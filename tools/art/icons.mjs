@@ -487,6 +487,24 @@ function pearl(P, glint = '#ffffff') {
 }
 const voidDark = ['#0c0a14', '#22103e', '#4a1f7a', '#8a3fc8', '#f4dcff'];
 
+// ---- Phase 3 ----------------------------------------------------------------------------------
+function beetle(P) {
+  const s = spr();
+  for (const [x0, y0, x1, y1] of [[7, 11, 3, 9], [6, 15, 2, 16], [7, 19, 4, 22], [17, 11, 21, 9], [18, 15, 22, 16], [17, 19, 20, 22]]) s.line(x0, y0, x1, y1, P[1]);
+  s.ball(12, 15, 6, 6.5, P, { facet: 2 }); s.ball(12, 7.5, 3.5, 3, P);
+  s.line(12, 10, 12, 20, P[0]); s.px(10, 12, P[4]); s.px(10, 6, '#ffffff'); s.px(9, 3, P[1]); s.px(15, 3, P[1]); s.px(10, 4, P[1]); s.px(14, 4, P[1]);
+  return s.outline();
+}
+function bone(P, band) {
+  const s = spr();
+  for (let k = 0; k < 3; k++) s.line(6 + k, 18 + k - 1, 17 + k, 7 + k - 1, P[4 - k]);
+  for (const [x, y] of [[5, 17], [8, 20], [16, 5], [19, 8]]) s.ball(x, y, 2.4, 2.4, P);
+  if (band) { s.line(10, 13, 13, 16, band); s.line(11, 12, 14, 15, band); }
+  s.px(15, 4, '#ffffff');
+  return s.outline();
+}
+const withSparks = (s, c = '#ffffff') => { sparkle(s, 18, 5, c); s.px(5, 6, c); s.px(20, 12, c); return s; };
+
 const pale = ['#3a4a6a', '#8fa8d0', '#c8d8f0', '#e8f4ff', '#ffffff'];
 /** Material id (as in content.json) => builder returning a 24x24 Spr. */
 const ICONS = {
@@ -504,6 +522,17 @@ const ICONS = {
   primal_bloom: () => flowerRound(R.pink, R.gold), thunder_ingot: () => ingot(R.blue, '#ffffff'), witch_salve: () => potionRound(R.violet),
   chimera_hide: () => scale(R.orange), void_pearl: () => pearl(voidDark, '#f4dcff'), titan_alloy: () => ingot(R.stone, R.orange[3]),
   dream_spore: () => mushroom(R.pink, R.blue[4]), philosopher_s_salt: () => bowlPowder(R.red), chrysopoeia: () => ingot(R.gold, R.red[3]),
+  // Phase 3: the materials behind the starters won from goals
+  salt_crystal: () => cubes(R.iron), copper_filings: () => bowlPowder(R.orange), grave_beetle: () => beetle(R.dark),
+  lightning_sand: () => withSparks(pouch(R.gold, R.dark)), hollow_bone: () => bone(R.bone),
+  brine: () => potionTall(R.blue), verdigris: () => bowlPowder(R.teal), carapace: () => scale(R.stone),
+  static_dust: () => withSparks(ashPile(R.blue, false)), marrow: () => potionFlask(R.pink), spark_quartz: () => withSparks(crystals(R.gold)),
+  bronze: () => ingot(R.orange), lye: () => potionRound(R.blue), blue_vitriol: () => crystals(R.blue), tempest_glass: () => withSparks(cubes(R.violet)),
+  scarab_amulet: () => beetle(R.green), ossuary_dust: () => bowlPowder(R.bone), thunderstone: () => ore(R.stone, R.gold, '#ffffff'),
+  quickfire: () => potionFlask(R.orange), stormcaller_rod: () => ingot(R.teal, '#ffffff'), reliquary_bone: () => bone(R.bone, R.gold[3]),
+  salt_of_ages: () => withSparks(bowlPowder(R.iron)), ball_lightning: () => withSparks(pearl(R.blue)), grave_lantern: () => crystals(R.green),
+  green_bronze: () => ingot(R.green, R.gold[3]), thunder_heart: () => withSparks(pearl(R.red, '#fff6b8'), R.gold[4]),
+  ossuary_crown: () => ingot(R.bone, R.violet[3]), storm_philter: () => potionTall(R.violet), copper_sun: () => withSparks(crystals(R.orange), R.gold[4]),
 };
 /** Catalyst id => builder. */
 const CATALYST_ICONS = {
@@ -511,6 +540,12 @@ const CATALYST_ICONS = {
   bestiary: () => catBook(R.red, (s) => { for (const x of [10, 12, 14]) s.line(x, 9, x + 1, 15, R.gold[4]); }),
   heart_tile: catHeartTile, first_spark: catSpark, crooked_mirror: catMirror, hourglass: catHourglass, deep_satchel: catSatchel,
   eureka_lens: catLens, resonant_slab: catSlab, quiet_bench: catMoon,
+  // Phase 3
+  herbarium: () => catBook(R.green, (s) => { s.line(12, 15, 12, 8, R.gold[4]); s.line(12, 11, 9, 9, R.gold[4]); s.line(12, 12, 15, 10, R.gold[4]); }),
+  alembic: () => potionFlask(R.violet), wide_crucible: () => bowlPowder(R.red), quick_hands: wing, grain_of_gold: () => pearl(R.gold),
+  tier_seeker: () => crystals(R.gold), hearth_habit: emberCoal, second_wind: steamWisp, warm_bench: () => cubes(R.red),
+  salvage: () => pouch(R.green, R.wood), cascade: starShard, descent: horn, tinkers_eye: eye,
+  bottomless_satchel: () => pouch(R.violet, R.gold), philosophers_fire: everflame, last_breath: () => potionRound(R.pink),
 };
 const KIND_COL = { Ore: '#c08a5c', Metal: '#a8b8c4', Crystal: '#c486f4', Powder: '#e4d2aa', Potion: '#6ee6c8', Plant: '#8ad04a', Beast: '#ee6a3c' };
 

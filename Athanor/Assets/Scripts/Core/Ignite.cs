@@ -42,30 +42,24 @@ namespace Athanor.Core
 
     public static class IgniteResolver
     {
-        static readonly (int dr, int dc)[] Ortho = { (0, 1), (1, 0) };
-        static readonly (int dr, int dc)[] WithDiag = { (0, 1), (1, -1), (1, 0), (1, 1) };
-
         /// <summary>Occupied neighbouring pairs in reading order (a &lt; b).</summary>
-        public static List<(int a, int b)> Pairs(Bench bench, bool diagonals)
+        public static List<(int a, int b)> Pairs(Bench bench, bool diagonals) => Pairs(bench, BenchRules.Plain(diagonals));
+
+        public static List<(int a, int b)> Pairs(Bench bench, BenchRules rules)
         {
+            rules = rules ?? BenchRules.None;
             var pairs = new List<(int, int)>();
             for (int a = 0; a < Bench.TileCount; a++)
             {
                 if (bench.Tiles[a] == null) continue;
-                int r = a / Bench.Size, c = a % Bench.Size;
-                foreach (var (dr, dc) in diagonals ? WithDiag : Ortho)
-                {
-                    int rr = r + dr, cc = c + dc;
-                    if (rr >= Bench.Size || cc < 0 || cc >= Bench.Size) continue;
-                    int b = rr * Bench.Size + cc;
-                    if (bench.Tiles[b] != null) pairs.Add((a, b));
-                }
+                for (int b = a + 1; b < Bench.TileCount; b++)
+                    if (bench.Tiles[b] != null && rules.Touch(a, b)) pairs.Add((a, b));
             }
-            pairs.Sort();
             return pairs;
         }
 
         public static bool HasAnyPair(Bench bench, bool diagonals) => Pairs(bench, diagonals).Count > 0;
+        public static bool HasAnyPair(Bench bench, BenchRules rules) => Pairs(bench, rules).Count > 0;
 
         public static bool Has(IReadOnlyList<CatalystData> catalysts, string effect) =>
             catalysts != null && catalysts.Any(c => c.effect == effect);
@@ -75,11 +69,15 @@ namespace Athanor.Core
         /// Updates the journal and the set of recipes fired this run; the bench itself is not changed.
         /// </summary>
         public static ResolveResult Resolve(Bench bench, ContentDb db, Journal journal, ISet<string> firedThisRun,
-            IReadOnlyList<CatalystData> catalysts)
+            IReadOnlyList<CatalystData> catalysts, ScoreContext context = null)
         {
             catalysts = catalysts ?? new CatalystData[0];
-            bool diagonals = Has(catalysts, Effects.Diagonals);
-            int empty = Bench.TileCount - bench.Count, chain = 0;
+            var ctx = context ?? new ScoreContext { Rules = BenchRules.Plain(Has(catalysts, Effects.Diagonals)) };
+            var diagonals = ctx.Rules;
+            ctx.EmptyTiles = Bench.TileCount - bench.Count;
+            ctx.EmptyAtIgnite = new bool[Bench.TileCount];
+            for (int t = 0; t < Bench.TileCount; t++) ctx.EmptyAtIgnite[t] = bench.Tiles[t] == null;
+            int chain = 0;
             var plan = ChainPlanner.Plan(bench.Tiles, db, diagonals);
             var result = new ResolveResult { Final = plan.Final, Made = plan.Made };
 
@@ -92,7 +90,7 @@ namespace Athanor.Core
                     e.Chain = ++chain;
                     e.Discovery = journal.Learn(step.Items);
                     e.FirstThisRun = firedThisRun.Add(db.KeyOf(step.Recipe));
-                    e.Potency = Score(db, step.Recipe, step.Tiles, e.FirstThisRun, e.Discovery, chain, empty, catalysts);
+                    e.Potency = Score(db, step.Recipe, step.Tiles, e.FirstThisRun, e.Discovery, chain, catalysts, ctx);
                 }
                 result.Events.Add(e);
             }
@@ -113,14 +111,23 @@ namespace Athanor.Core
 
         /// <summary>
         /// Potency of one reaction: the result's base, times one less than the number of materials used,
-        /// doubled the first time this run, times its place in the chain, then the catalysts.
+        /// doubled the first time this run, times its place in the chain, then the catalysts and the hub's tile.
         /// </summary>
         public static long Score(ContentDb db, RecipeData recipe, int[] tiles, bool firstThisRun, bool discovery, int chain,
-            int emptyTiles, IReadOnlyList<CatalystData> catalysts)
+            int emptyTiles, IReadOnlyList<CatalystData> catalysts) =>
+            Score(db, recipe, tiles, firstThisRun, discovery, chain, catalysts, new ScoreContext { EmptyTiles = emptyTiles });
+
+        public static long Score(ContentDb db, RecipeData recipe, int[] tiles, bool firstThisRun, bool discovery, int chain,
+            IReadOnlyList<CatalystData> catalysts, ScoreContext ctx)
         {
-            long p = ContentDb.BasePotency(db.Material(recipe.result).tier) * (recipe.items.Length - 1);
+            var rules = ctx.Rules ?? BenchRules.None;
+            int hub = tiles[0], tier = db.Material(recipe.result).tier, items = recipe.items.Length;
+            int baseTier = tier;
+            if (rules.AttunedKind[hub] != null && recipe.items.Any(i => db.KindOf(i).ToString() == rules.AttunedKind[hub])) baseTier++;
+            double p = ContentDb.BasePotency(baseTier) * (items - 1);
             if (firstThisRun) p *= 2;
-            p *= Has(catalysts, Effects.ChainPlus) ? chain + 1 : chain;
+            int step = chain + (rules.Heavy[hub] ? 1 : 0);
+            p *= Has(catalysts, Effects.ChainPlus) ? step + 1 : step;
             long bonus = 0;
             foreach (var c in catalysts)
             {
@@ -130,17 +137,30 @@ namespace Athanor.Core
                     case Effects.CentreTwice: if (System.Array.IndexOf(tiles, Bench.Centre) >= 0) p *= 2; break;
                     case Effects.FirstTriple: if (chain == 1) p *= 3; break;
                     case Effects.DiscoveryTriple: if (discovery) p *= 3; break;
-                    case Effects.EmptyTileBonus: bonus += (long)c.amount * emptyTiles; break;
+                    case Effects.EmptyTileBonus: bonus += (long)c.amount * ctx.EmptyTiles; break;
+                    case Effects.ComboBonus: if (items >= 3) p *= c.amount; break;
+                    case Effects.PairBonus: if (items == 2) p *= c.amount; break;
+                    case Effects.FlatPerReaction: bonus += (long)c.amount; break;
+                    case Effects.TierDouble: if (tier >= (int)c.amount) p *= 2; break;
+                    case Effects.StarterDouble: if (recipe.items.Count(i => db.Material(i).tier == 0) >= (int)c.amount) p *= 2; break;
+                    case Effects.ChainFrom: if (chain >= (int)c.amount) p *= 2; break;
+                    case Effects.DepthScale: p *= 1 + c.amount * (ctx.Depth - 1); break;
+                    case Effects.AllScale: p *= c.amount; break;
                 }
             }
-            return p + bonus;
+            p *= rules.HubMult[hub];
+            if (ctx.TripleFirst && chain == 1) p *= 3;
+            if (ctx.EmptyAtIgnite != null)
+                for (int t = 0; t < Bench.TileCount; t++)
+                    if (rules.SeedBonus[t] > 0 && ctx.EmptyAtIgnite[t] && rules.Touch(hub, t)) bonus += rules.SeedBonus[t];
+            return (long)System.Math.Round(p) + bonus;
         }
 
         /// <summary>
         /// For a pair that did nothing only because the bench was too dull: the heat that a recipe not yet
         /// found, laid out round one of the two, is waiting for. Given once for each material and number.
         /// </summary>
-        static HintData HeatHint(ContentDb db, Journal journal, string[] tiles, int ta, int tb, bool diagonals)
+        static HintData HeatHint(ContentDb db, Journal journal, string[] tiles, int ta, int tb, BenchRules diagonals)
         {
             RecipeData told = null;   // one recipe is hinted at from one of its materials, not from each
             foreach (int t in new[] { ta, tb })

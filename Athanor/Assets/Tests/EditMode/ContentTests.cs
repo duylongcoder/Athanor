@@ -11,7 +11,11 @@ namespace Athanor.Tests
         ContentData data; ContentDb db;
         [SetUp] public void Load() { data = TestContent.Load(); db = new ContentDb(data); }
 
-        [Test] public void Has8Starters() => Assert.AreEqual(8, db.Starters.Count);
+        [Test] public void Has13Starters_8OfThemOpen()
+        {
+            Assert.AreEqual(13, db.Starters.Count);
+            Assert.AreEqual(8, db.Starters.Count(m => !m.locked));
+        }
 
         [Test] public void Has7Kinds_EachUsed()
         {
@@ -19,19 +23,19 @@ namespace Athanor.Tests
             Assert.AreEqual(7, used);
         }
 
-        [Test] public void DiscoveriesBetween40And46()
+        [Test] public void Discoveries_43FromPhase2_24FromPhase3()
         {
             var n = data.materials.Count(m => m.tier >= 1 && m.tier <= 4);
-            Assert.That(n, Is.InRange(40, 46));
+            Assert.AreEqual(67, n);
         }
 
         [Test] public void EveryMaterialFitsTheJournalGrid() =>
-            Assert.That(data.materials.Length, Is.LessThanOrEqualTo(60));   // JournalView: 10 columns x 6 rows
+            Assert.That(data.materials.Length, Is.LessThanOrEqualTo(120));   // JournalView: two pages of 10 columns x 6 rows
 
         [Test] public void ComboRecipeCounts()
         {
-            Assert.That(db.Recipes.Count(r => r.items.Length == 3), Is.InRange(6, 8), "three-item");
-            Assert.That(db.Recipes.Count(r => r.items.Length == 4), Is.InRange(4, 6), "four-item");
+            Assert.That(db.Recipes.Count(r => r.items.Length == 3), Is.InRange(15, 19), "three-item");
+            Assert.That(db.Recipes.Count(r => r.items.Length == 4), Is.InRange(5, 8), "four-item");
             Assert.That(db.Recipes.Count(r => r.items.Length == 5), Is.InRange(2, 4), "five-item");
         }
 
@@ -54,11 +58,17 @@ namespace Athanor.Tests
 
         [Test] public void EveryDiscovery_IsUsedOrIsTheUltimate()
         {
+            // the only dead ends are the four tier-4 results of the Phase 3 side branch
+            var deadEnds = new[] { "thunder_heart", "ossuary_crown", "storm_philter", "copper_sun" };
             foreach (var m in data.materials.Where(m => m.tier >= 1 && m.id != db.Ultimate))
-                Assert.That(db.RecipesContaining(m.id).Count, Is.GreaterThan(0), m.id + " is a dead end");
+                Assert.AreEqual(deadEnds.Contains(m.id), db.RecipesContaining(m.id).Count == 0, m.id);
         }
 
-        [Test] public void Has10Catalysts() => Assert.AreEqual(10, db.Catalysts.Count);
+        [Test] public void Has26Catalysts_9OfThemOpen()
+        {
+            Assert.AreEqual(26, db.Catalysts.Count);
+            Assert.AreEqual(9, db.Catalysts.Count(c => !c.locked));
+        }
 
         [Test] public void DepthTargetsAre_300_1500_7500_37500()
         {

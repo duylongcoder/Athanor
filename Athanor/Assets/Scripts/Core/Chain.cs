@@ -34,60 +34,44 @@ namespace Athanor.Core
         /// <summary>Sputters are only reported for combos of this many materials or more.</summary>
         public const int SputterSize = 3;
 
-        static readonly int[][] Ortho = Build(false), Diag = Build(true);
-
-        static int[][] Build(bool diagonals)
-        {
-            var all = new int[Bench.TileCount][];
-            for (int t = 0; t < Bench.TileCount; t++)
-            {
-                var list = new List<int>();
-                int r = t / Bench.Size, c = t % Bench.Size;
-                for (int dr = -1; dr <= 1; dr++)
-                    for (int dc = -1; dc <= 1; dc++)
-                    {
-                        if ((dr == 0 && dc == 0) || (!diagonals && dr != 0 && dc != 0)) continue;
-                        int rr = r + dr, cc = c + dc;
-                        if (rr >= 0 && rr < Bench.Size && cc >= 0 && cc < Bench.Size) list.Add(rr * Bench.Size + cc);
-                    }
-                all[t] = list.ToArray();   // ascending
-            }
-            return all;
-        }
-
-        public static IEnumerable<int> Neighbours(int tile, bool diagonals) => (diagonals ? Diag : Ortho)[tile];
+        public static IEnumerable<int> Neighbours(int tile, bool diagonals) => BenchRules.Plain(diagonals).Around(tile);
+        public static int[] Neighbours(int tile, BenchRules rules) => (rules ?? BenchRules.None).Around(tile);
 
         /// <summary>
         /// The Reaction Index of the material on a tile plus that of everything touching it. A recipe fires
         /// only when the heat round its hub reaches the recipe's required total, so materials that are not
         /// part of the recipe (company) can lift it over, and dull company can leave it short.
         /// </summary>
-        public static int Heat(string[] tiles, int hub, ContentDb db, bool diagonals)
+        public static int Heat(string[] tiles, int hub, ContentDb db, bool diagonals) => Heat(tiles, hub, db, BenchRules.Plain(diagonals));
+
+        public static int Heat(string[] tiles, int hub, ContentDb db, BenchRules rules)
         {
             if (hub < 0 || hub >= tiles.Length || !db.Has(tiles[hub])) return 0;
-            int heat = db.Reactivity(tiles[hub]);
-            foreach (int n in (diagonals ? Diag : Ortho)[hub]) if (db.Has(tiles[n])) heat += db.Reactivity(tiles[n]);
+            int heat = rules.Ri(db, hub, tiles[hub]) + rules.HeatPlus;
+            foreach (int n in rules.Around(hub)) if (db.Has(tiles[n])) heat += rules.Ri(db, n, tiles[n]) + rules.HeatPlus;
             return heat;
         }
 
         /// <summary>The best recipe the material on this tile can complete as a hub, or null.</summary>
-        public static ChainStep MatchAt(string[] tiles, int hub, ContentDb db, bool diagonals) => Find(tiles, hub, db, diagonals, false);
+        public static ChainStep MatchAt(string[] tiles, int hub, ContentDb db, bool diagonals) => Find(tiles, hub, db, BenchRules.Plain(diagonals), false);
+        public static ChainStep MatchAt(string[] tiles, int hub, ContentDb db, BenchRules rules) => Find(tiles, hub, db, rules ?? BenchRules.None, false);
 
         /// <summary>
         /// The largest recipe laid out round this tile that does not fire only because the heat there is
         /// below its required total, or null. Used to tell the player what a dull bench was missing.
         /// </summary>
-        public static RecipeData ShortAt(string[] tiles, int hub, ContentDb db, bool diagonals) => Find(tiles, hub, db, diagonals, true)?.Recipe;
+        public static RecipeData ShortAt(string[] tiles, int hub, ContentDb db, bool diagonals) => Find(tiles, hub, db, BenchRules.Plain(diagonals), true)?.Recipe;
+        public static RecipeData ShortAt(string[] tiles, int hub, ContentDb db, BenchRules rules) => Find(tiles, hub, db, rules ?? BenchRules.None, true)?.Recipe;
 
         /// <summary>lacking: false finds what fires here; true finds what would, given more heat.</summary>
-        static ChainStep Find(string[] tiles, int hub, ContentDb db, bool diagonals, bool lacking)
+        static ChainStep Find(string[] tiles, int hub, ContentDb db, BenchRules rules, bool lacking)
         {
             if (hub < 0 || hub >= tiles.Length) return null;
             string centre = tiles[hub];
             if (centre == null || !db.Has(centre)) return null;
-            var around = (diagonals ? Diag : Ortho)[hub];
+            var around = rules.Around(hub);
             var recipes = db.RecipesContaining(centre);
-            int heat = Heat(tiles, hub, db, diagonals);
+            int heat = rules.Kiln[hub] ? int.MaxValue : Heat(tiles, hub, db, rules);   // a kiln asks for no heat
             var used = new int[ContentDb.MaxItems - 1];
             for (int i = 0; i < recipes.Count; i++)
             {
@@ -122,8 +106,12 @@ namespace Athanor.Core
         }
 
         /// <summary>sputters: false skips looking for spoiled combos (the scripted player does not need them).</summary>
-        public static ChainPlan Plan(string[] tiles, ContentDb db, bool diagonals, bool sputters = true)
+        public static ChainPlan Plan(string[] tiles, ContentDb db, bool diagonals, bool sputters = true) =>
+            Plan(tiles, db, BenchRules.Plain(diagonals), sputters);
+
+        public static ChainPlan Plan(string[] tiles, ContentDb db, BenchRules rules, bool sputters = true)
         {
+            rules = rules ?? BenchRules.None;
             var now = (string[])tiles.Clone();
             var plan = new ChainPlan { Final = now, Made = new bool[now.Length] };
             var order = new int[now.Length];
@@ -134,12 +122,13 @@ namespace Athanor.Core
                 for (int t = 0; t < now.Length; t++)
                 {
                     if (now[t] == null || !db.Has(now[t])) continue;
-                    int ri = db.Reactivity(now[t]), at = n++;
-                    while (at > 0 && db.Reactivity(now[order[at - 1]]) < ri) { order[at] = order[at - 1]; at--; }
+                    int ri = rules.Ri(db, t, now[t]), at = n++;
+                    while (at > 0 && rules.Ri(db, order[at - 1], now[order[at - 1]]) < ri) { order[at] = order[at - 1]; at--; }
                     order[at] = t;
                 }
-                ChainStep step = null;
-                for (int k = 0; k < n && step == null; k++) step = MatchAt(now, order[k], db, diagonals);
+                // a pivot tile that can react goes first, whatever the others' Reaction Index
+                ChainStep step = rules.Pivot >= 0 ? Find(now, rules.Pivot, db, rules, false) : null;
+                for (int k = 0; k < n && step == null; k++) step = Find(now, order[k], db, rules, false);
                 if (step == null) break;
 
                 // combos that were standing ready and are about to lose a material
@@ -147,7 +136,7 @@ namespace Athanor.Core
                 for (int t = 0; sputters && t < now.Length; t++)
                 {
                     if (t == step.Hub || now[t] == null) continue;
-                    var other = MatchAt(now, t, db, diagonals);
+                    var other = Find(now, t, db, rules, false);
                     if (other == null || other.Tiles.Length < SputterSize || !other.Tiles.Intersect(step.Tiles).Any()) continue;
                     if (SameTiles(other, step) || (spoiled != null && spoiled.Any(s => SameTiles(s, other)))) continue;
                     other.Sputter = true;

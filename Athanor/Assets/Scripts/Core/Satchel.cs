@@ -49,6 +49,9 @@ namespace Athanor.Core
             return hand;
         }
 
+        /// <summary>A card that is out (in the hand or on the bench) leaves the satchel for good.</summary>
+        public void Lose(string id) => outCards.Remove(id);
+
         public void Discard(IEnumerable<string> ids)
         {
             foreach (var id in ids.ToList()) { outCards.Remove(id); discard.Add(id); }

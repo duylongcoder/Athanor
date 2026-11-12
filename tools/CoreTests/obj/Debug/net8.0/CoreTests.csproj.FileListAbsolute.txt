@@ -196,3 +196,4 @@
 /Users/bunker/Desktop/New Folder/tools/CoreTests/obj/Debug/net8.0/CoreTests.pdb
 /Users/bunker/Desktop/New Folder/tools/CoreTests/obj/Debug/net8.0/CoreTests.genruntimeconfig.cache
 /Users/bunker/Desktop/New Folder/tools/CoreTests/obj/Debug/net8.0/ref/CoreTests.dll
+/Users/bunker/Desktop/New Folder/tools/CoreTests/obj/Debug/net8.0/CoreTests.sourcelink.json

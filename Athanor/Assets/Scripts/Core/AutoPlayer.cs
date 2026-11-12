@@ -8,15 +8,38 @@ namespace Athanor.Core
     /// cluster (a recipe laid round a hub) or one card at a time, asking the chain planner what the
     /// bench would do, and keeps the best. Used to prove the content is winnable and as a debug autoplay.
     /// </summary>
-    public enum AutoMove { None, ChoseCatalyst, Redrew, ReadyToIgnite }
+    public enum AutoMove { None, ChoseCatalyst, Redrew, ReadyToIgnite, ChoseAspect, ChoseEvent }
 
     public sealed class AutoPlayer
     {
         static readonly string[] CatalystOrder =
         {
-            Effects.ExtraHand, Effects.ChainPlus, Effects.FirstTriple, Effects.CentreTwice, Effects.ExtraTrial,
-            Effects.KindDouble, Effects.Diagonals, Effects.EmptyTileBonus, Effects.DiscoveryTriple,
+            Effects.AllScale, Effects.ExtraHand, Effects.ChainPlus, Effects.FirstTriple, Effects.DepthScale, Effects.CentreTwice, Effects.ExtraTrial,
+            Effects.SecondChance, Effects.PairBonus, Effects.TierDouble, Effects.ComboBonus, Effects.ChainFrom, Effects.KindDouble,
+            Effects.StarterDouble, Effects.Diagonals, Effects.HeatPlus, Effects.FlatPerReaction, Effects.EmptyTileBonus, Effects.ExtraRedraw,
+            Effects.FreeDiscovery, Effects.Salvage, Effects.DiscoveryTriple,
         };
+        static readonly string[] AspectOrder =
+        {
+            AspectEffects.Kiln, AspectEffects.Heated, AspectEffects.Doubled, AspectEffects.Echo, AspectEffects.Heavy, AspectEffects.Anchor,
+            AspectEffects.Greedy, AspectEffects.Attuned, AspectEffects.Seed, AspectEffects.Fallow, AspectEffects.Crossroads, AspectEffects.Bridge,
+            AspectEffects.OpenBench, AspectEffects.Pivot, AspectEffects.Volatile, AspectEffects.Cold,
+        };
+        /// <summary>What a hint is worth to this player when weighing an event: nothing to one who knows every recipe.</summary>
+        public double HintValue = 0;
+        /// <summary>Redraw when no layout makes anything this player wants. Off for a player with no route to want yet.</summary>
+        public bool RedrawWhenIdle = true;
+        /// <summary>For a player who does not know the whole tree: with no route to the last substance, work toward the highest materials it can make.</summary>
+        public bool SeekFrontier = false;
+        /// <summary>Materials this player is working toward while it knows no route to the last substance (material, how many).</summary>
+        public Dictionary<string, int> Wanted;
+        /// <summary>This player knows how to make the material from starting materials (or it is one).</summary>
+        public bool CanMake(string id) => tier.TryGetValue(id, out int t) && (t == 0 || route.ContainsKey(id));
+        /// <summary>Reactions it takes to make one from starting materials.</summary>
+        public int CostOf(string id) => cost.TryGetValue(id, out int c) ? c : 0;
+        public bool KnowsTheWay => route.ContainsKey(db.Ultimate);
+        /// <summary>How many of a material the last plan wanted in all, as an end or as an ingredient.</summary>
+        public int Demand(string id) => Count(demand, id);
 
         readonly ContentDb db;
         readonly Dictionary<string, int> cost = new Dictionary<string, int>();      // reactions needed to make one from starters
@@ -54,12 +77,29 @@ namespace Athanor.Core
                 run.ChooseCatalyst(pick?.id);
                 return AutoMove.ChoseCatalyst;
             }
+            if (run.Phase == RunPhase.AspectOffer)
+            {
+                var pick = run.AspectOffer.OrderBy(a => System.Array.IndexOf(AspectOrder, a.Data.effect)).First();
+                run.ChooseAspect(pick.Data.id);
+                return AutoMove.ChoseAspect;
+            }
+            if (run.Phase == RunPhase.EventOffer)
+            {
+                int bestOption = 0; double bestWorth = double.NegativeInfinity;
+                for (int i = 0; i < run.EventOptions.Count; i++)
+                {
+                    double w = Worth(run.EventOptions[i]);
+                    if (w > bestWorth) { bestWorth = w; bestOption = i; }
+                }
+                run.ChooseEventOption(bestOption);
+                return AutoMove.ChoseEvent;
+            }
             if (run.Phase != RunPhase.Playing) return AutoMove.None;
             for (int t = 0; t < Bench.TileCount; t++) run.Unplace(t);
 
             Prepare(run);
             Search();
-            if ((best == null || bestUseful == 0) && run.Redraw()) return AutoMove.Redrew;
+            if ((best == null || bestUseful == 0) && RedrawWhenIdle && run.Redraw()) return AutoMove.Redrew;
             if (best == null) return Force(run);
 
             for (int t = 0; t < Bench.TileCount; t++)
@@ -67,14 +107,51 @@ namespace Athanor.Core
             return run.CanIgnite ? AutoMove.ReadyToIgnite : Force(run);
         }
 
+        /// <summary>A rough worth of an event option: what it gives less what it costs, averaged over its outcomes.</summary>
+        double Worth(EventOption o)
+        {
+            double w = 0;
+            foreach (var c in o.cost ?? new EffectData[0]) w += Worth(c);
+            double total = o.outcomes.Sum(x => x.weight), gain = 0;
+            foreach (var x in o.outcomes)
+                foreach (var g in x.gain ?? new EffectData[0]) gain += Worth(g) * x.weight / total;
+            return w + gain;
+        }
+
+        double Worth(EffectData fx)
+        {
+            switch (fx.op)
+            {
+                case Ops.Trials: return 3.0 * fx.amount;
+                case Ops.Hand: return 1.5 * fx.amount;
+                case Ops.Redraws: return 0.5 * fx.amount;
+                case Ops.RiShift: return 2.0 * fx.amount;
+                case Ops.GiveDiscovery: return 2;
+                case Ops.LoseRack: return -1.5 * System.Math.Max(1, fx.amount);
+                case Ops.LoseCard: return -0.5 * System.Math.Max(1, fx.amount);
+                case Ops.FirstTriple: return 2;
+                case Ops.Hint: return HintValue;
+                case Ops.BlockTile: return -2;
+                case Ops.HeatTile: return 1;
+                case Ops.CatalystUpgrade: return 3;
+                case Ops.CatalystGift: return 4;
+                default: return 0;
+            }
+        }
+
         /// <summary>Nothing worth doing: spend the trial on two starting materials, never on a discovery.</summary>
         AutoMove Force(RunState run)
         {
             for (int t = 0; t < Bench.TileCount; t++) run.Unplace(t);
-            for (int tile = 0; tile < 2; tile++)
+            // two tiles that touch and are not shut
+            int first = -1, second = -1;
+            for (int a = 0; a < Bench.TileCount && first < 0; a++)
+                for (int b = a + 1; b < Bench.TileCount; b++)
+                    if (!run.Rules.Blocked[a] && !run.Rules.Blocked[b] && run.Rules.Touch(a, b)) { first = a; second = b; break; }
+            foreach (int tile in new[] { first, second })
             {
                 int i = run.Hand.ToList().FindIndex(h => tier[h] == 0);
-                if (i < 0) return run.Redraw() ? AutoMove.Redrew : AutoMove.None;
+                if (i < 0 || tile < 0) return run.Redraw() ? AutoMove.Redrew : AutoMove.None;
                 run.Place(i, tile);
             }
             return run.CanIgnite ? AutoMove.ReadyToIgnite : AutoMove.None;
@@ -91,7 +168,8 @@ namespace Athanor.Core
         readonly List<int> freeAround = new List<int>();
         RunState run;
         IReadOnlyList<CatalystData> cats;
-        bool diagonals;
+        BenchRules rules;
+        ScoreContext ctx;
         long remaining;
         int trialsLeft, discoveriesHeld, bestUseful, lastUseful;
         string[] best;
@@ -99,7 +177,7 @@ namespace Athanor.Core
 
         void Prepare(RunState r)
         {
-            run = r; cats = r.Catalysts; diagonals = r.Diagonals;
+            run = r; cats = r.Catalysts; rules = r.Rules; ctx = r.NewContext(); ctx.EmptyAtIgnite = new bool[Bench.TileCount];
             inHand.Clear(); held.Clear();
             foreach (var c in r.Hand) { inHand[c] = Count(inHand, c) + 1; held[c] = Count(held, c) + 1; }
             discoveriesHeld = r.Hand.Count(c => tier[c] > 0);
@@ -116,7 +194,18 @@ namespace Athanor.Core
         void ComputeNeeds()
         {
             need.Clear(); demand.Clear();
-            demand[db.Ultimate] = 1;
+            if (Wanted != null && Wanted.Count > 0 && !route.ContainsKey(db.Ultimate))
+            {
+                foreach (var w in Wanted) demand[w.Key] = w.Value;
+            }
+            else if (SeekFrontier && !route.ContainsKey(db.Ultimate))
+            {
+                // no known way to the last substance yet: want one of each of the highest things this player can make
+                int top = 0;
+                foreach (var m in route.Keys) if (tier[m] > top) top = tier[m];
+                foreach (var m in route.Keys) if (tier[m] >= top - 1) demand[m] = 1;
+            }
+            else demand[db.Ultimate] = 1;
             foreach (var m in byTierDown)
             {
                 int want = Count(demand, m);
@@ -149,9 +238,9 @@ namespace Athanor.Core
                         var others = Without(recipe.items, hubItem);
                         for (int hub = 0; hub < tiles.Length; hub++)
                         {
-                            if (tiles[hub] != null) continue;
+                            if (tiles[hub] != null || rules.Blocked[hub]) continue;
                             freeAround.Clear();
-                            foreach (int n in ChainPlanner.Neighbours(hub, diagonals)) if (tiles[n] == null) freeAround.Add(n);
+                            foreach (int n in rules.Around(hub)) if (tiles[n] == null) freeAround.Add(n);
                             if (freeAround.Count < others.Length) continue;
                             for (int variant = 0; variant < 2; variant++)
                             {
@@ -181,7 +270,7 @@ namespace Athanor.Core
                 {
                     if (inHand[id] <= 0) continue;
                     for (int t = 0; t < tiles.Length; t++)
-                        if (tiles[t] == null) Try(new[] { id }, new[] { t }, ref next);
+                        if (tiles[t] == null && !rules.Blocked[t]) Try(new[] { id }, new[] { t }, ref next);
                 }
                 if (next.ids == null) break;
                 for (int k = 0; k < next.ids.Length; k++) Put(next.ids[k], next.at[k]);
@@ -261,7 +350,7 @@ namespace Athanor.Core
             for (int t = 0; t < tiles.Length; t++)
             {
                 if (tiles[t] == null) continue;
-                foreach (int n in ChainPlanner.Neighbours(t, diagonals)) if (tiles[n] != null) return true;
+                foreach (int n in rules.Around(t)) if (tiles[n] != null) return true;
             }
             return false;
         }
@@ -272,8 +361,9 @@ namespace Athanor.Core
             lastUseful = 0;
             if (!AnyPair()) return double.NegativeInfinity;
             int empty = 0, chain = 0, useful = 0;
-            foreach (var t in tiles) if (t == null) empty++;
-            var plan = ChainPlanner.Plan(tiles, db, diagonals, false);
+            for (int t = 0; t < tiles.Length; t++) { ctx.EmptyAtIgnite[t] = tiles[t] == null; if (tiles[t] == null) empty++; }
+            ctx.EmptyTiles = empty;
+            var plan = ChainPlanner.Plan(tiles, db, rules, false);
             long gain = 0; bool won = false;
             double score = 0;
             firedLocal.Clear(); usedNeed.Clear();
@@ -282,7 +372,7 @@ namespace Athanor.Core
                 chain++;
                 string key = db.KeyOf(step.Recipe);
                 bool first = !run.HasFired(step.Recipe) && firedLocal.Add(key);
-                gain += IgniteResolver.Score(db, step.Recipe, step.Tiles, first, false, chain, empty, cats);
+                gain += IgniteResolver.Score(db, step.Recipe, step.Tiles, first, false, chain, cats, ctx);
                 if (step.Recipe.result == db.Ultimate) won = true;
             }
             // what the chain leaves standing is kept: worth the reactions it took, if it is wanted

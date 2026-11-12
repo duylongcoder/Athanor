@@ -4,6 +4,8 @@ using System.Linq;
 
 namespace Athanor.Core
 {
+    public static class RewardKinds { public const string Starter = "starter", Catalyst = "catalyst"; }
+
     /// <summary>Validated, indexed view of the game's content.</summary>
     public sealed class ContentDb
     {
@@ -60,12 +62,99 @@ namespace Athanor.Core
             if (!string.IsNullOrEmpty(data.ultimate) && !materials.ContainsKey(data.ultimate))
                 throw new ArgumentException("unknown ultimate " + data.ultimate);
             Catalysts = data.catalysts ?? new CatalystData[0];
+            Goals = data.goals ?? new GoalData[0];
+            Aspects = data.aspects ?? new AspectData[0];
+            Events = data.events ?? new EventData[0];
+            ValidatePhase3();
+        }
+
+        /// <summary>Rarity, locks, goals, aspects and events. Content with none of them (Phase 2) passes untouched.</summary>
+        void ValidatePhase3()
+        {
+            foreach (var m in data.materials)
+            {
+                if (m.tier != 0)
+                {
+                    if (!string.IsNullOrEmpty(m.rarity) || m.locked) throw new ArgumentException("only a starting material has a rarity or a lock: " + m.id);
+                    continue;
+                }
+                int rank = Array.IndexOf(Rarities.All, Rarities.Of(m.rarity));
+                if (rank < 0 || rank > 2) throw new ArgumentException("starter rarity must be Common, Uncommon or Rare: " + m.id);
+                if (m.locked && rank == 0) throw new ArgumentException("a Common item cannot be locked: " + m.id);
+            }
+            var ids = new HashSet<string>();
+            foreach (var c in Catalysts)
+            {
+                if (!ids.Add(c.id)) throw new ArgumentException("duplicate catalyst " + c.id);
+                if (Array.IndexOf(Effects.All, c.effect) < 0) throw new ArgumentException("unknown catalyst effect " + c.effect + " on " + c.id);
+                if (Array.IndexOf(Rarities.All, Rarities.Of(c.rarity)) < 0) throw new ArgumentException("unknown rarity on " + c.id);
+                if (c.locked && Rarities.Rank(c.rarity) == 0) throw new ArgumentException("a Common item cannot be locked: " + c.id);
+            }
+            ids.Clear();
+            var budget = new Dictionary<string, int>();
+            foreach (var g in Goals)
+            {
+                if (string.IsNullOrEmpty(g.id) || !ids.Add(g.id)) throw new ArgumentException("duplicate or empty goal id " + g.id);
+                if (Array.IndexOf(StatIds.All, g.stat) < 0) throw new ArgumentException("unknown stat " + g.stat + " on goal " + g.id);
+                if (g.target < 1) throw new ArgumentException("goal target must be 1 or more: " + g.id);
+                if (g.rewardKind != RewardKinds.Starter && g.rewardKind != RewardKinds.Catalyst) throw new ArgumentException("unknown reward kind on goal " + g.id);
+                int rank = Array.IndexOf(Rarities.All, g.rewardRarity);
+                if (rank < 1 || (g.rewardKind == RewardKinds.Starter && rank > 2)) throw new ArgumentException("no such reward bucket for goal " + g.id);
+                string bucket = g.rewardKind + "/" + g.rewardRarity;
+                budget[bucket] = (budget.TryGetValue(bucket, out int n) ? n : 0) + 1;
+            }
+            // the owner's rule: a goal must never complete onto an empty pool
+            foreach (var b in budget)
+            {
+                var parts = b.Key.Split('/');
+                int locked = LockedIn(parts[0], parts[1]).Count;
+                if (b.Value > locked) throw new ArgumentException(b.Value + " goals pay out " + b.Key + " but only " + locked + " such items are locked");
+            }
+            ids.Clear();
+            foreach (var a in Aspects)
+            {
+                if (string.IsNullOrEmpty(a.id) || !ids.Add(a.id)) throw new ArgumentException("duplicate or empty aspect id " + a.id);
+                if (Array.IndexOf(AspectEffects.All, a.effect) < 0) throw new ArgumentException("unknown aspect effect " + a.effect + " on " + a.id);
+            }
+            ids.Clear();
+            foreach (var e in Events)
+            {
+                if (string.IsNullOrEmpty(e.id) || !ids.Add(e.id)) throw new ArgumentException("duplicate or empty event id " + e.id);
+                if (Array.IndexOf(Ops.Types, e.type) < 0) throw new ArgumentException("unknown event type " + e.type + " on " + e.id);
+                if (e.weight < 1 || e.minDepth < 1 || e.maxDepth < e.minDepth) throw new ArgumentException("bad weight or depths on event " + e.id);
+                if (e.options == null || e.options.Length == 0) throw new ArgumentException("event has no option: " + e.id);
+                bool free = false;
+                foreach (var o in e.options)
+                {
+                    if (!string.IsNullOrEmpty(o.requires) && Array.IndexOf(Ops.Needs, o.requires) < 0) throw new ArgumentException("unknown requirement " + o.requires + " on " + e.id);
+                    if (o.outcomes == null || o.outcomes.Length == 0) throw new ArgumentException("option with no outcome on " + e.id);
+                    foreach (var fx in (o.cost ?? new EffectData[0]).Concat(o.outcomes.SelectMany(x => x.gain ?? new EffectData[0])))
+                        if (Array.IndexOf(Ops.All, fx.op) < 0) throw new ArgumentException("unknown effect " + fx.op + " on " + e.id);
+                    if (o.outcomes.Any(x => x.weight < 1)) throw new ArgumentException("outcome weight must be 1 or more on " + e.id);
+                    if (string.IsNullOrEmpty(o.requires) && (o.cost == null || o.cost.Length == 0)) free = true;
+                }
+                if (!free) throw new ArgumentException("event cannot be left: no option without a cost on " + e.id);
+            }
+        }
+
+        /// <summary>The locked items of one reward bucket, by id.</summary>
+        public List<string> LockedIn(string rewardKind, string rarity)
+        {
+            var found = rewardKind == RewardKinds.Starter
+                ? starters.Where(m => m.locked && Rarities.Of(m.rarity) == rarity).Select(m => m.id)
+                : Catalysts.Where(c => c.locked && Rarities.Of(c.rarity) == rarity).Select(c => c.id);
+            return found.OrderBy(i => i, StringComparer.Ordinal).ToList();
         }
 
         public IReadOnlyList<MaterialData> Starters => starters;
         public IReadOnlyList<MaterialData> Materials => data.materials;
         public IReadOnlyList<RecipeData> Recipes => data.recipes;
         public IReadOnlyList<CatalystData> Catalysts { get; }
+        public IReadOnlyList<GoalData> Goals { get; private set; }
+        public IReadOnlyList<AspectData> Aspects { get; private set; }
+        public IReadOnlyList<EventData> Events { get; private set; }
+        public int NoEventWeight => data.noEventWeight;
+        public CatalystData Catalyst(string id) => Catalysts.FirstOrDefault(c => c.id == id);
         public string Ultimate => data.ultimate;
 
         public MaterialData Material(string id) => materials[id];
