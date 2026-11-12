@@ -1,0 +1,1015 @@
+{
+ "materials": [
+  {
+   "id": "ember_coal",
+   "name": "Ember Coal",
+   "kind": "Ore",
+   "tier": 0,
+   "reactivity": 9,
+   "glow": "#ff6a1e"
+  },
+  {
+   "id": "deep_tear",
+   "name": "Deep Tear",
+   "kind": "Potion",
+   "tier": 0,
+   "reactivity": 4,
+   "glow": "#6ee6c8"
+  },
+  {
+   "id": "glowmoss",
+   "name": "Glowmoss",
+   "kind": "Plant",
+   "tier": 0,
+   "reactivity": 2,
+   "glow": "#6ee6c8"
+  },
+  {
+   "id": "moondust",
+   "name": "Moondust",
+   "kind": "Powder",
+   "tier": 0,
+   "reactivity": 7,
+   "glow": "#7cc0f8"
+  },
+  {
+   "id": "iron_ore",
+   "name": "Iron Ore",
+   "kind": "Ore",
+   "tier": 0,
+   "reactivity": 3,
+   "glow": ""
+  },
+  {
+   "id": "bone_ash",
+   "name": "Bone Ash",
+   "kind": "Powder",
+   "tier": 0,
+   "reactivity": 5,
+   "glow": ""
+  },
+  {
+   "id": "sunbloom",
+   "name": "Sunbloom",
+   "kind": "Plant",
+   "tier": 0,
+   "reactivity": 6,
+   "glow": "#ffa63a"
+  },
+  {
+   "id": "wyrm_fang",
+   "name": "Wyrm Fang",
+   "kind": "Beast",
+   "tier": 0,
+   "reactivity": 8,
+   "glow": ""
+  },
+  {
+   "id": "steam_wisp",
+   "name": "Steam Wisp",
+   "kind": "Beast",
+   "tier": 1,
+   "reactivity": 8,
+   "glow": "#a8fff4"
+  },
+  {
+   "id": "sky_iron",
+   "name": "Sky Iron",
+   "kind": "Metal",
+   "tier": 1,
+   "reactivity": 3,
+   "glow": ""
+  },
+  {
+   "id": "sulfur",
+   "name": "Sulfur",
+   "kind": "Powder",
+   "tier": 1,
+   "reactivity": 9,
+   "glow": ""
+  },
+  {
+   "id": "frost_salt",
+   "name": "Frost Salt",
+   "kind": "Crystal",
+   "tier": 1,
+   "reactivity": 2,
+   "glow": "#7cc0f8"
+  },
+  {
+   "id": "verdant_tonic",
+   "name": "Verdant Tonic",
+   "kind": "Potion",
+   "tier": 1,
+   "reactivity": 5,
+   "glow": "#8ad04a"
+  },
+  {
+   "id": "moonpetal",
+   "name": "Moonpetal",
+   "kind": "Plant",
+   "tier": 1,
+   "reactivity": 4,
+   "glow": "#7cc0f8"
+  },
+  {
+   "id": "dusk_cap",
+   "name": "Dusk Cap",
+   "kind": "Plant",
+   "tier": 1,
+   "reactivity": 1,
+   "glow": "#c486f4"
+  },
+  {
+   "id": "pixie_wing",
+   "name": "Pixie Wing",
+   "kind": "Beast",
+   "tier": 1,
+   "reactivity": 7,
+   "glow": "#f890b8"
+  },
+  {
+   "id": "dragon_scale",
+   "name": "Dragon Scale",
+   "kind": "Beast",
+   "tier": 1,
+   "reactivity": 2,
+   "glow": ""
+  },
+  {
+   "id": "dragon_blood",
+   "name": "Dragon Blood",
+   "kind": "Potion",
+   "tier": 1,
+   "reactivity": 10,
+   "glow": "#ee6a3c"
+  },
+  {
+   "id": "quicksilver",
+   "name": "Quicksilver",
+   "kind": "Metal",
+   "tier": 1,
+   "reactivity": 6,
+   "glow": ""
+  },
+  {
+   "id": "mandrake",
+   "name": "Mandrake",
+   "kind": "Plant",
+   "tier": 1,
+   "reactivity": 3,
+   "glow": ""
+  },
+  {
+   "id": "hearth_glass",
+   "name": "Hearth Glass",
+   "kind": "Crystal",
+   "tier": 1,
+   "reactivity": 6,
+   "glow": "#ffa63a"
+  },
+  {
+   "id": "wyrm_ichor",
+   "name": "Wyrm Ichor",
+   "kind": "Potion",
+   "tier": 1,
+   "reactivity": 4,
+   "glow": "#8ad04a"
+  },
+  {
+   "id": "forge_slag",
+   "name": "Forge Slag",
+   "kind": "Ore",
+   "tier": 1,
+   "reactivity": 1,
+   "glow": "#e06a1c"
+  },
+  {
+   "id": "primal_bloom",
+   "name": "Primal Bloom",
+   "kind": "Plant",
+   "tier": 1,
+   "reactivity": 10,
+   "glow": "#f890b8"
+  },
+  {
+   "id": "gold_ingot",
+   "name": "Gold Ingot",
+   "kind": "Metal",
+   "tier": 2,
+   "reactivity": 2,
+   "glow": "#f8d250"
+  },
+  {
+   "id": "cinnabar",
+   "name": "Cinnabar",
+   "kind": "Crystal",
+   "tier": 2,
+   "reactivity": 7,
+   "glow": "#ee6a3c"
+  },
+  {
+   "id": "humstone",
+   "name": "Humstone",
+   "kind": "Crystal",
+   "tier": 2,
+   "reactivity": 5,
+   "glow": "#c486f4"
+  },
+  {
+   "id": "storm_glass",
+   "name": "Storm Glass",
+   "kind": "Crystal",
+   "tier": 2,
+   "reactivity": 9,
+   "glow": "#7cc0f8"
+  },
+  {
+   "id": "basilisk_eye",
+   "name": "Basilisk Eye",
+   "kind": "Beast",
+   "tier": 2,
+   "reactivity": 6,
+   "glow": "#8ad04a"
+  },
+  {
+   "id": "unicorn_horn",
+   "name": "Unicorn Horn",
+   "kind": "Beast",
+   "tier": 2,
+   "reactivity": 3,
+   "glow": "#f890b8"
+  },
+  {
+   "id": "lifewater",
+   "name": "Lifewater",
+   "kind": "Potion",
+   "tier": 2,
+   "reactivity": 1,
+   "glow": "#8ad04a"
+  },
+  {
+   "id": "nightshade_ink",
+   "name": "Nightshade Ink",
+   "kind": "Potion",
+   "tier": 2,
+   "reactivity": 8,
+   "glow": "#c486f4"
+  },
+  {
+   "id": "starmetal_ore",
+   "name": "Starmetal Ore",
+   "kind": "Ore",
+   "tier": 2,
+   "reactivity": 4,
+   "glow": "#7cc0f8"
+  },
+  {
+   "id": "thunder_ingot",
+   "name": "Thunder Ingot",
+   "kind": "Metal",
+   "tier": 2,
+   "reactivity": 10,
+   "glow": "#7cc0f8"
+  },
+  {
+   "id": "witch_salve",
+   "name": "Witch Salve",
+   "kind": "Potion",
+   "tier": 2,
+   "reactivity": 3,
+   "glow": "#c486f4"
+  },
+  {
+   "id": "chimera_hide",
+   "name": "Chimera Hide",
+   "kind": "Beast",
+   "tier": 2,
+   "reactivity": 7,
+   "glow": "#ee6a3c"
+  },
+  {
+   "id": "phoenix_feather",
+   "name": "Phoenix Feather",
+   "kind": "Beast",
+   "tier": 3,
+   "reactivity": 10,
+   "glow": "#ffa63a"
+  },
+  {
+   "id": "star_shard",
+   "name": "Star Shard",
+   "kind": "Crystal",
+   "tier": 3,
+   "reactivity": 6,
+   "glow": "#fff6b8"
+  },
+  {
+   "id": "red_tincture",
+   "name": "Red Tincture",
+   "kind": "Potion",
+   "tier": 3,
+   "reactivity": 3,
+   "glow": "#ee6a3c"
+  },
+  {
+   "id": "aurora_dust",
+   "name": "Aurora Dust",
+   "kind": "Powder",
+   "tier": 3,
+   "reactivity": 8,
+   "glow": "#6ee6c8"
+  },
+  {
+   "id": "seer_s_orb",
+   "name": "Seer's Orb",
+   "kind": "Crystal",
+   "tier": 3,
+   "reactivity": 2,
+   "glow": "#c486f4"
+  },
+  {
+   "id": "sun_amalgam",
+   "name": "Sun Amalgam",
+   "kind": "Metal",
+   "tier": 3,
+   "reactivity": 5,
+   "glow": "#f8d250"
+  },
+  {
+   "id": "void_pearl",
+   "name": "Void Pearl",
+   "kind": "Crystal",
+   "tier": 3,
+   "reactivity": 1,
+   "glow": "#8a3fc8"
+  },
+  {
+   "id": "titan_alloy",
+   "name": "Titan Alloy",
+   "kind": "Metal",
+   "tier": 3,
+   "reactivity": 9,
+   "glow": "#ffa63a"
+  },
+  {
+   "id": "dream_spore",
+   "name": "Dream Spore",
+   "kind": "Plant",
+   "tier": 3,
+   "reactivity": 7,
+   "glow": "#f890b8"
+  },
+  {
+   "id": "everflame",
+   "name": "Everflame",
+   "kind": "Potion",
+   "tier": 4,
+   "reactivity": 9,
+   "glow": "#ffa63a"
+  },
+  {
+   "id": "heaven_s_ash",
+   "name": "Heaven's Ash",
+   "kind": "Powder",
+   "tier": 4,
+   "reactivity": 1,
+   "glow": "#e0f6ff"
+  },
+  {
+   "id": "living_gold",
+   "name": "Living Gold",
+   "kind": "Metal",
+   "tier": 4,
+   "reactivity": 4,
+   "glow": "#f8d250"
+  },
+  {
+   "id": "azoth",
+   "name": "Azoth",
+   "kind": "Potion",
+   "tier": 4,
+   "reactivity": 7,
+   "glow": "#a8fff4"
+  },
+  {
+   "id": "philosopher_s_salt",
+   "name": "Philosopher's Salt",
+   "kind": "Powder",
+   "tier": 4,
+   "reactivity": 6,
+   "glow": "#ee6a3c"
+  },
+  {
+   "id": "chrysopoeia",
+   "name": "Chrysopoeia",
+   "kind": "Metal",
+   "tier": 4,
+   "reactivity": 2,
+   "glow": "#f8d250"
+  },
+  {
+   "id": "worldseed",
+   "name": "Worldseed",
+   "kind": "Crystal",
+   "tier": 5,
+   "reactivity": 10,
+   "glow": "#ffffff"
+  }
+ ],
+ "recipes": [
+  {
+   "items": [
+    "ember_coal",
+    "deep_tear"
+   ],
+   "minReactivity": 0,
+   "result": "steam_wisp"
+  },
+  {
+   "items": [
+    "ember_coal",
+    "iron_ore"
+   ],
+   "minReactivity": 0,
+   "result": "sky_iron"
+  },
+  {
+   "items": [
+    "ember_coal",
+    "bone_ash"
+   ],
+   "minReactivity": 0,
+   "result": "sulfur"
+  },
+  {
+   "items": [
+    "deep_tear",
+    "moondust"
+   ],
+   "minReactivity": 0,
+   "result": "frost_salt"
+  },
+  {
+   "items": [
+    "deep_tear",
+    "glowmoss"
+   ],
+   "minReactivity": 0,
+   "result": "verdant_tonic"
+  },
+  {
+   "items": [
+    "sunbloom",
+    "deep_tear"
+   ],
+   "minReactivity": 0,
+   "result": "verdant_tonic"
+  },
+  {
+   "items": [
+    "glowmoss",
+    "moondust"
+   ],
+   "minReactivity": 0,
+   "result": "moonpetal"
+  },
+  {
+   "items": [
+    "glowmoss",
+    "bone_ash"
+   ],
+   "minReactivity": 0,
+   "result": "dusk_cap"
+  },
+  {
+   "items": [
+    "wyrm_fang",
+    "glowmoss"
+   ],
+   "minReactivity": 0,
+   "result": "dusk_cap"
+  },
+  {
+   "items": [
+    "sunbloom",
+    "moondust"
+   ],
+   "minReactivity": 0,
+   "result": "pixie_wing"
+  },
+  {
+   "items": [
+    "wyrm_fang",
+    "iron_ore"
+   ],
+   "minReactivity": 0,
+   "result": "dragon_scale"
+  },
+  {
+   "items": [
+    "wyrm_fang",
+    "deep_tear"
+   ],
+   "minReactivity": 0,
+   "result": "dragon_blood"
+  },
+  {
+   "items": [
+    "iron_ore",
+    "moondust"
+   ],
+   "minReactivity": 0,
+   "result": "quicksilver"
+  },
+  {
+   "items": [
+    "sunbloom",
+    "bone_ash"
+   ],
+   "minReactivity": 0,
+   "result": "mandrake"
+  },
+  {
+   "items": [
+    "sky_iron",
+    "sulfur"
+   ],
+   "minReactivity": 10,
+   "result": "gold_ingot"
+  },
+  {
+   "items": [
+    "quicksilver",
+    "sulfur"
+   ],
+   "minReactivity": 10,
+   "result": "cinnabar"
+  },
+  {
+   "items": [
+    "frost_salt",
+    "moonpetal"
+   ],
+   "minReactivity": 10,
+   "result": "humstone"
+  },
+  {
+   "items": [
+    "steam_wisp",
+    "frost_salt"
+   ],
+   "minReactivity": 10,
+   "result": "storm_glass"
+  },
+  {
+   "items": [
+    "dragon_blood",
+    "dragon_scale"
+   ],
+   "minReactivity": 10,
+   "result": "basilisk_eye"
+  },
+  {
+   "items": [
+    "pixie_wing",
+    "moonpetal"
+   ],
+   "minReactivity": 10,
+   "result": "unicorn_horn"
+  },
+  {
+   "items": [
+    "mandrake",
+    "verdant_tonic"
+   ],
+   "minReactivity": 10,
+   "result": "lifewater"
+  },
+  {
+   "items": [
+    "dusk_cap",
+    "quicksilver"
+   ],
+   "minReactivity": 10,
+   "result": "nightshade_ink"
+  },
+  {
+   "items": [
+    "sky_iron",
+    "moondust"
+   ],
+   "minReactivity": 10,
+   "result": "starmetal_ore"
+  },
+  {
+   "items": [
+    "gold_ingot",
+    "dragon_blood"
+   ],
+   "minReactivity": 14,
+   "result": "phoenix_feather"
+  },
+  {
+   "items": [
+    "starmetal_ore",
+    "humstone"
+   ],
+   "minReactivity": 14,
+   "result": "star_shard"
+  },
+  {
+   "items": [
+    "cinnabar",
+    "lifewater"
+   ],
+   "minReactivity": 14,
+   "result": "red_tincture"
+  },
+  {
+   "items": [
+    "unicorn_horn",
+    "storm_glass"
+   ],
+   "minReactivity": 14,
+   "result": "aurora_dust"
+  },
+  {
+   "items": [
+    "basilisk_eye",
+    "nightshade_ink"
+   ],
+   "minReactivity": 14,
+   "result": "seer_s_orb"
+  },
+  {
+   "items": [
+    "gold_ingot",
+    "quicksilver"
+   ],
+   "minReactivity": 14,
+   "result": "sun_amalgam"
+  },
+  {
+   "items": [
+    "phoenix_feather",
+    "red_tincture"
+   ],
+   "minReactivity": 22,
+   "result": "everflame"
+  },
+  {
+   "items": [
+    "star_shard",
+    "aurora_dust"
+   ],
+   "minReactivity": 22,
+   "result": "heaven_s_ash"
+  },
+  {
+   "items": [
+    "seer_s_orb",
+    "sun_amalgam"
+   ],
+   "minReactivity": 22,
+   "result": "living_gold"
+  },
+  {
+   "items": [
+    "star_shard",
+    "red_tincture"
+   ],
+   "minReactivity": 22,
+   "result": "azoth"
+  },
+  {
+   "items": [
+    "living_gold",
+    "azoth"
+   ],
+   "minReactivity": 30,
+   "result": "worldseed"
+  },
+  {
+   "items": [
+    "everflame",
+    "heaven_s_ash"
+   ],
+   "minReactivity": 30,
+   "result": "worldseed"
+  },
+  {
+   "items": [
+    "ember_coal",
+    "moondust",
+    "bone_ash"
+   ],
+   "minReactivity": 0,
+   "result": "hearth_glass"
+  },
+  {
+   "items": [
+    "wyrm_fang",
+    "deep_tear",
+    "sunbloom"
+   ],
+   "minReactivity": 0,
+   "result": "wyrm_ichor"
+  },
+  {
+   "items": [
+    "ember_coal",
+    "iron_ore",
+    "bone_ash",
+    "moondust"
+   ],
+   "minReactivity": 0,
+   "result": "forge_slag"
+  },
+  {
+   "items": [
+    "glowmoss",
+    "sunbloom",
+    "deep_tear",
+    "moondust",
+    "bone_ash"
+   ],
+   "minReactivity": 0,
+   "result": "primal_bloom"
+  },
+  {
+   "items": [
+    "sky_iron",
+    "steam_wisp",
+    "ember_coal"
+   ],
+   "minReactivity": 10,
+   "result": "thunder_ingot"
+  },
+  {
+   "items": [
+    "mandrake",
+    "dusk_cap",
+    "deep_tear",
+    "glowmoss"
+   ],
+   "minReactivity": 10,
+   "result": "witch_salve"
+  },
+  {
+   "items": [
+    "dragon_scale",
+    "pixie_wing",
+    "wyrm_fang"
+   ],
+   "minReactivity": 10,
+   "result": "chimera_hide"
+  },
+  {
+   "items": [
+    "storm_glass",
+    "humstone",
+    "moondust"
+   ],
+   "minReactivity": 14,
+   "result": "void_pearl"
+  },
+  {
+   "items": [
+    "gold_ingot",
+    "starmetal_ore",
+    "ember_coal",
+    "iron_ore"
+   ],
+   "minReactivity": 14,
+   "result": "titan_alloy"
+  },
+  {
+   "items": [
+    "lifewater",
+    "nightshade_ink",
+    "glowmoss",
+    "sunbloom",
+    "moondust"
+   ],
+   "minReactivity": 14,
+   "result": "dream_spore"
+  },
+  {
+   "items": [
+    "red_tincture",
+    "aurora_dust",
+    "bone_ash"
+   ],
+   "minReactivity": 22,
+   "result": "philosopher_s_salt"
+  },
+  {
+   "items": [
+    "sun_amalgam",
+    "phoenix_feather",
+    "ember_coal",
+    "sunbloom"
+   ],
+   "minReactivity": 22,
+   "result": "chrysopoeia"
+  },
+  {
+   "items": [
+    "void_pearl",
+    "lifewater",
+    "deep_tear"
+   ],
+   "minReactivity": 22,
+   "result": "azoth"
+  },
+  {
+   "items": [
+    "phoenix_feather",
+    "ember_coal",
+    "sulfur",
+    "dragon_blood"
+   ],
+   "minReactivity": 22,
+   "result": "everflame"
+  },
+  {
+   "items": [
+    "aurora_dust",
+    "bone_ash",
+    "frost_salt",
+    "moonpetal"
+   ],
+   "minReactivity": 22,
+   "result": "heaven_s_ash"
+  },
+  {
+   "items": [
+    "hearth_glass",
+    "steam_wisp"
+   ],
+   "minReactivity": 10,
+   "result": "storm_glass"
+  },
+  {
+   "items": [
+    "thunder_ingot",
+    "humstone"
+   ],
+   "minReactivity": 14,
+   "result": "star_shard"
+  },
+  {
+   "items": [
+    "chimera_hide",
+    "gold_ingot"
+   ],
+   "minReactivity": 14,
+   "result": "phoenix_feather"
+  },
+  {
+   "items": [
+    "void_pearl",
+    "titan_alloy"
+   ],
+   "minReactivity": 22,
+   "result": "living_gold"
+  },
+  {
+   "items": [
+    "philosopher_s_salt",
+    "chrysopoeia"
+   ],
+   "minReactivity": 30,
+   "result": "worldseed"
+  },
+  {
+   "items": [
+    "wyrm_ichor",
+    "forge_slag"
+   ],
+   "minReactivity": 10,
+   "result": "cinnabar"
+  },
+  {
+   "items": [
+    "primal_bloom",
+    "verdant_tonic"
+   ],
+   "minReactivity": 10,
+   "result": "lifewater"
+  },
+  {
+   "items": [
+    "witch_salve",
+    "basilisk_eye"
+   ],
+   "minReactivity": 14,
+   "result": "seer_s_orb"
+  },
+  {
+   "items": [
+    "dream_spore",
+    "titan_alloy"
+   ],
+   "minReactivity": 22,
+   "result": "chrysopoeia"
+  }
+ ],
+ "catalysts": [
+  {
+   "id": "bellows",
+   "name": "Bellows",
+   "text": "Reactions involving an Ore score double.",
+   "effect": "KindDouble",
+   "kind": "Ore",
+   "amount": 0
+  },
+  {
+   "id": "bestiary",
+   "name": "Bestiary",
+   "text": "Reactions involving a Beast part score double.",
+   "effect": "KindDouble",
+   "kind": "Beast",
+   "amount": 0
+  },
+  {
+   "id": "heart_tile",
+   "name": "Heart Tile",
+   "text": "Reactions touching the centre tile score double.",
+   "effect": "CentreTwice",
+   "kind": "",
+   "amount": 0
+  },
+  {
+   "id": "first_spark",
+   "name": "First Spark",
+   "text": "The first reaction of each trial scores triple.",
+   "effect": "FirstTriple",
+   "kind": "",
+   "amount": 0
+  },
+  {
+   "id": "crooked_mirror",
+   "name": "Crooked Mirror",
+   "text": "Diagonal neighbours also react.",
+   "effect": "Diagonals",
+   "kind": "",
+   "amount": 0
+  },
+  {
+   "id": "hourglass",
+   "name": "Hourglass",
+   "text": "One more trial at every depth.",
+   "effect": "ExtraTrial",
+   "kind": "",
+   "amount": 0
+  },
+  {
+   "id": "deep_satchel",
+   "name": "Deep Satchel",
+   "text": "Draw one more material each trial.",
+   "effect": "ExtraHand",
+   "kind": "",
+   "amount": 0
+  },
+  {
+   "id": "eureka_lens",
+   "name": "Eureka Lens",
+   "text": "New discoveries score triple.",
+   "effect": "DiscoveryTriple",
+   "kind": "",
+   "amount": 0
+  },
+  {
+   "id": "resonant_slab",
+   "name": "Resonant Slab",
+   "text": "Chains build faster: each reaction counts one step higher.",
+   "effect": "ChainPlus",
+   "kind": "",
+   "amount": 0
+  },
+  {
+   "id": "quiet_bench",
+   "name": "Quiet Bench",
+   "text": "Each reaction gains 20 potency per empty tile.",
+   "effect": "EmptyTileBonus",
+   "kind": "",
+   "amount": 20
+  }
+ ],
+ "depthTargets": [
+  300,
+  1500,
+  7500,
+  37500
+ ],
+ "depthNames": [
+  "The Shallow Cellar",
+  "The Dripping Stair",
+  "The Humming Dark",
+  "The Root of Stone",
+  "The Quiet Below"
+ ],
+ "ultimate": "worldseed"
+}
