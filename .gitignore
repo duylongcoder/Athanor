@@ -6,6 +6,22 @@
 # See: https://github.com/github/gitignore/tree/main/Global
 #
 .utmp/
+
+# Unity project lives in Athanor/ — the root-anchored rules below don't reach it
+/Athanor/[Ll]ibrary/
+/Athanor/[Tt]emp/
+/Athanor/[Oo]bj/
+/Athanor/[Bb]uild/
+/Athanor/[Bb]uilds/
+/Athanor/[Ll]ogs/
+/Athanor/[Uu]ser[Ss]ettings/
+/Athanor/[Mm]emoryCaptures/
+/Athanor/[Rr]ecordings/
+/Athanor/Data/
+
+# macOS
+.DS_Store
+
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
