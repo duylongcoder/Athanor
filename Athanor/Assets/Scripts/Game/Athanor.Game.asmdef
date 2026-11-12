@@ -1,0 +1,13 @@
+{
+    "name": "Athanor.Game",
+    "rootNamespace": "Athanor.Game",
+    "references": [
+        "Athanor.Core",
+        "Unity.TextMeshPro",
+        "Unity.InputSystem",
+        "Unity.RenderPipelines.Core.Runtime",
+        "Unity.RenderPipelines.Universal.Runtime",
+        "Unity.RenderPipelines.Universal.2D.Runtime"
+    ],
+    "autoReferenced": true
+}

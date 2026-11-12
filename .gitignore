@@ -1,0 +1,22 @@
+# Unity
+Athanor/[Ll]ibrary/
+Athanor/[Tt]emp/
+Athanor/[Oo]bj/
+Athanor/[Bb]uild/
+Athanor/[Bb]uilds/
+Athanor/[Ll]ogs/
+Athanor/[Uu]ser[Ss]ettings/
+Athanor/*.csproj
+Athanor/*.sln
+Athanor/*.slnx
+Athanor/.vs/
+Athanor/.vscode/
+# local
+pixel-effects/
+pixelfx/
+.superpowers/
+node_modules/
+tools/**/bin/
+tools/**/obj/
+tools/art/out/
+Athanor/Screenshots/
