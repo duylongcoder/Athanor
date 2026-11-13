@@ -56,5 +56,21 @@ namespace Athanor.Core
         {
             foreach (var id in ids.ToList()) { outCards.Remove(id); discard.Add(id); }
         }
+
+        /// <summary>Copies of a card in the draw and discard piles (not the ones out).</summary>
+        public int Available(string id) => draw.Count(c => c == id) + discard.Count(c => c == id);
+
+        /// <summary>
+        /// Takes a named card out of the draw pile, or else the discard pile, as if it had been drawn (the tutorial's
+        /// scripted hands). False, and nothing changed, when neither pile has a copy.
+        /// </summary>
+        public bool Take(string id)
+        {
+            var pile = draw.Contains(id) ? draw : discard.Contains(id) ? discard : null;
+            if (pile == null) return false;
+            pile.RemoveAt(pile.LastIndexOf(id));
+            outCards.Add(id);
+            return true;
+        }
     }
 }
