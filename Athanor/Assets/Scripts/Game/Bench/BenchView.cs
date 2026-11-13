@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Athanor.Core;
+using PrimeTween;
 using UnityEngine;
 
 namespace Athanor.Game
@@ -175,11 +176,11 @@ namespace Athanor.Game
         public IEnumerator FloatText(string text, Vector3 from, Color color, float seconds = 0.8f, bool small = false)
         {
             var label = Make.Text(transform, text, 0, 0, small ? FontKind.Tiny : FontKind.Title, small ? 8 : 16, color, 170, Align.Centre, Px.Hex("#0c0706"));
-            yield return Anim.Over(seconds, t =>
-            {
-                label.transform.position = Px.Snap(from + new Vector3(0, 6 + Anim.OutCubic(t) * 22, 0));
-                label.Alpha = t < 0.7f ? 1 : 1 - (t - 0.7f) / 0.3f;
-            });
+            // it rises the whole time and fades over the last 30 %
+            yield return Sequence.Create()
+                .Group(Motion.Move(label.transform, from + new Vector3(0, 6, 0), from + new Vector3(0, 28, 0), seconds, Ease.OutCubic))
+                .Insert(0.7f * seconds, Motion.Fade(label, 1, 0, 0.3f * seconds))
+                .ToYieldInstruction();
             Destroy(label.gameObject);
         }
 

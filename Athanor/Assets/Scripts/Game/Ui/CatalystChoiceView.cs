@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Athanor.Core;
+using PrimeTween;
 using UnityEngine;
 
 namespace Athanor.Game
@@ -135,16 +136,15 @@ namespace Athanor.Game
             gameObject.SetActive(true);
 
             float dealTime = 0.5f + 0.1f * count;
-            yield return Anim.Over(dealTime, t =>
-            {
-                shade.color = new Color(0, 0, 0, Dim * Mathf.Clamp01(t * 2.5f));
-                heading.Alpha = sub.Alpha = Mathf.Clamp01(t * 2);
-                for (int i = 0; i < count; i++)
-                {
-                    float k = Mathf.Clamp01((t * dealTime - i * 0.1f) / 0.5f);
-                    cards[i].root.position = Px.Snap(cards[i].home + new Vector3(0, (1 - Anim.OutBack(k)) * -300, 0));
-                }
-            });
+            // the shade and the heading come up first; the cards fly in one after another, 0.1 s apart
+            var deal = Sequence.Create()
+                .Group(Tween.Delay(dealTime))
+                .Group(Motion.Fade(shade, 0, Dim, dealTime / 2.5f))
+                .Group(Motion.Fade(heading, 0, 1, dealTime / 2))
+                .Group(Motion.Fade(sub, 0, 1, dealTime / 2));
+            for (int i = 0; i < count; i++)
+                deal.Insert(i * 0.1f, Motion.Move(cards[i].root, cards[i].home + new Vector3(0, -300, 0), cards[i].home, 0.5f, Ease.OutBack));
+            yield return deal.ToYieldInstruction();
             open = true;
             for (float waited = 0; picked == null; waited += Time.deltaTime)
             {
@@ -158,17 +158,20 @@ namespace Athanor.Game
             cards[chosen].lit.enabled = true;
             ScreenFx.I.Flash(0.22f, 0.35f);
             Sparks.I.Burst(cards[chosen].root.position, 40, new Color(2.2f, 1.7f, 0.6f), 150, 0.8f, O + 8, 60);
-            yield return Anim.Over(0.55f, t =>
+            // the others fall at once; the chosen card hops 10 px first, then falls after them
+            const float Away = 0.55f, Hop = 0.45f * Away;
+            var away = Sequence.Create()
+                .Group(Motion.Fade(shade, Dim, 0, Away, Ease.InCubic))
+                .Group(Motion.Fade(heading, 1, 0, Away))
+                .Group(Motion.Fade(sub, 1, 0, Away));
+            for (int i = 0; i < count; i++)
             {
-                shade.color = new Color(0, 0, 0, Dim * (1 - Anim.InCubic(t)));
-                heading.Alpha = sub.Alpha = 1 - t;
-                for (int i = 0; i < count; i++)
-                {
-                    var c = cards[i];
-                    float drop = i == chosen ? Anim.InCubic(Mathf.Clamp01((t - 0.45f) / 0.55f)) * 330 - Anim.Hump(Mathf.Clamp01(t / 0.45f)) * 10 : Anim.InCubic(t) * 330;
-                    c.root.position = Px.Snap(c.home + new Vector3(0, -drop + c.lift, 0));
-                }
-            });
+                var c = cards[i];
+                Vector3 at = c.home + new Vector3(0, c.lift, 0), gone = at + new Vector3(0, -330, 0);
+                if (i != chosen) away.Insert(0, Motion.Move(c.root, at, gone, Away, Ease.InCubic));
+                else away.Insert(0, Motion.Arc(c.root, at, at, 10, Hop)).Insert(Hop, Motion.Move(c.root, at, gone, Away - Hop, Ease.InCubic));
+            }
+            yield return away.ToYieldInstruction();
             gameObject.SetActive(false);
             done(picked);
         }

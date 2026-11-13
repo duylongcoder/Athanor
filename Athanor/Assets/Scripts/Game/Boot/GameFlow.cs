@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Athanor.Core;
+using PrimeTween;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
@@ -59,6 +60,7 @@ namespace Athanor.Game
 #else
             Application.targetFrameRate = 60;
 #endif
+            PrimeTweenConfig.SetTweensCapacity(200);   // a long chain runs many FloatTexts, Consumes and rack flights at once
             Db = new ContentDb(JsonUtility.FromJson<ContentData>(Resources.Load<TextAsset>("content").text));
             var layout = JsonUtility.FromJson<LayoutData>(Resources.Load<TextAsset>("layout").text);
             Journal = Save.LoadJournal();
@@ -414,7 +416,7 @@ namespace Athanor.Game
             yield return Anim.Over(seconds, t =>
             {
                 var p = Vector3.Lerp(from, to, Anim.InOut(t));
-                Sparks.I.Emit(p, Random.insideUnitCircle * 8, colour.Times(2), 0.25f, 151, 0, true);
+                Sparks.I.Trail(p, Random.insideUnitCircle * 8, colour.Times(2), 0.25f, 151, 0, true);
             });
         }
 
@@ -426,8 +428,8 @@ namespace Athanor.Game
             yield return Anim.Over(seconds, t =>
             {
                 var p = Vector3.Lerp(from, to, Anim.InOut(t)) + new Vector3(0, Anim.Hump(t) * 34, 0);
-                Sparks.I.Emit(p, Random.insideUnitCircle * 8, gold, 0.3f, 172, 0, true);
-                Sparks.I.Emit(p, Random.insideUnitCircle * 14, gold.Alpha(0.7f), 0.25f, 171);
+                Sparks.I.Trail(p, Random.insideUnitCircle * 8, gold, 0.3f, 172, 0, true);
+                Sparks.I.Trail(p, Random.insideUnitCircle * 14, gold.Alpha(0.7f), 0.25f, 171);
             });
             shownPotency += points;
             Bench.Hud.SetPotency(shownPotency);
@@ -440,23 +442,25 @@ namespace Athanor.Game
         {
             var halo = Make.Glow(Bench.transform, from, 26, colour.Alpha(0.6f), 164);
             var icon = Make.Sprite(Bench.transform, m.id, from, 165);
-            yield return Anim.Over(0.3f * pace, t =>
-            {
-                float s = Anim.OutBack(t) * 2;
-                icon.transform.localScale = new Vector3(s, s, 1);
-                icon.transform.position = halo.transform.position = Px.Snap(from + new Vector3(0, t * 8, 0));
-            });
+            float pop = 0.3f * pace, fly = 0.4f * pace;
+            var up = from + new Vector3(0, 8, 0);
+            yield return Sequence.Create()
+                .Group(Motion.Scale(icon.transform, 0, 2, pop, Ease.OutBack))
+                .Group(Motion.Move(icon.transform, from, up, pop))
+                .Group(Motion.Move(halo.transform, from, up, pop))
+                .ToYieldInstruction();
             yield return Anim.Wait(0.12f * pace);
             Vector3 start = icon.transform.position, to = Bench.RackSlot(slot);
-            yield return Anim.Over(0.4f * pace, t =>
+            var flight = Sequence.Create()
+                .Group(Motion.Arc(icon.transform, start, to, 20, fly, Ease.InOutSine))
+                .Group(Motion.Arc(halo.transform, start, to, 20, fly, Ease.InOutSine))
+                .Group(Motion.Scale(icon.transform, 2, 1, fly, Ease.InOutSine))
+                .Group(Motion.Fade(halo, 0.6f, 0, fly));
+            while (flight.isAlive)
             {
-                float k = Anim.InOut(t), s = Mathf.Lerp(2, 1, k);
-                var p = Px.Snap(Vector3.Lerp(start, to, k) + new Vector3(0, Anim.Hump(t) * 20, 0));
-                icon.transform.position = halo.transform.position = p;
-                icon.transform.localScale = new Vector3(s, s, 1);
-                halo.color = colour.Alpha(0.6f * (1 - t));
-                if (Random.value < 0.6f) Sparks.I.Emit(p, Random.insideUnitCircle * 10, colour.Times(2), 0.3f, 163);
-            });
+                if (Random.value < 0.6f) Sparks.I.Trail(icon.transform.position, Random.insideUnitCircle * 10, colour.Times(2), 0.3f, 163);
+                yield return null;
+            }
             Destroy(icon.gameObject); Destroy(halo.gameObject);
             Bench.PreviewOnRack(slot, m.id);
             Sparks.I.Burst(to, 8, colour.Times(2), 40, 0.3f, 163);

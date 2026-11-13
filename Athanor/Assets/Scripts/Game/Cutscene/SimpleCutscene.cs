@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Athanor.Core;
+using PrimeTween;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -122,16 +123,18 @@ namespace Athanor.Game
             banner.Text = "Depth Cleared";
             ScreenFx.I.Flash(0.3f, 0.5f); ScreenFx.I.Shake(2, 0.3f);
             Sparks.I.Burst(Px.At(CX, 170), 70, new Color(2.2f, 1.7f, 0.6f), 210, 1.1f, O + 11, 50, 0.6f);
-            yield return Anim.Over(0.3f, t => { banner.Alpha = t; banner.transform.position = Px.At(CX, 88 + Mathf.Round((1 - Anim.OutBack(t)) * 14)); });
+            yield return Sequence.Create()
+                .Group(Motion.Fade(banner, 0, 1, 0.3f))
+                .Group(Motion.Move(banner.transform, Px.At(CX, 102), Px.At(CX, 88), 0.3f, Ease.OutBack))
+                .ToYieldInstruction();
             yield return Hold(0.9f);
             // 2. down the stair: the room leaves upward
             bench.SetActive(false);
             streaks = 1;
-            yield return Anim.Over(0.9f, t =>
-            {
-                banner.Alpha = 1 - Mathf.Clamp01(t * 3);
-                workshop.transform.position = new Vector3(0, Mathf.Round(Anim.InCubic(t) * Scroll), 0);
-            });
+            yield return Sequence.Create()
+                .Group(Motion.Fade(banner, 1, 0, 0.3f))
+                .Group(Motion.Move(workshop.transform, Vector3.zero, new Vector3(0, Scroll, 0), 0.9f, Ease.InCubic))
+                .ToYieldInstruction();
             banner.Text = "";
             workshop.SetActive(false);
             midway?.Invoke();
@@ -140,21 +143,21 @@ namespace Athanor.Game
             big.main.fontSize = big.shadow.fontSize = depthName.Length > 20 ? 32 : 48;
             runeOn = 1;
             ClearSkip();
-            yield return Anim.Over(0.45f, t =>
-            {
-                small.Alpha = big.Alpha = t;
-                big.transform.position = Px.At(CX, 140 + Mathf.Round((1 - Anim.OutCubic(t)) * 8));
-            });
+            yield return Sequence.Create()
+                .Group(Motion.Fade(small, 0, 1, 0.45f))
+                .Group(Motion.Fade(big, 0, 1, 0.45f))
+                .Group(Motion.Move(big.transform, Px.At(CX, 148), Px.At(CX, 140), 0.45f, Ease.OutCubic))
+                .ToYieldInstruction();
             yield return Hold(1.7f);
             // 4. arriving: the room rises into view
             workshop.SetActive(true);
             streaks = 0.4f;
-            yield return Anim.Over(0.9f, t =>
-            {
-                small.Alpha = big.Alpha = 1 - Mathf.Clamp01(t * 2.5f);
-                runeOn = 1 - Mathf.Clamp01(t * 2);
-                workshop.transform.position = new Vector3(0, Mathf.Round((Anim.OutCubic(t) - 1) * Scroll), 0);
-            });
+            yield return Sequence.Create()
+                .Group(Motion.Fade(small, 1, 0, 0.36f))
+                .Group(Motion.Fade(big, 1, 0, 0.36f))
+                .Group(Tween.Custom(this, 1f, 0f, 0.45f, (s, v) => s.runeOn = v, Ease.Linear))
+                .Group(Motion.Move(workshop.transform, new Vector3(0, -Scroll, 0), Vector3.zero, 0.9f, Ease.OutCubic))
+                .ToYieldInstruction();
             End();
             workshop.transform.position = Vector3.zero;
             root.gameObject.SetActive(false);
@@ -227,7 +230,7 @@ namespace Athanor.Game
         void Update()
         {
             if (root == null || !root.gameObject.activeSelf) return;
-            float t = Time.time, dt = Time.deltaTime;
+            float t = Time.time;
             // the floating prize and its rays
             var at = Px.Snap(Px.At(CX, 122 + Mathf.Sin(t * 2.2f) * 3));
             icon.transform.position = at; iconGlow.transform.position = at;
@@ -246,18 +249,75 @@ namespace Athanor.Game
             ring.transform.localScale = new Vector3((60 + r * 320) / 60f, (14 + r * 76) / 14f, 1);
             ring.color = tint.Times(1.5f).Alpha(runeOn * (1 - r) * 0.8f);
             glow.color = tint.Alpha(0.16f * runeOn);
-            if (Sparks.I == null) return;
-            // embers off the fire
-            if (embers > 0 && UnityEngine.Random.value < 22 * dt)
-                Sparks.I.Emit(Px.At(CX + UnityEngine.Random.Range(-56f, 56f), 286), new Vector2(UnityEngine.Random.Range(-10f, 10f), UnityEngine.Random.Range(22f, 60f)),
-                    new Color(2.4f, 1.2f, 0.4f), 1.5f, 310, -6, UnityEngine.Random.value < 0.25f);
-            // motes rushing upward while descending
-            for (int n = Mathf.FloorToInt(t * 70 * streaks) - Mathf.FloorToInt((t - dt) * 70 * streaks); n > 0; n--)
-                Sparks.I.Emit(Px.At(UnityEngine.Random.Range(0f, Px.W), Px.H + 4), new Vector2(0, UnityEngine.Random.Range(380f, 620f)),
-                    tint.Times(1.6f).Alpha(0.75f), 1.1f, O + 1);
-            if (runeOn > 0 && UnityEngine.Random.value < 26 * dt * runeOn)
-                Sparks.I.Emit(Px.At(CX + UnityEngine.Random.Range(-140f, 140f), 262 + UnityEngine.Random.Range(-14f, 14f)),
-                    new Vector2(0, UnityEngine.Random.Range(20f, 60f)), tint.Times(2), 1.3f, O + 3, -4, UnityEngine.Random.value < 0.3f);
+            // the looping streams: embers off the fire, motes rushing upward while descending, motes off the rune
+            if (emberLoop == null)
+            {
+                emberLoop = new Loop(root, "embers", 310, 22, 1.5f, CX - 56, CX + 56, 286, 286, -10, 10, 22, 60, -6, 0.25f);
+                streakLoop = new Loop(root, "streaks", O + 1, 70, 1.1f, 0, Px.W, Px.H + 4, Px.H + 4, 0, 0, 380, 620, 0, 0);
+                runeLoop = new Loop(root, "rune motes", O + 3, 26, 1.3f, CX - 140, CX + 140, 248, 276, 0, 0, 20, 60, -4, 0.3f);
+            }
+            emberLoop.Draw(t, embers, new Color(2.4f, 1.2f, 0.4f));
+            streakLoop.Draw(t, streaks, tint.Times(1.6f).Alpha(0.75f));
+            runeLoop.Draw(t, runeOn, tint.Times(2));
+        }
+
+        // ---- looping particle streams (drawn by Update) ---------------------------------------------------
+
+        Loop emberLoop, streakLoop, runeLoop;
+
+        /// <summary>
+        /// A stream of glowing particles played as a loop instead of emitted: rate x life fixed slots, each reborn every
+        /// life seconds at a hashed place and speed, so its position is a function of the clock. A slot shows for a
+        /// life when it is reborn while the stream is on (with probability strength), so turning a stream on fills it
+        /// from its source and turning it off lets the particles in flight finish, as an emitter would. One SparkMesh.
+        /// </summary>
+        sealed class Loop
+        {
+            readonly SparkMesh mesh;
+            readonly int[] cycle;
+            readonly bool[] on;
+            readonly float life, x0, x1, y0, y1, vx0, vx1, vy0, vy1, gravity, sparkle;
+
+            public Loop(Transform parent, string name, int order, float rate, float life, float x0, float x1, float y0, float y1,
+                float vx0, float vx1, float vy0, float vy1, float gravity, float sparkle)
+            {
+                int n = Mathf.CeilToInt(rate * life);
+                cycle = new int[n]; on = new bool[n];
+                for (int i = 0; i < n; i++) cycle[i] = int.MinValue;
+                this.life = life; this.x0 = x0; this.x1 = x1; this.y0 = y0; this.y1 = y1;
+                this.vx0 = vx0; this.vx1 = vx1; this.vy0 = vy0; this.vy1 = vy1; this.gravity = gravity; this.sparkle = sparkle;
+                mesh = SparkMesh.Create(parent, name, order, Make.Lib.Sprite("dot"), Make.Lib.Sprite("sparkle"));
+            }
+
+            public void Draw(float t, float strength, Color color)
+            {
+                int n = cycle.Length;
+                mesh.Begin();
+                for (int i = 0; i < n; i++)
+                {
+                    float clock = t / life + (i + 0.5f + (Hash(i, 0, 9) - 0.5f) * 0.9f) / n;
+                    int c = Mathf.FloorToInt(clock);
+                    // reborn this frame: shown for this life if the stream is on now (a missed birth stays dark)
+                    if (cycle[i] != c) { on[i] = cycle[i] == c - 1 && Hash(i, c, 0) < strength; cycle[i] = c; }
+                    if (!on[i]) continue;
+                    float a = (clock - c) * life;
+                    var p = Px.At(Mathf.Lerp(x0, x1, Hash(i, c, 1)), Mathf.Lerp(y0, y1, Hash(i, c, 2)));
+                    float vx = Mathf.Lerp(vx0, vx1, Hash(i, c, 3)), vy = Mathf.Lerp(vy0, vy1, Hash(i, c, 4));
+                    var pos = new Vector2(p.x + vx * a, p.y + vy * a - 0.5f * gravity * a * a);
+                    mesh.Add(pos, color.Alpha(color.a * Mathf.Clamp01((life - a) / life * 2)), Hash(i, c, 5) < sparkle);
+                }
+                mesh.End();
+            }
+
+            static float Hash(int i, int c, int k)
+            {
+                unchecked
+                {
+                    uint h = (uint)i * 0x9E3779B1u ^ (uint)c * 0x85EBCA77u ^ (uint)k * 0xC2B2AE3Du;
+                    h ^= h >> 15; h *= 0x2C1B3C6Du; h ^= h >> 12; h *= 0x297A2D39u; h ^= h >> 15;
+                    return (h & 0xFFFFFF) / 16777216f;
+                }
+            }
         }
     }
 }

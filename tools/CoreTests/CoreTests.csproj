@@ -11,6 +11,7 @@
     <Compile Include="../../Athanor/Assets/Scripts/Core/**/*.cs" />
     <Compile Include="../../Athanor/Assets/Tests/EditMode/**/*.cs" />
     <None Include="../../Athanor/Assets/Resources/content.json" CopyToOutputDirectory="Always" />
+    <None Include="../../Athanor/Assets/Resources/lang/*.json" Link="lang/%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
     <PackageReference Include="NUnit" Version="3.14.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />

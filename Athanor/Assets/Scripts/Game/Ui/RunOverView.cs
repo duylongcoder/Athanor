@@ -1,5 +1,6 @@
 using System.Collections;
 using Athanor.Core;
+using PrimeTween;
 using UnityEngine;
 
 namespace Athanor.Game
@@ -75,11 +76,10 @@ namespace Athanor.Game
             done = false;
             gameObject.SetActive(true);
             var body = transform.GetChild(1);
-            yield return Anim.Over(0.35f, t =>
-            {
-                shade.color = new Color(0, 0, 0, 0.62f * t);
-                body.localPosition = new Vector3(0, Mathf.Round((1 - Anim.OutBack(t)) * -40), 0);
-            });
+            yield return Sequence.Create()
+                .Group(Motion.Fade(shade, 0, 0.62f, 0.35f))
+                .Group(Motion.MoveLocal(body, new Vector3(0, -40, 0), Vector3.zero, 0.35f, Ease.OutBack))
+                .ToYieldInstruction();
             while (!done) yield return null;
             gameObject.SetActive(false);
         }

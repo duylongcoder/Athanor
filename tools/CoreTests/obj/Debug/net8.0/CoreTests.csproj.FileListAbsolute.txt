@@ -297,3 +297,5 @@
 /home/long.caoduy@nccsoft.office/Desktop/Crucible_Fable/tools/CoreTests/obj/Debug/net8.0/CoreTests.pdb
 /home/long.caoduy@nccsoft.office/Desktop/Crucible_Fable/tools/CoreTests/obj/Debug/net8.0/CoreTests.genruntimeconfig.cache
 /home/long.caoduy@nccsoft.office/Desktop/Crucible_Fable/tools/CoreTests/obj/Debug/net8.0/ref/CoreTests.dll
+/Users/bunker/Desktop/New Folder/tools/CoreTests/bin/Debug/net8.0/lang/en.json
+/Users/bunker/Desktop/New Folder/tools/CoreTests/bin/Debug/net8.0/lang/vi.json

@@ -1,5 +1,6 @@
 using System.Collections;
 using Athanor.Core;
+using PrimeTween;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -95,7 +96,11 @@ namespace Athanor.Game
         {
             if (Material == null) yield break;
             Sparks.I.Burst(centre + new Vector3(0, 8, 0), 14, glow.Times(2), 40, 0.5f, 30, -20);
-            yield return Anim.Over(0.18f, t => { icon.color = Color.white.Alpha(1 - t); icon.transform.localScale = Vector3.one * (1 + t * 0.4f); });
+            icon.color = Color.white;
+            yield return Sequence.Create()
+                .Group(Motion.Fade(icon, 1, 0, 0.18f))
+                .Group(Motion.Scale(icon.transform, 1, 1.4f, 0.18f))
+                .ToYieldInstruction();
             icon.transform.localScale = Vector3.one;
             Clear();
         }

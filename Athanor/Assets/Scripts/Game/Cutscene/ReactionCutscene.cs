@@ -168,7 +168,7 @@ namespace Athanor.Game
                 for (int i = 0; i < matCount; i++)
                 {
                     var c = matCol[i].Times(2);
-                    Sparks.I.Emit(SpiralPos(i, to / GatherEnd) + (Vector3)Random.insideUnitCircle * 5, Random.insideUnitCircle * 10, c, 0.45f, O + 9, 0, Random.value < 0.25f);
+                    Sparks.I.Trail(SpiralPos(i, to / GatherEnd) + (Vector3)Random.insideUnitCircle * 5, Random.insideUnitCircle * 10, c, 0.45f, O + 9, 0, Random.value < 0.25f);
                 }
             }
             else if (to > Burst)

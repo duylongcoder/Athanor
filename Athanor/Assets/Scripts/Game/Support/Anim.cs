@@ -4,7 +4,10 @@ using UnityEngine;
 
 namespace Athanor.Game
 {
-    /// <summary>Small coroutine tweens and easing curves.</summary>
+    /// <summary>
+    /// Beats (Wait), easing curves, and Over for per-frame scripts that are not a move or a fade (the spark trails in
+    /// GameFlow). Moves, fades and scales of objects go through Motion (PrimeTween, snapped to pixels).
+    /// </summary>
     public static class Anim
     {
         /// <summary>Calls step with 0..1 over the given time, ending on exactly 1.</summary>

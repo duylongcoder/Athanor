@@ -1,14 +1,26 @@
 {
     "name": "Athanor.Game.Tests",
     "rootNamespace": "Athanor.Tests",
-    "references": ["Athanor.Core", "Athanor.Game", "UnityEngine.TestRunner", "UnityEditor.TestRunner"],
-    "includePlatforms": ["Editor"],
+    "references": [
+        "Athanor.Core",
+        "Athanor.Game",
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner",
+        "PrimeTween.Runtime"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": true,
-    "precompiledReferences": ["nunit.framework.dll"],
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
     "autoReferenced": false,
-    "defineConstraints": ["UNITY_INCLUDE_TESTS"],
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
     "versionDefines": [],
     "noEngineReferences": false
 }

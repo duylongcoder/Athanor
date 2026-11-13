@@ -50,8 +50,22 @@ Deferred for now, not dropped: endless mode after depth 5, and multiple Ultimate
 Orient points 2 to 4 (goal numbers, balance outliers, rarity check) are not Phase 4 tasks, but the tutorial's
 guidance depends on the recipe and goal numbers, so they should be checked before the tutorial text is final.
 
-Out of Phase 4 scope unless the owner says otherwise: sound, mobile layout, currency, rarity-weighted draws (all parked in the
+Out of Phase 4 scope unless the owner says otherwise: mobile layout, currency, rarity-weighted draws (all parked in the
 Phase 3 spec).
+
+Added by the owner (2026-11-13, round 2): a Redraw button with its counter; a title Settings panel (music, SFX, vibration,
+language EN/VI); asset work (atlases, particles, PrimeTween motion); sound design with FMOD (postponed in round 3);
+environment light (AERO, replaced in round 3).
+Research notes, not yet plans: [phase-4-settings-localization.md](phase-4-settings-localization.md),
+[phase-4-packages.md](phase-4-packages.md), [phase-4-assets.md](phase-4-assets.md); cutscene storyboard in
+[phase-4-lore.md](phase-4-lore.md).
+
+Owner, round 3 (2026-11-13): FMOD and all sound work are **postponed** (licence questions); AERO is replaced by a sprite fog
+layer idea; one JSON file per language (en, vi), Vietnamese first for content text while item, catalyst and aspect names stay
+English; fonts SVN-Determination Sans and SVN-Coder's Crux to test; atlases by use (UI, Background, Item Icon, Catalyst Icon...)
+and one spritesheet per animation; PrimeTween kept under Assets/Plugins, Demo removed, no .gitignore changes; time-based trails;
+Dust and cutscene streams as loops; 2.5D depth layers to be tried as a mockup first. Size cleanup (unused font, skybox,
+splash) is out of scope.
 
 ## Act: next steps before any Phase 4 code
 

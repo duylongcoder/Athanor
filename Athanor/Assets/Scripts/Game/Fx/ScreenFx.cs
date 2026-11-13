@@ -25,8 +25,8 @@ namespace Athanor.Game
         public void Flash(float peak, float seconds) { flashPeak = peak; flashLeft = flashTime = seconds; }
         public void Shake(float pixels, float seconds) { shakeSize = pixels; shakeLeft = shakeTime = seconds; }
 
-        public IEnumerator FadeOut(float seconds) => Anim.Over(seconds, t => black.color = new Color(0, 0, 0, t));
-        public IEnumerator FadeIn(float seconds) => Anim.Over(seconds, t => black.color = new Color(0, 0, 0, 1 - t));
+        public IEnumerator FadeOut(float seconds) => Motion.Fade(black, 0, 1, seconds).ToYieldInstruction();
+        public IEnumerator FadeIn(float seconds) => Motion.Fade(black, 1, 0, seconds).ToYieldInstruction();
         public void SetBlack(float a) => black.color = new Color(0, 0, 0, a);
 
         void LateUpdate()

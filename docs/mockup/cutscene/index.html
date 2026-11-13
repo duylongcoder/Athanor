@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Opening Cutscene Mockup</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <h1>Athanor: the opening cutscene</h1>
+  <p>The storyboard in <code>docs/devlogs/phase-4-lore.md</code>, played at 640x360 with the game's art, fonts and timings. Click the
+    picture as in the game: a click finishes the line being written, the next ends the wait, a click during a scroll or a walk
+    jumps to its end. Change any choice on the right and the playback follows at once.</p>
+  <p class="note">Placeholder art, drawn in code for this mockup only: the stair (<code>cellar_stair</code>), the Keepers
+    (<code>keeper_walk</code>, <code>keeper_kneel</code>, <code>keeper_last</code>), <code>cellar_bottom</code>, <code>roots_grow</code>
+    and the "new blank book" option. Judge their placement, size and motion, not their drawing. Everything else is the game's own PNGs.
+    Lighting, embers and glows are approximations of the game's Light2D and bloom.</p>
+  <p id="err"></p>
+  <div class="layout">
+    <section id="stagebox">
+      <canvas id="screen" width="640" height="360"></canvas>
+      <div class="progress"><div id="bar"></div></div>
+      <div class="controls">
+        <span class="group" id="scenes"><span>Scene</span><button>1</button><button>2</button><button>3</button><button>4</button><button>5</button><button>6</button><button>7</button></span>
+        <span class="group"><button id="play">Pause</button><button id="restart">Restart</button></span>
+        <span class="group" id="speed"><span>Speed</span><button data-v="0.25">¼x</button><button data-v="0.5">½x</button><button data-v="1">1x</button><button data-v="2">2x</button></span>
+        <span class="group" id="zoom"><span>Zoom <span id="scale"></span></span><button data-z="0">Auto</button><button data-z="1">1x</button><button data-z="2">2x</button><button data-z="3">3x</button></span>
+      </div>
+      <div class="hud">
+        <b id="hud-scene"></b><span id="hud-time"></span>
+        <b>Sound idea</b><span id="hud-sound"></span>
+        <b>Music</b><span id="hud-music"></span>
+        <b>Art</b><span id="hud-art"></span>
+      </div>
+      <p style="margin-top:10px">Keys: space pauses, 1 to 7 jump to a scene, Esc skips (only when choice 8 is "Esc skips").</p>
+
+      <h2>pixelfx flipbooks</h2>
+      <p>The four effects, each looping at 2x. Turn them on in the scene with "Effects to try" on the right. They are
+        real exports: rendered from the effect code by pixelfx's own renderer (<code>pixelfx/tools/render.mjs --sheet</code>) into the PNG sprite
+        sheets in <code>fx/</code>. The "game palette" versions are the same code with a palette option (warm gold, or the cellar greys for the poof).</p>
+      <div id="gallery"></div>
+    </section>
+    <aside>
+      <h3>Owner choices (storyboard, 11)</h3>
+      <div id="choices"></div>
+      <h3 style="margin-top:14px">Effects to try (pixelfx)</h3>
+      <div id="fxchoices"></div>
+      <div class="row"><button id="copy">Copy my choices</button><button id="reset">Back to proposed</button><span id="copied"></span></div>
+      <textarea id="summary" readonly aria-label="Summary of the choices"></textarea>
+    </aside>
+  </div>
+</main>
+<script src="fxsheets.js"></script>
+<script src="art.js"></script>
+<script src="cutscene.js"></script>
+</body>
+</html>
