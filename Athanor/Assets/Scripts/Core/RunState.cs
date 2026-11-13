@@ -168,6 +168,23 @@ namespace Athanor.Core
             return true;
         }
 
+        /// <summary>
+        /// The tutorial: puts the starting materials in hand back and deals exactly these instead. Discoveries on the
+        /// rack stay. Only while playing, on an empty bench. False, and nothing changed, when an id is not an open
+        /// starting material or the satchel has too few copies of it.
+        /// </summary>
+        public bool Deal(IReadOnlyList<string> ids)
+        {
+            if (Phase != RunPhase.Playing || Bench.Count > 0 || ids == null) return false;
+            foreach (var g in ids.GroupBy(i => i))
+                if (!db.Has(g.Key) || !IsMain(g.Key) || satchel.Available(g.Key) + hand.Count(h => h == g.Key) < g.Count()) return false;
+            satchel.Discard(hand.Where(IsMain));
+            hand.RemoveAll(IsMain);
+            foreach (var id in ids) satchel.Take(id);
+            hand.AddRange(ids);
+            return true;
+        }
+
         /// <summary>What a reaction's score depends on here and now (also used by the scripted player to plan).</summary>
         public ScoreContext NewContext() => new ScoreContext { Depth = Depth, Rules = Rules, TripleFirst = tripleFirst };
 

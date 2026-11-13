@@ -28,5 +28,51 @@ namespace Athanor.Tests
             Assert.IsFalse(s.Take("b"));
             Assert.IsFalse(s.Take("zzz"));
         }
+
+        // ---- scripted hands -----------------------------------------------------------------------
+
+        static readonly string[] FirstHand = { "ember_coal", "deep_tear", "iron_ore", "moondust", "bone_ash" };
+
+        /// <summary>Lays each (id, tile) from the hand and ignites.</summary>
+        static IgniteOutcome LayAndIgnite(RunState run, params (string id, int tile)[] lay)
+        {
+            foreach (var (id, tile) in lay)
+                Assert.IsTrue(run.Place(run.Hand.ToList().IndexOf(id), tile), "place " + id + " on " + tile);
+            return run.Ignite();
+        }
+
+        [Test]
+        public void Deal_ReplacesTheStartingHand_AndKeepsTheSatchelWhole()
+        {
+            var run = new RunState(db, new Journal(), 7);
+            int size = run.SatchelSize;
+            Assert.IsTrue(run.Deal(FirstHand));
+            CollectionAssert.AreEquivalent(FirstHand, run.Hand);
+            Assert.AreEqual(size, run.SatchelSize);
+        }
+
+        [Test]
+        public void Deal_KeepsTheRack()
+        {
+            var run = new RunState(db, new Journal(), 7);
+            run.Deal(FirstHand);
+            LayAndIgnite(run, ("ember_coal", 4), ("deep_tear", 5));
+            Assert.IsTrue(run.Deal(FirstHand));
+            CollectionAssert.AreEquivalent(FirstHand.Concat(new[] { "steam_wisp" }), run.Hand);
+        }
+
+        [Test]
+        public void Deal_Refuses_TooManyCopies_NonStarters_LockedStarters_AndABusyBench()
+        {
+            var run = new RunState(db, new Journal(), 7);
+            var before = run.Hand.ToList();
+            Assert.IsFalse(run.Deal(new[] { "moondust", "moondust", "moondust" }));   // the satchel holds two
+            Assert.IsFalse(run.Deal(new[] { "steam_wisp" }));                         // a discovery
+            Assert.IsFalse(run.Deal(new[] { "salt_crystal" }));                       // locked: not in a fresh satchel
+            Assert.IsFalse(run.Deal(new[] { "no_such_thing" }));
+            CollectionAssert.AreEqual(before, run.Hand);
+            run.Place(0, 4);
+            Assert.IsFalse(run.Deal(new[] { "moondust" }));
+        }
     }
 }
