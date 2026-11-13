@@ -133,9 +133,9 @@ Depth 2 starts with 4 trials plus the 1 left from depth 1 (5). After 5.4 the pla
 
 ## Numbers
 
-All numbers above are worked out by hand from `IgniteResolver.Score` (base by tier 0/20/60/180/500/1500, x(items-1), x2 first
-this run, x chain step, then catalysts). Task 4 of the plan turns each into a Core test; if a test disagrees, the test is
-right and this file is corrected.
+Measured by `TutorialTests` (2026-11-13), all as the script states: trial 1 = 40; trial 2 = 0 with the hint
+"Glowmoss reacts with something Potion"; trial 3 = 40 + 240, hubs on tiles 4 then 5, depth 1 cleared at 320 with 1 trial
+left; broken chain = 40; depth 2 first trial: Bellows 80, Heart Tile 80, First Spark 120. The same for 25 seeds.
 
 ## What I did not decide
 
