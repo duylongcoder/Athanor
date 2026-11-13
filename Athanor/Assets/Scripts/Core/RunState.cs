@@ -190,6 +190,18 @@ namespace Athanor.Core
         /// <summary>What a reaction's score depends on here and now (also used by the scripted player to plan).</summary>
         public ScoreContext NewContext() => new ScoreContext { Depth = Depth, Rules = Rules, TripleFirst = tripleFirst };
 
+        /// <summary>
+        /// What this layout (9 tiles, null where empty) would do if ignited now. Nothing changes: the journal and the
+        /// recipes fired this run are copied. The tutorial uses it to show a broken chain beside the real one.
+        /// </summary>
+        public List<ReactionEvent> Preview(string[] tiles)
+        {
+            var bench = new Bench();
+            for (int t = 0; t < Bench.TileCount && t < tiles.Length; t++) bench.Tiles[t] = tiles[t];
+            var copy = Journal.FromData(journal.ToData());
+            return IgniteResolver.Resolve(bench, db, copy, new HashSet<string>(fired), catalysts, NewContext()).Events;
+        }
+
         public IgniteOutcome Ignite()
         {
             if (!CanIgnite) throw new InvalidOperationException("nothing on the bench can react");

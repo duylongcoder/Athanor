@@ -128,5 +128,39 @@ namespace Athanor.Tests
             Assert.AreEqual(RunPhase.DepthCleared, run.Phase);
             CollectionAssert.AreEqual(new[] { "bellows" }, run.CatalystOffer.Select(c => c.id).ToArray());
         }
+
+        // ---- preview and score parts --------------------------------------------------------------
+
+        static string[] Row(string left, string centre, string right)
+        {
+            var t = new string[Bench.TileCount]; t[3] = left; t[4] = centre; t[5] = right; return t;
+        }
+
+        [Test]
+        public void Preview_ScoresALayout_AndChangesNothing()
+        {
+            var journal = new Journal();
+            var run = new RunState(db, journal, 7);
+            var hand = run.Hand.ToList();
+            var events = run.Preview(Row("iron_ore", "ember_coal", "moondust")).Where(e => e.Result != null).ToList();
+            CollectionAssert.AreEqual(new[] { "sky_iron", "starmetal_ore" }, events.Select(e => e.Result).ToArray());
+            CollectionAssert.AreEqual(new long[] { 40, 240 }, events.Select(e => e.Potency).ToArray());
+            CollectionAssert.AreEqual(new[] { 4, 5 }, events.Select(e => e.Hub).ToArray());   // step 2's hub is Moondust
+            Assert.AreEqual(0, journal.KnownPairs.Count);
+            Assert.IsFalse(run.HasFired("ember_coal", "iron_ore"));
+            Assert.AreEqual(0, run.Potency);
+            CollectionAssert.AreEqual(hand, run.Hand);
+        }
+
+        [Test]
+        public void ScoreParts_SplitsAScore_IntoItsFactors()
+        {
+            var run = new RunState(db, new Journal(), 7);
+            var step2 = run.Preview(Row("iron_ore", "ember_coal", "moondust")).Where(e => e.Result != null).ElementAt(1);
+            var p = ScoreParts.Of(db, step2);
+            Assert.AreEqual(60, p.Base); Assert.AreEqual(1, p.Used); Assert.AreEqual(2, p.First); Assert.AreEqual(2, p.Step);
+            Assert.AreEqual(1.0, p.Bonus, 1e-9); Assert.AreEqual(240, p.Total);
+            Assert.IsNull(ScoreParts.Of(db, new ReactionEvent()));   // a fizzle has no score
+        }
     }
 }
