@@ -74,5 +74,59 @@ namespace Athanor.Tests
             run.Place(0, 4);
             Assert.IsFalse(run.Deal(new[] { "moondust" }));
         }
+
+        // ---- run options --------------------------------------------------------------------------
+
+        [Test]
+        public void QuietBefore_HoldsAspectsAndEventsBack_UntilThatDepth()
+        {
+            var opts = new RunOptions { Unlocks = Unlocks.Fresh(db), Aspects = true, Events = true, QuietBefore = 3 };
+            Assert.AreEqual(RunPhase.AspectOffer, new RunState(db, new Journal(), 7, 1, RunOptions.Full(Unlocks.Fresh(db))).Phase, "control");
+            for (int seed = 1; seed <= 40; seed++)
+            {
+                foreach (int depth in new[] { 1, 2 })
+                {
+                    var run = new RunState(db, new Journal(), seed, depth, opts);
+                    Assert.AreEqual(RunPhase.Playing, run.Phase, "seed " + seed + " depth " + depth);
+                    Assert.IsNull(run.CurrentEvent);
+                    Assert.AreEqual(0, run.Aspects.Count);
+                }
+            }
+            Assert.AreEqual(RunPhase.AspectOffer, new RunState(db, new Journal(), 7, 3, opts).Phase);
+        }
+
+        /// <summary>Two starters, one recipe, targets of 1, four catalysts: every reaction clears a depth.</summary>
+        static ContentDb MiniWithCatalysts() => new ContentDb(new ContentData
+        {
+            materials = new[] { TestContent.Mat("a", "Ore", 0, 6), TestContent.Mat("b", "Potion", 0, 4), TestContent.Mat("x", "Metal", 1, 5) },
+            recipes = new[] { TestContent.Rec(new[] { "a", "b" }, 0, "x") },
+            catalysts = new[] { TestContent.Cat(Effects.ChainPlus), TestContent.Cat(Effects.ExtraTrial), TestContent.Cat(Effects.ExtraRedraw), TestContent.Cat(Effects.PairBonus, "", 2) },
+            depthTargets = new[] { 1, 1, 1, 1 }, depthNames = new[] { "1", "2", "3", "4", "5" }, ultimate = "",
+        });
+
+        [Test]
+        public void FirstOffer_IsFixed_ForTheFirstOfferOnly()
+        {
+            var mini = MiniWithCatalysts();
+            var run = new RunState(mini, new Journal(), 7, 1, new RunOptions { FirstOffer = new[] { Effects.ChainPlus, Effects.ExtraTrial, "unknown" } });
+            LayAndIgnite(run, ("a", 4), ("b", 5));
+            Assert.AreEqual(RunPhase.DepthCleared, run.Phase);
+            CollectionAssert.AreEqual(new[] { Effects.ChainPlus, Effects.ExtraTrial }, run.CatalystOffer.Select(c => c.id).ToArray());
+            run.ChooseCatalyst(Effects.ChainPlus);
+            LayAndIgnite(run, ("a", 4), ("b", 5));
+            Assert.AreEqual(3, run.CatalystOffer.Count, "the second offer is drawn as usual");
+        }
+
+        [Test]
+        public void FirstOffer_LeavesOutLockedCatalysts()
+        {
+            var opts = new RunOptions { Unlocks = Unlocks.Fresh(db), FirstOffer = new[] { "crooked_mirror", "bellows" } };   // crooked_mirror is locked
+            var run = new RunState(db, new Journal(), 7, 1, opts);
+            run.Deal(FirstHand); LayAndIgnite(run, ("ember_coal", 4), ("deep_tear", 5));
+            run.Deal(new[] { "iron_ore", "ember_coal", "moondust", "bone_ash", "sunbloom" });
+            LayAndIgnite(run, ("iron_ore", 3), ("ember_coal", 4), ("moondust", 5));
+            Assert.AreEqual(RunPhase.DepthCleared, run.Phase);
+            CollectionAssert.AreEqual(new[] { "bellows" }, run.CatalystOffer.Select(c => c.id).ToArray());
+        }
     }
 }

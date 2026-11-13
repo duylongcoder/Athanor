@@ -203,6 +203,10 @@ namespace Athanor.Core
         public string ForceEvent;
         /// <summary>With ForceEvent: the one depth to meet it at (the other depths then have no event). 0: every depth it may come to.</summary>
         public int ForceEventAt;
+        /// <summary>The tutorial: no aspect offer and no event at a depth below this one. 0: none held back.</summary>
+        public int QuietBefore;
+        /// <summary>The tutorial: the catalysts the run's first offer shows, in this order. Locked, held or unknown ids are left out.</summary>
+        public string[] FirstOffer;
         public static readonly RunOptions Legacy = new RunOptions();
         public static RunOptions Full(Unlocks unlocks) => new RunOptions { Unlocks = unlocks, Aspects = true, Events = true };
     }

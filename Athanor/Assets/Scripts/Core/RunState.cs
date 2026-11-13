@@ -32,6 +32,7 @@ namespace Athanor.Core
         readonly List<CatalystData> catalysts = new List<CatalystData>();
         readonly HashSet<string> fired = new HashSet<string>();
         List<CatalystData> offer = new List<CatalystData>();
+        bool firstOfferMade;
         int carried;   // trials left unspent at the last depth; they are added to the next
 
         public RunState(ContentDb db, Journal journal, int seed, int startDepth = 1, RunOptions options = null)
@@ -104,8 +105,9 @@ namespace Athanor.Core
             carried = 0;
             RedrawsLeft = Math.Max(0, BaseRedraws + Sum(Effects.ExtraRedraw) - (HasAspect(AspectEffects.Greedy) ? 1 : 0));
             RebuildRules();
-            aspectPending = options.Aspects && (Depth == 1 || Depth == 3 || Depth == 5);
-            eventPending = options.Events;
+            bool quiet = Depth < options.QuietBefore;
+            aspectPending = options.Aspects && !quiet && (Depth == 1 || Depth == 3 || Depth == 5);
+            eventPending = options.Events && !quiet;
             Advance();
         }
 
@@ -257,6 +259,13 @@ namespace Athanor.Core
 
         void BuildOffer()
         {
+            if (options.FirstOffer != null && !firstOfferMade)
+            {
+                firstOfferMade = true;
+                offer = options.FirstOffer.Select(id => db.Catalysts.FirstOrDefault(c => c.id == id))
+                    .Where(c => c != null && IsOpen(c.id) && catalysts.All(o => o.id != c.id)).ToList();
+                if (offer.Count > 0) return;
+            }
             var pool = db.Catalysts.Where(c => IsOpen(c.id) && catalysts.All(o => o.id != c.id)).ToList();
             rng.Shuffle(pool);
             offer = pool.Take(OfferSize).ToList();
