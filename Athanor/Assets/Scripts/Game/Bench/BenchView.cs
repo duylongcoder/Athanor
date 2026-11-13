@@ -16,7 +16,7 @@ namespace Athanor.Game
         public bool InputEnabled { get => inputEnabled; set { inputEnabled = value; if (run != null) Hud.Show(run, db, journal, value); if (!value) DropEverything(); } }
         public HudView Hud { get; private set; }
 
-        const int RackX = 130, RackY = 256, RackFirst = 6, RackPitch = 31, RackSlots = 12, CardY = 290, HandX = 131, HandW = 380;
+        const int RackX = 130, RackY = 256, RackFirst = 6, RackPitch = 31, RackSlots = 12, CardY = 290, HandX = 128, HandW = 386;
 
         enum From { None, Hand, Tile }
         struct Pick { public From from; public int handIndex, tile; public string id; public bool Is => from != From.None; }
@@ -27,7 +27,8 @@ namespace Athanor.Game
         readonly TileView[] tiles = new TileView[Bench.TileCount];
         readonly List<CardView> cards = new List<CardView>();
         readonly Slot[] slots = new Slot[RackSlots];
-        LinkView links; Tooltip tip; Transform handRoot; SpriteRenderer ghost; Label rackFull;
+        LinkView links, joins; Tooltip tip; Transform handRoot; SpriteRenderer ghost; Label rackFull;
+        readonly string[] tileNote = new string[Bench.TileCount], tileNoteTitle = new string[Bench.TileCount];
         Pick press, selected; Vector2 pressAt; bool dragging;
         float hoverTime; string hoverKey;
 
@@ -42,6 +43,9 @@ namespace Athanor.Game
                 tiles[i].Build(i, layout.tiles[i], tileRoot);
             }
             links = Make.Root("Links", transform).gameObject.AddComponent<LinkView>();
+            // tiles an aspect has joined (a bridge, an open bench): a slow, steady line of their own colour
+            joins = Make.Root("Joins", transform).gameObject.AddComponent<LinkView>();
+            joins.color = new Color(1.6f, 1.25f, 0.45f); joins.speed = 0.08f; joins.arc = 3; joins.alpha = 0.7f;
             Hud = Make.Root("Hud", transform).gameObject.AddComponent<HudView>();
             Hud.Build(transform);
             Hud.IgniteClicked += () => { if (inputEnabled) IgniteRequested?.Invoke(); };
@@ -93,6 +97,7 @@ namespace Athanor.Game
                 var id = run.Bench.Tiles[i];
                 if (id == null) tiles[i].Clear(); else tiles[i].Show(db.Material(id), tiles[i].Material != id);
             }
+            ShowTileStates();
             foreach (var c in cards) Destroy(c.gameObject);
             cards.Clear();
             foreach (var s in slots) { s.handIndex = -1; s.id = null; s.icon.enabled = s.lit.enabled = false; }
@@ -115,7 +120,8 @@ namespace Athanor.Game
             {
                 var m = db.Material(run.Hand[starters[k]]);
                 var card = new GameObject("Card " + m.id).AddComponent<CardView>();
-                card.Build(m, handRoot, 110 + k * 5);
+                card.Build(m, handRoot, 110 + k * 4);
+                card.Fan(k < n - 1 ? pitch : CardView.W, 110 + n * 4);     // every card but the last has the next one over its right
                 card.handIndex = starters[k];
                 card.home = Px.Snap(Px.Mid(startX + k * pitch, CardY, CardView.W, CardView.H));
                 if (deal) card.DealIn(k * 0.05f); else card.transform.position = card.home;
@@ -126,7 +132,7 @@ namespace Athanor.Game
 
             // links show what the bench will do, hub to neighbours, for as far as the player already knows the recipes
             var pairs = new List<(Vector3, Vector3)>();
-            foreach (var step in ChainPlanner.Plan(run.Bench.Tiles, db, run.Diagonals, false).Steps)
+            foreach (var step in ChainPlanner.Plan(run.Bench.Tiles, db, run.Rules, false).Steps)
             {
                 if (!journal.IsKnown(step.Items)) break;
                 for (int k = 1; k < step.Tiles.Length; k++) pairs.Add((tiles[step.Hub].centre, tiles[step.Tiles[k]].centre));
@@ -137,6 +143,29 @@ namespace Athanor.Game
             if (selected.from == From.Tile) selected = default;
             Hud.Show(run, db, journal, inputEnabled);
             ShowSelection();
+        }
+
+        /// <summary>Markers for the tiles an aspect or this depth's event acts on, lids on the shut ones, lines between joined ones.</summary>
+        void ShowTileStates()
+        {
+            var marks = new Color?[tiles.Length];
+            for (int i = 0; i < tiles.Length; i++) tileNote[i] = tileNoteTitle[i] = null;
+            foreach (var a in run.Aspects)
+                foreach (int t in a.Tiles)
+                {
+                    marks[t] = Wording.AspectColor(a.Data.effect);
+                    tileNoteTitle[t] = a.Data.name; tileNote[t] = Wording.AspectRule(a);
+                }
+            foreach (int t in run.DepthHeated)
+            {
+                marks[t] = Wording.Warm;
+                tileNoteTitle[t] = "Warm Tile"; tileNote[t] = "A material here counts " + (run.Rules.RiBonus[t] > 0 ? run.Rules.RiBonus[t] : 3) + " more Reaction Index, this depth only.";
+            }
+            foreach (int t in run.DepthBlocked) { tileNoteTitle[t] = "Shut Tile"; tileNote[t] = "Nothing can be placed here until the next depth."; }
+            for (int i = 0; i < tiles.Length; i++) tiles[i].SetState(marks[i], run.Rules.Blocked[i]);
+            var joined = new List<(Vector3, Vector3)>();
+            foreach (var (a, b) in run.Rules.Links) joined.Add((tiles[a].centre + new Vector3(0, -8, 0), tiles[b].centre + new Vector3(0, -8, 0)));
+            joins.Set(joined);
         }
 
         /// <summary>Hides the hand-drawn links while reactions resolve, so the bench reads cleanly.</summary>
@@ -161,7 +190,7 @@ namespace Athanor.Game
             press = default; dragging = false; selected = default;
             if (ghost != null) ghost.enabled = false;
             if (tip != null) tip.Hide();
-            foreach (var t in tiles) if (t != null) t.Hovered = false;
+            foreach (var t in tiles) if (t != null) t.Hovered = t.Pinged = false;
             ShowSelection();
         }
 
@@ -186,7 +215,7 @@ namespace Athanor.Game
         int FreeTileAt(Vector2 w)
         {
             for (int i = tiles.Length - 1; i >= 0; i--)
-                if (tiles[i].Contains(w) && run.Bench.Tiles[i] == null) return i;
+                if (tiles[i].Contains(w) && run.Bench.Tiles[i] == null && !run.Rules.Blocked[i]) return i;
             return -1;
         }
 
@@ -235,7 +264,13 @@ namespace Athanor.Game
 
             if (changed) Refresh();
             bool carrying = dragging || selected.Is;
-            for (int i = 0; i < tiles.Length; i++) tiles[i].Hovered = carrying && i == freeTile;
+            // the aspect under the pointer in the HUD shows where it sits
+            int shown = Hud.HoveredAspect >= 0 && Hud.HoveredAspect < run.Aspects.Count ? Hud.HoveredAspect : -1;
+            for (int i = 0; i < tiles.Length; i++)
+            {
+                tiles[i].Hovered = carrying && i == freeTile;
+                tiles[i].Pinged = shown >= 0 && System.Array.IndexOf(run.Aspects[shown].Tiles, i) >= 0;
+            }
             foreach (var c in cards)
             {
                 c.Lifted = !dragging && over.from == From.Hand && over.handIndex == c.handIndex;
@@ -262,7 +297,12 @@ namespace Athanor.Game
             if (!dragging && Hud.HoveredCatalyst >= 0 && Hud.HoveredCatalyst < run.Catalysts.Count)
             {
                 var c = run.Catalysts[Hud.HoveredCatalyst];
-                key = "cat" + c.id; title = c.name; body = c.text; anchor = Px.At(503 + Hud.HoveredCatalyst * 35, 39);
+                key = "cat" + c.id; title = c.name + " (" + Rarities.Of(c.rarity) + ")"; body = c.text; anchor = Hud.CatalystAnchor(Hud.HoveredCatalyst);
+            }
+            else if (!dragging && Hud.HoveredAspect >= 0 && Hud.HoveredAspect < run.Aspects.Count)
+            {
+                var a = run.Aspects[Hud.HoveredAspect];
+                key = "asp" + a.Data.id; title = a.Data.name; body = Wording.AspectRule(a); anchor = Hud.AspectAnchor(Hud.HoveredAspect); clear = 16;
             }
             else if (!dragging && Hud.RedrawHovered)
             {
@@ -275,11 +315,22 @@ namespace Athanor.Game
                 int known = 0; foreach (var r in db.RecipesContaining(m.id)) if (journal.IsKnown(r.items)) known++;
                 key = over.from + over.id + over.tile + over.handIndex; title = m.name;
                 // on the bench: the heat a recipe with this tile as its hub would have (itself and all it touches)
-                string heat = over.from == From.Tile ? ", heat here " + ChainPlanner.Heat(run.Bench.Tiles, over.tile, db, run.Diagonals) : "";
+                string heat = over.from == From.Tile ? ", heat here " + ChainPlanner.Heat(run.Bench.Tiles, over.tile, db, run.Rules) : "";
                 // two lines: the panel has no room for a third
-                body = m.kind + ", tier " + m.tier + " - " + known + " known\nReaction Index " + m.reactivity + heat;
+                int ri = over.from == From.Tile ? run.Rules.Ri(db, over.tile, m.id) : m.reactivity;
+                body = m.kind + ", tier " + m.tier + " - " + known + " known\nReaction Index " + ri + heat;
                 if (over.from == From.Tile) { anchor = tiles[over.tile].centre + new Vector3(0, 12, 0); clear = 22; }
                 else { foreach (var s in slots) if (s.handIndex == over.handIndex) anchor = s.pos; clear = 16; }
+            }
+            else if (!dragging && !over.Is)
+            {
+                // an empty tile that an aspect or this depth's event acts on says what it does
+                for (int i = tiles.Length - 1; i >= 0; i--)
+                {
+                    if (tileNote[i] == null || !tiles[i].Contains(w)) continue;
+                    key = "tile" + i; title = tileNoteTitle[i]; body = tileNote[i]; anchor = tiles[i].centre; clear = 16;
+                    break;
+                }
             }
             if (key != hoverKey) { hoverKey = key; hoverTime = 0; tip.Hide(); }
             if (key == null) return;

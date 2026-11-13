@@ -547,6 +547,153 @@ const CATALYST_ICONS = {
   salvage: () => pouch(R.green, R.wood), cascade: starShard, descent: horn, tinkers_eye: eye,
   bottomless_satchel: () => pouch(R.violet, R.gold), philosophers_fire: everflame, last_breath: () => potionRound(R.pink),
 };
+// ---- Phase 3: aspects (a bench tile with a sign on it) and event types ----
+/** The slanted bench tile every aspect icon stands on. */
+function tileBase(D = R.stone) {
+  const s = spr();
+  s.poly([[12, 9], [22, 14], [12, 19], [2, 14]], (x, y) => D[x + y < 25 ? 4 : 3]);
+  s.poly([[2, 14], [12, 19], [12, 22], [2, 17]], D[2]); s.poly([[12, 19], [22, 14], [22, 17], [12, 22]], D[1]);
+  return s;
+}
+const flameOn = (s, cx, top, K = R.orange) => {
+  s.poly([[cx, top], [cx + 4, top + 7], [cx + 2, top + 10], [cx - 2, top + 10], [cx - 4, top + 7]], (x, y) => (Math.abs(x - cx) < 1.6 && y > top + 4 ? K[4] : y > top + 6 ? K[3] : K[2]));
+  s.px(cx, top + 8, '#ffffff');
+};
+function aspDoubled() { const s = tileBase(); for (const cx of [8, 16]) { s.poly([[cx, 3], [cx + 4, 7], [cx, 11], [cx - 4, 7]], (x, y) => R.gold[x + y < cx + 7 ? 4 : 3]); s.px(cx - 1, 6, '#ffffff'); } return s.outline(); }
+function aspAnchor() {
+  const s = tileBase(), M = R.iron;
+  s.rect(11, 3, 2, 13, (x) => M[x === 11 ? 4 : 2]); s.rect(8, 5, 8, 2, M[3]); s.ell(12, 3, 2.2, 2.2, M[4]); s.px(12, 3, HOLLOW);
+  for (let k = 0; k <= 10; k++) { const a = Math.PI * k / 10, x = 12 - Math.cos(a) * 6, y = 11 + Math.sin(a) * 5; s.px(x, y, M[3]); s.px(x, y + 1, M[1]); }
+  s.px(5, 10, M[4]); s.px(19, 10, M[4]);
+  return s.outline();
+}
+function aspHeated() { const s = tileBase(R.orange); flameOn(s, 12, 1); s.px(5, 13, R.gold[4]); s.px(18, 12, R.gold[4]); return s.outline(); }
+function aspEcho() {
+  const s = tileBase(), T = R.teal;
+  s.ell(12, 9, 9, 7, (nx, ny) => { const d = Math.hypot(nx, ny); return Math.abs(d - 0.9) < 0.11 ? T[3] : Math.abs(d - 0.55) < 0.12 ? T[4] : d < 0.2 ? '#ffffff' : null; });
+  return s.outline();
+}
+function aspAttuned() {
+  const s = tileBase(), V = R.violet;
+  s.poly([[12, 1], [17, 7], [12, 15], [7, 7]], (x, y) => V[x < 10 ? 4 : x < 13 ? 3 : y < 7 ? 2 : 1]); s.px(10, 5, '#ffffff'); s.px(10, 6, '#ffffff');
+  sparkle(s, 19, 4, V[4]);
+  return s.outline();
+}
+function aspSeed() {
+  const s = tileBase(), G = R.green;
+  s.rect(12, 6, 1, 9, G[2]); s.ell(9, 6, 3.4, 2.2, (nx) => G[nx < 0 ? 4 : 3]); s.ell(15.5, 4.5, 3.4, 2.2, (nx) => G[nx < 0 ? 3 : 2]); s.ell(12, 15, 2.6, 1.6, R.wood[2]);
+  return s.outline();
+}
+function aspFallow() {
+  const s = tileBase(R.wood);
+  for (const k of [-4, 0, 4]) s.line(6 + k / 2, 14 + k / 2, 14 + k / 2, 10 + k / 2 + 0.5, R.wood[0]);
+  s.px(17, 13, R.wood[4]); s.px(8, 15, R.wood[4]);
+  return s.outline();
+}
+function aspHeavy() {
+  const s = tileBase(), D = R.dark;
+  s.poly([[8, 6], [16, 6], [19, 15], [5, 15]], (x, y) => D[x < 9 ? 4 : y < 8 ? 3 : 2]); s.rect(10, 3, 4, 3, D[3]); s.px(11, 4, HOLLOW); s.px(12, 4, HOLLOW);
+  s.rect(9, 10, 6, 1, R.gold[3]);
+  return s.outline();
+}
+function aspCold() {
+  const s = tileBase(R.blue), W = '#ffffff';
+  s.line(12, 2, 12, 14, W); s.line(7, 5, 17, 11, R.blue[4]); s.line(17, 5, 7, 11, R.blue[4]);
+  for (const [x, y] of [[10, 3], [14, 3], [10, 13], [14, 13]]) s.px(x, y, R.blue[4]);
+  return s.outline();
+}
+function aspVolatile() {
+  const s = tileBase(R.red), pts = [];
+  for (let k = 0; k < 10; k++) { const a = -Math.PI / 2 + k * Math.PI / 5, r = k % 2 ? 3 : 8; pts.push([12 + Math.cos(a) * r, 9 + Math.sin(a) * r]); }
+  s.poly(pts, (x, y) => (Math.hypot(x - 12, y - 9) < 2.6 ? '#ffffff' : Math.hypot(x - 12, y - 9) < 5 ? R.gold[4] : R.orange[3]));
+  return s.outline();
+}
+function aspGreedy() {
+  const s = spr();
+  for (const [x, y, k] of [[4, 6, 1], [8, 4, 2], [12, 3, 3]]) { s.rect(x, y, 8, 13, (xx, yy) => (xx === x || yy === y ? R.bone[4] : R.bone[k])); s.rect(x + 2, y + 2, 4, 4, R.red[k === 3 ? 2 : 1]); }
+  s.ell(15, 19, 4, 2.4, R.gold[3]); s.px(14, 18, R.gold[4]);
+  return s.outline();
+}
+function aspBridge() {
+  const s = spr(), D = R.stone;
+  for (const cx of [5, 19]) { s.poly([[cx, 14], [cx + 4, 16], [cx, 18], [cx - 4, 16]], D[4]); s.poly([[cx - 4, 16], [cx, 18], [cx, 21], [cx - 4, 19]], D[2]); s.poly([[cx, 18], [cx + 4, 16], [cx + 4, 19], [cx, 21]], D[1]); }
+  for (let k = 0; k <= 16; k++) { const t = k / 16, x = 5 + t * 14, y = 14 - Math.sin(t * Math.PI) * 9; s.px(x, y, R.gold[4]); s.px(x, y + 1, R.gold[2]); }
+  sparkle(s, 12, 5, '#ffffff');
+  return s.outline();
+}
+function aspOpenBench() {
+  const s = tileBase();
+  s.line(4, 3, 12, 12, R.gold[4]); s.line(5, 3, 13, 12, R.gold[2]); s.poly([[12, 14], [8, 12], [13, 8]], R.gold[4]); s.ell(4, 3, 2, 2, R.gold[3]);
+  return s.outline();
+}
+function aspKiln() {
+  const s = spr(), B = R.wood;
+  s.ell(12, 13, 9, 9, (nx, ny, x, y) => (y > 20 ? null : B[-nx * 0.5 - ny * 0.6 > 0.4 ? 4 : -nx * 0.5 - ny * 0.6 > 0 ? 3 : 2])); s.rect(3, 20, 18, 2, B[1]);
+  s.ell(12, 16, 4, 4.5, (nx, ny, x, y) => (y > 20 ? null : ny > 0.2 ? R.orange[3] : R.red[0])); s.px(12, 18, R.gold[4]); s.px(11, 19, R.gold[4]); s.px(13, 19, R.orange[4]);
+  s.rect(11, 2, 2, 3, B[2]); s.px(12, 1, R.ash[3]);
+  return s.outline();
+}
+function aspCrossroads() {
+  const s = tileBase();
+  s.line(5, 3, 19, 13, R.teal[4]); s.line(19, 3, 5, 13, R.teal[4]); s.line(5, 4, 19, 14, R.teal[2]); s.line(19, 4, 5, 14, R.teal[2]);
+  for (const [x, y] of [[5, 3], [19, 3], [5, 13], [19, 13]]) s.ell(x, y, 1.6, 1.6, R.teal[3]);
+  return s.outline();
+}
+function aspPivot() {
+  const s = tileBase(), P = R.pink;
+  for (let k = 0; k <= 14; k++) { const a = -Math.PI * 0.9 + k * Math.PI * 1.5 / 14, x = 12 + Math.cos(a) * 6, y = 8 + Math.sin(a) * 5; s.px(x, y, P[3]); s.px(x, y + 1, P[1]); }
+  s.poly([[17, 9], [21, 6], [20, 11]], P[4]); s.ell(12, 8, 1.8, 1.8, R.gold[4]);
+  return s.outline();
+}
+/** Aspect id => builder. */
+const ASPECT_ICONS = {
+  doubled_tile: aspDoubled, anchor_tile: aspAnchor, heated_tile: aspHeated, echo_tile: aspEcho, attuned_tile: aspAttuned, seed_tile: aspSeed,
+  fallow_tile: aspFallow, heavy_tile: aspHeavy, cold_tile: aspCold, volatile_tile: aspVolatile, greedy_bench: aspGreedy, bridge: aspBridge,
+  open_bench: aspOpenBench, kiln_tile: aspKiln, crossroads: aspCrossroads, pivot_tile: aspPivot,
+};
+function evtChoice() {
+  const s = spr(), W = R.wood;
+  s.rect(11, 8, 2, 14, (x) => W[x === 11 ? 3 : 1]);
+  s.poly([[3, 3], [13, 3], [13, 8], [3, 8], [1, 5.5]], (x, y) => W[y < 4 ? 4 : 3]); s.poly([[11, 10], [21, 10], [23, 12.5], [21, 15], [11, 15]], (x, y) => W[y < 11 ? 3 : 2]);
+  s.rect(5, 5, 5, 1, W[0]); s.rect(14, 12, 5, 1, W[0]);
+  return s.outline();
+}
+function evtGamble() {
+  const s = spr(), B = R.bone;
+  s.poly([[12, 3], [21, 8], [12, 13], [3, 8]], B[4]); s.poly([[3, 8], [12, 13], [12, 22], [3, 17]], B[3]); s.poly([[12, 13], [21, 8], [21, 17], [12, 22]], B[2]);
+  for (const [x, y] of [[12, 8], [7, 13], [6, 17], [8, 15], [16, 13], [17, 17]]) { s.px(x, y, INK); s.px(x + 1, y, INK); }
+  return s.outline();
+}
+function evtShrine() {
+  const s = spr(), D = R.stone;
+  s.rect(4, 19, 16, 3, (x, y) => D[y === 19 ? 3 : 1]); s.rect(6, 16, 12, 3, (x, y) => D[y === 16 ? 4 : 2]);
+  s.rect(7, 7, 3, 9, (x) => D[x === 7 ? 4 : 2]); s.rect(14, 7, 3, 9, (x) => D[x === 14 ? 3 : 1]); s.poly([[4, 7], [12, 2], [20, 7]], (x, y) => D[x < 12 ? 4 : 2]);
+  s.ell(12, 12, 1.8, 2.4, R.violet[3]); s.px(12, 11, '#ffffff'); sparkle(s, 12, 5, R.violet[4]);
+  return s.outline();
+}
+function evtHazard() {
+  const s = spr();
+  s.poly([[12, 2], [22, 20], [2, 20]], (x, y) => (y > 17 ? R.orange[1] : x + y * 0.4 < 17 ? R.gold[4] : R.gold[3]));
+  s.rect(11, 8, 2, 7, INK); s.rect(11, 16, 2, 2, INK);
+  return s.outline();
+}
+function evtBoon() {
+  const s = spr(), T = R.teal, pts = [];
+  for (let k = 0; k < 10; k++) { const a = -Math.PI / 2 + k * Math.PI / 5, r = k % 2 ? 4 : 10; pts.push([12 + Math.cos(a) * r, 12.5 + Math.sin(a) * r]); }
+  s.poly(pts, (x, y) => (Math.hypot(x - 12, y - 12.5) < 3 ? '#ffffff' : x + y < 24 ? T[4] : T[3]));
+  s.px(20, 4, T[4]); s.px(3, 6, T[3]);
+  return s.outline();
+}
+function evtLore() {
+  const s = spr(), B = R.bone;
+  s.rect(5, 4, 14, 16, (x, y) => B[x < 7 ? 4 : y > 17 ? 2 : 3]); s.ell(12, 4, 7.5, 2, (nx, ny) => B[ny < 0 ? 4 : 2]); s.ell(12, 20, 7.5, 2, (nx, ny) => B[ny < 0 ? 3 : 1]);
+  for (const y of [8, 11, 14]) s.rect(8, y, y === 14 ? 5 : 8, 1, R.wood[1]);
+  return s.outline();
+}
+/** Event type => builder. */
+const EVENT_ICONS = {
+  Choice: evtChoice, Gamble: evtGamble, Find: () => pouch(R.wood, R.gold), Shrine: evtShrine, Hazard: evtHazard, Boon: evtBoon, Lore: evtLore,
+};
 const KIND_COL = { Ore: '#c08a5c', Metal: '#a8b8c4', Crystal: '#c486f4', Powder: '#e4d2aa', Potion: '#6ee6c8', Plant: '#8ad04a', Beast: '#ee6a3c' };
 
-export { ICONS, CATALYST_ICONS, KIND_COL, potionRound, potionTall, potionFlask, crystals, horn, eye, sparkle, spr, lobe };
+export { ICONS, CATALYST_ICONS, ASPECT_ICONS, EVENT_ICONS, KIND_COL, potionRound, potionTall, potionFlask, crystals, horn, eye, sparkle, spr, lobe };

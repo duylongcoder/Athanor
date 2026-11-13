@@ -62,6 +62,9 @@ public static class SceneBuilder
         return "scene built: " + lib.sprites.Length + " sprites, " + lib.sheets.Length + " effect sheets";
     }
 
+    /// <summary>The same, from the command line: unity run Athanor -- -executeMethod SceneBuilder.BuildBatch -quit</summary>
+    public static void BuildBatch() => Debug.Log(Build());
+
     /// <summary>Re-collects sprites and effect sheets into the art library (after new art or effects are imported).</summary>
     public static ArtLibrary RefreshLibrary() { var lib = BuildLibrary(); AssetDatabase.SaveAssets(); return lib; }
 

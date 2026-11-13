@@ -42,6 +42,8 @@ namespace Athanor.Core
         /// <summary>This depth only: how much every material's Reaction Index is shifted, and whether the next first reaction triples.</summary>
         public int RiShift => riShift;
         public bool TripleFirst => tripleFirst;
+        /// <summary>This depth only: how many cards more or fewer each hand holds.</summary>
+        public int HandDelta => handDelta;
 
         bool HasAspect(string effect) => aspects.Any(a => a.Data.effect == effect);
         bool HasAspectOn(string effect, int tile) => aspects.Any(a => a.Data.effect == effect && a.Tiles.Length > 0 && a.Tiles[0] == tile);
@@ -170,7 +172,15 @@ namespace Athanor.Core
             {
                 if (Depth < e.minDepth || Depth > e.maxDepth) continue;
                 // worth showing only when there is something to do besides walking on (or it is all there is)
+                if (!e.options.Any(CanTake)) continue;
                 if (e.options.Length == 1 || e.options.Any(o => !IsWalkOn(o) && CanTake(o))) pool.Add(e);
+            }
+            if (options.ForceEvent != null)
+            {
+                // a balance check asked for this event: it comes wherever it may, and nothing else does
+                if (options.ForceEventAt == 0 || options.ForceEventAt == Depth) CurrentEvent = pool.FirstOrDefault(e => e.id == options.ForceEvent);
+                if (CurrentEvent != null) eventOptions = CurrentEvent.options.Where(CanTake).ToList();
+                return;
             }
             int total = Math.Max(0, db.NoEventWeight) + pool.Sum(e => e.weight);
             if (total <= 0) return;
@@ -202,9 +212,21 @@ namespace Athanor.Core
             result.Text = outcome.text;
             foreach (var g in outcome.gain ?? new EffectData[0]) Apply(g, result);
             CurrentEvent = null; eventOptions = new List<EventOption>();
+            TrimHand();
             RebuildRules();
             Advance();
             return result;
+        }
+
+        /// <summary>The hand was dealt before the event: when the event made it smaller, the last cards drawn go back.</summary>
+        void TrimHand()
+        {
+            for (int extra = hand.Count(IsMain) - HandSize; extra > 0; extra--)
+            {
+                int i = hand.FindLastIndex(IsMain);
+                satchel.Discard(new[] { hand[i] });
+                hand.RemoveAt(i);
+            }
         }
 
         /// <summary>Discoveries that can be made from the starting materials this run has.</summary>
@@ -279,7 +301,7 @@ namespace Athanor.Core
                     for (int k = 0; k < Math.Max(1, n); k++)
                     {
                         var cards = hand.Where(IsMain).ToList();
-                        if (cards.Count == 0 || satchel.Total <= HandSize + 2) break;   // never thin the satchel below a hand
+                        if (cards.Count == 0 || satchel.Total <= MinSatchel) break;   // never thin the satchel below a hand
                         string id = cards[eventRng.Range(cards.Count)];
                         hand.Remove(id); satchel.Lose(id);
                         result.Notes.Add("Lost a " + db.Material(id).name + " for this run");
@@ -312,7 +334,11 @@ namespace Athanor.Core
                 case Ops.BlockTile:
                 {
                     if (CountBlocked() >= 2) break;
-                    var free = Enumerable.Range(0, Bench.TileCount).Where(t => !TileTaken(t)).ToList();
+                    // Never the centre: it is the one tile with four neighbours, and the deep recipes cannot be laid without it.
+                    // A corner is twice as likely as an edge: an edge shut takes a neighbour from the centre, and at depth 4
+                    // that alone cost the informed player a third of its wins (EventReport).
+                    var free = Enumerable.Range(0, Bench.TileCount).Where(t => t != Bench.Centre && !TileTaken(t))
+                        .SelectMany(t => Enumerable.Repeat(t, t % 2 == 0 ? 2 : 1)).ToList();
                     if (free.Count == 0) break;
                     int t = free[eventRng.Range(free.Count)];
                     depthBlocked.Add(t);

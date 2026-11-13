@@ -199,6 +199,10 @@ namespace Athanor.Core
     {
         public Unlocks Unlocks;
         public bool Aspects, Events;
+        /// <summary>Balance checks: the id of an event to meet at every depth it may come to, in place of the draw.</summary>
+        public string ForceEvent;
+        /// <summary>With ForceEvent: the one depth to meet it at (the other depths then have no event). 0: every depth it may come to.</summary>
+        public int ForceEventAt;
         public static readonly RunOptions Legacy = new RunOptions();
         public static RunOptions Full(Unlocks unlocks) => new RunOptions { Unlocks = unlocks, Aspects = true, Events = true };
     }

@@ -443,7 +443,10 @@ namespace Athanor.Tests
                 if (run.Phase == RunPhase.Won) wins++;
                 depths.Add(run.Phase == RunPhase.Won ? "W" + run.TrialsLeft : run.Depth + ":" + run.Potency);
             }
-            Assert.That(wins, Is.GreaterThanOrEqualTo(32), "wins " + wins + "/40: " + string.Join(" ", depths));
+            // Phase 3: a run with no profile draws its catalysts from the nine a fresh profile has open, not the ten of Phase 2
+            // (the stronger ones are now won from goals), and the owner's target for a fresh profile is 60 to 70%.
+            // Phase3Tests holds the full profile to its 80%.
+            Assert.That(wins, Is.InRange(24, 31), "wins " + wins + "/40: " + string.Join(" ", depths));
         }
 
         /// <summary>The balance pass left five-item combos as a rare peak, not the standard way to win.</summary>
@@ -503,7 +506,8 @@ namespace Athanor.Tests
                 randomDepth[run.Depth]++;
             }
             // the same player on the same content with no catalysts on offer: no depth may depend on one
-            var bare = TestContent.Load(); bare.catalysts = new CatalystData[0];
+            // (goals go too: the content will not load with a goal that has no locked catalyst left to pay out)
+            var bare = TestContent.Load(); bare.catalysts = new CatalystData[0]; bare.goals = new GoalData[0];
             var bareDb = new ContentDb(bare);
             int bareWins = 0; var bareLostAt = new int[RunState.FinalDepth + 1];
             for (int seed = 1; seed <= Seeds; seed++)
@@ -515,7 +519,7 @@ namespace Athanor.Tests
             var without = new List<string>();
             foreach (var c in db.Catalysts)
             {
-                var less = TestContent.Load(); less.catalysts = less.catalysts.Where(x => x.id != c.id).ToArray();
+                var less = TestContent.Load(); less.catalysts = less.catalysts.Where(x => x.id != c.id).ToArray(); less.goals = new GoalData[0];
                 var lessDb = new ContentDb(less);
                 int n = 0;
                 for (int seed = 1; seed <= Seeds; seed++) if (Autoplay(lessDb, seed).Phase == RunPhase.Won) n++;

@@ -1,7 +1,9 @@
 // Drives the web build in headless Chrome over the DevTools protocol (no dependencies; Node 22+).
 //   node webtest.mjs <url> <outDir>
-// A: title and bench at 1280x720 and 1000x700, a first trial with real mouse events, journal, tiny window.
-// B: reload, the journal is still there.  C: damage the saved journal, reload, the game starts with an empty one.
+// A: title and bench at 1280x720 and 1000x700, the aspect offer and the depth's event, a first trial with real mouse
+//    events, journal, tiny window.
+// B: reload, the journal and the goals are still there; Reset progress asks, then erases the goals and keeps the journal.
+// C: damage the saved journal and the saved profile, reload, the game starts with an empty journal and a fresh profile.
 import { spawn } from 'node:child_process';
 import { mkdirSync, writeFileSync, mkdtempSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -63,6 +65,17 @@ try {
     await sleep(4000);                               // the title fades in and its lettering settles
   };
   const errorsSoFar = () => logs.filter((l) => /\[(error|exception|log:error)\]/.test(l)).length;
+  // The start of a depth: take the middle aspect card, then the event's first option and Continue. Both of the event's
+  // buttons are always in the same place; when no event was drawn those two clicks land on the bench and do nothing.
+  const startOfDepth = async (tag) => {
+    await sleep(2500);
+    await shot(tag + '_aspects');
+    await click(320, 200, 1800);                     // the middle card
+    await shot(tag + '_event');
+    await click(320, 165, 1000);                     // the event's first option
+    await shot(tag + '_event_result');
+    await click(320, 260, 1500);                     // Continue
+  };
 
   // ---- A: first visit ----
   await size(W, H);
@@ -72,10 +85,10 @@ try {
   await size(1000, 700); console.log('canvas 1000x700:', await canvas());
   await shot('a02_title_1000x700');
   await size(1280, 720);
-  await click(320, 239, 1500);                       // Begin
+  await click(320, 227, 1500);                       // Begin
   await shot('a03_intro');
   for (let i = 0; i < 8; i++) await click(60, 180, 450);   // through the intro
-  await sleep(2500);
+  await startOfDepth('a04');
   await shot('a04_bench_1280');
   await click(169, 325); await click(251, 157);      // five cards: the first goes top-left
   await click(207, 325); await click(320, 157);      // four left: the first goes top-middle
@@ -102,9 +115,16 @@ try {
   await sleep(1500);
   await load('reload');
   await shot('b01_title_again');
-  await click(320, 271, 900);                        // Journal, from the title
+  await click(320, 257, 900);                        // Journal, from the title
   await shot('b02_journal_kept');
   await click(8, 200, 700);
+  await click(320, 287, 900);                        // Goals, from the title
+  await shot('b03_goals');
+  await click(8, 200, 700);
+  await click(320, 326, 700);                        // Reset progress: it asks first
+  await shot('b04_reset_asks');
+  await click(392, 238, 900);                        // Erase
+  await shot('b05_after_reset');
   console.log('errors after B:', errorsSoFar());
 
   // ---- C: a damaged save ----
@@ -121,12 +141,17 @@ try {
           const bytes = v && v.contents;
           out.keys.push(name + ' / ' + storeName + ' / ' + key + ' (' + (bytes ? bytes.length : 'no') + ' bytes)');
           if (!bytes || !String(key).endsWith('PlayerPrefs')) continue;
-          const text = Array.from(bytes, (b) => String.fromCharCode(b)).join(''), at = text.indexOf('{"known"');
-          out.around = at < 0 ? text.slice(0, 200) : text.slice(Math.max(0, at - 30), at + 90);
-          if (at < 0) continue;
-          bytes[at] = 60;                             // '{' becomes '<': no longer JSON
+          const text = Array.from(bytes, (b) => String.fromCharCode(b)).join('');
+          // the journal starts {"known", the profile {"version": the '{' of each becomes '<', which is no longer JSON
+          let hit = false;
+          for (const marker of ['{"known"', '{"version"']) {
+            const at = text.indexOf(marker);
+            if (at < 0) continue;
+            (out.around ??= []).push(text.slice(Math.max(0, at - 30), at + 70));
+            bytes[at] = 60; hit = true; out.changed++;
+          }
+          if (!hit) { out.around = [text.slice(0, 200)]; continue; }
           await new Promise((res, rej) => { const r = store.put(v, key); r.onsuccess = res; r.onerror = () => rej(r.error); });
-          out.changed++;
         }
         await new Promise((res) => { tx.oncomplete = res; if (tx.commit) tx.commit(); });
       }
@@ -137,11 +162,15 @@ try {
   console.log('damage:', JSON.stringify(damage));
   await load('reload');
   await shot('c01_title_after_damage');
-  await click(320, 271, 900);
+  await click(320, 257, 900);
   await shot('c02_journal_after_damage');
   await click(8, 200, 700);
-  await click(320, 239, 3500);                       // Begin: the intro has been seen, so straight to the bench
-  await shot('c03_bench_after_damage');
+  await click(320, 287, 900);
+  await shot('c03_goals_after_damage');
+  await click(8, 200, 700);
+  await click(320, 227, 1000);                       // Begin: the intro has been seen, so straight to the first depth
+  await startOfDepth('c04');
+  await shot('c05_bench_after_damage');
   console.log('errors after C:', errorsSoFar());
 } catch (e) {
   console.log('TEST ERROR', e.message);

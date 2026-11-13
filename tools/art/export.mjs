@@ -5,9 +5,9 @@ import { writeFileSync, mkdirSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Canvas } from './painter.mjs';
-import { ICONS, CATALYST_ICONS } from './icons.mjs';
+import { ICONS, CATALYST_ICONS, ASPECT_ICONS, EVENT_ICONS } from './icons.mjs';
 import * as S from './scene.mjs';
-import { uiSprites, CARD, RACK, JOURNAL } from './ui.mjs';
+import { uiSprites, CARD, RACK, JOURNAL, GOALS, OPTION } from './ui.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url)), assets = join(here, '../../Athanor/Assets');
 const content = JSON.parse(readFileSync(join(assets, 'Resources/content.json'), 'utf8'));
@@ -18,10 +18,14 @@ function save(rel, cv) { const f = join(assets, 'Art', rel); mkdirSync(dirname(f
 function saveCropped(rel, cv) { const b = cv.bounds(); placed[rel.split('/').pop().replace('.png', '')] = b; save(rel, cv.crop(b.x, b.y, b.w, b.h)); }
 
 // icons
-const missing = content.materials.filter((m) => !ICONS[m.id]).map((m) => m.id).concat(content.catalysts.filter((c) => !CATALYST_ICONS[c.id]).map((c) => c.id));
+const eventTypes = [...new Set((content.events ?? []).map((e) => e.type))];
+const missing = content.materials.filter((m) => !ICONS[m.id]).map((m) => m.id).concat(content.catalysts.filter((c) => !CATALYST_ICONS[c.id]).map((c) => c.id))
+  .concat((content.aspects ?? []).filter((a) => !ASPECT_ICONS[a.id]).map((a) => 'aspect ' + a.id)).concat(eventTypes.filter((t) => !EVENT_ICONS[t]).map((t) => 'event type ' + t));
 if (missing.length) { console.error('no icon for: ' + missing.join(', ')); process.exit(1); }
 for (const m of content.materials) save(`Icons/${m.id}.png`, ICONS[m.id]().canvas());
 for (const c of content.catalysts) save(`Icons/cat_${c.id}.png`, CATALYST_ICONS[c.id]().canvas());
+for (const a of content.aspects ?? []) save(`Icons/asp_${a.id}.png`, ASPECT_ICONS[a.id]().canvas());
+for (const t of eventTypes) save(`Icons/evt_${t.toLowerCase()}.png`, EVENT_ICONS[t]().canvas());
 
 // scenery
 save('Background/workshop_wall.png', S.benchWall());
@@ -61,12 +65,13 @@ const layout = {
   w: S.W, h: S.H, tiles,
   placed: Object.entries(placed).map(([name, b]) => ({ name, ...b })),
   candles: S.CANDLES.map(([x, y]) => ({ x, y })), cauldron: S.CAULDRON,
-  card: CARD, rack: RACK, journal: JOURNAL,
+  card: CARD, rack: RACK, journal: JOURNAL, goals: GOALS, option: OPTION,
 };
 writeFileSync(join(assets, 'Resources/layout.json'), JSON.stringify(layout, null, 1));
 
 // contact sheet of every icon at 4x for a quick look
-const all = [...content.materials.map((m) => ICONS[m.id]), ...content.catalysts.map((c) => CATALYST_ICONS[c.id])], cols = 10, k = 4, cell = 24 * k + 8;
+const all = [...content.materials.map((m) => ICONS[m.id]), ...content.catalysts.map((c) => CATALYST_ICONS[c.id]),
+  ...(content.aspects ?? []).map((a) => ASPECT_ICONS[a.id]), ...eventTypes.map((t) => EVENT_ICONS[t])], cols = 10, k = 4, cell = 24 * k + 8;
 const sheet = new Canvas(cols * cell, Math.ceil(all.length / cols) * cell); sheet.fillStyle = '#1a1220'; sheet.fillRect(0, 0, sheet.w, sheet.h);
 all.forEach((mk, i) => sheet.drawImage(mk().canvas(), (i % cols) * cell + 4, Math.floor(i / cols) * cell + 4, 24 * k, 24 * k));
 mkdirSync(join(here, 'out'), { recursive: true });
@@ -83,4 +88,7 @@ writeFileSync(join(here, 'out/cutscene.png'), cut.png());
 const menus = new Canvas(640, 360); menus.fillStyle = '#1a1220'; menus.fillRect(0, 0, 640, 360);
 menus.drawImage(ui.journal, 20, 15);
 writeFileSync(join(here, 'out/journal.png'), menus.png());
+const goalsPage = new Canvas(640, 360); goalsPage.fillStyle = '#1a1220'; goalsPage.fillRect(0, 0, 640, 360);
+goalsPage.drawImage(ui.goals, 20, 15); goalsPage.drawImage(ui.option_up, 176, 200); goalsPage.drawImage(ui.toast, 170, 4);
+writeFileSync(join(here, 'out/goals.png'), goalsPage.png());
 console.log(`${count} sprites written to Athanor/Assets/Art, layout.json to Resources`);

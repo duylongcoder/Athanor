@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using Athanor.Core;
 using UnityEngine;
@@ -7,7 +8,7 @@ using UnityEngine.Rendering.Universal;
 
 namespace Athanor.Game
 {
-    public enum FlowState { Boot, Title, Intro, Bench, Resolving, Journal, Descent, CatalystChoice, Ending, RunOver }
+    public enum FlowState { Boot, Title, Intro, Bench, Resolving, Journal, Descent, CatalystChoice, Ending, RunOver, AspectChoice, Event, Goals }
 
     /// <summary>Owns the run and moves the game between its screens.</summary>
     public sealed class GameFlow : MonoBehaviour
@@ -19,6 +20,8 @@ namespace Athanor.Game
         public static GameFlow I { get; private set; }
         public ContentDb Db { get; private set; }
         public Journal Journal { get; private set; }
+        /// <summary>What the player keeps between runs besides the journal: stats, goals done, items won.</summary>
+        public Profile Profile { get; private set; }
         public RunState Run { get; private set; }
         public BenchView Bench { get; private set; }
         public FlowState State { get; private set; }
@@ -35,6 +38,10 @@ namespace Athanor.Game
         static readonly string[] Accent = { "#7cc0f8", "#6ee6c8", "#c486f4", "#ee6a3c", "#fff6b8" };
 
         ReactionCutscene reaction; SimpleCutscene story; TitleView title; JournalView journalView; CatalystChoiceView choice;
+        EventView eventView; GoalsView goalsView; GoalToast toast;
+        readonly List<GoalReward> goalsThisRun = new List<GoalReward>();
+        Unlocks unlocks;
+        FlowState goalsFrom;
         Light2D ambient, moon;
         AutoPlayer autoPlayer;
         FlowState journalFrom;
@@ -55,6 +62,8 @@ namespace Athanor.Game
             Db = new ContentDb(JsonUtility.FromJson<ContentData>(Resources.Load<TextAsset>("content").text));
             var layout = JsonUtility.FromJson<LayoutData>(Resources.Load<TextAsset>("layout").text);
             Journal = Save.LoadJournal();
+            Profile = Save.LoadProfile(Db);
+            unlocks = Unlocks.For(Db, Profile);
             autoPlayer = new AutoPlayer(Db);
             var light = GameObject.Find("Ambient Light"); if (light != null) ambient = light.GetComponent<Light2D>();
             var beam = workshop.transform.Find("Moonbeam"); if (beam != null) moon = beam.GetComponent<Light2D>();
@@ -70,10 +79,17 @@ namespace Athanor.Game
             story = gameObject.AddComponent<SimpleCutscene>(); story.Build(cutsceneRoom, workshop, Bench.gameObject);
             title = Make.Root("Title").gameObject.AddComponent<TitleView>(); title.Build();
             title.JournalClicked += OpenJournal;
+            title.GoalsClicked += OpenGoals;
+            title.ResetConfirmed += ResetProgress;
             journalView = Make.Root("Journal").gameObject.AddComponent<JournalView>(); journalView.Build(Db);
             journalView.Closed += CloseJournal;
             choice = Make.Root("Catalyst Choice").gameObject.AddComponent<CatalystChoiceView>(); choice.Build();
             RunOver = Make.Root("Run Over").gameObject.AddComponent<RunOverView>(); RunOver.Build();
+            RunOver.GoalsClicked += OpenGoals;
+            eventView = Make.Root("Event").gameObject.AddComponent<EventView>(); eventView.Build();
+            goalsView = Make.Root("Goals").gameObject.AddComponent<GoalsView>(); goalsView.Build(Db);
+            goalsView.Closed += CloseGoals;
+            toast = Make.Root("Goal Toast").gameObject.AddComponent<GoalToast>(); toast.Build();
             Bench.gameObject.SetActive(false);
             ScreenFx.I.SetBlack(1);
         }
@@ -102,7 +118,9 @@ namespace Athanor.Game
             State = FlowState.Title;
             Bench.gameObject.SetActive(false);
             Mood(1);
-            title.Open(Journal.KnownPairs.Count, Db.Recipes.Count);
+            title.Open(Journal.KnownPairs.Count, Db.Recipes.Count, Profile.Completed.Count, Db.Goals.Count);
+            // a journal kept from before there were goals pays out the journal goals at once
+            CheckGoals(false);
             yield return ScreenFx.I.FadeIn(0.7f);
             while (!title.BeginPressed || State != FlowState.Title)
             {
@@ -118,15 +136,21 @@ namespace Athanor.Game
         IEnumerator PlayRun()
         {
             runs++;
-            Run = new RunState(Db, Journal, System.Environment.TickCount * 31 + runs);
+            // what the profile has unlocked is fixed when the run starts: an item won during it joins the next one
+            unlocks = Unlocks.For(Db, Profile);
+            Run = new RunState(Db, Journal, System.Environment.TickCount * 31 + runs, 1, RunOptions.Full(unlocks));
             runEnded = false; shownPotency = 0;
+            goalsThisRun.Clear();
+            Profile.RunStarted(); Profile.DepthBegan(Run.Depth);
+            CheckGoals();
             Mood(1);
             Bench.gameObject.SetActive(true);
             Bench.Bind(Run, Journal);
             Bench.Refresh(true);
-            State = FlowState.Bench;
+            Bench.InputEnabled = false;
+            State = FlowState.Descent;
             yield return ScreenFx.I.FadeIn(0.5f);
-            Bench.InputEnabled = true;
+            yield return StartOfDepth();
             while (!runEnded) yield return null;
             yield return ScreenFx.I.FadeOut(0.35f);
             story.Close();
@@ -134,12 +158,82 @@ namespace Athanor.Game
             Bench.InputEnabled = false;
         }
 
+        /// <summary>
+        /// The start of a depth, after the descent (or the title, for depth 1): the aspect offer where there is one,
+        /// then the event if one was drawn, then the bench is handed to the player.
+        /// </summary>
+        IEnumerator StartOfDepth()
+        {
+            Bench.InputEnabled = false;
+            while (Run.Phase == RunPhase.AspectOffer || Run.Phase == RunPhase.EventOffer)
+            {
+                if (Auto) { autoPlayer.Decide(Run); Bench.Refresh(); continue; }       // the scripted player needs no screen
+                if (Run.Phase == RunPhase.AspectOffer)
+                {
+                    State = FlowState.AspectChoice;
+                    string picked = null;
+                    yield return choice.Choose(Run.AspectOffer, id => picked = id);
+                    Run.ChooseAspect(picked);
+                }
+                else
+                {
+                    State = FlowState.Event;
+                    yield return eventView.Show(Run, () => { Save.StoreJournal(Journal); Bench.Refresh(); });
+                }
+                Bench.Refresh();
+            }
+            Bench.Refresh(true);
+            State = FlowState.Bench;
+            Bench.InputEnabled = true;
+        }
+
+        /// <summary>
+        /// Completes the goals whose targets have been reached, draws their rewards and saves the profile.
+        /// announce: false keeps them off the run summary (goals paid outside a run).
+        /// </summary>
+        void CheckGoals(bool inRun = true)
+        {
+            var done = Profile.Evaluate(Db, Journal);
+            Save.StoreProfile(Profile);
+            if (done.Count == 0) return;
+            if (inRun) goalsThisRun.AddRange(done);
+            toast.Add(done, Db);
+            if (State == FlowState.Title) title.Progress(Journal.KnownPairs.Count, Db.Recipes.Count, Profile.Completed.Count, Db.Goals.Count);
+        }
+
         void OpenJournal()
         {
             if (State != FlowState.Bench && State != FlowState.Title) return;
+            if (State == FlowState.Title && title.Asking) return;
             journalFrom = State; State = FlowState.Journal;
             if (journalFrom == FlowState.Bench) Bench.InputEnabled = false;
-            journalView.Open(Journal);
+            // on the title what counts is what the profile has now; in a run, what the run was started with
+            journalView.Open(Journal, journalFrom == FlowState.Title ? Unlocks.For(Db, Profile).IsOpen : (System.Func<string, bool>)unlocks.IsOpen);
+        }
+
+        void OpenGoals()
+        {
+            if (State != FlowState.Title && State != FlowState.RunOver) return;
+            if (State == FlowState.Title && title.Asking) return;
+            goalsFrom = State; State = FlowState.Goals;
+            goalsView.Open(Profile, Journal);
+        }
+
+        void CloseGoals()
+        {
+            if (State == FlowState.Goals) State = goalsFrom;
+        }
+
+        /// <summary>Erases goals, unlocks and stats (the title's Reset progress, once confirmed). The journal is kept.</summary>
+        void ResetProgress()
+        {
+            if (State != FlowState.Title) return;
+            Save.ResetProfile();
+            Profile = Save.LoadProfile(Db);
+            unlocks = Unlocks.For(Db, Profile);
+            toast.Clear();
+            CheckGoals(false);           // the journal still counts toward the journal goals
+            title.Progress(Journal.KnownPairs.Count, Db.Recipes.Count, Profile.Completed.Count, Db.Goals.Count);
         }
 
         void CloseJournal()
@@ -177,6 +271,12 @@ namespace Athanor.Game
             // the run is settled first: whatever is skipped from here on, nothing can be lost
             var outcome = Run.Ignite();
             Save.StoreJournal(Journal);
+            Profile.IgniteResolved(outcome);
+            // the end of a run is counted with the Ignite that ended it: closing the page during the ending cannot lose a win
+            bool ended = outcome.PhaseAfter == RunPhase.Won || outcome.PhaseAfter == RunPhase.Lost;
+            if (ended) Profile.RunEnded(Run);
+            var earned = Profile.Evaluate(Db, Journal);
+            Save.StoreProfile(Profile);
             Bench.ClearLinks();
             Bench.Hud.Show(Run, Db, Journal, false);
 
@@ -217,12 +317,16 @@ namespace Athanor.Game
             shownPotency = Run.Potency;
             Bench.Hud.SetPotency(shownPotency);
             Bench.Refresh(true);
+            // goals this Ignite completed are announced now that it has played out, so they never interrupt it
+            // (those of a run's last Ignite wait for the summary, after the ending)
+            goalsThisRun.AddRange(earned);
+            if (!ended) toast.Add(earned, Db);
 
             switch (outcome.PhaseAfter)
             {
                 case RunPhase.DepthCleared: yield return Descend(); break;
-                case RunPhase.Lost: yield return EndRun(false); break;
-                case RunPhase.Won: yield return EndRun(true); break;
+                case RunPhase.Lost: yield return EndRun(false, earned); break;
+                case RunPhase.Won: yield return EndRun(true, earned); break;
                 default: State = FlowState.Bench; Bench.InputEnabled = true; break;
             }
         }
@@ -370,17 +474,19 @@ namespace Athanor.Game
             inCutscene = false;
             State = FlowState.CatalystChoice;
             string picked = null;
-            yield return choice.Choose(Run.CatalystOffer, id => picked = id, Auto ? 0.8f : -1);
+            yield return choice.Choose((IReadOnlyList<CatalystData>)Run.CatalystOffer, id => picked = id, Auto ? 0.8f : -1);
             Run.ChooseCatalyst(picked);
+            Profile.DepthBegan(Run.Depth);
+            CheckGoals();
             shownPotency = 0;
             Bench.gameObject.SetActive(true);
             Bench.Hud.SetPotency(0, true);
-            Bench.Refresh(true);
-            State = FlowState.Bench;
-            Bench.InputEnabled = true;
+            Bench.Refresh();
+            yield return StartOfDepth();
         }
 
-        IEnumerator EndRun(bool won)
+        /// <summary>The ending or the loss, then the summary. earned: the goals the last Ignite completed, already saved.</summary>
+        IEnumerator EndRun(bool won, List<GoalReward> earned)
         {
             if (won)
             {
@@ -395,8 +501,9 @@ namespace Athanor.Game
                 ScreenFx.I.Shake(3, 0.5f);
                 yield return Anim.Wait(0.9f);
             }
+            toast.Add(earned, Db);
             State = FlowState.RunOver;
-            yield return RunOver.Show(won, Run, Journal, Db);
+            yield return RunOver.Show(won, Run, Journal, Db, goalsThisRun);
             runEnded = true;
         }
 

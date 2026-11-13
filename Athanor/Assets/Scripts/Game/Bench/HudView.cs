@@ -13,16 +13,27 @@ namespace Athanor.Game
         /// <summary>Catalyst socket index the pointer is over, or -1.</summary>
         public int HoveredCatalyst { get; private set; } = -1;
         public bool RedrawHovered { get; private set; }
+        /// <summary>Index of the held aspect the pointer is over (in the strip under the depth panel), or -1.</summary>
+        public int HoveredAspect { get; private set; } = -1;
+        /// <summary>The most catalysts the sockets can show: four from clearing depths and two from shrines.</summary>
+        public const int MaxCatalysts = 6, MaxAspects = 3;
 
-        Label depth, depthName, potency, target, trials, redraws, redrawsLabel, journalCount, igniteText, hintText;
+        Label depth, depthName, potency, potencyWord, target, trials, redraws, redrawsLabel, journalCount, igniteText, hintText;
         readonly Label[] note = new Label[4];
         SpriteRenderer barFill, barTip, ignite, ignitePulse;
-        readonly SpriteRenderer[] socketLit = new SpriteRenderer[4], catalystIcon = new SpriteRenderer[4];
+        readonly SpriteRenderer[] socketLit = new SpriteRenderer[MaxCatalysts], catalystIcon = new SpriteRenderer[MaxCatalysts];
+        readonly SpriteRenderer[] aspectSocket = new SpriteRenderer[MaxAspects], aspectIcon = new SpriteRenderer[MaxAspects];
+        readonly Label[] depthNote = new Label[3];
+        Label aspectsLabel;
+        float catalystPitch = 35;
         float shown, bump; long goal, targetValue; bool canIgnite, igniteDown;
 
         static readonly Color Dim = Px.Hex("#a88a6a"), Pale = Px.Hex("#f0dcc0"), Gold = Px.Hex("#f8d250"), Ink = Px.Hex("#3a2212");
 
         public Vector3 PotencyPosition => Px.At(96, 56);
+        /// <summary>Where a tooltip about a held catalyst or aspect points.</summary>
+        public Vector3 CatalystAnchor(int i) => Px.At(503 + i * catalystPitch, 39);
+        public Vector3 AspectAnchor(int i) => Px.At(22 + i * 29, 111);
         public static string Number(long n) => n.ToString("N0", CultureInfo.InvariantCulture);
 
         public void Build(Transform parent)
@@ -33,7 +44,7 @@ namespace Athanor.Game
             Make.SpriteAt(t, "hud_left", 8, 8, O);
             depth = Make.Text(t, "", 16, 9, FontKind.Title, 32, Pale, O + 3, Align.Left, dark);
             depthName = Make.Text(t, "", 17, 37, FontKind.Body, 16, Dim, O + 3);
-            Make.Text(t, "POTENCY", 17, 52, FontKind.Tiny, 8, Dim, O + 3);
+            potencyWord = Make.Text(t, "POTENCY", 17, 52, FontKind.Tiny, 8, Dim, O + 3);
             potency = Make.Text(t, "0", 70, 49, FontKind.Title, 16, Gold, O + 3, Align.Left, Px.Hex("#3a1a08"));
             target = Make.Text(t, "", 153, 52, FontKind.Tiny, 8, Dim, O + 3, Align.Right);
             barFill = Make.Rect(t, 18, 70, 1, 5, Color.white, O + 2); barFill.sprite = Make.Lib.Sprite("bar_fill");
@@ -41,11 +52,11 @@ namespace Athanor.Game
             // top right: catalysts, trials, redraws
             Make.SpriteAt(t, "hud_right", 480, 8, O);
             Make.Text(t, "CATALYSTS", 489, 14, FontKind.Tiny, 8, Dim, O + 3);
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < MaxCatalysts; i++)
             {
                 int x = 488 + i * 35, index = i;
-                socketLit[i] = Make.SpriteAt(t, "socket_filled", x, 24, O + 1);
-                catalystIcon[i] = Make.Sprite(t, "dot", Px.Mid(x + 3, 27, 24, 24), O + 2);
+                socketLit[i] = Make.SpriteAt(t, "socket_filled", x, 24, O + 1 + i * 2);
+                catalystIcon[i] = Make.Sprite(t, "dot", Px.Mid(x + 3, 27, 24, 24), O + 2 + i * 2);
                 var c = Make.Click(socketLit[i].gameObject, new Vector2(30, 30), O);
                 c.onEnter = () => HoveredCatalyst = index; c.onExit = () => { if (HoveredCatalyst == index) HoveredCatalyst = -1; };
             }
@@ -56,6 +67,17 @@ namespace Athanor.Game
             var redrawZone = Make.Root("redraw", t); redrawZone.position = Px.Mid(552, 46, 78, 32);
             var rc = Make.Click(redrawZone.gameObject, new Vector2(78, 32), O, () => RedrawClicked?.Invoke());
             rc.onEnter = () => RedrawHovered = true; rc.onExit = () => RedrawHovered = false;
+            // under the depth panel: the aspects this run holds, and what this depth's event changed
+            aspectsLabel = Make.Text(t, "ASPECTS", 10, 88, FontKind.Tiny, 8, Dim, O + 3, Align.Left, dark);
+            for (int i = 0; i < MaxAspects; i++)
+            {
+                int x = 9 + i * 29, index = i;
+                aspectSocket[i] = Make.SpriteAt(t, "aspect_socket", x, 98, O + 1);
+                aspectIcon[i] = Make.Sprite(t, "dot", Px.Mid(x + 1, 99, 24, 24), O + 2);
+                var c = Make.Click(aspectSocket[i].gameObject, new Vector2(26, 26), O);
+                c.onEnter = () => HoveredAspect = index; c.onExit = () => { if (HoveredAspect == index) HoveredAspect = -1; };
+            }
+            for (int i = 0; i < depthNote.Length; i++) depthNote[i] = Make.Text(t, "", 10, 130 + i * 10, FontKind.Tiny, 8, Px.Hex("#6ee6c8"), O + 3, Align.Left, dark);
             // bottom left: the last reaction and the latest hint
             Make.SpriteAt(t, "note", 4, 262, O);
             Make.Text(t, "LAST REACTION", 10, 266, FontKind.Tiny, 8, Px.Hex("#7a5430"), O + 3);
@@ -88,12 +110,35 @@ namespace Athanor.Game
             trials.Text = run.TrialsLeft.ToString();
             redraws.Text = run.RedrawsLeft.ToString();
             redraws.Alpha = redrawsLabel.Alpha = run.RedrawsLeft > 0 ? 1 : 0.35f;
-            for (int i = 0; i < 4; i++)
+            // four sockets side by side; a fifth or sixth (a shrine's gift) makes them overlap to fit the panel
+            int held = Mathf.Min(run.Catalysts.Count, MaxCatalysts);
+            catalystPitch = held <= 4 ? 35 : 105f / (held - 1);
+            for (int i = 0; i < MaxCatalysts; i++)
             {
-                bool has = i < run.Catalysts.Count;
+                bool has = i < held;
                 socketLit[i].enabled = catalystIcon[i].enabled = has;
-                if (has) catalystIcon[i].sprite = Make.Lib.Sprite("cat_" + run.Catalysts[i].id);
+                socketLit[i].gameObject.SetActive(has);
+                if (!has) continue;
+                float x = Mathf.Round(488 + i * catalystPitch);
+                socketLit[i].transform.position = Px.Mid(x, 24, 30, 30);
+                catalystIcon[i].transform.position = Px.Mid(x + 3, 27, 24, 24);
+                catalystIcon[i].sprite = Make.Lib.Sprite("cat_" + run.Catalysts[i].id);
             }
+            aspectsLabel.gameObject.SetActive(run.Aspects.Count > 0);
+            for (int i = 0; i < MaxAspects; i++)
+            {
+                bool has = i < run.Aspects.Count;
+                aspectSocket[i].gameObject.SetActive(has); aspectIcon[i].enabled = has;
+                if (has) aspectIcon[i].sprite = Make.Lib.Sprite("asp_" + run.Aspects[i].Data.id);
+            }
+            if (run.Aspects.Count == 0) HoveredAspect = -1;
+            // what this depth's event left behind (shut and warm tiles show on the bench itself)
+            int line = 0, top = run.Aspects.Count > 0 ? 130 : 88;
+            foreach (var l in depthNote) l.Text = "";
+            void Say(string text) { if (line < depthNote.Length) { depthNote[line].Text = text; depthNote[line].transform.position = Px.At(10, top + line * 10); line++; } }
+            if (run.RiShift != 0) Say("THIS DEPTH: REACTION INDEX " + (run.RiShift > 0 ? "+" : "") + run.RiShift);
+            if (run.HandDelta != 0) Say("THIS DEPTH: " + (run.HandDelta > 0 ? "+" : "") + run.HandDelta + (Mathf.Abs(run.HandDelta) == 1 ? " CARD A HAND" : " CARDS A HAND"));
+            if (run.TripleFirst) Say("NEXT FIRST REACTION: x3");
             journalCount.Text = journal.KnownPairs.Count + "/" + db.Recipes.Count;
             canIgnite = inputEnabled && run.CanIgnite;
         }
@@ -147,7 +192,10 @@ namespace Athanor.Game
             }
             potency.Text = Number((long)Mathf.Round(shown));
             bump = Mathf.Max(0, bump - Time.deltaTime * 6);
-            potency.transform.position = Px.At(70, 49 - (bump > 0.5f ? 2 : bump > 0 ? 1 : 0));
+            // a number long enough to run into the target takes the place of the word before it
+            bool tight = 70 + potency.Width + 4 > 153 - target.Width;
+            potencyWord.gameObject.SetActive(!tight);
+            potency.transform.position = Px.At(tight ? 17 : 70, 49 - (bump > 0.5f ? 2 : bump > 0 ? 1 : 0));
             potency.Color = bump > 0.4f ? Color.white : Gold;
             float fill = targetValue > 0 ? Mathf.Clamp01(shown / targetValue) : 1;
             int w = Mathf.RoundToInt(132 * fill);

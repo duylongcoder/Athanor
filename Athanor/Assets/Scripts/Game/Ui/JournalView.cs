@@ -20,6 +20,11 @@ namespace Athanor.Game
         public bool IsOpen => gameObject.activeSelf;
 
         ContentDb db; Journal journal;
+        Func<string, bool> isOpen;      // which starting materials this profile may use (the rest are still to be won)
+        Label pageLabel;
+        int page;
+        const int PerPage = Cols * Rows;
+        int Pages => (db.Materials.Count + PerPage - 1) / PerPage;
         readonly List<SpriteRenderer> icons = new List<SpriteRenderer>();
         readonly HashSet<string> discovered = new HashSet<string>();
         readonly Label[] lines = new Label[LineCount], hints = new Label[HintCount];
@@ -48,7 +53,10 @@ namespace Athanor.Game
             Make.Text(t, "MATERIALS", X + GridX, Y + 43, FontKind.Tiny, 8, Faded, O + 2);
             materialsCount = Make.Text(t, "", X + GridX + Cols * Cell - (Cell - Well), Y + 43, FontKind.Tiny, 8, Faded, O + 2, Align.Right);
             pick = Make.Sprite(t, "journal_pick", Vector3.zero, O + 1);
-            for (int i = 0; i < db.Materials.Count && i < Cols * Rows; i++)
+            // more materials than the grid holds: they are shown a page at a time
+            pageLabel = Make.Text(t, "", X + GridX + 136, Y + 43, FontKind.Tiny, 8, Px.Hex("#9a3414"), O + 2, Align.Centre);
+            Make.Click(pageLabel.gameObject, new Vector2(110, 12), O + 3, () => ShowPage((page + 1) % Pages)).offset = new Vector2(0, -4);
+            for (int i = 0; i < db.Materials.Count; i++)
             {
                 int index = i;
                 var icon = Make.Sprite(t, db.Materials[i].id, CellCentre(i), O + 2);
@@ -72,13 +80,24 @@ namespace Athanor.Game
             gameObject.SetActive(false);
         }
 
-        Vector3 CellCentre(int i) => Px.Mid(X + GridX + (i % Cols) * Cell, Y + GridY + (i / Cols) * Cell, Well, Well);
+        Vector3 CellCentre(int i) => Px.Mid(X + GridX + (i % PerPage % Cols) * Cell, Y + GridY + (i % PerPage / Cols) * Cell, Well, Well);
 
-        public void Open(Journal book)
+        /// <summary>Shows one page of the grid; the selection moves to that page's first material if it was on another.</summary>
+        void ShowPage(int p)
         {
-            journal = book;
+            page = Mathf.Clamp(p, 0, Pages - 1);
+            for (int i = 0; i < icons.Count; i++) icons[i].gameObject.SetActive(i / PerPage == page);
+            pageLabel.Text = Pages > 1 ? "PAGE " + (page + 1) + " OF " + Pages + "  -  NEXT" : "";
+            if (selected / PerPage != page) Select(page * PerPage);
+            else pick.enabled = true;
+        }
+
+        /// <summary>openStarters: which starting materials the player may use; null means all of them.</summary>
+        public void Open(Journal book, Func<string, bool> openStarters = null)
+        {
+            journal = book; isOpen = openStarters;
             discovered.Clear();
-            foreach (var m in db.Starters) discovered.Add(m.id);
+            foreach (var m in db.Starters) if (isOpen == null || isOpen(m.id)) discovered.Add(m.id);
             foreach (var r in db.Recipes) if (journal.IsKnown(r.items)) discovered.Add(r.result);
             for (int i = 0; i < icons.Count; i++)
                 icons[i].color = discovered.Contains(db.Materials[i].id) ? Color.white : new Color(0.16f, 0.1f, 0.05f, 0.4f);
@@ -93,7 +112,9 @@ namespace Athanor.Game
                 hints[i].Color = i < open.Count ? Purple : Faded;
             }
             gameObject.SetActive(true);
-            Select(Mathf.Clamp(selected, 0, icons.Count - 1));
+            selected = Mathf.Clamp(selected, 0, icons.Count - 1);
+            ShowPage(selected / PerPage);
+            Select(selected);
         }
 
         string Names(IEnumerable<string> ids)
@@ -137,7 +158,8 @@ namespace Athanor.Game
             bool known = discovered.Contains(m.id);
             bigIcon.sprite = Make.Lib.Sprite(m.id);
             bigIcon.color = known ? Color.white : new Color(0.16f, 0.1f, 0.05f, 0.4f);
-            title.Text = known ? m.name : "Unknown";
+            bool locked = m.tier == 0 && !known;
+            title.Text = known ? m.name : locked ? "Locked" : "Unknown";
             title.main.fontSize = title.Text.Length > 13 ? 16 : 32;
             title.transform.position = Px.At(X + PageX + PageW / 2, Y + PageY + (title.Text.Length > 13 ? 72 : 62));
             sub.Text = known ? m.kind.ToUpperInvariant() + (m.tier == 0 ? "  -  STARTER" : "  -  TIER " + m.tier) + "  -  REACTIVITY " + m.reactivity : "";
@@ -145,7 +167,8 @@ namespace Athanor.Game
                 pips[pip].color = !known ? Color.clear : pip < m.reactivity ? Px.Hex("#c8501e") : Px.Hex("#b89860").Alpha(0.5f);
 
             var text = new List<(string, Color)>();
-            if (!known) text.Add(("Nothing is written here yet.", Faded));
+            if (locked) { text.Add(("A starting material you do not have yet.", Faded)); text.Add(("Complete goals to unlock it.", Faded)); }
+            else if (!known) text.Add(("Nothing is written here yet.", Faded));
             else
             {
                 if (m.tier > 0)

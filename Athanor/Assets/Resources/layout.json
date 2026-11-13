@@ -235,5 +235,20 @@
   "pageY": 30,
   "pageW": 260,
   "hintsY": 240
+ },
+ "goals": {
+  "w": 600,
+  "h": 330,
+  "leftX": 14,
+  "rightX": 304,
+  "top": 30,
+  "colW": 282,
+  "colH": 286,
+  "row": 21,
+  "head": 14
+ },
+ "option": {
+  "w": 288,
+  "h": 24
  }
 }

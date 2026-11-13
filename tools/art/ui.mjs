@@ -40,6 +40,8 @@ const make = (w, h, draw) => { const g = new Canvas(w, h); draw(g); return g; };
 
 export const CARD = { w: 74, h: 70 };
 export const RACK = { w: 380, h: 30, slots: 12, first: 6, pitch: 31, well: 26 };
+export const GOALS = { w: 600, h: 330, leftX: 14, rightX: 304, top: 30, colW: 282, colH: 286, row: 20, head: 14 };
+export const OPTION = { w: 288, h: 24 };
 export const JOURNAL = { w: 600, h: 330, cols: 10, rows: 6, cell: 27, well: 25, gridX: 33, gridY: 60, pageX: 324, pageY: 30, pageW: 260, hintsY: 240 };
 
 function card(sel) {
@@ -94,5 +96,18 @@ export function uiSprites() {
   out.choice_lit = make(158, 188, (g) => { g.fillStyle = R.gold[3]; g.fillRect(0, 0, 158, 188); g.fillStyle = R.gold[4]; g.fillRect(0, 0, 158, 2); g.clearRect(3, 3, 152, 182); });
   out.tooltip = make(176, 58, (g) => { panel(g, 0, 0, 176, 58, false); g.fillStyle = R.gold[1]; g.fillRect(1, 1, 174, 1); });
   out.dialog = make(320, 210, (g) => panel(g, 0, 0, 320, 210));
+  // Phase 3
+  out.goals = make(GOALS.w, GOALS.h, (g) => {
+    panel(g, 0, 0, GOALS.w, GOALS.h);
+    parchment(g, GOALS.leftX, GOALS.top, GOALS.colW, GOALS.colH, 5); parchment(g, GOALS.rightX, GOALS.top, GOALS.colW, GOALS.colH, 14);
+  });
+  for (const s of ['up', 'down', 'off']) out['option_' + s] = make(OPTION.w, OPTION.h, (g) => button(g, 0, 0, OPTION.w, OPTION.h, s));
+  out.toast = make(300, 36, (g) => { panel(g, 0, 0, 300, 36, false); g.fillStyle = R.gold[3]; g.fillRect(1, 1, 298, 1); g.fillStyle = R.gold[1]; g.fillRect(1, 34, 298, 1); });
+  // small white shapes, tinted in the game: a rarity pip, a tile marker, the cross on a shut tile
+  out.pip = make(7, 7, (g) => { for (let y = 0; y < 7; y++) for (let x = 0; x < 7; x++) { const d = Math.abs(x - 3) + Math.abs(y - 3); if (d > 3) continue; g.fillStyle = d === 3 ? '#1a1220' : x + y < 6 ? '#ffffff' : '#c8c8c8'; g.fillRect(x, y, 1, 1); } });
+  out.mark = make(11, 9, (g) => { for (let y = 0; y < 9; y++) for (let x = 0; x < 11; x++) { const d = Math.abs(x - 5) / 5 + Math.abs(y - 4) / 4; if (d > 1.01) continue; g.fillStyle = d > 0.78 ? '#1a1220' : x + y < 8 ? '#ffffff' : '#bcbcbc'; g.fillRect(x, y, 1, 1); } });
+  out.cross = make(13, 9, (g) => { for (let k = 0; k < 9; k++) { const x = Math.round(k * 10 / 8); g.fillStyle = '#ffffff'; g.fillRect(x, k, 3, 1); g.fillRect(10 - x, k, 3, 1); } });
+  out.mini_tile = make(6, 5, (g) => { g.fillStyle = '#ffffff'; g.fillRect(0, 0, 6, 5); g.fillStyle = '#b0b0b0'; g.fillRect(0, 4, 6, 1); });
+  out.aspect_socket = make(26, 26, (g) => socket(g, 0, 0, true, 26));
   return out;
 }

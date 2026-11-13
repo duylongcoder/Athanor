@@ -712,3 +712,67 @@ Core, run by `dotnet test tools/CoreTests` and again in Unity EditMode:
 
 Each step ends with `dotnet test tools/CoreTests` and, from 3.1, `unity test Athanor --mode EditMode`. The web build is
 rebuilt and checked in headless Chrome at 3.6.
+
+## 16. As built (2026-11-13)
+
+Where the game as built differs from the sections above, this section is right. The record of the work, with the
+measurements, is `docs/devlogs/phase-3-unlocks-aspects-events.md`.
+
+### Rules
+
+| Section | Spec | As built | Why |
+|---|---|---|---|
+| 5.4 | Unlocked starters join the satchel, two copies each; fallback one copy | They wait in a **pouch** of their own. Every hand draws one pouch card on top of the usual five. | Thirteen starters in one satchel thinned every hand: the informed bot fell to about 1% with two copies and 39% with one. With the pouch it holds 67% fresh and 82% full. |
+| 8.2 | `CatalystOffer`: offer the usual three catalysts | `CatalystGift`: one random open catalyst the run does not hold, given outright | An offer inside an event would need a second chooser inside the event panel. |
+| 8.2 | `LoseHandCard` | `LoseCard`: a random starter in hand leaves the satchel for the run, never below a hand and two | Same effect, and the floor keeps a run playable. |
+| 7.3 | Volatile Tile always burns the starter | It stops burning when the satchel is down to a hand and two | A player could otherwise burn the satchel empty and be left with a run that cannot end. |
+| 7.2 | Cold Tile is always placeable | Not offered when two tiles are already shut (cold tiles and this depth's grit together) | The bench must stay playable. |
+| 8.1 | An event with one option is always eligible | Only when that option can be taken | An event with nothing to press would stop the run. |
+| 8.2 | `Hand` changes this depth's hand size | It also trims the hand already dealt when the event makes it smaller | The first hand of the depth is dealt before the event, so it would have escaped the change. |
+| 8.2 | `BlockTile`: a random free tile is shut | Never the centre tile, and a corner is twice as likely as an edge | Met once at depth 4, Falling Grit left the informed bot 65% of its wins, under the 70% floor of 8.4: an edge shut takes a neighbour from the centre, and the centre shut takes the deep recipes away. As built it leaves 83%. |
+| 4.2 | A run's end is counted when the run ends | It is counted and saved with the Ignite that ended the run, before the ending plays | Closing the page during the ending would have lost the win. |
+| 4.4 | `Unlocks == null`: everything open | `Unlocks == null`: what the content leaves open (a fresh profile) | With Phase 2 content these are the same; with Phase 3 content "everything" would put locked starters in a run that has no profile. |
+| 1, invariant 4 | The 145 Phase 2 tests pass unchanged | One was changed: `InformedPlayer_WinsMostSeeds` now expects 24 to 31 wins of 40, not 32 or more | A run with no profile draws from the nine open catalysts, not the ten of Phase 2. The owner's fresh-profile target (60 to 70%) is the new bound. |
+
+### Code layout
+
+`Goals.cs`, `Unlocks.cs`, `Aspects.cs`, `Events.cs` and `RunOptions.cs` were not made. `Profile.cs` holds `Profile`
+(the stats are its fields, and `Profile.Evaluate(db, journal)` completes goals and draws rewards), `Unlocks` and
+`RunOptions`. `RunStart.cs` is the second half of `RunState` (a partial class): aspects, events and the start of a
+depth. `BenchRules.cs` also holds `ScoreContext`.
+
+### Screens
+
+- The Goals page is reached from the title and from the run summary (the line under "Goals completed this run").
+  It has two columns: Uncommon and Legendary on the left, Rare on the right. A row is two lines: the goal and its
+  count, then the reward and the progress bar. The reward reads "NEW UNCOMMON STARTER", not "Unlocks a new
+  Uncommon starter": the longer line ran under the bar.
+- A hand of more than five cards overlaps (six is the usual hand once a starter is won). Each card's name and icon
+  sit in the part that shows; the card pointed at comes to the front as a whole card. From seven cards on, long
+  names are cut until the card is pointed at.
+- An event option shows, under its button, what it costs and what it may give ("give up a discovery: +1 trial",
+  "50% +1 trial / 50% lose a card"). An option that cannot be taken is hidden. My call.
+- The journal has two pages of 60 materials. A locked starter shows as "Locked" until it is won.
+- The HUD shows up to six catalysts (four from depths and two from shrines) and, under the depth panel, the aspects
+  held and what this depth's event changed. Pointing at a held aspect lights its tile.
+- A tile an aspect or an event acts on carries a small gem in the aspect's colour; a shut tile has a dark lid and
+  a cross; joined tiles have a slow line of light between them.
+- Rarity pips are on catalyst cards and on starter cards in the hand.
+
+### Balance (informed bot, 200 seeds, `BalanceMatrix`, measured again on the final rules)
+
+| Profile | No aspects or events | With aspects and events | Owner target |
+|---|---|---|---|
+| Fresh | 66% | 67% | 60 to 70% |
+| Fresh and every catalyst | 82% | 85% | |
+| Fresh and every starter | 67% | 72% | within 5 points of fresh |
+| Half unlocked | 82% | 81% | |
+| Full | 83% | 85% | 80 to 90% |
+
+Aspects alone lift a fresh profile to 72%; events alone lower it to 64%; together they cancel. No number in the
+content was changed to reach the targets. The goal numbers of 4.3 are as drafted. The player who places at
+random wins 0 of 200 on a fresh profile and 0 of 200 with everything unlocked.
+
+Events (8.4), `EventReport`: a hazard or a gamble met once, at each depth it may come to, leaves the informed bot
+between 78% and 109% of the wins it has with no event (the floor is 70%). The lowest are Cold Draft at depth 4
+(78%) and at depth 3 (81%), and Falling Grit at depth 4 (83%). The devlog has the whole table.

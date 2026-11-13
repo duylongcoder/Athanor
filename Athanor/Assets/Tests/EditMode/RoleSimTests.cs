@@ -177,8 +177,10 @@ namespace Athanor.Tests
                         for (int i = 0; i < run.Hand.Count; i++)
                         {
                             string c = run.Hand[i];
-                            // company must be duller than the hub, or it would take the hub's place
-                            if (truth.Material(c).tier != 0 || truth.Reactivity(c) >= truth.Reactivity(hubItem)) continue;
+                            if (truth.Material(c).tier != 0) continue;
+                            // company that is known to react with either of the two would fire first and spoil the experiment;
+                            // anything else may be as lively as it likes: with no recipe of its own it never becomes the hub
+                            if (journal.IsKnown(c, hubItem) || journal.IsKnown(c, other)) continue;
                             if (pick < 0 || truth.Reactivity(c) > truth.Reactivity(run.Hand[pick])) pick = i;
                         }
                         if (pick < 0) break;

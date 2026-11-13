@@ -11,7 +11,8 @@ namespace Athanor.Game
         public int index;
         public Vector3 centre;            // world position of the middle of the top face
         Vector2 faceCentre, faceSize;
-        SpriteRenderer face, ring, shadow, icon, halo;
+        SpriteRenderer face, ring, shadow, icon, halo, lid, cross, mark;
+        Color markColor;
         Light2D glowLight;
         Color glow;
         bool glows;
@@ -20,6 +21,11 @@ namespace Athanor.Game
 
         public string Material { get; private set; }
         public bool Hovered { get; set; }
+        /// <summary>Lit softly in its marker's colour, to show which tile an aspect in the HUD sits on.</summary>
+        public bool Pinged { get; set; }
+        /// <summary>Nothing can be placed here (a cold tile, or grit from an event).</summary>
+        public bool Shut { get; private set; }
+        public bool Marked => mark.enabled;
         public SpriteRenderer Icon => icon;
 
         public void Build(int i, TileData data, Transform parent)
@@ -38,11 +44,28 @@ namespace Athanor.Game
             icon = Make.Sprite(transform, "dot", centre, 14 + row * 2, Make.Lib.lit);
             glowLight = Make.Light(transform, centre + new Vector3(0, 6, 0), 46, Color.white, 0, 0.77f);
             face.color = Color.clear;
+            // a shut tile: a dark lid over the face and a cross; a tile an aspect or an event acts on: a small gem at its front corner
+            lid = Make.SpriteAt(transform, "tile_face_" + i, f.x, f.y, 9);
+            cross = Make.Sprite(transform, "cross", Px.Snap(faceCentre), 11);
+            cross.color = Px.Hex("#7a5a6a");
+            mark = Make.Sprite(transform, "mark", Px.At(f.x + 11, f.y + f.h - 6), 13);
+            SetState(null, false);
             Clear();
         }
 
         public bool Contains(Vector2 world) =>
             Mathf.Abs(world.x - faceCentre.x) <= faceSize.x / 2 && Mathf.Abs(world.y - faceCentre.y) <= faceSize.y / 2;
+
+        /// <summary>The marker's colour (null: no marker) and whether the tile is shut.</summary>
+        public void SetState(Color? marker, bool shut)
+        {
+            Shut = shut;
+            lid.color = shut ? new Color(0.03f, 0.02f, 0.05f, 0.78f) : Color.clear;
+            cross.enabled = shut;
+            mark.enabled = marker.HasValue && !shut;
+            markColor = marker ?? Color.white;
+            mark.color = markColor;
+        }
 
         public void Show(MaterialData m, bool pop)
         {
@@ -82,7 +105,8 @@ namespace Athanor.Game
             float t = Time.time;
             flash = Mathf.Max(0, flash - Time.deltaTime * 2.6f);
             float hover = Hovered ? 0.45f + 0.3f * Mathf.Sin(t * 5) : 0;
-            face.color = flash > 0 ? flashColor.Alpha(flash) : Hovered ? new Color(1, 0.85f, 0.45f, hover) : Color.clear;
+            face.color = flash > 0 ? flashColor.Alpha(flash) : Hovered && !Shut ? new Color(1, 0.85f, 0.45f, hover)
+                : Pinged ? markColor.Alpha(0.35f + 0.25f * Mathf.Sin(t * 6)) : Color.clear;
             if (Material == null) return;
             appear = Mathf.Min(1, appear + Time.deltaTime * 5);
             float pop = Anim.OutBack(appear);

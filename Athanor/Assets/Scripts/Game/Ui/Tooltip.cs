@@ -23,6 +23,7 @@ namespace Athanor.Game
         public void Show(string heading, string text, Vector2 anchor, float clearance = 20)
         {
             title.Text = heading; body.Text = text;
+            body.main.lineSpacing = text != null && text.Length > 62 ? -30 : 0;      // a third line fits when the lines sit closer
             float y = anchor.y + clearance + H / 2f;
             if (y + H / 2f > Px.H / 2f - 2) y = anchor.y - clearance - H / 2f;
             float x = Mathf.Clamp(anchor.x, -Px.W / 2f + W / 2f + 2, Px.W / 2f - W / 2f - 2);

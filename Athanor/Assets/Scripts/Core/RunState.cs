@@ -69,6 +69,8 @@ namespace Athanor.Core
         public int RedrawsUsed { get; private set; }
         public RunOptions Options => options;
         public bool IsOpen(string id) => unlocks.IsOpen(id);
+        /// <summary>Nothing (a volatile tile, an event) takes the satchel below this many cards.</summary>
+        int MinSatchel => HandSize + 2;
         /// <summary>Copies of a material in the hand or on the bench.</summary>
         public int Owned(string id) => hand.Count(h => h == id) + Bench.Tiles.Count(t => t == id);
         bool IsStarter(string id) => db.Material(id).tier == 0;
@@ -195,7 +197,8 @@ namespace Athanor.Core
                 if (id == null) continue;
                 if (IsStarter(id))
                 {
-                    if (HasAspectOn(AspectEffects.Volatile, t)) DeckOf(id).Lose(id);     // burnt up for the rest of the run
+                    // burnt up for the rest of the run; but the satchel is never thinned below a hand, or the run could not go on
+                    if (HasAspectOn(AspectEffects.Volatile, t) && DeckOf(id).Total > MinSatchel) DeckOf(id).Lose(id);
                     else DeckOf(id).Discard(new[] { id });
                 }
                 else if (HasAspectOn(AspectEffects.Anchor, t)) made.Add(id);          // an anchored discovery comes back
