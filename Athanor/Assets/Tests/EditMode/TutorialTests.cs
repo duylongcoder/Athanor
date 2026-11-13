@@ -162,5 +162,110 @@ namespace Athanor.Tests
             Assert.AreEqual(1.0, p.Bonus, 1e-9); Assert.AreEqual(240, p.Total);
             Assert.IsNull(ScoreParts.Of(db, new ReactionEvent()));   // a fizzle has no score
         }
+
+        // ---- the script ---------------------------------------------------------------------------
+
+        RunState StartTutorial(int seed = TutorialScript.Seed) =>
+            new RunState(db, new Journal(), seed, 1, TutorialScript.Options(Unlocks.Fresh(db)));
+
+        static IgniteOutcome Play(RunState run, TutorialTrial trial)
+        {
+            Assert.IsTrue(run.Deal(trial.Hand), "deal");
+            foreach (var lay in trial.Lay)
+                Assert.IsTrue(run.Place(run.Hand.ToList().IndexOf(lay.Id), lay.Tile), "place " + lay.Id + " on " + lay.Tile);
+            return run.Ignite();
+        }
+
+        static List<ReactionEvent> Reactions(IEnumerable<ReactionEvent> events) => events.Where(e => e.Result != null).ToList();
+
+        [Test]
+        public void Trial1_EmberCoalAndDeepTear_MakeSteamWisp_For40()
+        {
+            var run = StartTutorial();
+            Assert.AreEqual(RunPhase.Playing, run.Phase);
+            Assert.AreEqual(4, run.TrialsLeft);
+            var r = Reactions(Play(run, TutorialScript.Reaction).Events);
+            CollectionAssert.AreEqual(TutorialScript.Reaction.Makes, r.Select(e => e.Result).ToArray());
+            var p = ScoreParts.Of(db, r[0]);
+            Assert.AreEqual(20, p.Base); Assert.AreEqual(1, p.Used); Assert.AreEqual(2, p.First); Assert.AreEqual(1, p.Step);
+            Assert.AreEqual(40, p.Total);
+            Assert.AreEqual(3, run.TrialsLeft);
+            Assert.Contains("steam_wisp", run.Hand.ToList());   // kept on the rack
+        }
+
+        [Test]
+        public void Trial2_GlowmossAndIronOre_Fizzle_SpendATrial_AndHintPotionOnGlowmoss()
+        {
+            var run = StartTutorial();
+            Play(run, TutorialScript.Reaction);
+            var o = Play(run, TutorialScript.Miss);
+            Assert.IsEmpty(Reactions(o.Events));
+            Assert.AreEqual(2, run.TrialsLeft);
+            Assert.AreEqual(40, run.Potency);
+            var hint = o.Events.Single(e => e.Hint != null).Hint;
+            Assert.AreEqual("glowmoss", hint.material);
+            Assert.AreEqual("Potion", hint.partnerKind);
+        }
+
+        [Test]
+        public void Trial3_Chain_SkyIronThenStarmetalOre_40And240_ClearsDepth1()
+        {
+            var run = StartTutorial();
+            Play(run, TutorialScript.Reaction);
+            Play(run, TutorialScript.Miss);
+            var broken = Reactions(run.Preview(TutorialScript.BrokenChain()));
+            CollectionAssert.AreEqual(new long[] { 40 }, broken.Select(e => e.Potency).ToArray());
+            var r = Reactions(Play(run, TutorialScript.Chain).Events);
+            CollectionAssert.AreEqual(TutorialScript.Chain.Makes, r.Select(e => e.Result).ToArray());
+            CollectionAssert.AreEqual(new long[] { 40, 240 }, r.Select(e => e.Potency).ToArray());
+            CollectionAssert.AreEqual(new[] { 4, 5 }, r.Select(e => e.Hub).ToArray());
+            CollectionAssert.AreEqual(new[] { 1, 2 }, r.Select(e => e.Chain).ToArray());
+            Assert.AreEqual(320, run.Potency);
+            Assert.AreEqual(RunPhase.DepthCleared, run.Phase);
+            Assert.AreEqual(1, run.TrialsLeft);
+            CollectionAssert.AreEqual(TutorialScript.Offer, run.CatalystOffer.Select(c => c.id).ToArray());
+        }
+
+        [TestCase("bellows", 80, 2.0)]
+        [TestCase("heart_tile", 80, 2.0)]
+        [TestCase("first_spark", 120, 3.0)]
+        public void Depth2_CatalystTrial_ShowsTheCatalyst(string catalyst, long score, double bonus)
+        {
+            var run = StartTutorial();
+            foreach (var t in TutorialScript.Depth1) Play(run, t);
+            run.ChooseCatalyst(catalyst);
+            Assert.AreEqual(2, run.Depth);
+            Assert.AreEqual(RunPhase.Playing, run.Phase, "no aspect or event before depth 3");
+            Assert.AreEqual(5, run.TrialsLeft, "4 plus the 1 left at depth 1");
+            var trial = TutorialScript.CatalystTrial(catalyst);
+            var r = Reactions(Play(run, trial).Events);
+            CollectionAssert.AreEqual(trial.Makes, r.Select(e => e.Result).ToArray());
+            Assert.AreEqual(score, r[0].Potency);
+            Assert.AreEqual(bonus, ScoreParts.Of(db, r[0]).Bonus, 1e-9);
+        }
+
+        [Test]
+        public void Script_IsTheSame_WhateverTheSeed()
+        {
+            for (int seed = 1; seed <= 25; seed++)
+            {
+                var run = StartTutorial(seed);
+                foreach (var t in TutorialScript.Depth1) Play(run, t);
+                Assert.AreEqual(320, run.Potency, "seed " + seed);
+            }
+        }
+
+        [Test]
+        public void CatalystTrial_CoversTheOffer_AndNothingElse()
+        {
+            foreach (var id in TutorialScript.Offer) Assert.IsNotNull(TutorialScript.CatalystTrial(id), id);
+            Assert.IsNull(TutorialScript.CatalystTrial("hourglass"));
+        }
+
+        [TestCase(false, 0, true)]
+        [TestCase(true, 0, false)]
+        [TestCase(false, 3, false)]
+        public void ShouldRun_OnlyOnAFreshSave(bool done, int journalEntries, bool expected) =>
+            Assert.AreEqual(expected, TutorialScript.ShouldRun(done, journalEntries));
     }
 }
