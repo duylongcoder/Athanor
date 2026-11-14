@@ -158,6 +158,15 @@ namespace Athanor.Tests
             CollectionAssert.IsEmpty(bad, "type NFC (dựng sẵn), not letter + combining mark");
         }
 
+        // The English limits from ContentTests.EventTexts_FitTheEventWindow: the best bound until the Vietnamese layout is decided.
+        [Test] public void VietnameseEventTexts_FitTheEventWindow()
+        {
+            int Limit(string k) => k.EndsWith(".name") ? 22 : k.EndsWith(".text") ? 56 : k.Contains(".out.") ? 52 : int.MaxValue;
+            var bad = viFile.entries.Where(e => e.key.StartsWith("event.") && e.text.Length > Limit(e.key))
+                .Select(e => e.key + " (" + e.text.Length + ")").ToList();
+            CollectionAssert.IsEmpty(bad);
+        }
+
         [Test] public void FontSet_HasThe134VietnameseLetters()
         {
             Assert.AreEqual(67, VietLower.Length); Assert.AreEqual(67, VietUpper.Length);
