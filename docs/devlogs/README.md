@@ -9,7 +9,8 @@ One Markdown file per phase, named `phase-N-<topic>.md`. Newest at the bottom of
 | 3 | [phase-3-plan.md](phase-3-plan.md) | The owner's decisions (rounds 1 to 3) |
 | 3 | [phase-3-unlocks-aspects-events.md](phase-3-unlocks-aspects-events.md) | Built (release web build 2026-11-13); open points for the owner; [handoff](phase-3-handoff.md) |
 | 4 | [phase-4-prep.md](phase-4-prep.md) | OODA re-check draft, awaiting owner decisions |
-| 4 | [phase-4-tutorial-script.md](phase-4-tutorial-script.md) | Tutorial script draft, awaiting owner review |
+| 4 | [phase-4-tutorial-script.md](phase-4-tutorial-script.md) | Script v2; Core hooks and numbers built, Unity controller next |
+| 4 | [phase-4-lore.md](phase-4-lore.md) | Lore draft; events and opening cutscene built |
 | 4 | [phase-4-settings-localization.md](phase-4-settings-localization.md) | Settings panel and localization research, awaiting owner decisions |
 | 4 | [phase-4-depth.md](phase-4-depth.md) | Depth layers / 2.5D feasibility and browser mockup (`docs/mockup/depth/`), awaiting owner review |
 

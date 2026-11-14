@@ -101,3 +101,10 @@ splash) is out of scope.
   - NEWCOMER: all runs: win 9%, average depth reached 3,26, losses by depth 1..5: 1% 10% 59% 29% 0%, stuck runs 0
   - NEWCOMER TOLD TIER<=4: first Ultimate at run: median 184, mean 155,4, fastest 23, slowest 466, quartiles 47 / 205; never within 600 runs: 4/12
   - NEWCOMER TOLD TIER<=4: all runs: win 23%, average depth reached 3,57, losses by depth 1..5: 1% 5% 48% 44% 1%, stuck runs 0
+- 2026-11-15: Plan `2026-11-13-athanor-phase4-tutorial-lore.md` done: Deal, QuietBefore, FirstOffer, Preview, ScoreParts,
+  TutorialScript with TutorialTests; event lore pass and 3 Lore events (Vietnamese updated); Lore events not shown twice
+  in a row; intro in three pages; tutorial save key; Redraw as its own button. Core tests 298 passed; Unity EditMode
+  331 total, 325 passed, 6 skipped. Screenshots in `phase-4-shots/`. Open for the owner: what `ShouldRun` does when a
+  new player quits mid-tutorial (it is skipped for good once the journal has a recipe); `quiet_room` now shows about a
+  quarter as often (the no-repeat rule turns most of its draws into no event); the 3-point balance rule cannot resolve
+  an event-pool change at 200 runs per row (see phase-4-lore.md). Next: the Unity tutorial controller plan.
