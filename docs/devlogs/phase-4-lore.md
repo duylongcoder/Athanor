@@ -241,3 +241,19 @@ What the mockup showed about the storyboard (for the owner):
 1. Depth intros (one line under the depth name in the descent): **postponed**, not in this pass.
 2. A Lore event is marked as seen in the profile so it is not shown twice in a row: **accepted** (plan Task 13).
 3. The name of the last Keeper: **"The Keeper"**.
+
+## Log
+
+- 2026-11-13: Event texts and three Lore events shipped in content.json. BalanceMatrix after (baseline in phase-4-prep.md):
+  - fresh                                        wins 132/200 (66%), avg depth 3,76, lost at 1..5: 7 4 23 33 1
+  - fresh + all catalysts                        wins 164/200 (82%), avg depth 3,81, lost at 1..5: 7 3 10 16 0
+  - fresh + all starters                         wins 134/200 (67%), avg depth 3,83, lost at 1..5: 4 3 25 34 0
+  - half                                         wins 164/200 (82%), avg depth 3,91, lost at 1..5: 3 1 11 21 0
+  - full                                         wins 166/200 (83%), avg depth 3,87, lost at 1..5: 4 2 10 18 0
+  - fresh +aspects+events                        wins 129/200 (64%), avg depth 3,96, lost at 1..5: 1 2 20 47 1
+  - fresh + all catalysts +aspects+events        wins 173/200 (86%), avg depth 3,97, lost at 1..5: 1 4 9 13 0
+  - fresh + all starters +aspects+events         wins 140/200 (70%), avg depth 4,01, lost at 1..5: 0 1 17 40 2
+  - half +aspects+events                         wins 163/200 (81%), avg depth 4,04, lost at 1..5: 0 2 12 22 1
+  - full +aspects+events                         wins 169/200 (84%), avg depth 3,97, lost at 1..5: 0 1 13 17 0
+  - fresh, aspects only                          wins 144/200 (72%), avg depth 3,90, lost at 1..5: 3 3 25 25 0
+  - fresh, events only                           wins 129/200 (64%), avg depth 3,83, lost at 1..5: 5 4 23 37 2
