@@ -36,6 +36,13 @@ namespace Athanor.Game
         static readonly Color RedrawUp = Px.Hex("#1d5a52"), RedrawOver = Px.Hex("#26706a"), RedrawPressed = Px.Hex("#143f3a"),
             RedrawOff = Px.Hex("#3a2e28");
 
+        /// <summary>The bench can be switched off under the pointer, which then never sends exit or release: forget them.</summary>
+        void OnDisable()
+        {
+            HoveredCatalyst = HoveredAspect = -1;
+            RedrawHovered = redrawDown = igniteDown = false;
+        }
+
         public Vector3 PotencyPosition => Px.At(96, 56);
         /// <summary>Where a tooltip about a held catalyst or aspect points.</summary>
         public Vector3 CatalystAnchor(int i) => Px.At(503 + i * catalystPitch, 39);
@@ -74,7 +81,7 @@ namespace Athanor.Game
             trials = Make.Text(t, "", 534, 48, FontKind.Title, 32, Px.Hex("#ee6a3c"), O + 3, Align.Left, dark);
             redrawsLabel = Make.Text(t, "REDRAWS", 556, 63, FontKind.Tiny, 8, Dim, O + 3);
             redraws = Make.Text(t, "", 611, 48, FontKind.Title, 32, Px.Hex("#6ee6c8"), O + 3, Align.Left, dark);
-            // the Redraw button, right under the counter: a dark one-pixel edge round a fill that greys out at zero
+            // the Redraw button, right under the counter: a dark one-pixel edge round a fill that greys out when no redraw can be made
             Make.Rect(t, RedrawX, RedrawY, RedrawW, RedrawH, dark, O + 1);
             redrawFill = Make.Rect(t, RedrawX + 1, RedrawY + 1, RedrawW - 2, RedrawH - 2, RedrawUp, O + 2);
             redrawText = Make.Text(t, "Redraw", RedrawX + RedrawW / 2f, RedrawY, FontKind.Title, 16, Pale, O + 4, Align.Centre, dark);
@@ -116,8 +123,11 @@ namespace Athanor.Game
             ic.onDown = () => igniteDown = true; ic.onUp = () => igniteDown = false; ic.onExit = () => igniteDown = false;
         }
 
-        /// <summary>Everything except the potency number, which is animated separately.</summary>
-        public void Show(RunState run, ContentDb db, Journal journal, bool inputEnabled)
+        /// <summary>
+        /// Everything except the potency number, which is animated separately. keepRedraw leaves the Redraw button and its
+        /// counter as they are: GameFlow.Resolve passes it while an Ignite plays out, so they do not show the outcome early.
+        /// </summary>
+        public void Show(RunState run, ContentDb db, Journal journal, bool inputEnabled, bool keepRedraw = false)
         {
             depth.Text = "Depth " + run.Depth;
             depthName.Text = db.DepthName(run.Depth);
@@ -125,9 +135,13 @@ namespace Athanor.Game
             target.Text = run.Target > 0 ? "/ " + Number(run.Target) : "NO TARGET";
             trials.Text = run.TrialsLeft.ToString();
             redraws.Text = run.RedrawsLeft.ToString();
-            // the button follows the run, not inputEnabled: it stays lit while a reaction plays (clicks are gated in BenchView)
-            canRedraw = CanRedraw(run);
-            redraws.Alpha = redrawsLabel.Alpha = canRedraw ? 1 : 0.35f;
+            // the button follows the run, not inputEnabled: it stays lit while a reaction plays (clicks are gated in BenchView);
+            // keepRedraw holds it as it was while an Ignite plays out, the run being settled already
+            if (!keepRedraw)
+            {
+                canRedraw = CanRedraw(run);
+                redraws.Alpha = redrawsLabel.Alpha = canRedraw ? 1 : 0.35f;
+            }
             // four sockets side by side; a fifth or sixth (a shrine's gift) makes them overlap to fit the panel
             int held = Mathf.Min(run.Catalysts.Count, MaxCatalysts);
             catalystPitch = held <= 4 ? 35 : 105f / (held - 1);

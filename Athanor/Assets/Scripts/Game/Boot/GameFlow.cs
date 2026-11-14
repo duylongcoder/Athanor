@@ -284,7 +284,8 @@ namespace Athanor.Game
             var earned = Profile.Evaluate(Db, Journal);
             Save.StoreProfile(Profile);
             Bench.ClearLinks();
-            Bench.Hud.Show(Run, Db, Journal, false);
+            // the run is settled already: keep the Redraw button as it was until the chain has played (Bench.Refresh below updates it)
+            Bench.Hud.Show(Run, Db, Journal, false, keepRedraw: true);
 
             int n = 0, shows = 0;
             foreach (var e in outcome.Events)
