@@ -264,3 +264,4 @@ What the mockup showed about the storyboard (for the owner):
   point, 95% interval -0.7 to +0.9), and across 50 disjoint blocks of 200 seeds the same before/after difference had
   a standard deviation of about 4 points. Read as seed noise: a 200-run comparison cannot resolve 3 points when the
   event pool changes.
+- 2026-11-13: Lore events are not shown twice in a row (Profile.LastLore, RunOptions.LastLore, DrawEvent). BalanceMatrix unchanged.

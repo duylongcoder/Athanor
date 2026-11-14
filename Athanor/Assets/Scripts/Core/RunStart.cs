@@ -32,6 +32,10 @@ namespace Athanor.Core
         int handDelta, riShift, fallowPending;
         bool tripleFirst, freeDiscoveryUsed, secondChanceUsed, aspectPending, eventPending;
         List<string> reachable;
+        string lastLore;
+
+        /// <summary>The last Lore event seen: this run's latest, or the one the run started with.</summary>
+        public string LastLore => lastLore ?? options.LastLore;
 
         public IReadOnlyList<AspectInstance> Aspects => aspects;
         public IReadOnlyList<AspectInstance> AspectOffer => aspectOffer;
@@ -191,7 +195,18 @@ namespace Athanor.Core
                 if (roll < e.weight) { CurrentEvent = e; break; }
                 roll -= e.weight;
             }
-            if (CurrentEvent != null) eventOptions = CurrentEvent.options.Where(CanTake).ToList();
+            if (CurrentEvent == null) return;
+            if (CurrentEvent.type == "Lore" && CurrentEvent.id == LastLore)
+            {
+                // seen last time: no event. Roll the outcome dice as walking past it would have, so every later draw is
+                // the same as if it had been shown (balance-neutral; a Lore event does nothing).
+                var walk = CurrentEvent.options.FirstOrDefault(CanTake);
+                if (walk != null) eventRng.Range(walk.outcomes.Sum(x => x.weight));
+                CurrentEvent = null;
+                return;
+            }
+            if (CurrentEvent.type == "Lore") lastLore = CurrentEvent.id;
+            eventOptions = CurrentEvent.options.Where(CanTake).ToList();
         }
 
         /// <summary>Takes an option of the current event (an index into EventOptions), applies it and opens the bench.</summary>

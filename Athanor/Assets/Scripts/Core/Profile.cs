@@ -20,6 +20,8 @@ namespace Athanor.Core
         public int RunsStarted, RunsWon, WonNoRedraw, DepthReached, Ignites, ChainLongest, ComboLargest;
         public long BestIgnite;
         public int RewardSeed;
+        /// <summary>The id of the last Lore event the player was shown (kept across runs), or null. A run leaves it out of its next draw.</summary>
+        public string LastLore;
         readonly HashSet<string> completed = new HashSet<string>();
         readonly HashSet<string> starters = new HashSet<string>(), catalysts = new HashSet<string>();
         readonly List<RewardLogData> rewards = new List<RewardLogData>();
@@ -38,6 +40,9 @@ namespace Athanor.Core
         // ---- recording ----------------------------------------------------------------------------
 
         public void RunStarted() => RunsStarted++;
+
+        /// <summary>Call when an event is shown. Only Lore events are remembered.</summary>
+        public void EventShown(EventData e) { if (e != null && e.type == "Lore") LastLore = e.id; }
 
         public void DepthBegan(int depth) => DepthReached = Math.Max(DepthReached, depth);
 
@@ -117,7 +122,7 @@ namespace Athanor.Core
             rewardSeed = RewardSeed, runsStarted = RunsStarted, runsWon = RunsWon, wonNoRedraw = WonNoRedraw, depthReached = DepthReached,
             ignites = Ignites, chainLongest = ChainLongest, comboLargest = ComboLargest, bestIgnite = BestIgnite,
             completed = completed.ToArray(), unlockedStarters = starters.ToArray(), unlockedCatalysts = catalysts.ToArray(),
-            rewards = rewards.ToArray(),
+            rewards = rewards.ToArray(), lastLore = LastLore,
         };
 
         /// <summary>Never throws: anything malformed or no longer in the content is skipped. db may be null (nothing is checked).</summary>
@@ -130,6 +135,7 @@ namespace Athanor.Core
                 DepthReached = Math.Max(0, d.depthReached), Ignites = Math.Max(0, d.ignites), ChainLongest = Math.Max(0, d.chainLongest),
                 ComboLargest = Math.Max(0, d.comboLargest), BestIgnite = Math.Max(0, d.bestIgnite),
             };
+            if (!string.IsNullOrEmpty(d.lastLore) && (db == null || db.Events.Any(e => e.id == d.lastLore && e.type == "Lore"))) p.LastLore = d.lastLore;
             foreach (var id in d.completed ?? new string[0])
                 if (!string.IsNullOrEmpty(id) && (db == null || db.Goals.Any(g => g.id == id))) p.completed.Add(id);
             foreach (var id in d.unlockedStarters ?? new string[0])
@@ -207,6 +213,8 @@ namespace Athanor.Core
         public int QuietBefore;
         /// <summary>The tutorial: the catalysts the run's first offer shows, in this order. Locked, held or unknown ids are left out.</summary>
         public string[] FirstOffer;
+        /// <summary>The Lore event seen last (Profile.LastLore): not drawn again until another Lore event has been seen. Null: none.</summary>
+        public string LastLore;
         public static readonly RunOptions Legacy = new RunOptions();
         public static RunOptions Full(Unlocks unlocks) => new RunOptions { Unlocks = unlocks, Aspects = true, Events = true };
     }
