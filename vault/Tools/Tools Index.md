@@ -18,7 +18,7 @@ Scripts outside Unity (art, fx, web tests, rule tests, this vault).
 - `tools/fx/export.sh` — Exports the pixelfx effects the game plays as sprite sheets (PNG + JSON) into the Unity project.
 - `tools/lint/tests/test_unity_lint.py` — 
 - `tools/lint/unity_lint.py` — 
-- `tools/setup/protect-branch.sh` — Bật branch protection: bắt buộc PR + status check "lint" xanh + nhánh phải cập nhật,
+- `tools/setup/protect-branch.sh` — Bật branch protection: bắt buộc PR + status check "ci-gate" xanh (gom lint, repo-guard, core-tests) + nhánh phải cập nhật,
 - `tools/vault/build_vault.py` — 
 - `tools/vault/q.py` — 
 - `tools/web/autoplay.mjs` — Lets the scripted player play a development web build in headless Chrome and photographs it (no dependencies; Node 22+).
