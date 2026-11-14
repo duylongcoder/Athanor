@@ -246,7 +246,7 @@ namespace Athanor.Tests
 
         [Test] public void ContentEnglish_KeysFollowTheScheme()
         {
-            Assert.AreEqual("A Cracked Altar", contentEn["event.cracked_altar.name"]);
+            Assert.AreEqual("A Keepers' Altar", contentEn["event.cracked_altar.name"]);
             Assert.AreEqual("Walk on", contentEn["event.cracked_altar.opt.1.label"]);
             Assert.AreEqual("You leave it be.", contentEn["event.cracked_altar.opt.1.out.0"]);
             Assert.AreEqual("Reach depth 2", contentEn["goal.g_depth2.text"]);

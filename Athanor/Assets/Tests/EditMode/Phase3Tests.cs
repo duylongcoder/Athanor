@@ -191,7 +191,7 @@ namespace Athanor.Tests
         [Test] public void Content_Has22Goals_16Aspects_16Events()
         {
             var db = new ContentDb(TestContent.Load());
-            Assert.AreEqual(22, db.Goals.Count); Assert.AreEqual(16, db.Aspects.Count); Assert.AreEqual(16, db.Events.Count);
+            Assert.AreEqual(22, db.Goals.Count); Assert.AreEqual(16, db.Aspects.Count); Assert.AreEqual(19, db.Events.Count);
             Assert.AreEqual(3, db.Aspects.Count(a => a.tradeOff));
             Assert.AreEqual(5, db.Aspects.Count(a => a.group == "Engine"));
             Assert.AreEqual(3, db.NoEventWeight);
