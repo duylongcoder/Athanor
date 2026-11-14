@@ -1,0 +1,47 @@
+{
+ "colorGroups": [
+  {
+   "query": "tag:#code/core",
+   "color": {
+    "a": 1,
+    "rgb": 5431378
+   }
+  },
+  {
+   "query": "tag:#code/game",
+   "color": {
+    "a": 1,
+    "rgb": 3447003
+   }
+  },
+  {
+   "query": "tag:#content/material",
+   "color": {
+    "a": 1,
+    "rgb": 15105570
+   }
+  },
+  {
+   "query": "tag:#content/event",
+   "color": {
+    "a": 1,
+    "rgb": 15277667
+   }
+  },
+  {
+   "query": "tag:#agent/athanor",
+   "color": {
+    "a": 1,
+    "rgb": 10181046
+   }
+  },
+  {
+   "query": "tag:#test",
+   "color": {
+    "a": 1,
+    "rgb": 9807270
+   }
+  }
+ ],
+ "search": "-path:Code/Editor"
+}

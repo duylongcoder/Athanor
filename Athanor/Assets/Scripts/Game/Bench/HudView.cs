@@ -19,6 +19,8 @@ namespace Athanor.Game
         public const int MaxCatalysts = 6, MaxAspects = 3;
         /// <summary>The Redraw button in art space: under the right panel, right below the redraws-left counter.</summary>
         public const int RedrawX = 556, RedrawY = 88, RedrawW = 76, RedrawH = 20;
+        /// <summary>How far below the box's top the label is placed, so the word and its shadow sit centred in the fill.</summary>
+        const int RedrawLabelY = 3;
 
         Label depth, depthName, potency, potencyWord, target, trials, redraws, redrawsLabel, journalCount, igniteText, hintText;
         readonly Label[] note = new Label[4];
@@ -84,7 +86,7 @@ namespace Athanor.Game
             // the Redraw button, right under the counter: a dark one-pixel edge round a fill that greys out when no redraw can be made
             Make.Rect(t, RedrawX, RedrawY, RedrawW, RedrawH, dark, O + 1);
             redrawFill = Make.Rect(t, RedrawX + 1, RedrawY + 1, RedrawW - 2, RedrawH - 2, RedrawUp, O + 2);
-            redrawText = Make.Text(t, "Redraw", RedrawX + RedrawW / 2f, RedrawY, FontKind.Title, 16, Pale, O + 4, Align.Centre, dark);
+            redrawText = Make.Text(t, "Redraw", RedrawX + RedrawW / 2f, RedrawY + RedrawLabelY, FontKind.Title, 16, Pale, O + 4, Align.Centre, dark);
             var redrawZone = Make.Root("redraw", t); redrawZone.position = RedrawAnchor;
             var rc = Make.Click(redrawZone.gameObject, new Vector2(RedrawW, RedrawH), O, () => { if (canRedraw) RedrawClicked?.Invoke(); });
             rc.onEnter = () => RedrawHovered = true;
@@ -243,7 +245,7 @@ namespace Athanor.Game
             igniteText.transform.position = Px.At(575, 306 + (canIgnite && igniteDown ? 2 : 0));
             redrawFill.color = !canRedraw ? RedrawOff : redrawDown ? RedrawPressed : RedrawHovered ? RedrawOver : RedrawUp;
             redrawText.Alpha = canRedraw ? 1 : 0.45f;
-            redrawText.transform.position = Px.At(RedrawX + RedrawW / 2f, RedrawY + (canRedraw && redrawDown ? 2 : 0));
+            redrawText.transform.position = Px.At(RedrawX + RedrawW / 2f, RedrawY + RedrawLabelY + (canRedraw && redrawDown ? 2 : 0));
         }
     }
 }

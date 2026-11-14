@@ -2012,8 +2012,8 @@
  "events": [
   {
    "id": "cracked_altar",
-   "name": "A Cracked Altar",
-   "text": "A cracked altar asks for an offering.",
+   "name": "A Keepers' Altar",
+   "text": "A cracked altar to the Keepers asks for an offering.",
    "type": "Choice",
    "minDepth": 1,
    "maxDepth": 4,
@@ -2061,8 +2061,8 @@
   },
   {
    "id": "tilted_workbench",
-   "name": "A Tilted Workbench",
-   "text": "The bench here is tilted, but roomy.",
+   "name": "An Old Workbench",
+   "text": "Another Keeper's bench. Tilted, but roomy.",
    "type": "Choice",
    "minDepth": 1,
    "maxDepth": 5,
@@ -2129,8 +2129,8 @@
   },
   {
    "id": "old_ledger",
-   "name": "An Old Ledger",
-   "text": "A damp ledger lists what others tried.",
+   "name": "A Keeper's Ledger",
+   "text": "A damp ledger lists what another Keeper tried.",
    "type": "Choice",
    "minDepth": 2,
    "maxDepth": 5,
@@ -2178,8 +2178,8 @@
   },
   {
    "id": "hungry_furnace",
-   "name": "A Hungry Furnace",
-   "text": "A furnace gapes, already warm.",
+   "name": "A Keeper's Furnace",
+   "text": "An old furnace gapes, still warm after all this time.",
    "type": "Choice",
    "minDepth": 2,
    "maxDepth": 5,
@@ -2282,7 +2282,7 @@
   {
    "id": "shifting_bench",
    "name": "A Shifting Bench",
-   "text": "The bench grinds and shifts under your hands.",
+   "text": "Roots shift under the floor. The bench grinds.",
    "type": "Gamble",
    "minDepth": 2,
    "maxDepth": 5,
@@ -2295,7 +2295,7 @@
      "outcomes": [
       {
        "weight": 1,
-       "text": "A tile settles over a warm vent.",
+       "text": "A tile settles over a warm root.",
        "gain": [
         {
          "op": "HeatTile",
@@ -2335,8 +2335,8 @@
   },
   {
    "id": "smugglers_crate",
-   "name": "A Smuggler's Crate",
-   "text": "A crate, half open, half buried.",
+   "name": "A Buried Crate",
+   "text": "A crate, half swallowed by the roots.",
    "type": "Gamble",
    "minDepth": 3,
    "maxDepth": 5,
@@ -2390,7 +2390,7 @@
   {
    "id": "forgotten_satchel",
    "name": "A Forgotten Satchel",
-   "text": "A forgotten satchel, still warm.",
+   "text": "A satchel like yours, left on the stair.",
    "type": "Find",
    "minDepth": 1,
    "maxDepth": 3,
@@ -2432,7 +2432,7 @@
   {
    "id": "glinting_seam",
    "name": "A Glinting Seam",
-   "text": "A seam of something glints in the wall.",
+   "text": "An old brew has set into the wall like ore.",
    "type": "Find",
    "minDepth": 3,
    "maxDepth": 5,
@@ -2474,7 +2474,7 @@
   {
    "id": "sealed_shrine",
    "name": "A Sealed Shrine",
-   "text": "A sealed shrine hums at one of your catalysts.",
+   "text": "A shrine to the first Keeper hums at your catalysts.",
    "type": "Shrine",
    "minDepth": 2,
    "maxDepth": 5,
@@ -2565,7 +2565,7 @@
   {
    "id": "damp_air",
    "name": "Damp Air",
-   "text": "The air is damp. Everything cools.",
+   "text": "Water seeps down from the stair. Everything cools.",
    "type": "Hazard",
    "minDepth": 2,
    "maxDepth": 5,
@@ -2595,7 +2595,7 @@
   {
    "id": "falling_grit",
    "name": "Falling Grit",
-   "text": "Grit falls from the ceiling onto the bench.",
+   "text": "Grit falls from the roots onto the bench.",
    "type": "Hazard",
    "minDepth": 2,
    "maxDepth": 5,
@@ -2625,7 +2625,7 @@
   {
    "id": "cold_draft",
    "name": "A Cold Draft",
-   "text": "A cold draft goes through your pockets.",
+   "text": "A cold draft comes up the stair, through your pockets.",
    "type": "Hazard",
    "minDepth": 3,
    "maxDepth": 5,
@@ -2655,7 +2655,7 @@
   {
    "id": "warm_stone",
    "name": "A Warm Stone",
-   "text": "A stone in the wall is warm to the touch.",
+   "text": "A stone in the wall is warm. Something grows behind it.",
    "type": "Boon",
    "minDepth": 1,
    "maxDepth": 5,
@@ -2684,8 +2684,8 @@
   },
   {
    "id": "quiet_room",
-   "name": "A Quiet Room",
-   "text": "A quiet room. Dust turns slowly in the light.",
+   "name": "A Keeper's Room",
+   "text": "A cot, a cup, a name scratched out. Dust turns slowly.",
    "type": "Lore",
    "minDepth": 1,
    "maxDepth": 5,
@@ -2699,6 +2699,96 @@
       {
        "weight": 1,
        "text": "Nothing happens, and that is welcome.",
+       "gain": [
+        {
+         "op": "Nothing",
+         "arg": "",
+         "amount": 0,
+         "amount2": 0
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "names_in_wall",
+   "name": "Names in the Wall",
+   "text": "Names cut into the wall, one under another.",
+   "type": "Lore",
+   "minDepth": 1,
+   "maxDepth": 2,
+   "weight": 1,
+   "options": [
+    {
+     "label": "Go on",
+     "requires": "",
+     "cost": [],
+     "outcomes": [
+      {
+       "weight": 1,
+       "text": "The last one is fresh. There is room below it.",
+       "gain": [
+        {
+         "op": "Nothing",
+         "arg": "",
+         "amount": 0,
+         "amount2": 0
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "warm_roots",
+   "name": "Warm Roots",
+   "text": "Roots push through the ceiling. They are warm, and hum.",
+   "type": "Lore",
+   "minDepth": 3,
+   "maxDepth": 4,
+   "weight": 1,
+   "options": [
+    {
+     "label": "Go on",
+     "requires": "",
+     "cost": [],
+     "outcomes": [
+      {
+       "weight": 1,
+       "text": "You feel the hum in your teeth.",
+       "gain": [
+        {
+         "op": "Nothing",
+         "arg": "",
+         "amount": 0,
+         "amount2": 0
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "pinned_note",
+   "name": "A Pinned Note",
+   "text": "A note pinned to a bench: 'Plant it. Do not climb back.'",
+   "type": "Lore",
+   "minDepth": 5,
+   "maxDepth": 5,
+   "weight": 1,
+   "options": [
+    {
+     "label": "Go on",
+     "requires": "",
+     "cost": [],
+     "outcomes": [
+      {
+       "weight": 1,
+       "text": "You fold it away.",
        "gain": [
         {
          "op": "Nothing",

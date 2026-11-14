@@ -1,0 +1,87 @@
+---
+generated: true
+type: moc
+tags: [moc/skills]
+---
+
+# Skills (slash commands)
+78 skills in `.claude/skills/`.
+
+- `/adopt` — Brownfield audit — do existing artifacts actually work? Numbered migration plan. Unlike /project-stage-detect, checks compliance not existence.
+- `/architecture-decision` — Create an ADR documenting a technical decision: context, alternatives considered, consequences.
+- `/architecture-review` — Traceability matrix mapping GDD requirements to ADRs. Finds gaps, cross-ADR conflicts, engine compatibility. PASS/CONCERNS/NOT ASSESSED/FAIL.
+- `/art-bible` — Author the Art Bible — visual identity gating asset production. Run before /map-systems.
+- `/asset-audit` — Audit assets against naming conventions, file size budgets, format standards. Finds orphaned assets, missing references.
+- `/asset-spec` — Per-asset visual specs plus AI generation prompts from GDDs and character profiles. After the art bible.
+- `/balance-check` — Find balance outliers, broken progressions, degenerate strategies, economy imbalances in formulas and data. 'Check game balance'.
+- `/brainstorm` — Guides the user through finding and choosing a game concept. Use when the user wants game ideas, a new concept, a game jam idea, or to explore other directions,
+- `/bug-report` — Structured bug report from a description, or analyze code for potential bugs. Reproduction steps, severity.
+- `/bug-triage` — Re-evaluate open bugs — priority vs severity, assign to sprints, surface systemic trends. Run when the count grows.
+- `/changelog` — Old name of /write-changelog. Prints one line, then runs /write-changelog.
+- `/code-review` — Architectural review of written code: coding standards, SOLID, testability, performance.
+- `/consistency-check` — Scan GDDs against the entity registry for cross-document conflicts. Grep-first approach targets conflicting sections, different stats.
+- `/content-audit` — Audit GDD content counts against what's implemented — planned vs built.
+- `/create-architecture` — Author the architecture blueprint before code is written. Validates decisions against the pinned engine, flags knowledge gaps.
+- `/create-control-manifest` — Builds a short list of must-do and never-do coding rules per system from accepted ADRs. Use when the user wants programmer rules or a cheat sheet from the ADRs,
+- `/create-epics` — Turns the GDDs and architecture into epics, one per architectural module. Use when the user wants to break the game into epics or plan the work before writing s
+- `/create-stories` — Breaks one epic into implementable stories with acceptance criteria. Use when the user wants stories for an epic or the next batch of work to build. Not for tur
+- `/cut` — Proposes cuts and a polish list to finish the game from its brief and what is built; the person picks each cut. A game to sell also gets a release date and a fe
+- `/day-one-patch` — Day-one launch patch — focused fix for known issues found after gold master. Mini-sprint with QA gate and rollback.
+- `/design-review` — Reviews one design document for completeness, internal consistency, implementability, and design standards. Before handing to programmers.
+- `/design-system` — Section-by-section GDD authoring for one system — walks through each required section, cross-references dependencies.
+- `/dev-story` — Implements one story in code with tests, following its ADRs. Use when the user says to build, implement or start working on a story. Not for checking readiness 
+- `/estimate` — Estimate task effort from complexity, dependencies, velocity, risk. Structured estimate with confidence levels.
+- `/gate-check` — Ready to advance between development stages? PASS/CONCERNS/NOT ASSESSED/FAIL with blockers and required artifacts. 'Can we move to production?'
+- `/help` — Old name of /next-step. Prints one line, then runs /next-step.
+- `/hotfix` — Emergency fix bypassing normal sprint process — hotfix branch, approvals tracked, backport verified, full audit trail.
+- `/launch-checklist` — Launch readiness across every department: code, content, store, marketing, community, infrastructure, legal, go/no-go sign-offs.
+- `/localize` — Localization pipeline — find hardcoded strings, extract string tables, cultural review, VO, RTL, enforce string freeze.
+- `/map-systems` — Decompose a concept into individual systems, map dependencies, prioritize design order, create the systems index.
+- `/milestone-review` — Milestone progress review — completeness, quality metrics, risk, go/no-go recommendation. At checkpoints or before a deadline.
+- `/next-step` — Names the one next step: make a game, change it after play, grow it, or the next studio-mode step. Use when asked what to do next, or stuck.
+- `/onboard` — Onboarding doc for a new contributor or agent — project state, conventions, priorities relevant to the specified role.
+- `/patch-notes` — Player-facing patch notes from git history and changelogs. Translates developer language into player communication.
+- `/perf-profile` — Performance profiling — find bottlenecks, measure against budgets, produce ranked optimization recommendations.
+- `/playtest-report` — Structured playtest report template, or turn existing playtest notes into structured feedback.
+- `/project-settings` — Shows or changes a project setting and where its value comes from. Use to check or set one.
+- `/project-stage-detect` — Analyze project state, detect stage, identify gaps, recommend next steps. 'Where are we in development?'
+- `/propagate-design-change` — Finds architecture decisions (ADRs) made stale by a changed GDD and walks through resolving each. Use when the user changed a number or rule in a GDD and asks w
+- `/prototype` — Asks a few questions, writes a one-page brief, builds a playable browser game as one HTML folder it plays and screenshots; with an engine set, a throwaway engin
+- `/qa-plan` — QA test plan for a sprint — classifies stories by Logic/Integration/Visual/UI, covers automated tests, manual cases, smoke scope.
+- `/quick-design` — Lightweight spec for small changes — tuning adjustments, minor mechanics. Embeds directly into stories; skips full GDD.
+- `/regression-suite` — Map test coverage to GDD critical paths, find fixed bugs lacking regression tests, flag drift from new features.
+- `/release-checklist` — Pre-release checklist — build verification, certification requirements, store metadata, launch readiness.
+- `/retrospective` — Sprint or milestone retrospective from completed work, velocity, blockers. Actionable insights for the next iteration.
+- `/reverse-document` — Writes missing design or architecture docs, or a game's brief, from code. Use when code or prototypes have no docs.
+- `/review-all-gdds` — Holistic cross-GDD review — contradictions between systems, dominant strategies, economic imbalance, cognitive overload, pillar drift.
+- `/scope-check` — Scope creep check — current scope versus the original plan. Flags additions, quantifies bloat, recommends cuts. 'Any scope creep?' Finishing a game from its bri
+- `/security-audit` — Security audit — save tampering, cheat vectors, network exploits, data exposure, input validation. Before public or multiplayer release.
+- `/settings` — Old name of /project-settings. Prints one line, then runs /project-settings.
+- `/setup-engine` — Sets up and pins the engine version: web for a new project unless Godot, Unity or Unreal is named. Use to choose or upgrade it.
+- `/skill-improve` — Improve a skill via a test-fix-retest loop — static checks, targeted fixes, keep or revert on score change.
+- `/skill-test` — Validate skill files for structural compliance and behavioral correctness. Four modes: static linter, spec, category rubric, audit.
+- `/smoke-check` — Critical-path smoke gate before QA hand-off — runs the automated suite. A failed check means the build is not QA-ready.
+- `/soak-test` — Soak test protocol for extended play — what to observe and log for slow leaks, fatigue, late-appearing edge cases.
+- `/sprint-plan` — New or updated sprint plan from the current milestone, completed work, and available capacity.
+- `/sprint-status` — Fast, concise sprint snapshot — burndown and emerging risks for situational awareness. 'How is the sprint going?'
+- `/start` — Guides a first-time user through onboarding and picks the right workflow. Use when the user is new, just cloned or installed the studio, has no idea or engine y
+- `/story-done` — Closes a finished story: verifies each acceptance criterion, checks for design or ADR deviations and updates its status. Use when the user says a story is done,
+- `/story-readiness` — Checks whether a story is ready to implement: clear acceptance criteria, no open questions, valid ADR and dependencies. Use when the user asks if a story, or th
+- `/team-audio` — Orchestrate the audio team — audio-director, sound-designer, technical-artist, gameplay-programmer — direction through implementation.
+- `/team-combat` — Orchestrate the combat team — game-designer, gameplay-programmer, ai-programmer, technical-artist, sound-designer, qa-tester — design through implement and vali
+- `/team-level` — Orchestrate the level team — level-designer, narrative-director, world-builder, art-director, systems-designer, qa-tester — for complete area creation.
+- `/team-live-ops` — Orchestrate the live-ops team — live-ops-designer, economy-designer, analytics-engineer, community-manager, writer — for a season or live event.
+- `/team-narrative` — Orchestrate the narrative team — narrative-director, writer, world-builder, level-designer — for story, world lore, narrative-driven levels.
+- `/team-polish` — Orchestrate the polish team — performance-analyst, technical-artist, sound-designer, qa-tester — to optimize and harden a feature or area.
+- `/team-qa` — Orchestrate the QA team through a full testing cycle — qa-lead strategy and test plan, qa-tester case writing, execution, sign-off.
+- `/team-release` — Orchestrate the release team — release-manager, qa-lead, devops-engineer, producer — to execute a release from candidate to deployment.
+- `/team-ui` — Orchestrate the UI team through the UX pipeline — authoring, visual design, implementation, review, polish. Uses /ux-design, /ux-review, studio templates.
+- `/tech-debt` — Track, categorize and prioritize technical debt across the codebase — scans for debt indicators, maintains a register.
+- `/test-evidence-review` — Quality review of test files and evidence — goes beyond existence, evaluates assertion coverage. ADEQUATE/INCOMPLETE/MISSING/NOT ASSESSED per story.
+- `/test-flakiness` — Find flaky tests from CI logs — aggregates pass rates, spots intermittent failures, recommends quarantine. After multiple runs.
+- `/test-helpers` — Generate engine-specific test helper libraries — assertion utilities, factory functions, mocks in the engine's test folder. Reduces boilerplate.
+- `/test-setup` — Sets up the test framework and CI: tests/ directory, engine runner, GitHub Actions workflow. Use once, before the first sprint.
+- `/ux-design` — Section-by-section UX spec authoring for a screen, flow or HUD. Reads the player journey to provide context; also project-wide accessibility.
+- `/ux-review` — Validate a UX spec, HUD design or pattern library — accessibility, GDD alignment, readiness. APPROVED / NOT ASSESSED / NEEDS REVISION / MAJOR REVISION NEEDED.
+- `/vertical-slice` — Pre-production validation — end-to-end build to confirm the full loop is achievable before committing to Production. After GDDs, architecture, UX specs.
+- `/write-changelog` — Writes a changelog from git commits and sprint data. Use for an internal or player-facing one.
