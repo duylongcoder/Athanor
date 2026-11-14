@@ -50,6 +50,10 @@ tutorial can be skipped only by the title's "Skip tutorial" (asked once, before 
 
 Tiles are numbered 0 to 8 in reading order; 4 is the centre.
 
+Each scripted material goes on its own tile, not just any lit tile: in trial 3, four of the six arrangements of Iron Ore,
+Ember Coal and Moondust on tiles 3, 4, 5 score only 40 (no chain, depth 1 not cleared), and in trial 2 swapping Glowmoss
+and Iron Ore moves the hint to Iron Ore (Beast instead of Potion).
+
 ### Trial 1: lay, Ignite, reaction (reactions)
 
 Hand: Ember Coal, Deep Tear, Iron Ore, Moondust, Bone Ash. Trials 4 → 3.

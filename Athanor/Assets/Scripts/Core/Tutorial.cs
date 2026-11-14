@@ -2,7 +2,11 @@ using System.Linq;
 
 namespace Athanor.Core
 {
-    /// <summary>One material laid on one tile.</summary>
+    /// <summary>
+    /// One material laid on one tile. This material goes on this tile, not just any lit tile: another arrangement of the
+    /// same materials can break the chain (trial 3 then scores 40 and does not clear the depth) or move the hint to the
+    /// other material (trial 2).
+    /// </summary>
     public readonly struct TutorialLay
     {
         public readonly string Id;
