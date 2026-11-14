@@ -112,6 +112,26 @@ namespace Athanor.Tests
             Assert.Fail("no seed drew l2 at depth 2");
         }
 
+        [Test]
+        public void ANonLoreEvent_InBetween_DoesNotLetItComeBack()
+        {
+            var db = Mini(Ev("l1", "Lore", 1, 1, 3), Ev("b1", "Boon", 50, 2, 2));   // l1 at depths 1 to 3; a heavy Boon at depth 2 only
+            for (int seed = 1; seed <= 20; seed++)
+            {
+                var r = new RunState(db, new Journal(), seed, 1, Events());
+                Assert.AreEqual("l1", r.CurrentEvent?.id, "depth 1 has only l1");
+                NextDepth(r);
+                if (r.CurrentEvent?.id != "b1") continue;
+                Assert.AreEqual("l1", r.LastLore, "a Boon in between does not release l1");
+                NextDepth(r);
+                Assert.IsNull(r.CurrentEvent, "depth 3: l1 was still the last Lore event");
+                Assert.AreEqual(RunPhase.Playing, r.Phase);
+                Assert.AreEqual("l1", r.LastLore);
+                return;
+            }
+            Assert.Fail("no seed drew b1 at depth 2");
+        }
+
         // ---- balance --------------------------------------------------------------------------------
 
         static (RunState run, Dictionary<int, string> events) Play(ContentDb db, int seed, string lastLore)
