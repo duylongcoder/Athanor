@@ -122,6 +122,7 @@ namespace Athanor.Game
                     // the page before fades out, then the lines are reused
                     yield return Anim.Over(0.35f, t => { foreach (var l in lines) l.Alpha = 1 - t; });
                     foreach (var l in lines) { l.Text = ""; l.Alpha = 1; }
+                    ClearSkip();
                 }
                 var page = IntroPages[p];
                 bool last = p == IntroPages.Length - 1;

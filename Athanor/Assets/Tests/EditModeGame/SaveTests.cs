@@ -156,6 +156,7 @@ namespace Athanor.Tests
             finally
             {
                 if (had) PlayerPrefs.SetInt(Save.TutorialKey, kept); else PlayerPrefs.DeleteKey(Save.TutorialKey);
+                PlayerPrefs.Save();
             }
         }
     }
