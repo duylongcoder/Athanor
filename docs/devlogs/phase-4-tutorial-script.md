@@ -1,6 +1,6 @@
 # Phase 4: Tutorial script
 
-Status: **Script v2; owner decisions of 2026-11-13 recorded below.** Nothing is implemented. Part of [phase-4-prep.md](phase-4-prep.md); lore in
+Status: **Script v2; owner decisions of 2026-11-13 recorded below.** Core hooks and the script as data are built and measured (Numbers); the Unity controller is next. Part of [phase-4-prep.md](phase-4-prep.md); lore in
 [phase-4-lore.md](phase-4-lore.md); build plan in `docs/superpowers/plans/2026-11-13-athanor-phase4-tutorial-lore.md`.
 Scope (owner, 2026-11-13): first playthrough only; teaches **reactions**, the **Journal**, **Catalysts**; plays from a
 **standardized save file** so every new player sees the same thing.
@@ -49,6 +49,10 @@ about and **locks every other click** until the step is done. A click on the tex
 tutorial can be skipped only by the title's "Skip tutorial" (asked once, before it starts).
 
 Tiles are numbered 0 to 8 in reading order; 4 is the centre.
+
+Each scripted material goes on its own tile, not just any lit tile: in trial 3, four of the six arrangements of Iron Ore,
+Ember Coal and Moondust on tiles 3, 4, 5 score only 40 (no chain, depth 1 not cleared), and in trial 2 swapping Glowmoss
+and Iron Ore moves the hint to Iron Ore (Beast instead of Potion).
 
 ### Trial 1: lay, Ignite, reaction (reactions)
 
@@ -133,9 +137,9 @@ Depth 2 starts with 4 trials plus the 1 left from depth 1 (5). After 5.4 the pla
 
 ## Numbers
 
-All numbers above are worked out by hand from `IgniteResolver.Score` (base by tier 0/20/60/180/500/1500, x(items-1), x2 first
-this run, x chain step, then catalysts). Task 4 of the plan turns each into a Core test; if a test disagrees, the test is
-right and this file is corrected.
+Measured by `TutorialTests` (2026-11-13), all as the script states: trial 1 = 40; trial 2 = 0 with the hint
+"Glowmoss reacts with something Potion"; trial 3 = 40 + 240, hubs on tiles 4 then 5, depth 1 cleared at 320 with 1 trial
+left; broken chain = 40; depth 2 first trial: Bellows 80, Heart Tile 80, First Spark 120. The same for 25 seeds.
 
 ## What I did not decide
 

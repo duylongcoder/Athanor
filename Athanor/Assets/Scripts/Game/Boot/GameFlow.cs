@@ -140,7 +140,9 @@ namespace Athanor.Game
             runs++;
             // what the profile has unlocked is fixed when the run starts: an item won during it joins the next one
             unlocks = Unlocks.For(Db, Profile);
-            Run = new RunState(Db, Journal, System.Environment.TickCount * 31 + runs, 1, RunOptions.Full(unlocks));
+            var options = RunOptions.Full(unlocks);
+            options.LastLore = Profile.LastLore;
+            Run = new RunState(Db, Journal, System.Environment.TickCount * 31 + runs, 1, options);
             runEnded = false; shownPotency = 0;
             goalsThisRun.Clear();
             Profile.RunStarted(); Profile.DepthBegan(Run.Depth);
@@ -180,6 +182,8 @@ namespace Athanor.Game
                 else
                 {
                     State = FlowState.Event;
+                    Profile.EventShown(Run.CurrentEvent);
+                    Save.StoreProfile(Profile);
                     yield return eventView.Show(Run, () => { Save.StoreJournal(Journal); Bench.Refresh(); });
                 }
                 Bench.Refresh();
@@ -280,7 +284,8 @@ namespace Athanor.Game
             var earned = Profile.Evaluate(Db, Journal);
             Save.StoreProfile(Profile);
             Bench.ClearLinks();
-            Bench.Hud.Show(Run, Db, Journal, false);
+            // the run is settled already: keep the Redraw button as it was until the chain has played (Bench.Refresh below updates it)
+            Bench.Hud.Show(Run, Db, Journal, false, keepRedraw: true);
 
             int n = 0, shows = 0;
             foreach (var e in outcome.Events)

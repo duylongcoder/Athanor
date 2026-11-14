@@ -82,3 +82,29 @@ splash) is out of scope.
 ## Log
 
 - 2026-11-13: OODA re-check drafted from the Phase 3 handoff and devlog. No code changed, no reports run yet.
+
+- 2026-11-13: Newcomer baseline before the lore pass. BalanceMatrix (pouch mode 2, 200 runs per row):
+  - fresh                                        wins 132/200 (66%), avg depth 3,76, lost at 1..5: 7 4 23 33 1
+  - fresh + all catalysts                        wins 164/200 (82%), avg depth 3,81, lost at 1..5: 7 3 10 16 0
+  - fresh + all starters                         wins 134/200 (67%), avg depth 3,83, lost at 1..5: 4 3 25 34 0
+  - half                                         wins 164/200 (82%), avg depth 3,91, lost at 1..5: 3 1 11 21 0
+  - full                                         wins 166/200 (83%), avg depth 3,87, lost at 1..5: 4 2 10 18 0
+  - fresh +aspects+events                        wins 135/200 (67%), avg depth 3,88, lost at 1..5: 4 2 28 31 0
+  - fresh + all catalysts +aspects+events        wins 170/200 (85%), avg depth 3,93, lost at 1..5: 4 3 7 16 0
+  - fresh + all starters +aspects+events         wins 145/200 (72%), avg depth 4,05, lost at 1..5: 0 1 19 34 1
+  - half +aspects+events                         wins 163/200 (81%), avg depth 3,99, lost at 1..5: 0 1 15 21 0
+  - full +aspects+events                         wins 170/200 (85%), avg depth 4,00, lost at 1..5: 0 2 8 20 0
+  - fresh, aspects only                          wins 144/200 (72%), avg depth 3,90, lost at 1..5: 3 3 25 25 0
+  - fresh, events only                           wins 128/200 (64%), avg depth 3,77, lost at 1..5: 6 4 27 35 0
+  RoleReport (taught 4, 12 players, 600 runs):
+  - NEWCOMER: first Ultimate at run: median 371, mean 332,5, fastest 175, slowest 474, quartiles 240 / 443; never within 600 runs: 6/12
+  - NEWCOMER: all runs: win 9%, average depth reached 3,26, losses by depth 1..5: 1% 10% 59% 29% 0%, stuck runs 0
+  - NEWCOMER TOLD TIER<=4: first Ultimate at run: median 184, mean 155,4, fastest 23, slowest 466, quartiles 47 / 205; never within 600 runs: 4/12
+  - NEWCOMER TOLD TIER<=4: all runs: win 23%, average depth reached 3,57, losses by depth 1..5: 1% 5% 48% 44% 1%, stuck runs 0
+- 2026-11-15: Plan `2026-11-13-athanor-phase4-tutorial-lore.md` done: Deal, QuietBefore, FirstOffer, Preview, ScoreParts,
+  TutorialScript with TutorialTests; event lore pass and 3 Lore events (Vietnamese updated); Lore events not shown twice
+  in a row; intro in three pages; tutorial save key; Redraw as its own button. Core tests 298 passed; Unity EditMode
+  331 total, 325 passed, 6 skipped. Screenshots in `phase-4-shots/`. Open for the owner: what `ShouldRun` does when a
+  new player quits mid-tutorial (it is skipped for good once the journal has a recipe); `quiet_room` now shows about a
+  quarter as often (the no-repeat rule turns most of its draws into no event); the 3-point balance rule cannot resolve
+  an event-pool change at 200 runs per row (see phase-4-lore.md). Next: the Unity tutorial controller plan.

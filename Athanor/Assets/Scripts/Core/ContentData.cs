@@ -51,6 +51,7 @@ namespace Athanor.Core
         public long bestIgnite;
         public string[] completed, unlockedStarters, unlockedCatalysts;
         public RewardLogData[] rewards;
+        public string lastLore;
     }
 
     public static class Rarities

@@ -83,6 +83,29 @@ namespace Athanor.Game
 
         // ---- the three stories ---------------------------------------------------------------------
 
+        /// <summary>The opening story, three lines a page (docs/devlogs/phase-4-lore.md). The last page is the original text.</summary>
+        static readonly string[][] IntroPages =
+        {
+            new[]
+            {
+                "Under the old workshop, the cellar keeps going down.",
+                "No one dug it. It grew, one Keeper at a time.",
+                "Each went down with a satchel, a bench, and a Book.",
+            },
+            new[]
+            {
+                "At the bottom they made something, and planted it.",
+                "The last Keeper went down and did not come back up.",
+                "The bench is yours now. The Book is empty.",
+            },
+            new[]
+            {
+                "Each depth asks for a stronger brew. Nothing down here is labelled.",
+                "The Book will remember what your hands forget.",
+                "So mix. Watch what happens. Remember.",
+            },
+        };
+
         /// <summary>Starts and ends on a black screen.</summary>
         public IEnumerator Intro()
         {
@@ -92,16 +115,22 @@ namespace Athanor.Game
             embers = 1;
             yield return ScreenFx.I.FadeIn(0.9f);
             ClearSkip();
-            string[] text =
+            for (int p = 0; p < IntroPages.Length; p++)
             {
-                "Under the old workshop, the cellar keeps going down.",
-                "Each depth asks for a stronger brew. Nothing down here is labelled.",
-                "So mix. Watch what happens. Remember.",
-            };
-            for (int i = 0; i < text.Length; i++)
-            {
-                yield return Type(lines[i], text[i]);
-                yield return Hold(i < text.Length - 1 ? 0.8f : 0.3f);
+                if (p > 0)
+                {
+                    // the page before fades out, then the lines are reused
+                    yield return Anim.Over(0.35f, t => { foreach (var l in lines) l.Alpha = 1 - t; });
+                    foreach (var l in lines) { l.Text = ""; l.Alpha = 1; }
+                    ClearSkip();
+                }
+                var page = IntroPages[p];
+                bool last = p == IntroPages.Length - 1;
+                for (int i = 0; i < page.Length; i++)
+                {
+                    yield return Type(lines[i], page[i]);
+                    yield return Hold(i < page.Length - 1 ? 0.8f : last ? 0.3f : 1.6f);
+                }
             }
             prompt.Text = "CLICK TO BEGIN";
             yield return Hold(8);

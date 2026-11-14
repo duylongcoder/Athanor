@@ -32,6 +32,7 @@ namespace Athanor.Core
         readonly List<CatalystData> catalysts = new List<CatalystData>();
         readonly HashSet<string> fired = new HashSet<string>();
         List<CatalystData> offer = new List<CatalystData>();
+        bool firstOfferMade;
         int carried;   // trials left unspent at the last depth; they are added to the next
 
         public RunState(ContentDb db, Journal journal, int seed, int startDepth = 1, RunOptions options = null)
@@ -104,8 +105,9 @@ namespace Athanor.Core
             carried = 0;
             RedrawsLeft = Math.Max(0, BaseRedraws + Sum(Effects.ExtraRedraw) - (HasAspect(AspectEffects.Greedy) ? 1 : 0));
             RebuildRules();
-            aspectPending = options.Aspects && (Depth == 1 || Depth == 3 || Depth == 5);
-            eventPending = options.Events;
+            bool quiet = Depth < options.QuietBefore;
+            aspectPending = options.Aspects && !quiet && (Depth == 1 || Depth == 3 || Depth == 5);
+            eventPending = options.Events && !quiet;
             Advance();
         }
 
@@ -168,8 +170,37 @@ namespace Athanor.Core
             return true;
         }
 
+        /// <summary>
+        /// The tutorial: puts the starting materials in hand back and deals exactly these instead. Discoveries on the
+        /// rack stay. Only while playing, on an empty bench. False, and nothing changed, when an id is not an open
+        /// starting material or the satchel has too few copies of it.
+        /// </summary>
+        public bool Deal(IReadOnlyList<string> ids)
+        {
+            if (Phase != RunPhase.Playing || Bench.Count > 0 || ids == null) return false;
+            foreach (var g in ids.GroupBy(i => i))
+                if (!db.Has(g.Key) || !IsMain(g.Key) || satchel.Available(g.Key) + hand.Count(h => h == g.Key) < g.Count()) return false;
+            satchel.Discard(hand.Where(IsMain));
+            hand.RemoveAll(IsMain);
+            foreach (var id in ids) satchel.Take(id);
+            hand.AddRange(ids);
+            return true;
+        }
+
         /// <summary>What a reaction's score depends on here and now (also used by the scripted player to plan).</summary>
         public ScoreContext NewContext() => new ScoreContext { Depth = Depth, Rules = Rules, TripleFirst = tripleFirst };
+
+        /// <summary>
+        /// What this layout (9 tiles, null where empty) would do if ignited now. Nothing changes: the journal and the
+        /// recipes fired this run are copied. The tutorial uses it to show a broken chain beside the real one.
+        /// </summary>
+        public List<ReactionEvent> Preview(string[] tiles)
+        {
+            var bench = new Bench();
+            for (int t = 0; t < Bench.TileCount && t < tiles.Length; t++) bench.Tiles[t] = tiles[t];
+            var copy = Journal.FromData(journal.ToData());
+            return IgniteResolver.Resolve(bench, db, copy, new HashSet<string>(fired), catalysts, NewContext()).Events;
+        }
 
         public IgniteOutcome Ignite()
         {
@@ -240,6 +271,13 @@ namespace Athanor.Core
 
         void BuildOffer()
         {
+            if (options.FirstOffer != null && !firstOfferMade)
+            {
+                firstOfferMade = true;
+                offer = options.FirstOffer.Select(id => db.Catalysts.FirstOrDefault(c => c.id == id))
+                    .Where(c => c != null && IsOpen(c.id) && catalysts.All(o => o.id != c.id)).ToList();
+                if (offer.Count > 0) return;
+            }
             var pool = db.Catalysts.Where(c => IsOpen(c.id) && catalysts.All(o => o.id != c.id)).ToList();
             rng.Shuffle(pool);
             offer = pool.Take(OfferSize).ToList();

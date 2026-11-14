@@ -118,3 +118,11 @@ The build is Gzip-compressed with Unity's built-in fallback, so any static host 
 ## Credits
 
 See [CREDITS.md](CREDITS.md).
+
+## Obsidian vault
+
+Project knowledge (code structure, data design, content, events, agents, phases) lives in `vault/`; open the repository root in Obsidian. Regenerate with `python3 tools/vault/build_vault.py`, query with `python3 tools/vault/q.py`. See `vault/Workflow/Vault Guide.md`.
+
+## Claude Code agents
+
+The repo uses the Claude Code Game Studios framework plus twelve Athanor roles (`.claude/agents/`): see `CLAUDE.md` and `vault/Workflow/Agent Workflow.md`.

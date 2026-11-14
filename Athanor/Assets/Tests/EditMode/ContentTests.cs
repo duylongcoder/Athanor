@@ -311,5 +311,32 @@ namespace Athanor.Tests
             Assert.AreEqual("a+b+c", ContentDb.ComboKey(new[] { "c", "a", "b" }));
 
         [Test] public void PairKey_IsOrderIndependent() => Assert.AreEqual(ContentDb.PairKey("b", "a"), ContentDb.PairKey("a", "b"));
+
+        [Test]
+        public void EventTexts_FitTheEventWindow()
+        {
+            foreach (var e in data.events)
+            {
+                Assert.LessOrEqual(e.name.Length, 22, e.id + " name");
+                Assert.LessOrEqual(e.text.Length, 56, e.id + " text");
+                foreach (var o in e.options)
+                    foreach (var x in o.outcomes) Assert.LessOrEqual(x.text.Length, 52, e.id + " outcome");
+            }
+        }
+
+        [Test]
+        public void LoreEvents_DoNothing_AndTellTheStoryInOrder()
+        {
+            var lore = data.events.Where(e => e.type == "Lore").ToList();
+            CollectionAssert.AreEquivalent(new[] { "quiet_room", "names_in_wall", "warm_roots", "pinned_note" }, lore.Select(e => e.id));
+            foreach (var e in lore)
+            {
+                Assert.AreEqual(1, e.options.Length, e.id);
+                Assert.IsTrue(e.options[0].outcomes.All(x => x.gain.All(g => g.op == Ops.Nothing)), e.id);
+            }
+            var byId = lore.ToDictionary(e => e.id);
+            Assert.Less(byId["names_in_wall"].maxDepth, byId["warm_roots"].minDepth);
+            Assert.Less(byId["warm_roots"].maxDepth, byId["pinned_note"].minDepth);
+        }
     }
 }

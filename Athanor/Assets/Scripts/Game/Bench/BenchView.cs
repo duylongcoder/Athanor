@@ -307,7 +307,7 @@ namespace Athanor.Game
             }
             else if (!dragging && Hud.RedrawHovered)
             {
-                key = "redraw"; title = "Redraw"; anchor = Px.At(591, 46);
+                key = "redraw"; title = "Redraw"; anchor = Hud.RedrawAnchor;
                 body = run.RedrawsLeft > 0 ? "Swap the cards in your hand for new ones. Click to use one." : "None left at this depth.";
             }
             else if (!dragging && over.Is && (over.from == From.Tile || db.Material(over.id).tier > 0))

@@ -1,0 +1,953 @@
+{
+  "version": 1,
+  "entries": [
+    {
+      "rule": "UL001",
+      "path": "Assets/Scripts/Game/Cutscene/SimpleCutscene.cs",
+      "text": "rays[k].GetChild(0).GetComponent<SpriteRenderer>().color = new Color(1, 0.95f, 0.75f, 0.3f * raysOn);",
+      "count": 1
+    },
+    {
+      "rule": "UL002",
+      "path": "Assets/Scripts/Game/Boot/GameFlow.cs",
+      "text": "reaction.Skip(); story.Skip();",
+      "count": 1
+    },
+    {
+      "rule": "UL003",
+      "path": "Assets/Scripts/Game/Boot/Save.cs",
+      "text": "catch (Exception) { return new Journal(); }",
+      "count": 1
+    },
+    {
+      "rule": "UL003",
+      "path": "Assets/Scripts/Game/Boot/Save.cs",
+      "text": "catch (Exception) { return new Profile(seed); }",
+      "count": 1
+    },
+    {
+      "rule": "UL004",
+      "path": "Assets/Scripts/Game/Support/PointerInput.cs",
+      "text": "Hover?.onDown?.Invoke();",
+      "count": 1
+    },
+    {
+      "rule": "UL004",
+      "path": "Assets/Scripts/Game/Support/PointerInput.cs",
+      "text": "top?.onEnter?.Invoke();",
+      "count": 1
+    },
+    {
+      "rule": "UL005",
+      "path": "Assets/Scripts/Game/Boot/GameFlow.cs",
+      "text": "Bench.IgniteRequested += Ignite;",
+      "count": 1
+    },
+    {
+      "rule": "UL005",
+      "path": "Assets/Scripts/Game/Boot/GameFlow.cs",
+      "text": "Bench.JournalRequested += OpenJournal;",
+      "count": 1
+    },
+    {
+      "rule": "UL005",
+      "path": "Assets/Scripts/Game/Boot/GameFlow.cs",
+      "text": "Bench.RedrawRequested += () => { if (State == FlowState.Bench && Run.Redraw()) Bench.Refresh(true); };",
+      "count": 1
+    },
+    {
+      "rule": "UL005",
+      "path": "Assets/Scripts/Game/Boot/GameFlow.cs",
+      "text": "RunOver.GoalsClicked += OpenGoals;",
+      "count": 1
+    },
+    {
+      "rule": "UL005",
+      "path": "Assets/Scripts/Game/Boot/GameFlow.cs",
+      "text": "goalsView.Closed += CloseGoals;",
+      "count": 1
+    },
+    {
+      "rule": "UL005",
+      "path": "Assets/Scripts/Game/Boot/GameFlow.cs",
+      "text": "journalView.Closed += CloseJournal;",
+      "count": 1
+    },
+    {
+      "rule": "UL005",
+      "path": "Assets/Scripts/Game/Boot/GameFlow.cs",
+      "text": "title.GoalsClicked += OpenGoals;",
+      "count": 1
+    },
+    {
+      "rule": "UL005",
+      "path": "Assets/Scripts/Game/Boot/GameFlow.cs",
+      "text": "title.JournalClicked += OpenJournal;",
+      "count": 1
+    },
+    {
+      "rule": "UL005",
+      "path": "Assets/Scripts/Game/Boot/GameFlow.cs",
+      "text": "title.ResetConfirmed += ResetProgress;",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/BalanceMatrixTests.cs",
+      "text": "[Test, Explicit] public void BalanceMatrix()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/BalanceMatrixTests.cs",
+      "text": "[Test, Explicit] public void EventReport()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/ChainTests.cs",
+      "text": "[Test] public void Centre_HostsFiveItems()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/ChainTests.cs",
+      "text": "[Test] public void Chain_ResultReactsAgain()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/ChainTests.cs",
+      "text": "[Test] public void Company_LiftsARecipeOverItsRequiredTotal()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/ChainTests.cs",
+      "text": "[Test] public void Company_MustTouchTheHub()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/ChainTests.cs",
+      "text": "[Test] public void Corner_CannotHostFourItems()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/ChainTests.cs",
+      "text": "[Test] public void Diagonals_CountAsNeighbours()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/ChainTests.cs",
+      "text": "[Test] public void DullCompany_LeavesTheRecipeShort()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/ChainTests.cs",
+      "text": "[Test] public void EdgeMiddle_HostsFourItems()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/ChainTests.cs",
+      "text": "[Test] public void EmptyAndSingleBench_NoSteps()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/ChainTests.cs",
+      "text": "[Test] public void Heat_IsTheHubPlusEverythingTouchingIt()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/ChainTests.cs",
+      "text": "[Test] public void Hub_IsHighestReactivity()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/ChainTests.cs",
+      "text": "[Test] public void LargestComboFirst()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/ChainTests.cs",
+      "text": "[Test] public void MatchAt_NullWhenNothingFits()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/ChainTests.cs",
+      "text": "[Test] public void Neighbours_OrthogonalAndDiagonal()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/ChainTests.cs",
+      "text": "[Test] public void Plan_DoesNotMutateInput()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/ChainTests.cs",
+      "text": "[Test] public void ShortAt_NamesTheRecipeThatOnlyLacksHeat()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/ChainTests.cs",
+      "text": "[Test] public void TwoCopies_NeedTwoDistinctTiles()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/ContentTests.cs",
+      "text": "[Test] public void BasePotency_ByTier()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/ContentTests.cs",
+      "text": "[Test] public void ComboRecipeCounts()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/ContentTests.cs",
+      "text": "[Test] public void Company_IsWhatARecipeLacksOnItsOwn()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/ContentTests.cs",
+      "text": "[Test] public void EveryDiscovery_IsUsedOrIsTheUltimate()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/ContentTests.cs",
+      "text": "[Test] public void EveryMaterialReachableFromStarters()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/ContentTests.cs",
+      "text": "[Test] public void EveryRecipeResultTier_IsMaxInputTierPlus1()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/ContentTests.cs",
+      "text": "[Test] public void EveryRecipe_UsesItemsForm()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/ContentTests.cs",
+      "text": "[Test] public void EveryStarterHasAtLeast3Partners()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/ContentTests.cs",
+      "text": "[Test] public void Has13Starters_8OfThemOpen()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/ContentTests.cs",
+      "text": "[Test] public void Has26Catalysts_9OfThemOpen()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/ContentTests.cs",
+      "text": "[Test] public void Has7Kinds_EachUsed()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/ContentTests.cs",
+      "text": "[Test] public void PartnersOf_CoversComboMembers()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/ContentTests.cs",
+      "text": "[Test] public void Reactivity_AndTotals()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/ContentTests.cs",
+      "text": "[Test] public void Reactivity_NotMonotonicInTier()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/ContentTests.cs",
+      "text": "[Test] public void Reactivity_SpreadAcrossTiers()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/ContentTests.cs",
+      "text": "[Test] public void RecipesContaining_LargestFirst()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/ContentTests.cs",
+      "text": "[Test] public void TryReact_IsUnordered()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/ContentTests.cs",
+      "text": "[Test] public void UltimateIsTier5_FromTwoTier4()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/ContentTests.cs",
+      "text": "[Test] public void UltimateReachable_ViaAtLeastOneCombo()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/ContentTests.cs",
+      "text": "public void EventTexts_FitTheEventWindow()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/IgniteTests.cs",
+      "text": "[Test] public void Diagonals_LetCornersReactWithCentre()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/IgniteTests.cs",
+      "text": "[Test] public void FirstTriple_OnlyFirst()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/IgniteTests.cs",
+      "text": "[Test] public void FiveItem_ScoresFourTimesBase()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/IgniteTests.cs",
+      "text": "[Test] public void Fizzle_DoesNotHintAtAlreadyKnownRecipes()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/IgniteTests.cs",
+      "text": "[Test] public void Journal_LearnsComboKey()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/IgniteTests.cs",
+      "text": "[Test] public void NoPairs_ReturnsEmpty()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/IgniteTests.cs",
+      "text": "[Test] public void Pairs_DoNotWrapAcrossRows()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/IgniteTests.cs",
+      "text": "[Test] public void SameRecipeTwiceInOneIgnite_OnlyFirstIsDiscovery()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/IgniteTests.cs",
+      "text": "[Test] public void SecondReactionInIgnite_IsMultipliedBy2()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/IgniteTests.cs",
+      "text": "[Test] public void ThreeItem_Scores240()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/IgniteTests.cs",
+      "text": "[Test] public void WithCompany_TheSameBenchReacts()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/LangTests.cs",
+      "text": "[Test] public void BothFilesParse_WithTheirLanguageAndName()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/LangTests.cs",
+      "text": "[Test] public void ContentEnglish_KeysFollowTheScheme()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/LangTests.cs",
+      "text": "[Test] public void EnglishFile_HoldsNoContentKeys()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/LangTests.cs",
+      "text": "[Test] public void EveryVietnameseCharacter_IsInBothFonts()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/LangTests.cs",
+      "text": "[Test] public void EveryVietnameseKey_IsAnEnglishKeyOrAContentKey()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/LangTests.cs",
+      "text": "[Test] public void Fallback_LanguageThenEnglishThenSuppliedThenKey()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/LangTests.cs",
+      "text": "[Test] public void FontSet_HasThe134VietnameseLetters()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/LangTests.cs",
+      "text": "[Test] public void Missing_CountsOtherAsCoveringOne()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/LangTests.cs",
+      "text": "[Test] public void NoDuplicateKeys()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/LangTests.cs",
+      "text": "[Test] public void NoEmptyText()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/LangTests.cs",
+      "text": "[Test] public void Parse_EscapesUnknownFieldsAndBom()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/LangTests.cs",
+      "text": "[Test] public void Placeholders_MatchTheEnglish()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/LangTests.cs",
+      "text": "[Test] public void RealLookups()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/LangTests.cs",
+      "text": "[Test] public void Stale_FlagsChangedEnglish()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/LangTests.cs",
+      "text": "[Test] public void SystemTextJson_ReadsTheSameEntries()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/LangTests.cs",
+      "text": "[Test] public void VietnameseEventTexts_FitTheEventWindow()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/LangTests.cs",
+      "text": "[Test] public void Vietnamese_HasEveryUiKey()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/LangTests.cs",
+      "text": "[Test] public void Vietnamese_IsNotStale()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/LangTests.cs",
+      "text": "[Test] public void Vietnamese_IsPrecomposed()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/LoreTests.cs",
+      "text": "public void Profile_RemembersOnlyLoreEvents()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/LoreTests.cs",
+      "text": "public void SkippingALoreEvent_IsBalanceNeutral()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/LoreTests.cs",
+      "text": "public void TheLastLoreEvent_IsNotDrawn()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/LoreTests.cs",
+      "text": "public void WithoutALastLore_EveryLoreEventCanCome()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/Phase3Tests.cs",
+      "text": "[Test] public void AFreshRun_Draws5CardsFrom16()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/Phase3Tests.cs",
+      "text": "[Test] public void AllScale_ScalesEverything()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/Phase3Tests.cs",
+      "text": "[Test] public void AnchorTile_GivesBackTheDiscoveryLaidOnIt()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/Phase3Tests.cs",
+      "text": "[Test] public void Bridge_JoinsItsTwoTiles()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/Phase3Tests.cs",
+      "text": "[Test] public void CatalystOffer_HoldsOnlyOpenCatalysts()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/Phase3Tests.cs",
+      "text": "[Test] public void ChainFrom_DoublesFromThatLinkOn()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/Phase3Tests.cs",
+      "text": "[Test] public void ChooseAspect_RefusesWhatIsNotOnOffer()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/Phase3Tests.cs",
+      "text": "[Test] public void DepthScale_GrowsWithEachDepthBelowTheFirst()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/Phase3Tests.cs",
+      "text": "[Test] public void DoubledAndVolatile_ScoreOnTheirTile()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/Phase3Tests.cs",
+      "text": "[Test] public void EchoTile_KeepsACopyOfWhatItsHubMakes()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/Phase3Tests.cs",
+      "text": "[Test] public void Event_EffectsLastOneDepth()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/Phase3Tests.cs",
+      "text": "[Test] public void ExtraRedraw_AddsARedrawAtEveryDepth()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/Phase3Tests.cs",
+      "text": "[Test] public void FlatPerReaction_IsAddedAfterTheMultipliers()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/Phase3Tests.cs",
+      "text": "[Test] public void FreshProfile_ReachesOnlyThePhase2Recipes()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/Phase3Tests.cs",
+      "text": "[Test] public void HeatedTile_MakesItsMaterialTheHub()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/Phase3Tests.cs",
+      "text": "[Test] public void HeavyTile_CountsOneChainStepMore()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/Phase3Tests.cs",
+      "text": "[Test] public void KilnCrossroadsPivot_ReachTheBenchRules()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/Phase3Tests.cs",
+      "text": "[Test] public void LegacyRun_NeverStopsForAnAspectOrAnEvent()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/Phase3Tests.cs",
+      "text": "[Test] public void OpenBench_JoinsACornerToTheCentre()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/Phase3Tests.cs",
+      "text": "[Test] public void Pairs_FollowLinksAndSkipBlockedTiles()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/Phase3Tests.cs",
+      "text": "[Test] public void Phase2Content_LoadsWithNoPhase3Fields()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/Phase3Tests.cs",
+      "text": "[Test] public void PlainRules_PlanExactlyAsPhase2Did()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/Phase3Tests.cs",
+      "text": "[Test] public void Profile_CountsWhatAnIgniteDid()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/Phase3Tests.cs",
+      "text": "[Test] public void Score_ReadsTheHubsTile()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/Phase3Tests.cs",
+      "text": "[Test] public void StartOfDepth_IsAspectThenEventThenBench()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/Phase3Tests.cs",
+      "text": "[Test] public void StarterDouble_NeedsThatManyStartingMaterials()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/Phase3Tests.cs",
+      "text": "[Test] public void TheSameSeed_GivesTheSameAspectsAndEvents()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/Phase3Tests.cs",
+      "text": "[Test] public void TierDouble_DoublesFromItsTierUp()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/RoleSimTests.cs",
+      "text": "[Test, Explicit] public void NewcomerTrace()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/RoleSimTests.cs",
+      "text": "[Test, Explicit] public void RoleReport()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/RoleSimTests.cs",
+      "text": "[Test] public void Admin_WinsFromAFreshProfile()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/RoleSimTests.cs",
+      "text": "[Test] public void Newcomer_LearnsAndEventuallyWins()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/RunStateTests.cs",
+      "text": "[Test, Explicit] public void BalanceReport()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/RunStateTests.cs",
+      "text": "[Test, Explicit] public void TraceRun()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/RunStateTests.cs",
+      "text": "[Test] public void Bot_GivesADiscoveryTheCompanyItNeeds()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/RunStateTests.cs",
+      "text": "[Test] public void Bot_GivesARecipeTheCompanyItNeeds()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/RunStateTests.cs",
+      "text": "[Test] public void ExtraHand_Gives6Cards()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/RunStateTests.cs",
+      "text": "[Test] public void HasFired_ByRecipe()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/RunStateTests.cs",
+      "text": "[Test] public void InformedPlayer_RarelyFiresAFiveItemCombo()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/RunStateTests.cs",
+      "text": "[Test] public void InformedPlayer_WinsMostSeeds()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/RunStateTests.cs",
+      "text": "[Test] public void MakingTheUltimate_WinsAtAnyDepth()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/RunStateTests.cs",
+      "text": "[Test] public void PlacedStarters_AlwaysReturnToTheSatchel()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/RunStateTests.cs",
+      "text": "[Test] public void Redraw_KeepsDiscoveries()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/RunStateTests.cs",
+      "text": "[Test] public void ScriptedRun_ReachesWon()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/RunStateTests.cs",
+      "text": "[Test] public void SmallSatchel_DrawsWhatExists()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/SatchelTests.cs",
+      "text": "[Test] public void AddHint_NoDuplicates()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/SatchelTests.cs",
+      "text": "[Test] public void Draw_DoesNotReturnCardsStillOut()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/SatchelTests.cs",
+      "text": "[Test] public void IsComplete_OnlyWhenAllRecipesWithMaterialKnown()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/SatchelTests.cs",
+      "text": "[Test] public void OpenHints_HiddenOnceComplete()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/SatchelTests.cs",
+      "text": "[Test] public void RoundTripsThroughData()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/TutorialTests.cs",
+      "text": "public void Deal_KeepsTheRack()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditMode/TutorialTests.cs",
+      "text": "public void FirstOffer_LeavesOutLockedCatalysts()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditModeGame/HudTests.cs",
+      "text": "public void CanRedraw_UntilTheLastRedrawIsUsed()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditModeGame/MotionTests.cs",
+      "text": "public void EveryHelper_IsAlive()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditModeGame/SaveTests.cs",
+      "text": "public void LoadProfile_DropsWhatTheContentNoLongerHas()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditModeGame/SaveTests.cs",
+      "text": "public void StoreThenLoadProfile_KeepsStatsGoalsAndUnlocks()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditModeGame/SaveTests.cs",
+      "text": "public void StoreThenLoad_KeepsComboRecipes()",
+      "count": 1
+    },
+    {
+      "rule": "UL100",
+      "path": "Assets/Tests/EditModeGame/SaveTests.cs",
+      "text": "public void StoreThenLoad_KeepsRecipesAndHints()",
+      "count": 1
+    },
+    {
+      "rule": "UL101",
+      "path": "Assets/Tests/EditMode/BalanceMatrixTests.cs",
+      "text": "[Test, Explicit] public void BalanceMatrix()",
+      "count": 1
+    },
+    {
+      "rule": "UL101",
+      "path": "Assets/Tests/EditMode/BalanceMatrixTests.cs",
+      "text": "[Test, Explicit] public void EventReport()",
+      "count": 1
+    },
+    {
+      "rule": "UL101",
+      "path": "Assets/Tests/EditMode/RoleSimTests.cs",
+      "text": "[Test, Explicit] public void NewcomerTrace()",
+      "count": 1
+    },
+    {
+      "rule": "UL101",
+      "path": "Assets/Tests/EditMode/RoleSimTests.cs",
+      "text": "[Test, Explicit] public void RoleReport()",
+      "count": 1
+    },
+    {
+      "rule": "UL101",
+      "path": "Assets/Tests/EditMode/RunStateTests.cs",
+      "text": "[Test, Explicit] public void BalanceReport()",
+      "count": 1
+    },
+    {
+      "rule": "UL101",
+      "path": "Assets/Tests/EditMode/RunStateTests.cs",
+      "text": "[Test, Explicit] public void TraceRun()",
+      "count": 1
+    },
+    {
+      "rule": "UL103",
+      "path": "Assets/Tests/EditMode/BalanceMatrixTests.cs",
+      "text": "[Test, Explicit] public void BalanceMatrix()",
+      "count": 1
+    },
+    {
+      "rule": "UL103",
+      "path": "Assets/Tests/EditMode/BalanceMatrixTests.cs",
+      "text": "[Test, Explicit] public void EventReport()",
+      "count": 1
+    },
+    {
+      "rule": "UL103",
+      "path": "Assets/Tests/EditMode/RoleSimTests.cs",
+      "text": "[Test, Explicit] public void NewcomerTrace()",
+      "count": 1
+    },
+    {
+      "rule": "UL103",
+      "path": "Assets/Tests/EditMode/RoleSimTests.cs",
+      "text": "[Test, Explicit] public void RoleReport()",
+      "count": 1
+    },
+    {
+      "rule": "UL103",
+      "path": "Assets/Tests/EditMode/RunStateTests.cs",
+      "text": "[Test, Explicit] public void BalanceReport()",
+      "count": 1
+    },
+    {
+      "rule": "UL103",
+      "path": "Assets/Tests/EditMode/RunStateTests.cs",
+      "text": "[Test, Explicit] public void TraceRun()",
+      "count": 1
+    }
+  ]
+}
