@@ -1,0 +1,16 @@
+{
+	"nodes":[
+		{"id":"b5c2b5de420dbb66","x":-29,"y":3411,"width":400,"height":400,"type":"file","file":"vault/Canvas/agents.canvas.md"},
+		{"id":"2e5cfdf7a8ad43c2","x":416,"y":3411,"width":400,"height":400,"type":"file","file":"vault/Canvas/architecture.canvas.md"},
+		{"id":"205e00a6001e8ece","x":861,"y":3411,"width":400,"height":400,"type":"file","file":"vault/Canvas/content.canvas.md"},
+		{"id":"7d12ab0dc0b31893","x":1306,"y":3411,"width":400,"height":400,"type":"file","file":"vault/Canvas/content.stats.canvas.md"},
+		{"id":"1584e53adabc8c94","x":1751,"y":3411,"width":400,"height":400,"type":"file","file":"vault/Canvas/core.canvas.md"},
+		{"id":"7c1ceab8cd3140ea","x":2196,"y":3411,"width":400,"height":400,"type":"file","file":"vault/Canvas/data.canvas.md"},
+		{"id":"cf552306b279f04f","x":2641,"y":3411,"width":400,"height":400,"type":"file","file":"vault/Canvas/game.canvas.md"},
+		{"id":"0f7b9a7ceb3b888d","x":3086,"y":3411,"width":400,"height":400,"type":"file","file":"vault/Canvas/Index.md"},
+		{"id":"c2541499d35ce076","x":3531,"y":3411,"width":400,"height":400,"type":"file","file":"vault/Canvas/tests.canvas.md"},
+		{"id":"78612dae57b4c8cd","x":3976,"y":3411,"width":400,"height":400,"type":"file","file":"vault/Canvas/VaultGraph.md"},
+		{"id":"8b18c285d843569c","x":-29,"y":3856,"width":400,"height":400,"type":"file","file":"vault/Canvas/VaultOverview.md"}
+	],
+	"edges":[]
+}
