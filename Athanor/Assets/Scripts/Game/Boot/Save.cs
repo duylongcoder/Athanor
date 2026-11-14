@@ -7,7 +7,8 @@ namespace Athanor.Game
     /// <summary>Keeps the journal and the profile between sessions in PlayerPrefs (browser storage in a web build).</summary>
     public static class Save
     {
-        public const string Key = "athanor.journal.v1", IntroKey = "athanor.intro.v1", ProfileKey = "athanor.profile.v1";
+        public const string Key = "athanor.journal.v1", IntroKey = "athanor.intro.v1", ProfileKey = "athanor.profile.v1",
+            TutorialKey = "athanor.tutorial.v1";
 
         /// <summary>The saved journal; an empty one when nothing is saved or what is saved cannot be read.</summary>
         public static Journal LoadJournal()
@@ -64,6 +65,13 @@ namespace Athanor.Game
         {
             get => PlayerPrefs.GetInt(IntroKey, 0) == 1;
             set { PlayerPrefs.SetInt(IntroKey, value ? 1 : 0); PlayerPrefs.Save(); }
+        }
+
+        /// <summary>The tutorial was played to its end (or skipped). See TutorialScript.ShouldRun.</summary>
+        public static bool TutorialDone
+        {
+            get => PlayerPrefs.GetInt(TutorialKey, 0) == 1;
+            set { PlayerPrefs.SetInt(TutorialKey, value ? 1 : 0); PlayerPrefs.Save(); }
         }
     }
 }

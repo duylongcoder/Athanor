@@ -140,5 +140,23 @@ namespace Athanor.Tests
             PlayerPrefs.SetString(Save.Key, JsonUtility.ToJson(new JournalData { known = new[] { "deep_tear+ember_coal" } }));
             Assert.IsTrue(Save.LoadJournal().IsKnown("ember_coal", "deep_tear"));
         }
+
+        [Test]
+        public void TutorialDone_DefaultsToFalse_AndRoundTrips()
+        {
+            bool had = PlayerPrefs.HasKey(Save.TutorialKey);
+            int kept = PlayerPrefs.GetInt(Save.TutorialKey, 0);
+            try
+            {
+                PlayerPrefs.DeleteKey(Save.TutorialKey);
+                Assert.IsFalse(Save.TutorialDone);
+                Save.TutorialDone = true;
+                Assert.IsTrue(Save.TutorialDone);
+            }
+            finally
+            {
+                if (had) PlayerPrefs.SetInt(Save.TutorialKey, kept); else PlayerPrefs.DeleteKey(Save.TutorialKey);
+            }
+        }
     }
 }
