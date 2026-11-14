@@ -17,6 +17,8 @@ namespace Athanor.Game
         public int HoveredAspect { get; private set; } = -1;
         /// <summary>The most catalysts the sockets can show: four from clearing depths and two from shrines.</summary>
         public const int MaxCatalysts = 6, MaxAspects = 3;
+        /// <summary>The Redraw button in art space: under the right panel, right below the redraws-left counter.</summary>
+        public const int RedrawX = 556, RedrawY = 88, RedrawW = 76, RedrawH = 20;
 
         Label depth, depthName, potency, potencyWord, target, trials, redraws, redrawsLabel, journalCount, igniteText, hintText;
         readonly Label[] note = new Label[4];
@@ -26,14 +28,22 @@ namespace Athanor.Game
         readonly Label[] depthNote = new Label[3];
         Label aspectsLabel;
         float catalystPitch = 35;
-        float shown, bump; long goal, targetValue; bool canIgnite, igniteDown;
+        float shown, bump; long goal, targetValue; bool canIgnite, igniteDown, canRedraw, redrawDown;
+        SpriteRenderer redrawFill;
+        Label redrawText;
 
         static readonly Color Dim = Px.Hex("#a88a6a"), Pale = Px.Hex("#f0dcc0"), Gold = Px.Hex("#f8d250"), Ink = Px.Hex("#3a2212");
+        static readonly Color RedrawUp = Px.Hex("#1d5a52"), RedrawOver = Px.Hex("#26706a"), RedrawPressed = Px.Hex("#143f3a"),
+            RedrawOff = Px.Hex("#3a2e28");
 
         public Vector3 PotencyPosition => Px.At(96, 56);
         /// <summary>Where a tooltip about a held catalyst or aspect points.</summary>
         public Vector3 CatalystAnchor(int i) => Px.At(503 + i * catalystPitch, 39);
         public Vector3 AspectAnchor(int i) => Px.At(22 + i * 29, 111);
+        /// <summary>Where the Redraw tooltip (and the tutorial's highlight) points: the button's centre.</summary>
+        public Vector3 RedrawAnchor => Px.Mid(RedrawX, RedrawY, RedrawW, RedrawH);
+        /// <summary>The Redraw button is live: a redraw is left and the bench is being played (not an offer, not a cleared depth).</summary>
+        public static bool CanRedraw(RunState run) => run != null && run.Phase == RunPhase.Playing && run.RedrawsLeft > 0;
         public static string Number(long n) => n.ToString("N0", CultureInfo.InvariantCulture);
 
         public void Build(Transform parent)
@@ -64,9 +74,15 @@ namespace Athanor.Game
             trials = Make.Text(t, "", 534, 48, FontKind.Title, 32, Px.Hex("#ee6a3c"), O + 3, Align.Left, dark);
             redrawsLabel = Make.Text(t, "REDRAWS", 556, 63, FontKind.Tiny, 8, Dim, O + 3);
             redraws = Make.Text(t, "", 611, 48, FontKind.Title, 32, Px.Hex("#6ee6c8"), O + 3, Align.Left, dark);
-            var redrawZone = Make.Root("redraw", t); redrawZone.position = Px.Mid(552, 46, 78, 32);
-            var rc = Make.Click(redrawZone.gameObject, new Vector2(78, 32), O, () => RedrawClicked?.Invoke());
-            rc.onEnter = () => RedrawHovered = true; rc.onExit = () => RedrawHovered = false;
+            // the Redraw button, right under the counter: a dark one-pixel edge round a fill that greys out at zero
+            Make.Rect(t, RedrawX, RedrawY, RedrawW, RedrawH, dark, O + 1);
+            redrawFill = Make.Rect(t, RedrawX + 1, RedrawY + 1, RedrawW - 2, RedrawH - 2, RedrawUp, O + 2);
+            redrawText = Make.Text(t, "Redraw", RedrawX + RedrawW / 2f, RedrawY, FontKind.Title, 16, Pale, O + 4, Align.Centre, dark);
+            var redrawZone = Make.Root("redraw", t); redrawZone.position = RedrawAnchor;
+            var rc = Make.Click(redrawZone.gameObject, new Vector2(RedrawW, RedrawH), O, () => { if (canRedraw) RedrawClicked?.Invoke(); });
+            rc.onEnter = () => RedrawHovered = true;
+            rc.onExit = () => { RedrawHovered = false; redrawDown = false; };
+            rc.onDown = () => redrawDown = true; rc.onUp = () => redrawDown = false;
             // under the depth panel: the aspects this run holds, and what this depth's event changed
             aspectsLabel = Make.Text(t, "ASPECTS", 10, 88, FontKind.Tiny, 8, Dim, O + 3, Align.Left, dark);
             for (int i = 0; i < MaxAspects; i++)
@@ -109,7 +125,9 @@ namespace Athanor.Game
             target.Text = run.Target > 0 ? "/ " + Number(run.Target) : "NO TARGET";
             trials.Text = run.TrialsLeft.ToString();
             redraws.Text = run.RedrawsLeft.ToString();
-            redraws.Alpha = redrawsLabel.Alpha = run.RedrawsLeft > 0 ? 1 : 0.35f;
+            // the button follows the run, not inputEnabled: it stays lit while a reaction plays (clicks are gated in BenchView)
+            canRedraw = CanRedraw(run);
+            redraws.Alpha = redrawsLabel.Alpha = canRedraw ? 1 : 0.35f;
             // four sockets side by side; a fifth or sixth (a shrine's gift) makes them overlap to fit the panel
             int held = Mathf.Min(run.Catalysts.Count, MaxCatalysts);
             catalystPitch = held <= 4 ? 35 : 105f / (held - 1);
@@ -209,6 +227,9 @@ namespace Athanor.Game
             ignitePulse.color = canIgnite && !igniteDown ? new Color(1, 0.75f, 0.35f, 0.1f + 0.2f * pulse) : Color.clear;
             igniteText.Alpha = canIgnite ? 1 : 0.45f;
             igniteText.transform.position = Px.At(575, 306 + (canIgnite && igniteDown ? 2 : 0));
+            redrawFill.color = !canRedraw ? RedrawOff : redrawDown ? RedrawPressed : RedrawHovered ? RedrawOver : RedrawUp;
+            redrawText.Alpha = canRedraw ? 1 : 0.45f;
+            redrawText.transform.position = Px.At(RedrawX + RedrawW / 2f, RedrawY + (canRedraw && redrawDown ? 2 : 0));
         }
     }
 }
