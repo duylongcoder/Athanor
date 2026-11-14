@@ -87,7 +87,7 @@ try {
   await size(1280, 720);
   await click(320, 227, 1500);                       // Begin
   await shot('a03_intro');
-  for (let i = 0; i < 8; i++) await click(60, 180, 450);   // through the intro
+  for (let i = 0; i < 22; i++) await click(60, 180, 450);  // through the intro
   await startOfDepth('a04');
   await shot('a04_bench_1280');
   await click(169, 325); await click(251, 157);      // five cards: the first goes top-left

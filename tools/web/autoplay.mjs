@@ -64,7 +64,7 @@ try {
   if (!loaded) throw new Error('the build did not load');
   await sleep(4000);
   await click(320, 227, 1500);                               // Begin
-  for (let i = 0; i < 8; i++) await click(60, 180, 450);     // through the intro
+  for (let i = 0; i < 22; i++) await click(60, 180, 450);    // through the intro
   await sleep(2500);
   await click(320, 200, 1800);                               // the middle aspect
   await click(320, 165, 1000);                               // the event's first option, if there is an event
