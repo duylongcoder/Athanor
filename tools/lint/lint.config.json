@@ -1,0 +1,22 @@
+{
+  "_comment": "Chỉ ghi các khóa cần ghi đè; giá trị mặc định nằm trong unity_lint.py (DEFAULT_CONFIG). Khóa bắt đầu bằng _ bị bỏ qua.",
+  "exclude": [
+    "Assets/Plugins/**",
+    "Assets/ThirdParty/**",
+    "Assets/TextMesh Pro/**",
+    "Assets/Samples/**",
+    "**/Generated/**",
+    "**/*.g.cs",
+    "**/*.Designer.cs"
+  ],
+  "_pure_logic_paths": "Athanor Core: no UnityEngine here. Paths are relative to the lint root (Athanor/).",
+  "pure_logic_paths": [
+    "Assets/Scripts/Core"
+  ],
+  "unity_object_types": [],
+  "severity": {
+    "_comment": "error | warning | off. Mặc định mọi luật là error. Warning không làm CI fail."
+  },
+  "commit_regex": "^(?:feat|fix|refactor|test|docs|chore|perf|build|ci|style|revert)(?:\\([a-z0-9._/-]+\\))?!?: \\S.{0,80}$",
+  "_commit_regex": "Scope is optional: CLAUDE.md uses `feat:` style Conventional Commits."
+}

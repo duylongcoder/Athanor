@@ -8,7 +8,7 @@ tags: [agent, agent/athanor]
 ---
 # content-designer
 
-Owner of Athanor's game data and balance: materials, recipes, catalysts, aspects, events, goals, depth targets in content.json. Use to add or tune content, fix balance, or audit the recipe web.
+Athanor data and balance owner: edits content.json (materials, recipes, catalysts, aspects, events, goals, depth targets) and judges it with the BalanceMatrix and EventReport numbers. Use to add, tune or audit content.
 
 - Definition: `.claude/agents/content-designer.md`
 - Model: inherit · tools: Read, Glob, Grep, Write, Edit, Bash

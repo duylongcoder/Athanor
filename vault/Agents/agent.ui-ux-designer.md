@@ -8,7 +8,7 @@ tags: [agent, agent/athanor]
 ---
 # ui-ux-designer
 
-UI/UX designer for Athanor's 640x360 pixel UI: screen layouts, HUD, journal and goals pages, readability, tutorial pacing, mockups. Use before changing how a screen looks or flows; produces specs and mockups, not game code.
+Athanor screen designer: pixel-box layout specs, mockups under docs/mockup, layout.json changes, readability at 1x, tutorial pacing, Vietnamese overflow cases. Produces specs, not code. Use before changing how a screen looks or flows.
 
 - Definition: `.claude/agents/ui-ux-designer.md`
 - Model: inherit · tools: Read, Glob, Grep, Write, Edit, Bash

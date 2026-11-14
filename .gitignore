@@ -137,3 +137,8 @@ production/session-state/
 .obsidian/workspace.json
 .obsidian/workspaces.json
 .obsidian/cache
+
+# Build output of the rules test project (CLAUDE.md: never stage)
+/tools/CoreTests/bin/
+/tools/CoreTests/obj/
+test-results*.xml

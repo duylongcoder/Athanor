@@ -13,7 +13,12 @@ Scripts outside Unity (art, fx, web tests, rule tests, this vault).
 - `tools/art/png.mjs` — Minimal PNG writer: 8-bit RGBA, no dependencies beyond node:zlib.
 - `tools/art/scene.mjs` — The workshop and cutscene scenery, as unlit albedo layers. Lighting is added in Unity.
 - `tools/art/ui.mjs` — HUD and menu pieces, each drawn at the exact size it is shown (no stretching).
+- `tools/ci/check_repo.py` — 
+- `tools/ci/run.sh` — The one rule set for CI. The workflow and a developer both call this, so "green locally" means "green in CI".
 - `tools/fx/export.sh` — Exports the pixelfx effects the game plays as sprite sheets (PNG + JSON) into the Unity project.
+- `tools/lint/tests/test_unity_lint.py` — 
+- `tools/lint/unity_lint.py` — 
+- `tools/setup/protect-branch.sh` — Bật branch protection: bắt buộc PR + status check "lint" xanh + nhánh phải cập nhật,
 - `tools/vault/build_vault.py` — 
 - `tools/vault/q.py` — 
 - `tools/web/autoplay.mjs` — Lets the scripted player play a development web build in headless Chrome and photographs it (no dependencies; Node 22+).

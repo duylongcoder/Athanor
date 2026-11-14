@@ -8,7 +8,7 @@ tags: [agent, agent/athanor]
 ---
 # rules-engineer
 
-C# engineer for Athanor's Unity-free rules in Athanor.Core: ignite/chain resolution, scoring, run state, profile/unlocks, journal, satchel, tutorial script, auto-player. Use for any rule or scoring change, with tests.
+Athanor Core rules coder: edits Scripts/Core (ignite and chain resolution, scoring, run state, profile, journal, satchel, tutorial script, auto-player) test-first. Use for any rule or scoring change.
 
 - Definition: `.claude/agents/rules-engineer.md`
 - Model: inherit · tools: Read, Glob, Grep, Write, Edit, Bash

@@ -8,7 +8,7 @@ tags: [agent, agent/athanor]
 ---
 # audio-designer
 
-Sound and music designer for Athanor (sound is not in the game yet): audio direction, event list for reactions/UI/descent/ending, sourcing or synthesising assets, WebGL audio budget. Use when planning or adding audio.
+Athanor sound planner and asset maker: cue list tied to GameFlow states and reaction events, WebGL audio size budget, CC0 or self-made assets. Only when the owner has put sound in scope.
 
 - Definition: `.claude/agents/audio-designer.md`
 - Model: sonnet · tools: Read, Glob, Grep, Write, Edit, Bash

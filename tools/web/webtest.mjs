@@ -8,14 +8,20 @@ import { spawn } from 'node:child_process';
 import { mkdirSync, writeFileSync, mkdtempSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { existsSync } from 'node:fs';
+const chromeBin = () => process.env.CHROME_BIN
+  || ['/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', '/usr/bin/google-chrome', '/usr/bin/google-chrome-stable', '/usr/bin/chromium']
+    .find((p) => existsSync(p)) || 'google-chrome';
 
 const [url, outDir] = process.argv.slice(2);
 mkdirSync(outDir, { recursive: true });
 const port = 9333, profile = mkdtempSync(join(tmpdir(), 'athanor-chrome-'));
-const chrome = spawn('google-chrome', ['--headless=new', `--remote-debugging-port=${port}`, `--user-data-dir=${profile}`, '--window-size=1280,720',
+const chrome = spawn(chromeBin(), ['--headless=new', `--remote-debugging-port=${port}`, `--user-data-dir=${profile}`, '--window-size=1280,720',
   '--no-first-run', '--mute-audio', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist', 'about:blank'], { stdio: 'ignore' });
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const logs = [];
+let shots = 0;
+const MIN_SHOTS = Number(process.env.MIN_SHOTS ?? 20);
 let ws, id = 0; const pending = new Map();
 const send = (method, params = {}) => new Promise((res, rej) => { const i = ++id; pending.set(i, { res, rej }); ws.send(JSON.stringify({ id: i, method, params })); });
 
@@ -43,7 +49,7 @@ try {
     if (r.exceptionDetails) throw new Error('page script: ' + (r.exceptionDetails.exception?.description ?? r.exceptionDetails.text));
     return r.result.value;
   };
-  const shot = async (name) => { writeFileSync(join(outDir, name + '.png'), Buffer.from((await send('Page.captureScreenshot', { format: 'png' })).data, 'base64')); console.log('shot', name); };
+  const shot = async (name) => { writeFileSync(join(outDir, name + '.png'), Buffer.from((await send('Page.captureScreenshot', { format: 'png' })).data, 'base64')); console.log('shot', name); shots++; };
   const canvas = () => evalJs("(() => { const c = document.querySelector('#unity-canvas'); return c.width + 'x' + c.height + ' css ' + c.clientWidth + 'x' + c.clientHeight + ' at ' + c.style.left + ',' + c.style.top; })()");
   // art-space click: the picture is drawn at a whole multiple of 640x360, centred in the window
   const click = async (ax, ay, wait = 350) => {
@@ -174,9 +180,12 @@ try {
   console.log('errors after C:', errorsSoFar());
 } catch (e) {
   console.log('TEST ERROR', e.message);
+  process.exitCode = 1;
 } finally {
   const bad = logs.filter((l) => /\[(error|exception|log:error)\]/.test(l));
-  console.log(`console: ${logs.length} messages, ${bad.length} errors`);
+  console.log(`console: ${logs.length} messages, ${bad.length} errors, ${shots} screenshots`);
+  if (bad.length > 0) process.exitCode = 1;                       // a console error or exception fails the run
+  if (shots < MIN_SHOTS) { console.log(`only ${shots} screenshots, expected ${MIN_SHOTS}: the run stopped early`); process.exitCode = 1; }
   for (const l of bad.slice(0, 12)) console.log('  ', l);
   writeFileSync(join(outDir, 'console.txt'), logs.join('\n'));
   try { ws?.close(); } catch { /* closing */ }

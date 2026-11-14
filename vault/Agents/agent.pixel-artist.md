@@ -8,7 +8,7 @@ tags: [agent, agent/athanor]
 ---
 # pixel-artist
 
-Pixel artist and VFX artist for Athanor: generates sprites and icons from tools/art, exports pixelfx effect sheets from tools/fx, keeps palette and 640x360 pixel-perfect rules. Use for any new icon, sprite, background or effect.
+Athanor sprite and effect producer: runs and edits the code that generates art (tools/art, tools/fx), adds icons with matching ids, exports effect sheets, holds the palette. Use for any new icon, sprite, background or effect.
 
 - Definition: `.claude/agents/pixel-artist.md`
 - Model: sonnet · tools: Read, Glob, Grep, Write, Edit, Bash

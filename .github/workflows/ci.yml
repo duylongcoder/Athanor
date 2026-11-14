@@ -1,0 +1,153 @@
+# Athanor CI. Every job runs a script from tools/ci, so a developer reproduces any failure with the same command.
+# Merge rule: the single required check is `ci-gate`. It passes only when every job below succeeded; a failed,
+# cancelled or skipped job fails it (see tools/setup/protect-branch.sh, docs/CI.md).
+name: CI
+
+on:
+  pull_request:
+    branches: [main, develop]
+  push:
+    branches: [main, develop]
+    tags: ['v*']
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  DOTNET_NOLOGO: 'true'
+  DOTNET_CLI_TELEMETRY_OPTOUT: 'true'
+
+jobs:
+  lint:
+    name: lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - name: unity_lint (hard rules, baseline) and its own tests
+        run: tools/ci/run.sh lint
+        env: { LINT_FORMAT: github }
+      - name: PR title is a Conventional Commit (it becomes the squash message)
+        if: github.event_name == 'pull_request'
+        run: python3 tools/lint/unity_lint.py --root Athanor --config tools/lint/lint.config.json --check-message "$PR_TITLE"
+        env: { PR_TITLE: '${{ github.event.pull_request.title }}' }
+
+  repo-guard:
+    name: repo-guard
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - name: Build output, content ids, icons, en/vi parity, Core purity, .meta
+        run: tools/ci/run.sh repo
+      - name: Art and web scripts parse
+        run: |
+          for f in tools/web/*.mjs tools/art/*.mjs tools/fx/*.mjs; do [ -f "$f" ] && node --check "$f"; done
+          echo "scripts parse"
+      - name: Vault is regenerated (CLAUDE.md "keep it true")
+        run: |
+          python3 tools/vault/build_vault.py
+          if [ -n "$(git status --porcelain -- vault)" ]; then
+            git status --short -- vault
+            echo "::error::vault/ is out of date: run python3 tools/vault/build_vault.py and commit the result"
+            exit 1
+          fi
+
+  core-tests:
+    name: core-tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with: { dotnet-version: '8.0.x' }
+      - uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: nuget-${{ hashFiles('tools/CoreTests/CoreTests.csproj') }}
+      - name: dotnet test (fails on any failure or if fewer than MIN_TESTS pass)
+        run: tools/ci/run.sh core
+
+  # The one required check. `if: always()` makes it run (and fail) when a needed job fails, is cancelled or is skipped;
+  # without it a skipped job would leave the gate skipped, and GitHub counts a skipped required check as passing.
+  ci-gate:
+    name: ci-gate
+    if: always()
+    needs: [lint, repo-guard, core-tests]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Every job must be `success`
+        env: { RESULTS: '${{ toJSON(needs) }}' }
+        run: |
+          echo "$RESULTS" | jq -r 'to_entries[] | "\(.key): \(.value.result)"'
+          if [ "$(echo "$RESULTS" | jq '[.[].result] | all(. == "success")')" != "true" ]; then
+            echo "::error::CI failed or did not run (see the list above)"; exit 1
+          fi
+
+  # Release gate. Needs a Unity licence, so it runs on tags and on demand, not on every PR.
+  # It fails loudly when the secrets are missing: a release is never cut from an unchecked build.
+  release-gate:
+    name: release-gate
+    if: startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch'
+    needs: [ci-gate]
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+      UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+      UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+    steps:
+      - name: Unity secrets are set
+        run: |
+          [ -n "$UNITY_LICENSE" ] || { echo "::error::UNITY_LICENSE is not set: the release gate cannot run, so no release"; exit 1; }
+      - uses: actions/checkout@v4
+        with: { lfs: true }
+      - uses: actions/cache@v4
+        with:
+          path: Athanor/Library
+          key: Library-${{ hashFiles('Athanor/Packages/manifest.json', 'Athanor/ProjectSettings/ProjectVersion.txt') }}
+      - name: Unity EditMode tests (Core and Game layers)
+        uses: game-ci/unity-test-runner@v4
+        with:
+          projectPath: Athanor
+          unityVersion: auto
+          testMode: EditMode
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+      - name: WebGL build
+        uses: game-ci/unity-builder@v4
+        with:
+          projectPath: Athanor
+          unityVersion: auto
+          targetPlatform: WebGL
+          buildMethod: WebBuild.Build
+          allowDirtyBuild: true
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - name: Build size budget and headless web smoke
+        run: |
+          set -euo pipefail
+          BUILD="$(find build -type d -name Build | head -1)"
+          test -n "$BUILD" || { echo "::error::no WebGL Build/ folder produced"; exit 1; }
+          SIZE_MB=$(du -sm "$BUILD" | cut -f1)
+          echo "WebGL build: ${SIZE_MB} MB (budget ${WEB_BUDGET_MB} MB)"
+          [ "$SIZE_MB" -le "$WEB_BUDGET_MB" ] || { echo "::error::build is over its size budget"; exit 1; }
+          (cd "$(dirname "$BUILD")" && python3 -m http.server 8080 >/dev/null 2>&1 &)
+          sleep 2
+          CHROME_BIN="$(command -v google-chrome || command -v chromium)" node tools/web/webtest.mjs http://127.0.0.1:8080/ web-evidence
+        env: { WEB_BUDGET_MB: '60' }
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: web-evidence
+          path: web-evidence

@@ -8,7 +8,7 @@ tags: [agent, agent/athanor]
 ---
 # localizer-vi
 
-English-Vietnamese localizer for Athanor: keeps lang/vi.json in parity with lang/en.json, translates new strings, checks fit in the pixel UI. Use whenever player-visible text was added or changed.
+English to Vietnamese translator for Athanor: keeps lang/vi.json key-for-key with en.json, maintains the glossary, flags strings that overflow the pixel UI. Use whenever player-visible text was added or changed.
 
 - Definition: `.claude/agents/localizer-vi.md`
 - Model: sonnet · tools: Read, Glob, Grep, Write, Edit, Bash

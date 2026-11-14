@@ -8,7 +8,7 @@ tags: [agent, agent/athanor]
 ---
 # qa-engineer
 
-QA and balance verifier for Athanor: runs the dotnet and Unity tests, balance/role/event reports and headless-Chrome web checks, reproduces bugs, writes failing tests, signs off a task. Use after any task and before a build is called done.
+Athanor sign-off runner: executes dotnet and Unity tests, BalanceMatrix/RoleReport/EventReport, headless Chrome web checks; reproduces bugs with a seed and a failing test. Use after any task and before a build is called done.
 
 - Definition: `.claude/agents/qa-engineer.md`
 - Model: inherit · tools: Read, Glob, Grep, Write, Edit, Bash

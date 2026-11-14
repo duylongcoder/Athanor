@@ -91,3 +91,26 @@ session's model.
 | `godot-csharp-specialist` | C# / .NET | .NET patterns, [Signal] delegates, async, nullable types, type-safe node access |
 | `godot-shader-specialist` | Shaders/Rendering | Godot shading language, visual shaders, particles, post-processing |
 | `godot-gdextension-specialist` | GDExtension | C++/Rust bindings, native performance, custom nodes, build systems |
+
+## Athanor Project Agents
+
+Twelve project-specific agents added for Athanor (marked `project: athanor` in their frontmatter). They **implement**; the framework
+agents above remain the **consultants, reviewers and gate owners**. When both could take a task, the Athanor agent does the work and the
+framework agent is consulted only for the question named in the right-hand column.
+
+| Agent | Owns | Consult (framework) | Not for |
+| ---- | ---- | ---- | ---- |
+| `phase-lead` | phase plans, briefs, devlog index | `producer` | writing code or content |
+| `rules-engineer` | `Scripts/Core`, EditMode tests | `lead-programmer` | anything with `UnityEngine` |
+| `unity-gameplay-engineer` | `Scripts/Game`, `Editor` | `unity-specialist`, `unity-ui-specialist`, `unity-shader-specialist` | game rules, data |
+| `content-designer` | `content.json`, balance | `game-designer`, `systems-designer`, `economy-designer` | new mechanics, story text |
+| `lore-writer` | English story text, lore devlog | `narrative-director`, `world-builder` | `vi.json`, event structure |
+| `localizer-vi` | `lang/vi.json`, glossary | `localization-lead` | i18n architecture |
+| `pixel-artist` | `tools/art`, `tools/fx`, generated art | `art-director`, `technical-artist` | style or palette changes |
+| `ui-ux-designer` | `docs/mockup`, `layout.json`, UX specs | `ux-designer`, `art-director` | C# code |
+| `audio-designer` | `design/audio`, audio assets | `audio-director`, `sound-designer` | work before sound is in scope |
+| `qa-engineer` | new tests, `production/qa`, `tools/web` | `qa-lead`, `qa-tester` | fixing feature code |
+| `web-release-engineer` | `WebBuild`, `tools/web`, changelog | `release-manager`, `devops-engineer` | publishing |
+| `vault-librarian` | `vault/`, `tools/vault` | none | editing generated notes |
+
+Dispatch flow and hand-off rules: `vault/Workflow/Agent Workflow.md`.

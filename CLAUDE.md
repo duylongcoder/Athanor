@@ -77,6 +77,7 @@ See `docs/COLLABORATIVE-DESIGN-PRINCIPLE.md`.
 - A new material, catalyst or aspect needs an icon with the same id in `tools/art/icons.mjs`.
 - Content changes require `dotnet test tools/CoreTests` plus the balance report; quote the numbers.
 - `tools/CoreTests/bin`, `obj` and `Athanor/Build` are build output: never hand-edit or stage by accident.
+- **CI is the merge gate.** `ci-gate` red means no merge, for everyone. Run `tools/ci/run.sh all` before pushing. Never weaken a check to get green. Rules and the case-to-check map: `docs/CI.md`.
 - Devlog per phase in `docs/devlogs/phase-N-*.md`; a decision is written there before it is relied on.
 
 ## Coordination, standards, context

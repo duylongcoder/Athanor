@@ -9,12 +9,16 @@ import { spawn } from 'node:child_process';
 import { mkdirSync, writeFileSync, mkdtempSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { existsSync } from 'node:fs';
+const chromeBin = () => process.env.CHROME_BIN
+  || ['/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', '/usr/bin/google-chrome', '/usr/bin/google-chrome-stable', '/usr/bin/chromium']
+    .find((p) => existsSync(p)) || 'google-chrome';
 
 const [url, outDir, secondsArg, everyArg] = process.argv.slice(2);
 const seconds = Number(secondsArg ?? 120), every = Number(everyArg ?? 1.5);
 mkdirSync(outDir, { recursive: true });
 const port = 9334, profile = mkdtempSync(join(tmpdir(), 'athanor-chrome-'));
-const chrome = spawn('google-chrome', ['--headless=new', `--remote-debugging-port=${port}`, `--user-data-dir=${profile}`, '--window-size=1280,720',
+const chrome = spawn(chromeBin(), ['--headless=new', `--remote-debugging-port=${port}`, `--user-data-dir=${profile}`, '--window-size=1280,720',
   '--no-first-run', '--mute-audio', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist', 'about:blank'], { stdio: 'ignore' });
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const logs = [];

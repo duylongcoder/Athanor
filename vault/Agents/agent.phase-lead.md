@@ -8,7 +8,7 @@ tags: [agent, agent/athanor]
 ---
 # phase-lead
 
-Athanor phase planner. Use at the start of a phase or when a goal spans several roles: summarises where the project stands from the vault and devlogs, then returns a dispatch plan that splits the work into briefs for the role agents. Does not implement.
+Athanor phase planner: reads the vault and devlogs, summarises project state, and returns a dispatch plan of briefs per Athanor role. Plans only, never implements. Use at the start of a phase or for a goal spanning several roles.
 
 - Definition: `.claude/agents/phase-lead.md`
 - Model: opus · tools: Read, Glob, Grep, Write, Edit, Bash

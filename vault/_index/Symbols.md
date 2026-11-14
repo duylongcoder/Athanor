@@ -501,20 +501,20 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | HudView | property | HoveredAspect | 17 | public int HoveredAspect |
 | HudView | field | MaxCatalysts | 19 | public const int MaxCatalysts = 6, MaxAspects = 3 |
 | HudView | field | RedrawX | 21 | public const int RedrawX = 556, RedrawY = 88, RedrawW = 76, RedrawH = 20 |
-| HudView | property | PotencyPosition | 46 | public Vector3 PotencyPosition |
-| HudView | method | CatalystAnchor | 48 | public Vector3 CatalystAnchor(int i) |
-| HudView | method | AspectAnchor | 49 | public Vector3 AspectAnchor(int i) |
-| HudView | property | RedrawAnchor | 51 | public Vector3 RedrawAnchor |
-| HudView | method | CanRedraw | 53 | public static bool CanRedraw(RunState run) |
-| HudView | method | Number | 54 | public static string Number(long n) |
-| HudView | method | Build | 56 | public void Build(Transform parent) |
-| HudView | method | Show | 130 | public void Show(RunState run, ContentDb db, Journal journal, bool inputEnabled, bool keepRedraw = false) |
-| HudView | method | SetPotency | 178 | public void SetPotency(long value, bool instant = false) |
-| HudView | method | Note | 181 | public void Note(ReactionEvent e, ContentDb db) |
-| HudView | method | Hint | 198 | public void Hint(HintData h, ContentDb db) |
-| HudView | method | HintLine | 205 | public static string HintLine(HintData h, ContentDb db, bool withName = true) |
-| HudView | method | Bump | 213 | public void Bump() |
-| HudView | method | ClearNote | 215 | public void ClearNote() |
+| HudView | property | PotencyPosition | 48 | public Vector3 PotencyPosition |
+| HudView | method | CatalystAnchor | 50 | public Vector3 CatalystAnchor(int i) |
+| HudView | method | AspectAnchor | 51 | public Vector3 AspectAnchor(int i) |
+| HudView | property | RedrawAnchor | 53 | public Vector3 RedrawAnchor |
+| HudView | method | CanRedraw | 55 | public static bool CanRedraw(RunState run) |
+| HudView | method | Number | 56 | public static string Number(long n) |
+| HudView | method | Build | 58 | public void Build(Transform parent) |
+| HudView | method | Show | 132 | public void Show(RunState run, ContentDb db, Journal journal, bool inputEnabled, bool keepRedraw = false) |
+| HudView | method | SetPotency | 180 | public void SetPotency(long value, bool instant = false) |
+| HudView | method | Note | 183 | public void Note(ReactionEvent e, ContentDb db) |
+| HudView | method | Hint | 200 | public void Hint(HintData h, ContentDb db) |
+| HudView | method | HintLine | 207 | public static string HintLine(HintData h, ContentDb db, bool withName = true) |
+| HudView | method | Bump | 215 | public void Bump() |
+| HudView | method | ClearNote | 217 | public void ClearNote() |
 | LinkView | field | color | 11 | public Color color = new Color(2.2f, 1.7f, 0.8f) |
 | LinkView | field | speed | 12 | public float speed = 0.35f, arc = 7, alpha = 0.9f |
 | LinkView | method | Set | 16 | public void Set(List<(Vector3 a, Vector3 b)> pairs) |
