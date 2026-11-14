@@ -257,3 +257,10 @@ What the mockup showed about the storyboard (for the owner):
   - full +aspects+events                         wins 169/200 (84%), avg depth 3,97, lost at 1..5: 0 1 13 17 0
   - fresh, aspects only                          wins 144/200 (72%), avg depth 3,90, lost at 1..5: 3 3 25 25 0
   - fresh, events only                           wins 129/200 (64%), avg depth 3,83, lost at 1..5: 5 4 23 37 2
+  Against the baseline: the six rows without events are unchanged; the rows with events moved -3.0 (fresh
+  +aspects+events, 135 to 129 wins), +1.5, -2.5, 0, -0.5 and +0.5 points. The -3.0 is at the plan's 3-point cut-off,
+  not over it. A review rerun of that row over seeds 1 to 10,000 (a scratch runner that reproduces the report's rows
+  at seeds 1 to 200; not in the repo) gave 71.3% before and 71.0% after (pooled with a re-rolled event stream: +0.1
+  point, 95% interval -0.7 to +0.9), and across 50 disjoint blocks of 200 seeds the same before/after difference had
+  a standard deviation of about 4 points. Read as seed noise: a 200-run comparison cannot resolve 3 points when the
+  event pool changes.
