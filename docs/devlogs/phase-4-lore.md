@@ -1,6 +1,6 @@
 # Phase 4: Lore (rough draft)
 
-Status: **Draft for owner review.** Nothing is implemented. Part of [phase-4-prep.md](phase-4-prep.md).
+Status: **Built (2026-11-15):** event texts, three Lore events, no-repeat rule and the three-page intro; see Log. Part of [phase-4-prep.md](phase-4-prep.md).
 Owner direction (2026-11-13): the opening cutscene is enough as a format, but expand it for a broader story context;
 where possible, adjust the in-game events to match the lore. Endings and several Ultimates are deferred.
 

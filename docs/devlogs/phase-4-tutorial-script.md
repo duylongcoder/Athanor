@@ -1,6 +1,6 @@
 # Phase 4: Tutorial script
 
-Status: **Script v2; owner decisions of 2026-11-13 recorded below.** Nothing is implemented. Part of [phase-4-prep.md](phase-4-prep.md); lore in
+Status: **Script v2; owner decisions of 2026-11-13 recorded below.** Core hooks and the script as data are built and measured (Numbers); the Unity controller is next. Part of [phase-4-prep.md](phase-4-prep.md); lore in
 [phase-4-lore.md](phase-4-lore.md); build plan in `docs/superpowers/plans/2026-11-13-athanor-phase4-tutorial-lore.md`.
 Scope (owner, 2026-11-13): first playthrough only; teaches **reactions**, the **Journal**, **Catalysts**; plays from a
 **standardized save file** so every new player sees the same thing.
