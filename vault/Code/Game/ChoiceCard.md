@@ -20,9 +20,12 @@ aliases: []
 | Kind | Signature | Line | Note |
 |---|---|---|---|
 | field | `public string id, sprite, name, text, kicker, cost` | 13 |  |
-| field | `public Color? pip` | 14 |  |
+| field | `public string rarity` | 14 |  |
 | field | `public int[] tiles` | 15 |  |
 | field | `public int[] dimTiles` | 16 |  |
 
 ## Used by
 [[CatalystChoiceView]]
+
+## Tested by
+[[ChoiceHookTests]]

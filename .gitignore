@@ -142,3 +142,10 @@ production/session-state/
 /tools/CoreTests/bin/
 /tools/CoreTests/obj/
 test-results*.xml
+
+# Reference videos and screenshots (not committed)
+refs/
+
+# Session transcripts (not project docs)
+/20??-??-??-*.txt
+production/session-logs/

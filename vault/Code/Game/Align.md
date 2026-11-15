@@ -12,10 +12,13 @@ aliases: []
 # Align
 
 `public enum Align`
-- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Support/Make.cs:8-8`
+- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Support/Make.cs:9-9`
 
 ## Members
 `Left`, `Centre`, `Right`
 
 ## Used by
-[[BenchView]], [[CardView]], [[CatalystChoiceView]], [[EventView]], [[GoalToast]], [[GoalsView]], [[HudView]], [[JournalView]], [[Make]], [[ReactionCutscene]], [[RunOverView]], [[SimpleCutscene]], [[TitleView]], [[Tooltip]], [[UiButton]]
+[[BenchView]], [[CardView]], [[CatalystChoiceView]], [[EventView]], [[GoalToast]], [[GoalsView]], [[HudView]], [[JournalView]], [[Make]], [[PauseMenu]], [[ReactionCutscene]], [[RunOverView]], [[SimpleCutscene]], [[TitleView]], [[Tooltip]], [[TutorialController]], [[UiButton]]
+
+## Tested by
+[[LabelLineBoxTests]]

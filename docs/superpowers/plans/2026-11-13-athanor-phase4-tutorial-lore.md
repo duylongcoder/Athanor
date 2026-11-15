@@ -60,7 +60,7 @@ Python 3 for the one-off content edit.
 
 ### Task 0: Branch
 
-- [ ] **Step 1: Create the branch**
+- [x] **Step 1: Create the branch**
 
 ```bash
 cd "/Users/bunker/Desktop/New Folder"
@@ -77,7 +77,7 @@ Expected: `Passed!  - Failed: 0, Passed: 245`.
 - Modify: `Athanor/Assets/Scripts/Core/Satchel.cs` (class `Satchel`, after `Discard`)
 - Create: `Athanor/Assets/Tests/EditMode/TutorialTests.cs`
 
-- [ ] **Step 1: Write the failing test** (creates the test file used by every later task)
+- [x] **Step 1: Write the failing test** (creates the test file used by every later task)
 
 ```csharp
 using System.Collections.Generic;
@@ -114,12 +114,12 @@ namespace Athanor.Tests
 }
 ```
 
-- [ ] **Step 2: Run it, see it fail**
+- [x] **Step 2: Run it, see it fail**
 
 Run: `dotnet test tools/CoreTests --filter TutorialTests`
 Expected: build error `'Satchel' does not contain a definition for 'Available'`.
 
-- [ ] **Step 3: Implement** — add inside `Satchel`, after `Discard`:
+- [x] **Step 3: Implement** — add inside `Satchel`, after `Discard`:
 
 ```csharp
         /// <summary>Copies of a card in the draw and discard piles (not the ones out).</summary>
@@ -140,11 +140,11 @@ Expected: build error `'Satchel' does not contain a definition for 'Available'`.
 ```
 (`Satchel.cs` already has `using System.Linq;` — check the top of the file; add it if missing.)
 
-- [ ] **Step 4: Run it, see it pass**
+- [x] **Step 4: Run it, see it pass**
 
 Run: `dotnet test tools/CoreTests --filter TutorialTests` → Expected: 1 passed.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add Athanor/Assets/Scripts/Core/Satchel.cs Athanor/Assets/Tests/EditMode/TutorialTests.cs
@@ -159,7 +159,7 @@ git commit -m "Core: Satchel.Take and Available for scripted hands"
 - Modify: `Athanor/Assets/Scripts/Core/RunState.cs` (after `Redraw()`)
 - Test: `Athanor/Assets/Tests/EditMode/TutorialTests.cs`
 
-- [ ] **Step 1: Write the failing tests** — add to `TutorialTests` (below the satchel test):
+- [x] **Step 1: Write the failing tests** — add to `TutorialTests` (below the satchel test):
 
 ```csharp
         // ---- scripted hands -----------------------------------------------------------------------
@@ -209,12 +209,12 @@ git commit -m "Core: Satchel.Take and Available for scripted hands"
         }
 ```
 
-- [ ] **Step 2: Run, see them fail**
+- [x] **Step 2: Run, see them fail**
 
 Run: `dotnet test tools/CoreTests --filter TutorialTests`
 Expected: build error `'RunState' does not contain a definition for 'Deal'`.
 
-- [ ] **Step 3: Implement** — in `RunState.cs`, after `Redraw()`:
+- [x] **Step 3: Implement** — in `RunState.cs`, after `Redraw()`:
 
 ```csharp
         /// <summary>
@@ -235,11 +235,11 @@ Expected: build error `'RunState' does not contain a definition for 'Deal'`.
         }
 ```
 
-- [ ] **Step 4: Run, see them pass**
+- [x] **Step 4: Run, see them pass**
 
 Run: `dotnet test tools/CoreTests --filter TutorialTests` → Expected: 4 passed.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add Athanor/Assets/Scripts/Core/RunState.cs Athanor/Assets/Tests/EditMode/TutorialTests.cs
@@ -255,7 +255,7 @@ git commit -m "Core: RunState.Deal for the tutorial's scripted hands"
 - Modify: `Athanor/Assets/Scripts/Core/RunState.cs` (`BeginDepth`, `BuildOffer`, a new field)
 - Test: `Athanor/Assets/Tests/EditMode/TutorialTests.cs`
 
-- [ ] **Step 1: Write the failing tests** — add to `TutorialTests`:
+- [x] **Step 1: Write the failing tests** — add to `TutorialTests`:
 
 ```csharp
         // ---- run options --------------------------------------------------------------------------
@@ -313,12 +313,12 @@ git commit -m "Core: RunState.Deal for the tutorial's scripted hands"
         }
 ```
 
-- [ ] **Step 2: Run, see them fail**
+- [x] **Step 2: Run, see them fail**
 
 Run: `dotnet test tools/CoreTests --filter TutorialTests`
 Expected: build error `'RunOptions' does not contain a definition for 'QuietBefore'`.
 
-- [ ] **Step 3: Implement the options** — in `Profile.cs`, inside `RunOptions`, after `ForceEventAt`:
+- [x] **Step 3: Implement the options** — in `Profile.cs`, inside `RunOptions`, after `ForceEventAt`:
 
 ```csharp
         /// <summary>The tutorial: no aspect offer and no event at a depth below this one. 0: none held back.</summary>
@@ -327,7 +327,7 @@ Expected: build error `'RunOptions' does not contain a definition for 'QuietBefo
         public string[] FirstOffer;
 ```
 
-- [ ] **Step 4: Implement the run side** — in `RunState.cs`:
+- [x] **Step 4: Implement the run side** — in `RunState.cs`:
 
 Add a field next to `int carried;`:
 ```csharp
@@ -358,12 +358,12 @@ Replace `BuildOffer()` with:
         }
 ```
 
-- [ ] **Step 5: Run, see them pass; run everything**
+- [x] **Step 5: Run, see them pass; run everything**
 
 Run: `dotnet test tools/CoreTests --filter TutorialTests` → Expected: 7 passed.
 Run: `dotnet test tools/CoreTests` → Expected: 252 passed (245 + 7). The old runs pass `QuietBefore = 0`, so nothing else changes.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add Athanor/Assets/Scripts/Core/Profile.cs Athanor/Assets/Scripts/Core/RunState.cs Athanor/Assets/Tests/EditMode/TutorialTests.cs
@@ -379,7 +379,7 @@ git commit -m "Core: RunOptions.QuietBefore and FirstOffer for the tutorial"
 - Modify: `Athanor/Assets/Scripts/Core/RunState.cs` (after `NewContext()`)
 - Test: `Athanor/Assets/Tests/EditMode/TutorialTests.cs`
 
-- [ ] **Step 1: Write the failing tests** — add to `TutorialTests`:
+- [x] **Step 1: Write the failing tests** — add to `TutorialTests`:
 
 ```csharp
         // ---- preview and score parts --------------------------------------------------------------
@@ -417,12 +417,12 @@ git commit -m "Core: RunOptions.QuietBefore and FirstOffer for the tutorial"
         }
 ```
 
-- [ ] **Step 2: Run, see them fail**
+- [x] **Step 2: Run, see them fail**
 
 Run: `dotnet test tools/CoreTests --filter TutorialTests`
 Expected: build error `'RunState' does not contain a definition for 'Preview'`.
 
-- [ ] **Step 3: Implement `ScoreParts`** — create `Athanor/Assets/Scripts/Core/ScoreParts.cs`:
+- [x] **Step 3: Implement `ScoreParts`** — create `Athanor/Assets/Scripts/Core/ScoreParts.cs`:
 
 ```csharp
 namespace Athanor.Core
@@ -457,7 +457,7 @@ namespace Athanor.Core
 }
 ```
 
-- [ ] **Step 4: Implement `Preview`** — in `RunState.cs`, after `NewContext()`:
+- [x] **Step 4: Implement `Preview`** — in `RunState.cs`, after `NewContext()`:
 
 ```csharp
         /// <summary>
@@ -473,11 +473,11 @@ namespace Athanor.Core
         }
 ```
 
-- [ ] **Step 5: Run, see them pass**
+- [x] **Step 5: Run, see them pass**
 
 Run: `dotnet test tools/CoreTests --filter TutorialTests` → Expected: 9 passed.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add Athanor/Assets/Scripts/Core/ScoreParts.cs Athanor/Assets/Scripts/Core/RunState.cs Athanor/Assets/Tests/EditMode/TutorialTests.cs
@@ -496,7 +496,7 @@ The expected numbers below were worked out by hand from `IgniteResolver.Score` a
 disagrees, do not change the test to match without telling the owner**: the script text shows these numbers, so a
 mismatch means the script (`phase-4-tutorial-script.md`) must change too. Report it.
 
-- [ ] **Step 1: Write the failing tests** — add to `TutorialTests`:
+- [x] **Step 1: Write the failing tests** — add to `TutorialTests`:
 
 ```csharp
         // ---- the script ---------------------------------------------------------------------------
@@ -605,12 +605,12 @@ mismatch means the script (`phase-4-tutorial-script.md`) must change too. Report
             Assert.AreEqual(expected, TutorialScript.ShouldRun(done, journalEntries));
 ```
 
-- [ ] **Step 2: Run, see them fail**
+- [x] **Step 2: Run, see them fail**
 
 Run: `dotnet test tools/CoreTests --filter TutorialTests`
 Expected: build error `The type or namespace name 'TutorialScript' could not be found`.
 
-- [ ] **Step 3: Implement** — create `Athanor/Assets/Scripts/Core/Tutorial.cs`:
+- [x] **Step 3: Implement** — create `Athanor/Assets/Scripts/Core/Tutorial.cs`:
 
 ```csharp
 using System.Linq;
@@ -722,16 +722,16 @@ namespace Athanor.Core
 }
 ```
 
-- [ ] **Step 4: Run, see them pass**
+- [x] **Step 4: Run, see them pass**
 
 Run: `dotnet test tools/CoreTests --filter TutorialTests` → Expected: 20 passed (9 + 11; each `TestCase` counts once).
 If any number assertion fails, stop and report the actual value (see the note at the top of this task).
 
-- [ ] **Step 5: Run everything**
+- [x] **Step 5: Run everything**
 
 Run: `dotnet test tools/CoreTests` → Expected: 265 passed, 0 failed.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add Athanor/Assets/Scripts/Core/Tutorial.cs Athanor/Assets/Tests/EditMode/TutorialTests.cs
@@ -746,7 +746,7 @@ git commit -m "Core: the tutorial script as data, replayed by TutorialTests"
 - Modify: `docs/devlogs/phase-4-tutorial-script.md` (section "Numbers")
 - Modify: `docs/devlogs/phase-4-prep.md` (section "Log"; Act step 3)
 
-- [ ] **Step 1: Run the baseline reports** (prep, Act step 3; before the lore changes the event pool)
+- [x] **Step 1: Run the baseline reports** (prep, Act step 3; before the lore changes the event pool)
 
 ```bash
 cd tools/CoreTests
@@ -756,7 +756,7 @@ cd ../..
 ```
 Expected: both end with `Passed!`. RoleReport takes several minutes.
 
-- [ ] **Step 2: Write the numbers into the script doc** — replace the body of "## Numbers" in
+- [x] **Step 2: Write the numbers into the script doc** — replace the body of "## Numbers" in
 `docs/devlogs/phase-4-tutorial-script.md` with:
 
 ```markdown
@@ -766,7 +766,7 @@ left; broken chain = 40; depth 2 first trial: Bellows 80, Heart Tile 80, First S
 ```
 (If Task 5 reported a different number, write the measured one and fix the line that shows it.)
 
-- [ ] **Step 3: Save the baseline in the prep devlog** — in `docs/devlogs/phase-4-prep.md`, under "## Log", add:
+- [x] **Step 3: Save the baseline in the prep devlog** — in `docs/devlogs/phase-4-prep.md`, under "## Log", add:
 
 ```markdown
 - 2026-11-13: Newcomer baseline before the lore pass. BalanceMatrix: <paste the summary table from /tmp/balance-before.txt>.
@@ -774,7 +774,7 @@ left; broken chain = 40; depth 2 first trial: Bellows 80, Heart Tile 80, First S
 ```
 Replace the two `<paste ...>` with the actual summary lines from the files (the table rows printed at the end of each report).
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add docs/devlogs/phase-4-tutorial-script.md docs/devlogs/phase-4-prep.md
@@ -790,7 +790,7 @@ git commit -m "Docs: tutorial numbers measured, newcomer baseline"
 - Modify: `Athanor/Assets/Tests/EditMode/Phase3Tests.cs:194`
 - Modify: `Athanor/Assets/Resources/content.json`
 
-- [ ] **Step 1: Write the failing tests** — add at the end of `ContentTests` (class body):
+- [x] **Step 1: Write the failing tests** — add at the end of `ContentTests` (class body):
 
 ```csharp
         [Test]
@@ -823,13 +823,13 @@ git commit -m "Docs: tutorial numbers measured, newcomer baseline"
 
 And in `Phase3Tests.cs` line 194 change `Assert.AreEqual(16, db.Events.Count);` to `Assert.AreEqual(19, db.Events.Count);`.
 
-- [ ] **Step 2: Run, see them fail**
+- [x] **Step 2: Run, see them fail**
 
 Run: `dotnet test tools/CoreTests --filter "ContentTests|Phase3Tests"`
 Expected: `LoreEvents_DoNothing_AndTellTheStoryInOrder` fails (only `quiet_room`) and the count test fails (16, expected 19).
 `EventTexts_FitTheEventWindow` already passes: today's texts fit, and the test guards the new ones.
 
-- [ ] **Step 3: Apply the lore texts** — run from the repo root (keeps the file's 1-space JSON style, no trailing newline):
+- [x] **Step 3: Apply the lore texts** — run from the repo root (keeps the file's 1-space JSON style, no trailing newline):
 
 ```bash
 python3 - <<'EOF'
@@ -878,11 +878,11 @@ git diff --stat Athanor/Assets/Resources/content.json
 ```
 Expected: one file changed; the diff shows only event text lines and the three new events (no reformatting elsewhere).
 
-- [ ] **Step 4: Run, see them pass; run everything**
+- [x] **Step 4: Run, see them pass; run everything**
 
 Run: `dotnet test tools/CoreTests` → Expected: 267 passed, 0 failed.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add Athanor/Assets/Resources/content.json Athanor/Assets/Tests/EditMode/ContentTests.cs Athanor/Assets/Tests/EditMode/Phase3Tests.cs
@@ -896,7 +896,7 @@ git commit -m "Content: lore pass on the events, three new Lore events"
 **Files:**
 - Modify: `docs/devlogs/phase-4-lore.md` (end), `docs/devlogs/phase-4-prep.md` (Log)
 
-- [ ] **Step 1: Rerun the balance matrix**
+- [x] **Step 1: Rerun the balance matrix**
 
 ```bash
 cd tools/CoreTests
@@ -907,7 +907,7 @@ diff <(grep -i "win" /tmp/balance-before.txt) <(grep -i "win" /tmp/balance-after
 Expected: every win rate within 3 points of the baseline (the lore events only thin the event draw).
 If a row moves more than 3 points: stop, and report the row to the owner; do not retune in this plan.
 
-- [ ] **Step 2: Record it** — append to `docs/devlogs/phase-4-lore.md`:
+- [x] **Step 2: Record it** — append to `docs/devlogs/phase-4-lore.md`:
 
 ```markdown
 ## Log
@@ -916,7 +916,7 @@ If a row moves more than 3 points: stop, and report the row to the owner; do not
 ```
 Replace `<rows>` with the win-rate rows from `/tmp/balance-after.txt`.
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add docs/devlogs/phase-4-lore.md
@@ -932,7 +932,7 @@ git commit -m "Docs: balance check after the lore events"
 
 No automated test covers cutscene text; it is checked by playing it (Step 3).
 
-- [ ] **Step 1: Replace `Intro()`** with:
+- [x] **Step 1: Replace `Intro()`** with:
 
 ```csharp
         /// <summary>The opening story, three lines a page (docs/devlogs/phase-4-lore.md). The last page is the original text.</summary>
@@ -991,18 +991,18 @@ No automated test covers cutscene text; it is checked by playing it (Step 3).
         }
 ```
 
-- [ ] **Step 2: Compile and run Unity tests**
+- [x] **Step 2: Compile and run Unity tests**
 
 Run: `unity test ./Athanor --mode EditMode`
 Expected: no compile errors; 256 + the new Core tests (the EditMode assembly includes `Tests/EditMode`) passed, 6 skipped.
 
-- [ ] **Step 3: Play it**
+- [x] **Step 3: Play it**
 
 In the Editor: delete the key `athanor.intro.v1` (Edit > Clear All PlayerPrefs, or `PlayerPrefs.DeleteKey`), press Play,
 press Begin. Expected: three pages, each typed line by line; a click finishes a line, then ends a wait; no line is cut or
 wraps at 640x360; "CLICK TO BEGIN" after page 3. Take a screenshot of each page into `docs/devlogs/phase-4-shots/`.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add Athanor/Assets/Scripts/Game/Cutscene/SimpleCutscene.cs docs/devlogs/phase-4-shots
@@ -1017,7 +1017,7 @@ git commit -m "Game: opening cutscene in three pages (lore)"
 - Modify: `Athanor/Assets/Scripts/Game/Boot/Save.cs`
 - Test: `Athanor/Assets/Tests/EditModeGame/SaveTests.cs`
 
-- [ ] **Step 1: Write the failing test** — add to `SaveTests`:
+- [x] **Step 1: Write the failing test** — add to `SaveTests`:
 
 ```csharp
         [Test]
@@ -1039,12 +1039,12 @@ git commit -m "Game: opening cutscene in three pages (lore)"
         }
 ```
 
-- [ ] **Step 2: Run, see it fail**
+- [x] **Step 2: Run, see it fail**
 
 Run: `unity test ./Athanor --mode EditMode`
 Expected: compile error `'Save' does not contain a definition for 'TutorialKey'`.
 
-- [ ] **Step 3: Implement** — in `Save.cs`, extend the key line and add a property after `IntroSeen`:
+- [x] **Step 3: Implement** — in `Save.cs`, extend the key line and add a property after `IntroSeen`:
 
 ```csharp
         public const string Key = "athanor.journal.v1", IntroKey = "athanor.intro.v1", ProfileKey = "athanor.profile.v1",
@@ -1059,11 +1059,11 @@ Expected: compile error `'Save' does not contain a definition for 'TutorialKey'`
         }
 ```
 
-- [ ] **Step 4: Run, see it pass**
+- [x] **Step 4: Run, see it pass**
 
 Run: `unity test ./Athanor --mode EditMode` → Expected: all passed, 6 skipped.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add Athanor/Assets/Scripts/Game/Boot/Save.cs Athanor/Assets/Tests/EditModeGame/SaveTests.cs
@@ -1077,19 +1077,19 @@ git commit -m "Game: tutorial save key"
 **Files:**
 - Modify: `docs/devlogs/README.md`, `docs/devlogs/phase-4-prep.md`
 
-- [ ] **Step 1: Full test runs**
+- [x] **Step 1: Full test runs**
 
 Run: `dotnet test tools/CoreTests` → Expected: 267 passed, 0 failed.
 Run: `unity test ./Athanor --mode EditMode` → Expected: all passed, 6 skipped.
 
-- [ ] **Step 2: Devlog index** — in `docs/devlogs/README.md`, change the tutorial row's status and add the lore row:
+- [x] **Step 2: Devlog index** — in `docs/devlogs/README.md`, change the tutorial row's status and add the lore row:
 
 ```markdown
 | 4 | [phase-4-tutorial-script.md](phase-4-tutorial-script.md) | Script v2; Core hooks and numbers built, Unity controller next |
 | 4 | [phase-4-lore.md](phase-4-lore.md) | Lore draft; events and opening cutscene built |
 ```
 
-- [ ] **Step 3: Prep log** — add under "## Log" in `docs/devlogs/phase-4-prep.md`:
+- [x] **Step 3: Prep log** — add under "## Log" in `docs/devlogs/phase-4-prep.md`:
 
 ```markdown
 - 2026-11-13: Plan `2026-11-13-athanor-phase4-tutorial-lore.md` done: Deal, QuietBefore, FirstOffer, Preview, ScoreParts,
@@ -1097,7 +1097,7 @@ Run: `unity test ./Athanor --mode EditMode` → Expected: all passed, 6 skipped.
   Next: the Unity tutorial controller plan.
 ```
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add docs/devlogs/README.md docs/devlogs/phase-4-prep.md
@@ -1128,7 +1128,7 @@ placed by constants in `HudView`), so it is not changed.
 - Modify: `Athanor/Assets/Scripts/Game/Bench/BenchView.cs` (Redraw tooltip anchor)
 - Create: `Athanor/Assets/Tests/EditModeGame/HudTests.cs`
 
-- [ ] **Step 1: Write the failing test** — create `Athanor/Assets/Tests/EditModeGame/HudTests.cs`:
+- [x] **Step 1: Write the failing test** — create `Athanor/Assets/Tests/EditModeGame/HudTests.cs`:
 
 ```csharp
 using Athanor.Core;
@@ -1174,12 +1174,12 @@ namespace Athanor.Tests
 }
 ```
 
-- [ ] **Step 2: Run, see it fail**
+- [x] **Step 2: Run, see it fail**
 
 Run: `unity test ./Athanor --mode EditMode`
 Expected: compile error `'HudView' does not contain a definition for 'CanRedraw'`.
 
-- [ ] **Step 3: Implement in `HudView.cs`**
+- [x] **Step 3: Implement in `HudView.cs`**
 
 3a. Under `public const int MaxCatalysts = 6, MaxAspects = 3;` add:
 
@@ -1265,7 +1265,7 @@ with
             redrawText.transform.position = Px.At(RedrawX + RedrawW / 2f, RedrawY + (canRedraw && redrawDown ? 2 : 0));
 ```
 
-- [ ] **Step 4: Point the tooltip at the button** — in `BenchView.cs`, in the `Hud.RedrawHovered` branch, replace
+- [x] **Step 4: Point the tooltip at the button** — in `BenchView.cs`, in the `Hud.RedrawHovered` branch, replace
 
 ```csharp
                 key = "redraw"; title = "Redraw"; anchor = Px.At(591, 46);
@@ -1276,12 +1276,12 @@ with
 ```
 The body text stays ("Swap the cards in your hand for new ones. Click to use one." / "None left at this depth.").
 
-- [ ] **Step 5: Run, see it pass**
+- [x] **Step 5: Run, see it pass**
 
 Run: `unity test ./Athanor --mode EditMode`
 Expected: no compile errors; all passed (3 more than before), 6 skipped.
 
-- [ ] **Step 6: Look at it** — in the Editor, press Play and start a run:
+- [x] **Step 6: Look at it** — in the Editor, press Play and start a run:
   - The button reads "Redraw", sits under the right panel with the counter (2) right above it, and no text is cut at 640x360.
   - It brightens under the pointer and the label sinks 2 px when pressed; a click spends one redraw and deals a new hand.
   - After the second redraw the counter shows 0 and the button is grey; clicking it does nothing (the hand stays).
@@ -1290,7 +1290,7 @@ Expected: no compile errors; all passed (3 more than before), 6 skipped.
   - If "Redraw" sits too high or low in the box, change only the `RedrawY` offset in `redrawText` (Build and Update).
   Take a screenshot (lit and grey) into `docs/devlogs/phase-4-shots/`.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add Athanor/Assets/Scripts/Game/Bench/HudView.cs Athanor/Assets/Scripts/Game/Bench/BenchView.cs \
@@ -1318,7 +1318,7 @@ rows as before, and `SkippingALoreEvent_IsBalanceNeutral` checks it run by run.
 - Modify: `Athanor/Assets/Scripts/Game/Boot/GameFlow.cs` (`PlayRun`, `StartOfDepth`; Step 6)
 - Create: `Athanor/Assets/Tests/EditMode/LoreTests.cs`
 
-- [ ] **Step 0: Baseline the balance report** (unless `/tmp/balance-after.txt` from Task 8 is still there)
+- [x] **Step 0: Baseline the balance report** (unless `/tmp/balance-after.txt` from Task 8 is still there)
 
 ```bash
 cd tools/CoreTests
@@ -1326,7 +1326,7 @@ dotnet test --filter BalanceMatrix -l "console;verbosity=detailed" > /tmp/balanc
 cd ../..
 ```
 
-- [ ] **Step 1: Write the failing tests** — create `Athanor/Assets/Tests/EditMode/LoreTests.cs`:
+- [x] **Step 1: Write the failing tests** — create `Athanor/Assets/Tests/EditMode/LoreTests.cs`:
 
 ```csharp
 using System.Collections.Generic;
@@ -1517,12 +1517,12 @@ namespace Athanor.Tests
 }
 ```
 
-- [ ] **Step 2: Run, see them fail**
+- [x] **Step 2: Run, see them fail**
 
 Run: `dotnet test tools/CoreTests --filter LoreTests`
 Expected: build error `'RunOptions' does not contain a definition for 'LastLore'`.
 
-- [ ] **Step 3: The profile and the options** — in `ContentData.cs`, inside `ProfileData`, after `public RewardLogData[] rewards;`:
+- [x] **Step 3: The profile and the options** — in `ContentData.cs`, inside `ProfileData`, after `public RewardLogData[] rewards;`:
 
 ```csharp
         public string lastLore;
@@ -1556,7 +1556,7 @@ In `RunOptions`, after `FirstOffer`:
         public string LastLore;
 ```
 
-- [ ] **Step 4: The draw** — in `RunStart.cs`, add next to `List<string> reachable;`:
+- [x] **Step 4: The draw** — in `RunStart.cs`, add next to `List<string> reachable;`:
 
 ```csharp
         string lastLore;
@@ -1593,7 +1593,7 @@ In `DrawEvent()`, replace everything from `int total = ...` to the end of the me
 
 The `ForceEvent` branch above stays as it is (balance checks that force an event are not affected).
 
-- [ ] **Step 5: Run, see them pass; run everything; the balance report is unchanged**
+- [x] **Step 5: Run, see them pass; run everything; the balance report is unchanged**
 
 Run: `dotnet test tools/CoreTests --filter LoreTests` → Expected: 8 passed.
 Run: `dotnet test tools/CoreTests` → Expected: 0 failed; 8 more passed than before this task (275 after Task 7's 267).
@@ -1606,7 +1606,7 @@ diff <(grep -i "win" /tmp/balance-before-13.txt) <(grep -i "win" /tmp/balance-af
 ```
 Expected: `balance unchanged`. If any row differs: stop and report it; the skip path is meant to leave every draw the same.
 
-- [ ] **Step 6: Hook it up in the game** — in `GameFlow.PlayRun`, replace the `Run = new RunState(...)` line with:
+- [x] **Step 6: Hook it up in the game** — in `GameFlow.PlayRun`, replace the `Run = new RunState(...)` line with:
 
 ```csharp
             var options = RunOptions.Full(unlocks);
@@ -1626,7 +1626,7 @@ Look at it (Editor, Play): start a run, take "Go on" at A Keeper's Room; quit to
 does not come back at depth 1 or 2 until another Lore event has been shown (F9 autoplay with the console open shows the
 events per depth quickly).
 
-- [ ] **Step 7: Record it and commit** — in `docs/devlogs/phase-4-lore.md`, under "## Log" (create it if Task 8 has not):
+- [x] **Step 7: Record it and commit** — in `docs/devlogs/phase-4-lore.md`, under "## Log" (create it if Task 8 has not):
 
 ```markdown
 - 2026-11-13: Lore events are not shown twice in a row (Profile.LastLore, RunOptions.LastLore, DrawEvent). BalanceMatrix unchanged.

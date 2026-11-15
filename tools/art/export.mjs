@@ -4,6 +4,7 @@
 import { writeFileSync, mkdirSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { spawnSync } from 'node:child_process';
 import { Canvas } from './painter.mjs';
 import { ICONS, CATALYST_ICONS, ASPECT_ICONS, EVENT_ICONS } from './icons.mjs';
 import * as S from './scene.mjs';
@@ -30,6 +31,7 @@ for (const t of eventTypes) save(`Icons/evt_${t.toLowerCase()}.png`, EVENT_ICONS
 // scenery
 save('Background/workshop_wall.png', S.benchWall());
 saveCropped('Background/window.png', S.windowPane());
+for (let d = 1; d <= 5; d++) saveCropped(`Background/window_d${d}.png`, S.windowView(d));
 saveCropped('Background/workshop_table.png', S.benchTable());
 save('Background/moon_shaft.png', S.moonShaft());
 save('Background/candle.png', S.candle().canvas());
@@ -47,6 +49,7 @@ save('Fx/floor_ring.png', S.ring(60, 14));
 for (let k = 0; k < 4; k++) save(`Fx/liquid_${k}.png`, S.liquid(k * 0.55));
 save('Fx/pillar.png', S.pillar());
 save('Fx/ray.png', S.ray());
+save('Fx/window_drip.png', S.windowDrip());
 
 // tiles
 const tiles = [];
@@ -92,3 +95,8 @@ const goalsPage = new Canvas(640, 360); goalsPage.fillStyle = '#1a1220'; goalsPa
 goalsPage.drawImage(ui.goals, 20, 15); goalsPage.drawImage(ui.option_up, 176, 200); goalsPage.drawImage(ui.toast, 170, 4);
 writeFileSync(join(here, 'out/goals.png'), goalsPage.png());
 console.log(`${count} sprites written to Athanor/Assets/Art, layout.json to Resources`);
+
+// window views: export-window.mjs stays its own script (it can run alone) but one command rebuilds all art.
+// A failure there is reported by name and fails this command; nothing is swallowed.
+const win = spawnSync(process.execPath, [join(here, 'export-window.mjs')], { stdio: 'inherit' });
+if (win.status !== 0) { console.error(`export-window.mjs failed (${win.error ? win.error.message : 'exit ' + win.status}); window views may be stale`); process.exit(win.status || 1); }

@@ -162,17 +162,17 @@ back here.
 
 | Choice | Proposed | Owner |
 |---|---|---|
-| Show the Keepers' faces? | No, silhouettes only | [ ] |
-| Names under the Keepers in scene 3 (Tiny font, fading)? If yes, give three names. | No | [ ] |
-| How many Keepers in scene 3? | 3 | [ ] |
-| Does the last Keeper look back in scene 5? | Yes, once | [ ] |
-| Scene 6 close-up: reuse the empty `journal` panel, or draw a new open blank book (about 200x130)? | Reuse `journal` | [ ] |
-| Colour of the light in the hands in scene 4 | Plain warm gold, not the Worldseed's colour | [ ] |
-| Scene 6: same night, or dawn light through the window? | Same night, candles burnt low | [ ] |
-| A way to skip the whole cutscene at once (hold click, or Esc)? | Not now; per line only | [ ] |
-| Play on first launch only (as the spec says), or also from the title screen? | First launch, plus a title button later | [ ] |
-| Music: one cue across all scenes, or a change at scene 5? | One cue, drops out in scene 5, back in scene 7 | [ ] |
-| More scenes to add (where, and what)? | | [ ] |
+| Show the Keepers' faces? | No, silhouettes only | [x] accepted 2026-11-15 |
+| Names under the Keepers in scene 3 (Tiny font, fading)? If yes, give three names. | No | [x] accepted 2026-11-15 |
+| How many Keepers in scene 3? | 3 | [x] accepted 2026-11-15 |
+| Does the last Keeper look back in scene 5? | Yes, once | [x] accepted 2026-11-15 |
+| Scene 6 close-up: reuse the empty `journal` panel, or draw a new open blank book (about 200x130)? | Reuse `journal` | [x] accepted 2026-11-15 |
+| Colour of the light in the hands in scene 4 | Plain warm gold, not the Worldseed's colour | [x] accepted 2026-11-15 |
+| Scene 6: same night, or dawn light through the window? | Same night, candles burnt low | [x] accepted 2026-11-15 |
+| A way to skip the whole cutscene at once (hold click, or Esc)? | Not now; per line only | [x] accepted 2026-11-15 |
+| Play on first launch only (as the spec says), or also from the title screen? | First launch, plus a title button later | [x] accepted 2026-11-15 |
+| Music: one cue across all scenes, or a change at scene 5? | One cue, drops out in scene 5, back in scene 7 | [x] accepted 2026-11-15 |
+| More scenes to add (where, and what)? | (none) | [x] accepted 2026-11-15: no more scenes |
 
 ## Events (rewritten for the lore)
 

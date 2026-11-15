@@ -42,8 +42,8 @@ namespace Athanor.Game
             foreach (var r in rewards)
                 queue.Enqueue(new Item
                 {
-                    goal = "GOAL COMPLETE: " + r.Goal.text.ToUpperInvariant(),
-                    reward = r.Item == null ? "Nothing was left to unlock" : "Unlocked: " + Wording.ItemName(db, r.Item),
+                    goal = Loc.T("ui.toast.goal", ("goal", Loc.Upper(Wording.GoalText(r.Goal)))),
+                    reward = r.Item == null ? Loc.T("ui.toast.nothing") : Loc.T("ui.toast.unlocked", ("item", Wording.ItemName(db, r.Item))),
                     sprite = r.Item == null ? null : Wording.ItemSprite(db, r.Item),
                 });
         }

@@ -1,0 +1,1770 @@
+fileFormatVersion: 2
+guid: d53794113ef784d1e91cc92601c9ff1d
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -1443652957835369063
+    second: collect-burst_0
+  - first:
+      213: 9161309394999232240
+    second: collect-burst_1
+  - first:
+      213: -8877096103993717202
+    second: collect-burst_2
+  - first:
+      213: 2740973393303758512
+    second: collect-burst_3
+  - first:
+      213: -48621611133400610
+    second: collect-burst_4
+  - first:
+      213: -8034805380186230021
+    second: collect-burst_5
+  - first:
+      213: 133799534535964595
+    second: collect-burst_6
+  - first:
+      213: 2801499014720235266
+    second: collect-burst_7
+  - first:
+      213: 3152391273461073378
+    second: collect-burst_8
+  - first:
+      213: -2933740266727874412
+    second: collect-burst_9
+  - first:
+      213: 9069350319769891555
+    second: collect-burst_10
+  - first:
+      213: 1381872667325118047
+    second: collect-burst_11
+  - first:
+      213: -1262908249857654421
+    second: collect-burst_12
+  - first:
+      213: -2633083791708217965
+    second: collect-burst_13
+  - first:
+      213: 5169433711696091532
+    second: collect-burst_14
+  - first:
+      213: -2448174304431293019
+    second: collect-burst_15
+  - first:
+      213: 2273077374968850574
+    second: collect-burst_16
+  - first:
+      213: 7835792125218393735
+    second: collect-burst_17
+  - first:
+      213: -8977056416272272666
+    second: collect-burst_18
+  - first:
+      213: -7907052888104603223
+    second: collect-burst_19
+  - first:
+      213: -6589608033242805859
+    second: collect-burst_20
+  - first:
+      213: -8300593941345288925
+    second: collect-burst_21
+  - first:
+      213: 5265548087009831477
+    second: collect-burst_22
+  - first:
+      213: 6194724978984637370
+    second: collect-burst_23
+  - first:
+      213: -288969306403864919
+    second: collect-burst_24
+  - first:
+      213: -4407567488434355485
+    second: collect-burst_25
+  - first:
+      213: -7332517831129016691
+    second: collect-burst_26
+  - first:
+      213: -8975320118474392944
+    second: collect-burst_27
+  - first:
+      213: -4418997997031542245
+    second: collect-burst_28
+  - first:
+      213: 7107048945320172104
+    second: collect-burst_29
+  - first:
+      213: 2724411130844374444
+    second: collect-burst_30
+  - first:
+      213: 7851777685948024055
+    second: collect-burst_31
+  - first:
+      213: 1096807380868256513
+    second: collect-burst_32
+  - first:
+      213: 7575722791693815825
+    second: collect-burst_33
+  - first:
+      213: -7701216630272867666
+    second: collect-burst_34
+  - first:
+      213: -7463679031363094432
+    second: collect-burst_35
+  - first:
+      213: -8712880397162639963
+    second: collect-burst_36
+  - first:
+      213: 1447393631414644916
+    second: collect-burst_37
+  - first:
+      213: 4201996034525055922
+    second: collect-burst_38
+  - first:
+      213: 6223249772481059216
+    second: collect-burst_39
+  - first:
+      213: -6443021912238524235
+    second: collect-burst_40
+  - first:
+      213: -6421054313959614950
+    second: collect-burst_41
+  - first:
+      213: 2845687240630279677
+    second: collect-burst_42
+  - first:
+      213: 6006779465861406522
+    second: collect-burst_43
+  - first:
+      213: 6630981042999397790
+    second: collect-burst_44
+  - first:
+      213: 6977888425205463043
+    second: collect-burst_45
+  - first:
+      213: -7113113686278468505
+    second: collect-burst_46
+  - first:
+      213: -1340991972982356355
+    second: collect-burst_47
+  - first:
+      213: 2017524948444655329
+    second: collect-burst_48
+  - first:
+      213: -4151810372873911457
+    second: collect-burst_49
+  - first:
+      213: -9029682376966351447
+    second: collect-burst_50
+  - first:
+      213: 6408987142331807486
+    second: collect-burst_51
+  - first:
+      213: -7540258373794977659
+    second: collect-burst_52
+  - first:
+      213: 2568527104562706356
+    second: collect-burst_53
+  - first:
+      213: -1061009462987208677
+    second: collect-burst_54
+  - first:
+      213: 6198828099338666089
+    second: collect-burst_55
+  - first:
+      213: 7096509685174247318
+    second: collect-burst_56
+  - first:
+      213: -6966218119520834044
+    second: collect-burst_57
+  - first:
+      213: 8525204707606661229
+    second: collect-burst_58
+  - first:
+      213: 8611341070594169414
+    second: collect-burst_59
+  - first:
+      213: 3715500048818777396
+    second: collect-burst_60
+  - first:
+      213: -4631585289472403403
+    second: collect-burst_61
+  - first:
+      213: -9127273697807535463
+    second: collect-burst_62
+  - first:
+      213: 1401506477512717149
+    second: collect-burst_63
+  - first:
+      213: 939046666510067819
+    second: collect-burst_64
+  - first:
+      213: -8957558521303756124
+    second: collect-burst_65
+  - first:
+      213: -8134723719929011800
+    second: collect-burst_66
+  - first:
+      213: -953680989459618263
+    second: collect-burst_67
+  - first:
+      213: -6111037135803612297
+    second: collect-burst_68
+  - first:
+      213: 1337235697194444823
+    second: collect-burst_69
+  - first:
+      213: 6686119244487903732
+    second: collect-burst_70
+  - first:
+      213: -4700868217788272761
+    second: collect-burst_71
+  - first:
+      213: 415032327860846771
+    second: collect-burst_72
+  - first:
+      213: -866412501599254386
+    second: collect-burst_73
+  - first:
+      213: 8874199093691020785
+    second: collect-burst_74
+  - first:
+      213: -4087311865709448228
+    second: collect-burst_75
+  - first:
+      213: -1081886429812698249
+    second: collect-burst_76
+  - first:
+      213: 1035203919085183655
+    second: collect-burst_77
+  - first:
+      213: 296976912203813952
+    second: collect-burst_78
+  - first:
+      213: 4452597110185832443
+    second: collect-burst_79
+  - first:
+      213: 4115334333968440829
+    second: collect-burst_80
+  - first:
+      213: 823375408021145145
+    second: collect-burst_81
+  - first:
+      213: 5100184328657793304
+    second: collect-burst_82
+  - first:
+      213: 2258102245557855560
+    second: collect-burst_83
+  - first:
+      213: -5427337071040623884
+    second: collect-burst_84
+  - first:
+      213: 4992097685315292634
+    second: collect-burst_85
+  - first:
+      213: 3935285924567271541
+    second: collect-burst_86
+  - first:
+      213: -6503298291560623332
+    second: collect-burst_87
+  - first:
+      213: 2447489797558369922
+    second: collect-burst_88
+  - first:
+      213: 7904662490701940665
+    second: collect-burst_89
+  - first:
+      213: -7644990946109751687
+    second: collect-burst_90
+  - first:
+      213: 523992924751551568
+    second: collect-burst_91
+  - first:
+      213: 514758159618591010
+    second: collect-burst_92
+  - first:
+      213: 4534391193623642502
+    second: collect-burst_93
+  - first:
+      213: 1868348372393955735
+    second: collect-burst_94
+  - first:
+      213: 1364448924966479418
+    second: collect-burst_95
+  - first:
+      213: -8075598516302915276
+    second: collect-burst_96
+  - first:
+      213: -4034655312208778332
+    second: collect-burst_97
+  - first:
+      213: -2642157320468440207
+    second: collect-burst_98
+  - first:
+      213: -5160705650351769678
+    second: collect-burst_99
+  - first:
+      213: -8416989970262745665
+    second: collect-burst_100
+  - first:
+      213: -4442699802481191762
+    second: collect-burst_101
+  - first:
+      213: 3735537635072323343
+    second: collect-burst_102
+  - first:
+      213: 5011925033972294873
+    second: collect-burst_103
+  - first:
+      213: -4641222660723802547
+    second: collect-burst_104
+  - first:
+      213: -543259878125318307
+    second: collect-burst_105
+  - first:
+      213: 2840127873871159474
+    second: collect-burst_106
+  - first:
+      213: -1630444079963165859
+    second: collect-burst_107
+  - first:
+      213: -6855473066318217992
+    second: collect-burst_108
+  - first:
+      213: 6750683825742468555
+    second: collect-burst_109
+  - first:
+      213: -802426614570853439
+    second: collect-burst_110
+  - first:
+      213: 4014958547243998850
+    second: collect-burst_111
+  - first:
+      213: 4154111657378874307
+    second: collect-burst_112
+  - first:
+      213: 7702426181869763514
+    second: collect-burst_113
+  - first:
+      213: -8394310537376246775
+    second: collect-burst_114
+  - first:
+      213: 7100047263531452468
+    second: collect-burst_115
+  - first:
+      213: -5617178133291714140
+    second: collect-burst_116
+  - first:
+      213: -31355720284314700
+    second: collect-burst_117
+  - first:
+      213: 5756809182457366567
+    second: collect-burst_118
+  - first:
+      213: 1578529407689324351
+    second: collect-burst_119
+  - first:
+      213: -8309019896502681416
+    second: collect-burst_120
+  - first:
+      213: -6013823075744876221
+    second: collect-burst_121
+  - first:
+      213: 4764952056558468987
+    second: collect-burst_122
+  - first:
+      213: 6187158591773437037
+    second: collect-burst_123
+  - first:
+      213: -5156944182133760665
+    second: collect-burst_124
+  - first:
+      213: -3654844473133923125
+    second: collect-burst_125
+  - first:
+      213: 4331237828003379929
+    second: collect-burst_126
+  - first:
+      213: 2686001087196968612
+    second: collect-burst_127
+  - first:
+      213: 7146024922777340517
+    second: collect-burst_128
+  - first:
+      213: -7774963339232981399
+    second: collect-burst_129
+  - first:
+      213: 728844903963099726
+    second: collect-burst_130
+  - first:
+      213: -514988972706578555
+    second: collect-burst_131
+  - first:
+      213: 255998496122104100
+    second: collect-burst_132
+  - first:
+      213: 4213597093955952845
+    second: collect-burst_133
+  - first:
+      213: -770571330156066007
+    second: collect-burst_134
+  - first:
+      213: 2445210751935219528
+    second: collect-burst_135
+  - first:
+      213: -6971777823990274914
+    second: collect-burst_136
+  - first:
+      213: 8202891174809098999
+    second: collect-burst_137
+  - first:
+      213: 795604510637068053
+    second: collect-burst_138
+  - first:
+      213: 638657715911512199
+    second: collect-burst_139
+  - first:
+      213: -9099025334160887970
+    second: collect-burst_140
+  - first:
+      213: 2187420236608076774
+    second: collect-burst_141
+  - first:
+      213: 245769980501411791
+    second: collect-burst_142
+  - first:
+      213: -4900665034130788538
+    second: collect-burst_143
+  - first:
+      213: -4218670784408265289
+    second: collect-burst_144
+  - first:
+      213: 8949491419812866307
+    second: collect-burst_145
+  - first:
+      213: -6340722609044294610
+    second: collect-burst_146
+  - first:
+      213: 3631723929164408275
+    second: collect-burst_147
+  - first:
+      213: 7690002332349194205
+    second: collect-burst_148
+  - first:
+      213: 4407664588567334761
+    second: collect-burst_149
+  - first:
+      213: -1136868866345367414
+    second: collect-burst_150
+  - first:
+      213: -9060777814399090989
+    second: collect-burst_151
+  - first:
+      213: -6656683105343116882
+    second: collect-burst_152
+  - first:
+      213: 921973270561678018
+    second: collect-burst_153
+  - first:
+      213: 7389911905587343918
+    second: collect-burst_154
+  - first:
+      213: 2588961965407130455
+    second: collect-burst_155
+  - first:
+      213: 8998387857303315136
+    second: collect-burst_156
+  - first:
+      213: 4426741080310407012
+    second: collect-burst_157
+  - first:
+      213: -4917958273789346283
+    second: collect-burst_158
+  - first:
+      213: 3298284356887050399
+    second: collect-burst_159
+  - first:
+      213: -5629579675308270956
+    second: collect-burst_160
+  - first:
+      213: -3468870183056167503
+    second: collect-burst_161
+  - first:
+      213: -5827362308549466782
+    second: collect-burst_162
+  - first:
+      213: -6981260558160698736
+    second: collect-burst_163
+  - first:
+      213: 5152913448533074682
+    second: collect-burst_164
+  - first:
+      213: 6846078493856429303
+    second: collect-burst_165
+  - first:
+      213: -1853924674381417936
+    second: collect-burst_166
+  - first:
+      213: 1235616109622728293
+    second: collect-burst_167
+  - first:
+      213: -3307417510198434512
+    second: collect-burst_168
+  - first:
+      213: 4100560571304935110
+    second: collect-burst_169
+  - first:
+      213: -2971221302785238196
+    second: collect-burst_170
+  - first:
+      213: 3768456997163084074
+    second: collect-burst_171
+  - first:
+      213: 1144182473275392617
+    second: collect-burst_172
+  - first:
+      213: 1504105882891253585
+    second: collect-burst_173
+  - first:
+      213: 6736793606544260082
+    second: collect-burst_174
+  - first:
+      213: -6056840999516034109
+    second: collect-burst_175
+  - first:
+      213: 6024372577373410825
+    second: collect-burst_176
+  - first:
+      213: 8534068954900301667
+    second: collect-burst_177
+  - first:
+      213: -3882689355014086886
+    second: collect-burst_178
+  - first:
+      213: 2789546271852773178
+    second: collect-burst_179
+  - first:
+      213: -3924278465150227992
+    second: collect-burst_180
+  - first:
+      213: 7052821486829100914
+    second: collect-burst_181
+  - first:
+      213: 6863099775561936843
+    second: collect-burst_182
+  - first:
+      213: 5218107992528565299
+    second: collect-burst_183
+  - first:
+      213: -7040943570528065374
+    second: collect-burst_184
+  - first:
+      213: 368239246228970698
+    second: collect-burst_185
+  - first:
+      213: -2496759411093897995
+    second: collect-burst_186
+  - first:
+      213: 5093523385483976592
+    second: collect-burst_187
+  - first:
+      213: 6725421654114679173
+    second: collect-burst_188
+  - first:
+      213: 7126305579906262930
+    second: collect-burst_189
+  - first:
+      213: -6153783406581903101
+    second: collect-burst_190
+  - first:
+      213: -6303982971463535270
+    second: collect-burst_191
+  - first:
+      213: 7710751377240066208
+    second: collect-burst_192
+  - first:
+      213: -6874185803112283784
+    second: collect-burst_193
+  - first:
+      213: -7364576589016504747
+    second: collect-burst_194
+  - first:
+      213: 1084118907911499431
+    second: collect-burst_195
+  - first:
+      213: 162762640957445477
+    second: collect-burst_196
+  - first:
+      213: 2072350246393401546
+    second: collect-burst_197
+  - first:
+      213: -5584975553232913650
+    second: collect-burst_198
+  - first:
+      213: -1882957747440389579
+    second: collect-burst_199
+  - first:
+      213: -5911192414818880207
+    second: collect-burst_200
+  - first:
+      213: 625754428641797490
+    second: collect-burst_201
+  - first:
+      213: 277134571082225666
+    second: collect-burst_202
+  - first:
+      213: -154296684728366559
+    second: collect-burst_203
+  - first:
+      213: 6324932477647830580
+    second: collect-burst_204
+  - first:
+      213: -4643503634225313622
+    second: collect-burst_205
+  - first:
+      213: -5645174540288458448
+    second: collect-burst_206
+  - first:
+      213: -4345438953738905524
+    second: collect-burst_207
+  - first:
+      213: 696950837716080291
+    second: collect-burst_208
+  - first:
+      213: -6274482114341510618
+    second: collect-burst_209
+  - first:
+      213: 6592478905886465809
+    second: collect-burst_210
+  - first:
+      213: -8640708573468579298
+    second: collect-burst_211
+  - first:
+      213: 8247219068713174016
+    second: collect-burst_212
+  - first:
+      213: -3842056593713203871
+    second: collect-burst_213
+  - first:
+      213: -1604774448928887035
+    second: collect-burst_214
+  - first:
+      213: -528579931053502057
+    second: collect-burst_215
+  - first:
+      213: 4294659502013529948
+    second: collect-burst_216
+  - first:
+      213: 8274505227055872616
+    second: collect-burst_217
+  - first:
+      213: 1057245216499569832
+    second: collect-burst_218
+  - first:
+      213: -3850871827260193437
+    second: collect-burst_219
+  - first:
+      213: 7872086888885327916
+    second: collect-burst_220
+  - first:
+      213: -8217356988519066864
+    second: collect-burst_221
+  - first:
+      213: 721309691365974569
+    second: collect-burst_222
+  - first:
+      213: -5742169387085977273
+    second: collect-burst_223
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 0
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 1
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 0
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: 4
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 1
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: collect-burst_000
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 440
+        width: 78
+        height: 88
+      alignment: 9
+      pivot: {x: 0.46153846, y: 0.07954545}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d280ab4980cd04e0fbbad76c85f68d86
+      internalID: -229953399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collect-burst_001
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 440
+        width: 78
+        height: 88
+      alignment: 9
+      pivot: {x: 0.46153846, y: 0.07954545}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c092504b136764bd184f2b2f8ba54656
+      internalID: -56726933
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collect-burst_002
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 440
+        width: 78
+        height: 88
+      alignment: 9
+      pivot: {x: 0.46153846, y: 0.07954545}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21ad8397ded954756ae85c3b95917271
+      internalID: -1913113210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collect-burst_003
+      rect:
+        serializedVersion: 2
+        x: 234
+        y: 440
+        width: 78
+        height: 88
+      alignment: 9
+      pivot: {x: 0.46153846, y: 0.07954545}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65aedb41109cf4ab787dde8d0f301f66
+      internalID: 790455530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collect-burst_004
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 440
+        width: 78
+        height: 88
+      alignment: 9
+      pivot: {x: 0.46153846, y: 0.07954545}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0c9f338dff734b63841678697ba0b05
+      internalID: 204397335
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collect-burst_005
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 440
+        width: 78
+        height: 88
+      alignment: 9
+      pivot: {x: 0.46153846, y: 0.07954545}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a6663ed837634196aeb83df98efa8fb
+      internalID: 1017512119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collect-burst_006
+      rect:
+        serializedVersion: 2
+        x: 468
+        y: 440
+        width: 78
+        height: 88
+      alignment: 9
+      pivot: {x: 0.46153846, y: 0.07954545}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0084fb39039c84a0ab0d5bc107b1303c
+      internalID: 910330712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collect-burst_007
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 352
+        width: 78
+        height: 88
+      alignment: 9
+      pivot: {x: 0.46153846, y: 0.07954545}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6cd77adcaca664eae9d03c319cb5c8a7
+      internalID: -25345784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collect-burst_008
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 352
+        width: 78
+        height: 88
+      alignment: 9
+      pivot: {x: 0.46153846, y: 0.07954545}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ba516564efab4371ac75543481ba37a
+      internalID: -4727082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collect-burst_009
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 352
+        width: 78
+        height: 88
+      alignment: 9
+      pivot: {x: 0.46153846, y: 0.07954545}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a85a586d8d02e42459814fce555ce9ea
+      internalID: -1131015743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collect-burst_010
+      rect:
+        serializedVersion: 2
+        x: 234
+        y: 352
+        width: 78
+        height: 88
+      alignment: 9
+      pivot: {x: 0.46153846, y: 0.07954545}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4cd19d81358634f8c8c0896dc2eaf1b4
+      internalID: 610242186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collect-burst_011
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 352
+        width: 78
+        height: 88
+      alignment: 9
+      pivot: {x: 0.46153846, y: 0.07954545}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 842f7c842b3d54bbf83a770bbfb4b8b1
+      internalID: 865287010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collect-burst_012
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 352
+        width: 78
+        height: 88
+      alignment: 9
+      pivot: {x: 0.46153846, y: 0.07954545}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b10289582cbf47e88ba4114b88c818d
+      internalID: 604601161
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collect-burst_013
+      rect:
+        serializedVersion: 2
+        x: 468
+        y: 352
+        width: 78
+        height: 88
+      alignment: 9
+      pivot: {x: 0.46153846, y: 0.07954545}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 870b10033cd634655a17db8010b6a004
+      internalID: 612751772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collect-burst_014
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 264
+        width: 78
+        height: 88
+      alignment: 9
+      pivot: {x: 0.46153846, y: 0.07954545}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f12e1759ebb1404d86d0d85bdd4c5c6
+      internalID: -1494331036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collect-burst_015
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 264
+        width: 78
+        height: 88
+      alignment: 9
+      pivot: {x: 0.46153846, y: 0.07954545}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 411a58eb9382e46a5808ee5864455de0
+      internalID: -411119733
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collect-burst_016
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 264
+        width: 78
+        height: 88
+      alignment: 9
+      pivot: {x: 0.46153846, y: 0.07954545}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26f3a8dbfa67e45b09ec4af097e286ad
+      internalID: -2064990822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collect-burst_017
+      rect:
+        serializedVersion: 2
+        x: 234
+        y: 264
+        width: 78
+        height: 88
+      alignment: 9
+      pivot: {x: 0.46153846, y: 0.07954545}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf7f031bcc76f4744a1fe0f357511752
+      internalID: 1268384236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collect-burst_018
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 264
+        width: 78
+        height: 88
+      alignment: 9
+      pivot: {x: 0.46153846, y: 0.07954545}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0bbad0876cef54e6e8612a9dc1e8301d
+      internalID: -142548687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collect-burst_019
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 264
+        width: 78
+        height: 88
+      alignment: 9
+      pivot: {x: 0.46153846, y: 0.07954545}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a6838d9d6a1644f47b1125aeda45f809
+      internalID: -332042540
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collect-burst_020
+      rect:
+        serializedVersion: 2
+        x: 468
+        y: 264
+        width: 78
+        height: 88
+      alignment: 9
+      pivot: {x: 0.46153846, y: 0.07954545}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4325247b69102441e8d8d853dce7ed58
+      internalID: -1861168010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collect-burst_021
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 176
+        width: 78
+        height: 88
+      alignment: 9
+      pivot: {x: 0.46153846, y: 0.07954545}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c49ef14069614da987935e3b2298f88
+      internalID: 1480550903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collect-burst_022
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 176
+        width: 78
+        height: 88
+      alignment: 9
+      pivot: {x: 0.46153846, y: 0.07954545}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e53e6223db9cb4e018af626700f65581
+      internalID: -2006230456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collect-burst_023
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 176
+        width: 78
+        height: 88
+      alignment: 9
+      pivot: {x: 0.46153846, y: 0.07954545}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac39a1ab65bfb473bb6dcbb4b2ae1f48
+      internalID: -1179427261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collect-burst_024
+      rect:
+        serializedVersion: 2
+        x: 234
+        y: 176
+        width: 78
+        height: 88
+      alignment: 9
+      pivot: {x: 0.46153846, y: 0.07954545}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d0f7e92e795246cab7d3d2150c5744d
+      internalID: 1088847102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collect-burst_025
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 176
+        width: 78
+        height: 88
+      alignment: 9
+      pivot: {x: 0.46153846, y: 0.07954545}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1fcd585cc01bd40d38c9b51a9261f294
+      internalID: -1918952893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collect-burst_026
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 176
+        width: 78
+        height: 88
+      alignment: 9
+      pivot: {x: 0.46153846, y: 0.07954545}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99841c07d33d84aaca3ae3eccf2242e7
+      internalID: 1380985786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collect-burst_027
+      rect:
+        serializedVersion: 2
+        x: 468
+        y: 176
+        width: 78
+        height: 88
+      alignment: 9
+      pivot: {x: 0.46153846, y: 0.07954545}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bfbb15e0cac754ed69904052886a81b9
+      internalID: -129017731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collect-burst_028
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 88
+        width: 78
+        height: 88
+      alignment: 9
+      pivot: {x: 0.46153846, y: 0.07954545}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 721197936183d4bce8568b4f7e9033cb
+      internalID: 1604850071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collect-burst_029
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 88
+        width: 78
+        height: 88
+      alignment: 9
+      pivot: {x: 0.46153846, y: 0.07954545}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a3ae7d1f9664a439ea8ffb8134b210c6
+      internalID: 1938704178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collect-burst_030
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 88
+        width: 78
+        height: 88
+      alignment: 9
+      pivot: {x: 0.46153846, y: 0.07954545}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d1a239e86b5f8442c8610777d67b3ed7
+      internalID: -1082230217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collect-burst_031
+      rect:
+        serializedVersion: 2
+        x: 234
+        y: 88
+        width: 78
+        height: 88
+      alignment: 9
+      pivot: {x: 0.46153846, y: 0.07954545}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf4b563f7bdd841018327ba0370be38a
+      internalID: -1246030854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collect-burst_032
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 88
+        width: 78
+        height: 88
+      alignment: 9
+      pivot: {x: 0.46153846, y: 0.07954545}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 400d76909a59649ffb389b8b4adaea66
+      internalID: 982610997
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collect-burst_033
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 88
+        width: 78
+        height: 88
+      alignment: 9
+      pivot: {x: 0.46153846, y: 0.07954545}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2906ba2a4f1fb4e478f534afc201d0de
+      internalID: 1060116925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collect-burst_034
+      rect:
+        serializedVersion: 2
+        x: 468
+        y: 88
+        width: 78
+        height: 88
+      alignment: 9
+      pivot: {x: 0.46153846, y: 0.07954545}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 42d7b0bb96fde435384ae5058ce1c7b8
+      internalID: 582793821
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collect-burst_035
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 78
+        height: 88
+      alignment: 9
+      pivot: {x: 0.46153846, y: 0.07954545}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa17c4b8b4788443a9bc32357f8a43ce
+      internalID: -889819021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collect-burst_036
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 0
+        width: 78
+        height: 88
+      alignment: 9
+      pivot: {x: 0.46153846, y: 0.07954545}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be9c0044484714eb19788482e0c0f175
+      internalID: 1985785498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collect-burst_037
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 0
+        width: 78
+        height: 88
+      alignment: 9
+      pivot: {x: 0.46153846, y: 0.07954545}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 551b34365ba6c4f36bef64b1cb0c2f6b
+      internalID: -179468801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collect-burst_038
+      rect:
+        serializedVersion: 2
+        x: 234
+        y: 0
+        width: 78
+        height: 88
+      alignment: 9
+      pivot: {x: 0.46153846, y: 0.07954545}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 529b7d4cd18804975a4daaac4a687c90
+      internalID: 1617625105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collect-burst_039
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 0
+        width: 78
+        height: 88
+      alignment: 9
+      pivot: {x: 0.46153846, y: 0.07954545}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ffa9605abd4bf4f48a9f0a5ec506bd26
+      internalID: -461658727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collect-burst_040
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 0
+        width: 78
+        height: 88
+      alignment: 9
+      pivot: {x: 0.46153846, y: 0.07954545}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 311b477d7de834a3eb6f2cdeb7a0e98c
+      internalID: 1452873769
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collect-burst_041
+      rect:
+        serializedVersion: 2
+        x: 468
+        y: 0
+        width: 78
+        height: 88
+      alignment: 9
+      pivot: {x: 0.46153846, y: 0.07954545}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bfea7b72112ba4cdd8b6bbb6ccc2dc21
+      internalID: 537363921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: fabc3ad0316fa4d7aab7cc2f1bae8ae5
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      collect-burst_000: -229953399
+      collect-burst_001: -56726933
+      collect-burst_002: -1913113210
+      collect-burst_003: 790455530
+      collect-burst_004: 204397335
+      collect-burst_005: 1017512119
+      collect-burst_006: 910330712
+      collect-burst_007: -25345784
+      collect-burst_008: -4727082
+      collect-burst_009: -1131015743
+      collect-burst_010: 610242186
+      collect-burst_011: 865287010
+      collect-burst_012: 604601161
+      collect-burst_013: 612751772
+      collect-burst_014: -1494331036
+      collect-burst_015: -411119733
+      collect-burst_016: -2064990822
+      collect-burst_017: 1268384236
+      collect-burst_018: -142548687
+      collect-burst_019: -332042540
+      collect-burst_020: -1861168010
+      collect-burst_021: 1480550903
+      collect-burst_022: -2006230456
+      collect-burst_023: -1179427261
+      collect-burst_024: 1088847102
+      collect-burst_025: -1918952893
+      collect-burst_026: 1380985786
+      collect-burst_027: -129017731
+      collect-burst_028: 1604850071
+      collect-burst_029: 1938704178
+      collect-burst_030: -1082230217
+      collect-burst_031: -1246030854
+      collect-burst_032: 982610997
+      collect-burst_033: 1060116925
+      collect-burst_034: 582793821
+      collect-burst_035: -889819021
+      collect-burst_036: 1985785498
+      collect-burst_037: -179468801
+      collect-burst_038: 1617625105
+      collect-burst_039: -461658727
+      collect-burst_040: 1452873769
+      collect-burst_041: 537363921
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

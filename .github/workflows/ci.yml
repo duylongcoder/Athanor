@@ -51,6 +51,8 @@ jobs:
         with: { node-version: '22' }
       - name: Build output, content ids, icons, en/vi parity, Core purity, .meta
         run: tools/ci/run.sh repo
+      - name: Rotate-device text in the WebGL template matches lang/en.json and lang/vi.json
+        run: tools/ci/run.sh rotate
       - name: Art and web scripts parse
         run: |
           for f in tools/web/*.mjs tools/art/*.mjs tools/fx/*.mjs; do [ -f "$f" ] && node --check "$f"; done
@@ -124,7 +126,9 @@ jobs:
           unityVersion: auto
           testMode: EditMode
           githubToken: ${{ secrets.GITHUB_TOKEN }}
-      - name: WebGL build
+      # Two builds: the release build is what ships (size budget + load smoke); the development build carries the
+      # dev-only hooks (scripted player, tutorial and depth hooks) that the full webtest.mjs needs. No check is dropped.
+      - name: WebGL release build
         uses: game-ci/unity-builder@v4
         with:
           projectPath: Athanor
@@ -132,20 +136,36 @@ jobs:
           targetPlatform: WebGL
           buildMethod: WebBuild.Build
           allowDirtyBuild: true
+      - name: WebGL development build
+        uses: game-ci/unity-builder@v4
+        with:
+          projectPath: Athanor
+          unityVersion: auto
+          targetPlatform: WebGL
+          buildMethod: WebBuild.BuildDev
+          allowDirtyBuild: true
       - uses: actions/setup-node@v4
         with: { node-version: '22' }
-      - name: Build size budget and headless web smoke
+      - name: Release build size budget (bytes) and load smoke
         run: |
           set -euo pipefail
-          BUILD="$(find build -type d -name Build | head -1)"
-          test -n "$BUILD" || { echo "::error::no WebGL Build/ folder produced"; exit 1; }
-          SIZE_MB=$(du -sm "$BUILD" | cut -f1)
-          echo "WebGL build: ${SIZE_MB} MB (budget ${WEB_BUDGET_MB} MB)"
-          [ "$SIZE_MB" -le "$WEB_BUDGET_MB" ] || { echo "::error::build is over its size budget"; exit 1; }
-          (cd "$(dirname "$BUILD")" && python3 -m http.server 8080 >/dev/null 2>&1 &)
+          REL="Athanor/Build/web"
+          test -d "$REL/Build" -a -f "$REL/index.html" || { echo "::error::no release build in $REL"; exit 1; }
+          BYTES=$(find "$REL/Build" "$REL/index.html" -type f -printf '%s\n' | awk '{ s += $1 } END { print s + 0 }')
+          echo "release build: ${BYTES} B (budget ${WEB_BUDGET_BYTES} B, Build/ + index.html)"
+          [ "$BYTES" -le "$WEB_BUDGET_BYTES" ] || { echo "::error::release build is over its size budget"; exit 1; }
+          (cd "$REL" && python3 -m http.server 8080 >/dev/null 2>&1 &)
           sleep 2
-          CHROME_BIN="$(command -v google-chrome || command -v chromium)" node tools/web/webtest.mjs http://127.0.0.1:8080/ web-evidence
-        env: { WEB_BUDGET_MB: '60' }
+          CHROME_BIN="$(command -v google-chrome || command -v chromium)" node tools/web/loadsmoke.mjs http://127.0.0.1:8080/ web-evidence/release
+        env: { WEB_BUDGET_BYTES: '11824672' }   # Phase 5 ceiling (devlog phase-5-prep.md, Gate G1): 5a+5b together
+      - name: Full headless web test on the development build
+        run: |
+          set -euo pipefail
+          DEV="Athanor/Build/web-dev"
+          test -d "$DEV/Build" || { echo "::error::no development build in $DEV"; exit 1; }
+          (cd "$DEV" && python3 -m http.server 8081 >/dev/null 2>&1 &)
+          sleep 2
+          CHROME_BIN="$(command -v google-chrome || command -v chromium)" node tools/web/webtest.mjs http://127.0.0.1:8081/ web-evidence/dev
       - uses: actions/upload-artifact@v4
         if: always()
         with:

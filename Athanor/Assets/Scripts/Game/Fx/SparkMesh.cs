@@ -114,6 +114,8 @@ namespace Athanor.Game
             // Bounds are given by hand (DontRecalculateBounds): one huge box, so the mesh is never culled; it is all on
             // screen. Each submesh carries it too, because a default descriptor has an invalid box ("Converting invalid
             // MinMaxAABB"), and the mesh box is set only once vertices exist, never on an empty mesh.
+            // park the second submesh on an empty range first: the new first one must never overlap the old second one
+            mesh.SetSubMesh(1, new SubMeshDescriptor(0, 0) { bounds = Everything }, Quiet);
             var d0 = new SubMeshDescriptor(0, dotCount * 6) { bounds = Everything };
             var d1 = new SubMeshDescriptor(dotCount * 6, sparkCount * 6) { bounds = Everything };
             mesh.SetSubMesh(0, d0, Quiet);
@@ -142,6 +144,8 @@ namespace Athanor.Game
                 idx[i] = (ushort)b; idx[i + 1] = (ushort)(b + 1); idx[i + 2] = (ushort)(b + 2);
                 idx[i + 3] = (ushort)b; idx[i + 4] = (ushort)(b + 2); idx[i + 5] = (ushort)(b + 3);
             }
+            // a larger buffer invalidates the submesh ranges of the smaller one: start from an empty mesh (no stale descriptors)
+            mesh.Clear();
             mesh.SetVertexBufferParams(quadCapacity * 4, Layout);
             mesh.SetIndexBufferParams(quadCapacity * 6, IndexFormat.UInt16);
             mesh.SetIndexBufferData(idx, 0, 0, idx.Length, Quiet);

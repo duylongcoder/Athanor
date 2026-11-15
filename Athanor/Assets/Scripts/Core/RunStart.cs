@@ -383,7 +383,7 @@ namespace Athanor.Core
                 {
                     var pool = db.Catalysts.Where(c => IsOpen(c.id) && catalysts.All(h => h.id != c.id)).ToList();
                     if (pool.Count == 0) break;
-                    var got = pool[eventRng.Range(pool.Count)];
+                    var got = db.PickCatalyst(pool, eventRng);
                     catalysts.Add(got);
                     result.Notes.Add("Received " + got.name);
                     break;

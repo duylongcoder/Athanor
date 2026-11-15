@@ -90,6 +90,69 @@ export function windowPane() {
   return g;
 }
 
+/** The pane's glass pixels, with the same lattice as windowPane so the bars line up across depths. */
+function paneEach(fn) {
+  const g = new Canvas(W, H);
+  for (let y = 8; y <= 104; y++) for (let x = 268; x <= 372; x++) {
+    if (windowDist(x, y) > 40) continue;
+    const bar = (x + y) % 14 === 0 || (x - y + 1400) % 14 === 0 || Math.abs(x + 0.5 - 320) < 1;
+    g.fillStyle = bar ? '#120e18' : fn(x, y); g.fillRect(x, y, 1, 1);
+  }
+  return g;
+}
+
+/**
+ * What the window shows underground, depth 1..5 (phase-5-lore.md "Window view per depth"). Same pane shape and lattice as
+ * windowPane, transparent outside the glass, unlit. Palette: stone greys, iron, wood, gold and the night-sky blues only.
+ */
+export function windowView(depth) {
+  const stone = ['#0d0a12', '#17131c', '#231e2b', '#2b2733'];
+  if (depth === 1) return paneEach((x, y) => {
+    const t = (y - 8) / 96, half = 4 + (1 - t) * 14 + (hsh(x, y, 4) - 0.5) * 2, dx = Math.abs(x + 0.5 - 320);
+    if (y < 22) return y < 14 ? '#a8b8c4' : y < 18 ? '#6a788c' : '#3a4256';            // the workshop floor far above
+    if (dx < half) return dx < half * 0.45 ? (t < 0.55 ? '#6a788c' : '#3a4256') : '#3a4256'; // grey light going up the shaft
+    return stone[Math.floor(hsh(x, y, 6) * 3) + (dx < half + 4 ? 1 : 0)] ?? stone[3];
+  });
+  if (depth === 2) return paneEach((x, y) => {
+    const step = 62 + (x - 268) * 0.18;                                                  // stair step edge, falling to the right
+    if (Math.abs(y - step) < 1) return '#5c5464';
+    if (y > step && y < step + 2) return '#3a4256';
+    const n = hsh(x, y, 8);
+    if (n > 0.992) return '#3a4256';                                                     // wet shine
+    if (y > step) return n < 0.5 ? stone[0] : stone[1];
+    return n < 0.6 ? stone[1] : stone[2];
+  });
+  if (depth === 3) return paneEach((x, y) => {
+    const d = Math.hypot((x - 347) / 1.5, y - 70), n = hsh(x, y, 3) * 2;
+    if (d + n < 5) return '#f8d250';
+    if (d + n < 11) return '#d49a22';
+    if (d + n < 18) return '#8c5a14';
+    if (d + n < 27) return '#4a2a0e';
+    return (y - 12) / 92 + (hsh(x, y, 2) - 0.5) * 0.12 < 0.5 ? '#0c1030' : '#141a4a';
+  });
+  if (depth === 4) {
+    const roots = new Set(), add = (x, y) => roots.add(x + ',' + y);
+    // each root: start on the glass edge, wander inward, end in a pale tip
+    for (const [sx, sy, dx, dy, len, seed] of [[270, 40, 1, 0.35, 34, 1], [271, 80, 1, -0.45, 30, 2], [369, 30, -1, 0.5, 36, 3], [370, 70, -1, 0.2, 28, 4], [330, 103, 0.2, -1, 30, 5], [300, 103, -0.3, -1, 22, 6], [345, 14, -0.25, 1, 18, 7]])
+      for (let i = 0; i < len; i++) { const w = Math.sin(i * 0.5 + seed) * 1.6; add(Math.round(sx + dx * i - dy * w * 0.3), Math.round(sy + dy * i + dx * w * 0.5)); if (i < len * 0.7) { add(Math.round(sx + dx * i - dy * w * 0.3), Math.round(sy + dy * i + dx * w * 0.5) + 1); add(Math.round(sx + dx * i - dy * w * 0.3) + 1, Math.round(sy + dy * i + dx * w * 0.5)); } }
+    return paneEach((x, y) => roots.has(x + ',' + y) ? (hsh(x, y, 1) > 0.6 ? '#d49a5c' : '#a86a34') : hsh(x, y, 5) > 0.93 ? '#231e2b' : '#17131c');
+  }
+  return paneEach((x, y) => {                                                            // 5: near black, one faint point low in the glass
+    const d = Math.hypot(x - 331, y - 90);
+    if (d < 0.9) return '#fff6b8';
+    if (d < 1.6) return '#8c5a14';
+    return hsh(x, y, 2) > 0.7 ? '#0d0a12' : '#07060c';
+  });
+}
+
+/** A water drop for the depth 2 pane (3x7, white with alpha so Unity tints it): bright head, fading tail. */
+export function windowDrip() {
+  const g = new Canvas(3, 7);
+  for (let y = 0; y < 7; y++) white(g, 1, y, y < 4 ? 0.12 + y * 0.1 : 1);
+  white(g, 0, 5, 0.7); white(g, 2, 5, 0.7); white(g, 1, 6, 1);
+  return g;
+}
+
 /** The oak table, brass-rimmed slab, nine raised tiles and props. Transparent elsewhere, 640x360. */
 export function benchTable() {
   const g = new Canvas(W, H);

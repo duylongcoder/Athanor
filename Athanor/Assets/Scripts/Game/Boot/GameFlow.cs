@@ -30,6 +30,16 @@ namespace Athanor.Game
         /// <summary>Debug: the scripted player plays and cutscenes skip themselves. F9 toggles it in the editor and in development builds.</summary>
         public bool Auto;
 
+        /// <summary>The development-build log line of the F9 toggle, followed by "on" or "off" (tools/web/descents.mjs reads it).</summary>
+        public const string AutoHook = "[auto] ";
+
+        /// <summary>Turns the scripted player on or off (F9) and logs its new state in development builds.</summary>
+        public void ToggleAuto()
+        {
+            Auto = !Auto;
+            Dev.Hook(AutoHook + (Auto ? "on" : "off"));
+        }
+
         // the room's ambient colour, the moonbeam's strength and the accent colour, one per depth
         static readonly Color[] Ambient =
         {
@@ -38,23 +48,50 @@ namespace Athanor.Game
         static readonly float[] Moon = { 0.62f, 0.5f, 0.4f, 0.3f, 0.5f };
         static readonly string[] Accent = { "#7cc0f8", "#6ee6c8", "#c486f4", "#ee6a3c", "#fff6b8" };
 
-        ReactionCutscene reaction; SimpleCutscene story; TitleView title; JournalView journalView; CatalystChoiceView choice;
+        ReactionCutscene reaction; SimpleCutscene story; WindowView window; TitleView title; JournalView journalView; CatalystChoiceView choice;
         EventView eventView; GoalsView goalsView; GoalToast toast;
         readonly List<GoalReward> goalsThisRun = new List<GoalReward>();
         Unlocks unlocks;
+        Settings settings;
         FlowState goalsFrom;
         Light2D ambient, moon;
         AutoPlayer autoPlayer;
         FlowState journalFrom;
+        /// <summary>The journal screen, for the tutorial to point at parts of a page.</summary>
+        public JournalView JournalView => journalView;
         long shownPotency;
-        bool hurry, inCutscene, runEnded, autoReady;
+        PauseMenu pause;
+        Coroutine tutRoutine;
+        int escGuardFrame = -1;
+        bool hurry, inCutscene, runEnded, autoReady, abandoned;
         float autoClock;
         int runs;
+        TutorialController tut, tutorial;
+        Journal realJournal; Profile realProfile;
+        /// <summary>A replay of the tutorial: a throwaway journal and profile, nothing written to storage.</summary>
+        bool sandbox;
+        enum TitleChoice { Begin, HowToPlay, Intro }
+        TitleChoice titleChoice;
+        readonly List<GoalReward> heldGoals = new List<GoalReward>();
+
+        void StoreJournal() { if (!sandbox) Save.StoreJournal(Journal); }
+        void StoreProfile() { if (!sandbox) Save.StoreProfile(Profile); }
+        /// <summary>Goal toasts wait while the tutorial plays (and are dropped in a replay).</summary>
+        void ToastGoals(List<GoalReward> done)
+        {
+            if (tut != null) { if (!sandbox) heldGoals.AddRange(done); return; }
+            toast.Add(done, Db);
+        }
 
         void Awake()
         {
             I = this;
             Make.Lib = library;
+            settings = Save.LoadSettings();
+            Loc.InitFromPlayer(settings.language);
+            Haptics.Enabled = settings.haptics;
+            RenderSettings.skybox = null;                  // a 2D game: no skybox material to keep in the build
+            gameObject.AddComponent<AudioMuteHook>();
 #if UNITY_WEBGL && !UNITY_EDITOR
             Application.targetFrameRate = -1; QualitySettings.vSyncCount = 0;      // the browser paces frames
 #else
@@ -79,10 +116,14 @@ namespace Athanor.Game
 
             reaction = gameObject.AddComponent<ReactionCutscene>(); reaction.Build(cutsceneRoom, workshop, Bench.gameObject);
             story = gameObject.AddComponent<SimpleCutscene>(); story.Build(cutsceneRoom, workshop, Bench.gameObject);
-            title = Make.Root("Title").gameObject.AddComponent<TitleView>(); title.Build();
+            window = gameObject.AddComponent<WindowView>(); window.Build(workshop.transform);
+            title = Make.Root("Title").gameObject.AddComponent<TitleView>(); title.Build(settings);
+            title.SettingsClosed += SaveSettings;
             title.JournalClicked += OpenJournal;
             title.GoalsClicked += OpenGoals;
             title.ResetConfirmed += ResetProgress;
+            tut = null;
+            tutorial = gameObject.AddComponent<TutorialController>(); tutorial.Build();
             journalView = Make.Root("Journal").gameObject.AddComponent<JournalView>(); journalView.Build(Db);
             journalView.Closed += CloseJournal;
             choice = Make.Root("Catalyst Choice").gameObject.AddComponent<CatalystChoiceView>(); choice.Build();
@@ -92,8 +133,29 @@ namespace Athanor.Game
             goalsView = Make.Root("Goals").gameObject.AddComponent<GoalsView>(); goalsView.Build(Db);
             goalsView.Closed += CloseGoals;
             toast = Make.Root("Goal Toast").gameObject.AddComponent<GoalToast>(); toast.Build();
+            pause = Make.Root("Pause").gameObject.AddComponent<PauseMenu>(); pause.Build(settings);
+            pause.CanOpen = CanPause;
+            pause.Opened += OnPauseOpened;
+            pause.Closed += OnPauseClosed;
+            pause.QuitConfirmed += AbandonRun;
+            pause.VibrationChanged += SaveSettings;
+            Bench.Hud.PauseClicked += OpenPause;
             Bench.gameObject.SetActive(false);
             ScreenFx.I.SetBlack(1);
+        }
+
+        void SaveSettings() => Save.StoreSettings(settings);
+
+        void OnPauseOpened() => Bench.InputEnabled = false;
+        void OnPauseClosed() { if (State == FlowState.Bench) Bench.InputEnabled = true; }
+        void OpenPause() => pause.Open();
+
+        void OnDestroy()
+        {
+            if (title != null) title.SettingsClosed -= SaveSettings;
+            if (pause != null) { pause.Opened -= OnPauseOpened; pause.Closed -= OnPauseClosed; pause.QuitConfirmed -= AbandonRun; pause.VibrationChanged -= SaveSettings; }
+            if (Bench != null && Bench.Hud != null) Bench.Hud.PauseClicked -= OpenPause;
+            Time.timeScale = 1f;
         }
 
         void Start() => StartCoroutine(Main());
@@ -103,14 +165,35 @@ namespace Athanor.Game
             while (true)
             {
                 yield return ShowTitle();
+                if (titleChoice == TitleChoice.Intro)
+                {
+                    State = FlowState.Intro;
+                    inCutscene = true; yield return story.Intro(); inCutscene = false;
+                    story.Close(); Sparks.I.Clear();
+                    continue;
+                }
+                if (titleChoice == TitleChoice.HowToPlay) { yield return PlayTutorialReplay(); continue; }
                 if (!Save.IntroSeen)
                 {
                     State = FlowState.Intro;
                     inCutscene = true; yield return story.Intro(); inCutscene = false;
                     Save.IntroSeen = true;
                 }
-                do yield return PlayRun(); while (RunOver.Again);
+                // the first run is the tutorial when the save has never finished it and the journal is empty
+                bool first = !Auto && TutorialScript.Plan(Save.TutorialDone, Journal.KnownPairs.Count) == TutorialPlan.Run;
+                do { yield return PlayRun(first); first = false; } while (!abandoned && RunOver.Again);
             }
+        }
+
+        /// <summary>How to play, and "Play it" of the skip question: the tutorial on a throwaway journal and profile, then the title.</summary>
+        IEnumerator PlayTutorialReplay()
+        {
+            realJournal = Journal; realProfile = Profile; sandbox = true;
+            Journal = new Journal(); Profile = new Profile(1);
+            yield return PlayRun(true);
+            Journal = realJournal; Profile = realProfile; sandbox = false;
+            unlocks = Unlocks.For(Db, Profile);
+            heldGoals.Clear();
         }
 
         // ---- screens -----------------------------------------------------------------------------
@@ -119,14 +202,31 @@ namespace Athanor.Game
         {
             State = FlowState.Title;
             Bench.gameObject.SetActive(false);
-            Mood(1);
+            Mood(1, false);
             title.Open(Journal.KnownPairs.Count, Db.Recipes.Count, Profile.Completed.Count, Db.Goals.Count);
             // a journal kept from before there were goals pays out the journal goals at once
             CheckGoals(false);
             yield return ScreenFx.I.FadeIn(0.7f);
-            while (!title.BeginPressed || State != FlowState.Title)
+            titleChoice = TitleChoice.Begin;
+            while (true)
             {
                 if (Auto && State == FlowState.Title) break;
+                if (State == FlowState.Title && title.IntroPressed) { titleChoice = TitleChoice.Intro; break; }
+                if (State == FlowState.Title && title.HowToPressed) { titleChoice = TitleChoice.HowToPlay; break; }
+                if (State == FlowState.Title && title.BeginPressed)
+                {
+                    // a journal with entries and a tutorial never finished: ask once
+                    if (!Auto && TutorialScript.Plan(Save.TutorialDone, Journal.KnownPairs.Count) == TutorialPlan.AskSkip)
+                    {
+                        int answer = 0; title.AskSkip(play => answer = play ? 1 : 2);
+                        while (answer == 0) yield return null;
+                        title.ClearBegin();
+                        // Skip starts the run now (owner Q3); Play it is the sandbox replay (Q4)
+                        titleChoice = TutorialRules.AnswerSkipQuestion(answer == 1) ? TitleChoice.HowToPlay : TitleChoice.Begin;
+                        break;
+                    }
+                    break;
+                }
                 yield return null;
             }
             yield return ScreenFx.I.FadeOut(0.35f);
@@ -135,15 +235,16 @@ namespace Athanor.Game
         }
 
         /// <summary>One run from the first trial to its summary. Starts and ends on a black screen.</summary>
-        IEnumerator PlayRun()
+        IEnumerator PlayRun(bool tutorialRun = false)
         {
             runs++;
             // what the profile has unlocked is fixed when the run starts: an item won during it joins the next one
             unlocks = Unlocks.For(Db, Profile);
-            var options = RunOptions.Full(unlocks);
+            var options = tutorialRun ? TutorialScript.Options(unlocks) : RunOptions.Full(unlocks);
             options.LastLore = Profile.LastLore;
-            Run = new RunState(Db, Journal, System.Environment.TickCount * 31 + runs, 1, options);
-            runEnded = false; shownPotency = 0;
+            Run = new RunState(Db, Journal, tutorialRun ? TutorialScript.Seed : System.Environment.TickCount * 31 + runs, 1, options);
+            if (tutorialRun) { Run.Deal(TutorialScript.Reaction.Hand); tut = tutorial; } else tut = null;
+            runEnded = false; abandoned = false; shownPotency = 0;
             goalsThisRun.Clear();
             Profile.RunStarted(); Profile.DepthBegan(Run.Depth);
             CheckGoals();
@@ -153,13 +254,31 @@ namespace Athanor.Game
             Bench.Refresh(true);
             Bench.InputEnabled = false;
             State = FlowState.Descent;
+            Haptics.Pulse(Haptics.DepthCleared);
             yield return ScreenFx.I.FadeIn(0.5f);
+            if (DepthLook.ShowsRunIntro(Run.Depth, tut != null, sandbox))
+            {
+                Dev.Hook("[intro] " + Run.Depth);
+                inCutscene = true; yield return story.DepthIntro(DepthLook.IntroKey(Run.Depth)); inCutscene = false;
+            }
             yield return StartOfDepth();
+            if (tut != null) tutRoutine = StartCoroutine(RunTutorial());
             while (!runEnded) yield return null;
             yield return ScreenFx.I.FadeOut(0.35f);
             story.Close();
             Sparks.I.Clear();
             Bench.InputEnabled = false;
+        }
+
+        /// <summary>The tutorial's lessons; a replay ends at 5.5 and goes back to the title, the first run goes on as a normal run.</summary>
+        IEnumerator RunTutorial()
+        {
+            yield return tut.Drive(this);
+            var pending = heldGoals.ToArray(); heldGoals.Clear();
+            bool replay = sandbox;
+            tut = null;
+            if (pending.Length > 0) toast.Add(new List<GoalReward>(pending), Db);
+            if (replay) runEnded = true;
         }
 
         /// <summary>
@@ -176,6 +295,7 @@ namespace Athanor.Game
                 {
                     State = FlowState.AspectChoice;
                     string picked = null;
+                    Dev.Hook("[start] aspects");       // development builds only: tools/web/webtest.mjs waits for [start] aspects / ready
                     yield return choice.Choose(Run.AspectOffer, id => picked = id);
                     Run.ChooseAspect(picked);
                 }
@@ -183,14 +303,15 @@ namespace Athanor.Game
                 {
                     State = FlowState.Event;
                     Profile.EventShown(Run.CurrentEvent);
-                    Save.StoreProfile(Profile);
-                    yield return eventView.Show(Run, () => { Save.StoreJournal(Journal); Bench.Refresh(); });
+                    StoreProfile();
+                    yield return eventView.Show(Run, () => { StoreJournal(); Bench.Refresh(); });
                 }
                 Bench.Refresh();
             }
             Bench.Refresh(true);
             State = FlowState.Bench;
             Bench.InputEnabled = true;
+            Dev.Hook("[start] ready");
         }
 
         /// <summary>
@@ -200,10 +321,10 @@ namespace Athanor.Game
         void CheckGoals(bool inRun = true)
         {
             var done = Profile.Evaluate(Db, Journal);
-            Save.StoreProfile(Profile);
+            StoreProfile();
             if (done.Count == 0) return;
             if (inRun) goalsThisRun.AddRange(done);
-            toast.Add(done, Db);
+            ToastGoals(done);
             if (State == FlowState.Title) title.Progress(Journal.KnownPairs.Count, Db.Recipes.Count, Profile.Completed.Count, Db.Goals.Count);
         }
 
@@ -227,6 +348,7 @@ namespace Athanor.Game
 
         void CloseGoals()
         {
+            escGuardFrame = Time.frameCount;
             if (State == FlowState.Goals) State = goalsFrom;
         }
 
@@ -242,19 +364,48 @@ namespace Athanor.Game
             title.Progress(Journal.KnownPairs.Count, Db.Recipes.Count, Profile.Completed.Count, Db.Goals.Count);
         }
 
+        /// <summary>A pause may open only while the bench is the player's: not in a cutscene, an offer, the descent or the same frame Esc closed a screen.</summary>
+        bool CanPause() => PauseMenu.Allowed(State, Bench != null && Bench.InputEnabled, inCutscene)
+            && Run != null && Run.Phase == RunPhase.Playing && Time.frameCount != escGuardFrame;
+
+        /// <summary>The journal after a quit: what is stored, as if the page had been closed (a How-to-play sandbox keeps its throwaway).</summary>
+        public static Journal JournalAfterQuit(bool sandbox, Journal current) => sandbox ? current : Save.LoadJournal();
+        /// <summary>The profile after a quit: what is stored. A run counts only at the Ignite that ends it, so nothing is added.</summary>
+        public static Profile ProfileAfterQuit(bool sandbox, Profile current, ContentDb db) => sandbox ? current : Save.LoadProfile(db);
+
+        /// <summary>Quit to title, confirmed: the run is thrown away uncounted (like closing the page) and Main goes back to the title.</summary>
+        void AbandonRun()
+        {
+            if (State != FlowState.Bench || runEnded) return;
+            Time.timeScale = 1f;
+            abandoned = true;
+            Bench.InputEnabled = false;
+            Journal = JournalAfterQuit(sandbox, Journal);
+            Profile = ProfileAfterQuit(sandbox, Profile, Db);
+            unlocks = Unlocks.For(Db, Profile);
+            goalsThisRun.Clear(); heldGoals.Clear(); toast.Clear();
+            if (tut != null) { if (tutRoutine != null) StopCoroutine(tutRoutine); tutRoutine = null; tutorial.Abort(); tut = null; }
+            Dev.Hook("[pause] quit");
+            runEnded = true;
+        }
+
         void CloseJournal()
         {
+            escGuardFrame = Time.frameCount;
             if (State != FlowState.Journal) return;
             State = journalFrom;
             if (State == FlowState.Bench) Bench.InputEnabled = true;
         }
 
         /// <summary>Lighting for a depth: the deeper, the stranger the colour and the weaker the moon.</summary>
-        void Mood(int depth)
+        void Mood(int depth, bool inRun = true)
         {
             int i = Mathf.Clamp(depth, 1, Ambient.Length) - 1;
             if (ambient != null) ambient.color = Ambient[i];
             if (moon != null) moon.intensity = Moon[i];
+            if (window == null) return;
+            // the view through the window changes with the depth, inside a normal run only; the title and the tutorials keep the night sky
+            if (DepthLook.ThemedWindow(inRun, tut != null, sandbox)) window.Show(depth); else window.ShowNight();
         }
 
         // ---- Ignite ------------------------------------------------------------------------------
@@ -267,6 +418,14 @@ namespace Athanor.Game
             StartCoroutine(Resolve());
         }
 
+        /// <summary>Ignites and stores the journal at once, so a discovery is in storage before anything else can happen (Quit, closed page). A sandbox stores nothing.</summary>
+        public static IgniteOutcome SettleIgnite(RunState run, Journal journal, bool sandbox)
+        {
+            var outcome = run.Ignite();
+            if (!sandbox) Save.StoreJournal(journal);
+            return outcome;
+        }
+
         bool IsDiscovery(string id) => Db.Material(id).tier > 0;
 
         IEnumerator Resolve()
@@ -275,14 +434,13 @@ namespace Athanor.Game
             hurry = false;
             shownPotency = Run.Potency;
             // the run is settled first: whatever is skipped from here on, nothing can be lost
-            var outcome = Run.Ignite();
-            Save.StoreJournal(Journal);
+            var outcome = SettleIgnite(Run, Journal, sandbox);
             Profile.IgniteResolved(outcome);
             // the end of a run is counted with the Ignite that ended it: closing the page during the ending cannot lose a win
             bool ended = outcome.PhaseAfter == RunPhase.Won || outcome.PhaseAfter == RunPhase.Lost;
             if (ended) Profile.RunEnded(Run);
             var earned = Profile.Evaluate(Db, Journal);
-            Save.StoreProfile(Profile);
+            StoreProfile();
             Bench.ClearLinks();
             // the run is settled already: keep the Redraw button as it was until the chain has played (Bench.Refresh below updates it)
             Bench.Hud.Show(Run, Db, Journal, false, keepRedraw: true);
@@ -292,12 +450,13 @@ namespace Athanor.Game
             {
                 float pace = hurry || Auto ? 0.4f : Mathf.Max(0.55f, 1 - n * 0.07f);
                 if (e.Sputter) { Bench.Hud.Note(e, Db); yield return Sputter(e, pace); }
-                else if (e.Result == null) { Bench.Hud.Note(e, Db); yield return Fizzle(e, pace); }
+                else if (e.Result == null) { Bench.Hud.Note(e, Db); yield return Fizzle(e, pace); if (tut != null) yield return tut.AfterEvent(e, n); }
                 else
                 {
                     if (e.Discovery) yield return Discover(e, 1 + 0.4f * Mathf.Min(shows++, 3));
                     Bench.Hud.Note(e, Db);
                     yield return React(e, pace, n);
+                    if (tut != null) yield return tut.AfterEvent(e, n);
                     n++;
                 }
             }
@@ -320,14 +479,15 @@ namespace Athanor.Game
             }
             yield return Anim.Wait(kept > 0 ? 0.85f * endPace : 0.3f);
             foreach (var id in outcome.Dropped)
-                StartCoroutine(Bench.FloatText("Lost: " + Db.Material(id).name, Px.At(320, 232), Px.Hex("#ee6a3c"), 1.6f));
+                StartCoroutine(Bench.FloatText(Loc.T("ui.bench.lost", ("item", Db.Material(id).name)), Px.At(320, 232), Px.Hex("#ee6a3c"), 1.6f));
             shownPotency = Run.Potency;
             Bench.Hud.SetPotency(shownPotency);
+            if (tut != null) yield return tut.AfterIgnite(new TutorialController.IgniteOutcomeView { Events = outcome.Events });
             Bench.Refresh(true);
             // goals this Ignite completed are announced now that it has played out, so they never interrupt it
             // (those of a run's last Ignite wait for the summary, after the ending)
             goalsThisRun.AddRange(earned);
-            if (!ended) toast.Add(earned, Db);
+            if (!ended) ToastGoals(earned);
 
             switch (outcome.PhaseAfter)
             {
@@ -355,7 +515,7 @@ namespace Athanor.Game
             Sparks.I.Burst(mid, 10, grey.Alpha(0.8f), 26, 0.7f, 150, -18);
             Fx.Spawn("poof", mid, null, 150);
             // a plain fizzle is over quickly; one that taught something lingers and says so
-            if (e.Hint != null) StartCoroutine(Bench.FloatText("NEW HINT", mid + new Vector3(0, 8, 0), Px.Hex("#c486f4"), 1.1f, true));
+            if (e.Hint != null) StartCoroutine(Bench.FloatText(Loc.T("ui.bench.new_hint"), mid + new Vector3(0, 8, 0), Px.Hex("#c486f4"), 1.1f, true));
             yield return Anim.Wait((e.Hint != null ? 0.55f : 0.24f) * pace);
         }
 
@@ -365,13 +525,14 @@ namespace Athanor.Game
             var dull = new Color(0.55f, 0.4f, 0.75f);
             FlashTiles(e, dull.Alpha(0.6f));
             foreach (int t in e.Tiles) Sparks.I.Burst(Bench.TileCentre(t) + new Vector3(0, 10, 0), 5, dull.Alpha(0.8f), 22, 0.6f, 150, -14);
-            StartCoroutine(Bench.FloatText("SPOILED", Bench.TileCentre(e.Hub) + new Vector3(0, 20, 0), Px.Hex("#c486f4"), 1.0f, true));
+            StartCoroutine(Bench.FloatText(Loc.T("ui.bench.spoiled"), Bench.TileCentre(e.Hub) + new Vector3(0, 20, 0), Px.Hex("#c486f4"), 1.0f, true));
             yield return Anim.Wait(0.6f * pace);
         }
 
         /// <summary>A recipe nobody has seen before: a beat of held breath on the bench, then the full cutscene.</summary>
         IEnumerator Discover(ReactionEvent e, float hurry)
         {
+            Haptics.Pulse(Haptics.Discovery);
             var mid = Between(e);
             FlashTiles(e, Color.white);
             ScreenFx.I.Shake(2, 0.35f);
@@ -409,8 +570,8 @@ namespace Athanor.Game
             if (chain >= 2 || size >= 4) ScreenFx.I.Flash(Mathf.Min(0.05f * (chain + size - 2), 0.22f), 0.2f);
             string label = "+" + HudView.Number(e.Potency);
             StartCoroutine(Bench.FloatText(label, mid + new Vector3(0, 16, 0), Px.Hex("#f8d250"), 0.5f + 0.5f * pace));
-            if (size >= 3) StartCoroutine(Bench.FloatText(size + "-COMBO", mid + new Vector3(0, 30, 0), Px.Hex("#ee6a3c"), 0.9f, true));
-            else if (chain >= 1) StartCoroutine(Bench.FloatText("CHAIN x" + (chain + 1), mid + new Vector3(0, 30, 0), Px.Hex("#6ee6c8"), 0.9f, true));
+            if (size >= 3) StartCoroutine(Bench.FloatText(Loc.T("ui.bench.combo", ("n", size)), mid + new Vector3(0, 30, 0), Px.Hex("#ee6a3c"), 0.9f, true));
+            else if (chain >= 1) StartCoroutine(Bench.FloatText(Loc.T("ui.bench.chain", ("n", chain + 1)), mid + new Vector3(0, 30, 0), Px.Hex("#6ee6c8"), 0.9f, true));
             StartCoroutine(Points(mid, e.Potency, 0.5f * pace));
             yield return Anim.Wait(0.5f * pace);
         }
@@ -479,12 +640,18 @@ namespace Athanor.Game
             yield return Anim.Wait(0.6f);                    // let the potency counter finish
             int next = Run.Depth + 1;
             inCutscene = true;
-            yield return story.Descent(next, Db.DepthName(next), Px.Hex(Accent[Mathf.Clamp(next, 1, Accent.Length) - 1]), () => Mood(next));
+            Dev.Hook("[descent] " + next);       // development builds only: tools/web/descents.mjs waits for it
+            yield return story.Descent(next, Loc.DepthName(Db, next), Px.Hex(Accent[Mathf.Clamp(next, 1, Accent.Length) - 1]), () => Mood(next));
             inCutscene = false;
             State = FlowState.CatalystChoice;
+            Dev.Hook("[choice] " + Run.Depth);      // development builds only: tools/web evidence scripts wait for it
             string picked = null;
-            yield return choice.Choose((IReadOnlyList<CatalystData>)Run.CatalystOffer, id => picked = id, Auto ? 0.8f : -1);
+            if (tut != null) yield return tut.OnOffer();
+            var offer = (IReadOnlyList<CatalystData>)Run.CatalystOffer;
+            yield return choice.Choose(offer, id => picked = id, Auto ? 0.8f : -1);
+            string pickedName = offer.First(c => c.id == picked).name;
             Run.ChooseCatalyst(picked);
+            if (tut != null) { tut.OfferTaken(); tut.AfterChoose(picked, pickedName); }
             Profile.DepthBegan(Run.Depth);
             CheckGoals();
             shownPotency = 0;
@@ -510,8 +677,10 @@ namespace Athanor.Game
                 ScreenFx.I.Shake(3, 0.5f);
                 yield return Anim.Wait(0.9f);
             }
-            toast.Add(earned, Db);
+            Haptics.Pulse(Haptics.RunEnded);
+            ToastGoals(earned);
             State = FlowState.RunOver;
+            Dev.Hook("[runover] " + (won ? "won" : "lost"));
             yield return RunOver.Show(won, Run, Journal, Db, goalsThisRun);
             runEnded = true;
         }
@@ -521,8 +690,9 @@ namespace Athanor.Game
         void Update()
         {
             var kb = Keyboard.current;
-            if (kb != null && kb.f9Key.wasPressedThisFrame && (Application.isEditor || Debug.isDebugBuild)) Auto = !Auto;
+            if (kb != null && kb.f9Key.wasPressedThisFrame && (Application.isEditor || Debug.isDebugBuild)) ToggleAuto();
             if (State == FlowState.Resolving && !inCutscene && PointerInput.Down) hurry = true;
+            if (Bench != null && Bench.Hud != null) Bench.Hud.SetPauseShown(!pause.IsOpen && CanPause());
             if (!Auto) return;
             autoClock -= Time.deltaTime;
             if (autoClock > 0) return;

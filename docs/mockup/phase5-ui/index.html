@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Athanor Phase 5a UI mockup (brief 5a-03)</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <h1>Athanor, Phase 5a: UI mockup for Gate G1</h1>
+  <p>Rarity is drawn with a 7x7 star glyph (drawn in the page, not the final sprite). Every frame is the 640x360 canvas drawn with the game's own sprites and fonts (English: Alagard, Pixel Operator, BitPotion; Vietnamese: SVN-Coder's Crux for Title, Name, Body and Tiny). Each frame is shown in EN and VI. Vietnamese strings for new keys are drafts for the fit test only. Spec, change list and key table: <a href="SPEC.md" style="color:#f0c050">SPEC.md</a>.</p>
+  <div class="bar">
+    Scale:
+    <button data-s="1" class="on">1x (legibility test)</button><button data-s="1.5">1.5x</button><button data-s="2">2x</button>
+    <button id="hits">Show hit boxes</button>
+    <a href="#g-a" style="color:#aaa">a</a><a href="#g-b" style="color:#aaa">b</a><a href="#g-c" style="color:#aaa">c</a><a href="#g-d" style="color:#aaa">d</a><a href="#g-e" style="color:#aaa">e</a><a href="#g-f" style="color:#aaa">f</a><a href="#g-g" style="color:#aaa">g</a>
+    <span id="overflow" class="tag">checking text fit...</span>
+  </div>
+  <div id="frames"></div>
+</main>
+<script src="app.js"></script>
+</body>
+</html>

@@ -33,4 +33,4 @@ aliases: []
 [[GameFlow]], [[RunOptions]], [[RunState]], [[TutorialScript]]
 
 ## Tested by
-[[HudTests]], [[LoreTests]], [[Phase3Tests]], [[RoleSimTests]], [[TutorialTests]]
+[[HudTests]], [[LoreTests]], [[PauseTests]], [[Phase3Tests]], [[RarityReportTests]], [[RoleSimTests]], [[TutorialFlowTests]], [[TutorialTests]]

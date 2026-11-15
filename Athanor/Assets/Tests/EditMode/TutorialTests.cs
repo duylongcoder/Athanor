@@ -262,10 +262,24 @@ namespace Athanor.Tests
             Assert.IsNull(TutorialScript.CatalystTrial("hourglass"));
         }
 
-        [TestCase(false, 0, true)]
-        [TestCase(true, 0, false)]
-        [TestCase(false, 3, false)]
-        public void ShouldRun_OnlyOnAFreshSave(bool done, int journalEntries, bool expected) =>
-            Assert.AreEqual(expected, TutorialScript.ShouldRun(done, journalEntries));
+        [TestCase(false, true)]
+        [TestCase(true, false)]
+        public void ShouldRun_TutorialDoneFlag_RunsOnlyUntilDone(bool done, bool expected) =>
+            Assert.AreEqual(expected, TutorialScript.ShouldRun(done));
+
+        [TestCase(false, 0, TutorialPlan.Run)]
+        [TestCase(false, 1, TutorialPlan.AskSkip)]
+        [TestCase(false, 12, TutorialPlan.AskSkip)]
+        [TestCase(true, 0, TutorialPlan.None)]
+        [TestCase(true, 12, TutorialPlan.None)]
+        public void Plan_DoneFlagAndJournal_PicksRunAskSkipOrNone(bool done, int journalEntries, TutorialPlan expected) =>
+            Assert.AreEqual(expected, TutorialScript.Plan(done, journalEntries));
+
+        [TestCase(0)] [TestCase(5)]
+        public void Plan_NotDone_RunsExactlyWhenShouldRunAndTheJournalIsEmpty(int journalEntries)
+        {
+            bool runs = TutorialScript.Plan(false, journalEntries) == TutorialPlan.Run;
+            Assert.AreEqual(TutorialScript.ShouldRun(false) && journalEntries == 0, runs);
+        }
     }
 }

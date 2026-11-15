@@ -2,6 +2,9 @@ using System.Linq;
 
 namespace Athanor.Core
 {
+    /// <summary>What Begin does about the tutorial: nothing, play it, or ask once whether to skip it.</summary>
+    public enum TutorialPlan { None, Run, AskSkip }
+
     /// <summary>
     /// One material laid on one tile. This material goes on this tile, not just any lit tile: another arrangement of the
     /// same materials can break the chain (trial 3 then scores 40 and does not clear the depth) or move the hint to the
@@ -105,7 +108,17 @@ namespace Athanor.Core
             Unlocks = unlocks, Aspects = true, Events = true, QuietBefore = QuietBefore, FirstOffer = Offer,
         };
 
-        /// <summary>The tutorial plays on a save that has never finished it and whose journal is empty.</summary>
-        public static bool ShouldRun(bool tutorialDone, int journalEntries) => !tutorialDone && journalEntries == 0;
+        /// <summary>The tutorial is offered until the save has finished (or skipped) it. Only the TutorialDone flag decides.</summary>
+        public static bool ShouldRun(bool tutorialDone) => !tutorialDone;
+
+        /// <summary>
+        /// What Begin does: done is None; not done with an empty journal is Run; not done with journal entries
+        /// (a save from before the tutorial) is AskSkip, asked once.
+        /// </summary>
+        public static TutorialPlan Plan(bool tutorialDone, int journalEntries)
+        {
+            if (!ShouldRun(tutorialDone)) return TutorialPlan.None;
+            return journalEntries == 0 ? TutorialPlan.Run : TutorialPlan.AskSkip;
+        }
     }
 }

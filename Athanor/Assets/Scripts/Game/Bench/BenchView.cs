@@ -129,7 +129,7 @@ namespace Athanor.Game
                 cards.Add(card);
             }
             int held = 0; foreach (var id in run.Hand) if (db.Material(id).tier > 0) held++;
-            rackFull.Text = held >= RunState.RackSize ? "RACK FULL: THE WEAKEST WILL FALL" : "";
+            rackFull.Text = held >= RunState.RackSize ? Loc.T("ui.bench.rack_full") : "";
 
             // links show what the bench will do, hub to neighbours, for as far as the player already knows the recipes
             var pairs = new List<(Vector3, Vector3)>();
@@ -160,9 +160,9 @@ namespace Athanor.Game
             foreach (int t in run.DepthHeated)
             {
                 marks[t] = Wording.Warm;
-                tileNoteTitle[t] = "Warm Tile"; tileNote[t] = "A material here counts " + (run.Rules.RiBonus[t] > 0 ? run.Rules.RiBonus[t] : 3) + " more Reaction Index, this depth only.";
+                tileNoteTitle[t] = Loc.T("ui.bench.warm_tile"); tileNote[t] = Loc.T("ui.bench.warm_tile_text", ("n", run.Rules.RiBonus[t] > 0 ? run.Rules.RiBonus[t] : 3));
             }
-            foreach (int t in run.DepthBlocked) { tileNoteTitle[t] = "Shut Tile"; tileNote[t] = "Nothing can be placed here until the next depth."; }
+            foreach (int t in run.DepthBlocked) { tileNoteTitle[t] = Loc.T("ui.bench.shut_tile"); tileNote[t] = Loc.T("ui.bench.shut_tile_text"); }
             for (int i = 0; i < tiles.Length; i++) tiles[i].SetState(marks[i], run.Rules.Blocked[i]);
             var joined = new List<(Vector3, Vector3)>();
             foreach (var (a, b) in run.Rules.Links) joined.Add((tiles[a].centre + new Vector3(0, -8, 0), tiles[b].centre + new Vector3(0, -8, 0)));
@@ -294,34 +294,45 @@ namespace Athanor.Game
 
         void ShowTooltip(Pick over, Vector2 w)
         {
-            string key = null, title = null, body = null; Vector2 anchor = w; float clear = 18;
+            string key = null, title = null, body = null, rarity = null; Vector2 anchor = w; float clear = 18;
             if (!dragging && Hud.HoveredCatalyst >= 0 && Hud.HoveredCatalyst < run.Catalysts.Count)
             {
                 var c = run.Catalysts[Hud.HoveredCatalyst];
-                key = "cat" + c.id; title = c.name + " (" + Rarities.Of(c.rarity) + ")"; body = c.text; anchor = Hud.CatalystAnchor(Hud.HoveredCatalyst);
+                key = "cat" + c.id; title = Loc.T("ui.bench.catalyst_title", ("name", c.name), ("rarity", Loc.Rarity(c.rarity))); body = Loc.C("catalyst." + c.id + ".text", c.text); anchor = Hud.CatalystAnchor(Hud.HoveredCatalyst);
             }
             else if (!dragging && Hud.HoveredAspect >= 0 && Hud.HoveredAspect < run.Aspects.Count)
             {
                 var a = run.Aspects[Hud.HoveredAspect];
                 key = "asp" + a.Data.id; title = a.Data.name; body = Wording.AspectRule(a); anchor = Hud.AspectAnchor(Hud.HoveredAspect); clear = 16;
             }
+            else if (!dragging && Hud.PauseHovered && !Application.isMobilePlatform)
+            {
+                key = "pause"; title = Loc.T("ui.pause.button"); anchor = Hud.PauseAnchor; body = "";
+            }
             else if (!dragging && Hud.RedrawHovered)
             {
-                key = "redraw"; title = "Redraw"; anchor = Hud.RedrawAnchor;
-                body = run.RedrawsLeft > 0 ? "Swap the cards in your hand for new ones. Click to use one." : "None left at this depth.";
+                key = "redraw"; title = Loc.T("ui.bench.redraw"); anchor = Hud.RedrawAnchor;
+                body = Loc.T(run.RedrawsLeft > 0 ? "ui.bench.redraw_text" : "ui.bench.redraw_none");
             }
-            else if (!dragging && over.Is && (over.from == From.Tile || db.Material(over.id).tier > 0))
+            // a hand card of a starting material tells its rarity (SPEC 23), so it has a tip too; a made material in the rack always had one
+            else if (!dragging && over.Is && (over.from == From.Tile || over.from == From.Hand || db.Material(over.id).tier > 0))
             {
                 var m = db.Material(over.id);
                 int known = 0; foreach (var r in db.RecipesContaining(m.id)) if (journal.IsKnown(r.items)) known++;
                 key = over.from + over.id + over.tile + over.handIndex; title = m.name;
                 // on the bench: the heat a recipe with this tile as its hub would have (itself and all it touches)
-                string heat = over.from == From.Tile ? ", heat here " + ChainPlanner.Heat(run.Bench.Tiles, over.tile, db, run.Rules) : "";
+                string heat = over.from == From.Tile ? Loc.T("ui.bench.heat_here", ("n", ChainPlanner.Heat(run.Bench.Tiles, over.tile, db, run.Rules))) : "";
                 // two lines: the panel has no room for a third
                 int ri = over.from == From.Tile ? run.Rules.Ri(db, over.tile, m.id) : m.reactivity;
-                body = m.kind + ", tier " + m.tier + " - " + known + " known\nReaction Index " + ri + heat;
+                body = Loc.T("ui.bench.material", ("kind", Loc.Kind(m.kind)), ("tier", m.tier), ("known", known), ("ri", ri)) + heat;
                 if (over.from == From.Tile) { anchor = tiles[over.tile].centre + new Vector3(0, 12, 0); clear = 22; }
-                else { foreach (var s in slots) if (s.handIndex == over.handIndex) anchor = s.pos; clear = 16; }
+                else
+                {
+                    foreach (var s in slots) if (s.handIndex == over.handIndex) anchor = s.pos;
+                    foreach (var c in cards) if (c.handIndex == over.handIndex) anchor = c.home + new Vector3(0, CardView.H / 2f, 0);   // above the card
+                    clear = 16;
+                    if (m.tier == 0) rarity = Rarities.Of(m.rarity);
+                }
             }
             else if (!dragging && !over.Is)
             {
@@ -336,7 +347,7 @@ namespace Athanor.Game
             if (key != hoverKey) { hoverKey = key; hoverTime = 0; tip.Hide(); }
             if (key == null) return;
             hoverTime += Time.deltaTime;
-            if (hoverTime > 0.3f) tip.Show(title, body, anchor, clear);
+            if (hoverTime > 0.3f) tip.Show(title, body, anchor, clear, rarity);
         }
     }
 }

@@ -1,0 +1,75 @@
+@font-face { font-family: Alagard;  src: url(f/Alagard.ttf); }
+@font-face { font-family: PixOpB;   src: url(f/PixelOperator-Bold.ttf); }
+@font-face { font-family: BitPotion; src: url(f/BitPotion.ttf); }
+@font-face { font-family: PixOp8;   src: url(f/PixelOperator8.ttf); }
+@font-face { font-family: SvnCrux;  src: url(f/svn-crux.ttf); }
+
+:root { --s: 1; --bg: #0d0a12; --panel: #17121c; --line: #3a2c3c; --text: #e8dcc8; --dim: #9a8a7a; --gold: #f0c050; }
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--text); font: 14px/1.5 system-ui, -apple-system, Segoe UI, sans-serif; }
+main { max-width: 1480px; margin: 0 auto; padding: 16px 20px 80px; }
+h1 { font-size: 22px; margin: 0 0 4px; color: #f0dcc0; font-weight: 600; }
+h2 { font-size: 16px; margin: 40px 0 6px; color: var(--gold); border-top: 1px solid var(--line); padding-top: 14px; }
+h3 { font-size: 13px; margin: 0 0 4px; color: var(--text); font-weight: 600; }
+p, li { color: #b8a78c; max-width: 110ch; }
+code { background: #241b26; padding: 0 4px; border-radius: 3px; color: #e8c890; font-size: 12px; }
+.bar { position: sticky; top: 0; z-index: 50; background: var(--bg); padding: 8px 0; display: flex; gap: 8px; align-items: center; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+.bar button { font: inherit; color: var(--text); background: #241b26; border: 1px solid var(--line); border-radius: 4px; padding: 4px 10px; cursor: pointer; }
+.bar button.on { background: #5a3a12; border-color: var(--gold); color: #fff; }
+.pair { display: flex; gap: 14px; flex-wrap: wrap; align-items: flex-start; margin: 8px 0 14px; }
+figure { margin: 0; }
+figcaption { font-size: 12px; color: var(--dim); margin-top: 4px; max-width: 640px; }
+figcaption b { color: var(--text); }
+.tag { display: inline-block; font-size: 11px; padding: 0 6px; border-radius: 3px; background: #2c2236; color: #c8b8e8; margin-right: 4px; }
+.tag.bad { background: #5a1a1a; color: #ffb0a0; }
+.tag.ok  { background: #1a4a2a; color: #a0f0b0; }
+table { border-collapse: collapse; font-size: 12px; margin: 8px 0; width: 100%; }
+th, td { border: 1px solid var(--line); padding: 3px 7px; text-align: left; vertical-align: top; }
+th { background: #241b26; color: var(--gold); }
+td.k { font-family: ui-monospace, Menlo, monospace; color: #e8c890; white-space: nowrap; }
+tr.new td.k::before { content: "NEW "; color: #7fe08f; font-weight: 700; }
+tr.chg td.k::before { content: "CHG "; color: #f0c050; font-weight: 700; }
+ol.changes li { margin: 3px 0; }
+
+/* ---- the 640x360 canvas ---- */
+.scr { position: relative; width: 640px; height: 360px; background: #000; overflow: hidden; zoom: var(--s); image-rendering: pixelated; flex: 0 0 auto; user-select: none; }
+.scr img, .scr .sp { position: absolute; image-rendering: pixelated; display: block; }
+.scr .r { position: absolute; }
+.scr .t { position: absolute; white-space: nowrap; -webkit-font-smoothing: none; font-smooth: never; }
+.scr .t.wrap { white-space: normal; }
+.scr .hit { position: absolute; pointer-events: none; }
+body.hits .scr .hit { outline: 1px dashed #5ff; background: rgba(80,255,255,.12); z-index: 999; }
+.scr .over { outline: 1px solid #ff3030 !important; background: rgba(255,0,0,.25); }
+.scr .lang { position: absolute; right: 2px; bottom: 2px; font: 9px system-ui; color: #fff8; z-index: 998; background: #0008; padding: 0 3px; }
+.scr .pip { position: absolute; width: 7px; height: 7px; -webkit-mask: var(--star) 0 0/7px 7px; mask: var(--star) 0 0/7px 7px; }
+.scr .pip.round { -webkit-mask: url(img/pip.png) 0 0/7px 7px; mask: url(img/pip.png) 0 0/7px 7px; }
+.pipo { position: absolute; width: 7px; height: 7px; filter: drop-shadow(1px 0 0 #1a0e08) drop-shadow(-1px 0 0 #1a0e08) drop-shadow(0 1px 0 #1a0e08) drop-shadow(0 -1px 0 #1a0e08); }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
+@keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(3px); } }
+.pulse { animation: pulse 1s steps(2, end) infinite; }
+.bob { animation: bob .8s steps(3, end) infinite; }
+body.still .pulse, body.still .bob { animation: none; }
+
+/* phone simulation: CSS pixels, canvas scaled to fit and letterboxed */
+.phone { position: relative; width: 844px; height: 390px; background: #000; overflow: hidden; border: 1px solid #444; flex: 0 0 auto; }
+.phone .scr { position: absolute; left: 75.33px; top: 0; zoom: 1.08333; }
+.phone .guide { position: absolute; border: 1px dashed #5ff; background: rgba(80,255,255,.15); pointer-events: none; }
+.phone .guide span { position: absolute; left: 2px; top: 2px; font: 10px system-ui; color: #5ff; }
+
+/* ---- (g) rotate-device layer. These rules are the spec for WebGLTemplates/Athanor/index.html: there the layer is
+   #rotate (position: fixed; inset: 0; z-index: 10; display: none; shown by the media query in SPEC.md). ---- */
+.pphone { position: relative; background: #000; overflow: hidden; border: 1px solid #444; flex: 0 0 auto; zoom: var(--s); }
+.pphone .lang { position: absolute; right: 2px; bottom: 2px; font: 9px system-ui; color: #fff8; z-index: 998; background: #0008; padding: 0 3px; }
+.rot { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; box-sizing: border-box;
+  background: #0c0706; color: #f0dcc0; text-align: center; touch-action: none; padding-bottom: 48px;
+  font-family: ui-monospace, Menlo, Consolas, "Roboto Mono", monospace; }
+.rot::before { content: ""; position: absolute; inset: 8px; border: 2px solid #8a5a1e; box-shadow: inset 0 0 0 1px #3a2412; pointer-events: none; }
+.rot-body { box-sizing: border-box; width: 100%; max-width: 376px; padding: 0 28px; }
+.rot-icon { display: block; width: 240px; max-width: 100%; height: auto; margin: 0 auto 28px; shape-rendering: crispEdges; }
+.rot-title { margin: 0 0 12px; font-size: 24px; line-height: 30px; font-weight: 700; color: #f8d250; text-shadow: 0 2px 0 #3a1a08; text-wrap: balance; overflow-wrap: break-word; }
+.rot-text { margin: 0; font-size: 16px; line-height: 24px; font-weight: 400; color: #f0dcc0; text-wrap: balance; overflow-wrap: break-word; }
+@keyframes rotnudge { 0%,100% { transform: translateX(0); } 50% { transform: translateX(1px); } }
+.rot-arrow { animation: rotnudge 1s steps(2, end) infinite; }
+@media (prefers-reduced-motion: reduce) { .rot-arrow { animation: none; } }
+body.still .rot-arrow { animation: none; }
+body.bare main > *:not(#frames), body.bare #frames > h2, body.bare figcaption, body.bare figure > h3 { display: none; } body.bare main { padding: 0; max-width: none; margin: 0; } body.bare .pair { margin: 0; display: block; }

@@ -4,6 +4,7 @@ Status: **Script v2; owner decisions of 2026-11-13 recorded below.** Core hooks 
 [phase-4-lore.md](phase-4-lore.md); build plan in `docs/superpowers/plans/2026-11-13-athanor-phase4-tutorial-lore.md`.
 Scope (owner, 2026-11-13): first playthrough only; teaches **reactions**, the **Journal**, **Catalysts**; plays from a
 **standardized save file** so every new player sees the same thing.
+Wording note (2026-11-15): lines 1.6, 2.7, 3.6 and 5.1 were shortened so no lone word wraps onto a second line in the 288 px box; facts and numbers unchanged.
 
 ## What changed from the draft (v1), and why
 
@@ -65,7 +66,7 @@ Hand: Ember Coal, Deep Tear, Iron Ore, Moondust, Bone Ash. Trials 4 → 3.
 | 1.3 | "Put Deep Tear next to it. Neighbours react." (tile 5 lit) | place Deep Tear | placed |
 | 1.4 | "Changed your mind? Click a placed material to take it back." | optional take back and re-place | both placed |
 | 1.5 | "Ignite." (Ignite button pulses) | press Ignite | reaction plays |
-| 1.6 | "A new material: Steam Wisp. The number is its potency, your score." Popup held, in parts: `Base 20`, `First time this run x2`, `Chain step x1` = **40** | read | click |
+| 1.6 | "New: Steam Wisp. The number is its potency, your score." Popup held, in parts: `Base 20`, `First time this run x2`, `Chain step x1` = **40** | read | click |
 | 1.6b | "Potency: what you made, times one less than the materials used, doubled the first time, times the chain step." | read | click |
 | 1.7 | "What you make is kept on the rack, ready for later." (rack highlighted) | read | click |
 
@@ -83,7 +84,7 @@ Hand: Glowmoss, Iron Ore, Sunbloom, Moondust, Bone Ash (rack: Steam Wisp). Trial
 | 2.4 | "Open the Journal." (Journal button pulses) | open it | open |
 | 2.5 | "Every reaction you find is written here, kept across runs. Steam Wisp is in it already." (Ember Coal's page) | read | click |
 | 2.6 | "The number is the Reaction Index, 1 to 10. It decides who reacts first. Ember Coal is a 9." | read | click |
-| 2.7 | "Glowmoss's page: it reacts with something Potion. The hint stays until you find it." (Glowmoss's page, hint highlighted) | read, close | closed |
+| 2.7 | "Glowmoss reacts with a Potion. The hint stays until found." (Glowmoss's page, hint highlighted) | read, close | closed |
 
 Glowmoss must be on the lower tile (3): the hint goes to the first material of the pair in reading order. The hint is
 the simplest unfound Glowmoss recipe: `deep_tear + glowmoss -> verdant_tonic`, so "something Potion". Glowmoss and
@@ -102,7 +103,7 @@ Hand: Iron Ore, Ember Coal, Moondust, plus Bone Ash and Sunbloom, which the scri
 | 3.3b | Slow motion, one step per click, "Step 1" / "Step 2" over the hub tile. Step 1: Ember Coal + Iron Ore → Sky Iron on tile 4. Step 2: Moondust + Sky Iron → Starmetal Ore on tile 5 | watch | click per step |
 | 3.4 | "Sky Iron was new, and it touched Moondust. Hot enough now, so they reacted too. That is a chain." | read | click |
 | 3.5 | Both scores side by side, in parts. Step 1: `20 x2 x1` = **40**. Step 2: `60 x2 x2` = **240**. "Step 2 counts twice. Step 3 would count three times. Long chains are where the potency is." | read | click |
-| 3.6 | "Without Moondust, the chain stops at step 1: 40 instead of 280." (the broken bench is shown greyed beside it; numbers from `RunState.Preview`, worked out before the Ignite, so nothing is spent) | read | click |
+| 3.6 | "Without Moondust the chain stops at step 1: 40, not 280." (the broken bench is shown greyed beside it; numbers from `RunState.Preview`, worked out before the Ignite, so nothing is spent) | read | click |
 | 3.7 | Potency bar fills past 300 (320). The usual "Depth Cleared" descent plays. | watch | descent ends |
 
 3.0 sits at the start of trial 3 because this hand holds two "not now" materials, the first time a player would want
@@ -120,7 +121,7 @@ Offer, fixed: **Bellows** (Ore reactions double), **Heart Tile** (reactions touc
 
 | # | Line | Player does | Done when |
 |---|---|---|---|
-| 5.1 | "Depth cleared. Pick a catalyst. It helps for the rest of the run." | read | click |
+| 5.1 | "Depth cleared. Pick a catalyst. It helps all run long." | read | click |
 | 5.2 | "Each one says what it does. Point at one to read it." | hover | any hover |
 | 5.3 | "Take one." | choose | chosen |
 | 5.4 | Descent to depth 2 (no event). The first hand is scripted for the choice (table below). "See the difference? That is your catalyst." Popup in parts with the catalyst's line | lay the lit pair, Ignite | reaction plays |

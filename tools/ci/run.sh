@@ -3,8 +3,9 @@
 #   tools/ci/run.sh lint      unity_lint (with baseline) + its own unit tests
 #   tools/ci/run.sh repo      tools/ci/check_repo.py (build output, content, icons, lang parity, Core purity, .meta)
 #   tools/ci/run.sh core      dotnet test tools/CoreTests, fails on any failure or if too few tests ran
+#   tools/ci/run.sh rotate    tools/web/rotate_sync.mjs (rotate-device text in the WebGL template = ui.rotate.* in en/vi.json)
 #   tools/ci/run.sh commits <range>   commit messages in a range, e.g. origin/main..HEAD
-#   tools/ci/run.sh all       lint + repo + core
+#   tools/ci/run.sh all       lint + repo + rotate + core
 # Any non-zero exit means CI fails and the merge is blocked.
 set -euo pipefail
 cd "$(dirname "$0")/../.."
@@ -19,8 +20,13 @@ lint() {
 
 repo() { python3 tools/ci/check_repo.py; }
 
+rotate() { node tools/web/rotate_sync.mjs; }   # exit 1 = template and lang differ, 2 = a file could not be read
+
 core() {
   local log; log="$(mktemp)"
+  # CoreTests targets net8.0; on a machine with only a newer runtime (e.g. .NET 10) let it roll forward instead of aborting.
+  # Same tests, same MIN_TESTS guard; only the runtime that hosts them changes. Override by exporting the variable.
+  export DOTNET_ROLL_FORWARD="${DOTNET_ROLL_FORWARD:-Major}"
   dotnet test tools/CoreTests --nologo 2>&1 | tee "$log"
   local passed; passed="$(grep -Eo 'Passed: +[0-9]+' "$log" | tail -1 | grep -Eo '[0-9]+' || echo 0)"
   if [[ "$passed" -lt "$MIN_TESTS" ]]; then
@@ -38,7 +44,8 @@ case "${1:-all}" in
   lint) lint ;;
   repo) repo ;;
   core) core ;;
+  rotate) rotate ;;
   commits) shift; commits "$@" ;;
-  all) lint; repo; core ;;
+  all) lint; repo; rotate; core ;;
   *) echo "unknown job: $1" >&2; exit 2 ;;
 esac

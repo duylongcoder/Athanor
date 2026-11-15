@@ -27,6 +27,7 @@ public static class SceneBuilder
         var layout = JsonUtility.FromJson<LayoutData>(File.ReadAllText("Assets/Resources/layout.json"));
         var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
 
+        RenderSettings.skybox = null;               // 2D: the default skybox material is dead weight in the build
         // camera: 640x360 pixels, scaled up by whole numbers
         var camGo = new GameObject("Main Camera") { tag = "MainCamera" };
         camGo.transform.position = new Vector3(0, 0, -10);
@@ -65,6 +66,15 @@ public static class SceneBuilder
     /// <summary>The same, from the command line: unity run Athanor -- -executeMethod SceneBuilder.BuildBatch -quit</summary>
     public static void BuildBatch() => Debug.Log(Build());
 
+    /// <summary>Batch: fonts, effect sheets, then the scene and library. unity run Athanor -- -executeMethod SceneBuilder.AllBatch -quit</summary>
+    public static void AllBatch()
+    {
+        Debug.Log(FontBuilder.Build());
+        AssetDatabase.Refresh();
+        Debug.Log(FlipbookImporter.Import());
+        Debug.Log(Build());
+    }
+
     /// <summary>Re-collects sprites and effect sheets into the art library (after new art or effects are imported).</summary>
     public static ArtLibrary RefreshLibrary() { var lib = BuildLibrary(); AssetDatabase.SaveAssets(); return lib; }
 
@@ -84,6 +94,7 @@ public static class SceneBuilder
         lib.body = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Art/Fonts/BitPotion.asset");
         lib.label = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Art/Fonts/PixelOperator-Bold.asset");
         lib.tiny = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Art/Fonts/PixelOperator8.asset");
+        lib.crux = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Art/Fonts/Crux.asset");
         lib.lit = AssetDatabase.LoadAssetAtPath<Material>(UrpMaterials + "Sprite-Lit-Default.mat");
         lib.unlit = AssetDatabase.LoadAssetAtPath<Material>(UrpMaterials + "Sprite-Unlit-Default.mat");
         var glow = AssetDatabase.LoadAssetAtPath<Material>(GlowPath);

@@ -27,5 +27,8 @@ aliases: []
 ## Uses
 [[ContentDb]], [[ReactionEvent]]
 
+## Used by
+[[TutorialController]]
+
 ## Tested by
 [[TutorialTests]]

@@ -1,0 +1,2017 @@
+fileFormatVersion: 2
+guid: 810ace090c412451194542992ff3fa6e
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -4542111751973435051
+    second: holy-pillar_0
+  - first:
+      213: -4675161910121385127
+    second: holy-pillar_1
+  - first:
+      213: 6402636662588732401
+    second: holy-pillar_2
+  - first:
+      213: -283972845439827667
+    second: holy-pillar_3
+  - first:
+      213: 6852122857094670894
+    second: holy-pillar_4
+  - first:
+      213: 4824100844864160528
+    second: holy-pillar_5
+  - first:
+      213: 4110070742407536916
+    second: holy-pillar_6
+  - first:
+      213: 2731646357476095421
+    second: holy-pillar_7
+  - first:
+      213: 8265947416913790091
+    second: holy-pillar_8
+  - first:
+      213: -7364502548620698463
+    second: holy-pillar_9
+  - first:
+      213: 4503057623819700833
+    second: holy-pillar_10
+  - first:
+      213: 2233714437729001280
+    second: holy-pillar_11
+  - first:
+      213: -1459770876037901094
+    second: holy-pillar_12
+  - first:
+      213: -487263117922262815
+    second: holy-pillar_13
+  - first:
+      213: 5230026264646885509
+    second: holy-pillar_14
+  - first:
+      213: 6844586341000871193
+    second: holy-pillar_15
+  - first:
+      213: 5356232807661053580
+    second: holy-pillar_16
+  - first:
+      213: 4531472458312466250
+    second: holy-pillar_17
+  - first:
+      213: 2376777227822530443
+    second: holy-pillar_18
+  - first:
+      213: 6228102885163260425
+    second: holy-pillar_19
+  - first:
+      213: 4161672222015149336
+    second: holy-pillar_20
+  - first:
+      213: -2968099870371701115
+    second: holy-pillar_21
+  - first:
+      213: -8102681643792658949
+    second: holy-pillar_22
+  - first:
+      213: -6604714603316063364
+    second: holy-pillar_23
+  - first:
+      213: -3878597235587103112
+    second: holy-pillar_24
+  - first:
+      213: 1159290695209131848
+    second: holy-pillar_25
+  - first:
+      213: 1025916906119231070
+    second: holy-pillar_26
+  - first:
+      213: 4224328077314108218
+    second: holy-pillar_27
+  - first:
+      213: -2836578635174743887
+    second: holy-pillar_28
+  - first:
+      213: 696810207387492769
+    second: holy-pillar_29
+  - first:
+      213: 8607513877687719853
+    second: holy-pillar_30
+  - first:
+      213: -5095416469488477192
+    second: holy-pillar_31
+  - first:
+      213: -7772444050009512728
+    second: holy-pillar_32
+  - first:
+      213: -9030336365320806022
+    second: holy-pillar_33
+  - first:
+      213: 1918191233201406947
+    second: holy-pillar_34
+  - first:
+      213: 1865641584462870627
+    second: holy-pillar_35
+  - first:
+      213: 1230952737632516952
+    second: holy-pillar_36
+  - first:
+      213: 7046250743659658150
+    second: holy-pillar_37
+  - first:
+      213: 8707755726128474275
+    second: holy-pillar_38
+  - first:
+      213: 6442936519438695891
+    second: holy-pillar_39
+  - first:
+      213: 8118546839365642436
+    second: holy-pillar_40
+  - first:
+      213: -7789990424807206849
+    second: holy-pillar_41
+  - first:
+      213: 5175377424198682179
+    second: holy-pillar_42
+  - first:
+      213: 7459477443800310134
+    second: holy-pillar_43
+  - first:
+      213: -7050647509550172440
+    second: holy-pillar_44
+  - first:
+      213: -1422253823855037757
+    second: holy-pillar_45
+  - first:
+      213: -6007390054337373455
+    second: holy-pillar_46
+  - first:
+      213: -2787000682171933707
+    second: holy-pillar_47
+  - first:
+      213: -9038883493816355389
+    second: holy-pillar_48
+  - first:
+      213: -1312685849313517326
+    second: holy-pillar_49
+  - first:
+      213: -5453868066172007523
+    second: holy-pillar_50
+  - first:
+      213: -2618291268270922663
+    second: holy-pillar_51
+  - first:
+      213: 7854967901207350932
+    second: holy-pillar_52
+  - first:
+      213: -7115520115875247564
+    second: holy-pillar_53
+  - first:
+      213: 7502402654600506241
+    second: holy-pillar_54
+  - first:
+      213: 229897798731716474
+    second: holy-pillar_55
+  - first:
+      213: -8167497872282021111
+    second: holy-pillar_56
+  - first:
+      213: 4181077947966537730
+    second: holy-pillar_57
+  - first:
+      213: -5497806640165166641
+    second: holy-pillar_58
+  - first:
+      213: -1753186356459180791
+    second: holy-pillar_59
+  - first:
+      213: 7941466896937932940
+    second: holy-pillar_60
+  - first:
+      213: -4128705866513351608
+    second: holy-pillar_61
+  - first:
+      213: 6262122179980217812
+    second: holy-pillar_62
+  - first:
+      213: -7571345569592862827
+    second: holy-pillar_63
+  - first:
+      213: -2098612380501773937
+    second: holy-pillar_64
+  - first:
+      213: 434738782708487102
+    second: holy-pillar_65
+  - first:
+      213: -853306710906396701
+    second: holy-pillar_66
+  - first:
+      213: 8928012696645725160
+    second: holy-pillar_67
+  - first:
+      213: -1355597576264291030
+    second: holy-pillar_68
+  - first:
+      213: -4017476964913686977
+    second: holy-pillar_69
+  - first:
+      213: -349625307767598840
+    second: holy-pillar_70
+  - first:
+      213: -2650374503239918395
+    second: holy-pillar_71
+  - first:
+      213: 4165633855827433495
+    second: holy-pillar_72
+  - first:
+      213: 8368034185400459960
+    second: holy-pillar_73
+  - first:
+      213: 4044849398827026767
+    second: holy-pillar_74
+  - first:
+      213: 89670911654320155
+    second: holy-pillar_75
+  - first:
+      213: 5732578164536973913
+    second: holy-pillar_76
+  - first:
+      213: -4153272695742172961
+    second: holy-pillar_77
+  - first:
+      213: -5354047116614754154
+    second: holy-pillar_78
+  - first:
+      213: 7550738265057026124
+    second: holy-pillar_79
+  - first:
+      213: 2416187499371217590
+    second: holy-pillar_80
+  - first:
+      213: 8786295578507921845
+    second: holy-pillar_81
+  - first:
+      213: 6248393326250781925
+    second: holy-pillar_82
+  - first:
+      213: 5295480562222752391
+    second: holy-pillar_83
+  - first:
+      213: 7700238341182090509
+    second: holy-pillar_84
+  - first:
+      213: -4665341009624399509
+    second: holy-pillar_85
+  - first:
+      213: 8848259769893369409
+    second: holy-pillar_86
+  - first:
+      213: -2939909569146950694
+    second: holy-pillar_87
+  - first:
+      213: 1746241961661975364
+    second: holy-pillar_88
+  - first:
+      213: 6525245728781300006
+    second: holy-pillar_89
+  - first:
+      213: -8041000950241574895
+    second: holy-pillar_90
+  - first:
+      213: -1230840895616448099
+    second: holy-pillar_91
+  - first:
+      213: 1955672590517273868
+    second: holy-pillar_92
+  - first:
+      213: -1482714421720780239
+    second: holy-pillar_93
+  - first:
+      213: -7196317528732010858
+    second: holy-pillar_94
+  - first:
+      213: 7166095452206312610
+    second: holy-pillar_95
+  - first:
+      213: 1060332303316838218
+    second: holy-pillar_96
+  - first:
+      213: 8870885695804023715
+    second: holy-pillar_97
+  - first:
+      213: -2808423235835788722
+    second: holy-pillar_98
+  - first:
+      213: 154914076156733846
+    second: holy-pillar_99
+  - first:
+      213: 23227588641002886
+    second: holy-pillar_100
+  - first:
+      213: -8318978815885451297
+    second: holy-pillar_101
+  - first:
+      213: 1054279718196443004
+    second: holy-pillar_102
+  - first:
+      213: 8031650291725325564
+    second: holy-pillar_103
+  - first:
+      213: 3173567762759129349
+    second: holy-pillar_104
+  - first:
+      213: -7486541208440962847
+    second: holy-pillar_105
+  - first:
+      213: 2630121213115147739
+    second: holy-pillar_106
+  - first:
+      213: -5233325199308546928
+    second: holy-pillar_107
+  - first:
+      213: 5968391024232032647
+    second: holy-pillar_108
+  - first:
+      213: 2150624082816575985
+    second: holy-pillar_109
+  - first:
+      213: 8283740125985023287
+    second: holy-pillar_110
+  - first:
+      213: -1225386725494730994
+    second: holy-pillar_111
+  - first:
+      213: 7183755907800012395
+    second: holy-pillar_112
+  - first:
+      213: -6205601528407669987
+    second: holy-pillar_113
+  - first:
+      213: 2784186875980824725
+    second: holy-pillar_114
+  - first:
+      213: -9150423295190810898
+    second: holy-pillar_115
+  - first:
+      213: -4355833096080252962
+    second: holy-pillar_116
+  - first:
+      213: 3163690681916017493
+    second: holy-pillar_117
+  - first:
+      213: 2535417371867539202
+    second: holy-pillar_118
+  - first:
+      213: 3480569310768878983
+    second: holy-pillar_119
+  - first:
+      213: -483706446254252990
+    second: holy-pillar_120
+  - first:
+      213: 2115834542681226269
+    second: holy-pillar_121
+  - first:
+      213: -687072146130520397
+    second: holy-pillar_122
+  - first:
+      213: -3363250940576792875
+    second: holy-pillar_123
+  - first:
+      213: -3570226080347470820
+    second: holy-pillar_124
+  - first:
+      213: -6714865283355280994
+    second: holy-pillar_125
+  - first:
+      213: 2095841888046432730
+    second: holy-pillar_126
+  - first:
+      213: 7872357483137950279
+    second: holy-pillar_127
+  - first:
+      213: -8762455744865159901
+    second: holy-pillar_128
+  - first:
+      213: -6865486102952677758
+    second: holy-pillar_129
+  - first:
+      213: 9079130876563748247
+    second: holy-pillar_130
+  - first:
+      213: -3224672656994540020
+    second: holy-pillar_131
+  - first:
+      213: 8219531496723589945
+    second: holy-pillar_132
+  - first:
+      213: -5082614917365339610
+    second: holy-pillar_133
+  - first:
+      213: -3483049233773130271
+    second: holy-pillar_134
+  - first:
+      213: -8082498681671872119
+    second: holy-pillar_135
+  - first:
+      213: -4178264841510091326
+    second: holy-pillar_136
+  - first:
+      213: 3215438188643571031
+    second: holy-pillar_137
+  - first:
+      213: -2749476062051632752
+    second: holy-pillar_138
+  - first:
+      213: -7456357294747484058
+    second: holy-pillar_139
+  - first:
+      213: 3306776809466100472
+    second: holy-pillar_140
+  - first:
+      213: 8174051020501029692
+    second: holy-pillar_141
+  - first:
+      213: 5587401419540917922
+    second: holy-pillar_142
+  - first:
+      213: -4378710398253505465
+    second: holy-pillar_143
+  - first:
+      213: 1320357529449616152
+    second: holy-pillar_144
+  - first:
+      213: 6905120708217994627
+    second: holy-pillar_145
+  - first:
+      213: -2277034614497009578
+    second: holy-pillar_146
+  - first:
+      213: -1978838745276208486
+    second: holy-pillar_147
+  - first:
+      213: 2599841908209284051
+    second: holy-pillar_148
+  - first:
+      213: 282011340837205500
+    second: holy-pillar_149
+  - first:
+      213: -7297495100884289362
+    second: holy-pillar_150
+  - first:
+      213: 2041698241684726963
+    second: holy-pillar_151
+  - first:
+      213: 7749025956989033428
+    second: holy-pillar_152
+  - first:
+      213: 4777197433847494865
+    second: holy-pillar_153
+  - first:
+      213: 4996114760063381525
+    second: holy-pillar_154
+  - first:
+      213: -585225959421076533
+    second: holy-pillar_155
+  - first:
+      213: -1217459635146193760
+    second: holy-pillar_156
+  - first:
+      213: -3821859295271705337
+    second: holy-pillar_157
+  - first:
+      213: 3101839064192499994
+    second: holy-pillar_158
+  - first:
+      213: 8194245639262373219
+    second: holy-pillar_159
+  - first:
+      213: -3795019743367718972
+    second: holy-pillar_160
+  - first:
+      213: 7821360759677656375
+    second: holy-pillar_161
+  - first:
+      213: -2366699826957305967
+    second: holy-pillar_162
+  - first:
+      213: -5026777073322745033
+    second: holy-pillar_163
+  - first:
+      213: 354185589186186781
+    second: holy-pillar_164
+  - first:
+      213: 5714035961172405742
+    second: holy-pillar_165
+  - first:
+      213: -8912373491536549468
+    second: holy-pillar_166
+  - first:
+      213: -7941672342147966499
+    second: holy-pillar_167
+  - first:
+      213: 8776855097672446366
+    second: holy-pillar_168
+  - first:
+      213: 7741878115400525443
+    second: holy-pillar_169
+  - first:
+      213: 9172943509065282114
+    second: holy-pillar_170
+  - first:
+      213: 5923061404986255407
+    second: holy-pillar_171
+  - first:
+      213: 1151831511086185550
+    second: holy-pillar_172
+  - first:
+      213: -7279528478096641422
+    second: holy-pillar_173
+  - first:
+      213: -4595547950134724889
+    second: holy-pillar_174
+  - first:
+      213: 3520442845608327237
+    second: holy-pillar_175
+  - first:
+      213: 3088948697195640674
+    second: holy-pillar_176
+  - first:
+      213: -823295233116468893
+    second: holy-pillar_177
+  - first:
+      213: 2072406969318508371
+    second: holy-pillar_178
+  - first:
+      213: 6359670901380009960
+    second: holy-pillar_179
+  - first:
+      213: -9101239470138937678
+    second: holy-pillar_180
+  - first:
+      213: 8030413156073409871
+    second: holy-pillar_181
+  - first:
+      213: -7385859695170544418
+    second: holy-pillar_182
+  - first:
+      213: 9095258885843548458
+    second: holy-pillar_183
+  - first:
+      213: -8126845472958268786
+    second: holy-pillar_184
+  - first:
+      213: 5954289393327789548
+    second: holy-pillar_185
+  - first:
+      213: -8376901556648076462
+    second: holy-pillar_186
+  - first:
+      213: 4097299591424301434
+    second: holy-pillar_187
+  - first:
+      213: 802724782549702967
+    second: holy-pillar_188
+  - first:
+      213: -4792257999659616195
+    second: holy-pillar_189
+  - first:
+      213: 2865506805851654630
+    second: holy-pillar_190
+  - first:
+      213: -4384157622416500068
+    second: holy-pillar_191
+  - first:
+      213: -1348921657362236391
+    second: holy-pillar_192
+  - first:
+      213: 8600564644185471921
+    second: holy-pillar_193
+  - first:
+      213: -2942951732280930068
+    second: holy-pillar_194
+  - first:
+      213: -7602798438454796190
+    second: holy-pillar_195
+  - first:
+      213: 2431025700648102146
+    second: holy-pillar_196
+  - first:
+      213: 489642594290775877
+    second: holy-pillar_197
+  - first:
+      213: -3997607444507318782
+    second: holy-pillar_198
+  - first:
+      213: -1591402218926734877
+    second: holy-pillar_199
+  - first:
+      213: 4996764723968992859
+    second: holy-pillar_200
+  - first:
+      213: -8476435867449525494
+    second: holy-pillar_201
+  - first:
+      213: -2907032366123001474
+    second: holy-pillar_202
+  - first:
+      213: 5958975601712069676
+    second: holy-pillar_203
+  - first:
+      213: -4604484656164669218
+    second: holy-pillar_204
+  - first:
+      213: 1583418737519115097
+    second: holy-pillar_205
+  - first:
+      213: -2902417742732666689
+    second: holy-pillar_206
+  - first:
+      213: -2442082109154171996
+    second: holy-pillar_207
+  - first:
+      213: 1346818764990202854
+    second: holy-pillar_208
+  - first:
+      213: 7062080089291204298
+    second: holy-pillar_209
+  - first:
+      213: 5487897701438689209
+    second: holy-pillar_210
+  - first:
+      213: 596809118794998232
+    second: holy-pillar_211
+  - first:
+      213: -3954551433592687658
+    second: holy-pillar_212
+  - first:
+      213: -7527990119652666472
+    second: holy-pillar_213
+  - first:
+      213: -4693719558943041397
+    second: holy-pillar_214
+  - first:
+      213: -7844399759210304105
+    second: holy-pillar_215
+  - first:
+      213: -1384893569122442795
+    second: holy-pillar_216
+  - first:
+      213: 166429860325072478
+    second: holy-pillar_217
+  - first:
+      213: -839839303895882016
+    second: holy-pillar_218
+  - first:
+      213: 7550073365623354609
+    second: holy-pillar_219
+  - first:
+      213: 5360271870351492094
+    second: holy-pillar_220
+  - first:
+      213: 1124235975757704298
+    second: holy-pillar_221
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 0
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 1
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 0
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: 4
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 1
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: holy-pillar_000
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1380
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 01aab9ff0345749c6981070df3854495
+      internalID: -1476032312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_001
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 1380
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e50a8e868cfe047b7b427bb6704897be
+      internalID: 689346131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_002
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 1380
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1c74286e0edf41b0a8ef738f11dce6e
+      internalID: 1814076733
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_003
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 1380
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea61fe8eb23864867ab0f20408951044
+      internalID: 984781273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_004
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 1380
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c208efcd24aa44cedba74591ed99fab3
+      internalID: -1504211130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_005
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 1380
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f642d76856e6645a5a2db748957aae0c
+      internalID: -1958979991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_006
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 1380
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 855ca5941da244bb9b2f680675463db2
+      internalID: -1467150158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_007
+      rect:
+        serializedVersion: 2
+        x: 1344
+        y: 1380
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c5397a214c26949269300358b73768ec
+      internalID: 1708104884
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_008
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1150
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c5a49225c1ee04501ac9812abee23449
+      internalID: 458701935
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_009
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 1150
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7645a315bcc034334b643e406ab4d083
+      internalID: 1748436007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_010
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 1150
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8091f688a0f424cf4b2cfc05313508f1
+      internalID: -349634190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_011
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 1150
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 058e50c81e6ab437f96eb810fe9cbccd
+      internalID: 1251145104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_012
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 1150
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b6889ec0398d6432498d6ba6b183aa7c
+      internalID: 1825793035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_013
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 1150
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f8c00054ac0474a909e3ab489641b879
+      internalID: 1460239857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_014
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 1150
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7976ba051f4a45dab6e65bfd3400ae8
+      internalID: 1568127699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_015
+      rect:
+        serializedVersion: 2
+        x: 1344
+        y: 1150
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8071756172faa45189b22cf1dba5e1ed
+      internalID: 653669878
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_016
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 920
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f790ac3f638e41759d29b8a5ab9e4ca
+      internalID: 816551743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_017
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 920
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c79bdbd084004f96895ca0f2806e8ec
+      internalID: -343676617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_018
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 920
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 289af7385c0b74ba1bd266b597b8103b
+      internalID: 398113200
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_019
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 920
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d3893589c4d044721a3f8e60267a218f
+      internalID: -2063208002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_020
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 920
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ec8299dae1f040dcb9789ccfbcf4321
+      internalID: 83130858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_021
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 920
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fbc981d9ca3464ce3916ee4ec24a0bdc
+      internalID: -435174479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_022
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 920
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e0a9963651784bdc89b9530a19b8e00
+      internalID: -1650950992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_023
+      rect:
+        serializedVersion: 2
+        x: 1344
+        y: 920
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f472f3457d4e042759d727461a862638
+      internalID: -1854117350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_024
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 690
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a8a7e97b3c4a4c2eaa87bd6781b5710
+      internalID: 1347664663
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_025
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 690
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2dcadf0ed6654e0eacb9fb5921b9002
+      internalID: -1329117258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_026
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 690
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 073beffd3257f4db5b2976c77daae7bc
+      internalID: 256124537
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_027
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 690
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 81624290aa017455582490ea19a5619f
+      internalID: 1195205169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_028
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 690
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c03031cd697dc4ec48d7f6705642c6d0
+      internalID: 1408651958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_029
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 690
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9557e96385580458fb3dda4c3cc79461
+      internalID: 428091346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_030
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 690
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f624c283fa0fe46fba7878031b5189a1
+      internalID: -1893676630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_031
+      rect:
+        serializedVersion: 2
+        x: 1344
+        y: 690
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0361ed26ccbb5480189a29a236b5c4f8
+      internalID: -174075768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_032
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 460
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b072759b7efa41dc908908ede17dba9
+      internalID: 649226776
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_033
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 460
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 664318b8534a34dfc838391ebb682e8e
+      internalID: 124709162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_034
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 460
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 903ca05f9552448bc9a5aa3218df7844
+      internalID: 976018136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_035
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 460
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c9df512074cac47b28adcf7b7ea010b9
+      internalID: -755678841
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_036
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 460
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a63cf7b8697694cc3be0485fc6090ebb
+      internalID: 1075752853
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_037
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 460
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7db77b4e08f54320bb795a340bbda10
+      internalID: 522023386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_038
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 460
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4aad22cab85b4606b60709e48945054
+      internalID: -504617888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_039
+      rect:
+        serializedVersion: 2
+        x: 1344
+        y: 460
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a6fd379819614571ba52de46585ac32
+      internalID: -112171682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_040
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 230
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0259bfd3b1b0b4a41a87e25cf13b4dc4
+      internalID: 1190424129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_041
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 230
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0f9cb116079c40aebdb8302069658c7
+      internalID: -532951018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_042
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 230
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4327d9d14e8344592a493fc43749f8b2
+      internalID: -1742407110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_043
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 230
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea32a958769f84be0849c6e9ca3a7c8b
+      internalID: 1420042075
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_044
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 230
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6fd2ef6888d8d44dcb40d798b97e5453
+      internalID: 2001724676
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_045
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 230
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a6c66a025de840edb6a86f2f7c2f2e5
+      internalID: -116296597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_046
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 230
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b9527da447feb415bbea770c3153bbe0
+      internalID: -1777641558
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_047
+      rect:
+        serializedVersion: 2
+        x: 1344
+        y: 230
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a591f0ed943554bd7a73bbee492c6311
+      internalID: 1697980290
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_048
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2276fff1cb7524846875cc319acf3732
+      internalID: -545408396
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_049
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 347fb0e6305314bfe8e8b2c3b795ae6f
+      internalID: -2118464880
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_050
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57603e7156ee949babc78d6a37536295
+      internalID: -556781296
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_051
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 0
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6fff4dcea5de04e1386664f44b7019b2
+      internalID: -696391243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: holy-pillar_052
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 0
+        width: 192
+        height: 230
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11304348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7f3788874ba514a6e96fdaf2ce60bd11
+      internalID: -1585780855
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 985d5fb2442854b88a2931c6958ec65e
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      holy-pillar_000: -1476032312
+      holy-pillar_001: 689346131
+      holy-pillar_002: 1814076733
+      holy-pillar_003: 984781273
+      holy-pillar_004: -1504211130
+      holy-pillar_005: -1958979991
+      holy-pillar_006: -1467150158
+      holy-pillar_007: 1708104884
+      holy-pillar_008: 458701935
+      holy-pillar_009: 1748436007
+      holy-pillar_010: -349634190
+      holy-pillar_011: 1251145104
+      holy-pillar_012: 1825793035
+      holy-pillar_013: 1460239857
+      holy-pillar_014: 1568127699
+      holy-pillar_015: 653669878
+      holy-pillar_016: 816551743
+      holy-pillar_017: -343676617
+      holy-pillar_018: 398113200
+      holy-pillar_019: -2063208002
+      holy-pillar_020: 83130858
+      holy-pillar_021: -435174479
+      holy-pillar_022: -1650950992
+      holy-pillar_023: -1854117350
+      holy-pillar_024: 1347664663
+      holy-pillar_025: -1329117258
+      holy-pillar_026: 256124537
+      holy-pillar_027: 1195205169
+      holy-pillar_028: 1408651958
+      holy-pillar_029: 428091346
+      holy-pillar_030: -1893676630
+      holy-pillar_031: -174075768
+      holy-pillar_032: 649226776
+      holy-pillar_033: 124709162
+      holy-pillar_034: 976018136
+      holy-pillar_035: -755678841
+      holy-pillar_036: 1075752853
+      holy-pillar_037: 522023386
+      holy-pillar_038: -504617888
+      holy-pillar_039: -112171682
+      holy-pillar_040: 1190424129
+      holy-pillar_041: -532951018
+      holy-pillar_042: -1742407110
+      holy-pillar_043: 1420042075
+      holy-pillar_044: 2001724676
+      holy-pillar_045: -116296597
+      holy-pillar_046: -1777641558
+      holy-pillar_047: 1697980290
+      holy-pillar_048: -545408396
+      holy-pillar_049: -2118464880
+      holy-pillar_050: -556781296
+      holy-pillar_051: -696391243
+      holy-pillar_052: -1585780855
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -7,8 +7,9 @@
 | Alagard | Hewett Tsoi | CC BY 3.0 (as listed on OpenGameArt) | Headings and numbers |
 | BitPotion | Joeb Rogers | CC BY 4.0 (author's itch.io page, checked 2026-11-12) | Reading text |
 | Pixel Operator (Bold, 8) | Jayvee Enaguas (HarvettFox96) | CC0 1.0 | Card names and tiny labels |
+| Coder's Crux | Nal (NAL) | CC BY 3.0 | Title, name and tiny text in Vietnamese; Phase 5 UI text |
 
-Alagard and BitPotion require attribution: keep this file with any copy of the game, and keep the credit
+Alagard, BitPotion and Coder's Crux require attribution: keep this file with any copy of the game, and keep the credit
 line on the title screen.
 
 ## Effects
@@ -16,6 +17,22 @@ line on the title screen.
 The cutscenes and bench feedback are drawn by the game's own code. Optional extra effect sheets come from
 [pixelfx](https://github.com/patch-gg/pixelfx) (MIT), exported with `tools/fx/export.sh`. If you ship a build
 that includes them, include pixelfx's `LICENSE` and `NOTICE.md` as well.
+
+## Libraries
+
+| Library | Author | Licence | Used for |
+|---|---|---|---|
+| PrimeTween | Kyrylo Kuzyk | PrimeTween licence (free to use in released games; v1.5.2) | Tweens and sequences |
+
+### PrimeTween licence note (owner decision #8, 2026-11-15)
+
+Read from `license.md` in the PrimeTween 1.5.2 package (Athanor/Library/PackageCache, read-only). Shipping games in binary
+form, free or commercial, is allowed. Internal sharing within a team, such as a private Git repository, is allowed.
+Not allowed: distributing PrimeTween's source or its .tgz inside derivative products, or reselling it. Athanor keeps the package as
+`Athanor/Packages/com.kyrylokuzyk.primetween.tgz` (referenced in `Athanor/Packages/manifest.json`), so a public repository would
+be a redistribution of that tarball. This is fine while the repo is private. **Re-decide before any public release** (public
+repo, or a repo published with the .tgz): switch to the NPM/UPM install, or drop the .tgz from the repo. The WebGL build
+ships only compiled code, which the licence allows. This is a reading of the licence text, not legal advice.
 
 ## Everything else
 

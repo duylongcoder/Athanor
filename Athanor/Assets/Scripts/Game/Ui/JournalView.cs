@@ -29,6 +29,9 @@ namespace Athanor.Game
         readonly HashSet<string> discovered = new HashSet<string>();
         readonly Label[] lines = new Label[LineCount], hints = new Label[HintCount];
         SpriteRenderer pick, bigIcon;
+        RarityStars pageStars;
+        Label pageTier;
+        readonly Dictionary<int, RarityStars> cellStars = new Dictionary<int, RarityStars>();
         readonly SpriteRenderer[] pips = new SpriteRenderer[PipCount];
         Label found, materialsCount, title, sub;
         int selected;
@@ -44,13 +47,13 @@ namespace Athanor.Game
             Make.Click(shade.gameObject, new Vector2(Px.W, Px.H), O - 1, Close);         // a click outside the book closes it
             var panel = Make.SpriteAt(t, "journal", X, Y, O);
             Make.Click(panel.gameObject, new Vector2(600, 330), O);
-            Make.Text(t, "Journal", X + 18, Y + 7, FontKind.Title, 16, Pale, O + 2, Align.Left, Dark);
+            Make.TextKey(t, "ui.journal.title", X + 18, Y + 7, FontKind.Title, 16, Pale, O + 2, Align.Left, Dark);
             found = Make.Text(t, "", X + 300, Y + 11, FontKind.Tiny, 8, Px.Hex("#a88a6a"), O + 2, Align.Centre);
-            var close = Make.Text(t, "Close", X + 582, Y + 7, FontKind.Title, 16, Pale, O + 2, Align.Right, Dark);
+            var close = Make.TextKey(t, "ui.common.close", X + 582, Y + 7, FontKind.Title, 16, Pale, O + 2, Align.Right, Dark);
             Make.Click(close.gameObject, new Vector2(60, 22), O + 3, Close).offset = new Vector2(-22, -8);
 
             // left page: the grid of materials, then the latest hints
-            Make.Text(t, "MATERIALS", X + GridX, Y + 43, FontKind.Tiny, 8, Faded, O + 2);
+            Make.TextKey(t, "ui.journal.materials", X + GridX, Y + 43, FontKind.Tiny, 8, Faded, O + 2);
             materialsCount = Make.Text(t, "", X + GridX + Cols * Cell - (Cell - Well), Y + 43, FontKind.Tiny, 8, Faded, O + 2, Align.Right);
             pick = Make.Sprite(t, "journal_pick", Vector3.zero, O + 1);
             // more materials than the grid holds: they are shown a page at a time
@@ -62,8 +65,16 @@ namespace Athanor.Game
                 var icon = Make.Sprite(t, db.Materials[i].id, CellCentre(i), O + 2);
                 Make.Click(icon.gameObject, new Vector2(Cell, Cell), O + 3, () => Select(index));
                 icons.Add(icon);
+                // one star at the corner of the cell for an Uncommon or better starting material (SPEC 24); Common shows none
+                if (db.Materials[i].tier == 0 && Rarities.Rank(db.Materials[i].rarity) > 0)
+                {
+                    var s = new RarityStars(t, O + 4);
+                    s.Root.position = Px.At(X + GridX + (i % PerPage % Cols) * Cell - 1, Y + GridY + (i % PerPage / Cols) * Cell - 1);
+                    s.Show(1, Wording.RarityColor(db.Materials[i].rarity));
+                    cellStars[i] = s;
+                }
             }
-            Make.Text(t, "LATEST HINTS", X + GridX, Y + HintsY, FontKind.Tiny, 8, Faded, O + 2);
+            Make.TextKey(t, "ui.journal.latest_hints", X + GridX, Y + HintsY, FontKind.Tiny, 8, Faded, O + 2);
             for (int i = 0; i < HintCount; i++) hints[i] = Make.Text(t, "", X + GridX, Y + HintsY + 9 + i * 11, FontKind.Body, 16, Purple, O + 2);
 
             // right page: the selected material
@@ -71,6 +82,10 @@ namespace Athanor.Game
             bigIcon = Make.Sprite(t, "dot", Px.At(cx, Y + PageY + 36), O + 2);
             bigIcon.transform.localScale = new Vector3(2, 2, 1);
             title = Make.Text(t, "", cx, Y + PageY + 62, FontKind.Title, 32, Ink, O + 2, Align.Centre);
+            // the rarity mark at the page's top-left: n stars at (page x+14, y+8), the tier word on the row below (SPEC 24)
+            pageStars = new RarityStars(t, O + 3);
+            pageStars.Root.position = Px.At(X + PageX + 14, Y + PageY + 8);
+            pageTier = Make.Text(t, "", X + PageX + 14, Y + PageY + 18, FontKind.Name, 16, Ink, O + 2);
             sub = Make.Text(t, "", cx, Y + PageY + 94, FontKind.Tiny, 8, Faded, O + 2, Align.Centre);
             // the Reaction Index: one lit pip per point
             int pipsLeft = cx - (PipCount * (PipW + PipGap) - PipGap) / 2;
@@ -87,9 +102,16 @@ namespace Athanor.Game
         {
             page = Mathf.Clamp(p, 0, Pages - 1);
             for (int i = 0; i < icons.Count; i++) icons[i].gameObject.SetActive(i / PerPage == page);
-            pageLabel.Text = Pages > 1 ? "PAGE " + (page + 1) + " OF " + Pages + "  -  NEXT" : "";
+            pageLabel.Text = Pages > 1 ? Loc.T("ui.journal.page", ("n", page + 1), ("pages", Pages)) : "";
             if (selected / PerPage != page) Select(page * PerPage);
             else pick.enabled = true;
+            ShowCellStars();
+        }
+
+        /// <summary>The corner stars follow the page of the grid and show only for what has been found.</summary>
+        void ShowCellStars()
+        {
+            foreach (var kv in cellStars) kv.Value.SetActive(kv.Key / PerPage == page && discovered.Contains(db.Materials[kv.Key].id));
         }
 
         /// <summary>openStarters: which starting materials the player may use; null means all of them.</summary>
@@ -101,19 +123,20 @@ namespace Athanor.Game
             foreach (var r in db.Recipes) if (journal.IsKnown(r.items)) discovered.Add(r.result);
             for (int i = 0; i < icons.Count; i++)
                 icons[i].color = discovered.Contains(db.Materials[i].id) ? Color.white : new Color(0.16f, 0.1f, 0.05f, 0.4f);
-            found.Text = journal.KnownPairs.Count + " OF " + db.Recipes.Count + " REACTIONS FOUND";
+            found.Text = Loc.T("ui.journal.found", ("known", journal.KnownPairs.Count), ("total", db.Recipes.Count));
             materialsCount.Text = discovered.Count + " / " + db.Materials.Count;
             var open = new List<HintData>();
             for (int h = journal.Hints.Count - 1; h >= 0 && open.Count < HintCount; h--)
                 if (db.Has(journal.Hints[h].material) && !journal.IsComplete(journal.Hints[h].material, db)) open.Add(journal.Hints[h]);
             for (int i = 0; i < HintCount; i++)
             {
-                hints[i].Text = i < open.Count ? HudView.HintLine(open[i], db) : i == 0 ? "A failed mix leaves a hint here." : "";
+                hints[i].Text = i < open.Count ? HudView.HintLine(open[i], db) : i == 0 ? Loc.T("ui.journal.hint_empty") : "";
                 hints[i].Color = i < open.Count ? Purple : Faded;
             }
             gameObject.SetActive(true);
             selected = Mathf.Clamp(selected, 0, icons.Count - 1);
             ShowPage(selected / PerPage);
+            ShowCellStars();
             Select(selected);
         }
 
@@ -125,7 +148,7 @@ namespace Athanor.Game
         }
 
         /// <summary>" (heat 22)" after a recipe that needs lively company beside its hub; nothing after one that does not.</summary>
-        string Heat(RecipeData r) => db.Company(r) > 0 ? " (heat\u00a0" + r.minReactivity + ")" : "";
+        string Heat(RecipeData r) => db.Company(r) > 0 ? " " + Loc.T("ui.journal.heat", ("n", r.minReactivity)).Replace(' ', '\u00a0') : "";
 
         /// <summary>Breaks a long recipe line between words so it stays on the page; later lines are indented.</summary>
         static IEnumerable<string> Wrap(string text)
@@ -150,6 +173,23 @@ namespace Athanor.Game
             Closed?.Invoke();
         }
 
+        // ---- the tutorial points at parts of a page (art space, top left origin) ----
+        int IndexOf(string id) { for (int i = 0; i < db.Materials.Count; i++) if (db.Materials[i].id == id) return i; return -1; }
+
+        /// <summary>Opens the page of a material (its cell picked) and returns the rectangle of its cell in the grid.</summary>
+        public Rect ShowMaterial(string id)
+        {
+            int i = Mathf.Max(0, IndexOf(id));
+            ShowPage(i / PerPage); Select(i);
+            return new Rect(X + GridX + (i % PerPage % Cols) * Cell - 1, Y + GridY + (i % PerPage / Cols) * Cell - 1, Well + 2, Well + 2);
+        }
+        /// <summary>The page's line "heat/ reactivity" and its pips.</summary>
+        public static Rect IndexRect => new Rect(X + PageX + 12, Y + PageY + 91, PageW - 24, 22);
+        /// <summary>The recipe lines of the page.</summary>
+        public static Rect RecipesRect => new Rect(X + PageX + 12, Y + PageY + 111, PageW - 24, 60);
+        /// <summary>The latest hints under the grid.</summary>
+        public static Rect HintsRect => new Rect(X + GridX - 2, Y + HintsY - 2, Cols * Cell + 2, 14 + 2 * 11);
+
         void Select(int i)
         {
             selected = i;
@@ -159,21 +199,26 @@ namespace Athanor.Game
             bigIcon.sprite = Make.Lib.Sprite(m.id);
             bigIcon.color = known ? Color.white : new Color(0.16f, 0.1f, 0.05f, 0.4f);
             bool locked = m.tier == 0 && !known;
-            title.Text = known ? m.name : locked ? "Locked" : "Unknown";
-            title.main.fontSize = title.Text.Length > 13 ? 16 : 32;
+            title.Text = known ? m.name : locked ? Loc.T("ui.journal.locked") : Loc.T("ui.journal.unknown");
+            title.SetSize(title.Text.Length > 13 ? 16 : 32);
             title.transform.position = Px.At(X + PageX + PageW / 2, Y + PageY + (title.Text.Length > 13 ? 72 : 62));
-            sub.Text = known ? m.kind.ToUpperInvariant() + (m.tier == 0 ? "  -  STARTER" : "  -  TIER " + m.tier) + "  -  REACTIVITY " + m.reactivity : "";
+            sub.Text = known ? (m.tier == 0 ? Loc.T("ui.journal.sub_starter", ("kind", Loc.Upper(Loc.Kind(m.kind))), ("r", m.reactivity)) : Loc.T("ui.journal.sub_tier", ("kind", Loc.Upper(Loc.Kind(m.kind))), ("tier", m.tier), ("r", m.reactivity))) : "";
+            // the rarity is only defined for starting materials; a made one, or one not found yet, shows none
+            bool rated = known && m.tier == 0;
+            pageStars.Show(rated ? RarityStars.Count(m.rarity) : 0, Wording.RarityColor(m.rarity));
+            pageTier.Text = rated ? Wording.RarityWord(m.rarity) : "";
+            pageTier.Color = Wording.RarityTone(m.rarity);
             for (int pip = 0; pip < PipCount; pip++)
                 pips[pip].color = !known ? Color.clear : pip < m.reactivity ? Px.Hex("#c8501e") : Px.Hex("#b89860").Alpha(0.5f);
 
             var text = new List<(string, Color)>();
-            if (locked) { text.Add(("A starting material you do not have yet.", Faded)); text.Add(("Complete goals to unlock it.", Faded)); }
-            else if (!known) text.Add(("Nothing is written here yet.", Faded));
+            if (locked) { text.Add((Loc.T("ui.journal.locked_text"), Faded)); text.Add((Loc.T("ui.journal.locked_how"), Faded)); }
+            else if (!known) text.Add((Loc.T("ui.journal.empty"), Faded));
             else
             {
                 if (m.tier > 0)
                 {
-                    text.Add(("Made from", Faded));
+                    text.Add((Loc.T("ui.journal.made_from"), Faded));
                     foreach (var r in db.Recipes)
                         if (r.result == m.id && journal.IsKnown(r.items))
                             foreach (var l in Wrap("  " + Names(r.items) + Heat(r))) text.Add((l, Ink));
@@ -189,7 +234,7 @@ namespace Athanor.Game
                     others.Remove(m.id);
                     foreach (var l in Wrap("  + " + Names(others) + " = " + db.Material(r.result).name + Heat(r))) reactions.Add((l, Teal));
                 }
-                text.Add((total == 0 ? "Reacts with nothing more" : "Reactions found: " + got + " of " + total, Faded));
+                text.Add((total == 0 ? Loc.T("ui.journal.no_more") : Loc.T("ui.journal.reactions_found", ("got", got), ("total", total)), Faded));
                 text.AddRange(reactions);
                 // hints stay on the material's page until everything it does has been found
                 foreach (var h in journal.OpenHints(m.id, db)) text.Add((HudView.HintLine(h, db, false), Purple));
@@ -197,7 +242,7 @@ namespace Athanor.Game
             for (int k = 0; k < LineCount; k++)
             {
                 bool cut = k == LineCount - 1 && text.Count > LineCount;
-                lines[k].Text = cut ? "... and " + (text.Count - LineCount + 1) + " more" : k < text.Count ? text[k].Item1 : "";
+                lines[k].Text = cut ? Loc.T("ui.journal.more", ("n", text.Count - LineCount + 1)) : k < text.Count ? text[k].Item1 : "";
                 lines[k].Color = cut ? Faded : k < text.Count ? text[k].Item2 : Ink;
             }
         }

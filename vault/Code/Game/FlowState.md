@@ -21,4 +21,7 @@ aliases: []
 [[Bench]], [[Journal]]
 
 ## Used by
-[[GameFlow]]
+[[GameFlow]], [[PauseMenu]], [[TutorialController]]
+
+## Tested by
+[[PauseTests]]

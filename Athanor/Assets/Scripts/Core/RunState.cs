@@ -279,8 +279,7 @@ namespace Athanor.Core
                 if (offer.Count > 0) return;
             }
             var pool = db.Catalysts.Where(c => IsOpen(c.id) && catalysts.All(o => o.id != c.id)).ToList();
-            rng.Shuffle(pool);
-            offer = pool.Take(OfferSize).ToList();
+            offer = db.DrawCatalysts(pool, OfferSize, rng);
         }
 
         /// <summary>Takes one of the offered catalysts (or null when none were left to offer) and descends.</summary>

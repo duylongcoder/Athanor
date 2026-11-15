@@ -28,4 +28,7 @@ aliases: []
 | method | `public static Color Times(this Color c, float k)` | 29 |  |
 
 ## Used by
-[[BenchView]], [[CardView]], [[CatalystChoiceView]], [[Dust]], [[EventView]], [[GameFlow]], [[GoalToast]], [[GoalsView]], [[HudView]], [[JournalView]], [[LinkView]], [[Loop]], [[Make]], [[Motion]], [[PointerInput]], [[ReactionCutscene]], [[RunOverView]], [[SceneBuilder]], [[ScreenFx]], [[SimpleCutscene]], [[TileView]], [[TitleView]], [[Tooltip]], [[UiButton]], [[Wording]]
+[[BenchView]], [[CardView]], [[CatalystChoiceView]], [[Dust]], [[EventView]], [[GameFlow]], [[GoalToast]], [[GoalsView]], [[HudView]], [[JournalView]], [[LinkView]], [[Loop]], [[Make]], [[Motion]], [[PauseMenu]], [[PointerInput]], [[RarityStars]], [[ReactionCutscene]], [[RunOverView]], [[SceneBuilder]], [[ScreenFx]], [[SimpleCutscene]], [[TileView]], [[TitleView]], [[Tooltip]], [[TutorialController]], [[UiButton]], [[WindowView]], [[Wording]]
+
+## Tested by
+[[TutorialFlowTests]]

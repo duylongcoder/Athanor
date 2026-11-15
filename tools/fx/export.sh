@@ -24,4 +24,6 @@ for id in "${IDS[@]}"; do
   node "$PFX/tools/render.mjs" "$id" --sheet --no-actor --out "$TMP"
   cp "$TMP/$id/$name.png" "$TMP/$id/$name.json" "$OUT/"
 done
+# Shrink: halve holy-pillar frames (30 -> 15 fps, same duration), crop to content, indexed PNG.
+node "$ROOT/tools/fx/shrink.mjs" "$OUT" holy-pillar:2 implosion:1 collect-burst:1 poof:1
 echo "Wrote ${#IDS[@]} sheets to $OUT. Now in Unity: Athanor > Import Effect Sheets."

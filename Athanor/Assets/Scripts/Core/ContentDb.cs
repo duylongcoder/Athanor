@@ -71,6 +71,12 @@ namespace Athanor.Core
         /// <summary>Rarity, locks, goals, aspects and events. Content with none of them (Phase 2) passes untouched.</summary>
         void ValidatePhase3()
         {
+            if (data.rarityWeights != null)
+            {
+                if (data.rarityWeights.Length != Rarities.All.Length) throw new ArgumentException("rarityWeights needs " + Rarities.All.Length + " numbers: Common, Uncommon, Rare, Legendary");
+                if (data.rarityWeights.Any(w => w < 0)) throw new ArgumentException("a rarity weight cannot be negative");
+                if (data.rarityWeights.All(w => w == 0)) throw new ArgumentException("rarityWeights cannot all be zero");
+            }
             foreach (var m in data.materials)
             {
                 if (m.tier != 0)
@@ -154,6 +160,32 @@ namespace Athanor.Core
         public IReadOnlyList<AspectData> Aspects { get; private set; }
         public IReadOnlyList<EventData> Events { get; private set; }
         public int NoEventWeight => data.noEventWeight;
+
+        /// <summary>The draw weight of a rarity (rarityWeights, or 1 when the field is missing).</summary>
+        public int RarityWeight(string rarity) => data.rarityWeights == null ? 1 : data.rarityWeights[Rarities.Rank(rarity)];
+
+        /// <summary>True when the weights are all equal (or missing): draws then keep the plain uniform shuffle.</summary>
+        public bool UniformRarity => data.rarityWeights == null || data.rarityWeights.All(w => w == data.rarityWeights[0]);
+
+        /// <summary>Removes and returns up to n catalysts from pool by rarity weight, without replacement. Uniform weights shuffle exactly as before.</summary>
+        public List<CatalystData> DrawCatalysts(List<CatalystData> pool, int n, Rng rng)
+        {
+            if (UniformRarity) { rng.Shuffle(pool); var all = pool.Take(n).ToList(); return all; }
+            var left = new List<CatalystData>(pool); var got = new List<CatalystData>();
+            while (got.Count < n && left.Count > 0) { var c = PickCatalyst(left, rng); left.Remove(c); got.Add(c); }
+            return got;
+        }
+
+        /// <summary>One catalyst from pool by rarity weight (uniform when the weights are missing or all zero in the pool).</summary>
+        public CatalystData PickCatalyst(IList<CatalystData> pool, Rng rng)
+        {
+            if (UniformRarity) return pool[rng.Range(pool.Count)];
+            int total = pool.Sum(c => RarityWeight(c.rarity));
+            if (total <= 0) return pool[rng.Range(pool.Count)];
+            int roll = rng.Range(total);
+            foreach (var c in pool) { roll -= RarityWeight(c.rarity); if (roll < 0) return c; }
+            return pool[pool.Count - 1];
+        }
         public CatalystData Catalyst(string id) => Catalysts.FirstOrDefault(c => c.id == id);
         public string Ultimate => data.ultimate;
 

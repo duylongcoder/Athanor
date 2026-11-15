@@ -60,7 +60,7 @@ namespace Athanor.Game
             outcome = Make.Text(body, "", 320, Y + 82, FontKind.Body, 16, Px.Hex("#f0dcc0"), O + 2, Align.Centre, null, 288);
             outcome.main.lineSpacing = -30;
             for (int i = 0; i < NoteCount; i++) notes[i] = Make.Text(body, "", 320, Y + 108 + i * 13, FontKind.Title, 16, Px.Hex("#6ee6c8"), O + 2, Align.Centre, Px.Hex("#0c0706"));
-            proceed = UiButton.Create(body, "Continue", 260, Y + 172, O + 2, () => closing = true);
+            proceed = UiButton.Create(body, "ui.common.continue", 260, Y + 172, O + 2, () => closing = true);
             gameObject.SetActive(false);
         }
 
@@ -70,14 +70,14 @@ namespace Athanor.Game
             var e = run.CurrentEvent;
             count = Mathf.Min(run.EventOptions.Count, MaxOptions);
             icon.sprite = Make.Lib.Sprite("evt_" + e.type.ToLowerInvariant());
-            heading.Text = e.name; kind.Text = e.type.ToUpperInvariant() + "  -  DEPTH " + run.Depth; text.Text = e.text;
+            heading.Text = Loc.C(Lang.EventKey(e.id, "name"), e.name); kind.Text = Loc.T("ui.event.kind", ("type", Loc.Upper(Loc.T("event_type." + e.type.ToLowerInvariant()))), ("n", run.Depth)); text.Text = Loc.C(Lang.EventKey(e.id, "text"), e.text);
             for (int i = 0; i < MaxOptions; i++)
             {
                 rows[i].root.gameObject.SetActive(i < count);
                 if (i >= count) continue;
                 rows[i].over = rows[i].down = false;
-                rows[i].label.Text = run.EventOptions[i].label;
-                rows[i].summary.Text = Wording.OptionSummary(run.EventOptions[i]).ToUpperInvariant();
+                rows[i].label.Text = Wording.OptionLabel(e, run.EventOptions[i]);
+                rows[i].summary.Text = Loc.Upper(Wording.OptionSummary(run.EventOptions[i]));
             }
             outcome.Text = ""; foreach (var n in notes) n.Text = "";
             proceed.gameObject.SetActive(false);
@@ -88,19 +88,23 @@ namespace Athanor.Game
                 .Group(Motion.MoveLocal(body, new Vector3(0, -40, 0), Vector3.zero, 0.35f, Ease.OutBack))
                 .ToYieldInstruction();
             choosing = true;
+            Dev.Hook("[event] options");      // development builds only: tools/web/webtest.mjs waits for these three lines
             while (picked < 0) yield return null;
             choosing = false;
 
+            var option = run.EventOptions[picked];      // ChooseEventOption empties EventOptions, so keep the option for the outcome text
             var result = run.ChooseEventOption(picked);
             changed?.Invoke();
             for (int i = 0; i < MaxOptions; i++) rows[i].root.gameObject.SetActive(false);
-            outcome.Text = result.Text ?? "";
-            for (int i = 0; i < NoteCount; i++) notes[i].Text = i < result.Notes.Count ? result.Notes[i] : "";
+            outcome.Text = Wording.OutcomeText(e, option, result.Text);
+            for (int i = 0; i < NoteCount; i++) notes[i].Text = i < result.Notes.Count ? Wording.Note(result.Notes[i]) : "";
             if (result.Notes.Count > 0) ScreenFx.I.Flash(0.12f, 0.25f);
             proceed.gameObject.SetActive(true);
+            Dev.Hook("[event] result");
             while (!closing) yield return null;
             yield return Motion.Fade(shade, 0.62f, 0, 0.2f).ToYieldInstruction();
             gameObject.SetActive(false);
+            Dev.Hook("[event] closed");
         }
 
         void Update()

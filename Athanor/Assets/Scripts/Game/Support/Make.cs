@@ -4,7 +4,8 @@ using UnityEngine.Rendering.Universal;
 
 namespace Athanor.Game
 {
-    public enum FontKind { Title, Body, Name, Tiny }
+    /// <summary>Logo is the "Athanor" lettering: Alagard in every language. The other kinds follow the language (Loc).</summary>
+    public enum FontKind { Title, Body, Name, Tiny, Logo, Numeral }
     public enum Align { Left, Centre, Right }
 
     /// <summary>Factories for the sprites, text and lights the views are built from.</summary>
@@ -66,21 +67,54 @@ namespace Athanor.Game
             go.transform.SetParent(parent, false);
             go.transform.position = Px.At(x, y);
             var label = go.AddComponent<Label>();
+            label.kind = font; label.size = size;
             if (shadow.HasValue)
             {
                 label.shadow = Tmp(Root("shadow", go.transform).gameObject, text, font, size, shadow.Value, order - 1, align, width);
                 label.shadow.transform.localPosition = new Vector3(1, -1, 0);
             }
             label.main = Tmp(Root("face", go.transform).gameObject, text, font, size, color, order, align, width);
+            label.ApplyBias();
             return label;
+        }
+
+        /// <summary>Text for a Lang key: it rewrites itself, and swaps its font, when the language changes.</summary>
+        public static Label TextKey(Transform parent, string key, float x, float y, FontKind font, int size, Color color, int order,
+            Align align = Align.Left, Color? shadow = null, float width = 0, params (string name, object value)[] args)
+        {
+            var label = Text(parent, Loc.T(key, args), x, y, font, size, color, order, align, shadow, width);
+            label.Bind(key, args);
+            return label;
+        }
+
+        /// <summary>The font of a kind in the language showing. Vietnamese uses SVN-Coder's Crux for all four kinds, never for the logo.</summary>
+        public static TMP_FontAsset FontFor(FontKind kind)
+        {
+            if (kind == FontKind.Logo || kind == FontKind.Numeral) return Lib.title;   // Numeral: digits only, so the English face and size in every language
+            if (Loc.Vi && Lib.crux != null) return Lib.crux;
+            return kind == FontKind.Title ? Lib.title : kind == FontKind.Body ? Lib.body : kind == FontKind.Name ? Lib.label : Lib.tiny;
+        }
+
+        /// <summary>The point size for a kind: Tiny 8 is Crux 16 in Vietnamese (the marks need the height); the rest keep their size.</summary>
+        public static float SizeFor(FontKind kind, int size) => kind == FontKind.Tiny && Loc.Vi && Lib.crux != null ? size * 2 : size;
+
+        /// <summary>
+        /// The half-leading of a font at a point size, in whole pixels (rounded up): how far below the top of a line box as
+        /// tall as the size (the mockup's CSS, line-height = size) the font's ascent line sits. TMP puts the ascent line at
+        /// the box top instead. Crux (ascent 7, descent -2 at 16): 11 px at 48, 7 at 32.
+        /// </summary>
+        public static int HalfLeading(UnityEngine.TextCore.FaceInfo face, float size)
+        {
+            float scale = size / face.pointSize;
+            return Mathf.Max(0, Mathf.CeilToInt((size - (face.ascentLine - face.descentLine) * scale) / 2 - 0.001f));
         }
 
         static TextMeshPro Tmp(GameObject go, string text, FontKind font, int size, Color color, int order, Align align, float width)
         {
             var t = go.AddComponent<TextMeshPro>();
-            t.font = font == FontKind.Title ? Lib.title : font == FontKind.Body ? Lib.body : font == FontKind.Name ? Lib.label : Lib.tiny;
+            t.font = FontFor(font);
             t.isOrthographic = true;
-            t.fontSize = size;
+            t.fontSize = SizeFor(font, size);
             t.color = color;
             t.richText = true;
             t.extraPadding = false;

@@ -12,7 +12,7 @@ aliases: []
 # SparkMesh
 
 `public sealed class SparkMesh` : `MonoBehaviour`
-- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Fx/SparkMesh.cs:13-165`
+- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Fx/SparkMesh.cs:13-169`
 
 > Many 1 px dots and 5x5 sparkles drawn as one mesh at one sorting order: one renderer and at most two draws (one per texture) instead of a SpriteRenderer each. Fill it every frame with Begin, Add, End. Centres are rounded to whole pixels here, and colours stay floats so HDR glow (above 1) reaches the bloom. Needs no engine module beyond what the game already uses (no ParticleSystem).
 
@@ -28,7 +28,7 @@ aliases: []
 | method | `public void Begin()` | 90 |  |
 | method | `public void Add(Vector2 pos, Color color, bool sparkle)` | 92 |  |
 | method | `public void End()` | 99 | Uploads what was added since Begin. Allocates only when the most quads so far grows. |
-| property | `public Mesh Mesh` | 164 | For tests: the vertex positions and colours uploaded by the last End. |
+| property | `public Mesh Mesh` | 168 | For tests: the vertex positions and colours uploaded by the last End. |
 
 ## Used by
 [[Dust]], [[Lane]], [[Loop]], [[SimpleCutscene]], [[SparkParticles]], [[Sparks]]

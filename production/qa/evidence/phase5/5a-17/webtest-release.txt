@@ -1,0 +1,10 @@
+loaded in 3.8 s
+canvas 1280x720: 1280x720 css 1280x720 at 0px,0px
+shot a01_title_1280
+canvas 1000x700: 1000x700 css 1000x700 at 0px,0px
+shot a02_title_1000x700
+shot a03_intro
+shot fail_1_1_bench
+TEST ERROR tutorial step never appeared: 1_1_bench
+console: 83 messages, 0 errors, 4 screenshots
+only 4 screenshots, expected 31: the run stopped early

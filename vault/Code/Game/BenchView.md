@@ -12,7 +12,7 @@ aliases: []
 # BenchView
 
 `public sealed class BenchView` : `MonoBehaviour`
-- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Bench/BenchView.cs:14-341`
+- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Bench/BenchView.cs:14-352`
 
 > The main screen: nine tiles, the hand of cards, the rack of discoveries and the HUD. Materials are placed by dragging them onto a tile, or by clicking one and then a tile; clicking a placed one takes it back.
 
@@ -35,7 +35,7 @@ aliases: []
 | method | `public IEnumerator FloatText(string text, Vector3 from, Color color, float seconds = 0.8f, bool small = false)` | 176 | A number that rises from a point and fades. |
 
 ## Uses
-[[Align]], [[Bench]], [[CardView]], [[ChainPlanner]], [[ContentDb]], [[FontKind]], [[HudView]], [[Journal]], [[Label]], [[LayoutData]], [[LinkView]], [[Make]], [[Motion]], [[PointerInput]], [[Px]], [[Rarities]], [[RunState]], [[TileView]], [[Tooltip]], [[Wording]]
+[[Align]], [[Bench]], [[CardView]], [[ChainPlanner]], [[ContentDb]], [[FontKind]], [[HudView]], [[Journal]], [[Kind]], [[Label]], [[LayoutData]], [[LinkView]], [[Loc]], [[Make]], [[Motion]], [[PointerInput]], [[Px]], [[Rarities]], [[RunState]], [[TileView]], [[Tooltip]], [[Wording]]
 
 ## Used by
 [[GameFlow]]

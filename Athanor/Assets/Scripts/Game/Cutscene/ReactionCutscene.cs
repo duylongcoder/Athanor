@@ -74,7 +74,7 @@ namespace Athanor.Game
             headerLeft = Make.Text(ui, "", 12, 9, FontKind.Body, 16, faint, O + 45);
             headerRight = Make.Text(ui, "", Px.W - 12, 9, FontKind.Body, 16, faint, O + 45, Align.Right);
             skipHint = Make.Text(ui, "CLICK TO SKIP", CX, Px.H - 19, FontKind.Tiny, 8, Px.Hex("#5a4028"), O + 45, Align.Centre);
-            banner = Make.Text(ui, "New Discovery", CX, 38, FontKind.Title, 32, Px.Hex("#f8d250"), O + 45, Align.Centre, Px.Hex("#3a1a08"));
+            banner = Make.TextKey(ui, "cutscene.new_discovery", CX, 38, FontKind.Title, 32, Px.Hex("#f8d250"), O + 45, Align.Centre, Px.Hex("#3a1a08"));
             title = Make.Text(ui, "", CX, 180, FontKind.Title, 48, Color.white, O + 45, Align.Centre, Px.Hex("#0b2b3a"));
             plus = Make.Text(ui, "", CX - 84, 230, FontKind.Title, 32, Px.Hex("#f8d250"), O + 45, Align.Centre, Px.Hex("#3a1a08"));
             times = Make.Text(ui, "", CX - 16, 230, FontKind.Title, 32, Px.Hex("#ee6a3c"), O + 45, Align.Centre, Px.Hex("#3b0d1e"));
@@ -104,11 +104,11 @@ namespace Athanor.Game
             }
             colRes = Px.Hex(string.IsNullOrEmpty(r.glow) ? "#fff6b8" : r.glow);
             result.sprite = Make.Lib.Sprite(r.id);
-            headerLeft.Text = "Experiment " + experiment;
+            headerLeft.Text = Loc.T("cutscene.experiment", ("n", experiment));
             string all = string.Join(" + ", names);
-            headerRight.Text = all.Length <= 46 ? all : names[0] + " + " + names[1] + " + " + (matCount - 2) + " more";
+            headerRight.Text = all.Length <= 46 ? all : Loc.T("cutscene.more", ("a", names[0]), ("b", names[1]), ("n", matCount - 2));
             title.Text = r.name;
-            title.main.fontSize = title.shadow.fontSize = r.name.Length > 14 ? 32 : 48;
+            title.SetSize(r.name.Length > 14 ? 32 : 48);
             basePotency = ContentDb.BasePotency(r.tier);
             multiplier = basePotency > 0 && e.Potency % basePotency == 0 ? (int)(e.Potency / basePotency) : 1;
             plus.Text = "+" + HudView.Number(multiplier > 1 ? basePotency : e.Potency);
@@ -241,7 +241,7 @@ namespace Athanor.Game
             plus.Alpha = times.Alpha = total.Alpha = counting ? 1 : 0;
             if (multiplier <= 1) plus.transform.position = Px.At(CX, 230);
             else plus.transform.position = Px.At(CX - 84, 230);
-            skipHint.Text = T >= Settled ? "CLICK TO CONTINUE" : "CLICK TO SKIP";
+            skipHint.Text = Loc.T(T >= Settled ? "ui.common.click_to_continue" : "ui.common.click_to_skip");
         }
     }
 }

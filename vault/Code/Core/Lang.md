@@ -45,5 +45,8 @@ aliases: []
 ## Uses
 [[ContentData]]
 
+## Used by
+[[EventView]], [[FontBuilder]], [[Loc]], [[Wording]]
+
 ## Tested by
-[[LangTests]]
+[[LangTests]], [[LocTests]]

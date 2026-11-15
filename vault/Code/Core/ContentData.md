@@ -12,7 +12,7 @@ aliases: []
 # ContentData
 
 `public class ContentData`
-- Layer: **Core** · Source: `Athanor/Assets/Scripts/Core/ContentData.cs:28-40`
+- Layer: **Core** · Source: `Athanor/Assets/Scripts/Core/ContentData.cs:28-42`
 
 ## Members
 | Kind | Signature | Line | Note |
@@ -27,9 +27,10 @@ aliases: []
 | field | `public AspectData[] aspects` | 37 |  |
 | field | `public EventData[] events` | 38 |  |
 | field | `public int noEventWeight` | 39 |  |
+| field | `public int[] rarityWeights` | 41 | Optional draw weights for catalyst offers and event gifts, in the order Common, Uncommon, Rare, Legendary. Missing: all 1 (a uniform draw). |
 
 ## Used by
 [[ContentDb]], [[GameFlow]], [[Lang]]
 
 ## Tested by
-[[ContentTests]], [[HudTests]], [[LoreTests]], [[Phase3Tests]], [[RoleSimTests]], [[RunStateTests]], [[SaveTests]], [[TutorialTests]]
+[[ContentTests]], [[HudTests]], [[LoreTests]], [[PauseTests]], [[Phase3Tests]], [[RarityTests]], [[RoleSimTests]], [[RunStateTests]], [[SaveTests]], [[TutorialFlowTests]], [[TutorialTests]]

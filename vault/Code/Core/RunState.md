@@ -65,7 +65,7 @@ aliases: []
 | method | `public ScoreContext NewContext()` | 191 | What a reaction's score depends on here and now (also used by the scripted player to plan). |
 | method | `public List<ReactionEvent> Preview(string[] tiles)` | 197 | What this layout (9 tiles, null where empty) would do if ignited now. Nothing changes: the journal and the recipes fired this run are copied. The tutorial uses it to show a broken chain beside the real one. |
 | method | `public IgniteOutcome Ignite()` | 205 |  |
-| method | `public void ChooseCatalyst(string id)` | 287 | Takes one of the offered catalysts (or null when none were left to offer) and descends. |
+| method | `public void ChooseCatalyst(string id)` | 286 | Takes one of the offered catalysts (or null when none were left to offer) and descends. |
 
 ## Uses
 [[AspectEffects]], [[AspectInstance]], [[Bench]], [[BenchRules]], [[ContentDb]], [[Effects]], [[EventResult]], [[IgniteOutcome]], [[IgniteResolver]], [[Journal]], [[Kind]], [[Ops]], [[Rarities]], [[ReactionEvent]], [[Rng]], [[RunOptions]], [[RunPhase]], [[Satchel]], [[ScoreContext]], [[Unlocks]]
@@ -74,4 +74,4 @@ aliases: []
 [[AutoPlayer]], [[BenchView]], [[CatalystChoiceView]], [[EventView]], [[GameFlow]], [[HudView]], [[Profile]], [[RunOverView]]
 
 ## Tested by
-[[ContentTests]], [[HudTests]], [[LoreTests]], [[Phase3Tests]], [[RoleSimTests]], [[RunStateTests]], [[TutorialTests]]
+[[ContentTests]], [[HudTests]], [[LoreTests]], [[PauseTests]], [[Phase3Tests]], [[RarityReportTests]], [[RarityTests]], [[RoleSimTests]], [[RunOverDepthTests]], [[RunStateTests]], [[TutorialFlowTests]], [[TutorialTests]]
