@@ -8,7 +8,7 @@ namespace Athanor.Game
     public static class Save
     {
         public const string Key = "athanor.journal.v1", IntroKey = "athanor.intro.v1", ProfileKey = "athanor.profile.v1",
-            TutorialKey = "athanor.tutorial.v1";
+            TutorialKey = "athanor.tutorial.v1", SettingsKey = "athanor.settings.v1";
 
         /// <summary>The saved journal; an empty one when nothing is saved or what is saved cannot be read.</summary>
         public static Journal LoadJournal()
@@ -52,6 +52,18 @@ namespace Athanor.Game
         public static void ResetProfile()
         {
             PlayerPrefs.DeleteKey(ProfileKey);
+            PlayerPrefs.Save();
+        }
+
+        /// <summary>The saved settings; defaults when nothing is saved or what is saved cannot be read (Settings.FromJson never throws).</summary>
+        public static Settings LoadSettings()
+        {
+            return Settings.FromJson(PlayerPrefs.GetString(SettingsKey, ""));
+        }
+
+        public static void StoreSettings(Settings settings)
+        {
+            PlayerPrefs.SetString(SettingsKey, settings.ToJson());
             PlayerPrefs.Save();
         }
 

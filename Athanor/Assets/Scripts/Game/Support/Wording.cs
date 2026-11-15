@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using System.Globalization;
+using System.Text.RegularExpressions;
 using Athanor.Core;
 using UnityEngine;
 
@@ -18,6 +18,21 @@ namespace Athanor.Game
                 default: return Px.Hex("#a8a0a8");
             }
         }
+
+        /// <summary>The dark tone of a rarity: the catalyst strip, the tooltip's tier word and the Journal page's tier word (SPEC 22).</summary>
+        public static Color RarityTone(string rarity)
+        {
+            switch (Rarities.Of(rarity))
+            {
+                case Rarities.Uncommon: return Px.Hex("#3a6a14");
+                case Rarities.Rare: return Px.Hex("#1c5a96");
+                case Rarities.Legendary: return Px.Hex("#8a4a08");
+                default: return Px.Hex("#5a5058");
+            }
+        }
+
+        /// <summary>The tier word as the strip, tooltip and Journal show it: "RARE" / "HIẾM".</summary>
+        public static string RarityWord(string rarity) => Loc.Upper(Loc.Rarity(rarity));
 
         /// <summary>The colour of an aspect's marker on its tile and of its link.</summary>
         public static Color AspectColor(string effect)
@@ -42,26 +57,35 @@ namespace Athanor.Game
 
         public static readonly Color Warm = Px.Hex("#ffa63a");
 
-        static string A(string word) => ("AEIOU".IndexOf(char.ToUpperInvariant(word[0])) >= 0 ? "an " : "a ") + word;
-
         /// <summary>An aspect's rule, with the kind an attuned tile drew written in. cost: false leaves the trade-off's price out.</summary>
         public static string AspectRule(AspectInstance a, bool cost = true)
         {
-            string text = a.Data.text ?? "";
-            if (!string.IsNullOrEmpty(a.Kind)) text = text.Replace("the attuned kind", A(a.Kind));
-            int at = text.IndexOf("COST:");
+            string text = RuleText(a);
+            if (!string.IsNullOrEmpty(a.Kind))
+            {
+                string kind = Loc.Indef(a.Kind);
+                text = text.Replace("the attuned kind", kind).Replace("loại đã hòa hợp", "loại " + kind);
+            }
+            int at = text.IndexOf(Marker, System.StringComparison.Ordinal);
             return at < 0 || cost ? text : text.Substring(0, at).TrimEnd();
+        }
+
+        static string Marker => Loc.T("ui.aspect.cost_marker");
+
+        static string RuleText(AspectInstance a)
+        {
+            string text = Loc.C("aspect." + a.Data.id + ".text", a.Data.text ?? "");
+            // content.json writes the price after "COST:"; the language writes it after its own marker (vi.json already does)
+            return text.Replace("COST:", Marker);
         }
 
         /// <summary>"COST: this tile is shut for the run.", or null for an aspect that costs nothing.</summary>
         public static string AspectCost(AspectInstance a)
         {
-            string text = a.Data.text ?? "";
-            int at = text.IndexOf("COST:");
+            string text = RuleText(a);
+            int at = text.IndexOf(Marker, System.StringComparison.Ordinal);
             return at < 0 ? null : text.Substring(at);
         }
-
-        static string Signed(int n, string one, string many) => (n > 0 ? "+" : "") + n + " " + (Mathf.Abs(n) == 1 ? one : many);
 
         /// <summary>A few words for one event effect, as it is shown under an option before it is taken.</summary>
         public static string Effect(EffectData fx)
@@ -69,19 +93,19 @@ namespace Athanor.Game
             int n = fx.amount;
             switch (fx.op)
             {
-                case Ops.Trials: return Signed(n, "trial", "trials");
-                case Ops.Hand: return Signed(n, "card each hand", "cards each hand");
-                case Ops.Redraws: return Signed(n, "redraw", "redraws");
-                case Ops.RiShift: return "Reaction Index " + (n > 0 ? "+" : "") + n;
-                case Ops.GiveDiscovery: return "a discovery";
-                case Ops.LoseRack: return "give up " + (n > 1 ? n + " discoveries" : "a discovery");
-                case Ops.LoseCard: return "lose a card";
-                case Ops.FirstTriple: return "first reaction x3";
-                case Ops.Hint: return "a hint";
-                case Ops.BlockTile: return "a tile shut";
-                case Ops.HeatTile: return "a warm tile";
-                case Ops.CatalystUpgrade: return "a catalyst made rarer";
-                case Ops.CatalystGift: return "a catalyst";
+                case Ops.Trials: return Loc.P("effect.trials", n);
+                case Ops.Hand: return Loc.P("effect.hand", n);
+                case Ops.Redraws: return Loc.P("effect.redraws", n);
+                case Ops.RiShift: return Loc.T("effect.ri_shift", ("n", n));
+                case Ops.GiveDiscovery: return Loc.T("effect.give_discovery");
+                case Ops.LoseRack: return Loc.P("effect.lose_rack", n > 1 ? n : 1);
+                case Ops.LoseCard: return Loc.T("effect.lose_card");
+                case Ops.FirstTriple: return Loc.T("effect.first_triple");
+                case Ops.Hint: return Loc.T("effect.hint");
+                case Ops.BlockTile: return Loc.T("effect.block_tile");
+                case Ops.HeatTile: return Loc.T("effect.heat_tile");
+                case Ops.CatalystUpgrade: return Loc.T("effect.catalyst_upgrade");
+                case Ops.CatalystGift: return Loc.T("effect.catalyst_gift");
                 default: return null;
             }
         }
@@ -99,26 +123,74 @@ namespace Athanor.Game
             string cost = Join(o.cost);
             int total = 0;
             foreach (var x in o.outcomes) total += x.weight;
+            string nothing = Loc.T("effect.nothing");
             var gains = new List<string>();
             foreach (var x in o.outcomes)
             {
                 string g = Join(x.gain);
-                if (g.Length == 0) g = "nothing";
-                gains.Add(o.outcomes.Length > 1 ? Mathf.RoundToInt(100f * x.weight / total) + "% " + g : g);
+                if (g.Length == 0) g = nothing;
+                gains.Add(o.outcomes.Length > 1 ? Loc.T("effect.chance", ("pct", Mathf.RoundToInt(100f * x.weight / total)), ("gain", g)) : g);
             }
             string gain = string.Join(" / ", gains);
-            if (cost.Length == 0) return gain == "nothing" ? "" : gain;
-            return cost + ": " + gain;
+            if (cost.Length == 0) return gain == nothing ? "" : gain;
+            return Loc.T("effect.cost_gain", ("cost", cost), ("gain", gain));
+        }
+
+        /// <summary>A goal's text in this language.</summary>
+        public static string GoalText(GoalData g) => Loc.C("goal." + g.id + ".text", g.text);
+
+        /// <summary>The label of an event option in this language.</summary>
+        public static string OptionLabel(EventData e, EventOption o) =>
+            Loc.C(Lang.OptionKey(e.id, System.Array.IndexOf(e.options, o)), o.label);
+
+        /// <summary>What came of an option, in this language: the outcome the core drew (English text) found among the option's outcomes.</summary>
+        public static string OutcomeText(EventData e, EventOption o, string english)
+        {
+            if (string.IsNullOrEmpty(english)) return "";
+            int i = System.Array.IndexOf(e.options, o), j = System.Array.FindIndex(o.outcomes, x => x.text == english);
+            return i < 0 || j < 0 ? english : Loc.C(Lang.OutcomeKey(e.id, i, j), english);
+        }
+
+        static readonly (Regex re, System.Func<Match, string> make)[] NoteForms =
+        {
+            (new Regex(@"^([+-]?\d+) trials?$"), m => Loc.P("note.trials", long.Parse(m.Groups[1].Value))),
+            (new Regex(@"^([+-]?\d+) cards? in hand this depth$"), m => Loc.P("note.hand", long.Parse(m.Groups[1].Value))),
+            (new Regex(@"^([+-]?\d+) redraws?$"), m => Loc.P("note.redraws", long.Parse(m.Groups[1].Value))),
+            (new Regex(@"^Reaction Index ([+-]?\d+) this depth$"), m => Loc.T("note.ri_shift", ("n", int.Parse(m.Groups[1].Value)))),
+            (new Regex(@"^Found (.+)$"), m => Loc.T("note.found", ("item", m.Groups[1].Value))),
+            (new Regex(@"^Gave up (.+)$"), m => Loc.T("note.gave_up", ("item", m.Groups[1].Value))),
+            (new Regex(@"^Lost an? (.+) for this run$"), m => Loc.T("note.lost", ("item", m.Groups[1].Value))),
+            (new Regex(@"^Your next first reaction scores triple$"), m => Loc.T("note.first_triple")),
+            (new Regex(@"^(.+) reacts with something (.+)$"), m => Loc.T("note.hint", ("item", m.Groups[1].Value), ("kind", Loc.Vi ? Loc.Indef(m.Groups[2].Value) : Loc.Kind(m.Groups[2].Value)))),
+            (new Regex(@"^A tile is shut this depth$"), m => Loc.T("note.block_tile")),
+            (new Regex(@"^A tile is warm this depth: \+(\d+) Reaction Index$"), m => Loc.T("note.heat_tile", ("n", int.Parse(m.Groups[1].Value)))),
+            (new Regex(@"^(.+) became (.+)$"), m => Loc.T("note.became", ("a", m.Groups[1].Value), ("b", m.Groups[2].Value))),
+            (new Regex(@"^Received (.+)$"), m => Loc.T("note.received", ("item", m.Groups[1].Value))),
+        };
+
+        /// <summary>
+        /// A note the core wrote in English ("Found Ember Coal"), in this language. The core still writes English
+        /// (handoff: rules-engineer, notes as key + args); until then the sentence is matched back to its note.* key. No match: unchanged.
+        /// </summary>
+        public static string Note(string english)
+        {
+            if (!Loc.Vi) return english;
+            foreach (var (re, make) in NoteForms)
+            {
+                var m = re.Match(english);
+                if (m.Success) return make(m);
+            }
+            return english;
         }
 
         /// <summary>"New Rare catalyst": the kind and rarity of a goal's reward, never the item. Short, so it ends before the progress bar.</summary>
         public static string RewardLine(GoalData g) =>
-            "New " + g.rewardRarity + (g.rewardKind == RewardKinds.Starter ? " starter" : " catalyst");
+            Loc.T(g.rewardKind == RewardKinds.Starter ? "ui.goals.reward_starter" : "ui.goals.reward_catalyst", ("rarity", Loc.Rarity(g.rewardRarity)));
 
         /// <summary>The name of a starting material or catalyst won from a goal.</summary>
         public static string ItemName(ContentDb db, string id)
         {
-            if (string.IsNullOrEmpty(id)) return "nothing";
+            if (string.IsNullOrEmpty(id)) return Loc.T("effect.nothing");
             if (db.Has(id)) return db.Material(id).name;
             var c = db.Catalyst(id);
             return c != null ? c.name : id;
@@ -127,6 +199,6 @@ namespace Athanor.Game
         /// <summary>The sprite of an item won from a goal: a material's icon, or a catalyst's.</summary>
         public static string ItemSprite(ContentDb db, string id) => db.Has(id) ? id : "cat_" + id;
 
-        public static string Number(long n) => n.ToString("N0", CultureInfo.InvariantCulture);
+        public static string Number(long n) => Loc.Number(n);
     }
 }

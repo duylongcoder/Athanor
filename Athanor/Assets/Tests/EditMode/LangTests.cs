@@ -22,8 +22,8 @@ namespace Athanor.Tests
     public class LangTests
     {
         /// <summary>
-        /// Characters both Vietnamese fonts draw (SVN-Determination Sans and SVN-Coder's Crux), measured from their cmap
-        /// tables on 2026-11-13: printable ASCII, the 134 precomposed Vietnamese letters, and the punctuation below.
+        /// Characters the Vietnamese font draws (SVN-Coder's Crux only; Determination Sans was removed at Gate G1), measured
+        /// from its cmap table (re-measured 2026-11-15, same set): printable ASCII, the 134 precomposed Vietnamese letters, and the punctuation below.
         /// Crux has no en dash (U+2013), so it is left out. See docs/devlogs/phase-4-settings-localization.md.
         /// </summary>
         const string VietLower = "àáâãèéêìíòóôõùúýăđĩũơưạảấầẩẫậắằẳẵặẹẻẽếềểễệỉịọỏốồổỗộớờởỡợụủứừửữựỳỵỷỹ";

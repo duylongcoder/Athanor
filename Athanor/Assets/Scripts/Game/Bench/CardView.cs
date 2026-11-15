@@ -12,8 +12,8 @@ namespace Athanor.Game
         public Vector3 home;              // world position of the card's centre when at rest
         public bool Lifted, Selected, Dimmed;
 
-        SpriteRenderer frame, glow, icon, pip;
-        Color pipColor;
+        SpriteRenderer frame, glow, icon;
+        RarityStars stars;
         Label line1, line2, kind;
         Transform lettering, picture;         // the lettering and the icon, which slide left while the next card covers this one's right
         float lift, delay, shift, slid;
@@ -38,13 +38,12 @@ namespace Athanor.Game
             var words = m.name.Split(' ');
             string a = words[0], b = words.Length > 1 ? string.Join(" ", words, 1, words.Length - 1) : null;
             line1 = Text(a, b == null ? -3 : 2, FontKind.Name, 16, Ink);
-            if (b != null) line2 = Text(b, -8, FontKind.Name, 16, Ink);
-            kind = Text(m.kind.ToUpperInvariant(), -24, FontKind.Tiny, 8, Px.Hex(KindColors.Of(m.kind)));
-            // rarity: a pip in the corner (grey for the eight everyone starts with)
-            pip = Make.Sprite(transform, "pip", Vector3.zero, order + 3);
-            pip.transform.localPosition = new Vector3(-W / 2 + 6, H / 2 - 6, 0);
-            pipColor = Wording.RarityColor(m.rarity);
-            pip.color = pipColor;
+            if (b != null) { line2 = Text(b, -8, FontKind.Name, 16, Ink); line1.Lines = 2; line2.Lines = 2; }
+            kind = Text(Loc.Upper(Loc.Kind(m.kind)), -24, FontKind.Tiny, 8, Px.Hex(KindColors.Of(m.kind)));
+            // rarity: n stars at (x+3, y+3) of the card (SPEC 21); the frame's top-left corner is (-W/2, H/2)
+            stars = new RarityStars(transform, order + 3);
+            stars.Root.localPosition = new Vector3(-W / 2 + 3, H / 2 - 3, 0);
+            stars.Show(m.rarity);
             shownOrder = order;
         }
 
@@ -73,7 +72,7 @@ namespace Athanor.Game
         {
             if (order == shownOrder) return;
             shownOrder = order;
-            frame.sortingOrder = order; glow.sortingOrder = order + 1; icon.sortingOrder = order + 2; pip.sortingOrder = order + 3;
+            frame.sortingOrder = order; glow.sortingOrder = order + 1; icon.sortingOrder = order + 2; stars.SetOrder(order + 3);
             line1.Order = order + 3; if (line2 != null) line2.Order = order + 3; kind.Order = order + 3;
         }
 
@@ -106,7 +105,7 @@ namespace Athanor.Game
             frame.sprite = Make.Lib.Sprite(Selected ? "card_sel" : "card");
             float a = Dimmed ? 0.35f : 1;
             frame.color = icon.color = Color.white.Alpha(a);
-            pip.color = pipColor.Alpha(a);
+            stars.SetAlpha(a);
             line1.Alpha = a; if (line2 != null) line2.Alpha = a; kind.Alpha = a;
         }
     }

@@ -15,7 +15,7 @@ Obsidian's Graph View reads data from **3 sources** in this order:
 ```
 [Athanor Vault → Graph Data]
 
-   └─→ PRIMARY SOURCE: [[links]] embedded in content
+   └─→ PRIMARY SOURCE: `[[links]]` embedded in content
         │
         ├─→ Each file is scanned line-by-line
         │    └─→ Regex pattern: `^\[\[.*?\]\]\s*$`
@@ -36,8 +36,8 @@ Obsidian's Graph View reads data from **3 sources** in this order:
         │         └─→ `tags[]` → metadata attributes
         │
         └─→ TERTIARY: File content relationships
-             └─→ References within text (not [[links]])
-                  └─→ Not indexed for graph; only [[links]] matter
+             └─→ References within text (not `[[links]]`)
+                  └─→ Not indexed for graph; only `[[links]]` matter
 
    ↓ Graph Algorithm
 
@@ -56,8 +56,8 @@ Obsidian's Graph View reads data from **3 sources** in this order:
    ↓ Graph Output
 
 [Graph Elements]
-   ├─→ Nodes (from [[links]])
-   │    ├─→ Each unique [[link]] becomes one node
+   ├─→ Nodes (from `[[links]]`)
+   │    ├─→ Each unique `[[link]]` becomes one node
    │    │    ├─→ If [[ContentDb]] appears in 5 files → large node
    │    │    └─→ type field from frontmatter determines role
    │    │
@@ -67,7 +67,7 @@ Obsidian's Graph View reads data from **3 sources** in this order:
    │         └─→ Default = 100px, scaled by degree
 
    └─→ Links (edges between nodes)
-        └─→ Each [[link]] in file creates one edge
+        └─→ Each `[[link]]` in file creates one edge
              └─→ Weighted by recency (last edit date)
                   │
                   └─→ Thicker if edited within 7 days of other node
@@ -126,9 +126,9 @@ python3 tools/vault/q.py type="core" → Core layer subgraph only
 2. **Same-day edits** → Higher weight edge
 3. **Cross-category links** → Lower weight but shows integration
 
-## Key Insight: [[links]] = Graph Edges
+## Key Insight: `[[links]]` = Graph Edges
 
-The entire graph is **just the set of all [[links]]** in all files. No external graph structure exists — Obsidian builds it dynamically by scanning every file's markdown content for link patterns.
+The entire graph is **just the set of all `[[links]]`** in all files. No external graph structure exists — Obsidian builds it dynamically by scanning every file's markdown content for link patterns.
 
 When you see a cluster around `[[ContentDb]]` → `[[RunState]]` → `[[BenchView]]`:
 

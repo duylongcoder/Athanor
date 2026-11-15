@@ -39,9 +39,9 @@ namespace Athanor.Game
             Make.Click(shade.gameObject, new Vector2(Px.W, Px.H), O - 1, Close);            // a click outside the page closes it
             var panel = Make.SpriteAt(t, "goals", X, Y, O);
             Make.Click(panel.gameObject, new Vector2(600, 330), O);
-            Make.Text(t, "Goals", X + 18, Y + 7, FontKind.Title, 16, Pale, O + 2, Align.Left, Dark);
+            Make.TextKey(t, "ui.goals.title", X + 18, Y + 7, FontKind.Title, 16, Pale, O + 2, Align.Left, Dark);
             found = Make.Text(t, "", X + 300, Y + 11, FontKind.Tiny, 8, Px.Hex("#a88a6a"), O + 2, Align.Centre);
-            var close = Make.Text(t, "Close", X + 582, Y + 7, FontKind.Title, 16, Pale, O + 2, Align.Right, Dark);
+            var close = Make.TextKey(t, "ui.common.close", X + 582, Y + 7, FontKind.Title, 16, Pale, O + 2, Align.Right, Dark);
             Make.Click(close.gameObject, new Vector2(60, 22), O + 3, Close).offset = new Vector2(-22, -8);
             for (int i = 0; i < heads.Length; i++) heads[i] = Make.Text(t, "", 0, 0, FontKind.Tiny, 8, Faded, O + 2);
             for (int i = 0; i < db.Goals.Count; i++)
@@ -90,7 +90,7 @@ namespace Athanor.Game
                 foreach (var g in db.Goals)
                     if (g.rewardRarity == Sections[s]) (profile.IsComplete(g.id) ? finished : open).Add(g);
                 if (open.Count + finished.Count == 0) { heads[s].Text = ""; continue; }
-                heads[s].Text = Sections[s].ToUpperInvariant() + "  -  " + finished.Count + " OF " + (open.Count + finished.Count);
+                heads[s].Text = Loc.T("ui.goals.section", ("rarity", Loc.Upper(Loc.Rarity(Sections[s]))), ("done", finished.Count), ("all", open.Count + finished.Count));
                 heads[s].Color = Wording.RarityColor(Sections[s]).Times(0.55f).Alpha(1);
                 heads[s].transform.position = Px.At(x, y[col]);
                 y[col] += HeadH;
@@ -102,10 +102,10 @@ namespace Athanor.Game
                     long progress = profile.Progress(g, db, journal);
                     r.root.gameObject.SetActive(true);
                     r.root.position = Px.At(x, y[col]);
-                    r.text.Text = g.text; r.text.Color = complete ? Faded : Ink;
+                    r.text.Text = Wording.GoalText(g); r.text.Color = complete ? Faded : Ink;
                     string item = profile.RewardOf(g.id);
                     r.count.Text = complete ? "" : Wording.Number(progress) + " / " + Wording.Number(g.target);
-                    r.reward.Text = (complete ? "UNLOCKED: " + Wording.ItemName(db, item) : Wording.RewardLine(g)).ToUpperInvariant();
+                    r.reward.Text = Loc.Upper(complete ? Loc.T("ui.goals.unlocked", ("item", Wording.ItemName(db, item))) : Wording.RewardLine(g));
                     r.reward.Color = complete ? Teal : Faded;
                     SetBar(r.track, complete ? 0 : BarW);
                     SetBar(r.fill, complete ? 0 : Mathf.Floor(BarW * Mathf.Clamp01(progress / (float)g.target)));
@@ -117,7 +117,7 @@ namespace Athanor.Game
                 y[col] += 4;
             }
             for (int i = used; i < rows.Count; i++) rows[i].root.gameObject.SetActive(false);
-            found.Text = done + " OF " + db.Goals.Count + " GOALS COMPLETE";
+            found.Text = Loc.T("ui.goals.complete", ("done", done), ("all", db.Goals.Count));
             gameObject.SetActive(true);
         }
 

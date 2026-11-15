@@ -18,9 +18,11 @@ same command CI runs: `tools/ci/run.sh all` (or `lint`, `repo`, `core`).
 | String missing in `vi.json`, empty text, placeholder `{x}` that differs between en and vi | LANG | repo-guard |
 | Rules regress or a test is silently dropped (fewer than `MIN_TESTS` pass) | `dotnet test tools/CoreTests` | core-tests |
 | `vault/` stale after a code or content change | `build_vault.py` then no diff | repo-guard |
+| Rotate-device text in the WebGL template drifts from `ui.rotate.title` / `ui.rotate.body` in en/vi.json | `tools/web/rotate_sync.mjs` (`run.sh rotate`); `rotate.mjs` stays manual (needs a browser) | repo-guard |
 | Art/web scripts do not parse | `node --check` | repo-guard |
 | A job fails, is cancelled or is skipped | `ci-gate` needs every job `success` | ci-gate |
-| Release build broken, over its size budget, console error in the browser, run stopped early | Unity EditMode, WebGL build, `webtest.mjs` (non-zero exit on error) | release-gate (tags and manual) |
+| Release build broken, over its size budget (Build/ + index.html > 11,824,672 B, Phase 5 ceiling), console error while loading | Unity EditMode, `WebBuild.Build`, byte budget, `loadsmoke.mjs` (non-zero exit on error) | release-gate (tags and manual) |
+| Game flow broken in the browser, run stopped early, console error in play | `WebBuild.BuildDev` (dev-only hooks) then `webtest.mjs` (non-zero exit on error) | release-gate (tags and manual) |
 
 ## Rules for everyone
 

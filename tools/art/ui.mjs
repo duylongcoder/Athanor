@@ -105,6 +105,8 @@ export function uiSprites() {
   out.toast = make(300, 36, (g) => { panel(g, 0, 0, 300, 36, false); g.fillStyle = R.gold[3]; g.fillRect(1, 1, 298, 1); g.fillStyle = R.gold[1]; g.fillRect(1, 34, 298, 1); });
   // small white shapes, tinted in the game: a rarity pip, a tile marker, the cross on a shut tile
   out.pip = make(7, 7, (g) => { for (let y = 0; y < 7; y++) for (let x = 0; x < 7; x++) { const d = Math.abs(x - 3) + Math.abs(y - 3); if (d > 3) continue; g.fillStyle = d === 3 ? '#1a1220' : x + y < 6 ? '#ffffff' : '#c8c8c8'; g.fillRect(x, y, 1, 1); } });
+  // 7x7 star, the rarity glyph (Phase 5 G1): white so Wording.RarityColor tints it; no baked outline, the game draws four offset dark #1a0e08 copies. Pip stays until the swap.
+  out.star = make(7, 7, (g) => { const rows = ['...#...', '..###..', '#######', '.#####.', '..###..', '.##.##.', '.#...#.']; rows.forEach((r, y) => [...r].forEach((c, x) => { if (c !== '#') return; g.fillStyle = x + y < 7 ? '#ffffff' : '#c8c8c8'; g.fillRect(x, y, 1, 1); })); });
   out.mark = make(11, 9, (g) => { for (let y = 0; y < 9; y++) for (let x = 0; x < 11; x++) { const d = Math.abs(x - 5) / 5 + Math.abs(y - 4) / 4; if (d > 1.01) continue; g.fillStyle = d > 0.78 ? '#1a1220' : x + y < 8 ? '#ffffff' : '#bcbcbc'; g.fillRect(x, y, 1, 1); } });
   out.cross = make(13, 9, (g) => { for (let k = 0; k < 9; k++) { const x = Math.round(k * 10 / 8); g.fillStyle = '#ffffff'; g.fillRect(x, k, 3, 1); g.fillRect(10 - x, k, 3, 1); } });
   out.mini_tile = make(6, 5, (g) => { g.fillStyle = '#ffffff'; g.fillRect(0, 0, 6, 5); g.fillStyle = '#b0b0b0'; g.fillRect(0, 4, 6, 1); });

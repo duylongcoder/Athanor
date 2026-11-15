@@ -1,10 +1,12 @@
 // Lets the scripted player play a development web build in headless Chrome and photographs it (no dependencies; Node 22+).
 //   node autoplay.mjs <url> <outDir> [seconds = 120] [every = 1.5]
 // Needs the build made by WebBuild.BuildDev: F9 hands the bench to the scripted player only in a development build.
-// It starts a run by hand (aspect, event), presses F9, takes a picture every <every> seconds for <seconds>, then
+// It turns the scripted player on at the title (so the tutorial is skipped), starts a run (aspect, event), takes a picture every <every> seconds for <seconds>, then
 // opens the Goals page from the run summary, starts a second run (by then a starter is usually won, so the hand
 // is six cards) and plays some of it. Look at the pictures: goal toasts, tile gems, big hands, the summary and the
 // finished goals are all in them.
+// Effect evidence (poof, collect burst, ...) needs the scripted player off during the resolve: in a development build it
+// calls reaction.Skip() every 0.45 s (GameFlow.cs, the scripted player's loop), so the effects are cut before a picture finds them.
 import { spawn } from 'node:child_process';
 import { mkdirSync, writeFileSync, mkdtempSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -61,12 +63,30 @@ try {
     await send('Input.dispatchKeyEvent', { type: 'keyUp', ...key });
     await sleep(300);
   };
+  // (headless Chrome draws a frame only when a picture is asked for, so every wait below takes pictures)
+  const frame = () => send('Page.captureScreenshot', { format: 'jpeg', quality: 20 });
+  const count = (re) => logs.filter((l) => re.test(l)).length;
+  // Wait (taking pictures) until the log has more than n lines matching re; false after ms.
+  const waitLog = async (re, n, ms) => { for (const t = Date.now(); Date.now() - t < ms && count(re) <= n;) await frame(); return count(re) > n; };
+  // F9 is a toggle, and the script cannot see the state from its own presses. GameFlow logs "[auto] on|off" (GameFlow.AutoHook):
+  // set the wanted state and wait for the game to confirm it. A press with no frame while the key is down is lost, so an
+  // unconfirmed press is sent again (up to 3 presses in all). Same as descents.mjs.
+  const AUTO = /\[auto\] /;
+  const autoOn = () => (logs.filter((l) => AUTO.test(l)).at(-1) ?? '').includes('[auto] on');
+  const setAuto = async (want) => {
+    for (let k = 0; k < 3 && autoOn() !== want; k++) { const n = count(AUTO); await f9(); await waitLog(AUTO, n, 3000); }
+    if (autoOn() !== want) throw new Error('the scripted player did not turn ' + (want ? 'on' : 'off'));
+  };
 
   await send('Page.navigate', { url });
   let loaded = false;
   for (let i = 0; i < 240 && !loaded; i++) { await sleep(500); loaded = await send('Runtime.evaluate', { expression: "document.querySelector('#loading') === null", returnByValue: true }).then((r) => r.result.value).catch(() => false); }
   if (!loaded) throw new Error('the build did not load');
   await sleep(4000);
+  // The scripted player on, on the title (as descents.mjs): the tutorial is skipped (GameFlow.Main: first = !Auto && ...),
+  // so a fresh profile plays a normal run; the scripted player stays on through the intro and the start of the run.
+  await click(20, 20, 300);                                  // focus the canvas for the key (a corner of the title does nothing)
+  await setAuto(true);
   await click(320, 227, 1500);                               // Begin
   for (let i = 0; i < 22; i++) await click(60, 180, 450);    // through the intro
   await sleep(2500);
@@ -75,11 +95,11 @@ try {
   await click(320, 260, 1500);                               // Continue
   await hover(207, 325);                                     // point at the second card of the hand
   await shot('hand_hover');
-  await f9();
+  await setAuto(true);
   const n = Math.round(seconds / every);
   for (let i = 0; i < n; i++) { await sleep(every * 1000); await shot('p' + String(i).padStart(3, '0')); }
   console.log('pictures:', n);
-  await f9();                                                // the player takes the bench back
+  await setAuto(false);                                      // the player takes the bench back
   await sleep(600);
   await shot('q1_end');
   await click(320, 226, 900);                                // the goals line of the run summary, if the run is over
@@ -94,10 +114,10 @@ try {
   await shot('r1_second_run');
   await hover(200, 325);                                     // point at the second card: it comes to the front
   await shot('r2_second_run_hover');
-  await f9();
+  await setAuto(true);
   const m = Math.round(Math.min(seconds, 60) / every / 2);
   for (let i = 0; i < m; i++) { await sleep(every * 2000); await shot('s' + String(i).padStart(3, '0')); }
-  await f9();
+  await setAuto(false);
   await sleep(600);
   await shot('r3_second_run_end');
   await click(390, 255, 2500);                               // Title, if that run is over too

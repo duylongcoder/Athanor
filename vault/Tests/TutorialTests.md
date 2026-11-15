@@ -3,14 +3,14 @@ generated: true
 type: test
 file: Athanor/Assets/Tests/EditMode/TutorialTests.cs
 tags: [test]
-count: 16
+count: 18
 ---
 
 # TutorialTests
-`Athanor/Assets/Tests/EditMode/TutorialTests.cs` — 16 tests
+`Athanor/Assets/Tests/EditMode/TutorialTests.cs` — 18 tests
 
 ## Covers
-[[Bench]], [[ContentData]], [[ContentDb]], [[Effects]], [[IgniteOutcome]], [[Journal]], [[ReactionEvent]], [[RunOptions]], [[RunPhase]], [[RunState]], [[Satchel]], [[ScoreParts]], [[TutorialScript]], [[TutorialTrial]], [[Unlocks]]
+[[Bench]], [[ContentData]], [[ContentDb]], [[Effects]], [[IgniteOutcome]], [[Journal]], [[ReactionEvent]], [[RunOptions]], [[RunPhase]], [[RunState]], [[Satchel]], [[ScoreParts]], [[TutorialPlan]], [[TutorialScript]], [[TutorialTrial]], [[Unlocks]]
 
 ## Tests
 - `Satchel_Take_PullsANamedCard_FromDrawOrDiscard`
@@ -28,4 +28,6 @@ count: 16
 - `Depth2_CatalystTrial_ShowsTheCatalyst`
 - `Script_IsTheSame_WhateverTheSeed`
 - `CatalystTrial_CoversTheOffer_AndNothingElse`
-- `ShouldRun_OnlyOnAFreshSave`
+- `ShouldRun_TutorialDoneFlag_RunsOnlyUntilDone`
+- `Plan_DoneFlagAndJournal_PicksRunAskSkipOrNone`
+- `Plan_NotDone_RunsExactlyWhenShouldRunAndTheJournalIsEmpty`

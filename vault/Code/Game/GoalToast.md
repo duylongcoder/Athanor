@@ -25,7 +25,7 @@ aliases: []
 | method | `public void Clear()` | 52 | Drops whatever is showing or waiting (the profile was reset). |
 
 ## Uses
-[[Align]], [[Anim]], [[ContentDb]], [[FontKind]], [[GoalReward]], [[Label]], [[Make]], [[Px]], [[Sparks]], [[Wording]]
+[[Align]], [[Anim]], [[ContentDb]], [[FontKind]], [[GoalReward]], [[Label]], [[Loc]], [[Make]], [[Px]], [[Sparks]], [[Wording]]
 
 ## Used by
 [[GameFlow]]

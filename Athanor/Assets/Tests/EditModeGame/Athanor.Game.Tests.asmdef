@@ -6,7 +6,8 @@
         "Athanor.Game",
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "PrimeTween.Runtime"
+        "PrimeTween.Runtime",
+        "Unity.TextMeshPro"
     ],
     "includePlatforms": [
         "Editor"

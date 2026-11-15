@@ -43,6 +43,6 @@ Start with **VaultOverview.md** for high-level architecture view. Then dive into
 
 All canvases use:
 - Mind-map syntax with code-block mermaid diagrams
-- [[link]] references for inter-file navigation
+- `[[link]]` references for inter-file navigation
 - Obsidian-style YAML frontmatter tags and types
 - Clear structure hierarchy for visual scanning

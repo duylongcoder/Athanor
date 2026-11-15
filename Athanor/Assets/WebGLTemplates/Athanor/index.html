@@ -11,11 +11,43 @@
       #loading { position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 240px; font: 12px monospace; color: #a88a6a; text-align: center; letter-spacing: 2px; }
       #bar { margin-top: 10px; height: 8px; border: 2px solid #6a4428; background: #1a0e14; }
       #fill { height: 100%; width: 0; background: #f08a2c; }
+      /* Rotate-device layer (Phase 5 W2-07, SPEC change 26). HTML/CSS only, shown by the media query, no close button. */
+      #rotate { display: none; position: fixed; inset: 0; z-index: 10; align-items: center; justify-content: center; box-sizing: border-box; padding-bottom: 48px; background: #0c0706; touch-action: none;
+        font-family: ui-monospace, Menlo, Consolas, "Roboto Mono", monospace; text-align: center; }
+      #rotate::before { content: ""; position: absolute; inset: 8px; border: 2px solid #8a5a1e; box-shadow: inset 0 0 0 1px #3a2412; pointer-events: none; }
+      @media (orientation: portrait) and (max-width: 639px) and (pointer: coarse) { #rotate { display: flex; } }
+      .rot-body { box-sizing: border-box; width: 100%; max-width: 376px; padding: 0 28px; }
+      .rot-icon { display: block; width: 240px; max-width: 100%; height: auto; margin: 0 auto 28px; shape-rendering: crispEdges; }
+      .rot-title { margin: 0 0 12px; font-size: 24px; line-height: 30px; font-weight: 700; color: #f8d250; text-shadow: 0 2px 0 #3a1a08; text-wrap: balance; overflow-wrap: break-word; }
+      .rot-text { margin: 0; font-size: 16px; line-height: 24px; font-weight: 400; color: #f0dcc0; text-wrap: balance; overflow-wrap: break-word; }
+      @keyframes rotnudge { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(1px); } }
+      .rot-arrow { animation: rotnudge 1s steps(2, end) infinite; }
+      @media (prefers-reduced-motion: reduce) { .rot-arrow { animation: none; } }
     </style>
   </head>
   <body>
     <canvas id="unity-canvas" tabindex="-1"></canvas>
     <div id="loading">ATHANOR<div id="bar"><div id="fill"></div></div></div>
+    <div id="rotate" role="alert" lang="en">
+      <div class="rot-body">
+        <svg class="rot-icon" viewBox="0 0 48 18" aria-hidden="true"><rect x="0" y="0" width="10" height="18" fill="#a88a6a"/><rect x="1" y="1" width="8" height="16" fill="#2a1810"/><rect x="4" y="1" width="2" height="1" fill="#a88a6a"/><g class="rot-arrow"><rect x="14" y="8" width="8" height="2" fill="#f0dcc0"/><rect x="22" y="5" width="1" height="8" fill="#f0dcc0"/><rect x="23" y="6" width="1" height="6" fill="#f0dcc0"/><rect x="24" y="7" width="1" height="4" fill="#f0dcc0"/><rect x="25" y="8" width="1" height="2" fill="#f0dcc0"/></g><rect x="30" y="4" width="18" height="10" fill="#f8d250"/><rect x="31" y="5" width="16" height="8" fill="#2a1810"/><rect x="31" y="8" width="1" height="2" fill="#f8d250"/></svg>
+        <div class="rot-title" role="heading" aria-level="1"></div>
+        <p class="rot-text"></p>
+      </div>
+    </div>
+    <script>
+      // Texts for the rotate layer. It shows before Unity loads, so Lang is not available: a two-entry table, kept equal to
+      // ui.rotate.title / ui.rotate.body in lang/en.json and lang/vi.json by tools/web/rotate_sync.mjs (keep it valid JSON, NFC).
+      var ROTATE_TEXT = /*rotate-table*/{"en": {"title": "Rotate your device", "body": "Turn your phone sideways to play."}, "vi": {"title": "Hãy xoay thiết bị", "body": "Xoay điện thoại sang ngang để chơi."}}/*end-rotate-table*/;
+      (function () {
+        var langs = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || "en"], lang = "en";
+        for (var i = 0; i < langs.length; i++) { if (/^vi/i.test(langs[i])) { lang = "vi"; break; } }
+        var layer = document.querySelector("#rotate");
+        layer.lang = lang; document.documentElement.lang = lang;
+        layer.querySelector(".rot-title").textContent = ROTATE_TEXT[lang].title;
+        layer.querySelector(".rot-text").textContent = ROTATE_TEXT[lang].body;
+      })();
+    </script>
     <script src="Build/{{{ LOADER_FILENAME }}}"></script>
     <script>
       // The game draws a 640x360 picture at the largest whole multiple that fits and centres it on black.

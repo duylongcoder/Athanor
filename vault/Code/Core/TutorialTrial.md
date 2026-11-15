@@ -12,22 +12,22 @@ aliases: []
 # TutorialTrial
 
 `public sealed class TutorialTrial`
-- Layer: **Core** · Source: `Athanor/Assets/Scripts/Core/Tutorial.cs:18-23`
+- Layer: **Core** · Source: `Athanor/Assets/Scripts/Core/Tutorial.cs:21-26`
 
 > One scripted trial: the hand dealt, where each material goes, and what the Ignite makes, in chain order.
 
 ## Members
 | Kind | Signature | Line | Note |
 |---|---|---|---|
-| field | `public string[] Hand` | 20 |  |
-| field | `public TutorialLay[] Lay` | 21 |  |
-| field | `public string[] Makes` | 22 |  |
+| field | `public string[] Hand` | 23 |  |
+| field | `public TutorialLay[] Lay` | 24 |  |
+| field | `public string[] Makes` | 25 |  |
 
 ## Uses
 [[TutorialLay]]
 
 ## Used by
-[[TutorialScript]]
+[[TutorialController]], [[TutorialScript]]
 
 ## Tested by
 [[TutorialTests]]

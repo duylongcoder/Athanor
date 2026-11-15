@@ -12,7 +12,7 @@ aliases: []
 # EventView
 
 `public sealed class EventView` : `MonoBehaviour`
-- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Ui/EventView.cs:13-116`
+- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Ui/EventView.cs:13-120`
 
 > The event at the start of a depth: what was found, the options that can be taken (each with what it costs and may give), then what came of the one chosen.
 
@@ -23,7 +23,7 @@ aliases: []
 | method | `public IEnumerator Show(RunState run, Action changed)` | 68 | Shows the run's current event, takes the option the player picks and shows what it did. Ends when Continue is pressed. |
 
 ## Uses
-[[Align]], [[FontKind]], [[Label]], [[Make]], [[Motion]], [[Px]], [[RunState]], [[ScreenFx]], [[UiButton]], [[Wording]]
+[[Align]], [[Dev]], [[FontKind]], [[Label]], [[Lang]], [[Loc]], [[Make]], [[Motion]], [[Px]], [[RunState]], [[ScreenFx]], [[UiButton]], [[Wording]]
 
 ## Used by
 [[GameFlow]]

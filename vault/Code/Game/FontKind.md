@@ -12,10 +12,13 @@ aliases: []
 # FontKind
 
 `public enum FontKind`
-- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Support/Make.cs:7-7`
+- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Support/Make.cs:8-8`
 
 ## Members
-`Title`, `Body`, `Name`, `Tiny`
+`Title`, `Body`, `Name`, `Tiny`, `Logo`, `Numeral`
 
 ## Used by
-[[BenchView]], [[CardView]], [[CatalystChoiceView]], [[EventView]], [[GoalToast]], [[GoalsView]], [[HudView]], [[JournalView]], [[Make]], [[ReactionCutscene]], [[RunOverView]], [[SimpleCutscene]], [[TitleView]], [[Tooltip]], [[UiButton]]
+[[BenchView]], [[CardView]], [[CatalystChoiceView]], [[EventView]], [[GoalToast]], [[GoalsView]], [[HudView]], [[JournalView]], [[Label]], [[Make]], [[PauseMenu]], [[ReactionCutscene]], [[RunOverView]], [[SimpleCutscene]], [[TitleView]], [[Tooltip]], [[TutorialController]], [[UiButton]]
+
+## Tested by
+[[LabelLineBoxTests]]

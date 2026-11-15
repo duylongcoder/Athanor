@@ -1,23 +1,42 @@
 ---
 type: workflow
 tags: [workflow, phase5]
-status: draft - owner decides scope
+status: planned - 5a ready to dispatch, 5b behind owner gates
 ---
 # Phase 5 Kickoff
 
-Phase 4 (tutorial, lore, settings/localization research, depth layers, packages) is in [[Phases]]. Phase 5's scope is **not decided**; this note collects what Phase 4 left open so the owner can pick, and shows how each candidate would be split across [[Agent Workflow]]. Source: `docs/devlogs/phase-4-*.md` open-question lists.
+Scope decided by the owner on 2026-11-15. Decisions: `docs/devlogs/phase-5-prep.md`. Plan and briefs:
+`docs/superpowers/plans/2026-11-15-athanor-phase5.md`. Dispatch per [[Agent Workflow]].
 
-| Candidate | Open owner decisions | Roles (in order) |
-|---|---|---|
-| Vietnamese build + Settings screen | font choice (option C recommended in the settings devlog), where settings live, pause menu on mobile | ui-ux-designer → unity-gameplay-engineer → localizer-vi → qa-engineer |
-| Sound (FMOD or plain Unity audio) | is sound in scope; FMOD licence/ownership; click-to-start for WebGL autoplay; volume controls | audio-designer → unity-gameplay-engineer → web-release-engineer (size) → qa-engineer |
-| Depth layers / fog (2.5D look) | drop AERO for a sprite fog layer; background only or in front of the bench | ui-ux-designer → pixel-artist → unity-gameplay-engineer → qa-engineer |
-| Depth intros (one line per depth) | postponed in Phase 4: bring back? | lore-writer → localizer-vi → unity-gameplay-engineer |
-| Content depth (more recipes/events) | target counts, new Lore events | content-designer ↔ lore-writer → localizer-vi → qa-engineer (BalanceMatrix) |
-| Tutorial polish / first-launch rules | tutorial from title screen too? | unity-gameplay-engineer → qa-engineer |
-| Repository hygiene | `tools/CoreTests/bin,obj` are tracked build output; package licences (PrimeTween, FMOD, AERO) and repo privacy | web-release-engineer |
+## 5a: foundation and content (4 waves)
 
-## How to start
-1. Owner picks scope from the table (or adds rows).
-2. Main session invokes `phase-lead` with the chosen rows; it writes the plan to `docs/superpowers/plans/` and the briefs.
-3. Dispatch per [[Agent Workflow]].
+| Wave | Tasks (agent) |
+|---|---|
+| 0 | 5a-01 size baseline (web-release-engineer) · 5a-02 depth intro lines + lore audit (lore-writer) · 5a-03 UI mockups (ui-ux-designer) |
+| gate | **G1** owner approves the 5a-03 mockups |
+| 1 | 5a-04 rarity-weighted item draws, 5a-05 Core Settings (rules-engineer) · 5a-06 package cleanup + size cuts (web-release-engineer) · 5a-07 flipbook export (pixel-artist) · 5a-08 en/vi keys (localizer-vi) |
+| 2 | 5a-10 Lang in Game → 5a-11 Settings/haptics/mute → 5a-12 tutorial controller, How to play, Watch intro → 5a-13 pause menu → 5a-14 depth intro, window swap, rarity display (unity-gameplay-engineer, in order) · parallel: 5a-09 window views (pixel-artist), 5a-15 rarity weights + BalanceMatrix (content-designer) |
+| 3 | 5a-16 sign-off (qa-engineer) → 5a-17 release size (web-release-engineer) → vault rebuild |
+
+## 5b: visuals and new design (owner gate at each step)
+
+| Step | Tasks |
+|---|---|
+| 1 | 5b-01 HD-2D mockup, 5b-02 Dust/ember loop mockup (ui-ux-designer, no code) · 5b-03 endings/Worldseed lore frame (lore-writer) |
+| gate | **G2** owner approves the HD-2D mockup |
+| 2 | 5b-04 layer art (pixel-artist) → 5b-05 DepthTest prototype (unity-gameplay-engineer) → 5b-06 WebGL measure (web-release-engineer) |
+| gate | **G3** owner approves the prototype |
+| 3 | 5b-07 integrate → 5b-08 sign-off and size |
+
+Size ceiling: +1 MB over the 5a-01 baseline for 5a and 5b together.
+
+## Needs design (no tasks)
+
+- Endless mode after depth 5: the owner redesigns it. Old questions: scoring and difficulty, saved record, replaces or sits beside the ending.
+- Currency: no purpose yet.
+- Several Ultimates / endings: only the 5b-03 lore frame and questions (equal endings, by the Worldseed made; no true/good/bad).
+- Sound: a separate plan outside Phase 5 (FMOD dropped).
+
+## Blocks release
+
+- Nothing from fonts: SVN-Determination Sans was deleted at G1. Coder's Crux (CC BY 3.0) needs its credit.

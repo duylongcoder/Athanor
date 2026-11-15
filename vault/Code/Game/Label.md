@@ -12,19 +12,33 @@ aliases: []
 # Label
 
 `public sealed class Label` : `MonoBehaviour`
-- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Support/Label.cs:7-34`
+- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Support/Label.cs:11-114`
 
-> A line of pixel text with an optional one-pixel drop shadow.
+> A line of pixel text with an optional one-pixel drop shadow. A label made from a Lang key (Make.TextKey) rewrites itself when the language changes; every label swaps its font to the language's.
 
 ## Members
 | Kind | Signature | Line | Note |
 |---|---|---|---|
-| field | `public TextMeshPro main, shadow` | 9 |  |
-| property | `public string Text` | 11 |  |
-| property | `public Color Color` | 17 |  |
-| property | `public float Alpha` | 19 |  |
-| property | `public int Order` | 28 |  |
-| property | `public float Width` | 33 |  |
+| field | `public TextMeshPro main, shadow` | 13 |  |
+| field | `public FontKind kind` | 15 | The kind and the size (English points) it was made with, kept for font swaps. |
+| field | `public int size` | 16 |  |
+| property | `public int Lines` | 21 | Name-role text: how many lines the name has. Crux sits higher in its box than the English face, so Vietnamese names are nudged down 5 px (two lines) or 1 px (one) to land on the English rows. |
+| property | `public bool LineBox` | 30 | Display text placed as the mockup places it, in a line box as tall as its size (the Descent's depth name, SPEC (f)). Crux's ascent line is short for its size, so in Vietnamese the face moves down by Crux's half-leading at the current size (11 px at 48, 7 at 32). English is left alone: Alagard's half-leading is under 2 px and the English name already matches the mock. |
+| method | `public void ApplyBias()` | 33 | Moves the face (and its shadow) down by the font's vertical bias; nothing outside Vietnamese Name and line-box text. |
+| method | `public void Bind(string textKey, params (string name, object value)[] textArgs)` | 57 | Ties the label to a key: the text is rewritten whenever the language changes. |
+| method | `public void SetKey(string textKey, params (string name, object value)[] textArgs)` | 60 | Sets the key and its text together. |
+| method | `public void SetSize(int points)` | 63 | Changes the size (in English points); the font follows the language. |
+| property | `public string Text` | 91 |  |
+| property | `public Color Color` | 97 |  |
+| property | `public float Alpha` | 99 |  |
+| property | `public int Order` | 108 |  |
+| property | `public float Width` | 113 |  |
+
+## Uses
+[[FontKind]], [[Loc]], [[Make]]
 
 ## Used by
-[[BenchView]], [[Card]], [[CardView]], [[CatalystChoiceView]], [[EventView]], [[EventView.Row]], [[GoalToast]], [[GoalsView]], [[GoalsView.Row]], [[HudView]], [[JournalView]], [[Make]], [[Motion]], [[ReactionCutscene]], [[RunOverView]], [[SimpleCutscene]], [[TitleView]], [[Tooltip]], [[UiButton]]
+[[BenchView]], [[Card]], [[CardView]], [[CatalystChoiceView]], [[EventView]], [[EventView.Row]], [[GoalToast]], [[GoalsView]], [[GoalsView.Row]], [[HudView]], [[JournalView]], [[Make]], [[Motion]], [[PauseMenu]], [[ReactionCutscene]], [[RunOverView]], [[SimpleCutscene]], [[TitleView]], [[Tooltip]], [[TutorialController]], [[UiButton]]
+
+## Tested by
+[[LabelLineBoxTests]], [[RunOverDepthTests]]

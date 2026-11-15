@@ -11,7 +11,7 @@ namespace Athanor.Game
     public sealed class ChoiceCard
     {
         public string id, sprite, name, text, kicker, cost;
-        public Color? pip;        // the rarity pip in the corner; none for an aspect
+        public string rarity;     // the rarity shown as stars and a tier strip; null for an aspect
         public int[] tiles;       // bench tiles to light on the little bench at the foot of the card; null: no bench
         public int[] dimTiles;    // tiles the lit ones are joined to
     }
@@ -22,12 +22,18 @@ namespace Athanor.Game
     /// </summary>
     public sealed class CatalystChoiceView : MonoBehaviour
     {
+        /// <summary>
+        /// The development-build log line once the dealt cards take a click (tools/web/webtest.mjs and descents.mjs click a card after it).
+        /// Not "[choice] ...": descents.mjs counts that one from GameFlow.Descend.
+        /// </summary>
+        public const string OpenHook = "[cards] open";
+
         const int O = 440, CardW = 150, CardH = 180, Gap = 18, Top = 112;
         const float Dim = 0.8f;
 
         sealed class Card
         {
-            public Transform root; public SpriteRenderer lit, icon, pip; public Label name, text, kicker; public Vector3 home; public string id; public float lift;
+            public Transform root; public SpriteRenderer lit, icon, strip; public RarityStars cornerStars, stripStars; public Label name, text, kicker, tier; public Vector3 home; public string id; public float lift;
             public readonly SpriteRenderer[] bench = new SpriteRenderer[Bench.TileCount];
         }
 
@@ -54,7 +60,12 @@ namespace Athanor.Game
                 c.lit = Make.Sprite(c.root, "choice_lit", Vector3.zero, O); c.lit.transform.localPosition = new Vector3(1, -1, 0);
                 Make.Sprite(c.root, "choice", Vector3.zero, O + 1).transform.localPosition = new Vector3(1, -2, 0);
                 c.icon = Make.Sprite(c.root, "dot", Vector3.zero, O + 2); c.icon.transform.localPosition = new Vector3(0, 61, 0);
-                c.pip = Make.Sprite(c.root, "pip", Vector3.zero, O + 3); c.pip.transform.localPosition = new Vector3(-66, 81, 0);
+                c.cornerStars = new RarityStars(c.root, O + 3); c.cornerStars.Root.localPosition = new Vector3(-CardW / 2 + 6, CardH / 2 - 6, 0);
+                // the tier strip, 144x20 at (x+4, y+158), with its stars at its left and the tier word at its right
+                c.strip = Make.Rect(c.root, 0, 0, 144, 20, Color.clear, O + 2); c.strip.transform.localPosition = new Vector3(-CardW / 2 + 4 + 72, CardH / 2 - 158 - 10, 0);
+                c.stripStars = new RarityStars(c.root, O + 3); c.stripStars.Root.localPosition = new Vector3(-CardW / 2 + 8, CardH / 2 - 164, 0);
+                c.tier = Make.Text(c.root, "", 0, 0, FontKind.Name, 16, Px.Hex("#fff6e0"), O + 4, Align.Right, Px.Hex("#1a0e08"));
+                c.tier.transform.localPosition = new Vector3(-CardW / 2 + 146, CardH / 2 - 160, 0);   // top edge at y+160 (SPEC 22)
                 c.name = Make.Text(c.root, "", 0, 0, FontKind.Title, 16, Ink, O + 3, Align.Centre);
                 c.name.transform.localPosition = new Vector3(0, 40, 0);
                 c.text = Make.Text(c.root, "", 0, 0, FontKind.Body, 16, Ink, O + 3, Align.Left, null, 124);
@@ -82,10 +93,9 @@ namespace Athanor.Game
             foreach (var c in offer)
                 list.Add(new ChoiceCard
                 {
-                    id = c.id, sprite = "cat_" + c.id, name = c.name, text = c.text, pip = Wording.RarityColor(c.rarity),
-                    kicker = Rarities.Of(c.rarity).ToUpperInvariant() + " CATALYST",
+                    id = c.id, sprite = "cat_" + c.id, name = c.name, text = Loc.C("catalyst." + c.id + ".text", c.text), rarity = Rarities.Of(c.rarity),
                 });
-            return Choose("Choose a Catalyst", "It bends the rules for the rest of this descent.", list, done, autoAfter);
+            return Choose(Loc.T("ui.choice.catalyst_title"), Loc.T("ui.choice.catalyst_sub"), list, done, autoAfter);
         }
 
         /// <summary>The aspects offered at the start of a run and of depths 3 and 5.</summary>
@@ -96,10 +106,10 @@ namespace Athanor.Game
                 list.Add(new ChoiceCard
                 {
                     id = a.Data.id, sprite = "asp_" + a.Data.id, name = a.Data.name, text = Wording.AspectRule(a, false), cost = Wording.AspectCost(a),
-                    kicker = a.Data.tradeOff ? "TRADE-OFF ASPECT" : "ASPECT", tiles = a.Tiles,
+                    kicker = Loc.T(a.Data.tradeOff ? "ui.choice.tradeoff" : "ui.choice.aspect"), tiles = a.Tiles,
                     dimTiles = a.Data.effect == AspectEffects.OpenBench ? new[] { Bench.Centre } : null,
                 });
-            return Choose("Choose an Aspect", "It changes the bench until this descent ends.", list, done, autoAfter);
+            return Choose(Loc.T("ui.choice.aspect_title"), Loc.T("ui.choice.aspect_sub"), list, done, autoAfter);
         }
 
         /// <summary>Shows the cards and waits for a pick. autoAfter >= 0 takes the first card after that many seconds (scripted play).</summary>
@@ -120,9 +130,12 @@ namespace Athanor.Game
                 c.icon.sprite = Make.Lib.Sprite(o.sprite);
                 c.name.Text = o.name;
                 c.text.Text = string.IsNullOrEmpty(o.cost) ? o.text : o.text + "\n<color=#9a3414>" + o.cost + "</color>";
-                c.kicker.Text = o.kicker; c.kicker.Color = Px.Hex(string.IsNullOrEmpty(o.cost) ? "#a8854e" : "#9a3414");
-                c.pip.enabled = o.pip.HasValue;
-                if (o.pip.HasValue) c.pip.color = o.pip.Value;
+                c.kicker.Color = Px.Hex(string.IsNullOrEmpty(o.cost) ? "#a8854e" : "#9a3414");
+                bool catalyst = o.rarity != null;
+                c.kicker.Text = o.kicker ?? "";
+                c.strip.enabled = catalyst; c.tier.Text = catalyst ? Wording.RarityWord(o.rarity) : "";
+                if (catalyst) { c.strip.color = Wording.RarityTone(o.rarity); c.cornerStars.Show(o.rarity); c.stripStars.Show(o.rarity); }
+                else { c.cornerStars.Show(0, Color.white); c.stripStars.Show(0, Color.white); }
                 bool bench = o.tiles != null && o.tiles.Length > 0;
                 for (int k = 0; k < Bench.TileCount; k++)
                 {
@@ -146,6 +159,7 @@ namespace Athanor.Game
                 deal.Insert(i * 0.1f, Motion.Move(cards[i].root, cards[i].home + new Vector3(0, -300, 0), cards[i].home, 0.5f, Ease.OutBack));
             yield return deal.ToYieldInstruction();
             open = true;
+            Dev.Hook(OpenHook);                // development builds only: from here a click on a card is taken
             for (float waited = 0; picked == null; waited += Time.deltaTime)
             {
                 if (autoAfter >= 0 && waited > autoAfter) picked = cards[0].id;

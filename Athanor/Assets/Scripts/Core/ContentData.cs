@@ -37,6 +37,8 @@ namespace Athanor.Core
         public AspectData[] aspects;
         public EventData[] events;
         public int noEventWeight;
+        /// <summary>Optional draw weights for catalyst offers and event gifts, in the order Common, Uncommon, Rare, Legendary. Missing: all 1 (a uniform draw).</summary>
+        public int[] rarityWeights;
     }
 
     [Serializable] public class HintData { public string material, partnerKind; public int heat; }   // heat > 0: "needs this much heat", and no partnerKind

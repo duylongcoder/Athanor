@@ -49,4 +49,4 @@ aliases: []
 [[GameFlow]], [[GoalsView]], [[Save]], [[Unlocks]]
 
 ## Tested by
-[[LoreTests]], [[Phase3Tests]], [[RoleSimTests]], [[SaveTests]]
+[[LoreTests]], [[PauseTests]], [[Phase3Tests]], [[RoleSimTests]], [[SaveTests]], [[TutorialFlowTests]]

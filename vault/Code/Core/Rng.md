@@ -25,7 +25,7 @@ aliases: []
 | method | `public void Shuffle<T>(IList<T> list)` | 13 |  |
 
 ## Used by
-[[Profile]], [[RunState]], [[Satchel]], [[Unlocks]]
+[[ContentDb]], [[Profile]], [[RunState]], [[Satchel]], [[Unlocks]]
 
 ## Tested by
 [[Phase3Tests]]

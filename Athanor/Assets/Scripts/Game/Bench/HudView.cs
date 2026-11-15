@@ -1,5 +1,4 @@
 using System;
-using System.Globalization;
 using Athanor.Core;
 using UnityEngine;
 
@@ -9,10 +8,17 @@ namespace Athanor.Game
     public sealed class HudView : MonoBehaviour
     {
         const int O = 100;
-        public event Action IgniteClicked, JournalClicked, RedrawClicked;
+        public event Action IgniteClicked, JournalClicked, RedrawClicked, PauseClicked;
         /// <summary>Catalyst socket index the pointer is over, or -1.</summary>
         public int HoveredCatalyst { get; private set; } = -1;
         public bool RedrawHovered { get; private set; }
+        /// <summary>The pointer is over the pause button's 44x44 hit box.</summary>
+        public bool PauseHovered { get; private set; }
+        /// <summary>Unused offset kept at 0: the bench layout is unchanged; the pause button sits on the empty floor left of the table.</summary>
+        const int AspectDy = 0;
+        /// <summary>The pause button's picture (28x20 at 12,152) and its 44x44 hit box (4,140); SPEC item 11 deviation: the aspects shelf band is full, shown only while a pause can open.</summary>
+        public const int PauseX = 12, PauseY = 152, PauseW = 28, PauseH = 20, PauseOrder = 650;
+        GameObject pauseGroup; SpriteRenderer pauseEdge;
         /// <summary>Index of the held aspect the pointer is over (in the strip under the depth panel), or -1.</summary>
         public int HoveredAspect { get; private set; } = -1;
         /// <summary>The most catalysts the sockets can show: four from clearing depths and two from shrines.</summary>
@@ -42,18 +48,30 @@ namespace Athanor.Game
         void OnDisable()
         {
             HoveredCatalyst = HoveredAspect = -1;
-            RedrawHovered = redrawDown = igniteDown = false;
+            RedrawHovered = redrawDown = igniteDown = PauseHovered = false;
         }
+
+        /// <summary>Shows or hides the pause button (and its hit box): shown only while the bench is the player's.</summary>
+        public void SetPauseShown(bool shown)
+        {
+            if (pauseGroup == null || pauseGroup.activeSelf == shown) return;
+            pauseGroup.SetActive(shown);
+            if (!shown) PauseHovered = false;
+        }
+        public bool PauseShown => pauseGroup != null && pauseGroup.activeSelf;
+        public Vector3 PauseAnchor => Px.Mid(PauseX, PauseY, PauseW, PauseH);
 
         public Vector3 PotencyPosition => Px.At(96, 56);
         /// <summary>Where a tooltip about a held catalyst or aspect points.</summary>
         public Vector3 CatalystAnchor(int i) => Px.At(503 + i * catalystPitch, 39);
-        public Vector3 AspectAnchor(int i) => Px.At(22 + i * 29, 111);
+        public Vector3 AspectAnchor(int i) => Px.At(22 + i * 29, 111 + AspectDy);
         /// <summary>Where the Redraw tooltip (and the tutorial's highlight) points: the button's centre.</summary>
         public Vector3 RedrawAnchor => Px.Mid(RedrawX, RedrawY, RedrawW, RedrawH);
         /// <summary>The Redraw button is live: a redraw is left and the bench is being played (not an offer, not a cleared depth).</summary>
         public static bool CanRedraw(RunState run) => run != null && run.Phase == RunPhase.Playing && run.RedrawsLeft > 0;
-        public static string Number(long n) => n.ToString("N0", CultureInfo.InvariantCulture);
+        public static string Number(long n) => Loc.Number(n);
+        /// <summary>Pitch of the small rows: Crux at 16 needs 12 px, Pixel Operator 8 keeps 10.</summary>
+        static int Row => Loc.Vi ? 12 : 10;
 
         public void Build(Transform parent)
         {
@@ -63,14 +81,14 @@ namespace Athanor.Game
             Make.SpriteAt(t, "hud_left", 8, 8, O);
             depth = Make.Text(t, "", 16, 9, FontKind.Title, 32, Pale, O + 3, Align.Left, dark);
             depthName = Make.Text(t, "", 17, 37, FontKind.Body, 16, Dim, O + 3);
-            potencyWord = Make.Text(t, "POTENCY", 17, 52, FontKind.Tiny, 8, Dim, O + 3);
-            potency = Make.Text(t, "0", 70, 49, FontKind.Title, 16, Gold, O + 3, Align.Left, Px.Hex("#3a1a08"));
+            potencyWord = Make.TextKey(t, "ui.hud.potency", 17, 52, FontKind.Tiny, 8, Dim, O + 3);
+            potency = Make.Text(t, "0", 70, 49, FontKind.Numeral, 16, Gold, O + 3, Align.Left, Px.Hex("#3a1a08"));
             target = Make.Text(t, "", 153, 52, FontKind.Tiny, 8, Dim, O + 3, Align.Right);
             barFill = Make.Rect(t, 18, 70, 1, 5, Color.white, O + 2); barFill.sprite = Make.Lib.Sprite("bar_fill");
             barTip = Make.Rect(t, 18, 70, 1, 5, Color.white, O + 3);
             // top right: catalysts, trials, redraws
             Make.SpriteAt(t, "hud_right", 480, 8, O);
-            Make.Text(t, "CATALYSTS", 489, 14, FontKind.Tiny, 8, Dim, O + 3);
+            Make.TextKey(t, "ui.hud.catalysts", 489, 14, FontKind.Tiny, 8, Dim, O + 3);
             for (int i = 0; i < MaxCatalysts; i++)
             {
                 int x = 488 + i * 35, index = i;
@@ -79,48 +97,60 @@ namespace Athanor.Game
                 var c = Make.Click(socketLit[i].gameObject, new Vector2(30, 30), O);
                 c.onEnter = () => HoveredCatalyst = index; c.onExit = () => { if (HoveredCatalyst == index) HoveredCatalyst = -1; };
             }
-            Make.Text(t, "TRIALS", 489, 63, FontKind.Tiny, 8, Dim, O + 3);
-            trials = Make.Text(t, "", 534, 48, FontKind.Title, 32, Px.Hex("#ee6a3c"), O + 3, Align.Left, dark);
-            redrawsLabel = Make.Text(t, "REDRAWS", 556, 63, FontKind.Tiny, 8, Dim, O + 3);
-            redraws = Make.Text(t, "", 611, 48, FontKind.Title, 32, Px.Hex("#6ee6c8"), O + 3, Align.Left, dark);
+            Make.TextKey(t, "ui.hud.trials", 489, 63, FontKind.Tiny, 8, Dim, O + 3);
+            trials = Make.Text(t, "", 534, 48, FontKind.Numeral, 32, Px.Hex("#ee6a3c"), O + 3, Align.Left, dark);
+            redrawsLabel = Make.TextKey(t, "ui.hud.redraws", 556, 63, FontKind.Tiny, 8, Dim, O + 3);
+            redraws = Make.Text(t, "", 611, 48, FontKind.Numeral, 32, Px.Hex("#6ee6c8"), O + 3, Align.Left, dark);
             // the Redraw button, right under the counter: a dark one-pixel edge round a fill that greys out when no redraw can be made
             Make.Rect(t, RedrawX, RedrawY, RedrawW, RedrawH, dark, O + 1);
             redrawFill = Make.Rect(t, RedrawX + 1, RedrawY + 1, RedrawW - 2, RedrawH - 2, RedrawUp, O + 2);
-            redrawText = Make.Text(t, "Redraw", RedrawX + RedrawW / 2f, RedrawY + RedrawLabelY, FontKind.Title, 16, Pale, O + 4, Align.Centre, dark);
+            redrawText = Make.TextKey(t, "ui.bench.redraw", RedrawX + RedrawW / 2f, RedrawY + RedrawLabelY, FontKind.Title, 16, Pale, O + 4, Align.Centre, dark);
             var redrawZone = Make.Root("redraw", t); redrawZone.position = RedrawAnchor;
             var rc = Make.Click(redrawZone.gameObject, new Vector2(RedrawW, RedrawH), O, () => { if (canRedraw) RedrawClicked?.Invoke(); });
             rc.onEnter = () => RedrawHovered = true;
             rc.onExit = () => { RedrawHovered = false; redrawDown = false; };
             rc.onDown = () => redrawDown = true; rc.onUp = () => redrawDown = false;
             // under the depth panel: the aspects this run holds, and what this depth's event changed
-            aspectsLabel = Make.Text(t, "ASPECTS", 10, 88, FontKind.Tiny, 8, Dim, O + 3, Align.Left, dark);
+            aspectsLabel = Make.TextKey(t, "ui.hud.aspects", 10, 88 + AspectDy, FontKind.Tiny, 8, Dim, O + 3, Align.Left, dark);
             for (int i = 0; i < MaxAspects; i++)
             {
                 int x = 9 + i * 29, index = i;
-                aspectSocket[i] = Make.SpriteAt(t, "aspect_socket", x, 98, O + 1);
-                aspectIcon[i] = Make.Sprite(t, "dot", Px.Mid(x + 1, 99, 24, 24), O + 2);
+                aspectSocket[i] = Make.SpriteAt(t, "aspect_socket", x, 98 + AspectDy, O + 1);
+                aspectIcon[i] = Make.Sprite(t, "dot", Px.Mid(x + 1, 99 + AspectDy, 24, 24), O + 2);
                 var c = Make.Click(aspectSocket[i].gameObject, new Vector2(26, 26), O);
                 c.onEnter = () => HoveredAspect = index; c.onExit = () => { if (HoveredAspect == index) HoveredAspect = -1; };
             }
-            for (int i = 0; i < depthNote.Length; i++) depthNote[i] = Make.Text(t, "", 10, 130 + i * 10, FontKind.Tiny, 8, Px.Hex("#6ee6c8"), O + 3, Align.Left, dark);
+            // pause: a small button under the depth panel, the hit box larger than the picture (44 CSS px on a phone)
+            pauseGroup = Make.Root("pause", t).gameObject;
+            var pg = pauseGroup.transform;
+            pauseEdge = Make.Rect(pg, PauseX, PauseY, PauseW, PauseH, Px.Hex("#8a5a1e"), PauseOrder);
+            Make.Rect(pg, PauseX + 2, PauseY + 2, PauseW - 4, PauseH - 4, Px.Hex("#3a2412"), PauseOrder + 1);
+            Make.Rect(pg, PauseX + 3, PauseY + 3, PauseW - 6, PauseH - 6, Px.Hex("#1d1410"), PauseOrder + 1);
+            Make.Rect(pg, PauseX + 8, PauseY + 5, 4, 10, Pale, PauseOrder + 2); Make.Rect(pg, PauseX + 16, PauseY + 5, 4, 10, Pale, PauseOrder + 2);
+            var pz = Make.Root("hit", pg); pz.position = Px.Mid(PauseX - 8, PauseY - 12, 44, 44);
+            var pc = Make.Click(pz.gameObject, new Vector2(44, 44), PauseOrder + 4, () => PauseClicked?.Invoke());
+            pc.onEnter = () => { PauseHovered = true; pauseEdge.color = Gold; };
+            pc.onExit = () => { PauseHovered = false; pauseEdge.color = Px.Hex("#8a5a1e"); };
+            pauseGroup.SetActive(false);
+            for (int i = 0; i < depthNote.Length; i++) depthNote[i] = Make.Text(t, "", 10, 130 + AspectDy + i * Row, FontKind.Tiny, 8, Px.Hex("#6ee6c8"), O + 3, Align.Left, dark);
             // bottom left: the last reaction and the latest hint
             Make.SpriteAt(t, "note", 4, 262, O);
-            Make.Text(t, "LAST REACTION", 10, 266, FontKind.Tiny, 8, Px.Hex("#7a5430"), O + 3);
+            Make.TextKey(t, "ui.hud.last_reaction", 10, 266, FontKind.Tiny, 8, Px.Hex("#7a5430"), O + 3);
             for (int i = 0; i < 4; i++) note[i] = Make.Text(t, "", 10, 273 + i * 10, FontKind.Body, 16, Ink, O + 3);
             note[2].Color = Px.Hex("#11606a"); note[3].Color = Px.Hex("#9a3414");
-            Make.Text(t, "HINT", 10, 318, FontKind.Tiny, 8, Px.Hex("#7a5430"), O + 3);
+            Make.TextKey(t, "ui.hud.hint", 10, 318, FontKind.Tiny, 8, Px.Hex("#7a5430"), O + 3);
             // two lines: the longest hint ("Phoenix Feather stirs near a crystal.") wraps once
             hintText = Make.Text(t, "", 10, 322, FontKind.Body, 16, Px.Hex("#4a1f7a"), O + 3, Align.Left, null, 112);
             hintText.main.lineSpacing = -30;
             // bottom right: journal and Ignite
             Make.SpriteAt(t, "corner", 514, 284, O);
             var book = Make.SpriteAt(t, "book", 520, 290, O + 2);
-            Make.Text(t, "Journal", 542, 289, FontKind.Title, 16, Pale, O + 3);
+            Make.TextKey(t, "ui.hud.journal", 542, 289, FontKind.Title, 16, Pale, O + 3);
             journalCount = Make.Text(t, "", 630, 294, FontKind.Tiny, 8, Dim, O + 3, Align.Right);
             Make.Click(book.gameObject, new Vector2(118, 22), O, () => JournalClicked?.Invoke()).offset = new Vector2(46, 0);
             ignite = Make.SpriteAt(t, "ignite_up", 519, 310, O + 1);
             ignitePulse = Make.Rect(t, 521, 312, 108, 28, Color.clear, O + 2); ignitePulse.sharedMaterial = Make.Lib.glow;
-            igniteText = Make.Text(t, "Ignite", 575, 306, FontKind.Title, 32, Px.Hex("#fff6b8"), O + 4, Align.Centre, Px.Hex("#3b0d1e"));
+            igniteText = Make.TextKey(t, "ui.hud.ignite", 575, 306, FontKind.Title, 32, Px.Hex("#fff6b8"), O + 4, Align.Centre, Px.Hex("#3b0d1e"));
             var ic = Make.Click(ignite.gameObject, new Vector2(112, 36), O, () => { if (canIgnite) IgniteClicked?.Invoke(); });
             ic.onDown = () => igniteDown = true; ic.onUp = () => igniteDown = false; ic.onExit = () => igniteDown = false;
         }
@@ -131,10 +161,10 @@ namespace Athanor.Game
         /// </summary>
         public void Show(RunState run, ContentDb db, Journal journal, bool inputEnabled, bool keepRedraw = false)
         {
-            depth.Text = "Depth " + run.Depth;
-            depthName.Text = db.DepthName(run.Depth);
+            depth.Text = Loc.T("ui.hud.depth", ("n", run.Depth));
+            depthName.Text = Loc.DepthName(db, run.Depth);
             targetValue = run.Target;
-            target.Text = run.Target > 0 ? "/ " + Number(run.Target) : "NO TARGET";
+            target.Text = run.Target > 0 ? "/ " + Number(run.Target) : Loc.T("ui.hud.no_target");
             trials.Text = run.TrialsLeft.ToString();
             redraws.Text = run.RedrawsLeft.ToString();
             // the button follows the run, not inputEnabled: it stays lit while a reaction plays (clicks are gated in BenchView);
@@ -167,12 +197,12 @@ namespace Athanor.Game
             }
             if (run.Aspects.Count == 0) HoveredAspect = -1;
             // what this depth's event left behind (shut and warm tiles show on the bench itself)
-            int line = 0, top = run.Aspects.Count > 0 ? 130 : 88;
+            int line = 0, top = run.Aspects.Count > 0 ? 130 + AspectDy : 88 + AspectDy;
             foreach (var l in depthNote) l.Text = "";
-            void Say(string text) { if (line < depthNote.Length) { depthNote[line].Text = text; depthNote[line].transform.position = Px.At(10, top + line * 10); line++; } }
-            if (run.RiShift != 0) Say("THIS DEPTH: REACTION INDEX " + (run.RiShift > 0 ? "+" : "") + run.RiShift);
-            if (run.HandDelta != 0) Say("THIS DEPTH: " + (run.HandDelta > 0 ? "+" : "") + run.HandDelta + (Mathf.Abs(run.HandDelta) == 1 ? " CARD A HAND" : " CARDS A HAND"));
-            if (run.TripleFirst) Say("NEXT FIRST REACTION: x3");
+            void Say(string text) { if (line < depthNote.Length) { depthNote[line].Text = text; depthNote[line].transform.position = Px.At(10, top + line * Row); line++; } }
+            if (run.RiShift != 0) Say(Loc.T("ui.hud.depth_ri", ("n", run.RiShift)));
+            if (run.HandDelta != 0) Say(Loc.P("ui.hud.depth_hand", run.HandDelta));
+            if (run.TripleFirst) Say(Loc.T("ui.hud.next_triple"));
             journalCount.Text = journal.KnownPairs.Count + "/" + db.Recipes.Count;
             canIgnite = inputEnabled && run.CanIgnite;
         }
@@ -184,16 +214,23 @@ namespace Athanor.Game
         {
             if (e.Sputter)
             {
-                note[0].Text = "Something burned"; note[1].Text = "hotter and spoiled"; note[2].Text = "a mixture."; note[3].Text = "";
+                var words = Loc.T("ui.hud.sputter").Split(' '); int at = 0;
+                for (int i = 0; i < 3; i++)
+                {
+                    string line = "";
+                    while (at < words.Length && (line.Length == 0 || i == 2 || line.Length + 1 + words[at].Length <= (Loc.Vi ? 17 : 19))) line += (line.Length > 0 ? " " : "") + words[at++];
+                    note[i].Text = line;
+                }
+                note[3].Text = "";
                 note[2].Color = Px.Hex("#7a5430");
                 return;
             }
             // a pair is written out; a combo names its hub and counts the rest (the journal has the full recipe)
             note[0].Text = db.Material(e.Items[0]).name;
-            note[1].Text = e.Items.Length == 2 ? "+ " + db.Material(e.Items[1]).name : "+ " + (e.Items.Length - 1) + " around it";
-            note[2].Text = e.Result != null ? "= " + db.Material(e.Result).name : "Nothing happens";
+            note[1].Text = e.Items.Length == 2 ? "+ " + db.Material(e.Items[1]).name : Loc.P("ui.hud.around", e.Items.Length - 1);
+            note[2].Text = e.Result != null ? "= " + db.Material(e.Result).name : Loc.T("ui.hud.nothing_happens");
             note[2].Color = Px.Hex(e.Result != null ? "#11606a" : "#7a5430");
-            note[3].Text = e.Result != null ? "+" + Number(e.Potency) + (e.Discovery ? "  NEW" : e.Chain > 1 ? "  chain " + e.Chain : "") : "";
+            note[3].Text = e.Result != null ? "+" + Number(e.Potency) + (e.Discovery ? "  " + Loc.T("ui.hud.new") : e.Chain > 1 ? "  " + Loc.T("ui.hud.chain", ("n", e.Chain)) : "") : "";
             if (e.Hint != null) Hint(e.Hint, db);
         }
 
@@ -206,9 +243,9 @@ namespace Athanor.Game
         /// <summary>"Ember Coal stirs near a potion.", or for a recipe the bench was too dull for, "Ember Coal needs heat 14."</summary>
         public static string HintLine(HintData h, ContentDb db, bool withName = true)
         {
-            if (h.heat > 0) return (withName ? db.Material(h.material).name + " needs" : "Needs") + " heat " + h.heat + ".";
-            string kind = h.partnerKind.ToLowerInvariant();
-            return (withName ? db.Material(h.material).name + " stirs" : "Stirs") + " near " + ("aeiou".IndexOf(kind[0]) >= 0 ? "an " : "a ") + kind + ".";
+            if (h.heat > 0) return withName ? Loc.T("ui.hud.hint_heat", ("item", db.Material(h.material).name), ("n", h.heat)) : Loc.T("ui.hud.hint_heat_short", ("n", h.heat));
+            string kind = Loc.Indef(h.partnerKind);
+            return withName ? Loc.T("ui.hud.hint_kind", ("item", db.Material(h.material).name), ("kind", kind)) : Loc.T("ui.hud.hint_kind_short", ("kind", kind));
         }
 
         /// <summary>A short kick of the potency number when points land on it.</summary>

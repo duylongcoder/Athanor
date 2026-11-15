@@ -10,6 +10,8 @@ namespace Athanor.Game
         public Sprite[] sprites;
         public FlipbookSheet[] sheets;
         public TMP_FontAsset title, body, label, tiny;
+        /// <summary>SVN-Coder's Crux, baked at 16: all four text kinds in Vietnamese.</summary>
+        public TMP_FontAsset crux;
         public Material lit, unlit, glow;
 
         Dictionary<string, Sprite> spriteByName;

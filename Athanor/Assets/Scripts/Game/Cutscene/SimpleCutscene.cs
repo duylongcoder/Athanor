@@ -22,7 +22,7 @@ namespace Athanor.Game
         readonly SpriteRenderer[] bars = new SpriteRenderer[4];
         readonly Transform[] rays = new Transform[12];
         readonly Label[] lines = new Label[3];
-        Label small, big, banner, prompt;
+        Label small, big, banner, prompt, intro;
         Light2D iconLight;
         Color tint = Color.white;
         float raysOn, runeOn, embers, streaks;      // strengths of the looping effects, driven by the scripts below
@@ -49,8 +49,10 @@ namespace Athanor.Game
             icon.transform.localScale = new Vector3(3, 3, 1);
             for (int i = 0; i < lines.Length; i++)
                 lines[i] = Make.Text(root, "", CX, 38 + i * 16, FontKind.Body, 16, Px.Hex("#f0dcc0"), O + 12, Align.Centre, dark);
-            small = Make.Text(root, "", CX, 128, FontKind.Tiny, 8, Px.Hex("#f8d250"), O + 12, Align.Centre, dark);
-            big = Make.Text(root, "", CX, 140, FontKind.Title, 48, Px.Hex("#f0dcc0"), O + 12, Align.Centre, dark);
+            small = Make.Text(root, "", CX, 104, FontKind.Tiny, 8, Px.Hex("#f8d250"), O + 12, Align.Centre, dark);
+            big = Make.Text(root, "", CX, 128, FontKind.Title, 48, Px.Hex("#f0dcc0"), O + 12, Align.Centre, dark);
+            big.LineBox = true;      // SPEC (f): the name sits in the mock's 48 px line box; Crux's short ascent would put VI ~11 px high
+            intro = Make.Text(root, "", CX, 186, FontKind.Body, 16, Px.Hex("#f0dcc0"), O + 12, Align.Centre, dark, 540);
             banner = Make.Text(root, "", CX, 88, FontKind.Title, 32, Px.Hex("#f8d250"), O + 12, Align.Centre, Px.Hex("#3a1a08"));
             prompt = Make.Text(root, "", CX, Px.H - 19, FontKind.Tiny, 8, Px.Hex("#7a5a3a"), O + 12, Align.Centre);
             root.gameObject.SetActive(false);
@@ -67,7 +69,7 @@ namespace Athanor.Game
             shade.color = glow.color = rune.color = ring.color = iconGlow.color = Color.clear;
             icon.enabled = false;
             foreach (var l in lines) { l.Text = ""; l.Alpha = 1; Visible(l, 99999); }
-            small.Text = big.Text = banner.Text = prompt.Text = "";
+            small.Text = big.Text = banner.Text = prompt.Text = intro.Text = "";
             raysOn = runeOn = embers = streaks = 0;
             Update();
         }
@@ -86,24 +88,9 @@ namespace Athanor.Game
         /// <summary>The opening story, three lines a page (docs/devlogs/phase-4-lore.md). The last page is the original text.</summary>
         static readonly string[][] IntroPages =
         {
-            new[]
-            {
-                "Under the old workshop, the cellar keeps going down.",
-                "No one dug it. It grew, one Keeper at a time.",
-                "Each went down with a satchel, a bench, and a Book.",
-            },
-            new[]
-            {
-                "At the bottom they made something, and planted it.",
-                "The last Keeper went down and did not come back up.",
-                "The bench is yours now. The Book is empty.",
-            },
-            new[]
-            {
-                "Each depth asks for a stronger brew. Nothing down here is labelled.",
-                "The Book will remember what your hands forget.",
-                "So mix. Watch what happens. Remember.",
-            },
+            new[] { "story.intro.1", "story.intro.2", "story.intro.3" },
+            new[] { "story.intro.4", "story.intro.5", "story.intro.6" },
+            new[] { "story.intro.7", "story.intro.8", "story.intro.9" },
         };
 
         /// <summary>Starts and ends on a black screen.</summary>
@@ -128,11 +115,11 @@ namespace Athanor.Game
                 bool last = p == IntroPages.Length - 1;
                 for (int i = 0; i < page.Length; i++)
                 {
-                    yield return Type(lines[i], page[i]);
+                    yield return Type(lines[i], Loc.T(page[i]));
                     yield return Hold(i < page.Length - 1 ? 0.8f : last ? 0.3f : 1.6f);
                 }
             }
-            prompt.Text = "CLICK TO BEGIN";
+            prompt.Text = Loc.T("ui.common.click_to_begin");
             yield return Hold(8);
             End();
             yield return ScreenFx.I.FadeOut(0.4f);
@@ -149,7 +136,7 @@ namespace Athanor.Game
             Stage(false, false);
             tint = colour;
             // 1. the win, over the bench
-            banner.Text = "Depth Cleared";
+            banner.Text = Loc.T("cutscene.depth_cleared");
             ScreenFx.I.Flash(0.3f, 0.5f); ScreenFx.I.Shake(2, 0.3f);
             Sparks.I.Burst(Px.At(CX, 170), 70, new Color(2.2f, 1.7f, 0.6f), 210, 1.1f, O + 11, 50, 0.6f);
             yield return Sequence.Create()
@@ -168,22 +155,27 @@ namespace Athanor.Game
             workshop.SetActive(false);
             midway?.Invoke();
             // 3. the name of the place
-            small.Text = "DEPTH " + depth; big.Text = depthName;
-            big.main.fontSize = big.shadow.fontSize = depthName.Length > 20 ? 32 : 48;
+            small.Text = Loc.T("cutscene.depth", ("n", depth)); big.Text = depthName;
+            string introKey = DepthLook.IntroKey(depth);       // docs/mockup/phase5-ui SPEC (f): the line under the name; none past depth 5
+            intro.Text = introKey != null ? Loc.T(introKey) : "";
+            intro.Alpha = 0;
+            big.SetSize(depthName.Length > 20 ? 32 : 48);
             runeOn = 1;
             ClearSkip();
             yield return Sequence.Create()
                 .Group(Motion.Fade(small, 0, 1, 0.45f))
                 .Group(Motion.Fade(big, 0, 1, 0.45f))
-                .Group(Motion.Move(big.transform, Px.At(CX, 148), Px.At(CX, 140), 0.45f, Ease.OutCubic))
+                .Group(Motion.Move(big.transform, Px.At(CX, 136), Px.At(CX, 128), 0.45f, Ease.OutCubic))
                 .ToYieldInstruction();
-            yield return Hold(1.7f);
+            if (introKey != null) yield return Sequence.Create().Group(Motion.Fade(intro, 0, 1, 0.3f)).ToYieldInstruction();
+            yield return Hold(2.4f);
             // 4. arriving: the room rises into view
             workshop.SetActive(true);
             streaks = 0.4f;
             yield return Sequence.Create()
                 .Group(Motion.Fade(small, 1, 0, 0.36f))
                 .Group(Motion.Fade(big, 1, 0, 0.36f))
+                .Group(Motion.Fade(intro, 1, 0, 0.36f))
                 .Group(Tween.Custom(this, 1f, 0f, 0.45f, (s, v) => s.runeOn = v, Ease.Linear))
                 .Group(Motion.Move(workshop.transform, new Vector3(0, -Scroll, 0), Vector3.zero, 0.9f, Ease.OutCubic))
                 .ToYieldInstruction();
@@ -191,6 +183,25 @@ namespace Athanor.Game
             workshop.transform.position = Vector3.zero;
             root.gameObject.SetActive(false);
             streaks = runeOn = 0;
+        }
+
+        /// <summary>
+        /// The depth's line over the bench at the start of a run (depth 1 has no descent): fades in, holds, fades out, about 2.2 s
+        /// at most; a click shortens the hold. Leaves the bench as it was; the caller keeps its input off meanwhile.
+        /// </summary>
+        public IEnumerator DepthIntro(string key)
+        {
+            Begin();
+            Stage(false, false);
+            shade.color = new Color(0, 0, 0, 0.35f);
+            intro.Text = Loc.T(key); intro.Alpha = 0;
+            ClearSkip();
+            yield return Sequence.Create().Group(Motion.Fade(intro, 0, 1, 0.3f)).ToYieldInstruction();
+            yield return Hold(1.6f);
+            yield return Sequence.Create().Group(Motion.Fade(intro, 1, 0, 0.3f)).ToYieldInstruction();
+            intro.Text = "";
+            End();
+            root.gameObject.SetActive(false);
         }
 
         /// <summary>The ultimate substance over the cauldron. Stays on screen afterwards (the summary goes on top) until Close.</summary>
@@ -204,12 +215,7 @@ namespace Athanor.Game
             raysOn = 1; embers = 1;
             yield return ScreenFx.I.FadeIn(1.1f);
             ClearSkip();
-            string[] text =
-            {
-                "At the bottom of everything: a seed.",
-                "It hums with every reaction that came before it.",
-                "Plant it, and the cellar will grow a little deeper.",
-            };
+            string[] text = { Loc.T("story.ending.1"), Loc.T("story.ending.2"), Loc.T("story.ending.3") };
             for (int i = 0; i < text.Length; i++)
             {
                 yield return Type(lines[i], text[i]);
@@ -218,8 +224,8 @@ namespace Athanor.Game
             ScreenFx.I.Flash(0.5f, 0.8f);
             Sparks.I.Burst(Px.At(CX, 150), 90, tint.Times(2.4f), 220, 1.4f, O + 6, 30);
             foreach (var l in lines) l.Text = "";
-            banner.Text = "The Great Work"; banner.Alpha = 1; banner.transform.position = Px.At(CX, 44);
-            prompt.Text = "CLICK TO CONTINUE";
+            banner.Text = Loc.T("cutscene.great_work"); banner.Alpha = 1; banner.transform.position = Px.At(CX, 44);
+            prompt.Text = Loc.T("ui.common.click_to_continue");
             yield return Hold(10);
             prompt.Text = banner.Text = "";
             End();

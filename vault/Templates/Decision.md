@@ -7,4 +7,4 @@ status: proposed
 **Context:** 
 **Options:** 1) ... 2) ...
 **Decision:** 
-**Consequences / affected notes:** [[...]]
+**Consequences / affected notes:** `[[...]]`

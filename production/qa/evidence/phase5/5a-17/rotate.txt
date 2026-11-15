@@ -1,0 +1,86 @@
+360x800-portrait-touch-en
+  {"display":"flex","coarse":true,"portrait":true,"w":360,"h":800,"langs":"en-US","htmlLang":"en","layerLang":"en","title":"Rotate your device","body":"Turn your phone sideways to play.","titleLines":1,"bodyLines":2,"above":272,"below":320,"overflowX":false,"overflowY":false,"hit":"rotate","loading":true,"fill":"40%","buttons":0,"canvas":"720x1600 css 100vw x 100vh at 0px,0px"}
+  ok   layer shown (display=flex, coarse=true, portrait=true)
+  ok   language en from navigator.languages=en-US
+  ok   no close control in the layer
+  ok   loading bar present and stub progress applied (Unity loading is not blocked)
+  ok   layer takes the touch at the centre (hit: rotate)
+  ok   text matches the table
+  ok   title 1 line, body 2 lines (got 1, 2)
+  ok   no overflow, free space above 272 / below 320 px (>= 16)
+  ok   0 console errors
+360x800-portrait-touch-vi
+  {"display":"flex","coarse":true,"portrait":true,"w":360,"h":800,"langs":"vi-VN","htmlLang":"vi","layerLang":"vi","title":"Hãy xoay thiết bị","body":"Xoay điện thoại sang ngang để chơi.","titleLines":1,"bodyLines":2,"above":272,"below":320,"overflowX":false,"overflowY":false,"hit":"rotate","loading":true,"fill":"40%","buttons":0,"canvas":"720x1600 css 100vw x 100vh at 0px,0px"}
+  ok   layer shown (display=flex, coarse=true, portrait=true)
+  ok   language vi from navigator.languages=vi-VN
+  ok   no close control in the layer
+  ok   loading bar present and stub progress applied (Unity loading is not blocked)
+  ok   layer takes the touch at the centre (hit: rotate)
+  ok   text matches the table
+  ok   title 1 line, body 2 lines (got 1, 2)
+  ok   no overflow, free space above 272 / below 320 px (>= 16)
+  ok   0 console errors
+800x360-landscape-touch-en
+  {"display":"none","coarse":true,"portrait":false,"w":800,"h":360,"langs":"en-US","htmlLang":"en","layerLang":"en","title":"Rotate your device","body":"Turn your phone sideways to play.","titleLines":0,"bodyLines":0,"above":0,"below":360,"overflowX":false,"overflowY":false,"hit":"loading","loading":true,"fill":"40%","buttons":0,"canvas":"1600x720 css 100vw x 100vh at 0px,0px"}
+  ok   layer hidden (display=none, coarse=true, portrait=false)
+  ok   language en from navigator.languages=en-US
+  ok   no close control in the layer
+  ok   loading bar present and stub progress applied (Unity loading is not blocked)
+  ok   layer does not take the touch (hit: loading)
+  ok   canvas laid out by fit(): 1600x720 css 100vw x 100vh at 0px,0px
+  ok   0 console errors
+800x360-landscape-touch-vi
+  {"display":"none","coarse":true,"portrait":false,"w":800,"h":360,"langs":"vi-VN","htmlLang":"vi","layerLang":"vi","title":"Hãy xoay thiết bị","body":"Xoay điện thoại sang ngang để chơi.","titleLines":0,"bodyLines":0,"above":0,"below":360,"overflowX":false,"overflowY":false,"hit":"loading","loading":true,"fill":"40%","buttons":0,"canvas":"1600x720 css 100vw x 100vh at 0px,0px"}
+  ok   layer hidden (display=none, coarse=true, portrait=false)
+  ok   language vi from navigator.languages=vi-VN
+  ok   no close control in the layer
+  ok   loading bar present and stub progress applied (Unity loading is not blocked)
+  ok   layer does not take the touch (hit: loading)
+  ok   canvas laid out by fit(): 1600x720 css 100vw x 100vh at 0px,0px
+  ok   0 console errors
+390x844-portrait-touch-en
+  {"display":"flex","coarse":true,"portrait":true,"w":390,"h":844,"langs":"en-US","htmlLang":"en","layerLang":"en","title":"Rotate your device","body":"Turn your phone sideways to play.","titleLines":1,"bodyLines":1,"above":306,"below":354,"overflowX":false,"overflowY":false,"hit":"rotate","loading":true,"fill":"40%","buttons":0,"canvas":"780x1688 css 100vw x 100vh at 0px,0px"}
+  ok   layer shown (display=flex, coarse=true, portrait=true)
+  ok   language en from navigator.languages=en-US
+  ok   no close control in the layer
+  ok   loading bar present and stub progress applied (Unity loading is not blocked)
+  ok   layer takes the touch at the centre (hit: rotate)
+  ok   text matches the table
+  ok   no overflow, free space above 306 / below 354 px (>= 16)
+  ok   0 console errors
+768x1024-tablet-portrait-touch-en
+  {"display":"none","coarse":true,"portrait":true,"w":768,"h":1024,"langs":"en-US","htmlLang":"en","layerLang":"en","title":"Rotate your device","body":"Turn your phone sideways to play.","titleLines":0,"bodyLines":0,"above":0,"below":1024,"overflowX":false,"overflowY":false,"hit":"loading","loading":true,"fill":"40%","buttons":0,"canvas":"1536x2048 css 100vw x 100vh at 0px,0px"}
+  ok   layer hidden (display=none, coarse=true, portrait=true)
+  ok   language en from navigator.languages=en-US
+  ok   no close control in the layer
+  ok   loading bar present and stub progress applied (Unity loading is not blocked)
+  ok   layer does not take the touch (hit: loading)
+  ok   canvas laid out by fit(): 1536x2048 css 100vw x 100vh at 0px,0px
+  ok   0 console errors
+500x800-desktop-no-touch-en
+  {"display":"none","coarse":false,"portrait":true,"w":500,"h":800,"langs":"en-US","htmlLang":"en","layerLang":"en","title":"Rotate your device","body":"Turn your phone sideways to play.","titleLines":0,"bodyLines":0,"above":0,"below":800,"overflowX":false,"overflowY":false,"hit":"loading","loading":true,"fill":"40%","buttons":0,"canvas":"640x360 css 500px x 281.25px at 0px,259.375px"}
+  ok   layer hidden (display=none, coarse=false, portrait=true)
+  ok   language en from navigator.languages=en-US
+  ok   no close control in the layer
+  ok   loading bar present and stub progress applied (Unity loading is not blocked)
+  ok   layer does not take the touch (hit: loading)
+  ok   canvas laid out by fit(): 640x360 css 500px x 281.25px at 0px,259.375px
+  ok   0 console errors
+1280x720-desktop-en
+  {"display":"none","coarse":false,"portrait":false,"w":1280,"h":720,"langs":"en-US","htmlLang":"en","layerLang":"en","title":"Rotate your device","body":"Turn your phone sideways to play.","titleLines":0,"bodyLines":0,"above":0,"below":720,"overflowX":false,"overflowY":false,"hit":"loading","loading":true,"fill":"40%","buttons":0,"canvas":"1280x720 css 100vw x 100vh at 0px,0px"}
+  ok   layer hidden (display=none, coarse=false, portrait=false)
+  ok   language en from navigator.languages=en-US
+  ok   no close control in the layer
+  ok   loading bar present and stub progress applied (Unity loading is not blocked)
+  ok   layer does not take the touch (hit: loading)
+  ok   canvas laid out by fit(): 1280x720 css 100vw x 100vh at 0px,0px
+  ok   0 console errors
+live-turn
+  ok   live: portrait 360x800 shows the layer
+  ok   live: turned to 800x360, layer gone without reload
+  ok   live: canvas re-fitted by resize
+  ok   live: turned back to portrait, layer returns
+  ok   0 console errors during the live turn
+  ok   template table equals en.json / vi.json
+OK: all rotate-layer checks passed
+rc=0
