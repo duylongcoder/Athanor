@@ -1,0 +1,597 @@
+{
+  "embers-30hz": {
+    "id": "embers",
+    "hz": 30,
+    "stall": {
+      "bornBefore": 1,
+      "bornAfter": 6,
+      "onBefore": 28,
+      "onAfter": 33
+    },
+    "steady": {
+      "from": 2,
+      "to": 4.5,
+      "before": {
+        "mean": 31.24,
+        "sd": 3.43
+      },
+      "after": {
+        "mean": 33,
+        "sd": 0
+      }
+    },
+    "births": {
+      "before": 20.4,
+      "after": 22
+    },
+    "rows": {
+      "A": {
+        "t": 0.5,
+        "before": 13,
+        "after": 12
+      },
+      "B": {
+        "t": 3.5,
+        "before": 27,
+        "after": 33
+      },
+      "C": {
+        "t": 5.1,
+        "before": 20,
+        "after": 19
+      },
+      "S": {
+        "t": 2.7167,
+        "before": 28,
+        "after": 33
+      }
+    },
+    "afterSameAcrossHz": {
+      "t": 3,
+      "30v60": 0,
+      "60v144": 0,
+      "30v144": 0
+    }
+  },
+  "embers-60hz": {
+    "id": "embers",
+    "hz": 60,
+    "stall": {
+      "bornBefore": 1,
+      "bornAfter": 6,
+      "onBefore": 31,
+      "onAfter": 33
+    },
+    "steady": {
+      "from": 2,
+      "to": 4.5,
+      "before": {
+        "mean": 32.64,
+        "sd": 3.64
+      },
+      "after": {
+        "mean": 33,
+        "sd": 0
+      }
+    },
+    "births": {
+      "before": 18.8,
+      "after": 22.4
+    },
+    "rows": {
+      "A": {
+        "t": 0.5,
+        "before": 11,
+        "after": 11
+      },
+      "B": {
+        "t": 3.5,
+        "before": 34,
+        "after": 33
+      },
+      "C": {
+        "t": 5.1,
+        "before": 12,
+        "after": 20
+      },
+      "S": {
+        "t": 2.7333,
+        "before": 31,
+        "after": 33
+      }
+    },
+    "afterSameAcrossHz": {
+      "t": 3,
+      "30v60": 0,
+      "60v144": 0,
+      "30v144": 0
+    }
+  },
+  "embers-144hz": {
+    "id": "embers",
+    "hz": 144,
+    "stall": {
+      "bornBefore": 1,
+      "bornAfter": 5,
+      "onBefore": 25,
+      "onAfter": 33
+    },
+    "steady": {
+      "from": 2,
+      "to": 4.5,
+      "before": {
+        "mean": 28.05,
+        "sd": 3.67
+      },
+      "after": {
+        "mean": 33,
+        "sd": 0
+      }
+    },
+    "births": {
+      "before": 16,
+      "after": 22
+    },
+    "rows": {
+      "A": {
+        "t": 0.5,
+        "before": 11,
+        "after": 11
+      },
+      "B": {
+        "t": 3.5,
+        "before": 24,
+        "after": 33
+      },
+      "C": {
+        "t": 5.1042,
+        "before": 13,
+        "after": 20
+      },
+      "S": {
+        "t": 2.7431,
+        "before": 25,
+        "after": 33
+      }
+    },
+    "afterSameAcrossHz": {
+      "t": 3,
+      "30v60": 0,
+      "60v144": 0,
+      "30v144": 0
+    }
+  },
+  "streaks-30hz": {
+    "id": "streaks",
+    "hz": 30,
+    "stall": {
+      "bornBefore": 18,
+      "bornAfter": 18,
+      "onBefore": 36,
+      "onAfter": 52
+    },
+    "steady": {
+      "from": 1.5,
+      "to": 4.05,
+      "before": {
+        "mean": 50.66,
+        "sd": 1.8
+      },
+      "after": {
+        "mean": 51.05,
+        "sd": 2.06
+      }
+    },
+    "births": {
+      "before": 70.6,
+      "after": 70.6
+    },
+    "hide": {
+      "onBefore": 20,
+      "onAfter": 22,
+      "nextBefore": 20,
+      "nextAfter": 0,
+      "beforeLastsMs": 900
+    },
+    "rows": {
+      "A": {
+        "t": 0.3,
+        "before": 21,
+        "after": 23
+      },
+      "B": {
+        "t": 3,
+        "before": 51,
+        "after": 54
+      },
+      "C": {
+        "t": 4.8,
+        "before": 24,
+        "after": 24
+      },
+      "D": {
+        "t": 5.0667,
+        "before": 15,
+        "after": 0
+      },
+      "S": {
+        "t": 2.2167,
+        "before": 36,
+        "after": 52
+      }
+    },
+    "afterSameAcrossHz": {
+      "t": 3,
+      "30v60": 0,
+      "60v144": 0,
+      "30v144": 0
+    }
+  },
+  "streaks-60hz": {
+    "id": "streaks",
+    "hz": 60,
+    "stall": {
+      "bornBefore": 18,
+      "bornAfter": 17,
+      "onBefore": 36,
+      "onAfter": 52
+    },
+    "steady": {
+      "from": 1.5,
+      "to": 4.05,
+      "before": {
+        "mean": 54.2,
+        "sd": 1.92
+      },
+      "after": {
+        "mean": 51.05,
+        "sd": 2.08
+      }
+    },
+    "births": {
+      "before": 74.1,
+      "after": 70.6
+    },
+    "hide": {
+      "onBefore": 18,
+      "onAfter": 22,
+      "nextBefore": 18,
+      "nextAfter": 0,
+      "beforeLastsMs": 800
+    },
+    "rows": {
+      "A": {
+        "t": 0.3,
+        "before": 21,
+        "after": 22
+      },
+      "B": {
+        "t": 3,
+        "before": 54,
+        "after": 54
+      },
+      "C": {
+        "t": 4.8,
+        "before": 21,
+        "after": 24
+      },
+      "D": {
+        "t": 5.05,
+        "before": 17,
+        "after": 0
+      },
+      "S": {
+        "t": 2.2333,
+        "before": 36,
+        "after": 52
+      }
+    },
+    "afterSameAcrossHz": {
+      "t": 3,
+      "30v60": 0,
+      "60v144": 0,
+      "30v144": 0
+    }
+  },
+  "streaks-144hz": {
+    "id": "streaks",
+    "hz": 144,
+    "stall": {
+      "bornBefore": 18,
+      "bornAfter": 18,
+      "onBefore": 35,
+      "onAfter": 52
+    },
+    "steady": {
+      "from": 1.5,
+      "to": 4.05,
+      "before": {
+        "mean": 51.11,
+        "sd": 1.7
+      },
+      "after": {
+        "mean": 51.05,
+        "sd": 1.99
+      }
+    },
+    "births": {
+      "before": 70.2,
+      "after": 70.6
+    },
+    "hide": {
+      "onBefore": 21,
+      "onAfter": 22,
+      "nextBefore": 20,
+      "nextAfter": 0,
+      "beforeLastsMs": 826
+    },
+    "rows": {
+      "A": {
+        "t": 0.3056,
+        "before": 21,
+        "after": 22
+      },
+      "B": {
+        "t": 3,
+        "before": 53,
+        "after": 54
+      },
+      "C": {
+        "t": 4.8056,
+        "before": 24,
+        "after": 24
+      },
+      "D": {
+        "t": 5.0556,
+        "before": 17,
+        "after": 0
+      },
+      "S": {
+        "t": 2.2431,
+        "before": 35,
+        "after": 52
+      }
+    },
+    "afterSameAcrossHz": {
+      "t": 3,
+      "30v60": 0,
+      "60v144": 0,
+      "30v144": 0
+    }
+  },
+  "rune-30hz": {
+    "id": "rune",
+    "hz": 30,
+    "stall": {
+      "bornBefore": 1,
+      "bornAfter": 7,
+      "onBefore": 28,
+      "onAfter": 34
+    },
+    "steady": {
+      "from": 1.5,
+      "to": 3.15,
+      "before": {
+        "mean": 32.66,
+        "sd": 1.6
+      },
+      "after": {
+        "mean": 34,
+        "sd": 0
+      }
+    },
+    "births": {
+      "before": 24.2,
+      "after": 26.1
+    },
+    "hide": {
+      "onBefore": 19,
+      "onAfter": 16,
+      "nextBefore": 18,
+      "nextAfter": 0,
+      "beforeLastsMs": 800
+    },
+    "rows": {
+      "A": {
+        "t": 0.4,
+        "before": 13,
+        "after": 11
+      },
+      "B": {
+        "t": 2.6,
+        "before": 32,
+        "after": 34
+      },
+      "C": {
+        "t": 3.6,
+        "before": 28,
+        "after": 27
+      },
+      "D": {
+        "t": 4.1667,
+        "before": 16,
+        "after": 0
+      },
+      "S": {
+        "t": 2.2167,
+        "before": 28,
+        "after": 34
+      }
+    },
+    "afterSameAcrossHz": {
+      "t": 3,
+      "30v60": 0,
+      "60v144": 0,
+      "30v144": 0
+    }
+  },
+  "rune-60hz": {
+    "id": "rune",
+    "hz": 60,
+    "stall": {
+      "bornBefore": 1,
+      "bornAfter": 7,
+      "onBefore": 33,
+      "onAfter": 34
+    },
+    "steady": {
+      "from": 1.5,
+      "to": 3.15,
+      "before": {
+        "mean": 34.9,
+        "sd": 2.47
+      },
+      "after": {
+        "mean": 34,
+        "sd": 0
+      }
+    },
+    "births": {
+      "before": 24.8,
+      "after": 26.1
+    },
+    "hide": {
+      "onBefore": 14,
+      "onAfter": 16,
+      "nextBefore": 14,
+      "nextAfter": 0,
+      "beforeLastsMs": 600
+    },
+    "rows": {
+      "A": {
+        "t": 0.4,
+        "before": 9,
+        "after": 11
+      },
+      "B": {
+        "t": 2.6,
+        "before": 37,
+        "after": 34
+      },
+      "C": {
+        "t": 3.6,
+        "before": 24,
+        "after": 27
+      },
+      "D": {
+        "t": 4.15,
+        "before": 11,
+        "after": 0
+      },
+      "S": {
+        "t": 2.2333,
+        "before": 33,
+        "after": 34
+      }
+    },
+    "afterSameAcrossHz": {
+      "t": 3,
+      "30v60": 0,
+      "60v144": 0,
+      "30v144": 0
+    }
+  },
+  "rune-144hz": {
+    "id": "rune",
+    "hz": 144,
+    "stall": {
+      "bornBefore": 1,
+      "bornAfter": 7,
+      "onBefore": 25,
+      "onAfter": 34
+    },
+    "steady": {
+      "from": 1.5,
+      "to": 3.15,
+      "before": {
+        "mean": 30.46,
+        "sd": 3.5
+      },
+      "after": {
+        "mean": 34,
+        "sd": 0
+      }
+    },
+    "births": {
+      "before": 20.6,
+      "after": 25.5
+    },
+    "hide": {
+      "onBefore": 11,
+      "onAfter": 16,
+      "nextBefore": 11,
+      "nextAfter": 0,
+      "beforeLastsMs": 819
+    },
+    "rows": {
+      "A": {
+        "t": 0.4028,
+        "before": 14,
+        "after": 11
+      },
+      "B": {
+        "t": 2.6042,
+        "before": 27,
+        "after": 34
+      },
+      "C": {
+        "t": 3.6042,
+        "before": 21,
+        "after": 28
+      },
+      "D": {
+        "t": 4.1528,
+        "before": 10,
+        "after": 0
+      },
+      "S": {
+        "t": 2.2431,
+        "before": 25,
+        "after": 34
+      }
+    },
+    "afterSameAcrossHz": {
+      "t": 3,
+      "30v60": 0,
+      "60v144": 0,
+      "30v144": 0
+    }
+  },
+  "dust": {
+    "30": {
+      "frames": 600,
+      "motes": 46,
+      "differingPixels": 0
+    },
+    "60": {
+      "frames": 1200,
+      "motes": 46,
+      "differingPixels": 0
+    },
+    "144": {
+      "frames": 2880,
+      "motes": 46,
+      "differingPixels": 0
+    }
+  },
+  "beforeAcrossHz": [
+    {
+      "t": 3,
+      "30v60": 189,
+      "60v144": 208,
+      "30v144": 215
+    },
+    {
+      "t": 3,
+      "30v60": 105,
+      "60v144": 107,
+      "30v144": 100
+    },
+    {
+      "t": 3,
+      "30v60": 179,
+      "60v144": 220,
+      "30v144": 205
+    }
+  ]
+}

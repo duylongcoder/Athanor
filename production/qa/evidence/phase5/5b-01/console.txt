@@ -1,0 +1,2 @@
+[log] restdiff=0
+[log] restdiff=0

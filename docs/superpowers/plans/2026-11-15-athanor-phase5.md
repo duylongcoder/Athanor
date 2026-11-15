@@ -17,7 +17,7 @@ content and rules first, art/UI next, QA last. No agent commits.
   `material.*/catalyst.*/aspect.*.name` in vi.json); a new material/catalyst/aspect needs an icon id in `tools/art/icons.mjs`;
   every UI change leaves screenshots in `production/qa/evidence/phase5/<task-id>/`; after code/content changes run
   `python3 tools/vault/build_vault.py`; a design decision gets one line in `docs/devlogs/phase-5-prep.md` *Log* (via the main session).
-- Size ceiling (owner): **+1 MB over the 5a-01 baseline for 5a and 5b together**.
+- Size ceiling (owner): **+1 MB over the 5a-01 baseline for 5a and 5b together** (G1: 1 MiB, release build <= 11,824,672 B; 1,100,387 B left after 5a-17).
 
 ---
 
@@ -224,7 +224,7 @@ content and rules first, art/UI next, QA last. No agent commits.
 - **Objective:** bring the approved layer to `Main`: camera split, `PointerInput` ray, HUD layer, cutscenes flat at z = 0.
 
 ### 5b-08 Sign-off and size — `qa-engineer`, then `web-release-engineer`
-- **Acceptance:** as 5a-16/17; total growth over 5a-01 at most 1 MB.
+- **Acceptance:** as 5a-16/17; release build <= 11,824,672 B (1 MiB over 5a-01; G1).
 
 ## Notes, no tasks (Needs design)
 - **Endless mode after depth 5:** the owner redesigns the structure. Old questions: scoring and difficulty growth; is the

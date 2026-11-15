@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Athanor 5b-02: dust and ember loops, before / after</title>
+<link rel="icon" href="data:,">
+<style>
+  :root { --z: 1; --bg: #0d0a12; --line: #3a2c3c; --text: #e8dcc8; --dim: #9a8a7a; --gold: #f0c050; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--text); font: 14px/1.5 system-ui, -apple-system, Segoe UI, sans-serif; }
+  main { max-width: 1340px; margin: 0 auto; padding: 16px 20px 60px; }
+  h1 { font-size: 22px; margin: 0 0 4px; color: #f0dcc0; font-weight: 600; }
+  h2 { font-size: 16px; margin: 0 0 4px; color: var(--gold); }
+  h3 { font-size: 14px; margin: 18px 0 6px; color: var(--gold); font-weight: 600; }
+  p, li { color: #b8a78c; max-width: 120ch; }
+  code { background: #241b26; padding: 0 4px; border-radius: 3px; color: #e8c890; font-size: 12px; }
+  .dim { color: var(--dim); font-weight: 400; font-size: 12px; }
+  .bar { position: sticky; top: 0; z-index: 50; background: var(--bg); padding: 8px 0; display: flex; gap: 6px 14px; align-items: center; border-bottom: 1px solid var(--line); flex-wrap: wrap; font-size: 12px; }
+  .bar .grp { display: inline-flex; gap: 3px; align-items: center; }
+  .bar button { font: inherit; color: var(--text); background: #241b26; border: 1px solid var(--line); border-radius: 4px; padding: 3px 9px; cursor: pointer; }
+  .bar button:hover { border-color: #8a7a6a; }
+  .bar button.on { background: #5a3a12; border-color: var(--gold); color: #fff; font-weight: 600; }
+  .pair2 { display: flex; gap: 8px; align-items: flex-start; }
+  figure { margin: 0; }
+  figcaption { font-size: 12px; color: var(--dim); margin-top: 2px; }
+  figcaption b { color: var(--text); }
+  canvas.scr { display: block; width: calc(640px * var(--z)); height: calc(360px * var(--z)); image-rendering: pixelated; background: #000; }
+  .notes { border-top: 1px solid var(--line); margin-top: 24px; }
+  .notes table { border-collapse: collapse; font-size: 12px; margin: 8px 0; }
+  .notes th, .notes td { border: 1px solid var(--line); padding: 3px 7px; text-align: left; vertical-align: top; }
+  .notes th { background: #241b26; color: var(--gold); }
+  /* evidence sheet (?shot=...) */
+  body.shot main > :not(#sheet) { display: none; }
+  body.shot main { padding: 10px 12px; max-width: none; width: 1312px; margin: 0; }
+  #sheet .cols { display: flex; gap: 8px; font-size: 13px; margin: 4px 0 6px; }
+  #sheet .cols > div { width: 640px; }
+  #sheet .row { margin: 0 0 8px; }
+  #sheet .rl { font-size: 12px; color: #c8b89c; margin: 0 0 2px; }
+  #sheet .rl b { color: var(--text); }
+  #sheet canvas.chart { display: block; margin-top: 4px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>5b-02 &middot; Dust and ember loops: before / after</h1>
+  <p>The cutscene streams shipped as loops on 2026-11-13 (Phase 4). This page sets them beside the random emitters they replaced so the
+    owner can choose <b>keep</b> or <b>revert</b>. Both sides are ports of the C# (same rates, lives, ranges, colours, rounding), drawn the
+    same way (SparkMesh: centre rounded with <code>Mathf.Round</code>, 1 px dot or 5x5 sparkle, additive), so the only difference on screen is
+    emitter versus loop. Fixed-step simulation, seeded; bloom is an approximation of the URP volume (threshold 1.0, intensity 1.1).
+    Trails (<code>Sparks.Trail</code>) are already approved and not shown.</p>
+  <div class="bar" id="bar"></div>
+  <div id="live"></div>
+  <section id="sheet"></section>
+
+  <section class="notes">
+    <h3>What differs</h3>
+    <table>
+      <tr><th></th><th>Before: random <code>Emit</code> (40b8a469)</th><th>After: <code>Loop</code> (shipped)</th></tr>
+      <tr><td>Rate</td><td>22/s, 70/s x strength, 26/s x strength, as a coin toss per frame (embers, runes) or a counter (streaks)</td><td>Same averages: rate x life slots (33, 77, 34), each reborn once per life</td></tr>
+      <tr><td>Spacing in time</td><td>Random: clumps and gaps, the count on screen wanders</td><td>Births spread evenly with jitter: steadier count, no long gaps (sd in each sheet's chart)</td></tr>
+      <tr><td>Frame rate</td><td>Births land on frame starts; a different picture at 30, 60, 144 Hz; below 22 Hz embers (26 Hz runes) are capped at one per frame</td><td>A function of the clock: the same pixels at the same moment at 30, 60 and 144 Hz</td></tr>
+      <tr><td>A long frame (stall)</td><td>Embers and runes: at most one born for the whole stall, a gap follows; streaks: the stall's births all start at the bottom edge at once, a clump</td><td>Every slot is where it would have been; no gap, no clump</td></tr>
+      <tr><td>Fill and drain</td><td>On: fills from the source over one life. Off: in-flight particles finish</td><td>The same (a slot lights only when it is reborn while the stream is on)</td></tr>
+      <tr><td>End of Descent (root hidden)</td><td>Streaks and rune motes in flight live in <code>Sparks</code>, outside the story root: they fly on over what comes next until they leave or die</td><td>The meshes are children of the root: whatever is in flight vanishes in that frame</td></tr>
+      <tr><td>Cost, RNG</td><td>Shares the Sparks lanes; draws on <code>UnityEngine.Random</code></td><td>Three small meshes (144 slots, looped every frame); no <code>Random</code></td></tr>
+    </table>
+    <p><b>Dust</b> (the moonbeam over the bench, <code>Bench/Dust.cs</code>) gets no panel: the maths did not change, and the old <code>Px.Snap</code>
+      and the new <code>SparkMesh.Put</code> are the same <code>Mathf.Round</code> of the same local position, the same 1 px dot, the same blend
+      (Glow and ParticleGlow) at order 8. Recomputed here for 20 s of 46 motes: <span id="dust">checking...</span></p>
+    <p class="dim">Model notes. Before: <code>Sparks.Update</code> is assumed to step the pool before the cutscene's <code>Update</code> emits,
+      so a new particle is drawn where it was born (the other script order draws it one step on; not visible). The old SpriteRenderer pool
+      also showed a reused sprite for one frame at its previous position; that was a renderer bug fixed with SparkMesh, not part of this
+      choice, and is not drawn. Time.time is float32 as in Unity. Colours are added in display space; the game adds in linear space before
+      bloom and the vignette, so absolute brightness here is approximate, the same on both sides.</p>
+  </section>
+</main>
+<script src="room.js"></script>
+<script src="loops.js"></script>
+</body>
+</html>

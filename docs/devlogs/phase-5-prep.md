@@ -1,6 +1,6 @@
 # Phase 5 prep: owner decisions, scope 5a / 5b
 
-Status: **5a signed off (2026-11-16)**, PASS with accepted gaps ([sign-off](../../production/qa/phase5a-signoff.md)); not committed. 5b not started. Plan: [2026-11-15-athanor-phase5.md](../superpowers/plans/2026-11-15-athanor-phase5.md).
+Status: **5a signed off (2026-11-16)**, PASS with accepted gaps ([sign-off](../../production/qa/phase5a-signoff.md)); committed (1792ba53 / 1e53c9d3). 5b step 1 dispatched 2026-11-16 on `feature/phase5b-hd2d` (5b-01a, 5b-02, 5b-03; 5b-03 file is `phase-5-endings-lore.md`). Plan: [2026-11-15-athanor-phase5.md](../superpowers/plans/2026-11-15-athanor-phase5.md).
 Read first: [phase-4-prep.md](phase-4-prep.md) (Log 2026-11-15), the Phase 4 devlogs, [Phase 5 Kickoff](../../vault/Workflow/Phase%205%20Kickoff.md).
 
 ## State at the start (checked against the code, 2026-11-15)

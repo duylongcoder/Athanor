@@ -1,7 +1,7 @@
 ---
 type: workflow
 tags: [workflow, phase5]
-status: planned - 5a ready to dispatch, 5b behind owner gates
+status: 5a signed off and committed; 5b step 1 dispatched 2026-11-16 (branch feature/phase5b-hd2d)
 ---
 # Phase 5 Kickoff
 
@@ -28,7 +28,7 @@ Scope decided by the owner on 2026-11-15. Decisions: `docs/devlogs/phase-5-prep.
 | gate | **G3** owner approves the prototype |
 | 3 | 5b-07 integrate → 5b-08 sign-off and size |
 
-Size ceiling: +1 MB over the 5a-01 baseline for 5a and 5b together.
+Size ceiling: Build/ + index.html <= 11,824,672 B (1 MiB over the 5a-01 baseline) for 5a and 5b together; 1,100,387 B left after 5a-17.
 
 ## Needs design (no tasks)
 
