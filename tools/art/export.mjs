@@ -100,3 +100,7 @@ console.log(`${count} sprites written to Athanor/Assets/Art, layout.json to Reso
 // A failure there is reported by name and fails this command; nothing is swallowed.
 const win = spawnSync(process.execPath, [join(here, 'export-window.mjs')], { stdio: 'inherit' });
 if (win.status !== 0) { console.error(`export-window.mjs failed (${win.error ? win.error.message : 'exit ' + win.status}); window views may be stale`); process.exit(win.status || 1); }
+
+// HD-2D depth layers (pre-blurred far art, near corners, mist) -> Art/Depth, same pattern.
+const dep = spawnSync(process.execPath, [join(here, 'export-depth.mjs')], { stdio: 'inherit' });
+if (dep.status !== 0) { console.error(`export-depth.mjs failed (${dep.error ? dep.error.message : 'exit ' + dep.status})`); process.exit(dep.status || 1); }

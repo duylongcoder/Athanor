@@ -29,6 +29,13 @@ public static class AtlasBuilder
     public const string ArtDir = "Assets/Art", AtlasDir = "Assets/Art/Atlases", LibraryPath = "Assets/Art/ArtLibrary.asset";
     public const int Padding = 2, MaxSize = 2048, SheetGap = 2;
 
+    /// <summary>The HD-2D depth layers (Phase 5b prototype). Used by Assets/Scenes/DepthTest.unity only: they stay out of
+    /// every atlas and out of the art library, so they never reach the main scene or its web build.</summary>
+    public const string DepthDir = "Assets/Art/Depth";
+
+    /// <summary>True for an asset under <see cref="DepthDir"/>.</summary>
+    public static bool IsDepthArt(string assetPath) => assetPath.StartsWith(DepthDir + "/");
+
     /// <summary>Numbered frame sets that are animations (merged into one sheet each). tile_face_N and tile_ring_N are
     /// numbered too, but they are one picture per tile and row, not frames, so they stay separate sprites.</summary>
     public static readonly string[] Animations = { "flame_small", "flame_big", "liquid" };
@@ -287,6 +294,7 @@ public static class AtlasBuilder
         foreach (var guid in AssetDatabase.FindAssets("t:Texture2D", new[] { ArtDir }))
         {
             string path = AssetDatabase.GUIDToAssetPath(guid);
+            if (IsDepthArt(path)) continue;
             if (!(AssetImporter.GetAtPath(path) is TextureImporter ti) || ti.textureType != TextureImporterType.Sprite) continue;
             string dir = Path.GetDirectoryName(path).Replace('\\', '/').Substring(ArtDir.Length).TrimStart('/'), name = Path.GetFileNameWithoutExtension(path);
             if (Standalone.ContainsKey(name)) continue;

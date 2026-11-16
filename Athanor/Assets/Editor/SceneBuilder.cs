@@ -86,8 +86,10 @@ public static class SceneBuilder
             .Select(g => AssetDatabase.LoadAssetAtPath<FlipbookSheet>(AssetDatabase.GUIDToAssetPath(g))).Where(s => s != null).ToArray();
         var sheetTextures = new HashSet<Texture>(sheets.Where(s => s.frames.Length > 0 && s.frames[0] != null).Select(s => (Texture)s.frames[0].texture));
         // a texture can hold several sprites (the animation sheets made by AtlasBuilder), so load them all
+        // Art/Depth belongs to the depth test scene only (DepthTestBuilder): never in the library the main scene ships with
         lib.sprites = AssetDatabase.FindAssets("t:Sprite", new[] { "Assets/Art" }).Distinct()
-            .SelectMany(g => AssetDatabase.LoadAllAssetsAtPath(AssetDatabase.GUIDToAssetPath(g)).OfType<Sprite>())
+            .Select(AssetDatabase.GUIDToAssetPath).Where(p => !AtlasBuilder.IsDepthArt(p))
+            .SelectMany(p => AssetDatabase.LoadAllAssetsAtPath(p).OfType<Sprite>())
             .Where(s => s != null && !sheetTextures.Contains(s.texture)).OrderBy(s => s.name).ToArray();
         lib.sheets = sheets;
         lib.title = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Art/Fonts/Alagard.asset");

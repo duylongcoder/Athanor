@@ -1,6 +1,6 @@
 # Phase 5 prep: owner decisions, scope 5a / 5b
 
-Status: **5a signed off (2026-11-16)**, PASS with accepted gaps ([sign-off](../../production/qa/phase5a-signoff.md)); committed (1792ba53 / 1e53c9d3). 5b step 1 dispatched 2026-11-16 on `feature/phase5b-hd2d` (5b-01a, 5b-02, 5b-03; 5b-03 file is `phase-5-endings-lore.md`). Plan: [2026-11-15-athanor-phase5.md](../superpowers/plans/2026-11-15-athanor-phase5.md).
+Status: **5a signed off (2026-11-16)**, PASS with accepted gaps ([sign-off](../../production/qa/phase5a-signoff.md)); committed (1792ba53 / 1e53c9d3). 5b step 1 done 2026-11-16 on `feature/phase5b-hd2d` (5b-01 mockup + [SPEC](../mockup/hd2d/SPEC.md), 5b-02, 5b-03; 5b-03 file is `phase-5-endings-lore.md`); **G2 approved 2026-11-16** (all 11 SPEC questions as recommended, see *Gate G2*); 5b step 2 dispatched (5b-04 first). Plan: [2026-11-15-athanor-phase5.md](../superpowers/plans/2026-11-15-athanor-phase5.md).
 Read first: [phase-4-prep.md](phase-4-prep.md) (Log 2026-11-15), the Phase 4 devlogs, [Phase 5 Kickoff](../../vault/Workflow/Phase%205%20Kickoff.md).
 
 ## State at the start (checked against the code, 2026-11-15)
@@ -141,6 +141,34 @@ Source: [2026-11-15-athanor-phase5-briefs.md](../superpowers/plans/2026-11-15-at
 | R4 | Legendary Journal frame: not shot, no fake data and no new material added for a screenshot. The gap is recorded in the 5a-14 evidence; shoot it when a Legendary material exists in `content.json`. |
 | R5 | Verification work still open, no owner decision needed: vi run of `tools/web/descents.mjs` for 5a-14, re-check of the 09:20 `ArgumentOutOfRangeException`, wasm+data size after the effect sheets are imported (headroom 1,562,611 B), and the missing VI shots of W2-06. |
 
+## Gate G2 (owner, 2026-11-16)
+
+Approved: the HD-2D mockup (`docs/mockup/hd2d/`, evidence `production/qa/evidence/phase5/5b-01/`), with all 11 questions of
+[SPEC.md](../mockup/hd2d/SPEC.md) answered **as recommended** ("đồng ý đề xuất, tiếp tục"). 5b step 2 (5b-04 → 5b-05 → 5b-06) may start.
+
+| # | Decided |
+|---|---|
+| 1 | Foreground strip: **corners** (two pieces), with real art from `pixel-artist`; the left piece lighter than the stand-in and clear of the candle at (150,232). |
+| 2 | Front fog over the tiles: **kept, alpha 0.14** (per-depth 0.13 to 0.16) for the prototype; the drifting grain is judged in motion at G3; fallback is to keep it off the 3x3 board. |
+| 3 | Fog grain: **keep the 640x360 pixel mist** for the prototype; pixel mist vs 2x fog is decided on the real build. |
+| 4 | Sway amplitude **4** (camera travel in art px at z = 0). |
+| 5 | Sway gets an **off switch in Settings** (one new Lang key, en and vi). Built at integration (5b-07), not in the prototype. |
+| 6 | Shake moves the **world only**; the HUD stays. |
+| 7 | HUD stays **640x360**, shown at whole multiples. 5b-05 still writes its recommendation after seeing it in Unity. |
+| 8 | The five depth presets are the **starting values**; they may be widened in Unity. |
+| 9 | Window view: **soften less**. Starting values: far pre-blur radius 1 px at 2x (sigma 0.5 art px), tilt-shift strength 3 px at 2x (sigma 1.5 art px); checked again in the prototype. This replaces the SPEC's "Fixed values" rows of 2 and 4. |
+| 10 | Tilt-shift band accepted: sharp from art y 145 to 235. |
+| 11 | World rendered at the **whole display scale** (2x, 3x), never a fractional stretch; cost measured in 5b-06. |
+
+Textures: set A of the SPEC (wall blurred at 640x360), estimate 283,349 PNG bytes against 1,100,387 B left; 5b-06 measures the real delta.
+
+Not covered by this answer (still open, none blocks step 2):
+- 5b-02 loops mockup: the owner's review.
+- 5b-03 endings lore, 4 open questions (`phase-5-endings-lore.md`). The main session reads the owner's answer as covering the two
+  stated recommendations (world frame Option 1 "roots of worlds"; three seeds from the three existing recipe paths), **to be confirmed**;
+  "win at any depth or depth 5 only" and "lines 1 and 3 shared, line 2 per seed" are undecided. No content, rule or text changes until then.
+- Mockup follow-ups reported by 5b-01b (flat mode is not today's game; scratch variants not in evidence): not ordered.
+
 ## Log
 
 - 2026-11-15: Phase 5 planned (5a: 17 tasks in 4 waves; 5b: 8 tasks behind 3 owner gates). Decisions above written
@@ -205,3 +233,9 @@ Source: [2026-11-15-athanor-phase5-briefs.md](../superpowers/plans/2026-11-15-at
 - 2026-11-16 (D-5 / 5a-17, `web-release-engineer`): D-3 release build reused (nothing in Assets newer except the dev build profile). `5a-17/bytes.txt`: total 10,724,285 B; 5a used 0 B of the 1 MiB allowance (51,811 B under the 5a-01 baseline); 5b has 1,100,387 B to the 11,824,672 B ceiling. Load 4.8 s (loadsmoke, 5a-16). Draft player notes in `CHANGELOG.md` (new file; main session corrected Settings / pause / rotate / rarity lines against this log). CREDITS has Coder's Crux (CC BY 3.0) and the PrimeTween note. **Version string not set: owner decides.**
 - 2026-11-16 (owner decision #6, executed): local branch `feature/phase5b-hd2d` created from develop at `00b84e3e` (not checked out; the uncommitted 5a work stays on develop); local `feature/2.5D_test-phase-4` deleted (`b3cbb508`, 0 commits not in develop). The remote `origin/feature/2.5D_test-phase-4` still exists and the new branch is not pushed: both wait for the owner. 5a is still uncommitted, so 5b work should not start on the new branch until 5a is committed to develop and the branch is updated.
 - 2026-11-16 (open): files were staged mid-wave by something other than the agents (webtest.mjs, CatalystChoiceView.cs, ChoiceHookTests.cs, part of GameFlow.cs, the build profile). No repo hook or script runs `git add`; source unknown. Re-check the index before any commit.
+- 2026-11-16 (5b-01b, `ui-ux-designer`; re-run by the main session): HD-2D mockup complete for G2. The run that added depth moods, bloom, vignette, sway and shake to `docs/mockup/hd2d/index.html` had been cut off before its script, evidence and spec; `index.html` is unchanged by this task. `shoot.mjs` now covers all 8 effects, the 5 depth presets, sway (two ends) and shake: **56 checks ok, 0 console errors** (restdiff 0 at depths 1..5; HUD pixels identical under every effect, sway and shake; flat equals all-off pixel for pixel). Evidence `production/qa/evidence/phase5/5b-01/` (19 frames, `page-controls.png`, `console.txt`, `textures.txt`). New `docs/mockup/hd2d/SPEC.md`: layer stack, proposed values, Unity mapping (the URP bloom/vignette conversions are not verified in Unity), 11 questions for G2. Texture estimate (PNG bytes of stand-ins, not build bytes): set A (wall blurred at 640x360) 283,349 B = 25.7 % of the 1,100,387 B left; set B (wall at 1280x720) 600,252 B = 54.5 %. Presets not retuned. Reported for the owner: the presets differ little on the bench (the mood comes from wall tint and window view); the window view is blurred twice and loses its lattice at depth 3; fog grain shows as 2x2 dither blocks on the 2x world; the mockup's "flat reference" has no bloom or vignette while the build has bloom 1.1 and vignette 0.34 (`SceneBuilder.cs:120-122`), so it is not a true before/after. `tools/ci/run.sh repo` 0 problems.
+- 2026-11-16 (5b-02, main session): `node docs/mockup/loops/shoot.mjs` re-run, all checks ok, 0 console errors; unchanged, waits for the owner's review.
+- 2026-11-16 (owner, G2): HD-2D mockup approved, all 11 SPEC questions as recommended (section *Gate G2*). Step 2 starts: 5b-04 layer art (`pixel-artist`), then 5b-05 `DepthTest` prototype, then 5b-06 WebGL measure. Far pre-blur starts at sigma 0.5 art px and tilt-shift at sigma 1.5 art px (question 9).
+- 2026-11-16 (5b-04, `pixel-artist`; checked by the main session): depth layer art generated by the new `tools/art/export-depth.mjs` (+ `tools/art/blur.mjs`, Gaussian on premultiplied alpha) into `Athanor/Assets/Art/Depth/`: 19 PNGs, **152,134 B** (SPEC set A estimate 283,349 B; 948,253 B of the 1,100,387 B would remain; PNG bytes, not build bytes). Wall, 5 window views, candle and 8 flame frames at sigma 0.5 art px; two new foreground corners at sigma 3 (left: light oak board, books, mortar, flasks, ends at art x 144, clear of the candle at (150,232); right: crystals, rocks, books, flask); `fog_back` 320x150 and `fog_front` 320x110, white + alpha, tileable in x. Contact sheet and byte table in `production/qa/evidence/phase5/5b-04/`. Import settings for 5b-05: bilinear for `*_far` and `*_near`, point + repeat for the fog; `SpriteImportRules.cs` forces Point under `Assets/Art/` today, so it needs an exception. No `.meta` files yet (Unity writes them).
+- 2026-11-16 (open, found by 5b-04): **the art generator at HEAD is not reproducible against the committed art.** `node tools/art/export.mjs` (the brief asked for it) rewrote 61 tracked PNGs and `Resources/layout.json` and left 20 untracked per-frame files (`flame_small_0..7`, `flame_big_0..7`, `liquid_0..3`, which `AtlasBuilder` merges into sheets). Checked by decoding: all 61 PNGs have **identical pixels**, only the deflate bytes differ (Node v26.13.0). `layout.json` differs in substance: 5 new `placed` entries `window_d1..d5` and `goals.row` 21 -> 20 (`tools/art/ui.mjs:43` says 20; the committed file has had 21 since 40b8a469, so layout.json was edited without the generator). A sub-agent's revert was denied by the permission system; the main session did not run it. Until the owner decides, nothing under `Art/{Background,Fx,Icons,UI}` or `layout.json` may be committed, and Unity should not be opened on this tree. Depth art must be exported with `node tools/art/export-depth.mjs` alone.
+- 2026-11-16 (owner: "revert all"; main session): the 61 re-encoded PNGs and `layout.json` restored from HEAD (`git checkout --` on the four art folders and the file); the 20 untracked frame files removed by name (`git clean -f` is denied by `.claude/settings.json` and was not used). Tree under `Athanor/` and `tools/` now holds only the 5b-04 additions (`Art/Depth/`, `blur.mjs`, `export-depth.mjs`, the hook in `export.mjs`, two sharp sources in `tools/art/out/`). `node tools/art/export-depth.mjs` alone re-writes the 19 textures and touches nothing else; `tools/ci/run.sh repo` 0 problems. **Still open (not a 5b task): the generator drift itself** (`ui.mjs` `GOALS.row` 20 vs committed 21; `export.mjs` adds `window_d1..d5` to `placed`; a newer Node re-encodes every PNG). Until it is fixed, do not run the full `node tools/art/export.mjs`.

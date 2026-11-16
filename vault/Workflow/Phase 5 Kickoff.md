@@ -1,7 +1,7 @@
 ---
 type: workflow
 tags: [workflow, phase5]
-status: 5a signed off and committed; 5b step 1 dispatched 2026-11-16 (branch feature/phase5b-hd2d)
+status: 5a signed off and committed; 5b step 1 done and G2 approved 2026-11-16, step 2 in progress (branch feature/phase5b-hd2d)
 ---
 # Phase 5 Kickoff
 
