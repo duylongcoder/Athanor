@@ -1,0 +1,278 @@
+{
+ "2x/swayon/wall (bricks, moves with sway)": {
+  "changed_mean": 0.0,
+  "changed_p95": 0.0,
+  "luma_mean": 0.622,
+  "resid_mean": 0.0,
+  "resid_p95": 0.0,
+  "best_shift_art_px_mean_abs": 0
+ },
+ "2x/swayon/bench edge (gold frame, table lip)": {
+  "changed_mean": 24.07,
+  "changed_p95": 35.28,
+  "luma_mean": 5.408,
+  "resid_mean": 8.32,
+  "resid_p95": 20.71,
+  "best_shift_art_px_mean_abs": 1.31
+ },
+ "2x/swayon/tiles (3x3 faces)": {
+  "changed_mean": 16.66,
+  "changed_p95": 24.98,
+  "luma_mean": 4.063,
+  "resid_mean": 13.75,
+  "resid_p95": 17.16,
+  "best_shift_art_px_mean_abs": 0.39
+ },
+ "2x/swayon/fog over tiles (left, under fog sheet)": {
+  "changed_mean": 47.72,
+  "changed_p95": 56.75,
+  "luma_mean": 11.825
+ },
+ "2x/swayon/HUD panel (control, must not move)": {
+  "changed_mean": 0.0,
+  "changed_p95": 0.0,
+  "luma_mean": 0.0
+ },
+ "2x/swayoff/wall (bricks, moves with sway)": {
+  "changed_mean": 0.0,
+  "changed_p95": 0.0,
+  "luma_mean": 0.557
+ },
+ "2x/swayoff/bench edge (gold frame, table lip)": {
+  "changed_mean": 27.71,
+  "changed_p95": 35.84,
+  "luma_mean": 5.864
+ },
+ "2x/swayoff/tiles (3x3 faces)": {
+  "changed_mean": 19.03,
+  "changed_p95": 25.23,
+  "luma_mean": 4.438
+ },
+ "2x/swayoff/fog over tiles (left, under fog sheet)": {
+  "changed_mean": 46.39,
+  "changed_p95": 54.04,
+  "luma_mean": 11.094
+ },
+ "2x/swayoff/HUD panel (control, must not move)": {
+  "changed_mean": 0.0,
+  "changed_p95": 0.0,
+  "luma_mean": 0.0
+ },
+ "2x/swayon_nofx/wall (bricks, moves with sway)": {
+  "changed_mean": 2.22,
+  "changed_p95": 9.65,
+  "luma_mean": 1.024,
+  "resid_mean": 2.21,
+  "resid_p95": 9.65,
+  "best_shift_art_px_mean_abs": 0.02
+ },
+ "2x/swayon_nofx/bench edge (gold frame, table lip)": {
+  "changed_mean": 1.01,
+  "changed_p95": 3.05,
+  "luma_mean": 1.137,
+  "resid_mean": 1.01,
+  "resid_p95": 3.05,
+  "best_shift_art_px_mean_abs": 0.02
+ },
+ "2x/swayon_nofx/tiles (3x3 faces)": {
+  "changed_mean": 0.68,
+  "changed_p95": 1.3,
+  "luma_mean": 1.373,
+  "resid_mean": 0.68,
+  "resid_p95": 1.3,
+  "best_shift_art_px_mean_abs": 0
+ },
+ "2x/swayon_nofx/fog over tiles (left, under fog sheet)": {
+  "changed_mean": 0.0,
+  "changed_p95": 0.0,
+  "luma_mean": 0.096
+ },
+ "2x/swayon_nofx/HUD panel (control, must not move)": {
+  "changed_mean": 0.0,
+  "changed_p95": 0.0,
+  "luma_mean": 0.0
+ },
+ "2x/swayoff_nofx/wall (bricks, moves with sway)": {
+  "changed_mean": 0.0,
+  "changed_p95": 0.0,
+  "luma_mean": 0.566
+ },
+ "2x/swayoff_nofx/bench edge (gold frame, table lip)": {
+  "changed_mean": 1.0,
+  "changed_p95": 2.85,
+  "luma_mean": 1.133
+ },
+ "2x/swayoff_nofx/tiles (3x3 faces)": {
+  "changed_mean": 0.4,
+  "changed_p95": 1.04,
+  "luma_mean": 1.423
+ },
+ "2x/swayoff_nofx/fog over tiles (left, under fog sheet)": {
+  "changed_mean": 0.0,
+  "changed_p95": 0.0,
+  "luma_mean": 0.078
+ },
+ "2x/swayoff_nofx/HUD panel (control, must not move)": {
+  "changed_mean": 0.0,
+  "changed_p95": 0.0,
+  "luma_mean": 0.0
+ },
+ "2x/still/wall (bricks, moves with sway)": {
+  "changed": 0.0,
+  "luma_mean": 0.769
+ },
+ "2x/still/bench edge (gold frame, table lip)": {
+  "changed": 10.38,
+  "luma_mean": 3.059
+ },
+ "2x/still/tiles (3x3 faces)": {
+  "changed": 8.45,
+  "luma_mean": 2.843
+ },
+ "2x/still/fog over tiles (left, under fog sheet)": {
+  "changed": 12.14,
+  "luma_mean": 3.346
+ },
+ "2x/still/HUD panel (control, must not move)": {
+  "changed": 0.0,
+  "luma_mean": 0.0
+ },
+ "3x/swayon/wall (bricks, moves with sway)": {
+  "changed_mean": 0.0,
+  "changed_p95": 0.0,
+  "luma_mean": 0.737,
+  "resid_mean": 0.0,
+  "resid_p95": 0.0,
+  "best_shift_art_px_mean_abs": 0
+ },
+ "3x/swayon/bench edge (gold frame, table lip)": {
+  "changed_mean": 21.54,
+  "changed_p95": 29.92,
+  "luma_mean": 5.204,
+  "resid_mean": 13.98,
+  "resid_p95": 23.98,
+  "best_shift_art_px_mean_abs": 1.71
+ },
+ "3x/swayon/tiles (3x3 faces)": {
+  "changed_mean": 14.12,
+  "changed_p95": 20.19,
+  "luma_mean": 3.524,
+  "resid_mean": 14.01,
+  "resid_p95": 19.58,
+  "best_shift_art_px_mean_abs": 0.03
+ },
+ "3x/swayon/fog over tiles (left, under fog sheet)": {
+  "changed_mean": 34.18,
+  "changed_p95": 52.54,
+  "luma_mean": 8.466
+ },
+ "3x/swayon/HUD panel (control, must not move)": {
+  "changed_mean": 0.0,
+  "changed_p95": 0.0,
+  "luma_mean": 0.0
+ },
+ "3x/swayoff/wall (bricks, moves with sway)": {
+  "changed_mean": 0.0,
+  "changed_p95": 0.0,
+  "luma_mean": 0.699
+ },
+ "3x/swayoff/bench edge (gold frame, table lip)": {
+  "changed_mean": 18.58,
+  "changed_p95": 32.9,
+  "luma_mean": 4.186
+ },
+ "3x/swayoff/tiles (3x3 faces)": {
+  "changed_mean": 13.04,
+  "changed_p95": 24.38,
+  "luma_mean": 3.319
+ },
+ "3x/swayoff/fog over tiles (left, under fog sheet)": {
+  "changed_mean": 31.34,
+  "changed_p95": 51.3,
+  "luma_mean": 7.641
+ },
+ "3x/swayoff/HUD panel (control, must not move)": {
+  "changed_mean": 0.0,
+  "changed_p95": 0.0,
+  "luma_mean": 0.0
+ },
+ "3x/swayon_nofx/wall (bricks, moves with sway)": {
+  "changed_mean": 2.08,
+  "changed_p95": 6.87,
+  "luma_mean": 1.042,
+  "resid_mean": 2.08,
+  "resid_p95": 6.87,
+  "best_shift_art_px_mean_abs": 0
+ },
+ "3x/swayon_nofx/bench edge (gold frame, table lip)": {
+  "changed_mean": 1.65,
+  "changed_p95": 4.91,
+  "luma_mean": 1.405,
+  "resid_mean": 1.64,
+  "resid_p95": 4.91,
+  "best_shift_art_px_mean_abs": 0.02
+ },
+ "3x/swayon_nofx/tiles (3x3 faces)": {
+  "changed_mean": 0.83,
+  "changed_p95": 1.56,
+  "luma_mean": 1.344,
+  "resid_mean": 0.83,
+  "resid_p95": 1.56,
+  "best_shift_art_px_mean_abs": 0
+ },
+ "3x/swayon_nofx/fog over tiles (left, under fog sheet)": {
+  "changed_mean": 0.0,
+  "changed_p95": 0.0,
+  "luma_mean": 0.079
+ },
+ "3x/swayon_nofx/HUD panel (control, must not move)": {
+  "changed_mean": 0.0,
+  "changed_p95": 0.0,
+  "luma_mean": 0.0
+ },
+ "3x/swayoff_nofx/wall (bricks, moves with sway)": {
+  "changed_mean": 0.0,
+  "changed_p95": 0.0,
+  "luma_mean": 0.607
+ },
+ "3x/swayoff_nofx/bench edge (gold frame, table lip)": {
+  "changed_mean": 0.86,
+  "changed_p95": 2.5,
+  "luma_mean": 0.999
+ },
+ "3x/swayoff_nofx/tiles (3x3 faces)": {
+  "changed_mean": 0.39,
+  "changed_p95": 1.18,
+  "luma_mean": 1.277
+ },
+ "3x/swayoff_nofx/fog over tiles (left, under fog sheet)": {
+  "changed_mean": 0.0,
+  "changed_p95": 0.0,
+  "luma_mean": 0.075
+ },
+ "3x/swayoff_nofx/HUD panel (control, must not move)": {
+  "changed_mean": 0.0,
+  "changed_p95": 0.0,
+  "luma_mean": 0.0
+ },
+ "3x/still/wall (bricks, moves with sway)": {
+  "changed": 0.0,
+  "luma_mean": 0.276
+ },
+ "3x/still/bench edge (gold frame, table lip)": {
+  "changed": 10.77,
+  "luma_mean": 2.916
+ },
+ "3x/still/tiles (3x3 faces)": {
+  "changed": 8.7,
+  "luma_mean": 2.401
+ },
+ "3x/still/fog over tiles (left, under fog sheet)": {
+  "changed": 9.73,
+  "luma_mean": 2.902
+ },
+ "3x/still/HUD panel (control, must not move)": {
+  "changed": 0.0,
+  "luma_mean": 0.0
+ }
+}
