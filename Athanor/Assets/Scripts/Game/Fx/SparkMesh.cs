@@ -27,6 +27,13 @@ namespace Athanor.Game
         const MeshUpdateFlags Quiet = MeshUpdateFlags.DontRecalculateBounds | MeshUpdateFlags.DontValidateIndices;
         static readonly Bounds Everything = new Bounds(Vector3.zero, new Vector3(1e5f, 1e5f, 1e3f));
         static Material baseMaterial;
+
+        /// <summary>The shared "ParticleGlow" material every spark material is copied from. Sparks sets it in Awake; the Game tests set it in GameTestSetup.</summary>
+        public static Material BaseMaterial
+        {
+            get => baseMaterial;
+            set { if (baseMaterial == value) return; baseMaterial = value; materials.Clear(); }   // cached copies were made from the old base
+        }
         static readonly Dictionary<Texture, Material> materials = new Dictionary<Texture, Material>();
 
         Mesh mesh;
@@ -51,11 +58,10 @@ namespace Athanor.Game
             return m;
         }
 
-        /// <summary>The material for a texture: the shared "ParticleGlow" material (Resources) with that texture.</summary>
+        /// <summary>The material for a texture: the shared "ParticleGlow" material (<see cref="BaseMaterial"/>) with that texture.</summary>
         public static Material MaterialFor(Texture texture)
         {
             if (texture != null && materials.TryGetValue(texture, out var m) && m != null) return m;
-            if (baseMaterial == null) baseMaterial = Resources.Load<Material>("ParticleGlow");
             m = new Material(baseMaterial) { name = "ParticleGlow " + (texture != null ? texture.name : "white") };
             if (texture != null) { m.SetTexture("_MainTex", texture); materials[texture] = m; }
             return m;

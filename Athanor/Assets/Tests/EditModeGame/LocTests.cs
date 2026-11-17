@@ -11,9 +11,30 @@ namespace Athanor.Tests
     /// <summary>The Game layer's language: Vietnamese draws from SVN-Coder's Crux, every key resolves, and the core's English notes are translated.</summary>
     public class LocTests
     {
-        [TearDown] public void BackToEnglish() => Loc.Set(Loc.English);
+        [TearDown] public void BackToEnglish() { EditorGlobals.Inject(); Loc.Set(Loc.English); }
 
         static LangFile File(string code) => Lang.Parse(Resources.Load<TextAsset>("lang/" + code).text);
+
+        [Test]
+        public void Use_WithInjectedFiles_ServesTheirText()
+        {
+            var en = AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/Resources/lang/en.json");
+            var vi = AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/Resources/lang/vi.json");
+            const string entry = "\"text\": \"Xuống lần nữa\"";
+            StringAssert.Contains(entry, vi.text, "vi.json changed: update the entry this test replaces");
+            var marked = new TextAsset(vi.text.Replace(entry, "\"text\": \"P6MARKER\""));
+            Loc.Use(en, marked);
+            Loc.Set(Loc.Vietnamese);
+            Assert.AreEqual("P6MARKER", Loc.T("ui.runover.again"));
+        }
+
+        [Test]
+        public void Use_NullFile_Throws()
+        {
+            var en = AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/Resources/lang/en.json");
+            Assert.Throws<System.ArgumentNullException>(() => Loc.Use(null, en));
+            Assert.Throws<System.ArgumentNullException>(() => Loc.Use(en, null));
+        }
 
         [Test]
         public void ViJsonCharacters_AllInCruxAtlas_NoneMissing()

@@ -23,7 +23,7 @@ namespace Athanor.Game
             rig = worldSway != null ? worldSway.GetComponent<DepthRig>() : null;
             cam = camera.transform; camHome = cam.position;
             flash = Make.Rect(transform, 0, 0, Px.W, Px.H, Color.clear, 480);
-            flash.name = "Flash"; flash.sharedMaterial = Make.Lib.glow;
+            flash.name = "Flash"; flash.sharedMaterial = Art.Lib.glow;
             black = Make.Rect(transform, -8, -8, Px.W + 16, Px.H + 16, Color.clear, 500);
             black.name = "Fade";
         }

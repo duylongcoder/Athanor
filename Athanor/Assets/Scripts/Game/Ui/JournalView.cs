@@ -196,7 +196,7 @@ namespace Athanor.Game
             pick.transform.position = CellCentre(i);
             var m = db.Materials[i];
             bool known = discovered.Contains(m.id);
-            bigIcon.sprite = Make.Lib.Sprite(m.id);
+            bigIcon.sprite = Art.Lib.Sprite(m.id);
             bigIcon.color = known ? Color.white : new Color(0.16f, 0.1f, 0.05f, 0.4f);
             bool locked = m.tier == 0 && !known;
             title.Text = known ? m.name : locked ? Loc.T("ui.journal.locked") : Loc.T("ui.journal.unknown");

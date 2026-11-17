@@ -11,8 +11,6 @@ namespace Athanor.Game
     /// <summary>Factories for the sprites, text and lights the views are built from.</summary>
     public static class Make
     {
-        public static ArtLibrary Lib;
-
         public static Transform Root(string name, Transform parent = null)
         {
             var go = new GameObject(name);
@@ -29,8 +27,8 @@ namespace Athanor.Game
             if (parent != null) go.layer = parent.gameObject.layer;
             go.transform.position = worldPos;
             var r = go.AddComponent<SpriteRenderer>();
-            r.sprite = Lib.Sprite(sprite);
-            r.sharedMaterial = material != null ? material : Lib.unlit;
+            r.sprite = Art.Lib.Sprite(sprite);
+            r.sharedMaterial = material != null ? material : Art.Lib.unlit;
             r.sortingOrder = order;
             return r;
         }
@@ -38,7 +36,7 @@ namespace Athanor.Game
         /// <summary>A sprite placed by the art-space position of its top-left corner.</summary>
         public static SpriteRenderer SpriteAt(Transform parent, string sprite, float x, float y, int order, Material material = null)
         {
-            var s = Lib.Sprite(sprite);
+            var s = Art.Lib.Sprite(sprite);
             return Sprite(parent, sprite, Px.Mid(x, y, s.rect.width, s.rect.height), order, material);
         }
 
@@ -55,7 +53,7 @@ namespace Athanor.Game
         /// <summary>An additive soft glow of the given radius.</summary>
         public static SpriteRenderer Glow(Transform parent, Vector3 worldPos, float radius, Color color, int order)
         {
-            var r = Sprite(parent, "glow", worldPos, order, Lib.glow);
+            var r = Sprite(parent, "glow", worldPos, order, Art.Lib.glow);
             r.transform.localScale = new Vector3(radius / 32f, radius / 32f, 1);
             r.color = color;
             return r;
@@ -93,13 +91,13 @@ namespace Athanor.Game
         /// <summary>The font of a kind in the language showing. Vietnamese uses SVN-Coder's Crux for all four kinds, never for the logo.</summary>
         public static TMP_FontAsset FontFor(FontKind kind)
         {
-            if (kind == FontKind.Logo || kind == FontKind.Numeral) return Lib.title;   // Numeral: digits only, so the English face and size in every language
-            if (Loc.Vi && Lib.crux != null) return Lib.crux;
-            return kind == FontKind.Title ? Lib.title : kind == FontKind.Body ? Lib.body : kind == FontKind.Name ? Lib.label : Lib.tiny;
+            if (kind == FontKind.Logo || kind == FontKind.Numeral) return Art.Lib.title;   // Numeral: digits only, so the English face and size in every language
+            if (Loc.Vi && Art.Lib.crux != null) return Art.Lib.crux;
+            return kind == FontKind.Title ? Art.Lib.title : kind == FontKind.Body ? Art.Lib.body : kind == FontKind.Name ? Art.Lib.label : Art.Lib.tiny;
         }
 
         /// <summary>The point size for a kind: Tiny 8 is Crux 16 in Vietnamese (the marks need the height); the rest keep their size.</summary>
-        public static float SizeFor(FontKind kind, int size) => kind == FontKind.Tiny && Loc.Vi && Lib.crux != null ? size * 2 : size;
+        public static float SizeFor(FontKind kind, int size) => kind == FontKind.Tiny && Loc.Vi && Art.Lib.crux != null ? size * 2 : size;
 
         /// <summary>
         /// The half-leading of a font at a point size, in whole pixels (rounded up): how far below the top of a line box as

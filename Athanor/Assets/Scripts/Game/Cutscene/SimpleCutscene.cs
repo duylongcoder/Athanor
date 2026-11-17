@@ -36,12 +36,12 @@ namespace Athanor.Game
             bars[0] = Make.Rect(root, 0, 0, Px.W, 30, Color.black, O + 9); bars[1] = Make.Rect(root, 0, Px.H - 30, Px.W, 30, Color.black, O + 9);
             bars[2] = Make.Rect(root, 0, 30, Px.W, 1, Px.Hex("#8c5a14"), O + 10); bars[3] = Make.Rect(root, 0, Px.H - 31, Px.W, 1, Px.Hex("#8c5a14"), O + 10);
             glow = Make.Glow(root, Px.At(CX, 170), 150, Color.clear, O + 1);
-            rune = Make.Sprite(root, "rune_circle", Px.At(CX, 262), O + 2, Make.Lib.glow);
-            ring = Make.Sprite(root, "floor_ring", Px.At(CX, 262), O + 2, Make.Lib.glow);
+            rune = Make.Sprite(root, "rune_circle", Px.At(CX, 262), O + 2, Art.Lib.glow);
+            ring = Make.Sprite(root, "floor_ring", Px.At(CX, 262), O + 2, Art.Lib.glow);
             for (int k = 0; k < rays.Length; k++)
             {
                 rays[k] = Make.Root("ray", root);
-                Make.Sprite(rays[k], "ray", Vector3.zero, O + 3, Make.Lib.glow).transform.localPosition = new Vector3(26 + 75, 0, 0);
+                Make.Sprite(rays[k], "ray", Vector3.zero, O + 3, Art.Lib.glow).transform.localPosition = new Vector3(26 + 75, 0, 0);
             }
             iconGlow = Make.Glow(root, Vector3.zero, 80, Color.clear, O + 4);
             icon = Make.Sprite(root, "dot", Vector3.zero, O + 5);
@@ -211,7 +211,7 @@ namespace Athanor.Game
             yield return ScreenFx.I.FadeOut(0.5f);
             Stage(true, true);
             tint = Px.Hex(string.IsNullOrEmpty(ultimate.glow) ? "#fff6b8" : ultimate.glow);
-            icon.sprite = Make.Lib.Sprite(ultimate.id); icon.enabled = true;
+            icon.sprite = Art.Lib.Sprite(ultimate.id); icon.enabled = true;
             raysOn = 1; embers = 1;
             yield return ScreenFx.I.FadeIn(1.1f);
             ClearSkip();
@@ -321,7 +321,7 @@ namespace Athanor.Game
                 for (int i = 0; i < n; i++) cycle[i] = int.MinValue;
                 this.life = life; this.x0 = x0; this.x1 = x1; this.y0 = y0; this.y1 = y1;
                 this.vx0 = vx0; this.vx1 = vx1; this.vy0 = vy0; this.vy1 = vy1; this.gravity = gravity; this.sparkle = sparkle;
-                mesh = SparkMesh.Create(parent, name, order, Make.Lib.Sprite("dot"), Make.Lib.Sprite("sparkle"));
+                mesh = SparkMesh.Create(parent, name, order, Art.Lib.Sprite("dot"), Art.Lib.Sprite("sparkle"));
             }
 
             public void Draw(float t, float strength, Color color)

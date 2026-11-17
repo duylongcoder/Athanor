@@ -1844,6 +1844,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Athanor.Game::Athanor.Game.GameFlow
   library: {fileID: 11400000, guid: 170479308619b81e6a4b2471ff3e5b46, type: 2}
+  contentJson: {fileID: 4900000, guid: b6ccaf9d95287b60499fe87b749f4bb7, type: 3}
+  langEn: {fileID: 4900000, guid: d9319a9061e4542b8b0ad437f3abb79b, type: 3}
+  langVi: {fileID: 4900000, guid: baa9d998216a14ecebbbfbcba9a6d475, type: 3}
   workshop: {fileID: 888498917}
   cutsceneRoom: {fileID: 310397452}
   mainCamera: {fileID: 57964792}
@@ -1861,6 +1864,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 702d0d51847c4f2f6af04106dda34b8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Athanor.Game::Athanor.Game.Sparks
+  particleGlow: {fileID: 2100000, guid: 41d705c580b54d198d6ae9c654671269, type: 2}
 --- !u!114 &522944087
 MonoBehaviour:
   m_ObjectHideFlags: 0

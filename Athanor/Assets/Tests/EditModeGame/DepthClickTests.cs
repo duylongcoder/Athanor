@@ -24,7 +24,6 @@ namespace Athanor.Tests
         [SetUp]
         public void SetUp()
         {
-            Make.Lib = AssetDatabase.LoadAssetAtPath<ArtLibrary>("Assets/Art/ArtLibrary.asset");
             layout = JsonUtility.FromJson<LayoutData>(File.ReadAllText("Assets/Resources/layout.json"));
             root = new GameObject("depth click test");
             var cam = new GameObject("world camera").AddComponent<Camera>();

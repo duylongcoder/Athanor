@@ -14,7 +14,10 @@ namespace Athanor.Game
     /// <summary>Owns the run and moves the game between its screens.</summary>
     public sealed class GameFlow : MonoBehaviour
     {
+        /// <summary>The art library (sprites and effect sheets); GameFlow publishes it as <see cref="Art.Lib"/>.</summary>
         public ArtLibrary library;
+        /// <summary>content.json and the two language files, set in the scene. Awake throws when one is empty.</summary>
+        [SerializeField] TextAsset contentJson, langEn, langVi;
         public GameObject workshop, cutsceneRoom;
         public Camera mainCamera;
         /// <summary>The HD-2D bench rig (null in a scene without it: the flat game).</summary>
@@ -116,8 +119,13 @@ namespace Athanor.Game
 
         void Awake()
         {
+            if (contentJson == null) throw new System.InvalidOperationException("GameFlow: contentJson is not set in the scene");
+            if (langEn == null) throw new System.InvalidOperationException("GameFlow: langEn is not set in the scene");
+            if (langVi == null) throw new System.InvalidOperationException("GameFlow: langVi is not set in the scene");
+            if (library == null) throw new System.InvalidOperationException("GameFlow: library is not set in the scene");
             I = this;
-            Make.Lib = library;
+            Art.Lib = library;
+            Loc.Use(langEn, langVi);
             settings = Save.LoadSettings();
             Loc.InitFromPlayer(settings.language);
             Haptics.Enabled = settings.haptics;
@@ -129,7 +137,7 @@ namespace Athanor.Game
             Application.targetFrameRate = 60;
 #endif
             PrimeTweenConfig.SetTweensCapacity(200);   // a long chain runs many FloatTexts, Consumes and rack flights at once
-            Db = new ContentDb(JsonUtility.FromJson<ContentData>(Resources.Load<TextAsset>("content").text));
+            Db = new ContentDb(JsonUtility.FromJson<ContentData>(contentJson.text));
             var layout = JsonUtility.FromJson<LayoutData>(Resources.Load<TextAsset>("layout").text);
             Journal = Save.LoadJournal();
             Profile = Save.LoadProfile(Db);

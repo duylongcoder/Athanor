@@ -127,7 +127,7 @@ namespace Athanor.Game
                 if (i >= count) continue;
                 var o = offer[i];
                 c.id = o.id; c.lift = 0; c.lit.enabled = false;
-                c.icon.sprite = Make.Lib.Sprite(o.sprite);
+                c.icon.sprite = Art.Lib.Sprite(o.sprite);
                 c.name.Text = o.name;
                 c.text.Text = string.IsNullOrEmpty(o.cost) ? o.text : o.text + "\n<color=#9a3414>" + o.cost + "</color>";
                 c.kicker.Color = Px.Hex(string.IsNullOrEmpty(o.cost) ? "#a8854e" : "#9a3414");

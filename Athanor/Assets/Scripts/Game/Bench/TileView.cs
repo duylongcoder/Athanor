@@ -38,12 +38,12 @@ namespace Athanor.Game
             var f = data.face;
             faceCentre = Px.Mid(f.x, f.y, f.w, f.h); faceSize = new Vector2(f.w, f.h);
             int row = i / 3;
-            face = Make.SpriteAt(transform, "tile_face_" + i, f.x, f.y, 10, Make.Lib.glow);
-            ring = Make.Sprite(transform, "tile_ring_" + row, centre, 11, Make.Lib.glow);
+            face = Make.SpriteAt(transform, "tile_face_" + i, f.x, f.y, 10, Art.Lib.glow);
+            ring = Make.Sprite(transform, "tile_ring_" + row, centre, 11, Art.Lib.glow);
             shadow = Make.Glow(transform, centre + new Vector3(0, -3, 0), 9, new Color(0, 0, 0, 0.6f), 12);
-            shadow.sharedMaterial = Make.Lib.unlit; shadow.transform.localScale = new Vector3(18 / 64f, 7 / 64f, 1);
+            shadow.sharedMaterial = Art.Lib.unlit; shadow.transform.localScale = new Vector3(18 / 64f, 7 / 64f, 1);
             halo = Make.Glow(transform, centre + new Vector3(0, 8, 0), 24, Color.clear, 12);
-            icon = Make.Sprite(transform, "dot", centre, 14 + row * 2, Make.Lib.lit);
+            icon = Make.Sprite(transform, "dot", centre, 14 + row * 2, Art.Lib.lit);
             glowLight = Make.Light(transform, centre + new Vector3(0, 6, 0), 46, Color.white, 0, 0.77f);
             face.color = Color.clear;
             // a shut tile: a dark lid over the face and a cross; a tile an aspect or an event acts on: a small gem at its front corner
@@ -79,7 +79,7 @@ namespace Athanor.Game
             Material = m.id;
             glows = !string.IsNullOrEmpty(m.glow);
             glow = Px.Hex(glows ? m.glow : "#f0dcc0");
-            icon.sprite = Make.Lib.Sprite(m.id);
+            icon.sprite = Art.Lib.Sprite(m.id);
             icon.enabled = shadow.enabled = ring.enabled = halo.enabled = true;
             icon.color = Color.white;
             glowLight.color = glow;

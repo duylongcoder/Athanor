@@ -4,6 +4,7 @@
     "references": [
         "Athanor.Core",
         "Athanor.Game",
+        "Athanor.EditorShared",
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
         "PrimeTween.Runtime",

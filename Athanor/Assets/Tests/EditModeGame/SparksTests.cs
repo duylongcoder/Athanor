@@ -8,20 +8,16 @@ namespace Athanor.Tests
     /// <summary>Sparks on batched meshes: same motion and fade as the old SpriteRenderer pool, whole-pixel centres, HDR kept, no garbage.</summary>
     public class SparksTests
     {
-        ArtLibrary libBefore;
         GameObject go;
 
         [SetUp] public void Keep()
         {
-            libBefore = Make.Lib;
-            Make.Lib = AssetDatabase.LoadAssetAtPath<ArtLibrary>("Assets/Art/ArtLibrary.asset");
             go = new GameObject("sparks test");
         }
 
         [TearDown] public void Restore()
         {
             Object.DestroyImmediate(go);
-            Make.Lib = libBefore;
         }
 
         // the integrator of the SpriteRenderer pool, copied as it was before the change
@@ -74,19 +70,19 @@ namespace Athanor.Tests
         [Test]
         public void SparkMesh_SnapsCentres_ToWholePixels_AndKeepsHdrColours()
         {
-            var m = SparkMesh.Create(go.transform, "test", 150, Make.Lib.Sprite("dot"), Make.Lib.Sprite("sparkle"));
+            var m = SparkMesh.Create(go.transform, "test", 150, Art.Lib.Sprite("dot"), Art.Lib.Sprite("sparkle"));
             m.Begin();
             m.Add(new Vector2(10.4f, -3.6f), new Color(2.5f, 1.2f, 0.4f, 0.7f), false);
             m.Add(new Vector2(0.6f, 0), new Color(3, 3, 3, 1), true);
             m.End();
             var v = m.Mesh.vertices;
             var c = m.Mesh.colors;
-            var dot = Make.Lib.Sprite("dot").bounds;
+            var dot = Art.Lib.Sprite("dot").bounds;
             Assert.AreEqual(1, (dot.max.x - dot.min.x) * SparkMesh.DotScale, 1e-5f, "a dot is 1 px");
             Assert.AreEqual(10 + dot.min.x * SparkMesh.DotScale, v[0].x, 1e-5f, "around the rounded centre (10, -4)");
             Assert.AreEqual(-4 + dot.min.y * SparkMesh.DotScale, v[0].y, 1e-5f);
             Assert.AreEqual(10 + dot.max.x * SparkMesh.DotScale, v[2].x, 1e-5f);
-            var sparkle = Make.Lib.Sprite("sparkle").bounds;
+            var sparkle = Art.Lib.Sprite("sparkle").bounds;
             Assert.AreEqual(1 + sparkle.min.x, v[4].x, 1e-5f, "a sparkle is centred on the rounded centre (1, 0) at full size");
             Assert.AreEqual(1 + sparkle.max.x, v[6].x, 1e-5f);
             Assert.AreEqual(2.5f, c[0].r, 1e-5f, "colours above 1 survive, so the glow still crosses the bloom threshold");

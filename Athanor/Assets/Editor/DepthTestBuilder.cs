@@ -36,7 +36,7 @@ public static class DepthTestBuilder
     {
         var lib = AssetDatabase.LoadAssetAtPath<ArtLibrary>(LibraryPath);
         if (lib == null) throw new System.InvalidOperationException("no " + LibraryPath + ": run Athanor/Build Scene first");
-        Make.Lib = lib;
+        EditorGlobals.Inject();
         var layout = JsonUtility.FromJson<LayoutData>(File.ReadAllText("Assets/Resources/layout.json"));
         Directory.CreateDirectory(Dir);
         var tableMat = EnsureMaterial(Dir + "/DepthTable.mat", "Athanor/Depth Mesh Lit");

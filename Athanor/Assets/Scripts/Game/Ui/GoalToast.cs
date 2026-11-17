@@ -59,7 +59,7 @@ namespace Athanor.Game
                 var next = queue.Dequeue();
                 title.Text = next.goal; line.Text = next.reward;
                 icon.enabled = next.sprite != null;
-                if (next.sprite != null) icon.sprite = Make.Lib.Sprite(next.sprite);
+                if (next.sprite != null) icon.sprite = Art.Lib.Sprite(next.sprite);
                 age = 0;
                 panel.gameObject.SetActive(true);
                 if (Sparks.I != null) Sparks.I.Burst(Px.Mid(X, Y, W, H), 18, new Color(2.2f, 1.7f, 0.6f), 90, 0.6f, O + 3, 20);

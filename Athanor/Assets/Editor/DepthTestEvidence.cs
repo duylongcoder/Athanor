@@ -39,8 +39,8 @@ public static class DepthTestEvidence
     {
         Directory.CreateDirectory(Out);
         var log = new StringBuilder();
-        var lib = AssetDatabase.LoadAssetAtPath<ArtLibrary>("Assets/Art/ArtLibrary.asset");
-        Make.Lib = lib;
+        EditorGlobals.Inject();
+        var lib = Art.Lib;
         var layout = JsonUtility.FromJson<LayoutData>(File.ReadAllText("Assets/Resources/layout.json"));
 
         // ---- the main scene's bench (orthographic, 640x360, as the game renders it before the upscale)

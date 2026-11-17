@@ -102,7 +102,7 @@ namespace Athanor.Game
             slid = Mathf.MoveTowards(slid, front ? 0 : shift, Time.deltaTime * 160);
             Slide();
             SetOrder(front && frontOrder > 0 ? frontOrder : baseOrder);
-            frame.sprite = Make.Lib.Sprite(Selected ? "card_sel" : "card");
+            frame.sprite = Art.Lib.Sprite(Selected ? "card_sel" : "card");
             float a = Dimmed ? 0.35f : 1;
             frame.color = icon.color = Color.white.Alpha(a);
             stars.SetAlpha(a);

@@ -37,7 +37,7 @@ namespace Athanor.Game
 
         void Update()
         {
-            body.sprite = Make.Lib.Sprite(down ? "button_down" : "button_up");
+            body.sprite = Art.Lib.Sprite(down ? "button_down" : "button_up");
             body.color = disabled ? new Color(0.45f, 0.42f, 0.42f, 1) : over && !down ? new Color(1.25f, 1.15f, 1.05f, 1) : Color.white;
             label.transform.localPosition = new Vector3(0, down ? 8 : 10, 0);
         }

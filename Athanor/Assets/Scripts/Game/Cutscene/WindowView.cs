@@ -64,7 +64,7 @@ namespace Athanor.Game
             ReleaseRoots();
             HideEffects();
             string name = DepthLook.WindowSprite(depth);
-            var art = Make.Lib.Sprite(soft ? name + "_far" : name) ?? Make.Lib.Sprite(name);
+            var art = Art.Lib.Sprite(soft ? name + "_far" : name) ?? Art.Lib.Sprite(name);
             pane.sprite = art;
             if (view == 4) StartRoots(art);
         }

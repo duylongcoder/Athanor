@@ -14,14 +14,11 @@ namespace Athanor.Tests
     /// </summary>
     public class RunOverDepthTests
     {
-        ArtLibrary libBefore;
         GameObject root;
         RunOverView view;
 
         [SetUp] public void Build()
         {
-            libBefore = Make.Lib;
-            Make.Lib = AssetDatabase.LoadAssetAtPath<ArtLibrary>("Assets/Art/ArtLibrary.asset");
             Loc.Set(Loc.English);
             root = new GameObject("run over test");
             view = root.AddComponent<RunOverView>();
@@ -31,7 +28,6 @@ namespace Athanor.Tests
         [TearDown] public void Restore()
         {
             Object.DestroyImmediate(root);
-            Make.Lib = libBefore;
             Loc.Set(Loc.English);
         }
 

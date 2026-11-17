@@ -40,19 +40,19 @@ namespace Athanor.Game
         {
             room = cutsceneRoom; this.others = others;
             var t = stage = Make.Root("Reaction", room.transform);
-            rune = Make.Sprite(t, "rune_circle", Px.At(CX, FloorY), O + 2, Make.Lib.glow);
+            rune = Make.Sprite(t, "rune_circle", Px.At(CX, FloorY), O + 2, Art.Lib.glow);
             runeLight = Make.Light(t, Px.At(CX, FloorY), 230, Color.white, 0, 0.4f);
-            liquidFrames = new[] { Make.Lib.Sprite("liquid_0"), Make.Lib.Sprite("liquid_1"), Make.Lib.Sprite("liquid_2"), Make.Lib.Sprite("liquid_3") };
-            liquid = Make.Sprite(t, "liquid_0", Px.At(CX, Rim), O + 5, Make.Lib.glow);
+            liquidFrames = new[] { Art.Lib.Sprite("liquid_0"), Art.Lib.Sprite("liquid_1"), Art.Lib.Sprite("liquid_2"), Art.Lib.Sprite("liquid_3") };
+            liquid = Make.Sprite(t, "liquid_0", Px.At(CX, Rim), O + 5, Art.Lib.glow);
             liquidGlow = Make.Glow(t, Px.At(CX, Rim), 100, Color.clear, O + 5);
             liquidGlow.transform.localScale = new Vector3(100 / 32f, 45 / 32f, 1);
             liquidLight = Make.Light(t, Px.At(CX, Rim - 20), 200, Color.white, 0, 0.85f);
-            pillar = Make.Sprite(t, "pillar", Px.Mid(CX - 44.5f, 0, 89, 161), O + 6, Make.Lib.glow);
-            for (int k = 0; k < rings.Length; k++) rings[k] = Make.Sprite(t, "floor_ring", Px.At(CX, FloorY), O + 2, Make.Lib.glow);
+            pillar = Make.Sprite(t, "pillar", Px.Mid(CX - 44.5f, 0, 89, 161), O + 6, Art.Lib.glow);
+            for (int k = 0; k < rings.Length; k++) rings[k] = Make.Sprite(t, "floor_ring", Px.At(CX, FloorY), O + 2, Art.Lib.glow);
             for (int k = 0; k < rays.Length; k++)
             {
                 rays[k] = Make.Root("ray", t);
-                var r = Make.Sprite(rays[k], "ray", Vector3.zero, O + 7, Make.Lib.glow);
+                var r = Make.Sprite(rays[k], "ray", Vector3.zero, O + 7, Art.Lib.glow);
                 r.transform.localPosition = new Vector3(22 + 75, 0, 0);
             }
             for (int i = 0; i < MaxMats; i++)
@@ -99,11 +99,11 @@ namespace Athanor.Game
             {
                 var m = db.Material(e.Items[i]);
                 matCol[i] = Px.Hex(string.IsNullOrEmpty(m.glow) ? "#f0dcc0" : m.glow);
-                mats[i].sprite = Make.Lib.Sprite(m.id);
+                mats[i].sprite = Art.Lib.Sprite(m.id);
                 names.Add(m.name);
             }
             colRes = Px.Hex(string.IsNullOrEmpty(r.glow) ? "#fff6b8" : r.glow);
-            result.sprite = Make.Lib.Sprite(r.id);
+            result.sprite = Art.Lib.Sprite(r.id);
             headerLeft.Text = Loc.T("cutscene.experiment", ("n", experiment));
             string all = string.Join(" + ", names);
             headerRight.Text = all.Length <= 46 ? all : Loc.T("cutscene.more", ("a", names[0]), ("b", names[1]), ("n", matCount - 2));

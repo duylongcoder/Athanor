@@ -9,7 +9,6 @@ namespace Athanor.Tests
     /// <summary>The pause menu: time stops and comes back on every exit, Esc toggles, nothing opens in the tutorial, Quit leaves the stored run data alone.</summary>
     public class PauseTests
     {
-        ArtLibrary libBefore;
         GameObject go;
         PauseMenu menu;
         readonly string[] keys = { Save.Key, Save.ProfileKey };
@@ -18,8 +17,6 @@ namespace Athanor.Tests
         [SetUp] public void Build()
         {
             foreach (var k in keys) kept[k] = PlayerPrefs.GetString(k, null);
-            libBefore = Make.Lib;
-            Make.Lib = AssetDatabase.LoadAssetAtPath<ArtLibrary>("Assets/Art/ArtLibrary.asset");
             Haptics.ForceSupported = null;
             go = new GameObject("pause test");
             menu = go.AddComponent<PauseMenu>();
@@ -31,7 +28,6 @@ namespace Athanor.Tests
         {
             Time.timeScale = 1f;
             Object.DestroyImmediate(go);
-            Make.Lib = libBefore;
             Haptics.ForceSupported = null;
             foreach (var k in keys) { if (kept[k] == null) PlayerPrefs.DeleteKey(k); else PlayerPrefs.SetString(k, kept[k]); }
         }

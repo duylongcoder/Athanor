@@ -22,8 +22,9 @@ public static class SceneBuilder
     [MenuItem("Athanor/Build Scene")]
     public static string Build()
     {
+        EditorGlobals.Inject();
         var lib = BuildLibrary();
-        Make.Lib = lib;
+        Art.Lib = lib;
         var layout = JsonUtility.FromJson<LayoutData>(File.ReadAllText("Assets/Resources/layout.json"));
         var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
 
@@ -93,8 +94,16 @@ public static class SceneBuilder
 
         var game = new GameObject("Game");
         game.AddComponent<PointerInput>();
-        game.AddComponent<Sparks>();
+        var sparks = game.AddComponent<Sparks>();
+        var sparksSo = new SerializedObject(sparks);
+        sparksSo.FindProperty("particleGlow").objectReferenceValue = AssetDatabase.LoadAssetAtPath<Material>("Assets/Resources/ParticleGlow.mat");
+        sparksSo.ApplyModifiedPropertiesWithoutUndo();
         var flow = game.AddComponent<GameFlow>();
+        var flowSo = new SerializedObject(flow);
+        flowSo.FindProperty("contentJson").objectReferenceValue = AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/Resources/content.json");
+        flowSo.FindProperty("langEn").objectReferenceValue = AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/Resources/lang/en.json");
+        flowSo.FindProperty("langVi").objectReferenceValue = AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/Resources/lang/vi.json");
+        flowSo.ApplyModifiedPropertiesWithoutUndo();
         flow.library = lib; flow.workshop = workshop.gameObject; flow.cutsceneRoom = cutscene.gameObject; flow.mainCamera = cam; flow.depthStage = stage;
 
         Directory.CreateDirectory("Assets/Scenes");
@@ -172,26 +181,26 @@ public static class SceneBuilder
     internal static Transform BuildWorkshop(LayoutData layout)
     {
         var root = Make.Root("Workshop");
-        Make.SpriteAt(root, "workshop_wall", 0, 0, 0, Make.Lib.lit);
+        Make.SpriteAt(root, "workshop_wall", 0, 0, 0, Art.Lib.lit);
         var pane = layout.Placed("window");
         Make.SpriteAt(root, "window", pane.x, pane.y, 1);
         var table = layout.Placed("workshop_table");
-        Make.SpriteAt(root, "workshop_table", table.x, table.y, 2, Make.Lib.lit);
+        Make.SpriteAt(root, "workshop_table", table.x, table.y, 2, Art.Lib.lit);
 
         var moon = new GameObject("Moonbeam").AddComponent<Light2D>();
         moon.transform.SetParent(root, false);
-        moon.lightType = Light2D.LightType.Sprite; moon.lightCookieSprite = Make.Lib.Sprite("moon_shaft");
+        moon.lightType = Light2D.LightType.Sprite; moon.lightCookieSprite = Art.Lib.Sprite("moon_shaft");
         moon.color = new Color(0.42f, 0.6f, 1f); moon.intensity = 0.62f;
 
-        var frames = Enumerable.Range(0, 8).Select(k => Make.Lib.Sprite("flame_small_" + k)).ToArray();
+        var frames = Enumerable.Range(0, 8).Select(k => Art.Lib.Sprite("flame_small_" + k)).ToArray();
         for (int i = 0; i < layout.candles.Length; i++)
         {
             var c = layout.candles[i];
             bool onWall = c.y < 120;
             var candle = Make.Root("Candle " + i, root);
-            Make.SpriteAt(candle, "candle", c.x, c.y, onWall ? 3 : 5, Make.Lib.lit);
+            Make.SpriteAt(candle, "candle", c.x, c.y, onWall ? 3 : 5, Art.Lib.lit);
             var wick = Px.At(c.x + 6, c.y + 1);
-            var flame = Make.SpriteAt(candle, "flame_small_0", c.x, c.y - 8, onWall ? 4 : 6, Make.Lib.glow).gameObject.AddComponent<Flame>();
+            var flame = Make.SpriteAt(candle, "flame_small_0", c.x, c.y - 8, onWall ? 4 : 6, Art.Lib.glow).gameObject.AddComponent<Flame>();
             flame.frames = frames; flame.body = flame.GetComponent<SpriteRenderer>(); flame.body.color = new Color(1.6f, 1.6f, 1.6f, 1); flame.phase = i * 1.3f;
             flame.halo = Make.Glow(candle, wick + new Vector3(0, 4, 0), 30, new Color(1f, 0.6f, 0.23f, 0.5f), onWall ? 4 : 6);
             flame.haloAlpha = 0.55f;
@@ -199,21 +208,21 @@ public static class SceneBuilder
             flame.lightIntensity = onWall ? 1.2f : 1.55f;
         }
         var dust = Make.Root("Dust", root).gameObject.AddComponent<Dust>();
-        dust.material = Make.Lib.glow; dust.sprite = Make.Lib.Sprite("dot");
+        dust.material = Art.Lib.glow; dust.sprite = Art.Lib.Sprite("dot");
         return root;
     }
 
     static Transform BuildCutsceneRoom()
     {
         var root = Make.Root("Cutscene Room");
-        Make.SpriteAt(root, "cutscene_room", 0, 0, 300, Make.Lib.lit);
-        Make.SpriteAt(root, "logs", 260, 282, 301, Make.Lib.lit);
-        Make.SpriteAt(root, "cauldron", 220, 118, 303, Make.Lib.lit);
-        var frames = Enumerable.Range(0, 8).Select(k => Make.Lib.Sprite("flame_big_" + k)).ToArray();
+        Make.SpriteAt(root, "cutscene_room", 0, 0, 300, Art.Lib.lit);
+        Make.SpriteAt(root, "logs", 260, 282, 301, Art.Lib.lit);
+        Make.SpriteAt(root, "cauldron", 220, 118, 303, Art.Lib.lit);
+        var frames = Enumerable.Range(0, 8).Select(k => Art.Lib.Sprite("flame_big_" + k)).ToArray();
         for (int i = 0; i < 7; i++)
         {
             float x = 272 + i * 16 + Mathf.Sin(i * 3) * 3, y = 290 - (i % 2) * 3;
-            var flame = Make.SpriteAt(root, "flame_big_0", Mathf.Round(x) - 10, y - 17, 304, Make.Lib.glow).gameObject.AddComponent<Flame>();
+            var flame = Make.SpriteAt(root, "flame_big_0", Mathf.Round(x) - 10, y - 17, 304, Art.Lib.glow).gameObject.AddComponent<Flame>();
             flame.name = "Fire " + i;
             flame.frames = frames; flame.body = flame.GetComponent<SpriteRenderer>(); flame.body.color = new Color(1.6f, 1.6f, 1.6f, 1); flame.phase = i * 1.3f;
             if (i % 2 == 0) { flame.halo = Make.Glow(root, Px.At(x, y - 8), 60, new Color(1f, 0.6f, 0.23f, 0.4f), 304); flame.haloAlpha = 0.4f; }

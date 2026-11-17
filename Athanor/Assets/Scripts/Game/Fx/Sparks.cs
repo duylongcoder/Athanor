@@ -30,7 +30,13 @@ namespace Athanor.Game
         readonly Dictionary<int, Lane> laneByOrder = new Dictionary<int, Lane>();
         readonly List<Lane> lanes = new List<Lane>();
 
-        void Awake() => I = this;
+        [SerializeField] Material particleGlow;
+
+        void Awake()
+        {
+            if (particleGlow == null) throw new System.InvalidOperationException("Sparks: particleGlow is not set in the scene");
+            I = this; SparkMesh.BaseMaterial = particleGlow;
+        }
 
         /// <summary>Particles alive now, over all lanes.</summary>
         public int LiveCount
@@ -120,7 +126,7 @@ namespace Athanor.Game
         Lane LaneFor(int order)
         {
             if (laneByOrder.TryGetValue(order, out var l)) return l;
-            l = new Lane { order = order, mesh = SparkMesh.Create(transform, "sparks " + order, order, Make.Lib.Sprite("dot"), Make.Lib.Sprite("sparkle")) };
+            l = new Lane { order = order, mesh = SparkMesh.Create(transform, "sparks " + order, order, Art.Lib.Sprite("dot"), Art.Lib.Sprite("sparkle")) };
             laneByOrder[order] = l;
             lanes.Add(l);
             return l;

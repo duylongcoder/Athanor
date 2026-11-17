@@ -13,7 +13,6 @@ namespace Athanor.Tests
     /// </summary>
     public class ChoiceHookTests
     {
-        ArtLibrary libBefore;
         GameObject go;
         readonly List<string> heard = new List<string>();
 
@@ -21,8 +20,6 @@ namespace Athanor.Tests
 
         [SetUp] public void Build()
         {
-            libBefore = Make.Lib;
-            Make.Lib = AssetDatabase.LoadAssetAtPath<ArtLibrary>("Assets/Art/ArtLibrary.asset");
             go = new GameObject("choice test");
             heard.Clear();
             Application.logMessageReceived += Hear;
@@ -33,7 +30,6 @@ namespace Athanor.Tests
             Application.logMessageReceived -= Hear;
             Tween.StopAll();
             Object.DestroyImmediate(go);
-            Make.Lib = libBefore;
         }
 
         [Test]

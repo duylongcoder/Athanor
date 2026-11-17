@@ -43,8 +43,8 @@ public static class MainDepthEvidence
     public static string Capture()
     {
         Directory.CreateDirectory(Out);
-        var lib = AssetDatabase.LoadAssetAtPath<ArtLibrary>("Assets/Art/ArtLibrary.asset");
-        Make.Lib = lib;
+        EditorGlobals.Inject();
+        var lib = Art.Lib;
         var layout = JsonUtility.FromJson<LayoutData>(File.ReadAllText("Assets/Resources/layout.json"));
         EditorSceneManager.OpenScene("Assets/Scenes/Main.unity", OpenSceneMode.Single);
         var flow = Object.FindFirstObjectByType<GameFlow>();

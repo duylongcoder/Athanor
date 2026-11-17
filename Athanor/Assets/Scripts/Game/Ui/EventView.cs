@@ -69,7 +69,7 @@ namespace Athanor.Game
         {
             var e = run.CurrentEvent;
             count = Mathf.Min(run.EventOptions.Count, MaxOptions);
-            icon.sprite = Make.Lib.Sprite("evt_" + e.type.ToLowerInvariant());
+            icon.sprite = Art.Lib.Sprite("evt_" + e.type.ToLowerInvariant());
             heading.Text = Loc.C(Lang.EventKey(e.id, "name"), e.name); kind.Text = Loc.T("ui.event.kind", ("type", Loc.Upper(Loc.T("event_type." + e.type.ToLowerInvariant()))), ("n", run.Depth)); text.Text = Loc.C(Lang.EventKey(e.id, "text"), e.text);
             for (int i = 0; i < MaxOptions; i++)
             {
@@ -112,7 +112,7 @@ namespace Athanor.Game
             for (int i = 0; i < count && i < MaxOptions; i++)
             {
                 var r = rows[i];
-                r.body.sprite = Make.Lib.Sprite(r.down ? "option_down" : "option_up");
+                r.body.sprite = Art.Lib.Sprite(r.down ? "option_down" : "option_up");
                 r.body.color = r.over && !r.down ? new Color(1.25f, 1.15f, 1.05f, 1) : Color.white;
                 r.label.transform.localPosition = new Vector3(0, r.down ? 7 : 9, 0);
             }

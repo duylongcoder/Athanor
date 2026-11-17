@@ -13,20 +13,16 @@ namespace Athanor.Tests
     /// </summary>
     public class LabelLineBoxTests
     {
-        ArtLibrary libBefore;
         GameObject root;
 
         [SetUp] public void Build()
         {
-            libBefore = Make.Lib;
-            Make.Lib = AssetDatabase.LoadAssetAtPath<ArtLibrary>("Assets/Art/ArtLibrary.asset");
             root = new GameObject("line box test");
         }
 
         [TearDown] public void Restore()
         {
             Object.DestroyImmediate(root);
-            Make.Lib = libBefore;
             Loc.Set(Loc.English);
         }
 

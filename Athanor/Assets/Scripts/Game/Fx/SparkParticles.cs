@@ -66,7 +66,7 @@ namespace Athanor.Game
             var r = go.GetComponent<ParticleSystemRenderer>();
             r.renderMode = ParticleSystemRenderMode.Billboard; r.alignment = ParticleSystemRenderSpace.View;
             r.sortingOrder = k.order;
-            var sprite = Athanor.Game.Make.Lib.Sprite(k.sparkle ? "sparkle" : "dot");
+            var sprite = Athanor.Game.Art.Lib.Sprite(k.sparkle ? "sparkle" : "dot");
             var m = new Material(SparkMesh.MaterialFor(sprite.texture));
             m.SetFloat("_Intensity", K); m.EnableKeyword("CENTER_SNAP");
             r.sharedMaterial = m;

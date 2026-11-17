@@ -110,7 +110,7 @@ namespace Athanor.Game
                     SetBar(r.track, complete ? 0 : BarW);
                     SetBar(r.fill, complete ? 0 : Mathf.Floor(BarW * Mathf.Clamp01(progress / (float)g.target)));
                     r.icon.enabled = complete && !string.IsNullOrEmpty(item);
-                    if (r.icon.enabled) r.icon.sprite = Make.Lib.Sprite(Wording.ItemSprite(db, item));
+                    if (r.icon.enabled) r.icon.sprite = Art.Lib.Sprite(Wording.ItemSprite(db, item));
                     if (complete) done++;
                     y[col] += RowH;
                 }

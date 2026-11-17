@@ -33,9 +33,9 @@ namespace Athanor.Game
         public void ApplyBias()
         {
             if (main == null) return;
-            bool crux = Loc.Vi && Make.Lib != null && Make.Lib.crux != null;
+            bool crux = Loc.Vi && Art.Lib != null && Art.Lib.crux != null;
             float bias = kind == FontKind.Name && crux ? (lines > 1 ? 5 : 1) : 0;
-            if (lineBox && crux && main.font == Make.Lib.crux) bias += Make.HalfLeading(Make.Lib.crux.faceInfo, main.fontSize);
+            if (lineBox && crux && main.font == Art.Lib.crux) bias += Make.HalfLeading(Art.Lib.crux.faceInfo, main.fontSize);
             main.transform.localPosition = new Vector3(0, -bias, 0);
             if (shadow != null) shadow.transform.localPosition = new Vector3(1, -1 - bias, 0);
         }

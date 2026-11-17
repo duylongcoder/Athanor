@@ -84,7 +84,7 @@ namespace Athanor.Game
             potencyWord = Make.TextKey(t, "ui.hud.potency", 17, 52, FontKind.Tiny, 8, Dim, O + 3);
             potency = Make.Text(t, "0", 70, 49, FontKind.Numeral, 16, Gold, O + 3, Align.Left, Px.Hex("#3a1a08"));
             target = Make.Text(t, "", 153, 52, FontKind.Tiny, 8, Dim, O + 3, Align.Right);
-            barFill = Make.Rect(t, 18, 70, 1, 5, Color.white, O + 2); barFill.sprite = Make.Lib.Sprite("bar_fill");
+            barFill = Make.Rect(t, 18, 70, 1, 5, Color.white, O + 2); barFill.sprite = Art.Lib.Sprite("bar_fill");
             barTip = Make.Rect(t, 18, 70, 1, 5, Color.white, O + 3);
             // top right: catalysts, trials, redraws
             Make.SpriteAt(t, "hud_right", 480, 8, O);
@@ -149,7 +149,7 @@ namespace Athanor.Game
             journalCount = Make.Text(t, "", 630, 294, FontKind.Tiny, 8, Dim, O + 3, Align.Right);
             Make.Click(book.gameObject, new Vector2(118, 22), O, () => JournalClicked?.Invoke()).offset = new Vector2(46, 0);
             ignite = Make.SpriteAt(t, "ignite_up", 519, 310, O + 1);
-            ignitePulse = Make.Rect(t, 521, 312, 108, 28, Color.clear, O + 2); ignitePulse.sharedMaterial = Make.Lib.glow;
+            ignitePulse = Make.Rect(t, 521, 312, 108, 28, Color.clear, O + 2); ignitePulse.sharedMaterial = Art.Lib.glow;
             igniteText = Make.TextKey(t, "ui.hud.ignite", 575, 306, FontKind.Title, 32, Px.Hex("#fff6b8"), O + 4, Align.Centre, Px.Hex("#3b0d1e"));
             var ic = Make.Click(ignite.gameObject, new Vector2(112, 36), O, () => { if (canIgnite) IgniteClicked?.Invoke(); });
             ic.onDown = () => igniteDown = true; ic.onUp = () => igniteDown = false; ic.onExit = () => igniteDown = false;
@@ -186,14 +186,14 @@ namespace Athanor.Game
                 float x = Mathf.Round(488 + i * catalystPitch);
                 socketLit[i].transform.position = Px.Mid(x, 24, 30, 30);
                 catalystIcon[i].transform.position = Px.Mid(x + 3, 27, 24, 24);
-                catalystIcon[i].sprite = Make.Lib.Sprite("cat_" + run.Catalysts[i].id);
+                catalystIcon[i].sprite = Art.Lib.Sprite("cat_" + run.Catalysts[i].id);
             }
             aspectsLabel.gameObject.SetActive(run.Aspects.Count > 0);
             for (int i = 0; i < MaxAspects; i++)
             {
                 bool has = i < run.Aspects.Count;
                 aspectSocket[i].gameObject.SetActive(has); aspectIcon[i].enabled = has;
-                if (has) aspectIcon[i].sprite = Make.Lib.Sprite("asp_" + run.Aspects[i].Data.id);
+                if (has) aspectIcon[i].sprite = Art.Lib.Sprite("asp_" + run.Aspects[i].Data.id);
             }
             if (run.Aspects.Count == 0) HoveredAspect = -1;
             // what this depth's event left behind (shut and warm tiles show on the bench itself)
@@ -275,7 +275,7 @@ namespace Athanor.Game
             barFill.color = targetValue > 0 ? Color.white : new Color(0.55f, 0.5f, 0.75f, 1);
             barTip.transform.position = Px.Mid(18 + Mathf.Max(0, w - 1), 70, 1, 5); barTip.transform.localScale = new Vector3(0.25f, 1.25f, 1);
 
-            ignite.sprite = Make.Lib.Sprite(!canIgnite ? "ignite_off" : igniteDown ? "ignite_down" : "ignite_up");
+            ignite.sprite = Art.Lib.Sprite(!canIgnite ? "ignite_off" : igniteDown ? "ignite_down" : "ignite_up");
             float pulse = 0.5f + 0.5f * Mathf.Sin(Time.time * 3);
             ignitePulse.color = canIgnite && !igniteDown ? new Color(1, 0.75f, 0.35f, 0.1f + 0.2f * pulse) : Color.clear;
             igniteText.Alpha = canIgnite ? 1 : 0.45f;

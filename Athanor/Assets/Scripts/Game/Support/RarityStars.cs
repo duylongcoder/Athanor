@@ -44,7 +44,7 @@ namespace Athanor.Game
         /// </summary>
         static Sprite Glyph()
         {
-            var art = Make.Lib.Sprite("star");
+            var art = Art.Lib.Sprite("star");
             if (hanging == null || source != art)
             {
                 source = art;

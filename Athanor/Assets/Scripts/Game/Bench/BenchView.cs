@@ -86,7 +86,7 @@ namespace Athanor.Game
         public void PreviewOnRack(int i, string id)
         {
             var s = slots[Mathf.Clamp(i, 0, RackSlots - 1)];
-            s.icon.sprite = Make.Lib.Sprite(id); s.icon.color = Color.white; s.icon.enabled = true;
+            s.icon.sprite = Art.Lib.Sprite(id); s.icon.color = Color.white; s.icon.enabled = true;
         }
         public TileView Tile(int i) => tiles[i];
 
@@ -111,7 +111,7 @@ namespace Athanor.Game
                 else if (rack < RackSlots)
                 {
                     var s = slots[rack++];
-                    s.handIndex = h; s.id = m.id; s.icon.sprite = Make.Lib.Sprite(m.id); s.icon.enabled = true; s.icon.color = Color.white;
+                    s.handIndex = h; s.id = m.id; s.icon.sprite = Art.Lib.Sprite(m.id); s.icon.enabled = true; s.icon.color = Color.white;
                 }
             }
             int n = starters.Count;
@@ -264,7 +264,7 @@ namespace Athanor.Game
             if (press.Is && PointerInput.Held && !dragging && Vector2.Distance(w, pressAt) > 4)
             {
                 dragging = true; selected = default;
-                ghost.sprite = Make.Lib.Sprite(press.id); ghost.enabled = true;
+                ghost.sprite = Art.Lib.Sprite(press.id); ghost.enabled = true;
                 if (press.from == From.Tile) tiles[press.tile].Icon.color = Color.white.Alpha(0.3f);
             }
             if (dragging) ghost.transform.position = Px.Snap(new Vector3(w.x, w.y + 6, 0));
