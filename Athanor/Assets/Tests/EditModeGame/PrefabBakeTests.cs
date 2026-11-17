@@ -69,5 +69,37 @@ namespace Athanor.Tests
             button.GetComponent<Clickable>().onClick();
             Assert.AreEqual(0, clicks);
         }
+
+        [Test]
+        public void Text_ButtonAfterPrefabRoundTrip_KeepsLabelAndBody()
+        {
+            var button = RoundTrip<UiButton>(UiButton.Create(null, "ui.runover.again", 0, 0, 0).gameObject);
+            Assert.IsNotNull(button.Text, "label reference lost in the prefab");
+            var body = typeof(UiButton).GetField("body", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(button) as SpriteRenderer;
+            Assert.IsTrue(body != null, "body reference lost in the prefab");
+        }
+
+        [Test]
+        public void Disabled_SetBeforePrefabRoundTrip_StaysDisabled()
+        {
+            var original = UiButton.Create(null, "ui.runover.again", 0, 0, 0);
+            original.Disabled = true;
+            var button = RoundTrip<UiButton>(original.gameObject);
+            Assert.IsTrue(button.Disabled);
+        }
+
+        [Test]
+        public void ShowDepth_RunOverPrefab_WritesTheDepthRow()
+        {
+            var f = new PrefabFixture("Assets/Prefabs/Views/RunOver.prefab");
+            try
+            {
+                var view = f.Get<RunOverView>();
+                view.Bind();
+                view.ShowDepth(true, 4);
+                Assert.AreEqual("Planted at depth 4", view.DepthName.Text);
+            }
+            finally { f.Destroy(); }
+        }
     }
 }

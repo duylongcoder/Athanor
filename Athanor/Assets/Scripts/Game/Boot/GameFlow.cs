@@ -31,7 +31,9 @@ namespace Athanor.Game
         public RunState Run { get; private set; }
         public BenchView Bench { get; private set; }
         public FlowState State { get; private set; }
-        public RunOverView RunOver { get; private set; }
+        /// <summary>The run summary (a prefab in Main.unity).</summary>
+        [SerializeField] RunOverView runOver;
+        public RunOverView RunOver => runOver;
         /// <summary>Debug: the scripted player plays and cutscenes skip themselves. F9 toggles it in the editor and in development builds.</summary>
         public bool Auto;
 
@@ -123,6 +125,7 @@ namespace Athanor.Game
             if (langEn == null) throw new System.InvalidOperationException("GameFlow: langEn is not set in the scene");
             if (langVi == null) throw new System.InvalidOperationException("GameFlow: langVi is not set in the scene");
             if (library == null) throw new System.InvalidOperationException("GameFlow: library is not set in the scene");
+            if (runOver == null) throw new System.InvalidOperationException("GameFlow: runOver is not set in the scene");
             I = this;
             Art.Lib = library;
             Loc.Use(langEn, langVi);
@@ -169,7 +172,7 @@ namespace Athanor.Game
             journalView = Make.Root("Journal").gameObject.AddComponent<JournalView>(); journalView.Build(Db);
             journalView.Closed += CloseJournal;
             choice = Make.Root("Catalyst Choice").gameObject.AddComponent<CatalystChoiceView>(); choice.Build();
-            RunOver = Make.Root("Run Over").gameObject.AddComponent<RunOverView>(); RunOver.Build();
+            runOver.Bind();
             RunOver.GoalsClicked += OpenGoals;
             eventView = Make.Root("Event").gameObject.AddComponent<EventView>(); eventView.Build();
             goalsView = Make.Root("Goals").gameObject.AddComponent<GoalsView>(); goalsView.Build(Db);
@@ -195,6 +198,7 @@ namespace Athanor.Game
         void OnDestroy()
         {
             PointerInput.Rig = null;
+            if (runOver != null) runOver.GoalsClicked -= OpenGoals;
             if (title != null) title.SettingsClosed -= SaveSettings;
             if (pause != null) { pause.Opened -= OnPauseOpened; pause.Closed -= OnPauseClosed; pause.QuitConfirmed -= AbandonRun; pause.VibrationChanged -= SaveSettings; }
             if (Bench != null && Bench.Hud != null) Bench.Hud.PauseClicked -= OpenPause;

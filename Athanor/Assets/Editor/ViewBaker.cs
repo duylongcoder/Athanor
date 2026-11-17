@@ -123,7 +123,7 @@ public static class ViewBaker
         if (p > MaxDiffer) throw new Exception("[phase6] " + name + " differs by " + p.ToString("0.000") + " %, limit " + MaxDiffer);
     }
 
-    // One pair of entry points per view is added by its task, e.g.
-    //   public static void BakeRunOver() => Bake<RunOverView>("RunOver", "runOver", v => v.Build());
-    //   public static void CompareRunOver() => Compare("RunOver");
+    // One pair of entry points per view is added by its task (Bake<Name> is deleted with the view's Build).
+    public static void BakeRunOver() => Bake<RunOverView>("RunOver", "runOver", v => v.Build());
+    public static void CompareRunOver() => Compare("RunOver");
 }
