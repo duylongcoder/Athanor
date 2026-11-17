@@ -14,7 +14,13 @@ using Object = UnityEngine.Object;
 /// </summary>
 public static class ViewBaker
 {
-    public const string ScenePath = "Assets/Scenes/Main.unity", ViewDir = "Assets/Prefabs/Views", PartDir = "Assets/Prefabs/Parts";
+    /// <summary>Path of the scene the baked views are placed in.</summary>
+    public const string ScenePath = "Assets/Scenes/Main.unity";
+    /// <summary>Folder that holds the view prefabs.</summary>
+    public const string ViewDir = "Assets/Prefabs/Views";
+    /// <summary>Folder that holds the part prefabs (repeated pieces).</summary>
+    public const string PartDir = "Assets/Prefabs/Parts";
+    /// <summary>Folder (relative to the Unity project) for the before/after pictures.</summary>
     public const string EvidenceDir = "../production/qa/evidence/phase6/views";
     const float MaxDiffer = 0.1f;
 
@@ -24,6 +30,24 @@ public static class ViewBaker
         Loc.Set(Loc.English);
     }
 
+    /// <summary>Removes earlier bakes: root objects of the scene with this name, active or not.</summary>
+    static void RemoveRoots(UnityEngine.SceneManagement.Scene scene, string name)
+    {
+        foreach (var r in scene.GetRootGameObjects()) if (r.name == name) Object.DestroyImmediate(r);
+    }
+
+    static void SetFlowField(string flowField, Object value)
+    {
+        var flow = Object.FindFirstObjectByType<GameFlow>();
+        if (flow == null) throw new InvalidOperationException("[phase6] no GameFlow in " + ScenePath);
+        var so = new SerializedObject(flow);
+        var prop = so.FindProperty(flowField);
+        if (prop == null) throw new InvalidOperationException("[phase6] GameFlow has no serialized field '" + flowField + "'");
+        prop.objectReferenceValue = value;
+        so.ApplyModifiedPropertiesWithoutUndo();
+    }
+
+    /// <summary>The content database read from Resources/content.json, for views that bind to content.</summary>
     public static ContentDb Db() =>
         new ContentDb(JsonUtility.FromJson<ContentData>(AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/Resources/content.json").text));
 
@@ -39,12 +63,9 @@ public static class ViewBaker
         var prefab = PrefabUtility.SaveAsPrefabAsset(go, ViewDir + "/" + name + ".prefab");
 
         var scene = EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Single);
-        var old = GameObject.Find(name);
-        if (old != null) Object.DestroyImmediate(old);                    // a second bake replaces the first
+        RemoveRoots(scene, name);                                         // a second bake replaces the first
         var instance = (GameObject)PrefabUtility.InstantiatePrefab(prefab, scene);
-        var so = new SerializedObject(Object.FindFirstObjectByType<GameFlow>());
-        so.FindProperty(flowField).objectReferenceValue = instance.GetComponent<T>();
-        so.ApplyModifiedPropertiesWithoutUndo();
+        SetFlowField(flowField, instance.GetComponent<T>());
         EditorSceneManager.SaveScene(scene);
         Debug.Log("[phase6] baked " + name);
     }
@@ -70,8 +91,7 @@ public static class ViewBaker
     {
         Prepare();
         var scene = EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Single);
-        var old = GameObject.Find(name);
-        if (old != null) Object.DestroyImmediate(old);
+        RemoveRoots(scene, name);
         var go = new GameObject(name);
         var view = go.AddComponent<T>();
         build(view);
@@ -80,9 +100,7 @@ public static class ViewBaker
             Directory.CreateDirectory(ViewDir);
             PrefabUtility.SaveAsPrefabAssetAndConnect(go, ViewDir + "/" + name + ".prefab", InteractionMode.AutomatedAction);
         }
-        var so = new SerializedObject(Object.FindFirstObjectByType<GameFlow>());
-        so.FindProperty(flowField).objectReferenceValue = view;
-        so.ApplyModifiedPropertiesWithoutUndo();
+        SetFlowField(flowField, view);
         EditorSceneManager.SaveScene(scene);
         Debug.Log("[phase6] baked " + name + " in the scene");
     }
