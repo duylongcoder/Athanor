@@ -1,0 +1,1466 @@
+{
+  "Athanor/.vscode/extensions.json": {
+    "mtime": 1794532306.4858782,
+    "seen": 1794911069.6537251,
+    "ast_hash": "a9819ba4d76ccd81cf1f7b18e06c77d0",
+    "semantic_hash": "a9819ba4d76ccd81cf1f7b18e06c77d0"
+  },
+  "Athanor/.vscode/launch.json": {
+    "mtime": 1794532306.4858782,
+    "seen": 1794911069.6537316,
+    "ast_hash": "b939dea735cf9d32842d6a2c44474427",
+    "semantic_hash": "b939dea735cf9d32842d6a2c44474427"
+  },
+  "Athanor/.vscode/settings.json": {
+    "mtime": 1794532306.4858782,
+    "seen": 1794911069.6537344,
+    "ast_hash": "f5f8117249dad408791120ef89c3400b",
+    "semantic_hash": "f5f8117249dad408791120ef89c3400b"
+  },
+  "Athanor/Assets/Art/Fx/Sheets/collect-burst.json": {
+    "mtime": 1794793289.8586483,
+    "seen": 1794911069.6537359,
+    "ast_hash": "889f0321809950edaccded05944fe197",
+    "semantic_hash": "889f0321809950edaccded05944fe197"
+  },
+  "Athanor/Assets/Art/Fx/Sheets/holy-pillar.json": {
+    "mtime": 1794793289.8596485,
+    "seen": 1794911069.6537373,
+    "ast_hash": "ff526befd570ea68f713bea77d39b7c3",
+    "semantic_hash": "ff526befd570ea68f713bea77d39b7c3"
+  },
+  "Athanor/Assets/Art/Fx/Sheets/implosion.json": {
+    "mtime": 1794793289.8596485,
+    "seen": 1794911069.6537385,
+    "ast_hash": "08fce9b7655cbef2d46707baf9c3543f",
+    "semantic_hash": "08fce9b7655cbef2d46707baf9c3543f"
+  },
+  "Athanor/Assets/Art/Fx/Sheets/poof.json": {
+    "mtime": 1794793289.8606484,
+    "seen": 1794911069.6537397,
+    "ast_hash": "3bbb5c868acbe8486569a4250f65066d",
+    "semantic_hash": "3bbb5c868acbe8486569a4250f65066d"
+  },
+  "Athanor/Assets/Editor/AtlasBuilder.cs": {
+    "mtime": 1794878264.29009,
+    "seen": 1794911069.653741,
+    "ast_hash": "f4ecd97840b66af034e1a85938997209",
+    "semantic_hash": "f4ecd97840b66af034e1a85938997209"
+  },
+  "Athanor/Assets/Editor/DepthTestBuilder.cs": {
+    "mtime": 1794901435.6691322,
+    "seen": 1794911069.6537418,
+    "ast_hash": "bfc29adbd53093f7664ce76b6f97fa49",
+    "semantic_hash": "bfc29adbd53093f7664ce76b6f97fa49"
+  },
+  "Athanor/Assets/Editor/DepthTestEvidence.cs": {
+    "mtime": 1794901143.38863,
+    "seen": 1794911069.6537428,
+    "ast_hash": "fcc1b09ad9911fe8f468de5bd292fabc",
+    "semantic_hash": "fcc1b09ad9911fe8f468de5bd292fabc"
+  },
+  "Athanor/Assets/Editor/FlipbookImporter.cs": {
+    "mtime": 1794532306.4938788,
+    "seen": 1794911069.653744,
+    "ast_hash": "4094c7da1ea48ce7dcdbe197b23c3b62",
+    "semantic_hash": "4094c7da1ea48ce7dcdbe197b23c3b62"
+  },
+  "Athanor/Assets/Editor/FontBuilder.cs": {
+    "mtime": 1794793289.8606484,
+    "seen": 1794911069.6537454,
+    "ast_hash": "912ff4b8bf827732a48d1d81fe3a891b",
+    "semantic_hash": "912ff4b8bf827732a48d1d81fe3a891b"
+  },
+  "Athanor/Assets/Editor/SceneBuilder.cs": {
+    "mtime": 1794882868.7561355,
+    "seen": 1794911069.6537466,
+    "ast_hash": "1221953c2ddf3925c148862a5e34a9ab",
+    "semantic_hash": "1221953c2ddf3925c148862a5e34a9ab"
+  },
+  "Athanor/Assets/Editor/SpriteImportRules.cs": {
+    "mtime": 1794878264.29009,
+    "seen": 1794911069.6537478,
+    "ast_hash": "520884d7728ec5d6bfcd9ce00c3474f3",
+    "semantic_hash": "520884d7728ec5d6bfcd9ce00c3474f3"
+  },
+  "Athanor/Assets/Editor/WebBuild.cs": {
+    "mtime": 1794883145.3290362,
+    "seen": 1794911069.6537488,
+    "ast_hash": "9d8b4877f8e753f30607095cfaf74b0e",
+    "semantic_hash": "9d8b4877f8e753f30607095cfaf74b0e"
+  },
+  "Athanor/Assets/Resources/content.json": {
+    "mtime": 1794793289.8616483,
+    "seen": 1794911069.6537497,
+    "ast_hash": "3c75d4063207edda91f29033f89185a1",
+    "semantic_hash": "3c75d4063207edda91f29033f89185a1"
+  },
+  "Athanor/Assets/Resources/lang/en.json": {
+    "mtime": 1794793289.8616483,
+    "seen": 1794911069.6537511,
+    "ast_hash": "68e8ad3014f44e0fb709564d6562efb6",
+    "semantic_hash": "68e8ad3014f44e0fb709564d6562efb6"
+  },
+  "Athanor/Assets/Resources/lang/vi.json": {
+    "mtime": 1794793289.8616483,
+    "seen": 1794911069.653752,
+    "ast_hash": "77909904b1e8a47761951109cdabc194",
+    "semantic_hash": "77909904b1e8a47761951109cdabc194"
+  },
+  "Athanor/Assets/Resources/layout.json": {
+    "mtime": 1794533494.1149876,
+    "seen": 1794911069.653753,
+    "ast_hash": "565dd8b1d93f08142011a234a25c71e5",
+    "semantic_hash": "565dd8b1d93f08142011a234a25c71e5"
+  },
+  "Athanor/Assets/Scripts/Core/AutoPlayer.cs": {
+    "mtime": 1794532306.495879,
+    "seen": 1794911069.653754,
+    "ast_hash": "d0bbf35e6dabe4107833e4c1bd65eb9a",
+    "semantic_hash": "d0bbf35e6dabe4107833e4c1bd65eb9a"
+  },
+  "Athanor/Assets/Scripts/Core/BenchRules.cs": {
+    "mtime": 1794532306.495879,
+    "seen": 1794911069.6537552,
+    "ast_hash": "fe1f4d0548d282ce039ef567c5d6bd94",
+    "semantic_hash": "fe1f4d0548d282ce039ef567c5d6bd94"
+  },
+  "Athanor/Assets/Scripts/Core/Chain.cs": {
+    "mtime": 1794532306.495879,
+    "seen": 1794911069.6537561,
+    "ast_hash": "edb18d5281b2e2226f9c249563c1efed",
+    "semantic_hash": "edb18d5281b2e2226f9c249563c1efed"
+  },
+  "Athanor/Assets/Scripts/Core/ContentData.cs": {
+    "mtime": 1794793289.8626485,
+    "seen": 1794911069.6537578,
+    "ast_hash": "a2ecb7ab849bf4f5dde85f05140328c6",
+    "semantic_hash": "a2ecb7ab849bf4f5dde85f05140328c6"
+  },
+  "Athanor/Assets/Scripts/Core/ContentDb.cs": {
+    "mtime": 1794793289.8626485,
+    "seen": 1794911069.6537588,
+    "ast_hash": "3a1d1fb2c6b36b1cf505bdd1412a00b9",
+    "semantic_hash": "3a1d1fb2c6b36b1cf505bdd1412a00b9"
+  },
+  "Athanor/Assets/Scripts/Core/Ignite.cs": {
+    "mtime": 1794532306.495879,
+    "seen": 1794911069.6537597,
+    "ast_hash": "44259aad00209f6a5033ad65579dd129",
+    "semantic_hash": "44259aad00209f6a5033ad65579dd129"
+  },
+  "Athanor/Assets/Scripts/Core/Journal.cs": {
+    "mtime": 1794532306.495879,
+    "seen": 1794911069.6537607,
+    "ast_hash": "9aac7214bef291ef013f10e6fb80361a",
+    "semantic_hash": "9aac7214bef291ef013f10e6fb80361a"
+  },
+  "Athanor/Assets/Scripts/Core/Lang.cs": {
+    "mtime": 1794793250.0076785,
+    "seen": 1794911069.6537619,
+    "ast_hash": "212c240df7b37f6fee882814fb549321",
+    "semantic_hash": "212c240df7b37f6fee882814fb549321"
+  },
+  "Athanor/Assets/Scripts/Core/Profile.cs": {
+    "mtime": 1794793289.8626485,
+    "seen": 1794911069.6537628,
+    "ast_hash": "487b503050e0cd0070222ee4797cdcb7",
+    "semantic_hash": "487b503050e0cd0070222ee4797cdcb7"
+  },
+  "Athanor/Assets/Scripts/Core/RunStart.cs": {
+    "mtime": 1794793289.8626485,
+    "seen": 1794911069.653764,
+    "ast_hash": "c70e8bb188a44656662b125406625bf5",
+    "semantic_hash": "c70e8bb188a44656662b125406625bf5"
+  },
+  "Athanor/Assets/Scripts/Core/RunState.cs": {
+    "mtime": 1794793289.8636484,
+    "seen": 1794911069.6537652,
+    "ast_hash": "a2310f3dd68d9df8446ada513d3811a5",
+    "semantic_hash": "a2310f3dd68d9df8446ada513d3811a5"
+  },
+  "Athanor/Assets/Scripts/Core/Satchel.cs": {
+    "mtime": 1794793289.8636484,
+    "seen": 1794911069.6537662,
+    "ast_hash": "2e5799bc5e7216f0777d0b33f52b8ca5",
+    "semantic_hash": "2e5799bc5e7216f0777d0b33f52b8ca5"
+  },
+  "Athanor/Assets/Scripts/Core/ScoreParts.cs": {
+    "mtime": 1794793289.8636484,
+    "seen": 1794911069.653767,
+    "ast_hash": "5c5ff39fbf1a76a97229569b313b4a80",
+    "semantic_hash": "5c5ff39fbf1a76a97229569b313b4a80"
+  },
+  "Athanor/Assets/Scripts/Core/Settings.cs": {
+    "mtime": 1794793289.8636484,
+    "seen": 1794911069.6537683,
+    "ast_hash": "f1f0be2452af7e63fa4e98e27d0a80bf",
+    "semantic_hash": "f1f0be2452af7e63fa4e98e27d0a80bf"
+  },
+  "Athanor/Assets/Scripts/Core/Tutorial.cs": {
+    "mtime": 1794793289.8636484,
+    "seen": 1794911069.6537693,
+    "ast_hash": "01ef264557f7a3b639d05da17b649db2",
+    "semantic_hash": "01ef264557f7a3b639d05da17b649db2"
+  },
+  "Athanor/Assets/Scripts/Game/Bench/BenchView.cs": {
+    "mtime": 1794793289.8636484,
+    "seen": 1794911069.6537702,
+    "ast_hash": "65c59f1a83cf416baf28db9874c3e17c",
+    "semantic_hash": "65c59f1a83cf416baf28db9874c3e17c"
+  },
+  "Athanor/Assets/Scripts/Game/Bench/CardView.cs": {
+    "mtime": 1794793289.8636484,
+    "seen": 1794911069.6537712,
+    "ast_hash": "006cd61f2c0d25fd17c305a3dda50814",
+    "semantic_hash": "006cd61f2c0d25fd17c305a3dda50814"
+  },
+  "Athanor/Assets/Scripts/Game/Bench/Dust.cs": {
+    "mtime": 1794793250.0086784,
+    "seen": 1794911069.6537724,
+    "ast_hash": "f5e88bfa1eab287989430ca261a0880e",
+    "semantic_hash": "f5e88bfa1eab287989430ca261a0880e"
+  },
+  "Athanor/Assets/Scripts/Game/Bench/HudView.cs": {
+    "mtime": 1794793289.8636484,
+    "seen": 1794911069.6537733,
+    "ast_hash": "a5a016dd60446514edc4f22ed05c0d70",
+    "semantic_hash": "a5a016dd60446514edc4f22ed05c0d70"
+  },
+  "Athanor/Assets/Scripts/Game/Bench/LinkView.cs": {
+    "mtime": 1794533635.5020897,
+    "seen": 1794911069.6537743,
+    "ast_hash": "0a2a483705d359c0c3dd63d7ed81fe56",
+    "semantic_hash": "0a2a483705d359c0c3dd63d7ed81fe56"
+  },
+  "Athanor/Assets/Scripts/Game/Bench/TileView.cs": {
+    "mtime": 1794900963.084706,
+    "seen": 1794911069.6537755,
+    "ast_hash": "a3cab77796037545c173d7973f9e5490",
+    "semantic_hash": "a3cab77796037545c173d7973f9e5490"
+  },
+  "Athanor/Assets/Scripts/Game/Boot/GameFlow.cs": {
+    "mtime": 1794793289.8646486,
+    "seen": 1794911069.6537766,
+    "ast_hash": "bed840ee983530bba5dfaf7ef4d877c4",
+    "semantic_hash": "bed840ee983530bba5dfaf7ef4d877c4"
+  },
+  "Athanor/Assets/Scripts/Game/Boot/Save.cs": {
+    "mtime": 1794793289.8646486,
+    "seen": 1794911069.6537778,
+    "ast_hash": "6829fbf388cf1df62ebaf7532011fe6e",
+    "semantic_hash": "6829fbf388cf1df62ebaf7532011fe6e"
+  },
+  "Athanor/Assets/Scripts/Game/Cutscene/Cutscene.cs": {
+    "mtime": 1794532306.496879,
+    "seen": 1794911069.653779,
+    "ast_hash": "8b7accc206e278acf7cfd2702aebf78f",
+    "semantic_hash": "8b7accc206e278acf7cfd2702aebf78f"
+  },
+  "Athanor/Assets/Scripts/Game/Cutscene/DepthLook.cs": {
+    "mtime": 1794793289.8646486,
+    "seen": 1794911069.653781,
+    "ast_hash": "983c6c409d44adb4ddf33cc0ce1a9d6f",
+    "semantic_hash": "983c6c409d44adb4ddf33cc0ce1a9d6f"
+  },
+  "Athanor/Assets/Scripts/Game/Cutscene/ReactionCutscene.cs": {
+    "mtime": 1794793289.8646486,
+    "seen": 1794911069.6537824,
+    "ast_hash": "669029883927a4019dc7a7b90654bda0",
+    "semantic_hash": "669029883927a4019dc7a7b90654bda0"
+  },
+  "Athanor/Assets/Scripts/Game/Cutscene/SimpleCutscene.cs": {
+    "mtime": 1794793289.8646486,
+    "seen": 1794911069.6537833,
+    "ast_hash": "217e2aa51698ed9e62dd3fe2c505a8a2",
+    "semantic_hash": "217e2aa51698ed9e62dd3fe2c505a8a2"
+  },
+  "Athanor/Assets/Scripts/Game/Cutscene/TutorialController.cs": {
+    "mtime": 1794793289.8646486,
+    "seen": 1794911069.6537843,
+    "ast_hash": "6e2edcaa081f6ce434c83bdcfe574cc9",
+    "semantic_hash": "6e2edcaa081f6ce434c83bdcfe574cc9"
+  },
+  "Athanor/Assets/Scripts/Game/Cutscene/WindowView.cs": {
+    "mtime": 1794793289.8646486,
+    "seen": 1794911069.6537852,
+    "ast_hash": "20c48112ed994907f4b7f49844998f0c",
+    "semantic_hash": "20c48112ed994907f4b7f49844998f0c"
+  },
+  "Athanor/Assets/Scripts/Game/Depth/CameraSway.cs": {
+    "mtime": 1794882452.7017493,
+    "seen": 1794911069.6537862,
+    "ast_hash": "366a1d8e15785a083bd8c8cb0faae72d",
+    "semantic_hash": "366a1d8e15785a083bd8c8cb0faae72d"
+  },
+  "Athanor/Assets/Scripts/Game/Depth/DepthLayer.cs": {
+    "mtime": 1794878264.29009,
+    "seen": 1794911069.6537874,
+    "ast_hash": "fc5eef65118b6ee5edf8e9f96cf6dd8e",
+    "semantic_hash": "fc5eef65118b6ee5edf8e9f96cf6dd8e"
+  },
+  "Athanor/Assets/Scripts/Game/Depth/DepthMath.cs": {
+    "mtime": 1794882383.9504402,
+    "seen": 1794911069.6537883,
+    "ast_hash": "cf2a4e6f5a8049d30e35963d39fe246a",
+    "semantic_hash": "cf2a4e6f5a8049d30e35963d39fe246a"
+  },
+  "Athanor/Assets/Scripts/Game/Depth/DepthMood.cs": {
+    "mtime": 1794882452.7057493,
+    "seen": 1794911069.6537895,
+    "ast_hash": "5990372b860aba57ea41fff2aed08e2f",
+    "semantic_hash": "5990372b860aba57ea41fff2aed08e2f"
+  },
+  "Athanor/Assets/Scripts/Game/Depth/DepthRig.cs": {
+    "mtime": 1794882383.9514403,
+    "seen": 1794911069.6537905,
+    "ast_hash": "1b264adf7e11a93e33acb9b41b0e1911",
+    "semantic_hash": "1b264adf7e11a93e33acb9b41b0e1911"
+  },
+  "Athanor/Assets/Scripts/Game/Depth/DepthSwitch.cs": {
+    "mtime": 1794882383.9514403,
+    "seen": 1794911069.6537914,
+    "ast_hash": "5b3b31816e0e489a5492d1c95b227386",
+    "semantic_hash": "5b3b31816e0e489a5492d1c95b227386"
+  },
+  "Athanor/Assets/Scripts/Game/Depth/DepthTable.cs": {
+    "mtime": 1794878264.29009,
+    "seen": 1794911069.6537926,
+    "ast_hash": "0ebfbaa4634cbc485ee72441dc4a270a",
+    "semantic_hash": "0ebfbaa4634cbc485ee72441dc4a270a"
+  },
+  "Athanor/Assets/Scripts/Game/Depth/DepthTestControls.cs": {
+    "mtime": 1794882452.7067494,
+    "seen": 1794911069.6537936,
+    "ast_hash": "50a82317bdbb63e6557913c2997a99e2",
+    "semantic_hash": "50a82317bdbb63e6557913c2997a99e2"
+  },
+  "Athanor/Assets/Scripts/Game/Depth/DepthTiltShiftFeature.cs": {
+    "mtime": 1794882452.7047493,
+    "seen": 1794911069.6537945,
+    "ast_hash": "b268b233341e2e8fb49164e85eb86af3",
+    "semantic_hash": "b268b233341e2e8fb49164e85eb86af3"
+  },
+  "Athanor/Assets/Scripts/Game/Depth/FogSheet.cs": {
+    "mtime": 1794899442.6001086,
+    "seen": 1794911069.6537955,
+    "ast_hash": "fe4d9d070b4bd92052b45a9361ff7c55",
+    "semantic_hash": "fe4d9d070b4bd92052b45a9361ff7c55"
+  },
+  "Athanor/Assets/Scripts/Game/Depth/TiltShift.cs": {
+    "mtime": 1794882452.7037494,
+    "seen": 1794911069.653797,
+    "ast_hash": "8cde53efbe19fd9f0471b5e3cd605721",
+    "semantic_hash": "8cde53efbe19fd9f0471b5e3cd605721"
+  },
+  "Athanor/Assets/Scripts/Game/Fx/Flame.cs": {
+    "mtime": 1794532306.497879,
+    "seen": 1794911069.6537979,
+    "ast_hash": "027a1d8f689066e0f51db51c5484b0d7",
+    "semantic_hash": "027a1d8f689066e0f51db51c5484b0d7"
+  },
+  "Athanor/Assets/Scripts/Game/Fx/Flipbook.cs": {
+    "mtime": 1794532306.497879,
+    "seen": 1794911069.6537988,
+    "ast_hash": "b1c19b2ddc946fbc2e272bd7a860bb58",
+    "semantic_hash": "b1c19b2ddc946fbc2e272bd7a860bb58"
+  },
+  "Athanor/Assets/Scripts/Game/Fx/FlipbookSheet.cs": {
+    "mtime": 1794532306.497879,
+    "seen": 1794911069.6538,
+    "ast_hash": "097858c41cb872a15b34f69bb26c4a71",
+    "semantic_hash": "097858c41cb872a15b34f69bb26c4a71"
+  },
+  "Athanor/Assets/Scripts/Game/Fx/Fx.cs": {
+    "mtime": 1794532306.497879,
+    "seen": 1794911069.653801,
+    "ast_hash": "dd9021d36405038ff45584571b536d46",
+    "semantic_hash": "dd9021d36405038ff45584571b536d46"
+  },
+  "Athanor/Assets/Scripts/Game/Fx/ScreenFx.cs": {
+    "mtime": 1794793250.0096784,
+    "seen": 1794911069.653802,
+    "ast_hash": "248a09230b584c1163432565e0c25c67",
+    "semantic_hash": "248a09230b584c1163432565e0c25c67"
+  },
+  "Athanor/Assets/Scripts/Game/Fx/SparkMesh.cs": {
+    "mtime": 1794793289.8646486,
+    "seen": 1794911069.6538033,
+    "ast_hash": "964f043a07140763303525b48d973559",
+    "semantic_hash": "964f043a07140763303525b48d973559"
+  },
+  "Athanor/Assets/Scripts/Game/Fx/SparkParticles.cs": {
+    "mtime": 1794793250.0096784,
+    "seen": 1794911069.6538043,
+    "ast_hash": "ef9e84dcde76f8d0481e67e08af6fc59",
+    "semantic_hash": "ef9e84dcde76f8d0481e67e08af6fc59"
+  },
+  "Athanor/Assets/Scripts/Game/Fx/Sparks.cs": {
+    "mtime": 1794793250.0096784,
+    "seen": 1794911069.6538053,
+    "ast_hash": "7170119cc23cedc308dbd1901f1c1085",
+    "semantic_hash": "7170119cc23cedc308dbd1901f1c1085"
+  },
+  "Athanor/Assets/Scripts/Game/Support/Anim.cs": {
+    "mtime": 1794793250.0096784,
+    "seen": 1794911069.6538064,
+    "ast_hash": "9428441f9af170915169cbb0eaad62c7",
+    "semantic_hash": "9428441f9af170915169cbb0eaad62c7"
+  },
+  "Athanor/Assets/Scripts/Game/Support/ArtLibrary.cs": {
+    "mtime": 1794793289.8646486,
+    "seen": 1794911069.6538074,
+    "ast_hash": "415fd11f9f3f1196e41448c436a6a3c7",
+    "semantic_hash": "415fd11f9f3f1196e41448c436a6a3c7"
+  },
+  "Athanor/Assets/Scripts/Game/Support/AudioMute.cs": {
+    "mtime": 1794793289.8646486,
+    "seen": 1794911069.6538084,
+    "ast_hash": "e88c6f30c5b8060c431cb9f2aee23938",
+    "semantic_hash": "e88c6f30c5b8060c431cb9f2aee23938"
+  },
+  "Athanor/Assets/Scripts/Game/Support/Clickable.cs": {
+    "mtime": 1794532306.497879,
+    "seen": 1794911069.6538093,
+    "ast_hash": "d641fb0a36ed1f220fe76155fe2fdaca",
+    "semantic_hash": "d641fb0a36ed1f220fe76155fe2fdaca"
+  },
+  "Athanor/Assets/Scripts/Game/Support/Dev.cs": {
+    "mtime": 1794793289.8656485,
+    "seen": 1794911069.6538105,
+    "ast_hash": "2e922328198c83b6c32eb273254b60de",
+    "semantic_hash": "2e922328198c83b6c32eb273254b60de"
+  },
+  "Athanor/Assets/Scripts/Game/Support/Haptics.cs": {
+    "mtime": 1794793289.8656485,
+    "seen": 1794911069.6538115,
+    "ast_hash": "0504e1a6a6b51c96e5c84ed8841f0812",
+    "semantic_hash": "0504e1a6a6b51c96e5c84ed8841f0812"
+  },
+  "Athanor/Assets/Scripts/Game/Support/KindColors.cs": {
+    "mtime": 1794532306.497879,
+    "seen": 1794911069.6538124,
+    "ast_hash": "c0fb67325f7d151062766c12ee67d5c3",
+    "semantic_hash": "c0fb67325f7d151062766c12ee67d5c3"
+  },
+  "Athanor/Assets/Scripts/Game/Support/Label.cs": {
+    "mtime": 1794793289.8656485,
+    "seen": 1794911069.6538138,
+    "ast_hash": "ba6bf7c13706d87ead38a53a31e633e5",
+    "semantic_hash": "ba6bf7c13706d87ead38a53a31e633e5"
+  },
+  "Athanor/Assets/Scripts/Game/Support/LayoutData.cs": {
+    "mtime": 1794532306.497879,
+    "seen": 1794911069.6538146,
+    "ast_hash": "464e4209cc73a355bb36239fd781f453",
+    "semantic_hash": "464e4209cc73a355bb36239fd781f453"
+  },
+  "Athanor/Assets/Scripts/Game/Support/Loc.cs": {
+    "mtime": 1794793289.8656485,
+    "seen": 1794911069.6538155,
+    "ast_hash": "cc5a7d3a243fb30d7eae00ba8ac84b56",
+    "semantic_hash": "cc5a7d3a243fb30d7eae00ba8ac84b56"
+  },
+  "Athanor/Assets/Scripts/Game/Support/Make.cs": {
+    "mtime": 1794793289.8656485,
+    "seen": 1794911069.653817,
+    "ast_hash": "5fd487f68ae174bb335316ec01368f6a",
+    "semantic_hash": "5fd487f68ae174bb335316ec01368f6a"
+  },
+  "Athanor/Assets/Scripts/Game/Support/Motion.cs": {
+    "mtime": 1794793250.0096784,
+    "seen": 1794911069.6538181,
+    "ast_hash": "65cd245a3afbaf835af178ea33e11e17",
+    "semantic_hash": "65cd245a3afbaf835af178ea33e11e17"
+  },
+  "Athanor/Assets/Scripts/Game/Support/PointerInput.cs": {
+    "mtime": 1794532306.497879,
+    "seen": 1794911069.6538193,
+    "ast_hash": "dba4124e98de468a1975dfc1d518ee09",
+    "semantic_hash": "dba4124e98de468a1975dfc1d518ee09"
+  },
+  "Athanor/Assets/Scripts/Game/Support/Px.cs": {
+    "mtime": 1794532306.497879,
+    "seen": 1794911069.6538205,
+    "ast_hash": "940e6cfb061b1e6ca2cd4bbae35b4067",
+    "semantic_hash": "940e6cfb061b1e6ca2cd4bbae35b4067"
+  },
+  "Athanor/Assets/Scripts/Game/Support/RarityStars.cs": {
+    "mtime": 1794793289.8656485,
+    "seen": 1794911069.6538215,
+    "ast_hash": "cffcde880a145ec336a3747ee3240bec",
+    "semantic_hash": "cffcde880a145ec336a3747ee3240bec"
+  },
+  "Athanor/Assets/Scripts/Game/Support/Wording.cs": {
+    "mtime": 1794793289.8656485,
+    "seen": 1794911069.6538224,
+    "ast_hash": "eb2e54be255306bd84ef7ac61a2db1fb",
+    "semantic_hash": "eb2e54be255306bd84ef7ac61a2db1fb"
+  },
+  "Athanor/Assets/Scripts/Game/Ui/CatalystChoiceView.cs": {
+    "mtime": 1794793289.8656485,
+    "seen": 1794911069.6538234,
+    "ast_hash": "feaac8ce62161788902abe9f88fa1f65",
+    "semantic_hash": "feaac8ce62161788902abe9f88fa1f65"
+  },
+  "Athanor/Assets/Scripts/Game/Ui/EventView.cs": {
+    "mtime": 1794793289.8656485,
+    "seen": 1794911069.6538246,
+    "ast_hash": "3d81fad70918335d2787019650762547",
+    "semantic_hash": "3d81fad70918335d2787019650762547"
+  },
+  "Athanor/Assets/Scripts/Game/Ui/GoalToast.cs": {
+    "mtime": 1794793289.8656485,
+    "seen": 1794911069.6538255,
+    "ast_hash": "33b957dc6402a39831282fcff7ae5de3",
+    "semantic_hash": "33b957dc6402a39831282fcff7ae5de3"
+  },
+  "Athanor/Assets/Scripts/Game/Ui/GoalsView.cs": {
+    "mtime": 1794793289.8656485,
+    "seen": 1794911069.6538274,
+    "ast_hash": "e9a1f62cb601d07b030999b73c1889a9",
+    "semantic_hash": "e9a1f62cb601d07b030999b73c1889a9"
+  },
+  "Athanor/Assets/Scripts/Game/Ui/JournalView.cs": {
+    "mtime": 1794793289.8656485,
+    "seen": 1794911069.6538286,
+    "ast_hash": "d3b76c3b3a693e7060677a4ef44d386e",
+    "semantic_hash": "d3b76c3b3a693e7060677a4ef44d386e"
+  },
+  "Athanor/Assets/Scripts/Game/Ui/PauseMenu.cs": {
+    "mtime": 1794793289.8666487,
+    "seen": 1794911069.6538293,
+    "ast_hash": "f95b58e5ab9f51bf9387a9430350129a",
+    "semantic_hash": "f95b58e5ab9f51bf9387a9430350129a"
+  },
+  "Athanor/Assets/Scripts/Game/Ui/RunOverView.cs": {
+    "mtime": 1794793289.8666487,
+    "seen": 1794911069.6538308,
+    "ast_hash": "6bd614ca3d928cbef7616650cc78d967",
+    "semantic_hash": "6bd614ca3d928cbef7616650cc78d967"
+  },
+  "Athanor/Assets/Scripts/Game/Ui/TitleView.cs": {
+    "mtime": 1794793289.8666487,
+    "seen": 1794911069.6538317,
+    "ast_hash": "a8a83b36044445d651661e2a90536f44",
+    "semantic_hash": "a8a83b36044445d651661e2a90536f44"
+  },
+  "Athanor/Assets/Scripts/Game/Ui/Tooltip.cs": {
+    "mtime": 1794793289.8666487,
+    "seen": 1794911069.6538327,
+    "ast_hash": "577b2d628e1ed5b25e5dcfb4836e7358",
+    "semantic_hash": "577b2d628e1ed5b25e5dcfb4836e7358"
+  },
+  "Athanor/Assets/Scripts/Game/Ui/UiButton.cs": {
+    "mtime": 1794793289.8666487,
+    "seen": 1794911069.6538336,
+    "ast_hash": "8fb2cee2b1958e1523c1f789a0584100",
+    "semantic_hash": "8fb2cee2b1958e1523c1f789a0584100"
+  },
+  "Athanor/Assets/Tests/EditMode/BalanceMatrixTests.cs": {
+    "mtime": 1794555782.1887667,
+    "seen": 1794911069.653835,
+    "ast_hash": "d0be72da4e1a35bd47acbe6c1c035429",
+    "semantic_hash": "d0be72da4e1a35bd47acbe6c1c035429"
+  },
+  "Athanor/Assets/Tests/EditMode/ChainTests.cs": {
+    "mtime": 1794532306.4988792,
+    "seen": 1794911069.653836,
+    "ast_hash": "0eb4777f982b19aedb55677e59ba23e2",
+    "semantic_hash": "0eb4777f982b19aedb55677e59ba23e2"
+  },
+  "Athanor/Assets/Tests/EditMode/ContentTests.cs": {
+    "mtime": 1794793289.8666487,
+    "seen": 1794911069.653837,
+    "ast_hash": "11c073a381e421b5ddefec4869382ed4",
+    "semantic_hash": "11c073a381e421b5ddefec4869382ed4"
+  },
+  "Athanor/Assets/Tests/EditMode/IgniteTests.cs": {
+    "mtime": 1794532306.4988792,
+    "seen": 1794911069.6538382,
+    "ast_hash": "5b8d02d45151a119345a9b26a9406310",
+    "semantic_hash": "5b8d02d45151a119345a9b26a9406310"
+  },
+  "Athanor/Assets/Tests/EditMode/LangTests.cs": {
+    "mtime": 1794793289.8666487,
+    "seen": 1794911069.653839,
+    "ast_hash": "621515acad4c2d505cf86ca79079bb69",
+    "semantic_hash": "621515acad4c2d505cf86ca79079bb69"
+  },
+  "Athanor/Assets/Tests/EditMode/LoreTests.cs": {
+    "mtime": 1794793289.8666487,
+    "seen": 1794911069.65384,
+    "ast_hash": "253051abe5fb7161542ec9f79d93fbc4",
+    "semantic_hash": "253051abe5fb7161542ec9f79d93fbc4"
+  },
+  "Athanor/Assets/Tests/EditMode/Phase3Tests.cs": {
+    "mtime": 1794793289.8676486,
+    "seen": 1794911069.6538413,
+    "ast_hash": "7515bac7985f9cc2e5deac6cff579b5d",
+    "semantic_hash": "7515bac7985f9cc2e5deac6cff579b5d"
+  },
+  "Athanor/Assets/Tests/EditMode/RarityReportTests.cs": {
+    "mtime": 1794793289.8676486,
+    "seen": 1794911069.6538422,
+    "ast_hash": "732c2539b1db1fa6c5d5ae622e1d5c70",
+    "semantic_hash": "732c2539b1db1fa6c5d5ae622e1d5c70"
+  },
+  "Athanor/Assets/Tests/EditMode/RarityTests.cs": {
+    "mtime": 1794793289.8676486,
+    "seen": 1794911069.6538432,
+    "ast_hash": "500fa004fb60cd729fb35f4a9f3f4283",
+    "semantic_hash": "500fa004fb60cd729fb35f4a9f3f4283"
+  },
+  "Athanor/Assets/Tests/EditMode/RoleSimTests.cs": {
+    "mtime": 1794533163.7675822,
+    "seen": 1794911069.653844,
+    "ast_hash": "6b9c59a75c4136c6186d855f5cb6b4fa",
+    "semantic_hash": "6b9c59a75c4136c6186d855f5cb6b4fa"
+  },
+  "Athanor/Assets/Tests/EditMode/RunStateTests.cs": {
+    "mtime": 1794553307.0560398,
+    "seen": 1794911069.6538453,
+    "ast_hash": "5e98be9bc0c8cb1758648766b594e452",
+    "semantic_hash": "5e98be9bc0c8cb1758648766b594e452"
+  },
+  "Athanor/Assets/Tests/EditMode/SatchelTests.cs": {
+    "mtime": 1794532306.4998791,
+    "seen": 1794911069.6538463,
+    "ast_hash": "3cb862b4edb13a3e6531015a33d287de",
+    "semantic_hash": "3cb862b4edb13a3e6531015a33d287de"
+  },
+  "Athanor/Assets/Tests/EditMode/SettingsTests.cs": {
+    "mtime": 1794793289.8676486,
+    "seen": 1794911069.6538472,
+    "ast_hash": "91912d65cbae7408b4803ccfebeca8a7",
+    "semantic_hash": "91912d65cbae7408b4803ccfebeca8a7"
+  },
+  "Athanor/Assets/Tests/EditMode/TestContent.cs": {
+    "mtime": 1794532306.4998791,
+    "seen": 1794911069.6538484,
+    "ast_hash": "289e64fc14da15808c7f2d6a38560fa6",
+    "semantic_hash": "289e64fc14da15808c7f2d6a38560fa6"
+  },
+  "Athanor/Assets/Tests/EditMode/TutorialTests.cs": {
+    "mtime": 1794793289.8676486,
+    "seen": 1794911069.6538494,
+    "ast_hash": "709672bbfbe7c6c1d04efdc94a3a07b6",
+    "semantic_hash": "709672bbfbe7c6c1d04efdc94a3a07b6"
+  },
+  "Athanor/Assets/Tests/EditModeGame/AutoHookTests.cs": {
+    "mtime": 1794793289.8676486,
+    "seen": 1794911069.6538503,
+    "ast_hash": "0b07c89b0aa995562155bf13dcfc6a83",
+    "semantic_hash": "0b07c89b0aa995562155bf13dcfc6a83"
+  },
+  "Athanor/Assets/Tests/EditModeGame/ChoiceHookTests.cs": {
+    "mtime": 1794793289.8676486,
+    "seen": 1794911069.6538515,
+    "ast_hash": "3494425c797e5d10ab2a71d391b89d1c",
+    "semantic_hash": "3494425c797e5d10ab2a71d391b89d1c"
+  },
+  "Athanor/Assets/Tests/EditModeGame/DepthClickTests.cs": {
+    "mtime": 1794902665.793199,
+    "seen": 1794911069.6538525,
+    "ast_hash": "1b134cbd341ebbb97112889a3763d943",
+    "semantic_hash": "1b134cbd341ebbb97112889a3763d943"
+  },
+  "Athanor/Assets/Tests/EditModeGame/DepthLayerTests.cs": {
+    "mtime": 1794902677.6580927,
+    "seen": 1794911069.6538534,
+    "ast_hash": "47461d26a673c1fccbe4945067b8d31f",
+    "semantic_hash": "47461d26a673c1fccbe4945067b8d31f"
+  },
+  "Athanor/Assets/Tests/EditModeGame/DepthLookTests.cs": {
+    "mtime": 1794793289.8676486,
+    "seen": 1794911069.6538544,
+    "ast_hash": "e4786595fec6a49cf4aebf9c03f9a581",
+    "semantic_hash": "e4786595fec6a49cf4aebf9c03f9a581"
+  },
+  "Athanor/Assets/Tests/EditModeGame/HudTests.cs": {
+    "mtime": 1794793289.8686485,
+    "seen": 1794911069.6538558,
+    "ast_hash": "e8d69b200908b66b43b3a31c412e0218",
+    "semantic_hash": "e8d69b200908b66b43b3a31c412e0218"
+  },
+  "Athanor/Assets/Tests/EditModeGame/LabelLineBoxTests.cs": {
+    "mtime": 1794793289.8686485,
+    "seen": 1794911069.6538568,
+    "ast_hash": "a7045996f4ca6a15f7491dee1795b96f",
+    "semantic_hash": "a7045996f4ca6a15f7491dee1795b96f"
+  },
+  "Athanor/Assets/Tests/EditModeGame/LocTests.cs": {
+    "mtime": 1794793289.8686485,
+    "seen": 1794911069.6538577,
+    "ast_hash": "dd6713a0681c6b34b0abdda9fbd2d455",
+    "semantic_hash": "dd6713a0681c6b34b0abdda9fbd2d455"
+  },
+  "Athanor/Assets/Tests/EditModeGame/MotionTests.cs": {
+    "mtime": 1794793250.0116785,
+    "seen": 1794911069.653859,
+    "ast_hash": "68a90ff8131070eab83656ea5c6318af",
+    "semantic_hash": "68a90ff8131070eab83656ea5c6318af"
+  },
+  "Athanor/Assets/Tests/EditModeGame/PauseTests.cs": {
+    "mtime": 1794793289.8686485,
+    "seen": 1794911069.6538599,
+    "ast_hash": "a2a03f01db4062a4756a2be10053366f",
+    "semantic_hash": "a2a03f01db4062a4756a2be10053366f"
+  },
+  "Athanor/Assets/Tests/EditModeGame/RunOverDepthTests.cs": {
+    "mtime": 1794793289.8686485,
+    "seen": 1794911069.6538608,
+    "ast_hash": "0cecc78117d73e2f936656db7149b755",
+    "semantic_hash": "0cecc78117d73e2f936656db7149b755"
+  },
+  "Athanor/Assets/Tests/EditModeGame/SaveTests.cs": {
+    "mtime": 1794793289.8686485,
+    "seen": 1794911069.653862,
+    "ast_hash": "c8241c01a4c353e0685250daf33c1e82",
+    "semantic_hash": "c8241c01a4c353e0685250daf33c1e82"
+  },
+  "Athanor/Assets/Tests/EditModeGame/SettingsHapticsTests.cs": {
+    "mtime": 1794793289.8686485,
+    "seen": 1794911069.653863,
+    "ast_hash": "3f51a4758b231e956bfc4c2245cdf093",
+    "semantic_hash": "3f51a4758b231e956bfc4c2245cdf093"
+  },
+  "Athanor/Assets/Tests/EditModeGame/SparksTests.cs": {
+    "mtime": 1794793250.0116785,
+    "seen": 1794911069.653864,
+    "ast_hash": "f74447558e9db5af77bce1391486fcaa",
+    "semantic_hash": "f74447558e9db5af77bce1391486fcaa"
+  },
+  "Athanor/Assets/Tests/EditModeGame/TutorialFlowTests.cs": {
+    "mtime": 1794793289.8686485,
+    "seen": 1794911069.6538649,
+    "ast_hash": "5043c13bd862187e268deb92a6572221",
+    "semantic_hash": "5043c13bd862187e268deb92a6572221"
+  },
+  "Athanor/Packages/manifest.json": {
+    "mtime": 1794793250.0176787,
+    "seen": 1794911069.6538663,
+    "ast_hash": "b1b9b4a46b3e920bbf80561de02f1174",
+    "semantic_hash": "b1b9b4a46b3e920bbf80561de02f1174"
+  },
+  "Athanor/Packages/packages-lock.json": {
+    "mtime": 1794793250.0176787,
+    "seen": 1794911069.6538672,
+    "ast_hash": "ed98dd621f18437abfa8bdd5779848ed",
+    "semantic_hash": "ed98dd621f18437abfa8bdd5779848ed"
+  },
+  "Athanor/ProjectSettings/Packages/com.unity.learn.iet-framework/Settings.json": {
+    "mtime": 1794532306.5118802,
+    "seen": 1794911069.6538682,
+    "ast_hash": "2177a5c848307b58aacfd34b02d6d8f5",
+    "semantic_hash": "2177a5c848307b58aacfd34b02d6d8f5"
+  },
+  "Athanor/ProjectSettings/SceneTemplateSettings.json": {
+    "mtime": 1794532306.5118802,
+    "seen": 1794911069.6538694,
+    "ast_hash": "eeb26e313b89cd9334b828428a4847ef",
+    "semantic_hash": "eeb26e313b89cd9334b828428a4847ef"
+  },
+  "docs/architecture/tr-registry.yaml": {
+    "mtime": 1794793289.8706486,
+    "seen": 1794911069.6538703,
+    "ast_hash": "c3e03700bf842bc7df83e33d5889003c",
+    "semantic_hash": "c3e03700bf842bc7df83e33d5889003c"
+  },
+  "docs/mockup/art.js": {
+    "mtime": 1794532306.5178804,
+    "seen": 1794911069.6538713,
+    "ast_hash": "681ccffe4ebf3321cdd2c429578d7046",
+    "semantic_hash": "681ccffe4ebf3321cdd2c429578d7046"
+  },
+  "docs/mockup/build.sh": {
+    "mtime": 1794532306.5178804,
+    "seen": 1794911069.6538725,
+    "ast_hash": "6821a9ced2cd4087c5f58619983481ff",
+    "semantic_hash": "6821a9ced2cd4087c5f58619983481ff"
+  },
+  "docs/mockup/cutscene/art.js": {
+    "mtime": 1794793250.0196786,
+    "seen": 1794911069.6538734,
+    "ast_hash": "42f1e7e29b4ee752b214a357fe8ff563",
+    "semantic_hash": "42f1e7e29b4ee752b214a357fe8ff563"
+  },
+  "docs/mockup/cutscene/cutscene.js": {
+    "mtime": 1794793250.0206788,
+    "seen": 1794911069.6538744,
+    "ast_hash": "b8fe6fa045b50eb386f9154b48aef372",
+    "semantic_hash": "b8fe6fa045b50eb386f9154b48aef372"
+  },
+  "docs/mockup/cutscene/fxsheets.js": {
+    "mtime": 1794793250.0346792,
+    "seen": 1794911069.6538754,
+    "ast_hash": "cd6ba739ff6ac3a526fc26014ec71353",
+    "semantic_hash": "cd6ba739ff6ac3a526fc26014ec71353"
+  },
+  "docs/mockup/depth/assets.js": {
+    "mtime": 1794793250.0376792,
+    "seen": 1794911069.6538765,
+    "ast_hash": "292ef7ea4a8d53d8f148f2c42dcc36e9",
+    "semantic_hash": "292ef7ea4a8d53d8f148f2c42dcc36e9"
+  },
+  "docs/mockup/depth/build.sh": {
+    "mtime": 1794793250.0376792,
+    "seen": 1794911069.6538775,
+    "ast_hash": "8dbca5072f0f5634d970cfcb4b83eb2b",
+    "semantic_hash": "8dbca5072f0f5634d970cfcb4b83eb2b"
+  },
+  "docs/mockup/depth/main.js": {
+    "mtime": 1794793250.0376792,
+    "seen": 1794911069.6538785,
+    "ast_hash": "93e6394c98c98d7760d44fe33d9db443",
+    "semantic_hash": "93e6394c98c98d7760d44fe33d9db443"
+  },
+  "docs/mockup/hd2d/assets.js": {
+    "mtime": 1794793371.1686747,
+    "seen": 1794911069.6538796,
+    "ast_hash": "4fe81932517e4dd97044b1a2fdf82c52",
+    "semantic_hash": "4fe81932517e4dd97044b1a2fdf82c52"
+  },
+  "docs/mockup/hd2d/build.sh": {
+    "mtime": 1794793371.1686747,
+    "seen": 1794911069.6538806,
+    "ast_hash": "bf444203fce9a751d7144ca6ce5a3fd7",
+    "semantic_hash": "bf444203fce9a751d7144ca6ce5a3fd7"
+  },
+  "docs/mockup/hd2d/shoot.mjs": {
+    "mtime": 1794878264.2920902,
+    "seen": 1794911069.6538815,
+    "ast_hash": "1b33c47cbee4d712cdd3ee0de0a57ce7",
+    "semantic_hash": "1b33c47cbee4d712cdd3ee0de0a57ce7"
+  },
+  "docs/mockup/loops/loops.js": {
+    "mtime": 1794793371.1686747,
+    "seen": 1794911069.6538827,
+    "ast_hash": "838cddbc4fb7a8c15e96642c655003ca",
+    "semantic_hash": "838cddbc4fb7a8c15e96642c655003ca"
+  },
+  "docs/mockup/loops/room.js": {
+    "mtime": 1794793371.1686747,
+    "seen": 1794911069.6538837,
+    "ast_hash": "860145f300d5c10d30861fa113e95f26",
+    "semantic_hash": "860145f300d5c10d30861fa113e95f26"
+  },
+  "docs/mockup/loops/shoot.mjs": {
+    "mtime": 1794793371.1696746,
+    "seen": 1794911069.6538846,
+    "ast_hash": "dc5812105bb753e2cb133d11cd8c7b38",
+    "semantic_hash": "dc5812105bb753e2cb133d11cd8c7b38"
+  },
+  "docs/mockup/phase5-ui/app.js": {
+    "mtime": 1794793289.882649,
+    "seen": 1794911069.6538856,
+    "ast_hash": "9856645895aa5af337d6dd3eef56826c",
+    "semantic_hash": "9856645895aa5af337d6dd3eef56826c"
+  },
+  "docs/mockup/scene.js": {
+    "mtime": 1794532306.5188806,
+    "seen": 1794911069.6538868,
+    "ast_hash": "b585d1b77e736ab2bd03dde6440c67c8",
+    "semantic_hash": "b585d1b77e736ab2bd03dde6440c67c8"
+  },
+  "docs/registry/architecture.yaml": {
+    "mtime": 1794793289.885649,
+    "seen": 1794911069.6538877,
+    "ast_hash": "01201e7110789a6631ed9e6c0e126f53",
+    "semantic_hash": "01201e7110789a6631ed9e6c0e126f53"
+  },
+  "Athanor/Assets/TextMesh Pro/Resources/LineBreaking Following Characters.txt": {
+    "mtime": 1794532306.5078797,
+    "seen": 1794911069.6538887,
+    "ast_hash": "345c77ed32179f5f982dcf8e2b1d92af",
+    "semantic_hash": "345c77ed32179f5f982dcf8e2b1d92af"
+  },
+  "Athanor/Assets/TextMesh Pro/Resources/LineBreaking Leading Characters.txt": {
+    "mtime": 1794532306.5078797,
+    "seen": 1794911069.65389,
+    "ast_hash": "d52dd40acd32a62df3bc764b1e783ddf",
+    "semantic_hash": "d52dd40acd32a62df3bc764b1e783ddf"
+  },
+  "Athanor/Assets/WebGLTemplates/Athanor/index.html": {
+    "mtime": 1794793289.8686485,
+    "seen": 1794911069.6538908,
+    "ast_hash": "127c85e63cc98ce416e332eaa0de2ef8",
+    "semantic_hash": "127c85e63cc98ce416e332eaa0de2ef8"
+  },
+  "Athanor/ProjectSettings/ProjectVersion.txt": {
+    "mtime": 1794532306.5118802,
+    "seen": 1794911069.6538918,
+    "ast_hash": "31ad8d0db2978e8320e9e2330b8b3694",
+    "semantic_hash": "31ad8d0db2978e8320e9e2330b8b3694"
+  },
+  "docs/CI.md": {
+    "mtime": 1794793289.8696487,
+    "seen": 1794911069.6538928,
+    "ast_hash": "acb282486b497c5983a38b52953b84b3",
+    "semantic_hash": "acb282486b497c5983a38b52953b84b3"
+  },
+  "docs/CLAUDE.md": {
+    "mtime": 1794793289.8696487,
+    "seen": 1794911069.653894,
+    "ast_hash": "da87fd3d6fa6848d6d2cede62301be95",
+    "semantic_hash": "da87fd3d6fa6848d6d2cede62301be95"
+  },
+  "docs/COLLABORATIVE-DESIGN-PRINCIPLE.md": {
+    "mtime": 1794793289.8706486,
+    "seen": 1794911069.653895,
+    "ast_hash": "3cbd038f263db5541d946d06fd24e1e6",
+    "semantic_hash": "3cbd038f263db5541d946d06fd24e1e6"
+  },
+  "docs/WORKFLOW-GUIDE.md": {
+    "mtime": 1794793289.8706486,
+    "seen": 1794911069.6538959,
+    "ast_hash": "ce3de0539cc63d6880976e8b652c5680",
+    "semantic_hash": "ce3de0539cc63d6880976e8b652c5680"
+  },
+  "docs/devlogs/README.md": {
+    "mtime": 1794878264.29109,
+    "seen": 1794911069.653897,
+    "ast_hash": "80b3ccee1a70daa32335c793e58b990e",
+    "semantic_hash": "80b3ccee1a70daa32335c793e58b990e"
+  },
+  "docs/devlogs/phase-1-mvp.md": {
+    "mtime": 1794532306.51288,
+    "seen": 1794911069.653898,
+    "ast_hash": "ee37663f7e7836546bcbf120a4f95d17",
+    "semantic_hash": "ee37663f7e7836546bcbf120a4f95d17"
+  },
+  "docs/devlogs/phase-2-handoff.md": {
+    "mtime": 1794532306.51288,
+    "seen": 1794911069.653899,
+    "ast_hash": "7b87212c9e78a19315920bcb84c585e9",
+    "semantic_hash": "7b87212c9e78a19315920bcb84c585e9"
+  },
+  "docs/devlogs/phase-2-reactivity-and-chains.md": {
+    "mtime": 1794532306.51288,
+    "seen": 1794911069.6539001,
+    "ast_hash": "10b5ce1ad74c7ba4484cc7af00c03ec9",
+    "semantic_hash": "10b5ce1ad74c7ba4484cc7af00c03ec9"
+  },
+  "docs/devlogs/phase-3-handoff.md": {
+    "mtime": 1794557737.9570842,
+    "seen": 1794911069.653901,
+    "ast_hash": "dffc1d851d904cc3e397934c7abf1aac",
+    "semantic_hash": "dffc1d851d904cc3e397934c7abf1aac"
+  },
+  "docs/devlogs/phase-3-plan.md": {
+    "mtime": 1794532306.5168805,
+    "seen": 1794911069.653902,
+    "ast_hash": "2eb6d134a67023e4daeb3880ee25d8c0",
+    "semantic_hash": "2eb6d134a67023e4daeb3880ee25d8c0"
+  },
+  "docs/devlogs/phase-3-unlocks-aspects-events.md": {
+    "mtime": 1794558803.5264661,
+    "seen": 1794911069.653903,
+    "ast_hash": "9f0fc4a7315c6f2eb25d723cda4ade6f",
+    "semantic_hash": "9f0fc4a7315c6f2eb25d723cda4ade6f"
+  },
+  "docs/devlogs/phase-4-assets.md": {
+    "mtime": 1794793250.0186787,
+    "seen": 1794911069.6539042,
+    "ast_hash": "6ad97dc3f3ff2f989887e12cd5d1eef3",
+    "semantic_hash": "6ad97dc3f3ff2f989887e12cd5d1eef3"
+  },
+  "docs/devlogs/phase-4-depth.md": {
+    "mtime": 1794793250.0186787,
+    "seen": 1794911069.6539052,
+    "ast_hash": "8f6f4d8667a60297141bde6168ad8bd1",
+    "semantic_hash": "8f6f4d8667a60297141bde6168ad8bd1"
+  },
+  "docs/devlogs/phase-4-lore.md": {
+    "mtime": 1794793289.8706486,
+    "seen": 1794911069.6539066,
+    "ast_hash": "b675e11965c1a9be854efe144a21a681",
+    "semantic_hash": "b675e11965c1a9be854efe144a21a681"
+  },
+  "docs/devlogs/phase-4-packages.md": {
+    "mtime": 1794793250.0186787,
+    "seen": 1794911069.6539078,
+    "ast_hash": "a5508d40d36f06759970ba5b8c92d017",
+    "semantic_hash": "a5508d40d36f06759970ba5b8c92d017"
+  },
+  "docs/devlogs/phase-4-prep.md": {
+    "mtime": 1794793289.8706486,
+    "seen": 1794911069.653909,
+    "ast_hash": "79cd4a6f537b96598b7f3e0dbbeefe0f",
+    "semantic_hash": "79cd4a6f537b96598b7f3e0dbbeefe0f"
+  },
+  "docs/devlogs/phase-4-settings-localization.md": {
+    "mtime": 1794793250.0196786,
+    "seen": 1794911069.65391,
+    "ast_hash": "e8c0ac6c6e12f8626d663b79c1576171",
+    "semantic_hash": "e8c0ac6c6e12f8626d663b79c1576171"
+  },
+  "docs/devlogs/phase-4-tutorial-script.md": {
+    "mtime": 1794793289.8786488,
+    "seen": 1794911069.653911,
+    "ast_hash": "58995fd65841a00ce43efc547dd9f175",
+    "semantic_hash": "58995fd65841a00ce43efc547dd9f175"
+  },
+  "docs/devlogs/phase-5-endings-lore.md": {
+    "mtime": 1794793371.1666746,
+    "seen": 1794911069.6539123,
+    "ast_hash": "03e80ace9624db5b9e6f42ca69017513",
+    "semantic_hash": "03e80ace9624db5b9e6f42ca69017513"
+  },
+  "docs/devlogs/phase-5-lore.md": {
+    "mtime": 1794793289.8786488,
+    "seen": 1794911069.6539133,
+    "ast_hash": "c0debaf5f9ee1ec134a3a05f980fede8",
+    "semantic_hash": "c0debaf5f9ee1ec134a3a05f980fede8"
+  },
+  "docs/engine-reference/README.md": {
+    "mtime": 1794793289.8786488,
+    "seen": 1794911069.6539147,
+    "ast_hash": "afff58891af95990788831092e9647ff",
+    "semantic_hash": "afff58891af95990788831092e9647ff"
+  },
+  "docs/engine-reference/godot/VERSION.md": {
+    "mtime": 1794793289.8786488,
+    "seen": 1794911069.6539156,
+    "ast_hash": "8fd8444f32d049a6bb48a49b20a10116",
+    "semantic_hash": "8fd8444f32d049a6bb48a49b20a10116"
+  },
+  "docs/engine-reference/godot/breaking-changes.md": {
+    "mtime": 1794793289.8786488,
+    "seen": 1794911069.653918,
+    "ast_hash": "2baf55ef1eec49beffd4ffe94b20cbfe",
+    "semantic_hash": "2baf55ef1eec49beffd4ffe94b20cbfe"
+  },
+  "docs/engine-reference/godot/current-best-practices.md": {
+    "mtime": 1794793289.8786488,
+    "seen": 1794911069.653919,
+    "ast_hash": "d8ef681ca4559ba3cf65e4f823b38625",
+    "semantic_hash": "d8ef681ca4559ba3cf65e4f823b38625"
+  },
+  "docs/engine-reference/godot/deprecated-apis.md": {
+    "mtime": 1794793289.8786488,
+    "seen": 1794911069.65392,
+    "ast_hash": "117e23f4e45acbea4db724cf3d69ec63",
+    "semantic_hash": "117e23f4e45acbea4db724cf3d69ec63"
+  },
+  "docs/engine-reference/godot/modules/animation.md": {
+    "mtime": 1794793289.8786488,
+    "seen": 1794911069.6539211,
+    "ast_hash": "752fb05b6bb04c4d7c4dcbfdf0c7f936",
+    "semantic_hash": "752fb05b6bb04c4d7c4dcbfdf0c7f936"
+  },
+  "docs/engine-reference/godot/modules/audio.md": {
+    "mtime": 1794793289.8786488,
+    "seen": 1794911069.653922,
+    "ast_hash": "363b4454a54c19b3cbbadadce1e8fc6b",
+    "semantic_hash": "363b4454a54c19b3cbbadadce1e8fc6b"
+  },
+  "docs/engine-reference/godot/modules/input.md": {
+    "mtime": 1794793289.8786488,
+    "seen": 1794911069.653923,
+    "ast_hash": "25b607515540ee3e9652b18ab30c41ac",
+    "semantic_hash": "25b607515540ee3e9652b18ab30c41ac"
+  },
+  "docs/engine-reference/godot/modules/navigation.md": {
+    "mtime": 1794793289.8786488,
+    "seen": 1794911069.6539245,
+    "ast_hash": "1ddfb6e5b476c0312cd49eff927861d7",
+    "semantic_hash": "1ddfb6e5b476c0312cd49eff927861d7"
+  },
+  "docs/engine-reference/godot/modules/networking.md": {
+    "mtime": 1794793289.8786488,
+    "seen": 1794911069.6539254,
+    "ast_hash": "a9b033a23c4fb4ea92aadc28daa4d41c",
+    "semantic_hash": "a9b033a23c4fb4ea92aadc28daa4d41c"
+  },
+  "docs/engine-reference/godot/modules/physics.md": {
+    "mtime": 1794793289.8786488,
+    "seen": 1794911069.6539264,
+    "ast_hash": "38d7158719a6179768e304697e208871",
+    "semantic_hash": "38d7158719a6179768e304697e208871"
+  },
+  "docs/engine-reference/godot/modules/rendering.md": {
+    "mtime": 1794793289.879649,
+    "seen": 1794911069.6539273,
+    "ast_hash": "1786184bfcec55ff53fc90b23e1abb9e",
+    "semantic_hash": "1786184bfcec55ff53fc90b23e1abb9e"
+  },
+  "docs/engine-reference/godot/modules/ui.md": {
+    "mtime": 1794793289.879649,
+    "seen": 1794911069.6539288,
+    "ast_hash": "dd0aa9dafd0fbc4cb009b4976ac30901",
+    "semantic_hash": "dd0aa9dafd0fbc4cb009b4976ac30901"
+  },
+  "docs/engine-reference/unity/PLUGINS.md": {
+    "mtime": 1794793289.879649,
+    "seen": 1794911069.6539297,
+    "ast_hash": "b1f7af06b5d7b869c264a78c18423064",
+    "semantic_hash": "b1f7af06b5d7b869c264a78c18423064"
+  },
+  "docs/engine-reference/unity/VERSION.md": {
+    "mtime": 1794793289.879649,
+    "seen": 1794911069.6539307,
+    "ast_hash": "6ff3db8eb3d7678461f7171d442e0046",
+    "semantic_hash": "6ff3db8eb3d7678461f7171d442e0046"
+  },
+  "docs/engine-reference/unity/breaking-changes.md": {
+    "mtime": 1794793289.879649,
+    "seen": 1794911069.6539319,
+    "ast_hash": "fd11d4e7f7368ca505983e54e2ab2009",
+    "semantic_hash": "fd11d4e7f7368ca505983e54e2ab2009"
+  },
+  "docs/engine-reference/unity/current-best-practices.md": {
+    "mtime": 1794793289.879649,
+    "seen": 1794911069.653933,
+    "ast_hash": "748bade60266657c3a2cb2f835a19c5b",
+    "semantic_hash": "748bade60266657c3a2cb2f835a19c5b"
+  },
+  "docs/engine-reference/unity/deprecated-apis.md": {
+    "mtime": 1794793289.879649,
+    "seen": 1794911069.653934,
+    "ast_hash": "e7a428fcdfe4399917f2d222713f9514",
+    "semantic_hash": "e7a428fcdfe4399917f2d222713f9514"
+  },
+  "docs/engine-reference/unity/modules/animation.md": {
+    "mtime": 1794793289.879649,
+    "seen": 1794911069.6539352,
+    "ast_hash": "fbb93502b1af991007b628c1584c8105",
+    "semantic_hash": "fbb93502b1af991007b628c1584c8105"
+  },
+  "docs/engine-reference/unity/modules/audio.md": {
+    "mtime": 1794793289.879649,
+    "seen": 1794911069.6539361,
+    "ast_hash": "c75ba52d26f326b0829602b533bb13a3",
+    "semantic_hash": "c75ba52d26f326b0829602b533bb13a3"
+  },
+  "docs/engine-reference/unity/modules/input.md": {
+    "mtime": 1794793289.879649,
+    "seen": 1794911069.6539373,
+    "ast_hash": "8d1a875739e901c70ef0b9aa8e78b07c",
+    "semantic_hash": "8d1a875739e901c70ef0b9aa8e78b07c"
+  },
+  "docs/engine-reference/unity/modules/navigation.md": {
+    "mtime": 1794793289.879649,
+    "seen": 1794911069.6539385,
+    "ast_hash": "3e371b260a2a67b1f38b2125d0abb4e8",
+    "semantic_hash": "3e371b260a2a67b1f38b2125d0abb4e8"
+  },
+  "docs/engine-reference/unity/modules/networking.md": {
+    "mtime": 1794793289.879649,
+    "seen": 1794911069.6539395,
+    "ast_hash": "226f5e3c14452358be41975da97c0ca3",
+    "semantic_hash": "226f5e3c14452358be41975da97c0ca3"
+  },
+  "docs/engine-reference/unity/modules/physics.md": {
+    "mtime": 1794793289.879649,
+    "seen": 1794911069.6539404,
+    "ast_hash": "871d8124077b1e29d1cc75e399224d77",
+    "semantic_hash": "871d8124077b1e29d1cc75e399224d77"
+  },
+  "docs/engine-reference/unity/modules/rendering.md": {
+    "mtime": 1794793289.879649,
+    "seen": 1794911069.6539419,
+    "ast_hash": "199cabb13c8752bc73e97cf91940a7dd",
+    "semantic_hash": "199cabb13c8752bc73e97cf91940a7dd"
+  },
+  "docs/engine-reference/unity/modules/ui.md": {
+    "mtime": 1794793289.879649,
+    "seen": 1794911069.6539428,
+    "ast_hash": "5958418e0ced41508f505be7b86b3272",
+    "semantic_hash": "5958418e0ced41508f505be7b86b3272"
+  },
+  "docs/engine-reference/unity/plugins/addressables.md": {
+    "mtime": 1794793289.8806489,
+    "seen": 1794911069.6539438,
+    "ast_hash": "9cdf3b05ac174e295dc31960359ca6cd",
+    "semantic_hash": "9cdf3b05ac174e295dc31960359ca6cd"
+  },
+  "docs/engine-reference/unity/plugins/cinemachine.md": {
+    "mtime": 1794793289.8806489,
+    "seen": 1794911069.6539447,
+    "ast_hash": "742e9c0112dc8c1aba2000af4117e08e",
+    "semantic_hash": "742e9c0112dc8c1aba2000af4117e08e"
+  },
+  "docs/engine-reference/unity/plugins/dots-entities.md": {
+    "mtime": 1794793289.8806489,
+    "seen": 1794911069.653946,
+    "ast_hash": "6f7b0b4806d36509dc8f0237286d3a45",
+    "semantic_hash": "6f7b0b4806d36509dc8f0237286d3a45"
+  },
+  "docs/engine-reference/unreal/PLUGINS.md": {
+    "mtime": 1794793289.8806489,
+    "seen": 1794911069.6539469,
+    "ast_hash": "40a333a631f21ae35aa478809fad8345",
+    "semantic_hash": "40a333a631f21ae35aa478809fad8345"
+  },
+  "docs/engine-reference/unreal/VERSION.md": {
+    "mtime": 1794793289.8806489,
+    "seen": 1794911069.6539478,
+    "ast_hash": "b0ade564862147e9b80c57777b0676c0",
+    "semantic_hash": "b0ade564862147e9b80c57777b0676c0"
+  },
+  "docs/engine-reference/unreal/breaking-changes.md": {
+    "mtime": 1794793289.8806489,
+    "seen": 1794911069.6539493,
+    "ast_hash": "e7cbf1c0df3553e744849d055a595338",
+    "semantic_hash": "e7cbf1c0df3553e744849d055a595338"
+  },
+  "docs/engine-reference/unreal/current-best-practices.md": {
+    "mtime": 1794793289.8806489,
+    "seen": 1794911069.6539502,
+    "ast_hash": "99caf98bbef5b4cdba4cca0bffdee838",
+    "semantic_hash": "99caf98bbef5b4cdba4cca0bffdee838"
+  },
+  "docs/engine-reference/unreal/deprecated-apis.md": {
+    "mtime": 1794793289.8806489,
+    "seen": 1794911069.6539512,
+    "ast_hash": "a701772a316d7ad2ceae1b2e0b650785",
+    "semantic_hash": "a701772a316d7ad2ceae1b2e0b650785"
+  },
+  "docs/engine-reference/unreal/modules/animation.md": {
+    "mtime": 1794793289.8806489,
+    "seen": 1794911069.6539524,
+    "ast_hash": "a7aad830c7922c4d6cfa15d03b68786a",
+    "semantic_hash": "a7aad830c7922c4d6cfa15d03b68786a"
+  },
+  "docs/engine-reference/unreal/modules/audio.md": {
+    "mtime": 1794793289.8806489,
+    "seen": 1794911069.6539533,
+    "ast_hash": "ef236b4acb2f8785dd40c45b5ff96088",
+    "semantic_hash": "ef236b4acb2f8785dd40c45b5ff96088"
+  },
+  "docs/engine-reference/unreal/modules/input.md": {
+    "mtime": 1794793289.8806489,
+    "seen": 1794911069.6539543,
+    "ast_hash": "44a79cae541582e870d697ec07d39d2d",
+    "semantic_hash": "44a79cae541582e870d697ec07d39d2d"
+  },
+  "docs/engine-reference/unreal/modules/navigation.md": {
+    "mtime": 1794793289.8806489,
+    "seen": 1794911069.6539552,
+    "ast_hash": "0be731297295b4e09b78f2272a289327",
+    "semantic_hash": "0be731297295b4e09b78f2272a289327"
+  },
+  "docs/engine-reference/unreal/modules/networking.md": {
+    "mtime": 1794793289.881649,
+    "seen": 1794911069.6539564,
+    "ast_hash": "a21b64b0017815e523d2d48bda21311e",
+    "semantic_hash": "a21b64b0017815e523d2d48bda21311e"
+  },
+  "docs/engine-reference/unreal/modules/physics.md": {
+    "mtime": 1794793289.881649,
+    "seen": 1794911069.6539574,
+    "ast_hash": "f35eeb2513ed96eba6a37f426edfadd7",
+    "semantic_hash": "f35eeb2513ed96eba6a37f426edfadd7"
+  },
+  "docs/engine-reference/unreal/modules/rendering.md": {
+    "mtime": 1794793289.881649,
+    "seen": 1794911069.6539583,
+    "ast_hash": "b7b7951f3f5edce7b506d776074ca5e5",
+    "semantic_hash": "b7b7951f3f5edce7b506d776074ca5e5"
+  },
+  "docs/engine-reference/unreal/modules/ui.md": {
+    "mtime": 1794793289.881649,
+    "seen": 1794911069.6539595,
+    "ast_hash": "9f1397da8b115e157033eb646daf5c2f",
+    "semantic_hash": "9f1397da8b115e157033eb646daf5c2f"
+  },
+  "docs/engine-reference/unreal/plugins/common-ui.md": {
+    "mtime": 1794793289.881649,
+    "seen": 1794911069.6539605,
+    "ast_hash": "92bb1c3266e01f5a4e36c1525e698a4c",
+    "semantic_hash": "92bb1c3266e01f5a4e36c1525e698a4c"
+  },
+  "docs/engine-reference/unreal/plugins/gameplay-ability-system.md": {
+    "mtime": 1794793289.881649,
+    "seen": 1794911069.6539614,
+    "ast_hash": "fb15d16959c5e876bbdabce448c43973",
+    "semantic_hash": "fb15d16959c5e876bbdabce448c43973"
+  },
+  "docs/engine-reference/unreal/plugins/gameplay-camera-system.md": {
+    "mtime": 1794793289.881649,
+    "seen": 1794911069.6539629,
+    "ast_hash": "02e613089cc2cc4c24fad6899ccfcaf7",
+    "semantic_hash": "02e613089cc2cc4c24fad6899ccfcaf7"
+  },
+  "docs/engine-reference/unreal/plugins/pcg.md": {
+    "mtime": 1794793289.881649,
+    "seen": 1794911069.6539638,
+    "ast_hash": "39d77cc69fa2307feed96f638edb1450",
+    "semantic_hash": "39d77cc69fa2307feed96f638edb1450"
+  },
+  "docs/engine-reference/web/VERSION.md": {
+    "mtime": 1794793289.881649,
+    "seen": 1794911069.6539648,
+    "ast_hash": "d6cb5d5575032702d24039127372b83d",
+    "semantic_hash": "d6cb5d5575032702d24039127372b83d"
+  },
+  "docs/engine-reference/web/breaking-changes.md": {
+    "mtime": 1794793289.881649,
+    "seen": 1794911069.6539657,
+    "ast_hash": "27c65b4fd7bf1e55bffb5fa19e188d44",
+    "semantic_hash": "27c65b4fd7bf1e55bffb5fa19e188d44"
+  },
+  "docs/engine-reference/web/current-best-practices.md": {
+    "mtime": 1794793289.881649,
+    "seen": 1794911069.653967,
+    "ast_hash": "d687018607886b7abf866aa9b82c1d45",
+    "semantic_hash": "d687018607886b7abf866aa9b82c1d45"
+  },
+  "docs/engine-reference/web/deprecated-apis.md": {
+    "mtime": 1794793289.881649,
+    "seen": 1794911069.6539679,
+    "ast_hash": "348af51201d1c6a311fda37865fa5e2d",
+    "semantic_hash": "348af51201d1c6a311fda37865fa5e2d"
+  },
+  "docs/engine-reference/web/phaser.md": {
+    "mtime": 1794793289.881649,
+    "seen": 1794911069.6539688,
+    "ast_hash": "ae650f493c1fa1a357969fc7bd28be70",
+    "semantic_hash": "ae650f493c1fa1a357969fc7bd28be70"
+  },
+  "docs/engine-reference/web/pixijs.md": {
+    "mtime": 1794793289.881649,
+    "seen": 1794911069.65397,
+    "ast_hash": "13676b90ecb24c0bcd72a87e8f0203d0",
+    "semantic_hash": "13676b90ecb24c0bcd72a87e8f0203d0"
+  },
+  "docs/engine-reference/web/threejs.md": {
+    "mtime": 1794793289.882649,
+    "seen": 1794911069.653971,
+    "ast_hash": "942d95164c5edcf565fd6680268a4272",
+    "semantic_hash": "942d95164c5edcf565fd6680268a4272"
+  },
+  "docs/migration-guide-v1.1.md": {
+    "mtime": 1794793289.882649,
+    "seen": 1794911069.653972,
+    "ast_hash": "abb1dd057846ee68677e9b573ddbeac8",
+    "semantic_hash": "abb1dd057846ee68677e9b573ddbeac8"
+  },
+  "docs/mockup/cutscene/index.html": {
+    "mtime": 1794793250.035679,
+    "seen": 1794911069.653973,
+    "ast_hash": "2a6300c6fbefb2e897a2bc94b53d2ae4",
+    "semantic_hash": "2a6300c6fbefb2e897a2bc94b53d2ae4"
+  },
+  "docs/mockup/depth/index.html": {
+    "mtime": 1794793250.0376792,
+    "seen": 1794911069.653974,
+    "ast_hash": "936910808200e7c0414e33988fa0bf45",
+    "semantic_hash": "936910808200e7c0414e33988fa0bf45"
+  },
+  "docs/mockup/hd2d/SPEC.md": {
+    "mtime": 1794878264.29109,
+    "seen": 1794911069.6539752,
+    "ast_hash": "695a7363e95c8bc7fe1a300cf2ca46b7",
+    "semantic_hash": "695a7363e95c8bc7fe1a300cf2ca46b7"
+  },
+  "docs/mockup/hd2d/index.html": {
+    "mtime": 1794793371.1686747,
+    "seen": 1794911069.6539762,
+    "ast_hash": "672860684c55ab33851062bad4a86680",
+    "semantic_hash": "672860684c55ab33851062bad4a86680"
+  },
+  "docs/mockup/loops/index.html": {
+    "mtime": 1794793371.1686747,
+    "seen": 1794911069.6539774,
+    "ast_hash": "7d03408794dda9469b7ad18e2de9f175",
+    "semantic_hash": "7d03408794dda9469b7ad18e2de9f175"
+  },
+  "docs/mockup/mockup.html": {
+    "mtime": 1794532306.5188806,
+    "seen": 1794911069.6539783,
+    "ast_hash": "293d03a3beed9e7a6ffcc62f9594096e",
+    "semantic_hash": "293d03a3beed9e7a6ffcc62f9594096e"
+  },
+  "docs/mockup/page.html": {
+    "mtime": 1794532306.5188806,
+    "seen": 1794911069.6539793,
+    "ast_hash": "a4c2e222cb0d069c4ddd05e85becd010",
+    "semantic_hash": "a4c2e222cb0d069c4ddd05e85becd010"
+  },
+  "docs/mockup/phase5-ui/SPEC.md": {
+    "mtime": 1794793289.882649,
+    "seen": 1794911069.6539805,
+    "ast_hash": "76797d836a0f22e386290a99569d20c9",
+    "semantic_hash": "76797d836a0f22e386290a99569d20c9"
+  },
+  "docs/mockup/phase5-ui/VI-CARDS.md": {
+    "mtime": 1794793289.882649,
+    "seen": 1794911069.6539814,
+    "ast_hash": "1fd5bf6e7238724fc23fd91cef6da99e",
+    "semantic_hash": "1fd5bf6e7238724fc23fd91cef6da99e"
+  },
+  "docs/mockup/phase5-ui/index.html": {
+    "mtime": 1794793289.885649,
+    "seen": 1794911069.6539824,
+    "ast_hash": "c14a6e71a87a080e9e1b454839b4de78",
+    "semantic_hash": "c14a6e71a87a080e9e1b454839b4de78"
+  },
+  "docs/skill-flow-diagrams.md": {
+    "mtime": 1794793289.885649,
+    "seen": 1794911069.6539838,
+    "ast_hash": "ae8548ea47b2b6fb9df35997378458a8",
+    "semantic_hash": "ae8548ea47b2b6fb9df35997378458a8"
+  },
+  "docs/superpowers/plans/2026-11-11-athanor.md": {
+    "mtime": 1794532306.5188806,
+    "seen": 1794911069.6539848,
+    "ast_hash": "26052d26de072e33381f3d90bad94884",
+    "semantic_hash": "26052d26de072e33381f3d90bad94884"
+  },
+  "docs/superpowers/plans/2026-11-12-athanor-phase2.md": {
+    "mtime": 1794532306.5188806,
+    "seen": 1794911069.6539857,
+    "ast_hash": "3ab05c396c5c1ae2338883ac0a34c207",
+    "semantic_hash": "3ab05c396c5c1ae2338883ac0a34c207"
+  },
+  "docs/superpowers/plans/2026-11-13-athanor-phase4-tutorial-lore.md": {
+    "mtime": 1794793289.8866491,
+    "seen": 1794911069.6539872,
+    "ast_hash": "4bd4109aa8416d44382d077ead1e5842",
+    "semantic_hash": "4bd4109aa8416d44382d077ead1e5842"
+  },
+  "docs/superpowers/plans/2026-11-15-athanor-phase5-briefs.md": {
+    "mtime": 1794793289.8866491,
+    "seen": 1794911069.6539881,
+    "ast_hash": "114faf6156b9e14eb6be2359dc8df863",
+    "semantic_hash": "114faf6156b9e14eb6be2359dc8df863"
+  },
+  "docs/superpowers/plans/2026-11-15-athanor-phase5-delta2.md": {
+    "mtime": 1794793289.8866491,
+    "seen": 1794911069.653989,
+    "ast_hash": "06511c634a0b419391b131261c97c8c4",
+    "semantic_hash": "06511c634a0b419391b131261c97c8c4"
+  },
+  "docs/superpowers/plans/2026-11-15-athanor-phase5-delta3.md": {
+    "mtime": 1794793289.8866491,
+    "seen": 1794911069.65399,
+    "ast_hash": "92b6ff5210b6ccfc16da10b54ee56be7",
+    "semantic_hash": "92b6ff5210b6ccfc16da10b54ee56be7"
+  },
+  "docs/superpowers/plans/2026-11-15-athanor-phase5.md": {
+    "mtime": 1794793371.1696746,
+    "seen": 1794911069.6539912,
+    "ast_hash": "39410687ffbcd336e398a366126fedcb",
+    "semantic_hash": "39410687ffbcd336e398a366126fedcb"
+  },
+  "docs/superpowers/specs/2026-11-11-athanor-design.md": {
+    "mtime": 1794532306.5188806,
+    "seen": 1794911069.6539922,
+    "ast_hash": "d7f2e00169a1488005d0d718f3d181da",
+    "semantic_hash": "d7f2e00169a1488005d0d718f3d181da"
+  },
+  "docs/superpowers/specs/2026-11-12-athanor-phase2-design.md": {
+    "mtime": 1794532306.5188806,
+    "seen": 1794911069.6539931,
+    "ast_hash": "c25bdb3ef75bb043c4cd9a6b915a562f",
+    "semantic_hash": "c25bdb3ef75bb043c4cd9a6b915a562f"
+  },
+  "docs/superpowers/specs/2026-11-12-athanor-phase3-design.md": {
+    "mtime": 1794557616.1189818,
+    "seen": 1794911069.6539946,
+    "ast_hash": "2ee7c89c45af6ec5cc02a494967ef08f",
+    "semantic_hash": "2ee7c89c45af6ec5cc02a494967ef08f"
+  }
+}
