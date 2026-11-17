@@ -37,7 +37,7 @@ aliases: []
 [[Align]], [[ArtLibrary]], [[Clickable]], [[FontKind]], [[Label]], [[Loc]], [[Px]]
 
 ## Used by
-[[BenchView]], [[CardView]], [[CatalystChoiceView]], [[EventView]], [[Fx]], [[GameFlow]], [[GoalToast]], [[GoalsView]], [[HudView]], [[JournalView]], [[Label]], [[LinkView]], [[Loop]], [[PauseMenu]], [[RarityStars]], [[ReactionCutscene]], [[RunOverView]], [[SceneBuilder]], [[ScreenFx]], [[SimpleCutscene]], [[SparkParticles]], [[Sparks]], [[TileView]], [[TitleView]], [[Tooltip]], [[TutorialController]], [[UiButton]], [[WindowView]]
+[[BenchView]], [[CardView]], [[CatalystChoiceView]], [[DepthTestBuilder]], [[DepthTestEvidence]], [[EventView]], [[Fx]], [[GameFlow]], [[GoalToast]], [[GoalsView]], [[HudView]], [[JournalView]], [[Label]], [[LinkView]], [[Loop]], [[PauseMenu]], [[RarityStars]], [[ReactionCutscene]], [[RunOverView]], [[SceneBuilder]], [[ScreenFx]], [[SimpleCutscene]], [[SparkParticles]], [[Sparks]], [[TileView]], [[TitleView]], [[Tooltip]], [[TutorialController]], [[UiButton]], [[WindowView]]
 
 ## Tested by
-[[ChoiceHookTests]], [[LabelLineBoxTests]], [[LangTests]], [[PauseTests]], [[RunOverDepthTests]], [[SparksTests]]
+[[ChoiceHookTests]], [[DepthClickTests]], [[LabelLineBoxTests]], [[LangTests]], [[PauseTests]], [[RunOverDepthTests]], [[SparksTests]]

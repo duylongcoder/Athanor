@@ -5,7 +5,7 @@ tags: [moc/tests]
 ---
 
 # Tests
-393 test methods in 28 files. Run: `dotnet test tools/CoreTests` (rules) or `unity test Athanor --mode EditMode`.
+410 test methods in 30 files. Run: `dotnet test tools/CoreTests` (rules) or `unity test Athanor --mode EditMode`.
 
 - [[ChainTests]] — 26 tests · covers [[Bench]], [[ChainPlan]], [[ChainPlanner]], [[ContentDb]]
 - [[ContentTests]] — 41 tests · covers [[Bench]], [[ChainPlanner]], [[ContentData]], [[ContentDb]], [[Ops]], [[RunState]]
@@ -23,6 +23,8 @@ tags: [moc/tests]
 - [[TutorialTests]] — 18 tests · covers [[Bench]], [[ContentData]], [[ContentDb]], [[Effects]], [[IgniteOutcome]], [[Journal]], [[ReactionEvent]], [[RunOptions]]
 - [[AutoHookTests]] — 1 tests · covers [[GameFlow]]
 - [[ChoiceHookTests]] — 1 tests · covers [[ArtLibrary]], [[CatalystChoiceView]], [[ChoiceCard]], [[Make]]
+- [[DepthClickTests]] — 8 tests · covers [[ArtLibrary]], [[DepthMath]], [[DepthRig]], [[FogSheet]], [[LayoutData]], [[Make]], [[Px]], [[TileView]]
+- [[DepthLayerTests]] — 9 tests · covers [[ArtLibrary]], [[DepthLayer]], [[DepthMath]], [[Px]]
 - [[DepthLookTests]] — 8 tests · covers [[DepthLook]]
 - [[HudTests]] — 3 tests · covers [[ContentData]], [[ContentDb]], [[HudView]], [[Journal]], [[RunOptions]], [[RunPhase]], [[RunState]], [[Unlocks]]
 - [[LabelLineBoxTests]] — 5 tests · covers [[Align]], [[ArtLibrary]], [[FontKind]], [[Label]], [[Loc]], [[Make]]

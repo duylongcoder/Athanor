@@ -25,4 +25,4 @@ aliases: []
 | field | `public float lightIntensity = 1, haloAlpha = 0.5f, framesPerSecond = 11, phase` | 12 |  |
 
 ## Used by
-[[SceneBuilder]]
+[[DepthSwitch]], [[DepthTestBuilder]], [[DepthTestEvidence]], [[FlameSwap]], [[SceneBuilder]]

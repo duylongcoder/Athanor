@@ -127,7 +127,8 @@ public static class SceneBuilder
         return profile;
     }
 
-    static Transform BuildWorkshop(LayoutData layout)
+    /// <summary>The workshop bench (wall, window, table, candles, moonbeam, dust); DepthTestBuilder builds its copy with it.</summary>
+    internal static Transform BuildWorkshop(LayoutData layout)
     {
         var root = Make.Root("Workshop");
         Make.SpriteAt(root, "workshop_wall", 0, 0, 0, Make.Lib.lit);

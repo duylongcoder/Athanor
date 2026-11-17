@@ -39,7 +39,7 @@ namespace Athanor.Tests
         }
 
         [Test]
-        public void Scale_MatchesTheSpecTable()
+        public void Scale_SpecDepths_MatchTheSpecTable()
         {
             foreach (var (z, scale) in SpecScales) Assert.AreEqual(scale, DepthMath.Scale(z, D), 0.0006f, "z = " + z);
             Assert.AreEqual(1f, DepthMath.Scale(0, D), 1e-6f, "the art plane is not scaled");
@@ -70,7 +70,7 @@ namespace Athanor.Tests
         }
 
         [Test]
-        public void TableZ_RowsLieOnOnePlane()
+        public void TableZ_EveryArtRow_LiesOnOnePlane()
         {
             // 1 / distance linear in the screen row means the rows lie on one plane: world y is linear in world z
             Vector3 a = DepthMath.Place(Px.At(320, 132), DepthMath.TableZ(132, D), D), b = DepthMath.Place(Px.At(320, 254), DepthMath.TableZ(254, D), D);
@@ -90,32 +90,33 @@ namespace Athanor.Tests
             Assert.AreEqual(0f, DepthMath.Parallax(anchor, anchor, D), 1e-6f);
         }
 
+        GameObject go;
+
+        [TearDown]
+        public void TearDown() { if (go != null) Object.DestroyImmediate(go); }
+
         [Test]
         public void DepthLayer_Apply_PlacesAndScalesTheObjectAndItsPointLight()
         {
-            var go = new GameObject("layer");
-            try
-            {
-                go.transform.position = new Vector3(-94f, 86f, 0); go.transform.localScale = new Vector3(1, 0.8f, 1);
-                var light = go.AddComponent<Light2D>();
-                light.lightType = Light2D.LightType.Point; light.pointLightInnerRadius = 0; light.pointLightOuterRadius = 170;
-                var layer = DepthLayer.Add(go, -392f);
-                layer.Apply(D);
-                float s = DepthMath.Scale(-392f, D);
-                Assert.AreEqual(392f, go.transform.position.z, 1e-3f);
-                Assert.AreEqual(-94f * s, go.transform.position.x, 1e-3f);
-                Assert.AreEqual(0.8f * s, go.transform.localScale.y, 1e-4f);
-                Assert.AreEqual(170f * s, light.pointLightOuterRadius, 1e-3f, "URP ignores the transform scale of a point light: the radius is scaled");
-                layer.Apply(D);
-                Assert.AreEqual(170f * s, light.pointLightOuterRadius, 1e-3f, "applying twice does not compound");
-                var seen = DepthMath.Seen(go.transform.position, D);
-                Assert.AreEqual(-94f, seen.x, 1e-3f); Assert.AreEqual(86f, seen.y, 1e-3f);
-            }
-            finally { Object.DestroyImmediate(go); }
+            go = new GameObject("layer");
+            go.transform.position = new Vector3(-94f, 86f, 0); go.transform.localScale = new Vector3(1, 0.8f, 1);
+            var light = go.AddComponent<Light2D>();
+            light.lightType = Light2D.LightType.Point; light.pointLightInnerRadius = 0; light.pointLightOuterRadius = 170;
+            var layer = DepthLayer.Add(go, -392f);
+            layer.Apply(D);
+            float s = DepthMath.Scale(-392f, D);
+            Assert.AreEqual(392f, go.transform.position.z, 1e-3f);
+            Assert.AreEqual(-94f * s, go.transform.position.x, 1e-3f);
+            Assert.AreEqual(0.8f * s, go.transform.localScale.y, 1e-4f);
+            Assert.AreEqual(170f * s, light.pointLightOuterRadius, 1e-3f, "URP ignores the transform scale of a point light: the radius is scaled");
+            layer.Apply(D);
+            Assert.AreEqual(170f * s, light.pointLightOuterRadius, 1e-3f, "applying twice does not compound");
+            var seen = DepthMath.Seen(go.transform.position, D);
+            Assert.AreEqual(-94f, seen.x, 1e-3f); Assert.AreEqual(86f, seen.y, 1e-3f);
         }
 
         [Test]
-        public void DepthArt_IsNotInTheMainScenesArtLibrary()
+        public void ArtLibrary_MainScene_HasNoDepthArt()
         {
             var lib = AssetDatabase.LoadAssetAtPath<ArtLibrary>("Assets/Art/ArtLibrary.asset");
             Assert.NotNull(lib);
@@ -126,7 +127,7 @@ namespace Athanor.Tests
         [Test]
         public void DepthArt_ImportSettings_KeepTheBlurSmoothAndTheFogTiling()
         {
-            if (!AssetDatabase.IsValidFolder(DepthDir)) Assert.Ignore("no depth art in this checkout");
+            Assert.IsTrue(AssetDatabase.IsValidFolder(DepthDir), "the depth art is committed: " + DepthDir);
             var paths = AssetDatabase.FindAssets("t:Texture2D", new[] { DepthDir }).Select(AssetDatabase.GUIDToAssetPath).ToArray();
             Assert.IsNotEmpty(paths);
             foreach (string path in paths)

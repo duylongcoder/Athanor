@@ -24,4 +24,7 @@ aliases: []
 | method | `public RectData Placed(string name)` | 19 | Where a cropped full-frame layer (such as "workshop_table") sits. |
 
 ## Used by
-[[BenchView]], [[GameFlow]], [[SceneBuilder]]
+[[BenchView]], [[DepthTestBuilder]], [[DepthTestEvidence]], [[GameFlow]], [[SceneBuilder]]
+
+## Tested by
+[[DepthClickTests]]

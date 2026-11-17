@@ -32,6 +32,8 @@ namespace Athanor.Game
         public FlameSwap[] flames = new FlameSwap[0];
         /// <summary>Shown only with the effects on: the fog sheets and the foreground corners.</summary>
         public GameObject[] effectObjects = new GameObject[0];
+        /// <summary>Enabled only with the effects on: the tilt-shift.</summary>
+        public Behaviour[] effectBehaviours = new Behaviour[0];
 
         /// <summary>Shows the scene with the effects on or off.</summary>
         public void Set(bool on)
@@ -45,6 +47,7 @@ namespace Athanor.Game
                 if (f.flame.body != null && f.flame.frames != null && f.flame.frames.Length > 0) f.flame.body.sprite = f.flame.frames[0];
             }
             foreach (var go in effectObjects) if (go != null) go.SetActive(on);
+            foreach (var b in effectBehaviours) if (b != null) b.enabled = on;
         }
     }
 }

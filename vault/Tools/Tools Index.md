@@ -7,6 +7,8 @@ tags: [moc/tools]
 # Tools
 Scripts outside Unity (art, fx, web tests, rule tests, this vault).
 
+- `tools/art/blur.mjs` — Gaussian blur on premultiplied alpha, so transparent pixels never darken the edge.
+- `tools/art/export-depth.mjs` — HD-2D DepthTest layer art (task 5b-04): pre-blurred far layers, two near foreground corners, two mist layers.
 - `tools/art/export-window.mjs` — Writes only the window views (Background/window_d1..d5.png, Fx/window_drip.png) and a contact sheet; no layout.json, no other sprites.
 - `tools/art/export.mjs` — Writes every sprite the game uses into the Unity project, plus Resources/layout.json and a contact sheet.
 - `tools/art/icons.mjs` — The material and catalyst icon set (24x24), drawn in code.

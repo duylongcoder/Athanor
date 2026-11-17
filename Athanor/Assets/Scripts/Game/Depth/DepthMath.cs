@@ -57,5 +57,59 @@ namespace Athanor.Game
         /// picture re-aimed so that the anchor depth does not move. Positive follows the camera (far layers).
         /// </summary>
         public static float Parallax(float z, float zAnchor, float d = RestDistance) => -(d / (d - z) - d / (d - zAnchor));
+
+        /// <summary>Sway amplitude (camera travel in art px at z = 0) and the two periods, in seconds (owner gate G2 #4).</summary>
+        public const float SwayAmplitude = 4f, SwayPeriodX = 6f, SwayPeriodY = 9f;
+
+        /// <summary>The idle sway at time t: x = A sin(2 pi t / 6), y = A / 2 sin(2 pi t / 9), in art px, world y up.</summary>
+        public static Vector2 Sway(float t, float amplitude = SwayAmplitude) =>
+            new Vector2(amplitude * Mathf.Sin(2f * Mathf.PI * t / SwayPeriodX), amplitude / 2f * Mathf.Sin(2f * Mathf.PI * t / SwayPeriodY));
+
+        /// <summary>
+        /// The lens shift (art px on screen, world y up) that cancels a camera move of cam at the anchor depth, so that depth
+        /// does not move: cam * D / (D - zAnchor).
+        /// </summary>
+        public static Vector2 AnchorShift(Vector2 cam, float zAnchor, float d = RestDistance) => cam * (d / (d - zAnchor));
+
+        /// <summary>
+        /// The world camera's projection: the rest field of view on a 640:360 frame, with the picture shifted by
+        /// <paramref name="shift"/> art px (an off-axis frustum, the same as a lens shift).
+        /// </summary>
+        public static Matrix4x4 Projection(float d, Vector2 shift, float near, float far)
+        {
+            var m = Matrix4x4.Perspective(FovDegrees(d), Px.W / (float)Px.H, near, far);
+            m.m02 = -shift.x / (Px.W / 2f);
+            m.m12 = -shift.y / (Px.H / 2f);
+            return m;
+        }
+
+        /// <summary>
+        /// The ray through a viewport point (0..1, y up) of a world camera moved by cam from its rest position and shifted
+        /// by shift art px. The same ray as <c>Camera.ViewportPointToRay</c> on a camera set up with <see cref="Projection"/>.
+        /// </summary>
+        public static Ray ViewportRay(Vector2 viewport, Vector2 cam, Vector2 shift, float d = RestDistance)
+        {
+            float sx = (viewport.x - 0.5f) * Px.W - shift.x, sy = (viewport.y - 0.5f) * Px.H - shift.y;
+            return new Ray(new Vector3(cam.x, cam.y, -d), new Vector3(sx / d, sy / d, 1f).normalized);
+        }
+
+        /// <summary>
+        /// Where a ray meets the table's tilted top, as the flat (rest) world position of that point: the coordinates
+        /// <c>TileView.Contains</c> and <c>Clickable.Contains</c> use. False when the ray runs parallel to it or away from it.
+        /// </summary>
+        public static bool HitTable(Ray ray, out Vector2 flat, float d = RestDistance, float front = TableFront, float back = TableBack,
+            float topY = TableTopY, float rows = TableRows)
+        {
+            Vector3 a = Place(Px.At(0, topY), TableZ(topY, d, front, back, topY, rows), d);
+            Vector3 b = Place(Px.At(0, topY + rows), TableZ(topY + rows, d, front, back, topY, rows), d);
+            Vector3 n = Vector3.Cross(b - a, Vector3.right);
+            float den = Vector3.Dot(ray.direction, n);
+            flat = default;
+            if (Mathf.Abs(den) < 1e-6f) return false;
+            float t = Vector3.Dot(a - ray.origin, n) / den;
+            if (t <= 0) return false;
+            flat = Seen(ray.GetPoint(t), d);
+            return true;
+        }
     }
 }

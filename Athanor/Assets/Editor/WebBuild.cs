@@ -9,7 +9,7 @@ using UnityEngine;
 /// </summary>
 public static class WebBuild
 {
-    public const string Output = "Build/web", DevOutput = "Build/web-dev";
+    public const string Output = "Build/web", DevOutput = "Build/web-dev", DepthOutput = "Build/web-depth";
 
     [MenuItem("Athanor/Build for Web")]
     public static void Build() => Run(true);
@@ -25,7 +25,15 @@ public static class WebBuild
     [MenuItem("Athanor/Build for Web (quick, with autoplay)")]
     public static void BuildDev() => Run(false, BuildOptions.Development, DevOutput);
 
-    static void Run(bool release, BuildOptions options = BuildOptions.None, string output = Output)
+    /// <summary>
+    /// The HD-2D prototype scene alone (DepthTestBuilder), for the 5b-06 measurements, with the release settings, in a
+    /// folder of its own. The main build's scene list is not changed.
+    ///   unity build Athanor --target WebGL --execute-method WebBuild.BuildDepthTest
+    /// </summary>
+    [MenuItem("Athanor/Build Depth Test for Web")]
+    public static void BuildDepthTest() => Run(true, BuildOptions.None, DepthOutput, DepthTestBuilder.ScenePath);
+
+    static void Run(bool release, BuildOptions options = BuildOptions.None, string output = Output, string scene = "Assets/Scenes/Main.unity")
     {
         var target = NamedBuildTarget.WebGL;
         PlayerSettings.SetIl2CppCodeGeneration(target, Il2CppCodeGeneration.OptimizeSize);
@@ -47,7 +55,7 @@ public static class WebBuild
 
         var report = BuildPipeline.BuildPlayer(new BuildPlayerOptions
         {
-            scenes = new[] { "Assets/Scenes/Main.unity" }, locationPathName = output, target = BuildTarget.WebGL, options = options,
+            scenes = new[] { scene }, locationPathName = output, target = BuildTarget.WebGL, options = options,
         });
         var s = report.summary;
         string line = "Web build " + s.result + ": " + (s.totalSize / 1024 / 1024) + " MB in " + (int)s.totalTime.TotalSeconds + " s, " + s.totalErrors + " errors -> " + output;

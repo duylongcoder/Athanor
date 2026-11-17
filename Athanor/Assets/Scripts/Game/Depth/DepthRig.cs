@@ -25,6 +25,10 @@ namespace Athanor.Game
         public Camera uiCamera;
         /// <summary>The full-screen quad (640 x 360 units, on the UI layer) that shows the world texture.</summary>
         public MeshRenderer worldDisplay;
+        /// <summary>When playing, K follows the screen: the largest whole multiple of 640x360 that fits, at least 2.</summary>
+        public bool autoScale = true;
+        /// <summary>The world camera's clip planes (distance from the camera).</summary>
+        public float near = 50f, far = 2000f;
 
         MaterialPropertyBlock block;
 
@@ -34,11 +38,50 @@ namespace Athanor.Game
         /// <summary>The world camera's position at rest. Sway and shake offset the camera from here.</summary>
         public Vector3 RestPosition => new Vector3(0, 0, -distance);
 
+        /// <summary>The world camera's travel from rest (art px at z = 0, world y up): the sway.</summary>
+        public Vector2 CamOffset { get; private set; }
+        /// <summary>The shift of the whole world picture (art px, world y up): the anchor correction of the sway plus the shake.</summary>
+        public Vector2 ImageShift { get; private set; }
+        /// <summary>SPEC depth of the anchor row (art y 188), which the sway never moves.</summary>
+        public float AnchorZ => DepthMath.TableZ(DepthMath.AnchorY, distance);
+
+        /// <summary>
+        /// Moves the world camera by cam (the sway) and shifts the world picture by shake whole art px; the anchor row stays
+        /// still. The HUD camera is not touched.
+        /// </summary>
+        public void SetView(Vector2 cam, Vector2 shake)
+        {
+            CamOffset = cam;
+            ImageShift = DepthMath.AnchorShift(cam, AnchorZ, distance) + shake;
+            ApplyCamera();
+        }
+
+        /// <summary>Viewport point (0..1, y up) of the world texture under a point of the UI camera's world (640x360 units, origin at the centre).</summary>
+        public static Vector2 ViewportOf(Vector2 ui) => new Vector2(ui.x / Px.W + 0.5f, ui.y / Px.H + 0.5f);
+
+        /// <summary>The world ray under a point of the UI camera's world, through the world texture and the world camera.</summary>
+        public Ray WorldRay(Vector2 ui) => DepthMath.ViewportRay(ViewportOf(ui), CamOffset, ImageShift, distance);
+
+        /// <summary>The flat (rest) position on the table under a point of the UI camera's world: what the bench's hit tests take.</summary>
+        public bool BenchPoint(Vector2 ui, out Vector2 flat) => DepthMath.HitTable(WorldRay(ui), out flat, distance);
+
+        void ApplyCamera()
+        {
+            if (worldCamera == null) return;
+            worldCamera.orthographic = false;
+            worldCamera.fieldOfView = DepthMath.FovDegrees(distance);
+            worldCamera.nearClipPlane = near; worldCamera.farClipPlane = far;
+            worldCamera.transform.SetPositionAndRotation(RestPosition + (Vector3)CamOffset, Quaternion.identity);
+            worldCamera.projectionMatrix = DepthMath.Projection(distance, ImageShift, near, far);
+        }
+
         void OnEnable() => Apply();
         void OnDisable() => Release();
 
         void Update()
         {
+            if (Application.isPlaying && autoScale)
+                scale = Mathf.Max(2, Mathf.FloorToInt(Mathf.Min(Screen.width / (float)Px.W, Screen.height / (float)Px.H)));
             // a lost texture (a browser tab that lost its graphics context) or a changed K
             if (WorldTexture == null || !WorldTexture.IsCreated() || WorldTexture.width != Px.W * Mathf.Max(2, scale)) Apply();
         }
@@ -49,13 +92,8 @@ namespace Athanor.Game
         {
             scale = Mathf.Max(2, scale);
             EnsureTexture();
-            if (worldCamera != null)
-            {
-                worldCamera.orthographic = false;
-                worldCamera.fieldOfView = DepthMath.FovDegrees(distance);
-                worldCamera.transform.SetPositionAndRotation(RestPosition, Quaternion.identity);
-                worldCamera.targetTexture = WorldTexture;
-            }
+            ApplyCamera();
+            if (worldCamera != null) worldCamera.targetTexture = WorldTexture;
             if (worldDisplay != null)
             {
                 if (block == null) block = new MaterialPropertyBlock();

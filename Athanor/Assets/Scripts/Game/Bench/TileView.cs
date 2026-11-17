@@ -11,10 +11,11 @@ namespace Athanor.Game
     {
         public int index;
         public Vector3 centre;            // world position of the middle of the top face
-        Vector2 faceCentre, faceSize;
-        SpriteRenderer face, ring, shadow, icon, halo, lid, cross, mark;
-        Color markColor;
-        Light2D glowLight;
+        // serialized so a tile built in the editor and saved in a scene (DepthTestBuilder) still works when the scene reopens
+        [SerializeField, HideInInspector] Vector2 faceCentre, faceSize;
+        [SerializeField, HideInInspector] SpriteRenderer face, ring, shadow, icon, halo, lid, cross, mark;
+        [SerializeField, HideInInspector] Color markColor;
+        [SerializeField, HideInInspector] Light2D glowLight;
         Color glow;
         bool glows;
         float flash, appear = 1;
