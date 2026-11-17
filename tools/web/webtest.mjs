@@ -221,13 +221,13 @@ try {
   // ---- D: the Settings panel: language VI and back (desktop: no Vibration row), saved on close ----
   await click(320, 317, 800);                        // Settings
   await shot('d01_settings_en');
-  await click(375, 146, 900);                        // the whole Language cell switches to Vietnamese at once
+  await click(375, 178, 900);                        // the whole Language cell switches to Vietnamese at once
   await shot('d02_settings_vi');
   await size(640, 360);                              // 1x: the panel at its true pixel size, VI then EN
   await shot('d02_settings_vi_1x');
-  await click(375, 146, 900);
+  await click(375, 178, 900);
   await shot('d02_settings_en_1x');
-  await click(375, 146, 900);                        // back to Vietnamese for the rest of D
+  await click(375, 178, 900);                        // back to Vietnamese for the rest of D
   await size(1280, 720);
   await click(320, 244, 900);                        // Back writes the file
   await shot('d03_title_vi');
@@ -237,7 +237,7 @@ try {
   await load('reload');                              // the choice is kept
   await shot('d05_title_vi_after_reload');
   await click(320, 317, 800);
-  await click(375, 146, 900);                        // and back to English
+  await click(375, 178, 900);                        // and back to English
   await shot('d06_settings_en_again');
   await click(8, 20, 700);                           // a click outside closes
   await shot('d07_title_en_again');
@@ -250,8 +250,8 @@ try {
   const langs = () => logs.filter((l) => l.includes('[loc]'));
   const before = langs().length;
   await click(320, 317, 800);                        // Settings
-  await click(375, 146, 900);                        // the language cell
-  if (!langs().slice(before).some((l) => l.includes('[loc] vi'))) await click(375, 146, 900);   // it was Vietnamese: switch back to it
+  await click(375, 178, 900);                        // the language cell
+  if (!langs().slice(before).some((l) => l.includes('[loc] vi'))) await click(375, 178, 900);   // it was Vietnamese: switch back to it
   if (!langs().at(-1).includes('[loc] vi')) throw new Error('language is not Vietnamese: ' + langs().at(-1));
   await click(320, 244, 900);                        // Back
   await click(190, 317, 1500);                       // How to play
@@ -335,7 +335,7 @@ try {
   const setLang = async (want) => {
     for (let k = 0; k < 2; k++) {
       const n = langs().length;
-      await click(320, 317, 800); await click(375, 146, 900);
+      await click(320, 317, 800); await click(375, 178, 900);
       const now = langs().length > n ? langs().at(-1) : '';
       await click(320, 244, 800);
       if (now.includes('[loc] ' + want)) return;

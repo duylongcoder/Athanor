@@ -34,7 +34,7 @@ aliases: []
 [[ContentDb]], [[Journal]], [[Profile]], [[ProfileData]], [[Settings]]
 
 ## Used by
-[[AtlasBuilder]], [[DepthTestEvidence]], [[GameFlow]], [[TutorialRules]]
+[[AtlasBuilder]], [[DepthTestEvidence]], [[GameFlow]], [[MainDepthEvidence]], [[TutorialRules]]
 
 ## Tested by
 [[PauseTests]], [[SaveTests]], [[SettingsHapticsTests]], [[TutorialFlowTests]]

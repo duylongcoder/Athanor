@@ -49,7 +49,7 @@ aliases: []
 [[Align]], [[ContentDb]], [[FontKind]], [[Journal]], [[Label]], [[Loc]], [[Make]], [[Px]], [[ReactionEvent]], [[RunPhase]], [[RunState]]
 
 ## Used by
-[[BenchView]], [[GameFlow]], [[JournalView]], [[ReactionCutscene]], [[TutorialController]]
+[[BenchView]], [[GameFlow]], [[JournalView]], [[MainDepthEvidence]], [[ReactionCutscene]], [[TutorialController]]
 
 ## Tested by
 [[HudTests]]

@@ -3,11 +3,11 @@ generated: true
 type: test
 file: Athanor/Assets/Tests/EditModeGame/DepthClickTests.cs
 tags: [test]
-count: 8
+count: 9
 ---
 
 # DepthClickTests
-`Athanor/Assets/Tests/EditModeGame/DepthClickTests.cs` — 8 tests
+`Athanor/Assets/Tests/EditModeGame/DepthClickTests.cs` — 9 tests
 
 ## Covers
 [[ArtLibrary]], [[DepthMath]], [[DepthRig]], [[FogSheet]], [[LayoutData]], [[Make]], [[Px]], [[TileView]], [[TiltShift]]
@@ -15,6 +15,7 @@ count: 8
 ## Tests
 - `ClickOnTileCentre_AtRestAndUnderMaximumSway_HitsThatTile`
 - `ClickWhereTheCameraShowsTheTileCentre_UnderSwayAndShake_FindsThatPoint`
+- `DrawnFace_UnderShakeUpToThreePx_IsHitByTheRayAtCentreAndInsetCorners`
 - `WorldRay_UnderSwayAndShake_IsTheWorldCamerasOwnRay`
 - `Sway_KeepsTheAnchorRowStill_AndMovesTheWallLessThanAnArtPixel`
 - `SetView_ShakeOnly_MovesEveryDepthByTheSameWholeArtPixels`

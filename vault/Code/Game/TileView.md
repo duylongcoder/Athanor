@@ -12,7 +12,7 @@ aliases: []
 # TileView
 
 `public sealed class TileView` : `MonoBehaviour`
-- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Bench/TileView.cs:10-125`
+- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Bench/TileView.cs:10-129`
 
 > One of the nine bench tiles: its hover highlight and, when occupied, the material standing on it.
 
@@ -28,18 +28,20 @@ aliases: []
 | property | `public bool Marked` | 30 |  |
 | property | `public SpriteRenderer Icon` | 31 |  |
 | method | `public void Build(int i, TileData data, Transform parent)` | 33 |  |
-| method | `public bool Contains(Vector2 world)` | 58 |  |
-| method | `public void SetState(Color? marker, bool shut)` | 62 | The marker's colour (null: no marker) and whether the tile is shut. |
-| method | `public void Show(MaterialData m, bool pop)` | 72 |  |
-| method | `public void Clear()` | 85 |  |
-| method | `public void Flash(Color c)` | 93 | A quick bright pulse of the whole tile face. |
-| method | `public IEnumerator Consume()` | 96 | The material sinks into the tile in a puff of its own colour. |
+| property | `public Vector2 FaceCentre` | 59 | The face the tile is hit-tested on: centre and size in flat world units. |
+| property | `public Vector2 FaceSize` | 60 |  |
+| method | `public bool Contains(Vector2 world)` | 62 |  |
+| method | `public void SetState(Color? marker, bool shut)` | 66 | The marker's colour (null: no marker) and whether the tile is shut. |
+| method | `public void Show(MaterialData m, bool pop)` | 76 |  |
+| method | `public void Clear()` | 89 |  |
+| method | `public void Flash(Color c)` | 97 | A quick bright pulse of the whole tile face. |
+| method | `public IEnumerator Consume()` | 100 | The material sinks into the tile in a puff of its own colour. |
 
 ## Uses
 [[Anim]], [[Make]], [[Motion]], [[Px]], [[Sparks]]
 
 ## Used by
-[[BenchView]], [[DepthTestBuilder]], [[DepthTestControls]], [[DepthTestEvidence]]
+[[BenchView]], [[DepthTestBuilder]], [[DepthTestControls]], [[DepthTestEvidence]], [[MainDepthEvidence]]
 
 ## Tested by
-[[DepthClickTests]]
+[[DepthClickTests]], [[MainDepthTests]]

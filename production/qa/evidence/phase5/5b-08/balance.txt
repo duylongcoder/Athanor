@@ -1,0 +1,52 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  CoreTests -> /Users/bunker/Desktop/New Folder/tools/CoreTests/bin/Debug/net8.0/CoreTests.dll
+Test run for /Users/bunker/Desktop/New Folder/tools/CoreTests/bin/Debug/net8.0/CoreTests.dll (.NETCoreApp,Version=v8.0)
+A total of 1 test files matched the specified pattern.
+/Users/bunker/Desktop/New Folder/tools/CoreTests/bin/Debug/net8.0/CoreTests.dll
+NUnit Adapter 4.5.0.0: Test execution started
+Running selected tests in /Users/bunker/Desktop/New Folder/tools/CoreTests/bin/Debug/net8.0/CoreTests.dll
+   NUnit3TestExecutor discovered 2 of 2 NUnit test cases using Current Discovery mode, Explicit run
+MATRIX pouch mode 2
+MATRIX fresh                                        wins 132/200 (66%), avg depth 3,76, lost at 1..5: 7 4 23 33 1
+MATRIX fresh + all catalysts                        wins 164/200 (82%), avg depth 3,81, lost at 1..5: 7 3 10 16 0
+MATRIX fresh + all starters                         wins 134/200 (67%), avg depth 3,83, lost at 1..5: 4 3 25 34 0
+MATRIX half                                         wins 164/200 (82%), avg depth 3,91, lost at 1..5: 3 1 11 21 0
+MATRIX full                                         wins 166/200 (83%), avg depth 3,87, lost at 1..5: 4 2 10 18 0
+MATRIX fresh +aspects+events                        wins 129/200 (64%), avg depth 3,96, lost at 1..5: 1 2 20 47 1
+MATRIX fresh + all catalysts +aspects+events        wins 173/200 (86%), avg depth 3,97, lost at 1..5: 1 4 9 13 0
+MATRIX fresh + all starters +aspects+events         wins 140/200 (70%), avg depth 4,01, lost at 1..5: 0 1 17 40 2
+MATRIX half +aspects+events                         wins 163/200 (81%), avg depth 4,04, lost at 1..5: 0 2 12 22 1
+MATRIX full +aspects+events                         wins 169/200 (84%), avg depth 3,97, lost at 1..5: 0 1 13 17 0
+MATRIX fresh, aspects only                          wins 144/200 (72%), avg depth 3,90, lost at 1..5: 3 3 25 25 0
+MATRIX fresh, events only                           wins 129/200 (64%), avg depth 3,83, lost at 1..5: 5 4 23 37 2
+  Passed BalanceMatrix [38 s]
+EVENT no event           wins 144/200
+EVENT cracked_altar      Choice  at every depth 1 to 4: 157/200 (109%)
+EVENT tilted_workbench   Choice  at every depth 1 to 5: 153/200 (106%)
+EVENT old_ledger         Choice  at every depth 2 to 5: 144/200 (100%)
+EVENT hungry_furnace     Choice  at every depth 2 to 5: 120/200 (83%)
+EVENT dripping_well      Gamble  at every depth 1 to 5: 119/200 (82%); once, at d1 137/200 (95%), d2 148/200 (102%), d3 149/200 (103%), d4 141/200 (97%), d5 144/200 (100%)
+EVENT shifting_bench     Gamble  at every depth 2 to 5: 144/200 (100%); once, at d2 144/200 (100%), d3 144/200 (100%), d4 144/200 (100%), d5 144/200 (100%)
+EVENT smugglers_crate    Gamble  at every depth 3 to 5: 147/200 (102%); once, at d3 158/200 (109%), d4 142/200 (98%), d5 143/200 (99%)
+EVENT forgotten_satchel  Find    at every depth 1 to 3: 151/200 (104%)
+EVENT glinting_seam      Find    at every depth 3 to 5: 145/200 (100%)
+EVENT sealed_shrine      Shrine  at every depth 2 to 5: 139/200 (96%)
+EVENT quiet_shrine       Shrine  at every depth 3 to 5: 144/200 (100%)
+EVENT damp_air           Hazard  at every depth 2 to 5: 120/200 (83%); once, at d2 153/200 (106%), d3 144/200 (100%), d4 130/200 (90%), d5 143/200 (99%)
+EVENT falling_grit       Hazard  at every depth 2 to 5: 114/200 (79%); once, at d2 150/200 (104%), d3 152/200 (105%), d4 120/200 (83%), d5 139/200 (96%)
+EVENT cold_draft         Hazard  at every depth 3 to 5: 80/200 (55%); once, at d3 117/200 (81%), d4 113/200 (78%), d5 142/200 (98%)
+EVENT warm_stone         Boon    at every depth 1 to 5: 141/200 (97%)
+EVENT quiet_room         Lore    at every depth 1 to 5: 144/200 (100%)
+EVENT names_in_wall      Lore    at every depth 1 to 2: 144/200 (100%)
+EVENT warm_roots         Lore    at every depth 3 to 4: 144/200 (100%)
+EVENT pinned_note        Lore    at every depth 5 to 5: 144/200 (100%)
+RANDOM fresh  wins 0/200, ended at depth 1..5: 184 16 0 0 0
+RANDOM full   wins 0/200, ended at depth 1..5: 185 15 0 0 0
+NUnit Adapter 4.5.0.0: Test execution complete
+  Passed EventReport [1 m 34 s]
+
+Test Run Successful.
+Total tests: 2
+     Passed: 2
+ Total time: 2,2103 Minutes

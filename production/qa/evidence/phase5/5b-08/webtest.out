@@ -1,0 +1,154 @@
+loaded in 3.6 s
+canvas 1280x720: 1280x720 css 1280x720 at 0px,0px
+shot a01_title_1280
+canvas 1000x700: 1000x700 css 1000x700 at 0px,0px
+shot a02_title_1000x700
+shot a03_intro
+shot a_01_1_1_bench
+shot a_02_1_2_lay_ember_coal
+shot a_03_1_3_lay_deep_tear
+shot a_04_1_4_take_back
+shot a_05_1_5_ignite
+shot a_06_1_6_potency_parts
+shot a_07_1_6b_formula
+shot a_08_1_7_rack
+shot a_09_2_1_lay_miss
+shot a_10_2_2_ignite
+shot a_11_2_3_nothing_reacted
+shot a_12_2_4_open_journal
+shot a_13_2_5_journal
+shot a_14_2_6_index
+shot a_15_2_7_hint
+shot a_16_3_0_redraw
+shot a_17_3_1_lay_chain
+shot a_18_3_2_order
+shot a_19_3_3_ignite
+shot a_20_3_3b_step1
+shot a_21_3_3c_step2
+shot a_22_3_4_chain
+shot a_23_3_5_parts
+shot a_24_3_6_without_moondust
+shot a_25_5_1_offer
+shot a_26_5_2_offer
+shot a_27_5_3_take_one
+shot a_28_5_4_lay_catalyst_pair
+shot a_29_5_4b_ignite
+shot a_30_5_4c_catalyst_parts
+shot a_31_5_5_done
+tutorial a: 31 steps
+shot a07_after_trial
+shot a08_journal
+canvas 1000x700: 1000x700 css 1000x700 at 0px,0px
+shot a09_bench_1000x700
+canvas 500x300: 640x360 css 500x281 at 0px,9.375px
+shot a10_bench_500x300
+errors after A: 0
+loaded in 1.5 s
+shot b01_title_again
+shot b02_journal_kept
+shot b03_goals
+shot b04_reset_asks
+shot b05_after_reset
+errors after B: 0
+shot d01_settings_en
+shot d02_settings_vi
+shot d02_settings_vi_1x
+shot d02_settings_en_1x
+shot d03_title_vi
+shot d04_journal_vi
+loaded in 1.5 s
+shot d05_title_vi_after_reload
+shot d06_settings_en_again
+shot d07_title_en_again
+shot d08_journal_en
+errors after D: 0
+shot vi_01_1_1_bench
+shot vi_02_1_2_lay_ember_coal
+shot vi_03_1_3_lay_deep_tear
+shot vi_04_1_4_take_back
+shot vi_05_1_5_ignite
+shot vi_06_1_6_potency_parts
+shot vi_07_1_6b_formula
+shot vi_08_1_7_rack
+shot vi_09_2_1_lay_miss
+shot vi_10_2_2_ignite
+shot vi_11_2_3_nothing_reacted
+shot vi_12_2_4_open_journal
+shot vi_13_2_5_journal
+shot vi_14_2_6_index
+shot vi_15_2_7_hint
+shot vi_16_3_0_redraw
+shot vi_17_3_1_lay_chain
+shot vi_18_3_2_order
+shot vi_19_3_3_ignite
+shot vi_20_3_3b_step1
+shot vi_21_3_3c_step2
+shot vi_22_3_4_chain
+shot vi_23_3_5_parts
+shot vi_24_3_6_without_moondust
+shot vi_25_5_1_offer
+shot vi_26_5_2_offer
+shot vi_27_5_3_take_one
+shot vi_28_5_4_lay_catalyst_pair
+shot vi_29_5_4b_ignite
+shot vi_30_5_4c_catalyst_parts
+shot vi_31_5_5_done
+tutorial vi: 31 steps
+shot vi_back_on_title
+errors after T: 0
+damage: {"dbs":["/idbfs","UnityCache"],"keys":["/idbfs / FILE_DATA / /idbfs/5d0e8adf1687f8a7428b716700abad4c (no bytes)","/idbfs / FILE_DATA / /idbfs/5d0e8adf1687f8a7428b716700abad4c/PlayerPrefs (616 bytes)","UnityCache / RequestMetaDataStore / http://127.0.0.1:8092/Build/web-dev.data (no bytes)"],"changed":2,"around":["1þ\u0001\u0000\u0000\u0000\u0012athanor.journal.v1£\u0000\u0000\u0000{\"known\":[\"deep_tear+ember_coal\",\"ember_coal+iron_ore\",\"moondust+sky_i","\":0}]}\u0012athanor.profile.v1÷\u0000\u0000\u0000{\"version\":1,\"rewardSeed\":-2145491661,\"runsStarted\":0,\"runsWon\":0,\"won"]}
+loaded in 1.5 s
+shot c01_title_after_damage
+shot c02_journal_after_damage
+shot c03_goals_after_damage
+shot c04_aspects
+shot c04_event
+shot c04_event_result
+shot c05_bench_after_damage
+errors after C: 0
+shot e00_vi_menu
+shot e00_vi_confirm
+note: screen still moving after Quit: e00_vi
+shot e00_aspects
+shot e00_event
+shot e00_event_result
+shot e01_pause_menu_en
+shot e02_resumed
+shot e03_quit_confirm_en
+shot e04_quit_confirm_narrow_500x300
+shot e04b_cancel_back_to_menu
+shot e05_esc_closed
+shot e05b_esc_opens
+shot e05c_confirm_again
+note: screen still moving after Quit: e05
+shot e05d_after_yes
+shot e06_title_after_quit
+shot e07_journal_from_title
+shot e08_aspects
+shot e08_event
+shot e08_event_result
+shot e09_new_run_begins
+shot e10_menu
+shot e10_confirm
+note: screen still moving after Quit: e10
+shot e_32_tut_before_pause
+shot e11_tutorial_paused
+shot e11b_after_outside_click
+shot e12_esc_opens_again
+shot e12b_tutorial_resumed_by_esc
+shot e13_tut_menu
+shot e13_tut_confirm
+note: screen still moving after Quit: e13_tut
+shot e14_title_after_tutorial_quit
+errors after E (EN): 0 | first tutorial step: [log] [tut] This is the bench. Nine tiles. Materials go on t
+shot e15_aspects
+shot e15_event
+shot e15_event_result
+shot e16_pause_menu_vi
+shot e17_quit_confirm_vi
+shot e18_quit_confirm_vi_narrow_500x300
+note: screen still moving after Quit: e19
+shot e19_title_vi_after_quit
+errors after E: 0
+console: 38575 messages, 0 errors, 129 screenshots
+WEBTEST_EXIT 0

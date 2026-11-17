@@ -20,6 +20,8 @@ namespace Athanor.Core
         /// <summary>0-10, 0 = off.</summary>
         public int sfx = 8;
         public bool haptics = true;
+        /// <summary>The idle camera sway of the HD-2D bench (owner gate G2 #5). On by default; the shake is not affected.</summary>
+        public bool sway = true;
         /// <summary>"" (not chosen: use the system language), "en" or "vi".</summary>
         public string language = "";
 
@@ -35,12 +37,13 @@ namespace Athanor.Core
         /// <summary>Flat JSON object, same shape JsonUtility writes.</summary>
         public string ToJson()
         {
-            var c = new Settings { version = version, music = music, sfx = sfx, haptics = haptics, language = language }.Clamp();
+            var c = new Settings { version = version, music = music, sfx = sfx, haptics = haptics, sway = sway, language = language }.Clamp();
             var sb = new StringBuilder();
             sb.Append("{\"version\":").Append(c.version.ToString(CultureInfo.InvariantCulture));
             sb.Append(",\"music\":").Append(c.music.ToString(CultureInfo.InvariantCulture));
             sb.Append(",\"sfx\":").Append(c.sfx.ToString(CultureInfo.InvariantCulture));
             sb.Append(",\"haptics\":").Append(c.haptics ? "true" : "false");
+            sb.Append(",\"sway\":").Append(c.sway ? "true" : "false");
             sb.Append(",\"language\":\"").Append(c.language).Append("\"}");
             return sb.ToString();
         }
@@ -89,7 +92,7 @@ namespace Athanor.Core
                     var v = ReadString();
                     if (v == null) return false;
                     if (key == "language") s.language = v;
-                    else if (key == "version" || key == "music" || key == "sfx" || key == "haptics") return false;
+                    else if (key == "version" || key == "music" || key == "sfx" || key == "haptics" || key == "sway") return false;
                     return true;
                 }
                 if (c == 't' || c == 'f')
@@ -99,6 +102,7 @@ namespace Athanor.Core
                     if (string.CompareOrdinal(t, i, word, 0, word.Length) != 0) return false;
                     i += word.Length;
                     if (key == "haptics") s.haptics = b;
+                    else if (key == "sway") s.sway = b;
                     else if (key == "version" || key == "music" || key == "sfx" || key == "language") return false;
                     return true;
                 }
@@ -112,7 +116,7 @@ namespace Athanor.Core
                     case "version": s.version = n; break;
                     case "music": s.music = n; break;
                     case "sfx": s.sfx = n; break;
-                    case "haptics": case "language": return false;
+                    case "haptics": case "sway": case "language": return false;
                 }
                 return true;
             }

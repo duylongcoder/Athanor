@@ -1,0 +1,235 @@
+{
+ "url": "http://127.0.0.1:8081/",
+ "viewport": "640x360",
+ "scale": 1,
+ "canvas": "640x360 css 640x360",
+ "load_seconds": 0.7,
+ "tiles_rest": "45/45",
+ "checks": [
+  {
+   "name": "rest tile 0 point 0",
+   "ok": true,
+   "detail": "art 218.0,166.0"
+  },
+  {
+   "name": "rest tile 0 point 1",
+   "ok": true,
+   "detail": "art 281.0,166.0"
+  },
+  {
+   "name": "rest tile 0 point 2",
+   "ok": true,
+   "detail": "art 218.0,147.0"
+  },
+  {
+   "name": "rest tile 0 point 3",
+   "ok": true,
+   "detail": "art 281.0,147.0"
+  },
+  {
+   "name": "rest tile 0 point 4",
+   "ok": true,
+   "detail": "art 249.5,156.5"
+  },
+  {
+   "name": "rest tile 1 point 0",
+   "ok": true,
+   "detail": "art 290.0,166.0"
+  },
+  {
+   "name": "rest tile 1 point 1",
+   "ok": true,
+   "detail": "art 350.0,166.0"
+  },
+  {
+   "name": "rest tile 1 point 2",
+   "ok": true,
+   "detail": "art 290.0,147.0"
+  },
+  {
+   "name": "rest tile 1 point 3",
+   "ok": true,
+   "detail": "art 350.0,147.0"
+  },
+  {
+   "name": "rest tile 1 point 4",
+   "ok": true,
+   "detail": "art 320.0,156.5"
+  },
+  {
+   "name": "rest tile 2 point 0",
+   "ok": true,
+   "detail": "art 359.0,166.0"
+  },
+  {
+   "name": "rest tile 2 point 1",
+   "ok": true,
+   "detail": "art 422.0,166.0"
+  },
+  {
+   "name": "rest tile 2 point 2",
+   "ok": true,
+   "detail": "art 359.0,147.0"
+  },
+  {
+   "name": "rest tile 2 point 3",
+   "ok": true,
+   "detail": "art 422.0,147.0"
+  },
+  {
+   "name": "rest tile 2 point 4",
+   "ok": true,
+   "detail": "art 390.5,156.5"
+  },
+  {
+   "name": "rest tile 3 point 0",
+   "ok": true,
+   "detail": "art 207.0,197.0"
+  },
+  {
+   "name": "rest tile 3 point 1",
+   "ok": true,
+   "detail": "art 277.0,197.0"
+  },
+  {
+   "name": "rest tile 3 point 2",
+   "ok": true,
+   "detail": "art 207.0,179.0"
+  },
+  {
+   "name": "rest tile 3 point 3",
+   "ok": true,
+   "detail": "art 277.0,179.0"
+  },
+  {
+   "name": "rest tile 3 point 4",
+   "ok": true,
+   "detail": "art 242.0,188.0"
+  },
+  {
+   "name": "rest tile 4 point 0",
+   "ok": true,
+   "detail": "art 287.0,197.0"
+  },
+  {
+   "name": "rest tile 4 point 1",
+   "ok": true,
+   "detail": "art 353.0,197.0"
+  },
+  {
+   "name": "rest tile 4 point 2",
+   "ok": true,
+   "detail": "art 287.0,179.0"
+  },
+  {
+   "name": "rest tile 4 point 3",
+   "ok": true,
+   "detail": "art 353.0,179.0"
+  },
+  {
+   "name": "rest tile 4 point 4",
+   "ok": true,
+   "detail": "art 320.0,188.0"
+  },
+  {
+   "name": "rest tile 5 point 0",
+   "ok": true,
+   "detail": "art 363.0,197.0"
+  },
+  {
+   "name": "rest tile 5 point 1",
+   "ok": true,
+   "detail": "art 433.0,197.0"
+  },
+  {
+   "name": "rest tile 5 point 2",
+   "ok": true,
+   "detail": "art 363.0,179.0"
+  },
+  {
+   "name": "rest tile 5 point 3",
+   "ok": true,
+   "detail": "art 433.0,179.0"
+  },
+  {
+   "name": "rest tile 5 point 4",
+   "ok": true,
+   "detail": "art 398.0,188.0"
+  },
+  {
+   "name": "rest tile 6 point 0",
+   "ok": true,
+   "detail": "art 196.0,229.0"
+  },
+  {
+   "name": "rest tile 6 point 1",
+   "ok": true,
+   "detail": "art 273.0,229.0"
+  },
+  {
+   "name": "rest tile 6 point 2",
+   "ok": true,
+   "detail": "art 196.0,210.0"
+  },
+  {
+   "name": "rest tile 6 point 3",
+   "ok": true,
+   "detail": "art 273.0,210.0"
+  },
+  {
+   "name": "rest tile 6 point 4",
+   "ok": true,
+   "detail": "art 234.5,219.5"
+  },
+  {
+   "name": "rest tile 7 point 0",
+   "ok": true,
+   "detail": "art 283.0,229.0"
+  },
+  {
+   "name": "rest tile 7 point 1",
+   "ok": true,
+   "detail": "art 357.0,229.0"
+  },
+  {
+   "name": "rest tile 7 point 2",
+   "ok": true,
+   "detail": "art 283.0,210.0"
+  },
+  {
+   "name": "rest tile 7 point 3",
+   "ok": true,
+   "detail": "art 357.0,210.0"
+  },
+  {
+   "name": "rest tile 7 point 4",
+   "ok": true,
+   "detail": "art 320.0,219.5"
+  },
+  {
+   "name": "rest tile 8 point 0",
+   "ok": true,
+   "detail": "art 367.0,229.0"
+  },
+  {
+   "name": "rest tile 8 point 1",
+   "ok": true,
+   "detail": "art 444.0,229.0"
+  },
+  {
+   "name": "rest tile 8 point 2",
+   "ok": true,
+   "detail": "art 367.0,210.0"
+  },
+  {
+   "name": "rest tile 8 point 3",
+   "ok": true,
+   "detail": "art 444.0,210.0"
+  },
+  {
+   "name": "rest tile 8 point 4",
+   "ok": true,
+   "detail": "art 405.5,219.5"
+  }
+ ]
+}

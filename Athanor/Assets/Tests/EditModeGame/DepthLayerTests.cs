@@ -116,12 +116,16 @@ namespace Athanor.Tests
         }
 
         [Test]
-        public void ArtLibrary_MainScene_HasNoDepthArt()
+        public void ArtLibrary_MainScene_HasEveryDepthArtSpriteOnce()
         {
             var lib = AssetDatabase.LoadAssetAtPath<ArtLibrary>("Assets/Art/ArtLibrary.asset");
             Assert.NotNull(lib);
-            var leaked = lib.sprites.Where(s => s != null && AssetDatabase.GetAssetPath(s).StartsWith(DepthDir + "/")).Select(s => s.name).ToArray();
-            Assert.IsEmpty(leaked, "Art/Depth sprites in ArtLibrary: " + string.Join(", ", leaked));
+            var names = lib.sprites.Where(s => s != null).Select(s => s.name).ToArray();
+            Assert.AreEqual(names.Length, names.Distinct().Count(), "no sprite name twice in the library");
+            var depth = AssetDatabase.FindAssets("t:Sprite", new[] { DepthDir }).Select(AssetDatabase.GUIDToAssetPath)
+                .Select(p => System.IO.Path.GetFileNameWithoutExtension(p)).ToArray();
+            Assert.IsNotEmpty(depth);
+            CollectionAssert.IsSubsetOf(depth, names);
         }
 
         [Test]

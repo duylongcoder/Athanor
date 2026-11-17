@@ -30,6 +30,8 @@ namespace Athanor.Game
         public bool effectsOn = true;
         public SpriteSwap[] sprites = new SpriteSwap[0];
         public FlameSwap[] flames = new FlameSwap[0];
+        /// <summary>The window view of the main scene, which shows its pre-blurred pictures only with the effects on (or null).</summary>
+        public WindowView window;
         /// <summary>Shown only with the effects on: the fog sheets and the foreground corners.</summary>
         public GameObject[] effectObjects = new GameObject[0];
         /// <summary>Enabled only with the effects on: the tilt-shift.</summary>
@@ -39,6 +41,7 @@ namespace Athanor.Game
         public void Set(bool on)
         {
             effectsOn = on;
+            if (window != null) window.Soft = on;
             foreach (var s in sprites) if (s.target != null) s.target.sprite = on ? s.soft : s.sharp;
             foreach (var f in flames)
             {

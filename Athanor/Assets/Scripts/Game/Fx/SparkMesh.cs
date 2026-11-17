@@ -45,6 +45,7 @@ namespace Athanor.Game
         {
             var go = new GameObject(name);
             go.transform.SetParent(parent, false);
+            if (parent != null) go.layer = parent.gameObject.layer;
             var m = go.AddComponent<SparkMesh>();
             m.Setup(order, dot, sparkle);
             return m;

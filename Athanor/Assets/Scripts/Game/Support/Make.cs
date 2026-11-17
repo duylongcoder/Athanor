@@ -17,6 +17,7 @@ namespace Athanor.Game
         {
             var go = new GameObject(name);
             go.transform.SetParent(parent, false);
+            if (parent != null) go.layer = parent.gameObject.layer;      // a child draws with its parent (the world camera or the UI camera)
             return go.transform;
         }
 
@@ -25,6 +26,7 @@ namespace Athanor.Game
         {
             var go = new GameObject(sprite);
             go.transform.SetParent(parent, false);
+            if (parent != null) go.layer = parent.gameObject.layer;
             go.transform.position = worldPos;
             var r = go.AddComponent<SpriteRenderer>();
             r.sprite = Lib.Sprite(sprite);
@@ -65,6 +67,7 @@ namespace Athanor.Game
         {
             var go = new GameObject("text");
             go.transform.SetParent(parent, false);
+            if (parent != null) go.layer = parent.gameObject.layer;
             go.transform.position = Px.At(x, y);
             var label = go.AddComponent<Label>();
             label.kind = font; label.size = size;
@@ -136,6 +139,7 @@ namespace Athanor.Game
         {
             var go = new GameObject("light");
             go.transform.SetParent(parent, false);
+            if (parent != null) go.layer = parent.gameObject.layer;
             go.transform.position = worldPos;
             go.transform.localScale = new Vector3(1, squash, 1);
             var l = go.AddComponent<Light2D>();

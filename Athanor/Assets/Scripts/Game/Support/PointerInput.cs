@@ -8,6 +8,11 @@ namespace Athanor.Game
     public sealed class PointerInput : MonoBehaviour
     {
         public static Vector2 World { get; private set; }
+        /// <summary>The depth rig, when the bench is drawn by the perspective world camera (null: the flat game).</summary>
+        public static DepthRig Rig;
+        /// <summary>The pointer on the bench table, in flat coordinates (what a tile tests): found by the world ray, so a tile is
+        /// hit where it is drawn, under sway and shake. Equals <see cref="World"/> without a rig or in a flat cutscene.</summary>
+        public static Vector2 Bench { get; private set; }
         public static bool Down { get; private set; }
         public static bool Up { get; private set; }
         public static bool Held { get; private set; }
@@ -30,11 +35,19 @@ namespace Athanor.Game
             return new Vector2(x, y);
         }
 
+        /// <summary>Sets <see cref="World"/> and finds <see cref="Bench"/> from it (Update's step, separate so tests can drive it).</summary>
+        public static void Resolve(Vector2 world)
+        {
+            World = world;
+            Bench = World;
+            if (Rig != null && !Rig.Flat && Rig.BenchPoint(World, out var flat)) Bench = flat;
+        }
+
         void Update()
         {
             var p = UnityEngine.InputSystem.Pointer.current;
             if (p == null) { Down = Up = Held = false; return; }
-            World = ScreenToWorld(p.position.ReadValue());
+            Resolve(ScreenToWorld(p.position.ReadValue()));
             Down = p.press.wasPressedThisFrame;
             Up = p.press.wasReleasedThisFrame;
             Held = p.press.isPressed;

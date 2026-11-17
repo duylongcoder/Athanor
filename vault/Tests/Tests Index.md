@@ -5,7 +5,7 @@ tags: [moc/tests]
 ---
 
 # Tests
-410 test methods in 30 files. Run: `dotnet test tools/CoreTests` (rules) or `unity test Athanor --mode EditMode`.
+425 test methods in 32 files. Run: `dotnet test tools/CoreTests` (rules) or `unity test Athanor --mode EditMode`.
 
 - [[ChainTests]] — 26 tests · covers [[Bench]], [[ChainPlan]], [[ChainPlanner]], [[ContentDb]]
 - [[ContentTests]] — 41 tests · covers [[Bench]], [[ChainPlanner]], [[ContentData]], [[ContentDb]], [[Ops]], [[RunState]]
@@ -19,16 +19,18 @@ tags: [moc/tests]
 - [[RunStateTests]] — 31 tests · covers [[AutoMove]], [[AutoPlayer]], [[Bench]], [[ContentData]], [[ContentDb]], [[Effects]], [[IgniteOutcome]], [[Journal]]
 - [[SatchelTests]] — 5 tests · covers [[Satchel]]
 - [[JournalTests]] — 10 tests · covers [[ContentDb]], [[Journal]], [[Kind]]
-- [[SettingsTests]] — 7 tests · covers [[Settings]]
+- [[SettingsTests]] — 11 tests · covers [[Settings]]
 - [[TutorialTests]] — 18 tests · covers [[Bench]], [[ContentData]], [[ContentDb]], [[Effects]], [[IgniteOutcome]], [[Journal]], [[ReactionEvent]], [[RunOptions]]
 - [[AutoHookTests]] — 1 tests · covers [[GameFlow]]
 - [[ChoiceHookTests]] — 1 tests · covers [[ArtLibrary]], [[CatalystChoiceView]], [[ChoiceCard]], [[Make]]
-- [[DepthClickTests]] — 8 tests · covers [[ArtLibrary]], [[DepthMath]], [[DepthRig]], [[FogSheet]], [[LayoutData]], [[Make]], [[Px]], [[TileView]]
+- [[DepthClickTests]] — 9 tests · covers [[ArtLibrary]], [[DepthMath]], [[DepthRig]], [[FogSheet]], [[LayoutData]], [[Make]], [[Px]], [[TileView]]
 - [[DepthLayerTests]] — 9 tests · covers [[ArtLibrary]], [[DepthLayer]], [[DepthMath]], [[Px]]
 - [[DepthLookTests]] — 8 tests · covers [[DepthLook]]
 - [[HudTests]] — 3 tests · covers [[ContentData]], [[ContentDb]], [[HudView]], [[Journal]], [[RunOptions]], [[RunPhase]], [[RunState]], [[Unlocks]]
 - [[LabelLineBoxTests]] — 5 tests · covers [[Align]], [[ArtLibrary]], [[FontKind]], [[Label]], [[Loc]], [[Make]]
 - [[LocTests]] — 9 tests · covers [[Lang]], [[Loc]], [[Wording]]
+- [[MainDepthTests]] — 6 tests · covers [[ArtLibrary]], [[Bench]], [[CameraSway]], [[DepthLayer]], [[DepthMath]], [[DepthRig]], [[GameFlow]], [[LayoutData]]
+- [[MainDevHookTests]] — 4 tests · covers [[BenchView]], [[DepthMath]], [[GameFlow]]
 - [[MotionTests]] — 3 tests · covers [[Motion]]
 - [[PauseTests]] — 10 tests · covers [[ArtLibrary]], [[Bench]], [[Clickable]], [[ContentData]], [[ContentDb]], [[FlowState]], [[GameFlow]], [[Haptics]]
 - [[RunOverDepthTests]] — 4 tests · covers [[ArtLibrary]], [[Label]], [[Loc]], [[Make]], [[RunOverView]], [[RunState]]

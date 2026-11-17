@@ -17,6 +17,8 @@ namespace Athanor.Game
         public ArtLibrary library;
         public GameObject workshop, cutsceneRoom;
         public Camera mainCamera;
+        /// <summary>The HD-2D bench rig (null in a scene without it: the flat game).</summary>
+        public DepthStage depthStage;
 
         public static GameFlow I { get; private set; }
         public ContentDb Db { get; private set; }
@@ -38,6 +40,35 @@ namespace Athanor.Game
         {
             Auto = !Auto;
             Dev.Hook(AutoHook + (Auto ? "on" : "off"));
+        }
+
+        // ---- development keys (tools/web/mainhd2d.mjs): F6 mood, F7 shake, F8 effects, F10 tile faces; editor and development builds only
+
+        /// <summary>The depth mood after <paramref name="mood"/> in the F6 cycle 1..5.</summary>
+        public static int NextMood(int mood) => mood % 5 + 1;
+        public static string MoodLine(int mood) => "[dev] mood " + mood;
+        public static string EffectsLine(bool on) => "[dev] effects " + (on ? "on" : "off");
+        int devMood;
+
+        void DevKeys(Keyboard kb)
+        {
+            if (!(Application.isEditor || Debug.isDebugBuild) || depthStage == null) return;
+            if (kb.f6Key.wasPressedThisFrame) { devMood = NextMood(devMood); Mood(devMood); Dev.Hook(MoodLine(devMood)); }
+            if (kb.f7Key.wasPressedThisFrame) depthStage.sway.Shake(3, 4f);
+            if (kb.f8Key.wasPressedThisFrame && depthStage.effects != null)
+            {
+                bool on = !depthStage.effects.effectsOn;
+                depthStage.effects.Set(on);
+                if (window != null) window.Soft = on;
+                Dev.Hook(EffectsLine(on));
+            }
+            if (kb.f10Key.wasPressedThisFrame && Bench != null)
+                for (int i = 0; i < Athanor.Core.Bench.TileCount; i++)
+                {
+                    var t = Bench.Tile(i);
+                    var pts = DepthMath.DrawnFace(t.FaceCentre, t.FaceSize, Px.H / 2f - t.centre.y, depthStage.rig.CamOffset, depthStage.rig.ImageShift, 3f);
+                    Dev.Hook("[dev] tile " + i + " " + string.Join(" ", System.Array.ConvertAll(pts, p => p.x.ToString("0.0", System.Globalization.CultureInfo.InvariantCulture) + "," + p.y.ToString("0.0", System.Globalization.CultureInfo.InvariantCulture))));
+                }
         }
 
         // the room's ambient colour, the moonbeam's strength and the accent colour, one per depth
@@ -107,9 +138,11 @@ namespace Athanor.Game
             var light = GameObject.Find("Ambient Light"); if (light != null) ambient = light.GetComponent<Light2D>();
             var beam = workshop.transform.Find("Moonbeam"); if (beam != null) moon = beam.GetComponent<Light2D>();
 
-            gameObject.AddComponent<ScreenFx>().Build(mainCamera);
+            gameObject.AddComponent<ScreenFx>().Build(mainCamera, depthStage != null ? depthStage.sway : null);
+            PointerInput.Rig = depthStage != null ? depthStage.rig : null;
             Bench = Make.Root("Bench").gameObject.AddComponent<BenchView>();
             Bench.Build(layout, Db, null);
+            if (depthStage != null) depthStage.PlaceTiles(Bench, layout.tiles.Length);
             Bench.IgniteRequested += Ignite;
             Bench.RedrawRequested += () => { if (State == FlowState.Bench && Run.Redraw()) Bench.Refresh(true); };
             Bench.JournalRequested += OpenJournal;
@@ -117,6 +150,7 @@ namespace Athanor.Game
             reaction = gameObject.AddComponent<ReactionCutscene>(); reaction.Build(cutsceneRoom, workshop, Bench.gameObject);
             story = gameObject.AddComponent<SimpleCutscene>(); story.Build(cutsceneRoom, workshop, Bench.gameObject);
             window = gameObject.AddComponent<WindowView>(); window.Build(workshop.transform);
+            if (depthStage != null) { depthStage.window = window; if (depthStage.effects != null) depthStage.effects.window = window; window.Soft = depthStage.effects == null || depthStage.effects.effectsOn; }
             title = Make.Root("Title").gameObject.AddComponent<TitleView>(); title.Build(settings);
             title.SettingsClosed += SaveSettings;
             title.JournalClicked += OpenJournal;
@@ -152,6 +186,7 @@ namespace Athanor.Game
 
         void OnDestroy()
         {
+            PointerInput.Rig = null;
             if (title != null) title.SettingsClosed -= SaveSettings;
             if (pause != null) { pause.Opened -= OnPauseOpened; pause.Closed -= OnPauseClosed; pause.QuitConfirmed -= AbandonRun; pause.VibrationChanged -= SaveSettings; }
             if (Bench != null && Bench.Hud != null) Bench.Hud.PauseClicked -= OpenPause;
@@ -404,6 +439,7 @@ namespace Athanor.Game
             if (ambient != null) ambient.color = Ambient[i];
             if (moon != null) moon.intensity = Moon[i];
             if (window == null) return;
+            if (depthStage != null) depthStage.ShowMood(depth, DepthLook.ThemedWindow(inRun, tut != null, sandbox));
             // the view through the window changes with the depth, inside a normal run only; the title and the tutorials keep the night sky
             if (DepthLook.ThemedWindow(inRun, tut != null, sandbox)) window.Show(depth); else window.ShowNight();
         }
@@ -689,7 +725,13 @@ namespace Athanor.Game
 
         void Update()
         {
+            if (depthStage != null)
+            {
+                depthStage.SwayOn = settings.sway;
+                if (depthStage.rig.Flat != cutsceneRoom.activeSelf) depthStage.SetFlat(cutsceneRoom.activeSelf);
+            }
             var kb = Keyboard.current;
+            if (kb != null) DevKeys(kb);
             if (kb != null && kb.f9Key.wasPressedThisFrame && (Application.isEditor || Debug.isDebugBuild)) ToggleAuto();
             if (State == FlowState.Resolving && !inCutscene && PointerInput.Down) hurry = true;
             if (Bench != null && Bench.Hud != null) Bench.Hud.SetPauseShown(!pause.IsOpen && CanPause());

@@ -13,6 +13,10 @@ namespace Athanor.Game
     {
         /// <summary>GameObject layer of everything the UI camera draws (Unity's built-in "UI" layer); the world camera draws the rest.</summary>
         public const int UiLayer = 5;
+        /// <summary>GameObject layer of the bench in the main scene: the world camera draws this layer only, the UI camera every
+        /// other one, so anything created later (a card, a float text, a spark) is UI unless it is made a child of the world.
+        /// The depth test scene keeps its own convention (the world on layer 0, the HUD on <see cref="UiLayer"/>).</summary>
+        public const int WorldLayer = 6;
         static readonly int MainTex = Shader.PropertyToID("_MainTex");
 
         /// <summary>D: the world camera's distance to the art plane (z = 0) at rest.</summary>
@@ -31,6 +35,28 @@ namespace Athanor.Game
         public float near = 50f, far = 2000f;
 
         MaterialPropertyBlock block;
+        bool flat;
+        int displayScale = 2;
+
+        /// <summary>
+        /// Flat mode, for the cutscenes: the world camera and the world picture are off and the UI camera draws the whole
+        /// frame at z = 0 with the bloom and vignette (post processing on it). No sway, no perspective, no depth effect.
+        /// </summary>
+        public bool Flat
+        {
+            get => flat;
+            set
+            {
+                flat = value;
+                if (worldCamera != null) worldCamera.enabled = !value;
+                if (worldDisplay != null) worldDisplay.enabled = !value;
+                if (uiCamera != null && uiCamera.TryGetComponent<UnityEngine.Rendering.Universal.UniversalAdditionalCameraData>(out var data))
+                    data.renderPostProcessing = value;
+            }
+        }
+
+        /// <summary>The whole multiple of 640x360 that fits the screen (at least 1); K = max(2, this).</summary>
+        public static int ScreenScale() => Mathf.Max(1, Mathf.FloorToInt(Mathf.Min(Screen.width / (float)Px.W, Screen.height / (float)Px.H)));
 
         /// <summary>What the world camera renders into: 640K x 360K, point filtered, created here and never saved.</summary>
         public RenderTexture WorldTexture { get; private set; }
@@ -81,9 +107,15 @@ namespace Athanor.Game
         void Update()
         {
             if (Application.isPlaying && autoScale)
-                scale = Mathf.Max(2, Mathf.FloorToInt(Mathf.Min(Screen.width / (float)Px.W, Screen.height / (float)Px.H)));
+            {
+                displayScale = ScreenScale();
+                scale = Mathf.Max(2, displayScale);
+            }
             // a lost texture (a browser tab that lost its graphics context) or a changed K
             if (WorldTexture == null || !WorldTexture.IsCreated() || WorldTexture.width != Px.W * Mathf.Max(2, scale)) Apply();
+            // K = 2 on a 1x screen: the texture is shown at half size, and a bilinear read averages each 2 x 2 block
+            var want = displayScale < scale && Application.isPlaying ? FilterMode.Bilinear : FilterMode.Point;
+            if (WorldTexture != null && WorldTexture.filterMode != want) WorldTexture.filterMode = want;
         }
 
         /// <summary>Sets up the cameras and the world texture, and places every DepthLayer and DepthTable below this object.</summary>

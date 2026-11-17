@@ -1,0 +1,27 @@
+loaded in 5.5 s, viewport 1280x720, scale 2
+canvas 1280x720 css 1280x720
+on the bench
+ok   mood step 1 [log] [dev] mood 1
+
+shot mood-depth-1-1280x720
+ok   mood step 2 [log] [dev] mood 2
+
+shot mood-depth-2-1280x720
+ok   mood step 3 [log] [dev] mood 3
+
+shot mood-depth-3-1280x720
+ok   mood step 4 [log] [dev] mood 4
+
+shot mood-depth-4-1280x720
+ok   mood step 5 [log] [dev] mood 5
+
+shot mood-depth-5-1280x720
+ok   effects toggled off 
+shot mood-depth-5-effects-off-1280x720
+ok   effects back on 
+shot sway-on-0-1280x720
+shot sway-on-1-1280x720
+shot sway-on-2-1280x720
+shot sway-on-3-1280x720
+console: 2160 messages, 0 errors; checks 7/7
+MAIN_EXIT 0

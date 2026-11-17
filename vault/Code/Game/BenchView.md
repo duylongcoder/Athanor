@@ -12,7 +12,7 @@ aliases: []
 # BenchView
 
 `public sealed class BenchView` : `MonoBehaviour`
-- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Bench/BenchView.cs:14-352`
+- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Bench/BenchView.cs:14-371`
 
 > The main screen: nine tiles, the hand of cards, the rack of discoveries and the HUD. Materials are placed by dragging them onto a tile, or by clicking one and then a tile; clicking a placed one takes it back.
 
@@ -33,9 +33,14 @@ aliases: []
 | method | `public void Refresh(bool deal = false)` | 94 | Redraws tiles, hand, rack, links and HUD from the run. deal slides the cards in from below. |
 | method | `public void ClearLinks()` | 173 | Hides the hand-drawn links while reactions resolve, so the bench reads cleanly. |
 | method | `public IEnumerator FloatText(string text, Vector3 from, Color color, float seconds = 0.8f, bool small = false)` | 176 | A number that rises from a point and fades. |
+| method | `public static string PlaceLine(int tile)` | 225 | Development-build log lines of a card put on / taken off a tile (tools/web/mainhd2d.mjs waits for them). |
+| method | `public static string UnplaceLine(int tile)` | 226 |  |
 
 ## Uses
-[[Align]], [[Bench]], [[CardView]], [[ChainPlanner]], [[ContentDb]], [[FontKind]], [[HudView]], [[Journal]], [[Kind]], [[Label]], [[LayoutData]], [[LinkView]], [[Loc]], [[Make]], [[Motion]], [[PointerInput]], [[Px]], [[Rarities]], [[RunState]], [[TileView]], [[Tooltip]], [[Wording]]
+[[Align]], [[Bench]], [[CardView]], [[ChainPlanner]], [[ContentDb]], [[Dev]], [[FontKind]], [[HudView]], [[Journal]], [[Kind]], [[Label]], [[LayoutData]], [[LinkView]], [[Loc]], [[Make]], [[Motion]], [[PointerInput]], [[Px]], [[Rarities]], [[RunState]], [[TileView]], [[Tooltip]], [[Wording]]
 
 ## Used by
-[[GameFlow]]
+[[DepthStage]], [[GameFlow]], [[MainDepthEvidence]]
+
+## Tested by
+[[MainDevHookTests]]

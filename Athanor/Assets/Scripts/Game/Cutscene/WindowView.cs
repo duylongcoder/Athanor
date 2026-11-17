@@ -15,7 +15,9 @@ namespace Athanor.Game
 
         SpriteRenderer pane, glow, point;
         readonly SpriteRenderer[] motes = new SpriteRenderer[Motes], drips = new SpriteRenderer[Drips];
-        int view;
+        int view, shownDepth;
+        bool soft;
+        Vector3 centre;       // the pane's centre in the flat game: the effects are placed in flat coordinates, below a group at the pane's depth
         Sprite night;         // the original night-sky window, kept for the title and the tutorial
 
         // depth 4: a copy of the roots view with the root pixels painted out, then given back a row at a time from the top
@@ -28,13 +30,29 @@ namespace Athanor.Game
             pane = found != null ? found.GetComponent<SpriteRenderer>() : null;
             if (pane == null) return;
             night = pane.sprite;
+            var layer = pane.GetComponent<DepthLayer>();
+            var at = centre = layer != null ? (Vector3)layer.rest : pane.transform.position;
             var fx = Make.Root("WindowFx", workshop);
-            var at = pane.transform.position;
             for (int i = 0; i < Motes; i++) { motes[i] = Make.Sprite(fx, "dot", at, Order); motes[i].transform.localScale = new Vector3(0.25f, 0.25f, 1); }
             for (int i = 0; i < Drips; i++) drips[i] = Make.Sprite(fx, "window_drip", at, Order);
             glow = Make.Glow(fx, at, 18, Color.clear, Order);
             point = Make.Sprite(fx, "dot", at, Order); point.transform.localScale = new Vector3(0.5f, 0.5f, 1);
             HideEffects();
+            // in the HD-2D bench the effects sit just in front of the pane, in its depth
+            if (layer != null) DepthLayer.AddGroup(fx.gameObject, layer.z + 0.5f).Apply(DepthMath.RestDistance);
+        }
+
+        /// <summary>The pre-blurred window pictures (depth effects on) instead of the sharp ones (off). Redraws the pane.</summary>
+        public bool Soft
+        {
+            get => soft;
+            set
+            {
+                if (soft == value) return;
+                soft = value;
+                if (pane == null) return;
+                if (shownDepth > 0) Show(shownDepth); else ShowNight();
+            }
         }
 
         /// <summary>Swaps the view and starts its effect for a depth (1..5; deeper keeps 5).</summary>
@@ -42,9 +60,11 @@ namespace Athanor.Game
         {
             if (pane == null) return;
             view = DepthLook.View(depth);
+            shownDepth = depth;
             ReleaseRoots();
             HideEffects();
-            var art = Make.Lib.Sprite(DepthLook.WindowSprite(depth));
+            string name = DepthLook.WindowSprite(depth);
+            var art = Make.Lib.Sprite(soft ? name + "_far" : name) ?? Make.Lib.Sprite(name);
             pane.sprite = art;
             if (view == 4) StartRoots(art);
         }
@@ -53,7 +73,7 @@ namespace Athanor.Game
         public void ShowNight()
         {
             if (pane == null) return;
-            view = 0;
+            view = 0; shownDepth = 0;
             ReleaseRoots();
             HideEffects();
             if (night != null) pane.sprite = night;
@@ -70,7 +90,7 @@ namespace Athanor.Game
         {
             if (pane == null || !pane.gameObject.activeInHierarchy) return;
             float t = Time.time;
-            var c = pane.transform.position;
+            var c = centre;
             switch (view)
             {
                 case 1: Dust(t, c); break;
@@ -92,7 +112,7 @@ namespace Athanor.Game
                 int n = Mathf.FloorToInt(clock); float p = clock - n;
                 motes[i].enabled = true;
                 motes[i].color = new Color(0.85f, 0.85f, 0.8f, Mathf.Sin(p * Mathf.PI) * 0.55f);
-                motes[i].transform.position = Px.Snap(c + new Vector3(Mathf.Lerp(4, 14, Hash(i, n)), Mathf.Lerp(-22, 40, p), 0));
+                motes[i].transform.localPosition = Px.Snap(c + new Vector3(Mathf.Lerp(4, 14, Hash(i, n)), Mathf.Lerp(-22, 40, p), 0));
             }
         }
 
@@ -105,7 +125,7 @@ namespace Athanor.Game
                 int n = Mathf.FloorToInt(clock); float p = (clock - n) / 0.3f;      // falls for the first 0.3 of the cycle
                 drips[i].enabled = p < 1;
                 if (p >= 1) continue;
-                drips[i].transform.position = Px.Snap(c + new Vector3(Mathf.Lerp(-16, 16, Hash(i + 7, n)), 34 - p * p * 66, 0));
+                drips[i].transform.localPosition = Px.Snap(c + new Vector3(Mathf.Lerp(-16, 16, Hash(i + 7, n)), 34 - p * p * 66, 0));
             }
         }
 
@@ -113,7 +133,7 @@ namespace Athanor.Game
         void Breathe(float t, Vector3 c)
         {
             glow.enabled = true;
-            glow.transform.position = Px.Snap(c + new Vector3(22, -12, 0));
+            glow.transform.localPosition = Px.Snap(c + new Vector3(22, -12, 0));
             glow.color = new Color(1f, 0.68f, 0.28f, 0.08f + 0.2f * (0.5f + 0.5f * Mathf.Sin(t * Mathf.PI * 2 / 5f)));
         }
 
@@ -121,7 +141,7 @@ namespace Athanor.Game
         void Flicker(float t, Vector3 c)
         {
             point.enabled = true;
-            point.transform.position = Px.Snap(c + new Vector3(12, -30, 0));
+            point.transform.localPosition = Px.Snap(c + new Vector3(12, -30, 0));
             float k = t % 7f;
             float a = k < 0.28f ? 0.1f + 0.5f * Mathf.Abs(Mathf.Sin(k * 22f)) * 0.5f : 0.5f;
             point.color = new Color(1f, 0.82f, 0.4f, a);

@@ -40,6 +40,30 @@ namespace Athanor.Game
             return new Vector2(world.x * k, world.y * k);
         }
 
+        /// <summary>Where a world point is drawn on the UI camera's world (art px, origin at the centre, y up) by a world camera moved by
+        /// <paramref name="cam"/> with the picture shifted by <paramref name="shift"/> (the inverse of <see cref="ViewportRay"/>).</summary>
+        public static Vector2 Project(Vector3 world, Vector2 cam, Vector2 shift, float d = RestDistance)
+        {
+            float k = d / (world.z + d);
+            return new Vector2((world.x - cam.x) * k + shift.x, (world.y - cam.y) * k + shift.y);
+        }
+
+        /// <summary>
+        /// The four corners of a tile's face, pulled in by <paramref name="inset"/>, as drawn (a tile group sits at the depth of its
+        /// row's table point, +0.2) in UI units. The dev key F10 logs them so a click test can aim at what the player sees.
+        /// </summary>
+        public static Vector2[] DrawnFace(Vector2 faceCentre, Vector2 faceSize, float artY, Vector2 cam, Vector2 shift, float inset, float d = RestDistance)
+        {
+            float z = TableZ(artY, d) + 0.2f;
+            float hx = faceSize.x / 2 - inset, hy = faceSize.y / 2 - inset;
+            var pts = new Vector2[4];
+            int n = 0;
+            for (int sy = -1; sy <= 1; sy += 2)
+                for (int sx = -1; sx <= 1; sx += 2)
+                    pts[n++] = Project(Place(faceCentre + new Vector2(sx * hx, sy * hy), z, d), cam, shift, d);
+            return pts;
+        }
+
         /// <summary>
         /// Depth of an art row of the table. The table is a floor: 1 / distance runs linearly from the back edge
         /// (art y 132) to the front edge (art y 254), which is exactly a tilted plane; rows below the front edge are the

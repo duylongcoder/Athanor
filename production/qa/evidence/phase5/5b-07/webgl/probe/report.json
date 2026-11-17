@@ -1,0 +1,8 @@
+{
+ "url": "http://127.0.0.1:8082/",
+ "viewport": "1280x720",
+ "scale": 2,
+ "canvas": "1280x720 css 1280x720",
+ "load_seconds": 0.5,
+ "checks": []
+}

@@ -22,6 +22,7 @@ Voice: plain modern Vietnamese, "bạn" for the player, short clauses. Font: SVN
 | Tutorial | hướng dẫn | "Bỏ qua hướng dẫn" |
 | Pause / Paused / Resume | Tạm dừng / Tạm dừng / Tiếp tục | |
 | Vibration | Rung | |
+| Camera sway | Lắc camera | Settings toggle; "Rung" stays Vibration (haptics), so no "rung lắc" |
 | Quit | Thoát | |
 | Watch intro | Xem mở đầu | |
 | Play it (tutorial) | Chơi hướng dẫn | |

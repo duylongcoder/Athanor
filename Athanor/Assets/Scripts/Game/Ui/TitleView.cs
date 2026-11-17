@@ -23,9 +23,9 @@ namespace Athanor.Game
         Action<bool> skipAnswer;
         Settings settings;
         // Settings panel parts
-        Label langValue, vibValue; SpriteRenderer vibFill, vibBox;
-        readonly SpriteRenderer[] cellEdge = new SpriteRenderer[2], cellFill = new SpriteRenderer[2];
-        readonly bool[] cellOver = new bool[2];
+        Label langValue, vibValue, swayLabel, swayValue, resetLabel; SpriteRenderer divider2, swayBox, swayFill; SpriteRenderer vibFill, vibBox;
+        readonly SpriteRenderer[] cellEdge = new SpriteRenderer[3], cellFill = new SpriteRenderer[3];
+        readonly bool[] cellOver = new bool[3];
         readonly Label[] outline = new Label[4];
         static readonly Vector3[] Edge = { new Vector3(-2, 0, 0), new Vector3(2, 0, 0), new Vector3(0, 2, 0), new Vector3(0, -2, 0) };
         SpriteRenderer glow, shade;
@@ -123,19 +123,24 @@ namespace Athanor.Game
             Make.Click(body.gameObject, new Vector2(320, 210), P);                          // a click inside does not
             Make.TextKey(panel, "ui.settings.title", 320, PY + 12, FontKind.Title, 32, Px.Hex("#f8d250"), P + 2, Align.Centre, Px.Hex("#3a1a08"));
             Make.Rect(panel, PX + 24, PY + 50, 272, 1, Px.Hex("#8a5a1e"), P + 2);
-            Make.Rect(panel, PX + 24, PY + 126, 272, 1, Px.Hex("#8a5a1e"), P + 2);
+            divider2 = Make.Rect(panel, PX + 24, PY + 126, 272, 1, Px.Hex("#8a5a1e"), P + 2);
 
             // rows: Vibration (only where the device can), Language. Their y is set in RefreshSettings.
             vibLabel = Make.TextKey(panel, "ui.settings.vibration", 188, 0, FontKind.Body, 16, Px.Hex("#f0dcc0"), P + 2);
             langLabel = Make.TextKey(panel, "ui.settings.language", 188, 0, FontKind.Body, 16, Px.Hex("#f0dcc0"), P + 2);
             MakeCell(0, "vibration", ToggleVibration);
             MakeCell(1, "language", ToggleLanguage);
+            swayLabel = Make.TextKey(panel, "ui.settings.sway", 188, 0, FontKind.Body, 16, Px.Hex("#f0dcc0"), P + 2);
+            MakeCell(2, "sway", ToggleSway);
+            swayBox = Make.Rect(panel, 0, 0, 10, 10, Px.Hex("#8a5a1e"), P + 5);
+            swayFill = Make.Rect(panel, 0, 0, 8, 8, Px.Hex("#f8d250"), P + 6);
+            swayValue = Make.TextKey(panel, "ui.settings.on", 0, 0, FontKind.Title, 16, Px.Hex("#fff6b8"), P + 6, Align.Left, Px.Hex("#3b0d1e"));
             vibBox = Make.Rect(panel, 0, 0, 10, 10, Px.Hex("#8a5a1e"), P + 5);
             vibFill = Make.Rect(panel, 0, 0, 8, 8, Px.Hex("#f8d250"), P + 6);
             vibValue = Make.TextKey(panel, "ui.settings.on", 0, 0, FontKind.Title, 16, Px.Hex("#fff6b8"), P + 6, Align.Left, Px.Hex("#3b0d1e"));
             langValue = Make.Text(panel, "", 0, 0, FontKind.Title, 16, Px.Hex("#fff6b8"), P + 6, Align.Centre, Px.Hex("#3b0d1e"));
 
-            var reset = Make.TextKey(panel, "ui.title.reset", 320, PY + 134, FontKind.Tiny, 8, Px.Hex("#7a5a3a"), P + 2, Align.Centre, Px.Hex("#0c0706"));
+            var reset = resetLabel = Make.TextKey(panel, "ui.title.reset", 320, PY + 134, FontKind.Tiny, 8, Px.Hex("#7a5a3a"), P + 2, Align.Centre, Px.Hex("#0c0706"));
             var rc = Make.Click(reset.gameObject, new Vector2(120, 22), P + 3, () => confirm.gameObject.SetActive(true));
             rc.offset = new Vector2(0, -4);
             rc.onEnter = () => reset.Color = Px.Hex("#ee6a3c"); rc.onExit = () => reset.Color = Px.Hex("#7a5a3a");
@@ -144,7 +149,7 @@ namespace Athanor.Game
         }
 
         Label vibLabel, langLabel;
-        readonly Transform[] cell = new Transform[2];
+        readonly Transform[] cell = new Transform[3];
 
         /// <summary>A 150x26 value button: fill #2a1810 in a #8a5a1e border, gold border and lighter fill under the pointer.</summary>
         void MakeCell(int i, string name, Action onClick)
@@ -159,7 +164,7 @@ namespace Athanor.Game
             c.onExit = () => { cellOver[i] = false; PaintCell(i); };
             cellHit[i] = hit;
         }
-        readonly Transform[] cellHit = new Transform[2];
+        readonly Transform[] cellHit = new Transform[3];
 
         void PaintCell(int i)
         {
@@ -174,30 +179,44 @@ namespace Athanor.Game
             cellHit[i].position = Px.Mid(CellX, rowY, CellW, CellH);
         }
 
-        /// <summary>Lays out the rows and writes the values. Without Haptics.Supported the vibration row is absent and Language moves up.</summary>
+        /// <summary>Lays out the rows (Camera sway, Vibration where the device can, Language) and writes the values.</summary>
         void RefreshSettings()
         {
             if (panel == null) return;
             bool vib = Haptics.Supported;
-            float row = PY + 58;
+            float pitch = vib ? 28 : 32, row = PY + (vib ? 54 : 58);
+            // the third row pushes the lower divider and the erase link down
+            divider2.transform.position = Px.Mid(PX + 24, PY + (vib ? 140 : 126), 272, 1);
+            resetLabel.transform.position = Px.At(320, PY + (vib ? 144 : 134));
+            PlaceRow(2, row, swayLabel, swayBox, swayFill, swayValue, settings.sway);
+            row += pitch;
             cell[0].gameObject.SetActive(vib); vibLabel.gameObject.SetActive(vib); vibBox.gameObject.SetActive(vib);
             vibFill.gameObject.SetActive(vib && settings.haptics); vibValue.gameObject.SetActive(vib);
             if (vib)
             {
-                vibLabel.transform.position = Px.At(188, row + 4);
-                PlaceCell(0, row);
-                vibBox.transform.position = Px.Mid(CellX + 8, row + 8, 10, 10);
-                vibFill.transform.position = Px.Mid(CellX + 9, row + 9, 8, 8);
-                vibValue.transform.position = Px.At(CellX + 26, row + 3);
-                vibValue.SetKey(settings.haptics ? "ui.settings.on" : "ui.settings.off");
-                row += 32;
+                PlaceRow(0, row, vibLabel, vibBox, vibFill, vibValue, settings.haptics);
+                row += pitch;
             }
             langLabel.transform.position = Px.At(188, row + 4);
             PlaceCell(1, row);
             langValue.transform.position = Px.At(CellX + CellW / 2f, row + 3);
             langValue.Text = Loc.NativeName;
-            for (int i = 0; i < 2; i++) PaintCell(i);
+            for (int i = 0; i < 3; i++) PaintCell(i);
         }
+
+        /// <summary>One on/off row: label, cell, check box and its On or Off word.</summary>
+        void PlaceRow(int i, float row, Label label, SpriteRenderer box, SpriteRenderer fill, Label value, bool on)
+        {
+            label.transform.position = Px.At(188, row + 4);
+            PlaceCell(i, row);
+            box.transform.position = Px.Mid(CellX + 8, row + 8, 10, 10);
+            fill.transform.position = Px.Mid(CellX + 9, row + 9, 8, 8);
+            fill.gameObject.SetActive(on);
+            value.transform.position = Px.At(CellX + 26, row + 3);
+            value.SetKey(on ? "ui.settings.on" : "ui.settings.off");
+        }
+
+        void ToggleSway() { settings.sway = !settings.sway; RefreshSettings(); }
 
         void OpenSettings() { RefreshSettings(); panel.gameObject.SetActive(true); }
 

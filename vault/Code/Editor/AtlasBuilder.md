@@ -39,4 +39,4 @@ aliases: []
 [[Save]], [[SceneBuilder]]
 
 ## Used by
-[[SceneBuilder]], [[SpriteImportRules]]
+[[SpriteImportRules]]

@@ -197,6 +197,7 @@ namespace Athanor.Game
 
         Pick ItemAt(Vector2 w)
         {
+            Vector2 tw = PointerInput.Bench;      // tiles are hit through the world ray
             for (int i = cards.Count - 1; i >= 0; i--)
                 if (cards[i].Contains(w)) return new Pick { from = From.Hand, handIndex = cards[i].handIndex, id = cards[i].id, tile = -1 };
             foreach (var s in slots)
@@ -207,7 +208,7 @@ namespace Athanor.Game
             {
                 if (tiles[i].Material == null) continue;
                 var c = tiles[i].centre;
-                if ((Mathf.Abs(w.x - c.x) <= 13 && w.y >= c.y - 3 && w.y <= c.y + 24) || tiles[i].Contains(w))
+                if ((Mathf.Abs(tw.x - c.x) <= 13 && tw.y >= c.y - 3 && tw.y <= c.y + 24) || tiles[i].Contains(tw))
                     return new Pick { from = From.Tile, tile = i, id = tiles[i].Material, handIndex = -1 };
             }
             return default;
@@ -216,16 +217,34 @@ namespace Athanor.Game
         int FreeTileAt(Vector2 w)
         {
             for (int i = tiles.Length - 1; i >= 0; i--)
-                if (tiles[i].Contains(w) && run.Bench.Tiles[i] == null && !run.Rules.Blocked[i]) return i;
+                if (tiles[i].Contains(PointerInput.Bench) && run.Bench.Tiles[i] == null && !run.Rules.Blocked[i]) return i;
             return -1;
+        }
+
+        /// <summary>Development-build log lines of a card put on / taken off a tile (tools/web/mainhd2d.mjs waits for them).</summary>
+        public static string PlaceLine(int tile) => "[bench] place " + tile;
+        public static string UnplaceLine(int tile) => "[bench] unplace " + tile;
+
+        bool PlaceCard(int hand, int tile)
+        {
+            if (!run.Place(hand, tile)) return false;
+            Dev.Hook(PlaceLine(tile));
+            return true;
+        }
+
+        bool UnplaceCard(int tile)
+        {
+            if (!run.Unplace(tile)) return false;
+            Dev.Hook(UnplaceLine(tile));
+            return true;
         }
 
         bool Put(Pick p, int tile)
         {
             if (tile < 0 || !p.Is) return false;
-            if (p.from == From.Hand) return run.Place(p.handIndex, tile);
-            if (!run.Unplace(p.tile)) return false;       // goes to the end of the hand, then on to its new tile
-            return run.Place(run.Hand.Count - 1, tile);
+            if (p.from == From.Hand) return PlaceCard(p.handIndex, tile);
+            if (!UnplaceCard(p.tile)) return false;       // goes to the end of the hand, then on to its new tile
+            return PlaceCard(run.Hand.Count - 1, tile);
         }
 
         void Update()
@@ -254,10 +273,10 @@ namespace Athanor.Game
                 if (dragging)
                 {
                     if (freeTile >= 0) changed = Put(press, freeTile);
-                    else if (press.from == From.Tile && !tiles[press.tile].Contains(w)) changed = run.Unplace(press.tile);
+                    else if (press.from == From.Tile && !tiles[press.tile].Contains(PointerInput.Bench)) changed = UnplaceCard(press.tile);
                     if (!changed && press.from == From.Tile) tiles[press.tile].Icon.color = Color.white;
                 }
-                else if (press.from == From.Tile) changed = run.Unplace(press.tile);
+                else if (press.from == From.Tile) changed = UnplaceCard(press.tile);
                 else selected = selected.Is && selected.handIndex == press.handIndex ? default : press;
                 press = default; dragging = false; ghost.enabled = false;
             }
@@ -339,7 +358,7 @@ namespace Athanor.Game
                 // an empty tile that an aspect or this depth's event acts on says what it does
                 for (int i = tiles.Length - 1; i >= 0; i--)
                 {
-                    if (tileNote[i] == null || !tiles[i].Contains(w)) continue;
+                    if (tileNote[i] == null || !tiles[i].Contains(PointerInput.Bench)) continue;
                     key = "tile" + i; title = tileNoteTitle[i]; body = tileNote[i]; anchor = tiles[i].centre; clear = 16;
                     break;
                 }

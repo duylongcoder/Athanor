@@ -44,6 +44,8 @@ namespace Athanor.Game
         public int windowSwap;
         /// <summary>The flat window of today's game (depth 0), and the five depth views, sharp and pre-blurred.</summary>
         public Sprite windowNight;
+        /// <summary>When set (the main scene), the window view is this one's job, not the sprite swap above.</summary>
+        public WindowView window;
         public Sprite[] windowSharp = new Sprite[0], windowSoft = new Sprite[0];
 
         /// <summary>The SPEC's presets. Ambient, moon and accent are the game's arrays (GameFlow); bloom threshold =
@@ -68,7 +70,10 @@ namespace Athanor.Game
         }
 
         /// <summary>Shows depth d (0: today's look; 1..5: a preset).</summary>
-        public void Set(int d)
+        public void Set(int d) => Set(d, true);
+
+        /// <summary>Shows depth d; themedWindow false keeps the night-sky window (title, tutorials) while lights, post and fog follow d.</summary>
+        public void Set(int d, bool themedWindow)
         {
             depth = Mathf.Clamp(d, 0, presets.Length);
             // today's single setting (SceneBuilder.BuildVolume) and depth 1's lights, with depth 1's fog
@@ -87,7 +92,7 @@ namespace Athanor.Game
             if (frontFog != null) frontFog.color = tint.Alpha(p.frontFog);
             if (effects != null && windowSwap >= 0 && windowSwap < effects.sprites.Length)
             {
-                bool view = depth > 0 && depth <= windowSharp.Length;
+                bool view = themedWindow && depth > 0 && depth <= windowSharp.Length;
                 effects.sprites[windowSwap].sharp = view ? windowSharp[depth - 1] : windowNight;
                 effects.sprites[windowSwap].soft = view && depth <= windowSoft.Length ? windowSoft[depth - 1] : windowNight;
                 effects.Set(effects.effectsOn);

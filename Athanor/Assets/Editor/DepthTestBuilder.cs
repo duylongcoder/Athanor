@@ -92,6 +92,46 @@ public static class DepthTestBuilder
         var world = Make.Root("World", rt);
         var workshop = SceneBuilder.BuildWorkshop(layout);
         workshop.SetParent(world, true);
+        // the nine tiles, each at its row's depth on the table
+        var tileRoot = Make.Root("Tiles", world);
+        var tiles = new TileView[layout.tiles.Length];
+        for (int i = 0; i < tiles.Length; i++)
+        {
+            tiles[i] = new GameObject("Tile " + i).AddComponent<TileView>();
+            tiles[i].Build(i, layout.tiles[i], tileRoot);
+            float z = DepthMath.TableZ(layout.tiles[i].y) + 0.2f;
+            foreach (Transform leaf in tiles[i].transform) Leaf(leaf.gameObject, z);
+        }
+
+        var composed = ComposeWorld(rig, world, workshop, layout, lib, tableMat, fogMat, ambient, volume, tilt);
+        var effects = composed.effects; var mood = composed.mood; var swaps = new List<DepthSwitch.SpriteSwap>(effects.sprites); var flames = new List<DepthSwitch.FlameSwap>(effects.flames);
+        BuildHud(rt);
+        var sway = rig.gameObject.AddComponent<CameraSway>();
+        var controls = rig.gameObject.AddComponent<DepthTestControls>();
+        controls.rig = rig; controls.sway = sway; controls.effects = effects; controls.mood = mood; controls.tiles = tiles;
+
+        // saved as the 5b-06 measurement case: effects on, depth 1, sway on (it moves in play mode only)
+        effects.Set(true);
+        mood.Set(1);
+        rig.Apply();
+
+        Directory.CreateDirectory("Assets/Scenes");
+        EditorSceneManager.SaveScene(scene, ScenePath);
+        AssetDatabase.SaveAssets();
+        return "depth test scene built: " + ScenePath + ", " + swaps.Count + " sprite swaps, " + flames.Count + " flames, renderer index " + rendererIndex;
+    }
+
+    /// <summary>The result of <see cref="ComposeWorld"/>.</summary>
+    internal struct World { public DepthSwitch effects; public DepthMood mood; public int windowSwap; public SpriteRenderer window; public Light2D moon; public int swapCount, flameCount; }
+
+    /// <summary>
+    /// Puts the workshop (already built by SceneBuilder.BuildWorkshop under world) in depth: wall with overscan, window,
+    /// table mesh, candles, dust, fog sheets, foreground corners, the effects switch and the five moods. Shared by the depth
+    /// test scene and the main scene. tilt may be null.
+    /// </summary>
+    internal static World ComposeWorld(DepthRig rig, Transform world, Transform workshop, LayoutData layout, ArtLibrary lib,
+        Material tableMat, Material fogMat, Light2D ambient, Volume volume, TiltShift tilt)
+    {
         var swaps = new List<DepthSwitch.SpriteSwap>();
         var flames = new List<DepthSwitch.FlameSwap>();
 
@@ -152,17 +192,6 @@ public static class DepthTestBuilder
         }
         Leaf(workshop.Find("Dust").gameObject, DustZ);
 
-        // the nine tiles, each at its row's depth on the table
-        var tileRoot = Make.Root("Tiles", world);
-        var tiles = new TileView[layout.tiles.Length];
-        for (int i = 0; i < tiles.Length; i++)
-        {
-            tiles[i] = new GameObject("Tile " + i).AddComponent<TileView>();
-            tiles[i].Build(i, layout.tiles[i], tileRoot);
-            float z = DepthMath.TableZ(layout.tiles[i].y) + 0.2f;
-            foreach (Transform leaf in tiles[i].transform) Leaf(leaf.gameObject, z);
-        }
-
         // effects: the fog sheets and the foreground corners
         var backFog = FogSheet(world, "Fog Back", "fog_back", -96, 130, 832, 150, BackFogOrder, 4f, BackFogZ, fogMat);
         var frontFog = FogSheet(world, "Fog Front", "fog_front", -96, 150, 832, 110, FrontFogOrder, -6f, FrontFogZ, fogMat);
@@ -172,12 +201,11 @@ public static class DepthTestBuilder
         var fgRight = Make.Sprite(world, "dot", Px.Mid(514, 214, 222, 92), ForegroundOrder, lib.lit);
         fgRight.name = "Foreground Right"; fgRight.sprite = Art("fg_corner_right_near"); Leaf(fgRight.gameObject, ForegroundZ);
 
-        BuildHud(rt);
 
         var effects = rig.gameObject.AddComponent<DepthSwitch>();
         effects.sprites = swaps.ToArray(); effects.flames = flames.ToArray();
         effects.effectObjects = new[] { backFog.gameObject, frontFog.gameObject, fgLeft.gameObject, fgRight.gameObject };
-        effects.effectBehaviours = new Behaviour[] { tilt };
+        effects.effectBehaviours = tilt != null ? new Behaviour[] { tilt } : new Behaviour[0];
 
         var mood = rig.gameObject.AddComponent<DepthMood>();
         mood.ambient = ambient; mood.moon = moon; mood.volume = volume; mood.backFog = backFog; mood.frontFog = frontFog;
@@ -185,25 +213,13 @@ public static class DepthTestBuilder
         mood.windowSharp = Enumerable.Range(1, 5).Select(d => lib.Sprite("window_d" + d)).ToArray();
         mood.windowSoft = Enumerable.Range(1, 5).Select(d => Art("window_d" + d + "_far")).ToArray();
 
-        var sway = rig.gameObject.AddComponent<CameraSway>();
-        var controls = rig.gameObject.AddComponent<DepthTestControls>();
-        controls.rig = rig; controls.sway = sway; controls.effects = effects; controls.mood = mood; controls.tiles = tiles;
-
-        // saved as the 5b-06 measurement case: effects on, depth 1, sway on (it moves in play mode only)
-        effects.Set(true);
-        mood.Set(1);
-        rig.Apply();
-
-        Directory.CreateDirectory("Assets/Scenes");
-        EditorSceneManager.SaveScene(scene, ScenePath);
-        AssetDatabase.SaveAssets();
-        return "depth test scene built: " + ScenePath + ", " + swaps.Count + " sprite swaps, " + flames.Count + " flames, renderer index " + rendererIndex;
+        return new World { effects = effects, mood = mood, windowSwap = windowSwap, window = window, moon = moon, swapCount = swaps.Count, flameCount = flames.Count };
     }
 
     /// <summary>The same, from the command line.</summary>
     public static void BuildBatch() => Debug.Log(Build());
 
-    static Sprite Art(string name)
+    internal static Sprite Art(string name)
     {
         var s = AssetDatabase.LoadAssetAtPath<Sprite>(DepthArt + name + ".png");
         if (s == null) throw new FileNotFoundException("no depth sprite " + DepthArt + name + ".png");
@@ -211,9 +227,9 @@ public static class DepthTestBuilder
     }
 
     /// <summary>Puts one object (whose parents sit at the origin, unscaled) at depth z.</summary>
-    static void Leaf(GameObject go, float z) => DepthLayer.Add(go, z);
+    internal static void Leaf(GameObject go, float z) => DepthLayer.Add(go, z);
 
-    static SpriteRenderer FogSheet(Transform parent, string name, string sprite, float x, float y, float w, float h, int order, float speed, float z, Material mat)
+    internal static SpriteRenderer FogSheet(Transform parent, string name, string sprite, float x, float y, float w, float h, int order, float speed, float z, Material mat)
     {
         var r = Make.Sprite(parent, "dot", Px.Mid(x, y, w, h), order, mat);
         r.name = name; r.sprite = Art(sprite);
@@ -251,7 +267,7 @@ public static class DepthTestBuilder
         foreach (var t in hud.GetComponentsInChildren<Transform>(true)) t.gameObject.layer = DepthRig.UiLayer;
     }
 
-    static Material EnsureMaterial(string path, string shaderName)
+    internal static Material EnsureMaterial(string path, string shaderName)
     {
         var shader = Shader.Find(shaderName);
         if (shader == null) throw new System.InvalidOperationException("shader not found: " + shaderName);
@@ -262,7 +278,7 @@ public static class DepthTestBuilder
         return m;
     }
 
-    static VolumeProfile BuildVolume()
+    internal static VolumeProfile BuildVolume()
     {
         AssetDatabase.DeleteAsset(VolumePath);
         var profile = ScriptableObject.CreateInstance<VolumeProfile>();
@@ -288,7 +304,7 @@ public static class DepthTestBuilder
     /// A copy of the main 2D renderer with the two tilt-shift passes, listed in the pipeline asset after the main one
     /// (which stays the default and keeps no feature). Returns the copy's index in the pipeline's renderer list.
     /// </summary>
-    static int EnsureRenderer(Material tilt)
+    internal static int EnsureRenderer(Material tilt)
     {
         var data = AssetDatabase.LoadAssetAtPath<Renderer2DData>(RendererPath);
         if (data == null)

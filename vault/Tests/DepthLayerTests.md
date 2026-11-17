@@ -20,5 +20,5 @@ count: 9
 - `TableZ_EveryArtRow_LiesOnOnePlane`
 - `Parallax_MatchesTheSpecTable_AndIsZeroAtTheAnchor`
 - `DepthLayer_Apply_PlacesAndScalesTheObjectAndItsPointLight`
-- `ArtLibrary_MainScene_HasNoDepthArt`
+- `ArtLibrary_MainScene_HasEveryDepthArtSpriteOnce`
 - `DepthArt_ImportSettings_KeepTheBlurSmoothAndTheFogTiling`

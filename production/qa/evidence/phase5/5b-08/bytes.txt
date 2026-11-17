@@ -1,0 +1,11 @@
+release Build/ + index.html, one host, fresh WebBuild.Build, current tree
+data.unityweb              3,414,845 B
+framework.js.unityweb         74,558 B
+loader.js                     48,779 B
+wasm.unityweb              7,372,546 B
+index.html                     6,561 B
+TOTAL                     10,917,289 B
+ceiling 11,824,672  headroom 907,383 B
+vs 5a 10,724,285: +193,004 B (+1.80%)
+vs 5b-06 prototype 10,690,045: +227,244 B (+2.13%)
+all files in Build/: ['web.data.unityweb', 'web.framework.js.unityweb', 'web.loader.js', 'web.wasm.unityweb']

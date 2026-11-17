@@ -28,17 +28,47 @@ public static class SceneBuilder
         var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
 
         RenderSettings.skybox = null;               // 2D: the default skybox material is dead weight in the build
-        // camera: 640x360 pixels, scaled up by whole numbers
+        // HD-2D: a perspective world camera into a render texture (DepthRig) under an orthographic UI camera with the HUD
+        var tableMat = DepthTestBuilder.EnsureMaterial(DepthTestBuilder.Dir + "/DepthTable.mat", "Athanor/Depth Mesh Lit");
+        var displayMat = DepthTestBuilder.EnsureMaterial(DepthTestBuilder.Dir + "/DepthDisplay.mat", "Athanor/Depth Display");
+        var fogMat = DepthTestBuilder.EnsureMaterial(DepthTestBuilder.Dir + "/Fog.mat", "Athanor/Fog Lit");
+        var tiltMat = DepthTestBuilder.EnsureMaterial(DepthTestBuilder.Dir + "/TiltShift.mat", "Athanor/Tilt Shift");
+        int rendererIndex = DepthTestBuilder.EnsureRenderer(tiltMat);
+        const int worldLayer = DepthRig.WorldLayer;
+        var rig = new GameObject("Depth Rig").AddComponent<DepthRig>();
+
+        var worldCam = new GameObject("World Camera").AddComponent<Camera>();
+        worldCam.transform.SetParent(rig.transform, false);
+        worldCam.clearFlags = CameraClearFlags.SolidColor; worldCam.backgroundColor = Px.Hex("#0d0a12");
+        worldCam.cullingMask = 1 << worldLayer; worldCam.depth = -1; worldCam.allowHDR = true; worldCam.allowMSAA = false;
+        var worldData = worldCam.gameObject.AddComponent<UniversalAdditionalCameraData>();
+        worldData.renderPostProcessing = true; worldData.SetRenderer(rendererIndex);
+        var tilt = worldCam.gameObject.AddComponent<TiltShift>();
+        tilt.material = tiltMat; tilt.Push();
+
+        // the UI camera: today's camera (640x360 art pixels shown at a whole multiple, windowbox) at the screen's resolution,
+        // so the world texture is shown 1:1; the pixel-perfect component keeps the whole-multiple viewport
         var camGo = new GameObject("Main Camera") { tag = "MainCamera" };
+        camGo.transform.SetParent(rig.transform, false);
         camGo.transform.position = new Vector3(0, 0, -10);
         var cam = camGo.AddComponent<Camera>();
         cam.orthographic = true; cam.orthographicSize = Px.H / 2f; cam.nearClipPlane = 0.1f; cam.farClipPlane = 50;
         cam.clearFlags = CameraClearFlags.SolidColor; cam.backgroundColor = Px.Hex("#0d0a12");
-        camGo.AddComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
+        cam.cullingMask = ~(1 << worldLayer); cam.allowMSAA = false;
+        camGo.AddComponent<UniversalAdditionalCameraData>().renderPostProcessing = false;   // on only in a cutscene (DepthRig.Flat)
         var ppc = camGo.AddComponent<PixelPerfectCamera>();
         ppc.assetsPPU = 1; ppc.refResolutionX = Px.W; ppc.refResolutionY = Px.H;
-        ppc.gridSnapping = PixelPerfectCamera.GridSnapping.UpscaleRenderTexture;
+        ppc.gridSnapping = PixelPerfectCamera.GridSnapping.None;
         ppc.cropFrame = PixelPerfectCamera.CropFrame.Windowbox;
+
+        var display = new GameObject("World Display") { layer = DepthRig.UiLayer };
+        display.transform.SetParent(rig.transform, false);
+        display.transform.localScale = new Vector3(Px.W, Px.H, 1);
+        display.AddComponent<MeshFilter>().sharedMesh = Resources.GetBuiltinResource<Mesh>("Quad.fbx");
+        var displayRenderer = display.AddComponent<MeshRenderer>();
+        displayRenderer.sharedMaterial = displayMat; displayRenderer.sortingOrder = -1000;
+        displayRenderer.shadowCastingMode = ShadowCastingMode.Off; displayRenderer.receiveShadows = false;
+        rig.worldCamera = worldCam; rig.uiCamera = cam; rig.worldDisplay = displayRenderer; rig.scale = 2;
 
         var volume = new GameObject("Post Processing").AddComponent<Volume>();
         volume.isGlobal = true; volume.sharedProfile = BuildVolume();
@@ -47,6 +77,17 @@ public static class SceneBuilder
         global.lightType = Light2D.LightType.Global; global.color = new Color(0.52f, 0.52f, 1f); global.intensity = 0.25f;
 
         var workshop = BuildWorkshop(layout);
+        var worldRoot = Make.Root("World", rig.transform);
+        workshop.SetParent(worldRoot, true);
+        var composed = DepthTestBuilder.ComposeWorld(rig, worldRoot, workshop, layout, lib, tableMat, fogMat, global, volume, tilt);
+        composed.mood.windowSwap = -1;                       // the window view is WindowView's job in the game
+        foreach (var t in worldRoot.GetComponentsInChildren<Transform>(true)) t.gameObject.layer = worldLayer;
+        var sway = rig.gameObject.AddComponent<CameraSway>();
+        var stage = rig.gameObject.AddComponent<DepthStage>();
+        stage.rig = rig; stage.sway = sway; stage.mood = composed.mood; stage.effects = composed.effects;
+        composed.effects.Set(true);
+        composed.mood.Set(1, false);
+        rig.Apply();
         var cutscene = BuildCutsceneRoom();
         cutscene.gameObject.SetActive(false);
 
@@ -54,7 +95,7 @@ public static class SceneBuilder
         game.AddComponent<PointerInput>();
         game.AddComponent<Sparks>();
         var flow = game.AddComponent<GameFlow>();
-        flow.library = lib; flow.workshop = workshop.gameObject; flow.cutsceneRoom = cutscene.gameObject; flow.mainCamera = cam;
+        flow.library = lib; flow.workshop = workshop.gameObject; flow.cutsceneRoom = cutscene.gameObject; flow.mainCamera = cam; flow.depthStage = stage;
 
         Directory.CreateDirectory("Assets/Scenes");
         EditorSceneManager.SaveScene(scene, ScenePath);
@@ -86,9 +127,9 @@ public static class SceneBuilder
             .Select(g => AssetDatabase.LoadAssetAtPath<FlipbookSheet>(AssetDatabase.GUIDToAssetPath(g))).Where(s => s != null).ToArray();
         var sheetTextures = new HashSet<Texture>(sheets.Where(s => s.frames.Length > 0 && s.frames[0] != null).Select(s => (Texture)s.frames[0].texture));
         // a texture can hold several sprites (the animation sheets made by AtlasBuilder), so load them all
-        // Art/Depth belongs to the depth test scene only (DepthTestBuilder): never in the library the main scene ships with
+        // Art/Depth (the HD-2D layers) is in the library too: the main scene is the HD-2D bench; each name occurs once
         lib.sprites = AssetDatabase.FindAssets("t:Sprite", new[] { "Assets/Art" }).Distinct()
-            .Select(AssetDatabase.GUIDToAssetPath).Where(p => !AtlasBuilder.IsDepthArt(p))
+            .Select(AssetDatabase.GUIDToAssetPath)
             .SelectMany(p => AssetDatabase.LoadAllAssetsAtPath(p).OfType<Sprite>())
             .Where(s => s != null && !sheetTextures.Contains(s.texture)).OrderBy(s => s.name).ToArray();
         lib.sheets = sheets;

@@ -55,6 +55,10 @@ namespace Athanor.Game
             Clear();
         }
 
+        /// <summary>The face the tile is hit-tested on: centre and size in flat world units.</summary>
+        public Vector2 FaceCentre => faceCentre;
+        public Vector2 FaceSize => faceSize;
+
         public bool Contains(Vector2 world) =>
             Mathf.Abs(world.x - faceCentre.x) <= faceSize.x / 2 && Mathf.Abs(world.y - faceCentre.y) <= faceSize.y / 2;
 
@@ -117,7 +121,7 @@ namespace Athanor.Game
             appear = Mathf.Min(1, appear + Time.deltaTime * 5);
             float pop = Anim.OutBack(appear);
             int bob = Mathf.RoundToInt(Mathf.Sin(t * 2 + index * 1.7f) * 1.5f);
-            icon.transform.position = centre + new Vector3(0, 10 + bob + (1 - pop) * 8, 0);
+            icon.transform.localPosition = centre + new Vector3(0, 10 + bob + (1 - pop) * 8, 0);   // local: below a depth group the flat coordinates stay valid
             ring.color = glow.Times(1.6f).Alpha((0.55f + 0.25f * Mathf.Sin(t * 3 + index)) * appear);
             halo.color = glow.Alpha(glows ? 0.3f : 0.07f);
             glowLight.intensity = (glows ? 0.95f : 0.3f) * appear + flash * 0.8f;

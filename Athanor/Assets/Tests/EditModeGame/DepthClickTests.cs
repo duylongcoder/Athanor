@@ -89,6 +89,30 @@ namespace Athanor.Tests
         }
 
         [Test]
+        public void DrawnFace_UnderShakeUpToThreePx_IsHitByTheRayAtCentreAndInsetCorners()
+        {
+            int[] steps = { -3, -2, 0, 2, 3 };
+            foreach (var sway in Sways)
+                foreach (int sx in steps)
+                    foreach (int sy in steps)
+                    {
+                        var shake = new Vector2(sx, sy);
+                        rig.SetView(sway, shake);
+                        for (int i = 0; i < tiles.Length; i++)
+                        {
+                            var t = tiles[i];
+                            var pts = DepthMath.DrawnFace(t.FaceCentre, t.FaceSize, Px.H / 2f - t.centre.y, rig.CamOffset, rig.ImageShift, 3f);
+                            Vector2 centre = (pts[0] + pts[1] + pts[2] + pts[3]) / 4f;
+                            foreach (var p in new[] { centre, pts[0], pts[1], pts[2], pts[3] })
+                            {
+                                Assert.IsTrue(rig.BenchPoint(p, out var flat));
+                                Assert.IsTrue(t.Contains(flat), $"tile {i}, sway {sway}, shake {shake}: drawn point {p} -> flat {flat}");
+                            }
+                        }
+                    }
+        }
+
+        [Test]
         public void WorldRay_UnderSwayAndShake_IsTheWorldCamerasOwnRay()
         {
             rig.SetView(new Vector2(-4, 2), new Vector2(2, 1));

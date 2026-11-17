@@ -17,6 +17,34 @@ namespace Athanor.Tests
         }
 
         [Test]
+        public void New_NoArguments_SwayIsOn()
+        {
+            Assert.IsTrue(new Settings().sway);
+        }
+
+        [Test]
+        public void ToJson_ThenFromJson_RoundTripsSwayOff()
+        {
+            var back = Settings.FromJson(new Settings { sway = false }.ToJson());
+            Assert.IsFalse(back.sway);
+            Assert.IsTrue(Settings.FromJson(new Settings { sway = true }.ToJson()).sway);
+        }
+
+        [Test]
+        public void FromJson_OldSettingsWithoutSway_KeepsSwayOn()
+        {
+            var back = Settings.FromJson("{\"version\":1,\"music\":5,\"sfx\":5,\"haptics\":false,\"language\":\"en\"}");
+            Assert.IsTrue(back.sway);
+            Assert.IsFalse(back.haptics);
+        }
+
+        [Test]
+        public void FromJson_SwayAsNumber_GivesDefaults()
+        {
+            Assert.IsTrue(Settings.FromJson("{\"sway\": 0}").sway);
+        }
+
+        [Test]
         public void ToJson_ThenFromJson_RoundTripsValues()
         {
             var s = new Settings { music = 3, sfx = 0, haptics = false, language = "vi" };
