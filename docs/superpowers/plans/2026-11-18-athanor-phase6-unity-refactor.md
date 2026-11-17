@@ -36,7 +36,7 @@ Spec: `docs/superpowers/specs/2026-11-17-athanor-phase6-unity-refactor-design.md
 | DevBuild | `unity build Athanor --target WebGL --execute-method WebBuild.BuildDev --allow-dirty-build` | exit 0 |
 | Serve | `python3 -m http.server 8080 -d Athanor/Build/web-dev` (background) | |
 | WebTest | `node tools/web/webtest.mjs http://localhost:8080/ production/qa/evidence/phase6/<task>/web` | exit 0 |
-| HD2D | `node tools/web/mainhd2d.mjs http://localhost:8080/ production/qa/evidence/phase6/<task>/hd2d 640x360 hud,tiles` | exit 0 |
+| HD2D | `node tools/web/mainhd2d.mjs http://localhost:8080/ production/qa/evidence/phase6/<task>/hd2d 640x360 hud,tiles` | 0 console errors, every sway/rest/hud check passes, shake failures ≤ 7 (Task 0 baseline: 47/54, sway 27/27, shake 20/27; the shake gap is the 5b-08 accepted gap "harness latency", proven by `DepthClickTests`). Exit code is 1 at baseline for that reason; read `report.json` instead. |
 
 **Full verification** = CI + EditMode + DevBuild + WebTest + HD2D, all passing.
 
