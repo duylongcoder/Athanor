@@ -1,0 +1,64 @@
+loaded in 0.5 s, viewport 640x360, scale 1
+canvas 640x360 css 640x360
+on the bench
+shot hud-bench-640x360
+shot tiles-cleared-640x360
+cleared: 0 cards taken back
+shot tiles-card-selected-640x360
+ok   sway tile 0 point 0 art 217.9,166.1
+ok   sway tile 0 point 3 art 281.2,146.9
+ok   sway tile 0 point 4 art 249.4,156.6
+ok   sway tile 1 point 0 art 289.9,165.9
+ok   sway tile 1 point 3 art 350.2,147.0
+ok   sway tile 1 point 4 art 319.9,156.5
+ok   sway tile 2 point 0 art 358.8,166.0
+ok   sway tile 2 point 3 art 422.2,147.1
+ok   sway tile 2 point 4 art 390.4,156.4
+ok   sway tile 3 point 0 art 207.0,197.0
+ok   sway tile 3 point 3 art 277.0,179.0
+ok   sway tile 3 point 4 art 242.0,188.0
+ok   sway tile 4 point 0 art 287.0,197.0
+ok   sway tile 4 point 3 art 353.0,179.0
+ok   sway tile 4 point 4 art 320.0,188.0
+ok   sway tile 5 point 0 art 363.0,197.0
+ok   sway tile 5 point 3 art 433.0,179.0
+ok   sway tile 5 point 4 art 398.0,188.0
+ok   sway tile 6 point 0 art 196.2,228.9
+ok   sway tile 6 point 3 art 272.9,210.1
+ok   sway tile 6 point 4 art 234.4,219.4
+ok   sway tile 7 point 0 art 283.2,229.1
+ok   sway tile 7 point 3 art 357.0,209.9
+ok   sway tile 7 point 4 art 319.9,219.5
+ok   sway tile 8 point 0 art 367.2,229.0
+ok   sway tile 8 point 3 art 444.1,210.0
+ok   sway tile 8 point 4 art 405.3,219.5
+tiles sway: 27/27
+ok   shake tile 0 point 0 art 220.1,168.0
+ok   shake tile 0 point 3 art 277.8,148.0
+ok   shake tile 0 point 4 art 252.6,156.5
+ok   shake tile 1 point 0 art 293.2,168.0
+ok   shake tile 1 point 3 art 348.0,145.0
+ok   shake tile 1 point 4 art 317.8,157.5
+ok   shake tile 2 point 0 art 360.9,166.0
+FAIL shake tile 2 point 3 art 419.8,146.1 pre-inside=false post-inside=false drift=3.2px
+ok   shake tile 2 point 4 art 391.7,154.4
+FAIL shake tile 3 point 0 art 206.0,195.0 pre-inside=false post-inside=false drift=4.2px
+ok   shake tile 3 point 3 art 277.0,179.0
+ok   shake tile 3 point 4 art 239.0,187.0
+FAIL shake tile 4 point 0 art 284.0,197.0 pre-inside=false post-inside=false drift=5.4px
+ok   shake tile 4 point 3 art 355.0,179.0
+ok   shake tile 4 point 4 art 317.0,190.0
+ok   shake tile 5 point 0 art 363.0,199.0
+FAIL shake tile 5 point 3 art 436.0,178.0 pre-inside=false post-inside=false drift=5.1px
+ok   shake tile 5 point 4 art 395.0,189.0
+ok   shake tile 6 point 0 art 198.0,231.1
+FAIL shake tile 6 point 3 art 272.9,208.0 pre-inside=false post-inside=false drift=4.2px
+ok   shake tile 6 point 4 art 234.7,221.5
+FAIL shake tile 7 point 0 art 283.2,228.1 pre-inside=false post-inside=false drift=1.3px
+ok   shake tile 7 point 3 art 357.9,207.9
+ok   shake tile 7 point 4 art 318.9,219.5
+FAIL shake tile 8 point 0 art 364.1,230.9 pre-inside=false post-inside=false drift=5.7px
+ok   shake tile 8 point 3 art 447.1,211.0
+ok   shake tile 8 point 4 art 404.3,220.5
+tiles shake: 20/27
+console: 16014 messages, 0 errors; checks 47/54

@@ -14,13 +14,15 @@ namespace Athanor.Game
         /// <summary>The kind and the size (English points) it was made with, kept for font swaps.</summary>
         public FontKind kind;
         public int size;
-        string key; (string name, object value)[] args;
-        int lines = 1;
+        [SerializeField] string key;
+        (string name, object value)[] args;           // arguments are set at run time by SetKey; never baked
+        static readonly (string name, object value)[] NoArgs = new (string, object)[0];
+        [SerializeField] int lines = 1;
 
         /// <summary>Name-role text: how many lines the name has. Crux sits higher in its box than the English face, so Vietnamese names are nudged down 5 px (two lines) or 1 px (one) to land on the English rows.</summary>
         public int Lines { get => lines; set { lines = value; ApplyBias(); } }
 
-        bool lineBox;
+        [SerializeField] bool lineBox;
         /// <summary>
         /// Display text placed as the mockup places it, in a line box as tall as its size (the Descent's depth name, SPEC (f)).
         /// Crux's ascent line is short for its size, so in Vietnamese the face moves down by Crux's half-leading at the current
@@ -85,7 +87,7 @@ namespace Athanor.Game
             if (main.font != font) main.font = font;
             if (shadow != null && shadow.font != font) shadow.font = font;
             SetSize(size); ApplyBias();
-            if (key != null) Text = Loc.T(key, args);
+            if (!string.IsNullOrEmpty(key)) Text = Loc.T(key, args ?? NoArgs);
         }
 
         public string Text
