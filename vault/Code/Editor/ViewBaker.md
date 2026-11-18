@@ -12,7 +12,7 @@ aliases: []
 # ViewBaker
 
 `public static class ViewBaker`
-- Layer: **Editor** · Source: `Athanor/Assets/Editor/ViewBaker.cs:15-220`
+- Layer: **Editor** · Source: `Athanor/Assets/Editor/ViewBaker.cs:15-260`
 
 > Phase 6 only (deleted in Task 16): builds a view the old way once, keeps a reference picture, saves it as a prefab, puts the prefab into Main.unity and sets the GameFlow field. Then Compare checks the prefab draws the same picture. unity run Athanor -- -executeMethod ViewBaker.Bake<Name> (no -quit: unity run rejects it)
 
@@ -37,6 +37,11 @@ aliases: []
 | method | `public static void CompareTitle()` | 177 | The Title prefab in the same pose as its "before" pictures: all four must match within 0.1 %. |
 | method | `public static void BakeCard()` | 198 | Parts/Card.prefab: one card, shown for the first starting material (the game calls Show for each hand card). |
 | method | `public static void BakeBench()` | 210 | Prefabs/Views/Bench.prefab, in Main.unity (the bench sits in the HD-2D scene): the tiles from Editor/layout.json, the rack, the links, the Hud prefab nested, the card prefab as a reference. The depth groups are not baked: GameFlow places the tiles at run time as before. Its "before" picture is the browser baseline (Task 0, mainhd2d.mjs hud). |
+| method | `public static void BakeScreenFx()` | 222 | The "Screen Fx" object of Main.unity: the flash and fade sprites. GameFlow.Bind passes the camera at run time. |
+| method | `public static void BakeWindow()` | 228 | The "Window" object of Main.unity: the effect sprites under a WindowFx object in the workshop, and the pane found by name. An earlier WindowFx is removed first, because it is not a root and RemoveRoots does not see it. |
+| method | `public static void BakeTutorial()` | 237 | The "Tutorial" object of Main.unity: the text box, the arrow and the cell root. |
+| method | `public static void BakeReaction()` | 243 | The "Reaction Cutscene" object of Main.unity: the stage and its UI under the cutscene room. Earlier ones are removed first, because they are children of the room and not roots, so RemoveRoots does not see them. |
+| method | `public static void BakeStory()` | 255 | The "Story Cutscene" object of Main.unity: the story stage is its child, so a second bake replaces it with the object. |
 
 ## Uses
-[[BenchView]], [[CardView]], [[ContentData]], [[ContentDb]], [[EditorGlobals]], [[GameFlow]], [[HudView]], [[LayoutData]], [[Loc]], [[Save]], [[Settings]], [[TitleView]], [[Tooltip]], [[ViewCapture]]
+[[Bench]], [[BenchView]], [[CardView]], [[ContentData]], [[ContentDb]], [[EditorGlobals]], [[GameFlow]], [[HudView]], [[LayoutData]], [[Loc]], [[ReactionCutscene]], [[Save]], [[ScreenFx]], [[Settings]], [[SimpleCutscene]], [[TitleView]], [[Tooltip]], [[TutorialController]], [[ViewCapture]], [[WindowView]]

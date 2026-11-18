@@ -85,7 +85,16 @@ namespace Athanor.Game
         static readonly float[] Moon = { 0.62f, 0.5f, 0.4f, 0.3f, 0.5f };
         static readonly string[] Accent = { "#7cc0f8", "#6ee6c8", "#c486f4", "#ee6a3c", "#fff6b8" };
 
-        ReactionCutscene reaction; SimpleCutscene story; WindowView window;
+        /// <summary>The discovery sequence (the Reaction Cutscene object of Main.unity).</summary>
+        [SerializeField] ReactionCutscene reaction;
+        /// <summary>The intro, descent and ending (the Story Cutscene object of Main.unity).</summary>
+        [SerializeField] SimpleCutscene story;
+        /// <summary>The camera shake and the flash and fade of the whole screen (the Screen Fx object of Main.unity).</summary>
+        [SerializeField] ScreenFx screenFx;
+        /// <summary>The workshop window's effects (the Window object of Main.unity).</summary>
+        [SerializeField] WindowView window;
+        /// <summary>The tutorial overlay (the Tutorial object of Main.unity).</summary>
+        [SerializeField] TutorialController tutorial;
         /// <summary>The title screen (a prefab in Main.unity).</summary>
         [SerializeField] TitleView title;
         /// <summary>The journal (a prefab in Main.unity; its cells come from the JournalCell part).</summary>
@@ -116,7 +125,7 @@ namespace Athanor.Game
         bool hurry, inCutscene, runEnded, autoReady, abandoned;
         float autoClock;
         int runs;
-        TutorialController tut, tutorial;
+        TutorialController tut;
         Journal realJournal; Profile realProfile;
         /// <summary>A replay of the tutorial: a throwaway journal and profile, nothing written to storage.</summary>
         bool sandbox;
@@ -144,6 +153,11 @@ namespace Athanor.Game
             if (eventView == null) throw new System.InvalidOperationException("GameFlow: eventView is not set in the scene");
             if (choice == null) throw new System.InvalidOperationException("GameFlow: choice is not set in the scene");
             if (pause == null) throw new System.InvalidOperationException("GameFlow: pause is not set in the scene");
+            if (screenFx == null) throw new System.InvalidOperationException("GameFlow: screenFx is not set in the scene");
+            if (reaction == null) throw new System.InvalidOperationException("GameFlow: reaction is not set in the scene");
+            if (story == null) throw new System.InvalidOperationException("GameFlow: story is not set in the scene");
+            if (window == null) throw new System.InvalidOperationException("GameFlow: window is not set in the scene");
+            if (tutorial == null) throw new System.InvalidOperationException("GameFlow: tutorial is not set in the scene");
             if (title == null) throw new System.InvalidOperationException("GameFlow: title is not set in the scene");
             if (goalsView == null) throw new System.InvalidOperationException("GameFlow: goalsView is not set in the scene");
             if (journalView == null) throw new System.InvalidOperationException("GameFlow: journalView is not set in the scene");
@@ -169,7 +183,7 @@ namespace Athanor.Game
             var light = GameObject.Find("Ambient Light"); if (light != null) ambient = light.GetComponent<Light2D>();
             var beam = workshop.transform.Find("Moonbeam"); if (beam != null) moon = beam.GetComponent<Light2D>();
 
-            gameObject.AddComponent<ScreenFx>().Build(mainCamera, depthStage != null ? depthStage.sway : null);
+            screenFx.Bind(mainCamera, depthStage != null ? depthStage.sway : null);
             PointerInput.Rig = depthStage != null ? depthStage.rig : null;
             if (bench == null) throw new System.InvalidOperationException("GameFlow.bench is not set: bake Prefabs/Views/Bench.prefab into Main.unity");
             bench.Bind(Db);
@@ -178,9 +192,8 @@ namespace Athanor.Game
             Bench.RedrawRequested += () => { if (State == FlowState.Bench && Run.Redraw()) Bench.Refresh(true); };
             Bench.JournalRequested += OpenJournal;
 
-            reaction = gameObject.AddComponent<ReactionCutscene>(); reaction.Build(cutsceneRoom, workshop, Bench.gameObject);
-            story = gameObject.AddComponent<SimpleCutscene>(); story.Build(cutsceneRoom, workshop, Bench.gameObject);
-            window = gameObject.AddComponent<WindowView>(); window.Build(workshop.transform);
+            reaction.Bind(new[] { workshop, Bench.gameObject });
+            window.Bind();
             if (depthStage != null) { depthStage.window = window; if (depthStage.effects != null) depthStage.effects.window = window; window.Soft = depthStage.effects == null || depthStage.effects.effectsOn; }
             title.Bind(settings);
             title.SettingsClosed += SaveSettings;
@@ -188,7 +201,7 @@ namespace Athanor.Game
             title.GoalsClicked += OpenGoals;
             title.ResetConfirmed += ResetProgress;
             tut = null;
-            tutorial = gameObject.AddComponent<TutorialController>(); tutorial.Build();
+            tutorial.Bind(this);
             journalView.Bind(Db);
             journalView.Closed += CloseJournal;
             choice.Bind();
@@ -342,7 +355,7 @@ namespace Athanor.Game
         /// <summary>The tutorial's lessons; a replay ends at 5.5 and goes back to the title, the first run goes on as a normal run.</summary>
         IEnumerator RunTutorial()
         {
-            yield return tut.Drive(this);
+            yield return tut.Drive();
             var pending = heldGoals.ToArray(); heldGoals.Clear();
             bool replay = sandbox;
             tut = null;

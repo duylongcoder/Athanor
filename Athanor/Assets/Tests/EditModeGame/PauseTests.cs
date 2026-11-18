@@ -78,9 +78,12 @@ namespace Athanor.Tests
         public void Abort_TutorialRun_DoesNotMarkItDone()
         {
             Save.TutorialDone = false;
-            var t = go.AddComponent<TutorialController>(); t.Build();
-            t.Abort();
-            Assert.IsFalse(Save.TutorialDone);
+            using (var main = new MainSceneFixture())
+            {
+                var t = main.FlowField<TutorialController>("tutorial");
+                t.Abort();
+                Assert.IsFalse(Save.TutorialDone);
+            }
         }
 
         [Test]

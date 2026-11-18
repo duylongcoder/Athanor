@@ -7,7 +7,7 @@ namespace Athanor.Game
     public sealed class ScreenFx : MonoBehaviour
     {
         public static ScreenFx I { get; private set; }
-        SpriteRenderer flash, black;
+        [SerializeField] SpriteRenderer flash, black;
         Transform cam;
         Vector3 camHome;
         CameraSway world;
@@ -15,18 +15,25 @@ namespace Athanor.Game
         float flashLeft, flashTime, flashPeak, shakeLeft, shakeTime, shakeSize;
 
         /// <summary>camera is the camera the shake moves, unless a depth rig is given: then the shake moves the world only
-        /// (owner gate G2 #6), except in a cutscene, which is flat and shakes with its camera.</summary>
-        public void Build(Camera camera, CameraSway worldSway = null)
+        /// (owner gate G2 #6), except in a cutscene, which is flat and shakes with its camera. Makes this the scene's ScreenFx.I.</summary>
+        public void Bind(Camera camera, CameraSway worldSway = null)
         {
             I = this;
             world = worldSway;
             rig = worldSway != null ? worldSway.GetComponent<DepthRig>() : null;
             cam = camera.transform; camHome = cam.position;
+        }
+
+#if UNITY_EDITOR
+        /// <summary>Bake source for the Screen Fx object of Main.unity (ViewBaker.BakeScreenFx): the white flash and the black fade, full screen.</summary>
+        public void Build()
+        {
             flash = Make.Rect(transform, 0, 0, Px.W, Px.H, Color.clear, 480);
             flash.name = "Flash"; flash.sharedMaterial = Art.Lib.glow;
             black = Make.Rect(transform, -8, -8, Px.W + 16, Px.H + 16, Color.clear, 500);
             black.name = "Fade";
         }
+#endif
 
         public void Flash(float peak, float seconds) { flashPeak = peak; flashLeft = flashTime = seconds; }
         public void Shake(float pixels, float seconds) { shakeSize = pixels; shakeLeft = shakeTime = seconds; }
@@ -37,6 +44,7 @@ namespace Athanor.Game
 
         void LateUpdate()
         {
+            if (cam == null) return;                      // not bound yet (a scene opened in the editor)
             if (flashLeft > 0)
             {
                 flashLeft -= Time.deltaTime;

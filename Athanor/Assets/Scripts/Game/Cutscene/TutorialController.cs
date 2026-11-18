@@ -33,8 +33,10 @@ namespace Athanor.Game
         const int Z = 600;
         static readonly Color Gold = Px.Hex("#f8d250");
 
-        Transform root, cells;
-        Label line; SpriteRenderer boxFill, boxEdge, arrow;
+        // the overlay's fixed parts (the Tutorial object of Main.unity); the dim cells and rim pieces are made per step
+        [SerializeField] Transform root, cells;
+        [SerializeField] Label line;
+        [SerializeField] SpriteRenderer boxFill, boxEdge, arrow;
         readonly List<SpriteRenderer> rim = new List<SpriteRenderer>();
         readonly List<Label> extra = new List<Label>();
         Rect[] rimRects = new Rect[0]; Rect rimRect; bool rimOn; float pulse, bump;
@@ -51,6 +53,11 @@ namespace Athanor.Game
         /// <summary>The scores the popups showed, in order (checked by the tests against TutorialTests: 40 / 0 / 40 / 240 / ...).</summary>
         public readonly List<long> Shown = new List<long>();
 
+        /// <summary>Gives the controller the game it reads; the lessons run in Drive.</summary>
+        public void Bind(GameFlow flow) => f = flow;
+
+#if UNITY_EDITOR
+        /// <summary>Bake source for the Tutorial object of Main.unity (ViewBaker.BakeTutorial): the text box, the arrow and the (empty) cell root.</summary>
         public void Build()
         {
             root = Make.Root("Tutorial", transform);
@@ -62,6 +69,7 @@ namespace Athanor.Game
             arrow.transform.rotation = Quaternion.Euler(0, 0, 45);
             root.gameObject.SetActive(false);
         }
+#endif
 
         // ---- overlay ----------------------------------------------------------------------------
 
@@ -343,10 +351,10 @@ namespace Athanor.Game
         }
 
         /// <summary>Runs the lessons from the first bench to line 5.5. The game plays its own Ignite, descents and choice between.</summary>
-        public IEnumerator Drive(GameFlow flow)
+        public IEnumerator Drive()
         {
             Dev.Hook("[drive] start");
-            f = flow; trial = 0; Finished = false; Shown.Clear();
+            trial = 0; Finished = false; Shown.Clear();
             var all = new Rect(0, 0, Px.W, Px.H);
             var bench = Union(Enumerable.Range(0, Core.Bench.TileCount).Select(TileRect).ToArray());
             // trial 1: lay, Ignite, reaction

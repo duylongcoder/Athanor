@@ -13,8 +13,9 @@ namespace Athanor.Game
         const int Order = 2, Motes = 6, Drips = 2, RootRows = 89, RootsFrom = 20;
         const float RootStep = 0.45f;
 
-        SpriteRenderer pane, glow, point;
-        readonly SpriteRenderer[] motes = new SpriteRenderer[Motes], drips = new SpriteRenderer[Drips];
+        // the pane is the workshop's window sprite; the rest are the effect sprites under the WindowFx object (all in Main.unity)
+        [SerializeField] SpriteRenderer pane, glow, point;
+        [SerializeField] SpriteRenderer[] motes = new SpriteRenderer[Motes], drips = new SpriteRenderer[Drips];
         int view, shownDepth;
         bool soft;
         Vector3 centre;       // the pane's centre in the flat game: the effects are placed in flat coordinates, below a group at the pane's depth
@@ -23,15 +24,24 @@ namespace Athanor.Game
         // depth 4: a copy of the roots view with the root pixels painted out, then given back a row at a time from the top
         Texture2D rootTex; Sprite rootSprite; Color32[] rootSrc, rootNow; int rootRevealed; float rootClock;
 
-        /// <summary>Finds the pane in the workshop and makes the effect sprites (hidden).</summary>
+        /// <summary>Remembers the night sky and the pane's flat centre; the pane and the effect sprites are serialized (no pane: the view does nothing).</summary>
+        public void Bind()
+        {
+            if (pane == null) return;
+            night = pane.sprite;
+            var layer = pane.GetComponent<DepthLayer>();
+            centre = layer != null ? (Vector3)layer.rest : pane.transform.position;
+        }
+
+#if UNITY_EDITOR
+        /// <summary>Bake source for the Window object of Main.unity (ViewBaker.BakeWindow): finds the pane in the workshop and makes the effect sprites (hidden).</summary>
         public void Build(Transform workshop)
         {
             var found = workshop.Find("window");
             pane = found != null ? found.GetComponent<SpriteRenderer>() : null;
             if (pane == null) return;
-            night = pane.sprite;
             var layer = pane.GetComponent<DepthLayer>();
-            var at = centre = layer != null ? (Vector3)layer.rest : pane.transform.position;
+            var at = layer != null ? (Vector3)layer.rest : pane.transform.position;
             var fx = Make.Root("WindowFx", workshop);
             for (int i = 0; i < Motes; i++) { motes[i] = Make.Sprite(fx, "dot", at, Order); motes[i].transform.localScale = new Vector3(0.25f, 0.25f, 1); }
             for (int i = 0; i < Drips; i++) drips[i] = Make.Sprite(fx, "window_drip", at, Order);
@@ -41,6 +51,7 @@ namespace Athanor.Game
             // in the HD-2D bench the effects sit just in front of the pane, in its depth
             if (layer != null) DepthLayer.AddGroup(fx.gameObject, layer.z + 0.5f).Apply(DepthMath.RestDistance);
         }
+#endif
 
         /// <summary>The pre-blurred window pictures (depth effects on) instead of the sharp ones (off). Redraws the pane.</summary>
         public bool Soft

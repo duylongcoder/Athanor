@@ -16,21 +16,29 @@ namespace Athanor.Game
         const int O = 420;
         const float CX = 320, Scroll = 400;
 
-        GameObject room, workshop, bench;
-        Transform root;
-        SpriteRenderer shade, glow, ring, rune, icon, iconGlow;
-        readonly SpriteRenderer[] bars = new SpriteRenderer[4];
-        readonly Transform[] rays = new Transform[12];
-        readonly Label[] lines = new Label[3];
-        Label small, big, banner, prompt, intro;
-        Light2D iconLight;
+        // the parts below are the Story Cutscene object of Main.unity (baked by ViewBaker.BakeStory); the three loops are made at run time
+        [SerializeField] GameObject room, workshop, bench;
+        [SerializeField] Transform root;
+        [SerializeField] SpriteRenderer shade, glow, ring, rune, icon, iconGlow;
+        [SerializeField] SpriteRenderer[] bars = new SpriteRenderer[4];
+        [SerializeField] Transform[] rays = new Transform[12];
+        /// <summary>The sprite under each ray, found once when baked so that Update does not look for it every frame.</summary>
+        [SerializeField] SpriteRenderer[] rayFaces = new SpriteRenderer[12];
+        [SerializeField] Label[] lines = new Label[3];
+        [SerializeField] Label small, big, banner, prompt, intro;
+        [SerializeField] Light2D iconLight;
         Color tint = Color.white;
         float raysOn, runeOn, embers, streaks;      // strengths of the looping effects, driven by the scripts below
 
+#if UNITY_EDITOR
+        /// <summary>
+        /// Bake source for the Story Cutscene object of Main.unity (ViewBaker.BakeStory): the story stage, hidden, under this object.
+        /// The three scene objects are only remembered; the baked scene keeps them as references.
+        /// </summary>
         public void Build(GameObject cutsceneRoom, GameObject workshopRoot, GameObject benchRoot)
         {
             room = cutsceneRoom; workshop = workshopRoot; bench = benchRoot;
-            root = Make.Root("Story");
+            root = Make.Root("Story", transform);
             var dark = Px.Hex("#0c0706");
             shade = Make.Rect(root, 0, 0, Px.W, Px.H, Color.clear, O);
             bars[0] = Make.Rect(root, 0, 0, Px.W, 30, Color.black, O + 9); bars[1] = Make.Rect(root, 0, Px.H - 30, Px.W, 30, Color.black, O + 9);
@@ -41,7 +49,8 @@ namespace Athanor.Game
             for (int k = 0; k < rays.Length; k++)
             {
                 rays[k] = Make.Root("ray", root);
-                Make.Sprite(rays[k], "ray", Vector3.zero, O + 3, Art.Lib.glow).transform.localPosition = new Vector3(26 + 75, 0, 0);
+                rayFaces[k] = Make.Sprite(rays[k], "ray", Vector3.zero, O + 3, Art.Lib.glow);
+                rayFaces[k].transform.localPosition = new Vector3(26 + 75, 0, 0);
             }
             iconGlow = Make.Glow(root, Vector3.zero, 80, Color.clear, O + 4);
             icon = Make.Sprite(root, "dot", Vector3.zero, O + 5);
@@ -57,6 +66,7 @@ namespace Athanor.Game
             prompt = Make.Text(root, "", CX, Px.H - 19, FontKind.Tiny, 8, Px.Hex("#7a5a3a"), O + 12, Align.Centre);
             root.gameObject.SetActive(false);
         }
+#endif
 
         public override IEnumerator Play() => Intro();
 
@@ -276,7 +286,7 @@ namespace Athanor.Game
                 rays[k].position = at;
                 rays[k].rotation = Quaternion.Euler(0, 0, k * 30f + t * 14);
                 rays[k].localScale = new Vector3((k % 2 == 0 ? 0.75f : 1) * raysOn, 1, 1);
-                rays[k].GetChild(0).GetComponent<SpriteRenderer>().color = new Color(1, 0.95f, 0.75f, 0.3f * raysOn);
+                rayFaces[k].color = new Color(1, 0.95f, 0.75f, 0.3f * raysOn);
             }
             // the rune circle and its widening ring under a depth's name
             rune.color = tint.Times(1.5f).Alpha(runeOn * (0.7f + 0.3f * Mathf.Sin(t * 4)));

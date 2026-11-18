@@ -217,4 +217,44 @@ public static class ViewBaker
         var tip = v.GetComponentInChildren<Tooltip>(true);
         ((SpriteRenderer)typeof(Tooltip).GetField("panel", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(tip)).sprite = null;
     }, asPrefab: true);
+
+    /// <summary>The "Screen Fx" object of Main.unity: the flash and fade sprites. GameFlow.Bind passes the camera at run time.</summary>
+    public static void BakeScreenFx() => BakeInScene<ScreenFx>("Screen Fx", "screenFx", v => v.Build(), asPrefab: false);
+
+    /// <summary>
+    /// The "Window" object of Main.unity: the effect sprites under a WindowFx object in the workshop, and the pane found by name. An
+    /// earlier WindowFx is removed first, because it is not a root and RemoveRoots does not see it.
+    /// </summary>
+    public static void BakeWindow() => BakeInScene<WindowView>("Window", "window", v =>
+    {
+        var workshop = Object.FindFirstObjectByType<GameFlow>().workshop.transform;
+        var old = workshop.Find("WindowFx");
+        if (old != null) Object.DestroyImmediate(old.gameObject);
+        v.Build(workshop);
+    }, asPrefab: false);
+
+    /// <summary>The "Tutorial" object of Main.unity: the text box, the arrow and the cell root.</summary>
+    public static void BakeTutorial() => BakeInScene<TutorialController>("Tutorial", "tutorial", v => v.Build(), asPrefab: false);
+
+    /// <summary>
+    /// The "Reaction Cutscene" object of Main.unity: the stage and its UI under the cutscene room. Earlier ones are removed first,
+    /// because they are children of the room and not roots, so RemoveRoots does not see them.
+    /// </summary>
+    public static void BakeReaction() => BakeInScene<ReactionCutscene>("Reaction Cutscene", "reaction", v =>
+    {
+        var room = Object.FindFirstObjectByType<GameFlow>().cutsceneRoom;
+        foreach (var old in new[] { "Reaction", "Reaction UI" })
+        {
+            var t = room.transform.Find(old);
+            if (t != null) Object.DestroyImmediate(t.gameObject);
+        }
+        v.Build(room);
+    }, asPrefab: false);
+
+    /// <summary>The "Story Cutscene" object of Main.unity: the story stage is its child, so a second bake replaces it with the object.</summary>
+    public static void BakeStory() => BakeInScene<SimpleCutscene>("Story Cutscene", "story", v =>
+    {
+        var flow = Object.FindFirstObjectByType<GameFlow>();
+        v.Build(flow.cutsceneRoom, flow.workshop, flow.Bench.gameObject);
+    }, asPrefab: false);
 }

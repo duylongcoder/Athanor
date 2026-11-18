@@ -2,12 +2,6 @@
   "version": 1,
   "entries": [
     {
-      "rule": "UL001",
-      "path": "Assets/Scripts/Game/Cutscene/SimpleCutscene.cs",
-      "text": "rays[k].GetChild(0).GetComponent<SpriteRenderer>().color = new Color(1, 0.95f, 0.75f, 0.3f * raysOn);",
-      "count": 1
-    },
-    {
       "rule": "UL002",
       "path": "Assets/Scripts/Game/Boot/GameFlow.cs",
       "text": "reaction.Skip(); story.Skip();",

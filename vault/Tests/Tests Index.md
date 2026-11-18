@@ -5,7 +5,7 @@ tags: [moc/tests]
 ---
 
 # Tests
-466 test methods in 35 files. Run: `dotnet test tools/CoreTests` (rules) or `unity test Athanor --mode EditMode`.
+471 test methods in 37 files. Run: `dotnet test tools/CoreTests` (rules) or `unity test Athanor --mode EditMode`.
 
 - [[ChainTests]] — 26 tests · covers [[Bench]], [[ChainPlan]], [[ChainPlanner]], [[ContentDb]]
 - [[ContentTests]] — 41 tests · covers [[Bench]], [[ChainPlanner]], [[ContentData]], [[ContentDb]], [[Ops]], [[RunState]]
@@ -36,6 +36,7 @@ tags: [moc/tests]
 - [[PrefabBakeTests]] — 39 tests · covers [[Bench]], [[BenchView]], [[CardView]], [[CatalystChoiceView]], [[ChoiceCard]], [[Clickable]], [[ContentData]], [[ContentDb]]
 - [[RunOverDepthTests]] — 4 tests · covers [[Label]], [[Loc]], [[RunOverView]], [[RunState]]
 - [[SaveTests]] — 12 tests · covers [[ContentData]], [[ContentDb]], [[Journal]], [[Kind]], [[Profile]], [[ProfileData]], [[Save]]
+- [[SceneBakeTests]] — 5 tests · covers [[Bench]], [[ContentDb]], [[GameFlow]], [[Label]], [[ReactionCutscene]], [[ScreenFx]], [[SimpleCutscene]], [[TutorialController]]
 - [[SettingsHapticsTests]] — 7 tests · covers [[AudioMute]], [[Haptics]], [[Save]], [[Settings]]
 - [[SparksTests]] — 7 tests · covers [[Art]], [[Particle]], [[SparkMesh]], [[Sparks]]
 - [[TutorialFlowTests]] — 10 tests · covers [[AutoPlayer]], [[Bench]], [[ContentData]], [[ContentDb]], [[Journal]], [[Profile]], [[Px]], [[RunOptions]]

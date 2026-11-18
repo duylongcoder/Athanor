@@ -15,19 +15,21 @@ namespace Athanor.Game
         const float CX = 320, Rim = 161, FloorY = 292, GatherEnd = 2.05f, Burst = 2.3f, Reveal = 2.9f, Count = 3.4f, Settled = 4.5f, AutoEnd = 7.5f;
         const int O = 300;
 
-        GameObject room; GameObject[] others;
-        Transform stage;
-        SpriteRenderer rune, liquid, liquidGlow, pillar, result, resultGlow;
+        // the parts below are the Reaction Cutscene object of Main.unity (baked by ViewBaker.BakeReaction); others are given by Bind
+        [SerializeField] GameObject room;
+        GameObject[] others;
+        [SerializeField] Transform stage;
+        [SerializeField] SpriteRenderer rune, liquid, liquidGlow, pillar, result, resultGlow;
         const int MaxMats = ContentDb.MaxItems;
-        readonly SpriteRenderer[] mats = new SpriteRenderer[MaxMats], matGlow = new SpriteRenderer[MaxMats], rings = new SpriteRenderer[3];
-        readonly Transform[] rays = new Transform[14];
-        readonly Light2D[] matLight = new Light2D[MaxMats];
-        readonly Color[] matCol = new Color[MaxMats];
+        [SerializeField] SpriteRenderer[] mats = new SpriteRenderer[MaxMats], matGlow = new SpriteRenderer[MaxMats], rings = new SpriteRenderer[3];
+        [SerializeField] Transform[] rays = new Transform[14];
+        [SerializeField] Light2D[] matLight = new Light2D[MaxMats];
+        readonly Color[] matCol = new Color[MaxMats];       // filled by Setup from the materials of the reaction
         int matCount = 2;
-        Light2D runeLight, liquidLight, resultLight;
-        Sprite[] liquidFrames;
-        Label headerLeft, headerRight, skipHint, banner, title, plus, times, total;
-        Transform ui;
+        [SerializeField] Light2D runeLight, liquidLight, resultLight;
+        [SerializeField] Sprite[] liquidFrames;
+        [SerializeField] Label headerLeft, headerRight, skipHint, banner, title, plus, times, total;
+        [SerializeField] Transform ui;
 
         ReactionEvent ev; ContentDb db;
         Color colRes;
@@ -35,10 +37,21 @@ namespace Athanor.Game
         int experiment;
         float gatherSpeed = 1;
 
-        /// <summary>others: everything that is switched off while the cutscene room is on screen (workshop, bench).</summary>
-        public void Build(GameObject cutsceneRoom, params GameObject[] others)
+        /// <summary>others: everything that is switched off while the cutscene room is on screen (workshop, bench). Hides the stage.</summary>
+        public void Bind(GameObject[] others)
         {
-            room = cutsceneRoom; this.others = others;
+            this.others = others;
+            Stage(false);
+        }
+
+#if UNITY_EDITOR
+        /// <summary>
+        /// Bake source for the Reaction Cutscene object of Main.unity (ViewBaker.BakeReaction): the stage and its UI under the cutscene room,
+        /// both hidden. The room and the objects it hides are left as they are; Bind hides the stage and the room at run time.
+        /// </summary>
+        public void Build(GameObject cutsceneRoom)
+        {
+            room = cutsceneRoom;
             var t = stage = Make.Root("Reaction", room.transform);
             rune = Make.Sprite(t, "rune_circle", Px.At(CX, FloorY), O + 2, Art.Lib.glow);
             runeLight = Make.Light(t, Px.At(CX, FloorY), 230, Color.white, 0, 0.4f);
@@ -79,8 +92,9 @@ namespace Athanor.Game
             plus = Make.Text(ui, "", CX - 84, 230, FontKind.Title, 32, Px.Hex("#f8d250"), O + 45, Align.Centre, Px.Hex("#3a1a08"));
             times = Make.Text(ui, "", CX - 16, 230, FontKind.Title, 32, Px.Hex("#ee6a3c"), O + 45, Align.Centre, Px.Hex("#3b0d1e"));
             total = Make.Text(ui, "", CX + 66, 230, FontKind.Title, 32, Px.Hex("#fff6b8"), O + 45, Align.Centre, Px.Hex("#3a1a08"));
-            Stage(false);
+            stage.gameObject.SetActive(false); ui.gameObject.SetActive(false);
         }
+#endif
 
         void Stage(bool on)
         {
