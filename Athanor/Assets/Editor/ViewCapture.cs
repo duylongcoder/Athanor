@@ -6,11 +6,15 @@ using UnityEngine;
 /// <summary>Renders a GameObject alone (in an otherwise empty scene) to a 640x360 image, the way the UI camera draws it.</summary>
 public static class ViewCapture
 {
-    /// <summary>Draws root (made active for the shot, then restored) to a 640x360 texture.</summary>
+    /// <summary>
+    /// Draws root to a 640x360 texture. Root and every hidden object under it are made active for the shot, then restored: a view
+    /// that hides a part until it is needed (the goal toast's panel) is still compared whole.
+    /// </summary>
     public static Texture2D Render(GameObject root)
     {
-        bool wasActive = root.activeSelf;
-        root.SetActive(true);
+        var hidden = new System.Collections.Generic.List<GameObject>();
+        foreach (var t in root.GetComponentsInChildren<Transform>(true)) if (!t.gameObject.activeSelf) hidden.Add(t.gameObject);
+        foreach (var g in hidden) g.SetActive(true);
         GameObject camGo = null;
         RenderTexture rt = null;
         var previous = RenderTexture.active;
@@ -37,7 +41,7 @@ public static class ViewCapture
             RenderTexture.active = previous;
             if (rt != null) RenderTexture.ReleaseTemporary(rt);
             if (camGo != null) Object.DestroyImmediate(camGo);
-            root.SetActive(wasActive);
+            for (int i = hidden.Count - 1; i >= 0; i--) hidden[i].SetActive(false);
         }
     }
 

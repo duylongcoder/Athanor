@@ -363,9 +363,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.055555556
-    width: 0.33333334
-    height: 0.3333333
+    y: 0.125
+    width: 1
+    height: 0.75000006
   near clip plane: 0.1
   far clip plane: 50
   field of view: 60
@@ -1921,6 +1921,7 @@ MonoBehaviour:
   depthStage: {fileID: 539019352}
   runOver: {fileID: 411300214}
   Auto: 0
+  toast: {fileID: 879152207}
 --- !u!114 &522944086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3209,6 +3210,74 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
+--- !u!1001 &879152206
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1058290504052672916, guid: abe3b6feef435ffcdbf08e9065a84479, type: 3}
+      propertyPath: m_Name
+      value: GoalToast
+      objectReference: {fileID: 0}
+    - target: {fileID: 1476909729531458009, guid: abe3b6feef435ffcdbf08e9065a84479, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1476909729531458009, guid: abe3b6feef435ffcdbf08e9065a84479, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1476909729531458009, guid: abe3b6feef435ffcdbf08e9065a84479, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1476909729531458009, guid: abe3b6feef435ffcdbf08e9065a84479, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1476909729531458009, guid: abe3b6feef435ffcdbf08e9065a84479, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1476909729531458009, guid: abe3b6feef435ffcdbf08e9065a84479, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1476909729531458009, guid: abe3b6feef435ffcdbf08e9065a84479, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1476909729531458009, guid: abe3b6feef435ffcdbf08e9065a84479, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1476909729531458009, guid: abe3b6feef435ffcdbf08e9065a84479, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1476909729531458009, guid: abe3b6feef435ffcdbf08e9065a84479, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: abe3b6feef435ffcdbf08e9065a84479, type: 3}
+--- !u!114 &879152207 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 160362769875527404, guid: abe3b6feef435ffcdbf08e9065a84479, type: 3}
+  m_PrefabInstance: {fileID: 879152206}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40c7163d784528c93ae48704c8bdd309, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Athanor.Game::Athanor.Game.GoalToast
 --- !u!1 &888498917
 GameObject:
   m_ObjectHideFlags: 0
@@ -7412,3 +7481,4 @@ SceneRoots:
   - {fileID: 310397453}
   - {fileID: 522944088}
   - {fileID: 411300213}
+  - {fileID: 879152206}

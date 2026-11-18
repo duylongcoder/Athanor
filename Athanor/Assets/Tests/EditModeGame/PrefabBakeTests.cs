@@ -1,4 +1,5 @@
 using System.Reflection;
+using Athanor.Core;
 using Athanor.Game;
 using NUnit.Framework;
 using UnityEditor;
@@ -120,6 +121,49 @@ namespace Athanor.Tests
                 view.Pick(!again);                          // ignored once the click has chosen; counts if the click did nothing
 
                 Assert.AreEqual(again, view.Again);
+            }
+            finally { f.Destroy(); }
+        }
+
+        // a goal with no reward item: the toast needs no content database for it
+        static GoalReward[] OneGoal() => new[] { new GoalReward { Goal = new GoalData { id = "g_depth2", text = "Reach depth 2" } } };
+
+        // edit mode runs no Update; the toast takes the next item off its queue in Update
+        static void Tick(GoalToast t) => typeof(GoalToast).GetMethod("Update", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(t, null);
+
+        [Test]
+        public void Add_GoalToastPrefab_ShowsTheGoalName()
+        {
+            var f = new PrefabFixture("Assets/Prefabs/Views/GoalToast.prefab");
+            try
+            {
+                var toast = f.Get<GoalToast>();
+                toast.Bind();
+
+                toast.Add(OneGoal(), null);
+                Tick(toast);
+
+                Assert.AreEqual("GOAL COMPLETE: REACH DEPTH 2", toast.Title.Text);
+                Assert.AreEqual("Nothing was left to unlock", toast.Line.Text);
+            }
+            finally { f.Destroy(); }
+        }
+
+        [Test]
+        public void Click_ShowingGoalToastPrefab_SkipsToTheSlideOut()
+        {
+            var f = new PrefabFixture("Assets/Prefabs/Views/GoalToast.prefab");
+            try
+            {
+                var toast = f.Get<GoalToast>();
+                toast.Bind();
+                toast.Add(OneGoal(), null);
+                Tick(toast);
+
+                toast.Title.GetComponentInParent<Clickable>(true).onClick();
+
+                float age = (float)typeof(GoalToast).GetField("age", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(toast);
+                Assert.GreaterOrEqual(age, GoalToast.Stay + GoalToast.Slide);
             }
             finally { f.Destroy(); }
         }

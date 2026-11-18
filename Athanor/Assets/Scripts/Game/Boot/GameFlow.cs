@@ -85,7 +85,9 @@ namespace Athanor.Game
         static readonly string[] Accent = { "#7cc0f8", "#6ee6c8", "#c486f4", "#ee6a3c", "#fff6b8" };
 
         ReactionCutscene reaction; SimpleCutscene story; WindowView window; TitleView title; JournalView journalView; CatalystChoiceView choice;
-        EventView eventView; GoalsView goalsView; GoalToast toast;
+        EventView eventView; GoalsView goalsView;
+        /// <summary>The goal-complete toasts (a prefab in Main.unity).</summary>
+        [SerializeField] GoalToast toast;
         readonly List<GoalReward> goalsThisRun = new List<GoalReward>();
         Unlocks unlocks;
         Settings settings;
@@ -126,6 +128,7 @@ namespace Athanor.Game
             if (langVi == null) throw new System.InvalidOperationException("GameFlow: langVi is not set in the scene");
             if (library == null) throw new System.InvalidOperationException("GameFlow: library is not set in the scene");
             if (runOver == null) throw new System.InvalidOperationException("GameFlow: runOver is not set in the scene");
+            if (toast == null) throw new System.InvalidOperationException("GameFlow: toast is not set in the scene");
             I = this;
             Art.Lib = library;
             Loc.Use(langEn, langVi);
@@ -177,7 +180,7 @@ namespace Athanor.Game
             eventView = Make.Root("Event").gameObject.AddComponent<EventView>(); eventView.Build();
             goalsView = Make.Root("Goals").gameObject.AddComponent<GoalsView>(); goalsView.Build(Db);
             goalsView.Closed += CloseGoals;
-            toast = Make.Root("Goal Toast").gameObject.AddComponent<GoalToast>(); toast.Build();
+            toast.Bind();
             pause = Make.Root("Pause").gameObject.AddComponent<PauseMenu>(); pause.Build(settings);
             pause.CanOpen = CanPause;
             pause.Opened += OnPauseOpened;

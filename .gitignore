@@ -152,3 +152,4 @@ production/session-logs/
 
 # 5b-06 shimmer GIFs (~16 MB), kept out of git by owner decision (phase-5-prep.md)
 production/qa/evidence/phase5/5b-06/shimmer/*.gif
+production/qa/evidence/phase6/task05/hd2d-2/console.txt
