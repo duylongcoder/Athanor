@@ -439,5 +439,104 @@ namespace Athanor.Tests
             }
             finally { f.Destroy(); }
         }
+
+        const string JournalPrefab = "Assets/Prefabs/Views/Journal.prefab";
+
+        [Test]
+        public void Bind_JournalPrefab_MakesOneCellPerMaterial()
+        {
+            var f = new PrefabFixture(JournalPrefab);
+            try
+            {
+                var db = Content();
+                var view = f.Get<JournalView>();
+
+                view.Bind(db);
+
+                Assert.AreEqual(db.Materials.Count, view.GetComponentsInChildren<JournalCell>(true).Length);
+            }
+            finally { f.Destroy(); }
+        }
+
+        [Test]
+        public void Click_JournalPrefabCell_ShowsThatMaterial()
+        {
+            var f = new PrefabFixture(JournalPrefab);
+            try
+            {
+                var db = Content();
+                var view = f.Get<JournalView>();
+                view.Bind(db);
+                view.Open(new Journal());                       // every starting material is open to a fresh book
+                var starter = db.Starters[1];
+                int index = -1;
+                for (int i = 0; i < db.Materials.Count; i++) if (db.Materials[i].id == starter.id) index = i;
+                Assert.GreaterOrEqual(index, 0);
+
+                view.GetComponentsInChildren<JournalCell>(true)[index].click.onClick();
+
+                Assert.AreEqual(starter.name, view.Title.Text);
+            }
+            finally { f.Destroy(); }
+        }
+
+        [Test]
+        public void Click_JournalPrefabPageLabel_TurnsTheGridPage()
+        {
+            var f = new PrefabFixture(JournalPrefab);
+            try
+            {
+                var view = f.Get<JournalView>();
+                view.Bind(Content());
+                view.Open(new Journal());
+                var cells = view.GetComponentsInChildren<JournalCell>(true);
+                Assume.That(cells.Length, Is.GreaterThan(JournalView.PerPage), "content has a second page of materials");
+                Assert.IsTrue(cells[0].icon.gameObject.activeSelf);
+                Assert.IsFalse(cells[JournalView.PerPage].icon.gameObject.activeSelf);
+
+                view.PageClick.onClick();
+
+                Assert.IsFalse(cells[0].icon.gameObject.activeSelf);
+                Assert.IsTrue(cells[JournalView.PerPage].icon.gameObject.activeSelf);
+            }
+            finally { f.Destroy(); }
+        }
+
+        [Test]
+        public void Click_JournalPrefabClose_ClosesAndTellsTheOwner()
+        {
+            var f = new PrefabFixture(JournalPrefab);
+            try
+            {
+                var view = f.Get<JournalView>();
+                view.Bind(Content());
+                view.Open(new Journal());
+                int closed = 0;
+                view.Closed += () => closed++;
+
+                view.CloseClick.onClick();
+
+                Assert.IsFalse(view.IsOpen);
+                Assert.AreEqual(1, closed);
+            }
+            finally { f.Destroy(); }
+        }
+
+        // the tooltip's 9-slice panel sprite is made by Sprite.Create: a prefab cannot keep it, Bind makes it again
+        [Test]
+        public void Show_TooltipAfterPrefabRoundTrip_HasItsSlicedPanel()
+        {
+            var go = Make.Root("Tooltip").gameObject;
+            go.AddComponent<Tooltip>().Build(null);
+            var tip = RoundTrip<Tooltip>(go);
+
+            tip.Bind();
+            tip.Show("Name", "text", Vector2.zero);
+
+            var panel = typeof(Tooltip).GetField("panel", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(tip) as SpriteRenderer;
+            Assert.AreEqual(SpriteDrawMode.Sliced, panel.drawMode);
+            Assert.AreEqual(new Vector4(4, 4, 4, 4), panel.sprite.border);
+            Assert.AreEqual(new Vector2(176, 58), panel.size);
+        }
     }
 }

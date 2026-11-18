@@ -84,7 +84,9 @@ namespace Athanor.Game
         static readonly float[] Moon = { 0.62f, 0.5f, 0.4f, 0.3f, 0.5f };
         static readonly string[] Accent = { "#7cc0f8", "#6ee6c8", "#c486f4", "#ee6a3c", "#fff6b8" };
 
-        ReactionCutscene reaction; SimpleCutscene story; WindowView window; TitleView title; JournalView journalView;
+        ReactionCutscene reaction; SimpleCutscene story; WindowView window; TitleView title;
+        /// <summary>The journal (a prefab in Main.unity; its cells come from the JournalCell part).</summary>
+        [SerializeField] JournalView journalView;
         /// <summary>The Goals page (a prefab in Main.unity; its rows come from the GoalRow part).</summary>
         [SerializeField] GoalsView goalsView;
         /// <summary>The three-card chooser for catalysts and aspects (a prefab in Main.unity).</summary>
@@ -139,6 +141,7 @@ namespace Athanor.Game
             if (choice == null) throw new System.InvalidOperationException("GameFlow: choice is not set in the scene");
             if (pause == null) throw new System.InvalidOperationException("GameFlow: pause is not set in the scene");
             if (goalsView == null) throw new System.InvalidOperationException("GameFlow: goalsView is not set in the scene");
+            if (journalView == null) throw new System.InvalidOperationException("GameFlow: journalView is not set in the scene");
             I = this;
             Art.Lib = library;
             Loc.Use(langEn, langVi);
@@ -182,7 +185,7 @@ namespace Athanor.Game
             title.ResetConfirmed += ResetProgress;
             tut = null;
             tutorial = gameObject.AddComponent<TutorialController>(); tutorial.Build();
-            journalView = Make.Root("Journal").gameObject.AddComponent<JournalView>(); journalView.Build(Db);
+            journalView.Bind(Db);
             journalView.Closed += CloseJournal;
             choice.Bind();
             runOver.Bind();
@@ -213,6 +216,7 @@ namespace Athanor.Game
             PointerInput.Rig = null;
             if (runOver != null) runOver.GoalsClicked -= OpenGoals;
             if (goalsView != null) goalsView.Closed -= CloseGoals;
+            if (journalView != null) journalView.Closed -= CloseJournal;
             if (title != null) title.SettingsClosed -= SaveSettings;
             if (pause != null) { pause.Opened -= OnPauseOpened; pause.Closed -= OnPauseClosed; pause.QuitConfirmed -= AbandonRun; pause.VibrationChanged -= SaveSettings; }
             if (Bench != null && Bench.Hud != null) Bench.Hud.PauseClicked -= OpenPause;

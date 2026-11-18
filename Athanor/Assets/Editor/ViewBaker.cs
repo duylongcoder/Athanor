@@ -135,6 +135,9 @@ public static class ViewBaker
     public static void CompareCatalystChoice() => Compare("CatalystChoice");
     public static void ComparePause() => Compare("Pause");
 
+    /// <summary>The Journal prefab with Bind(Db()) run on it, so its cells exist for the picture (the "before" has one cell per material).</summary>
+    public static void CompareJournal() => Compare("Journal", go => go.GetComponent<JournalView>().Bind(Db()));
+
     /// <summary>The Goals prefab with Bind(Db()) run on it, so its rows exist for the picture (the "before" has one empty row per goal).</summary>
     public static void CompareGoals() => Compare("Goals", go => go.GetComponent<GoalsView>().Bind(Db()));
 }

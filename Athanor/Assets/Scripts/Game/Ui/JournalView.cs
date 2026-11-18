@@ -14,85 +14,78 @@ namespace Athanor.Game
         // the numbers match JOURNAL in tools/art/ui.mjs
         const int O = 440, X = 20, Y = 15, Cols = 10, Rows = 6, Cell = 27, Well = 25, GridX = 33, GridY = 60,
             PageX = 324, PageY = 30, PageW = 260, HintsY = 240, LineCount = 15, HintCount = 5,
-            PipCount = ContentDb.MaxReactivity, PipW = 5, PipGap = 2, WrapAt = 38;
+            PipCount = ContentDb.MaxReactivity, WrapAt = 38;
 
         public event Action Closed;
         public bool IsOpen => gameObject.activeSelf;
 
+        /// <summary>Materials on one page of the grid.</summary>
+        public const int PerPage = Cols * Rows;
+
         ContentDb db; Journal journal;
         Func<string, bool> isOpen;      // which starting materials this profile may use (the rest are still to be won)
-        Label pageLabel;
+        [SerializeField] JournalCell cellPrefab;
+        [SerializeField] Label pageLabel, found, materialsCount, title, sub, pageTier;
+        [SerializeField] Label[] lines = new Label[LineCount], hints = new Label[HintCount];
+        [SerializeField] SpriteRenderer pick, bigIcon;
+        [SerializeField] RarityStars pageStars;
+        [SerializeField] SpriteRenderer[] pips = new SpriteRenderer[PipCount];
+        [SerializeField] Clickable outside, closeClick, pageClick;
         int page;
-        const int PerPage = Cols * Rows;
         int Pages => (db.Materials.Count + PerPage - 1) / PerPage;
-        readonly List<SpriteRenderer> icons = new List<SpriteRenderer>();
+        readonly List<JournalCell> cells = new List<JournalCell>();
         readonly HashSet<string> discovered = new HashSet<string>();
-        readonly Label[] lines = new Label[LineCount], hints = new Label[HintCount];
-        SpriteRenderer pick, bigIcon;
-        RarityStars pageStars;
-        Label pageTier;
-        readonly Dictionary<int, RarityStars> cellStars = new Dictionary<int, RarityStars>();
-        readonly SpriteRenderer[] pips = new SpriteRenderer[PipCount];
-        Label found, materialsCount, title, sub;
         int selected;
+        bool wired;
 
-        static readonly Color Ink = Px.Hex("#3a2212"), Faded = Px.Hex("#7a5430"), Teal = Px.Hex("#11606a"), Purple = Px.Hex("#4a1f7a"),
-            Pale = Px.Hex("#f0dcc0"), Dark = Px.Hex("#0c0706");
+        static readonly Color Ink = Px.Hex("#3a2212"), Faded = Px.Hex("#7a5430"), Teal = Px.Hex("#11606a"), Purple = Px.Hex("#4a1f7a");
 
-        public void Build(ContentDb content)
+        /// <summary>The selected material's name on the right-hand page.</summary>
+        public Label Title => title;
+        /// <summary>The "Close" click at the top right of the book.</summary>
+        public Clickable CloseClick => closeClick;
+        /// <summary>The page label above the grid: a click turns to the next page of materials.</summary>
+        public Clickable PageClick => pageClick;
+
+        /// <summary>
+        /// Takes the content and makes one cell per material from the JournalCell part (cells are not baked: a new material needs its cell).
+        /// Hooks the clicks. GameFlow calls it once at start; a test calls it after instantiating the prefab.
+        /// </summary>
+        public void Bind(ContentDb content)
         {
             db = content;
-            var t = transform;
-            var shade = Make.Rect(t, 0, 0, Px.W, Px.H, new Color(0, 0, 0, 0.97f), O - 1);
-            Make.Click(shade.gameObject, new Vector2(Px.W, Px.H), O - 1, Close);         // a click outside the book closes it
-            var panel = Make.SpriteAt(t, "journal", X, Y, O);
-            Make.Click(panel.gameObject, new Vector2(600, 330), O);
-            Make.TextKey(t, "ui.journal.title", X + 18, Y + 7, FontKind.Title, 16, Pale, O + 2, Align.Left, Dark);
-            found = Make.Text(t, "", X + 300, Y + 11, FontKind.Tiny, 8, Px.Hex("#a88a6a"), O + 2, Align.Centre);
-            var close = Make.TextKey(t, "ui.common.close", X + 582, Y + 7, FontKind.Title, 16, Pale, O + 2, Align.Right, Dark);
-            Make.Click(close.gameObject, new Vector2(60, 22), O + 3, Close).offset = new Vector2(-22, -8);
-
-            // left page: the grid of materials, then the latest hints
-            Make.TextKey(t, "ui.journal.materials", X + GridX, Y + 43, FontKind.Tiny, 8, Faded, O + 2);
-            materialsCount = Make.Text(t, "", X + GridX + Cols * Cell - (Cell - Well), Y + 43, FontKind.Tiny, 8, Faded, O + 2, Align.Right);
-            pick = Make.Sprite(t, "journal_pick", Vector3.zero, O + 1);
-            // more materials than the grid holds: they are shown a page at a time
-            pageLabel = Make.Text(t, "", X + GridX + 136, Y + 43, FontKind.Tiny, 8, Px.Hex("#9a3414"), O + 2, Align.Centre);
-            Make.Click(pageLabel.gameObject, new Vector2(110, 12), O + 3, () => ShowPage((page + 1) % Pages)).offset = new Vector2(0, -4);
+            if (wired) return;
+            wired = true;
+            outside.onClick = Close;                          // a click outside the book closes it
+            closeClick.onClick = Close;
+            pageClick.onClick = NextPage;
             for (int i = 0; i < db.Materials.Count; i++)
             {
-                int index = i;
-                var icon = Make.Sprite(t, db.Materials[i].id, CellCentre(i), O + 2);
-                Make.Click(icon.gameObject, new Vector2(Cell, Cell), O + 3, () => Select(index));
-                icons.Add(icon);
-                // one star at the corner of the cell for an Uncommon or better starting material (SPEC 24); Common shows none
-                if (db.Materials[i].tier == 0 && Rarities.Rank(db.Materials[i].rarity) > 0)
-                {
-                    var s = new RarityStars(t, O + 4);
-                    s.Root.position = Px.At(X + GridX + (i % PerPage % Cols) * Cell - 1, Y + GridY + (i % PerPage / Cols) * Cell - 1);
-                    s.Show(1, Wording.RarityColor(db.Materials[i].rarity));
-                    cellStars[i] = s;
-                }
+                var cell = Instantiate(cellPrefab, transform);
+                SetUpCell(cell, i);
+                cells.Add(cell);
             }
-            Make.TextKey(t, "ui.journal.latest_hints", X + GridX, Y + HintsY, FontKind.Tiny, 8, Faded, O + 2);
-            for (int i = 0; i < HintCount; i++) hints[i] = Make.Text(t, "", X + GridX, Y + HintsY + 9 + i * 11, FontKind.Body, 16, Purple, O + 2);
+        }
 
-            // right page: the selected material
-            int cx = X + PageX + PageW / 2;
-            bigIcon = Make.Sprite(t, "dot", Px.At(cx, Y + PageY + 36), O + 2);
-            bigIcon.transform.localScale = new Vector3(2, 2, 1);
-            title = Make.Text(t, "", cx, Y + PageY + 62, FontKind.Title, 32, Ink, O + 2, Align.Centre);
-            // the rarity mark at the page's top-left: n stars at (page x+14, y+8), the tier word on the row below (SPEC 24)
-            pageStars = new RarityStars(t, O + 3);
-            pageStars.Root.position = Px.At(X + PageX + 14, Y + PageY + 8);
-            pageTier = Make.Text(t, "", X + PageX + 14, Y + PageY + 18, FontKind.Name, 16, Ink, O + 2);
-            sub = Make.Text(t, "", cx, Y + PageY + 94, FontKind.Tiny, 8, Faded, O + 2, Align.Centre);
-            // the Reaction Index: one lit pip per point
-            int pipsLeft = cx - (PipCount * (PipW + PipGap) - PipGap) / 2;
-            for (int i = 0; i < PipCount; i++) pips[i] = Make.Rect(t, pipsLeft + i * (PipW + PipGap), Y + PageY + 104, PipW, 3, Color.clear, O + 2);
-            Make.Rect(t, X + PageX + 16, Y + PageY + 109, PageW - 32, 1, Px.Hex("#b89860"), O + 1);
-            for (int i = 0; i < LineCount; i++) lines[i] = Make.Text(t, "", X + PageX + 18, Y + PageY + 112 + i * 11, FontKind.Body, 16, Ink, O + 2);
-            gameObject.SetActive(false);
+        void NextPage() => ShowPage((page + 1) % Pages);
+
+        /// <summary>Gives the cell its material's icon, its place in the grid, its click and, for an Uncommon or better starter, its star.</summary>
+        void SetUpCell(JournalCell cell, int i)
+        {
+            int index = i;
+            var m = db.Materials[i];
+            cell.name = "Cell " + i;
+            cell.icon.name = m.id;
+            cell.icon.sprite = Art.Lib.Sprite(m.id);
+            cell.icon.transform.position = CellCentre(i);
+            cell.click.onClick = () => Select(index);
+            // one star at the corner of the cell for an Uncommon or better starting material (SPEC 24); Common shows none
+            if (m.tier == 0 && Rarities.Rank(m.rarity) > 0)
+            {
+                cell.stars = new RarityStars(cell.transform, O + 4);
+                cell.stars.Root.position = Px.At(X + GridX + (i % PerPage % Cols) * Cell - 1, Y + GridY + (i % PerPage / Cols) * Cell - 1);
+                cell.stars.Show(1, Wording.RarityColor(m.rarity));
+            }
         }
 
         Vector3 CellCentre(int i) => Px.Mid(X + GridX + (i % PerPage % Cols) * Cell, Y + GridY + (i % PerPage / Cols) * Cell, Well, Well);
@@ -101,7 +94,7 @@ namespace Athanor.Game
         void ShowPage(int p)
         {
             page = Mathf.Clamp(p, 0, Pages - 1);
-            for (int i = 0; i < icons.Count; i++) icons[i].gameObject.SetActive(i / PerPage == page);
+            for (int i = 0; i < cells.Count; i++) cells[i].icon.gameObject.SetActive(i / PerPage == page);
             pageLabel.Text = Pages > 1 ? Loc.T("ui.journal.page", ("n", page + 1), ("pages", Pages)) : "";
             if (selected / PerPage != page) Select(page * PerPage);
             else pick.enabled = true;
@@ -111,7 +104,8 @@ namespace Athanor.Game
         /// <summary>The corner stars follow the page of the grid and show only for what has been found.</summary>
         void ShowCellStars()
         {
-            foreach (var kv in cellStars) kv.Value.SetActive(kv.Key / PerPage == page && discovered.Contains(db.Materials[kv.Key].id));
+            for (int i = 0; i < cells.Count; i++)
+                if (cells[i].stars != null) cells[i].stars.SetActive(i / PerPage == page && discovered.Contains(db.Materials[i].id));
         }
 
         /// <summary>openStarters: which starting materials the player may use; null means all of them.</summary>
@@ -121,8 +115,8 @@ namespace Athanor.Game
             discovered.Clear();
             foreach (var m in db.Starters) if (isOpen == null || isOpen(m.id)) discovered.Add(m.id);
             foreach (var r in db.Recipes) if (journal.IsKnown(r.items)) discovered.Add(r.result);
-            for (int i = 0; i < icons.Count; i++)
-                icons[i].color = discovered.Contains(db.Materials[i].id) ? Color.white : new Color(0.16f, 0.1f, 0.05f, 0.4f);
+            for (int i = 0; i < cells.Count; i++)
+                cells[i].icon.color = discovered.Contains(db.Materials[i].id) ? Color.white : new Color(0.16f, 0.1f, 0.05f, 0.4f);
             found.Text = Loc.T("ui.journal.found", ("known", journal.KnownPairs.Count), ("total", db.Recipes.Count));
             materialsCount.Text = discovered.Count + " / " + db.Materials.Count;
             var open = new List<HintData>();
@@ -134,7 +128,7 @@ namespace Athanor.Game
                 hints[i].Color = i < open.Count ? Purple : Faded;
             }
             gameObject.SetActive(true);
-            selected = Mathf.Clamp(selected, 0, icons.Count - 1);
+            selected = Mathf.Clamp(selected, 0, cells.Count - 1);
             ShowPage(selected / PerPage);
             ShowCellStars();
             Select(selected);
