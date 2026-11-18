@@ -55,7 +55,7 @@ jobs:
         run: tools/ci/run.sh rotate
       - name: Art and web scripts parse
         run: |
-          for f in tools/web/*.mjs tools/art/*.mjs tools/fx/*.mjs; do [ -f "$f" ] && node --check "$f"; done
+          for f in tools/web/*.mjs tools/art/*.mjs; do [ -f "$f" ] && node --check "$f"; done
           echo "scripts parse"
       - name: Vault is regenerated (CLAUDE.md "keep it true")
         run: |

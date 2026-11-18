@@ -106,7 +106,7 @@ framework agent is consulted only for the question named in the right-hand colum
 | `content-designer` | `content.json`, balance | `game-designer`, `systems-designer`, `economy-designer` | new mechanics, story text |
 | `lore-writer` | English story text, lore devlog | `narrative-director`, `world-builder` | `vi.json`, event structure |
 | `localizer-vi` | `lang/vi.json`, glossary | `localization-lead` | i18n architecture |
-| `pixel-artist` | `tools/art`, `tools/fx`, generated art | `art-director`, `technical-artist` | style or palette changes |
+| `pixel-artist` | `tools/art`, generated art | `art-director`, `technical-artist` | style or palette changes |
 | `ui-ux-designer` | `docs/mockup`, `layout.json`, UX specs | `ux-designer`, `art-director` | C# code |
 | `audio-designer` | `design/audio`, audio assets | `audio-director`, `sound-designer` | work before sound is in scope |
 | `qa-engineer` | new tests, `production/qa`, `tools/web` | `qa-lead`, `qa-tester` | fixing feature code |

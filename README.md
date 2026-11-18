@@ -41,7 +41,6 @@ Built with Unity 6000.6.7f1 (Universal 2D, 2D lights, bloom, Pixel Perfect Camer
 | `Athanor/Assets/Resources/content.json` | Materials, recipes, catalysts, depth targets, goals, aspects, events |
 | `Athanor/Assets/Editor/` | Scene, font, effect-sheet and web build tools (menu **Athanor**) |
 | `tools/art/` | Generates every sprite |
-| `tools/fx/` | Exports the optional pixelfx effect sheets |
 | `tools/CoreTests/` | Runs the rule tests without Unity |
 | `tools/web/` | Drives a web build in headless Chrome |
 | `docs/` | The designs, the plans, the approved mockup and the devlogs (`docs/devlogs/`) |
@@ -56,10 +55,8 @@ Regenerate art, then rebuild the scene and art library:
     # in Unity: Athanor > Build Scene, or with the editor closed:
     unity run Athanor -- -executeMethod SceneBuilder.BuildBatch
 
-Export the pixelfx effect sheets (optional; needs the `pixelfx` clone at the repository root, or `PIXELFX=/path`):
-
-    tools/fx/export.sh
-    # in Unity: Athanor > Import Effect Sheets
+Effect sheets are committed in `Athanor/Assets/Art/Fx/Sheets`. To re-export them, clone
+[pixelfx](https://github.com/patch-gg/pixelfx) (the export script was removed in Phase 6), then in Unity: Athanor > Import Effect Sheets.
 
 Run the tests:
 
