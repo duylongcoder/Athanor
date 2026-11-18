@@ -30,7 +30,7 @@ aliases: []
 [[DepthMath]], [[DepthRig]]
 
 ## Used by
-[[DepthStage]], [[DepthTestBuilder]], [[DepthTestControls]], [[SceneBuilder]], [[ScreenFx]]
+[[DepthStage]], [[DepthTestControls]], [[ScreenFx]]
 
 ## Tested by
 [[MainDepthTests]]

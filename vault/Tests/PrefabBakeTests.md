@@ -10,15 +10,15 @@ count: 39
 `Athanor/Assets/Tests/EditModeGame/PrefabBakeTests.cs` — 39 tests
 
 ## Covers
-[[Bench]], [[BenchView]], [[CardView]], [[CatalystChoiceView]], [[ChoiceCard]], [[Clickable]], [[ContentData]], [[ContentDb]], [[EventView]], [[FontKind]], [[GoalReward]], [[GoalRow]], [[GoalToast]], [[GoalsView]], [[HudView]], [[Journal]], [[JournalCell]], [[JournalView]], [[Label]], [[Loc]], [[Make]], [[PauseMenu]], [[Profile]], [[Rarities]], [[RunOptions]], [[RunOverView]], [[RunPhase]], [[RunState]], [[Settings]], [[TitleView]], [[Tooltip]], [[UiButton]], [[Unlocks]], [[Wording]]
+[[Bench]], [[BenchView]], [[CardView]], [[CatalystChoiceView]], [[ChoiceCard]], [[Clickable]], [[ContentData]], [[ContentDb]], [[EventView]], [[GoalReward]], [[GoalRow]], [[GoalToast]], [[GoalsView]], [[HudView]], [[Journal]], [[JournalCell]], [[JournalView]], [[Label]], [[Loc]], [[PauseMenu]], [[Profile]], [[Rarities]], [[RunOptions]], [[RunOverView]], [[RunPhase]], [[RunState]], [[Settings]], [[TitleView]], [[Tooltip]], [[UiButton]], [[Unlocks]], [[Wording]]
 
 ## Tests
-- `Relabel_KeyedLabelAfterPrefabRoundTrip_FollowsTheLanguage`
-- `Relabel_PlainLabelAfterPrefabRoundTrip_KeepsItsText`
-- `Click_ButtonAfterPrefabRoundTrip_RaisesClicked`
-- `Click_DisabledButtonAfterPrefabRoundTrip_DoesNothing`
-- `Text_ButtonAfterPrefabRoundTrip_KeepsLabelAndBody`
-- `Disabled_SetBeforePrefabRoundTrip_StaysDisabled`
+- `Relabel_KeyedLabelInPrefab_FollowsTheLanguage`
+- `Relabel_PlainLabelInPrefab_KeepsItsText`
+- `Click_ButtonInPrefab_RaisesClicked`
+- `Click_DisabledButtonInPrefab_DoesNothing`
+- `Text_ButtonInPrefab_HasLabelAndBody`
+- `Disabled_SetOnAButton_IsKeptInTheSerializedState`
 - `ShowDepth_RunOverPrefab_WritesTheDepthRow`
 - `Click_RunOverPrefabButton_PicksItsChoice`
 - `Show_EventPrefab_ListsTheOptions`
@@ -39,7 +39,7 @@ count: 39
 - `Click_JournalPrefabCell_ShowsThatMaterial`
 - `Click_JournalPrefabPageLabel_TurnsTheGridPage`
 - `Click_JournalPrefabClose_ClosesAndTellsTheOwner`
-- `Show_TooltipAfterPrefabRoundTrip_HasItsSlicedPanel`
+- `Show_TooltipInBenchPrefab_HasItsSlicedPanel`
 - `Bind_TitlePrefab_ShowsTheLogoText`
 - `Click_TitlePrefabBegin_SetsBeginPressed`
 - `Click_TitlePrefabSettingsThenLanguage_SwitchesTheLanguageAndBackCloses`

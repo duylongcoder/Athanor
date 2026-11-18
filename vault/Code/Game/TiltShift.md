@@ -28,7 +28,7 @@ aliases: []
 | method | `public void Push()` | 42 | Writes the band to the material. |
 
 ## Used by
-[[DepthTestBuilder]], [[DepthTestEvidence]], [[DepthTiltShiftFeature]], [[SceneBuilder]]
+[[DepthTiltShiftFeature]]
 
 ## Tested by
 [[DepthClickTests]]

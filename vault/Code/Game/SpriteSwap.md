@@ -21,6 +21,3 @@ aliases: []
 |---|---|---|---|
 | field | `public SpriteRenderer target` | 17 |  |
 | field | `public Sprite sharp, soft` | 18 |  |
-
-## Used by
-[[DepthTestBuilder]]

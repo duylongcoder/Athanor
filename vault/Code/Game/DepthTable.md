@@ -32,4 +32,4 @@ aliases: []
 [[DepthMath]], [[Px]]
 
 ## Used by
-[[DepthRig]], [[DepthTestBuilder]]
+[[DepthRig]]

@@ -34,7 +34,7 @@ aliases: []
 [[DepthMath]]
 
 ## Used by
-[[DepthRig]], [[DepthStage]], [[DepthTestBuilder]], [[WindowView]]
+[[DepthRig]], [[DepthStage]], [[WindowView]]
 
 ## Tested by
 [[DepthLayerTests]], [[MainDepthTests]]

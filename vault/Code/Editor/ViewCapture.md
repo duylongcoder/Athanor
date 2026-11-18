@@ -26,6 +26,3 @@ aliases: []
 
 ## Uses
 [[DepthRig]], [[Px]], [[Save]]
-
-## Used by
-[[ViewBaker]]

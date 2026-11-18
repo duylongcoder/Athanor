@@ -21,7 +21,7 @@ aliases: []
 |---|---|---|---|
 | field | `public const string ArtDir = "Assets/Art", AtlasDir = "Assets/Art/Atlases", LibraryPath =` | 29 |  |
 | field | `public const int Padding = 2, MaxSize = 2048, SheetGap = 2` | 30 |  |
-| field | `public const string DepthDir =` | 34 | The HD-2D depth layers (Phase 5b prototype). Used by Assets/Scenes/DepthTest.unity only: they stay out of every atlas and out of the art library, so they never reach the main scene or its web build. |
+| field | `public const string DepthDir =` | 34 | The HD-2D depth layers (Phase 5b). They stay out of every atlas: they are placed as plain sprites in the HD-2D bench of Main.unity. |
 | method | `public static bool IsDepthArt(string assetPath)` | 37 | True for an asset under DepthDir. |
 | property | `public static readonly string[] Animations =` | 41 | Numbered frame sets that are animations (merged into one sheet each). tile_face_N and tile_ring_N are numbered too, but they are one picture per tile and row, not frames, so they stay separate sprites. |
 | method | `public static bool IsSpriteSheet(string assetPath)` | 44 | True for a merged animation sheet: SpriteImportRules leaves it in Multiple mode. |
@@ -36,7 +36,7 @@ aliases: []
 | method | `public static string BuildAtlases()` | 309 |  |
 
 ## Uses
-[[Save]], [[SceneBuilder]]
+[[ArtLibraryBuilder]], [[Save]]
 
 ## Used by
 [[SpriteImportRules]]

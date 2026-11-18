@@ -24,8 +24,5 @@ aliases: []
 | method | `public static int Offset(float t, float speed, int width)` | 25 | The drift at time t, in whole texels, 0 .. width - 1. Truncated toward zero so both directions step the same way (the shown drift never runs ahead of t * speed). |
 | method | `public void Set(float t)` | 28 | Shows the sheet as it is at time t. |
 
-## Used by
-[[DepthTestBuilder]], [[DepthTestEvidence]]
-
 ## Tested by
 [[DepthClickTests]]

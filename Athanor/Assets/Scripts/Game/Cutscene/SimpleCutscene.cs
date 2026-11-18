@@ -16,57 +16,19 @@ namespace Athanor.Game
         const int O = 420;
         const float CX = 320, Scroll = 400;
 
-        // the parts below are the Story Cutscene object of Main.unity (baked by ViewBaker.BakeStory); the three loops are made at run time
+        // the parts below are the Story Cutscene object of Main.unity (authored in the scene); the three loops are made at run time
         [SerializeField] GameObject room, workshop, bench;
         [SerializeField] Transform root;
         [SerializeField] SpriteRenderer shade, glow, ring, rune, icon, iconGlow;
         [SerializeField] SpriteRenderer[] bars = new SpriteRenderer[4];
         [SerializeField] Transform[] rays = new Transform[12];
-        /// <summary>The sprite under each ray, found once when baked so that Update does not look for it every frame.</summary>
+        /// <summary>The sprite under each ray, found once, in the scene, so that Update does not look for it every frame.</summary>
         [SerializeField] SpriteRenderer[] rayFaces = new SpriteRenderer[12];
         [SerializeField] Label[] lines = new Label[3];
         [SerializeField] Label small, big, banner, prompt, intro;
         [SerializeField] Light2D iconLight;
         Color tint = Color.white;
         float raysOn, runeOn, embers, streaks;      // strengths of the looping effects, driven by the scripts below
-
-#if UNITY_EDITOR
-        /// <summary>
-        /// Bake source for the Story Cutscene object of Main.unity (ViewBaker.BakeStory): the story stage, hidden, under this object.
-        /// The three scene objects are only remembered; the baked scene keeps them as references.
-        /// </summary>
-        public void Build(GameObject cutsceneRoom, GameObject workshopRoot, GameObject benchRoot)
-        {
-            room = cutsceneRoom; workshop = workshopRoot; bench = benchRoot;
-            root = Make.Root("Story", transform);
-            var dark = Px.Hex("#0c0706");
-            shade = Make.Rect(root, 0, 0, Px.W, Px.H, Color.clear, O);
-            bars[0] = Make.Rect(root, 0, 0, Px.W, 30, Color.black, O + 9); bars[1] = Make.Rect(root, 0, Px.H - 30, Px.W, 30, Color.black, O + 9);
-            bars[2] = Make.Rect(root, 0, 30, Px.W, 1, Px.Hex("#8c5a14"), O + 10); bars[3] = Make.Rect(root, 0, Px.H - 31, Px.W, 1, Px.Hex("#8c5a14"), O + 10);
-            glow = Make.Glow(root, Px.At(CX, 170), 150, Color.clear, O + 1);
-            rune = Make.Sprite(root, "rune_circle", Px.At(CX, 262), O + 2, Art.Lib.glow);
-            ring = Make.Sprite(root, "floor_ring", Px.At(CX, 262), O + 2, Art.Lib.glow);
-            for (int k = 0; k < rays.Length; k++)
-            {
-                rays[k] = Make.Root("ray", root);
-                rayFaces[k] = Make.Sprite(rays[k], "ray", Vector3.zero, O + 3, Art.Lib.glow);
-                rayFaces[k].transform.localPosition = new Vector3(26 + 75, 0, 0);
-            }
-            iconGlow = Make.Glow(root, Vector3.zero, 80, Color.clear, O + 4);
-            icon = Make.Sprite(root, "dot", Vector3.zero, O + 5);
-            iconLight = Make.Light(root, Vector3.zero, 250, Color.white, 0);
-            icon.transform.localScale = new Vector3(3, 3, 1);
-            for (int i = 0; i < lines.Length; i++)
-                lines[i] = Make.Text(root, "", CX, 38 + i * 16, FontKind.Body, 16, Px.Hex("#f0dcc0"), O + 12, Align.Centre, dark);
-            small = Make.Text(root, "", CX, 104, FontKind.Tiny, 8, Px.Hex("#f8d250"), O + 12, Align.Centre, dark);
-            big = Make.Text(root, "", CX, 128, FontKind.Title, 48, Px.Hex("#f0dcc0"), O + 12, Align.Centre, dark);
-            big.LineBox = true;      // SPEC (f): the name sits in the mock's 48 px line box; Crux's short ascent would put VI ~11 px high
-            intro = Make.Text(root, "", CX, 186, FontKind.Body, 16, Px.Hex("#f0dcc0"), O + 12, Align.Centre, dark, 540);
-            banner = Make.Text(root, "", CX, 88, FontKind.Title, 32, Px.Hex("#f8d250"), O + 12, Align.Centre, Px.Hex("#3a1a08"));
-            prompt = Make.Text(root, "", CX, Px.H - 19, FontKind.Tiny, 8, Px.Hex("#7a5a3a"), O + 12, Align.Centre);
-            root.gameObject.SetActive(false);
-        }
-#endif
 
         public override IEnumerator Play() => Intro();
 

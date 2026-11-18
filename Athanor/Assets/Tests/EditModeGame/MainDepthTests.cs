@@ -37,14 +37,16 @@ namespace Athanor.Tests
         public void TearDown() => Object.DestroyImmediate(root);
 
         [Test]
-        public void MakeChildren_OfAWorldLayerParent_DrawOnTheWorldLayer()
+        public void SpawnChildren_OfAWorldLayerParent_DrawOnTheWorldLayer()
         {
-            var sprite = Make.Sprite(tiles[0].transform, "dot", Vector3.zero, 1);
-            var text = Make.Root("later", tiles[0].transform);
+            var sprite = Spawn.Sprite(tiles[0].transform, "dot", Vector3.zero, 1);
+            var text = Spawn.Root("later", tiles[0].transform);
             Assert.AreEqual(DepthRig.WorldLayer, sprite.gameObject.layer);
             Assert.AreEqual(DepthRig.WorldLayer, text.gameObject.layer);
-            Assert.AreEqual(0, Make.Root("loose").gameObject.layer, "no parent: the UI camera's layer");
+            var loose = Spawn.Root("loose");
+            Assert.AreEqual(0, loose.gameObject.layer, "no parent: the UI camera's layer");
             Object.DestroyImmediate(sprite.gameObject);
+            Object.DestroyImmediate(loose.gameObject);
         }
 
         [Test]

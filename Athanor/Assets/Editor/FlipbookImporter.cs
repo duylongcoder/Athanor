@@ -69,7 +69,7 @@ public static class FlipbookImporter
             done.Add(name + " (" + sheet.frames.Length + " frames)");
         }
         AssetDatabase.SaveAssets();
-        var lib = SceneBuilder.RefreshLibrary();
+        var lib = ArtLibraryBuilder.RefreshLibrary();
         string report = "Imported " + done.Count + " effect sheets: " + string.Join(", ", done) + ". Library now has " + lib.sheets.Length + " sheets.";
         Debug.Log(report);
         return report;

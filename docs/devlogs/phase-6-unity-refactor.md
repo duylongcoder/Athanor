@@ -61,3 +61,18 @@ Plan: `docs/superpowers/plans/2026-11-18-athanor-phase6-unity-refactor.md`. One 
   in `Draw` (14 per frame): not an `Update`, so not a lint finding, left alone. The UL001 line of `tools/lint/baseline.json` is now stale.
 - **Tests:** `SceneBakeTests` gains one test per cutscene (every part non-null, array lengths, the stage hidden, `Bind` switching the
   others, the ray faces being the ray sprites).
+
+## Task 16 — builders and the singleton removed (2026-11-18)
+
+- **`Make` became `Spawn`, not `Fonts` alone.** The plan assumed `Make.*` only served the bake sources. It does not: `TutorialController`
+  (dim rects, clicks, rim, text lines, greyed sprites), `GameFlow.ToRack` (glow + sprite), `BenchView.FloatText` (text), `LinkView` (sprite
+  motes) and the `RarityStars(Transform, int)` constructor (the Journal makes its corner stars when a cell is set up) spawn objects while the
+  game runs. So `Support/Make.cs` is now `Support/Spawn.cs` (class `Spawn`: `Root`, `Sprite`, `Rect`, `Glow`, `Text`, `Click` and the private `Tmp`)
+  and `FontFor`, `SizeFor`, `HalfLeading` moved to `Support/Fonts.cs` (class `Fonts`, with the `FontKind` enum). `SpriteAt`, `TextKey` and `Light` had no
+  caller left and were deleted. No behaviour change.
+- **`Settings/DepthTest/DepthRenderer2D.asset` is kept.** `UniversalRP.asset` lists it as renderer 1 and Main's camera uses index 1, so deleting the
+  folder would have broken the release build. It moved (GUID kept) to `Assets/Settings/DepthRenderer2D.asset`, next to `Renderer2D.asset`; the
+  four materials moved to `Assets/Art/Depth/Materials/`. Only `DepthVolume.asset` (used by `DepthTest.unity` alone) went with the scene.
+- **Tests:** the bake round-trip tests now load the shipped prefabs (`RunOver.prefab` button and label, `Bench.prefab` tooltip) and
+  `LabelLineBoxTests` uses a Title label from `RunOver.prefab`. The round-trip of `Disabled` is checked in the serialized state.
+  No test was deleted.

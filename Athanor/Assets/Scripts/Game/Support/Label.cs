@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Athanor.Game
 {
     /// <summary>
-    /// A line of pixel text with an optional one-pixel drop shadow. A label made from a Lang key (Make.TextKey) rewrites itself when
+    /// A line of pixel text with an optional one-pixel drop shadow. A label bound to a Lang key (Bind) rewrites itself when
     /// the language changes; every label swaps its font to the language's.
     /// </summary>
     public sealed class Label : MonoBehaviour
@@ -37,7 +37,7 @@ namespace Athanor.Game
             if (main == null) return;
             bool crux = Loc.Vi && Art.Lib != null && Art.Lib.crux != null;
             float bias = kind == FontKind.Name && crux ? (lines > 1 ? 5 : 1) : 0;
-            if (lineBox && crux && main.font == Art.Lib.crux) bias += Make.HalfLeading(Art.Lib.crux.faceInfo, main.fontSize);
+            if (lineBox && crux && main.font == Art.Lib.crux) bias += Fonts.HalfLeading(Art.Lib.crux.faceInfo, main.fontSize);
             main.transform.localPosition = new Vector3(0, -bias, 0);
             if (shadow != null) shadow.transform.localPosition = new Vector3(1, -1 - bias, 0);
         }
@@ -65,7 +65,7 @@ namespace Athanor.Game
         public void SetSize(int points)
         {
             size = points;
-            main.fontSize = Make.SizeFor(kind, points);
+            main.fontSize = Fonts.SizeFor(kind, points);
             if (shadow != null) shadow.fontSize = main.fontSize;
             if (lineBox) ApplyBias();
         }
@@ -73,17 +73,17 @@ namespace Athanor.Game
         /// <summary>A view may set text from its own Loc.Changed handler before this label has swapped its font; swap first, so no glyph is looked up in the old one.</summary>
         void SyncFont()
         {
-            var font = Make.FontFor(kind);
+            var font = Fonts.FontFor(kind);
             if (main.font == font) return;
             main.font = font; if (shadow != null) shadow.font = font;
-            main.fontSize = Make.SizeFor(kind, size); if (shadow != null) shadow.fontSize = main.fontSize;
+            main.fontSize = Fonts.SizeFor(kind, size); if (shadow != null) shadow.fontSize = main.fontSize;
             if (lineBox) ApplyBias();
         }
 
         void Relabel()
         {
             if (main == null) return;
-            var font = Make.FontFor(kind);
+            var font = Fonts.FontFor(kind);
             if (main.font != font) main.font = font;
             if (shadow != null && shadow.font != font) shadow.font = font;
             SetSize(size); ApplyBias();

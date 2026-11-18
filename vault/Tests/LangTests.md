@@ -10,7 +10,7 @@ count: 22
 `Athanor/Assets/Tests/EditMode/LangTests.cs` — 22 tests
 
 ## Covers
-[[Json]], [[Lang]], [[Make]]
+[[Json]], [[Lang]]
 
 ## Tests
 - `BothFilesParse_WithTheirLanguageAndName`

@@ -43,7 +43,7 @@ aliases: []
 [[Px]]
 
 ## Used by
-[[CameraSway]], [[DepthLayer]], [[DepthRig]], [[DepthStage]], [[DepthTable]], [[DepthTestBuilder]], [[GameFlow]], [[WindowView]]
+[[CameraSway]], [[DepthLayer]], [[DepthRig]], [[DepthStage]], [[DepthTable]], [[GameFlow]]
 
 ## Tested by
 [[DepthClickTests]], [[DepthLayerTests]], [[MainDepthTests]], [[MainDevHookTests]]

@@ -76,7 +76,7 @@ namespace Athanor.Game
         public void Set(int d, bool themedWindow)
         {
             depth = Mathf.Clamp(d, 0, presets.Length);
-            // today's single setting (SceneBuilder.BuildVolume) and depth 1's lights, with depth 1's fog
+            // today's single setting (the Main.unity volume as authored) and depth 1's lights, with depth 1's fog
             var p = depth == 0 ? presets[0] : presets[depth - 1];
             float threshold = depth == 0 ? 1.0f : p.bloomThreshold, intensity = depth == 0 ? 1.1f : p.bloomIntensity, vig = depth == 0 ? 0.34f : p.vignette;
             if (ambient != null) ambient.color = p.ambient;

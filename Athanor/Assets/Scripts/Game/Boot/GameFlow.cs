@@ -23,7 +23,6 @@ namespace Athanor.Game
         /// <summary>The HD-2D bench rig (null in a scene without it: the flat game).</summary>
         public DepthStage depthStage;
 
-        public static GameFlow I { get; private set; }
         public ContentDb Db { get; private set; }
         public Journal Journal { get; private set; }
         /// <summary>What the player keeps between runs besides the journal: stats, goals done, items won.</summary>
@@ -161,7 +160,6 @@ namespace Athanor.Game
             if (title == null) throw new System.InvalidOperationException("GameFlow: title is not set in the scene");
             if (goalsView == null) throw new System.InvalidOperationException("GameFlow: goalsView is not set in the scene");
             if (journalView == null) throw new System.InvalidOperationException("GameFlow: journalView is not set in the scene");
-            I = this;
             Art.Lib = library;
             Loc.Use(langEn, langVi);
             settings = Save.LoadSettings();
@@ -185,7 +183,7 @@ namespace Athanor.Game
 
             screenFx.Bind(mainCamera, depthStage != null ? depthStage.sway : null);
             PointerInput.Rig = depthStage != null ? depthStage.rig : null;
-            if (bench == null) throw new System.InvalidOperationException("GameFlow.bench is not set: bake Prefabs/Views/Bench.prefab into Main.unity");
+            if (bench == null) throw new System.InvalidOperationException("GameFlow.bench is not set: put Prefabs/Views/Bench.prefab in Main.unity and assign it");
             bench.Bind(Db);
             if (depthStage != null) depthStage.PlaceTiles(Bench, Bench.TileCount);
             Bench.IgniteRequested += Ignite;
@@ -689,8 +687,8 @@ namespace Athanor.Game
         /// <summary>The new material pops out between the two tiles, then arcs down into its well on the rack.</summary>
         IEnumerator ToRack(MaterialData m, Color colour, Vector3 from, int slot, float pace)
         {
-            var halo = Make.Glow(Bench.transform, from, 26, colour.Alpha(0.6f), 164);
-            var icon = Make.Sprite(Bench.transform, m.id, from, 165);
+            var halo = Spawn.Glow(Bench.transform, from, 26, colour.Alpha(0.6f), 164);
+            var icon = Spawn.Sprite(Bench.transform, m.id, from, 165);
             float pop = 0.3f * pace, fly = 0.4f * pace;
             var up = from + new Vector3(0, 8, 0);
             yield return Sequence.Create()

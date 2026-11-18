@@ -14,7 +14,7 @@ aliases: []
 `public sealed class DepthStage` : `MonoBehaviour`
 - Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Depth/DepthStage.cs:10-41`
 
-> The HD-2D bench of the main scene as the game sees it: the rig (world camera, UI camera), the sway, the per-depth moods and the effects switch, built by SceneBuilder. GameFlow talks to this and nothing else of the depth layer. Cutscenes stay flat (z = 0): SetFlat turns the world camera off and lets the UI camera draw the frame.
+> The HD-2D bench of the main scene as the game sees it: the rig (world camera, UI camera), the sway, the per-depth moods and the effects switch, all objects of Main.unity. GameFlow talks to this and nothing else of the depth layer. Cutscenes stay flat (z = 0): SetFlat turns the world camera off and lets the UI camera draw the frame.
 
 ## Members
 | Kind | Signature | Line | Note |
@@ -33,4 +33,4 @@ aliases: []
 [[BenchView]], [[CameraSway]], [[DepthLayer]], [[DepthMath]], [[DepthMood]], [[DepthRig]], [[DepthSwitch]], [[Px]], [[WindowView]]
 
 ## Used by
-[[GameFlow]], [[SceneBuilder]]
+[[GameFlow]]

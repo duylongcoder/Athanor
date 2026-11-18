@@ -30,7 +30,7 @@ aliases: []
 | field | `public int[] rarityWeights` | 41 | Optional draw weights for catalyst offers and event gifts, in the order Common, Uncommon, Rare, Legendary. Missing: all 1 (a uniform draw). |
 
 ## Used by
-[[ContentDb]], [[GameFlow]], [[Lang]], [[MainDepthEvidence]], [[ViewBaker]]
+[[ContentDb]], [[GameFlow]], [[Lang]]
 
 ## Tested by
 [[ContentTests]], [[HudTests]], [[LoreTests]], [[PauseTests]], [[Phase3Tests]], [[PrefabBakeTests]], [[RarityTests]], [[RoleSimTests]], [[RunStateTests]], [[SaveTests]], [[TutorialFlowTests]], [[TutorialTests]]

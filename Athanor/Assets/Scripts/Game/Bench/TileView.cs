@@ -11,7 +11,7 @@ namespace Athanor.Game
     {
         public int index;
         public Vector3 centre;            // world position of the middle of the top face
-        // serialized so a tile baked into the Bench prefab (or built in the editor and saved in a scene) works when it is loaded
+        // serialized: the tile lives in Prefabs/Views/Bench.prefab, so what it needs is kept in the prefab
         [SerializeField, HideInInspector] Vector2 faceCentre, faceSize;
         [SerializeField, HideInInspector] SpriteRenderer face, ring, shadow, icon, halo, lid, cross, mark;
         [SerializeField, HideInInspector] Color markColor, glow, flashColor;
@@ -27,34 +27,6 @@ namespace Athanor.Game
         public bool Shut { get; private set; }
         public bool Marked => mark.enabled;
         public SpriteRenderer Icon => icon;
-
-#if UNITY_EDITOR
-        /// <summary>Bake source (ViewBaker, the depth test builders): makes the tile's parts. The game loads them from the Bench prefab.</summary>
-        public void Build(int i, TileData data, Transform parent)
-        {
-            index = i;
-            transform.SetParent(parent, false);
-            centre = Px.At(data.x, data.y);
-            var f = data.face;
-            faceCentre = Px.Mid(f.x, f.y, f.w, f.h); faceSize = new Vector2(f.w, f.h);
-            int row = i / 3;
-            face = Make.SpriteAt(transform, "tile_face_" + i, f.x, f.y, 10, Art.Lib.glow);
-            ring = Make.Sprite(transform, "tile_ring_" + row, centre, 11, Art.Lib.glow);
-            shadow = Make.Glow(transform, centre + new Vector3(0, -3, 0), 9, new Color(0, 0, 0, 0.6f), 12);
-            shadow.sharedMaterial = Art.Lib.unlit; shadow.transform.localScale = new Vector3(18 / 64f, 7 / 64f, 1);
-            halo = Make.Glow(transform, centre + new Vector3(0, 8, 0), 24, Color.clear, 12);
-            icon = Make.Sprite(transform, "dot", centre, 14 + row * 2, Art.Lib.lit);
-            glowLight = Make.Light(transform, centre + new Vector3(0, 6, 0), 46, Color.white, 0, 0.77f);
-            face.color = Color.clear;
-            // a shut tile: a dark lid over the face and a cross; a tile an aspect or an event acts on: a small gem at its front corner
-            lid = Make.SpriteAt(transform, "tile_face_" + i, f.x, f.y, 9);
-            cross = Make.Sprite(transform, "cross", Px.Snap(faceCentre), 11);
-            cross.color = Px.Hex("#7a5a6a");
-            mark = Make.Sprite(transform, "mark", Px.At(f.x + 11, f.y + f.h - 6), 13);
-            SetState(null, false);
-            Clear();
-        }
-#endif
 
         /// <summary>The face the tile is hit-tested on: centre and size in flat world units.</summary>
         public Vector2 FaceCentre => faceCentre;

@@ -163,7 +163,7 @@ namespace Athanor.Tests
         [Test]
         public void Show_TileReloadedFromAScene_ShowsTheMaterialAndTakesClicks()
         {
-            // Arrange: Instantiate copies only serialized state, as saving DepthTest.unity and opening it again does
+            // Arrange: Instantiate copies only serialized state, as saving a scene and opening it again does
             var copy = Object.Instantiate(tiles[4], root.transform);
 
             // Act

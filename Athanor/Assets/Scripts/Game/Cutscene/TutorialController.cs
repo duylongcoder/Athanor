@@ -56,21 +56,6 @@ namespace Athanor.Game
         /// <summary>Gives the controller the game it reads; the lessons run in Drive.</summary>
         public void Bind(GameFlow flow) => f = flow;
 
-#if UNITY_EDITOR
-        /// <summary>Bake source for the Tutorial object of Main.unity (ViewBaker.BakeTutorial): the text box, the arrow and the (empty) cell root.</summary>
-        public void Build()
-        {
-            root = Make.Root("Tutorial", transform);
-            cells = Make.Root("cells", root);
-            boxEdge = Make.Rect(root, 168, 14, 304, 50, Gold, Z + 10);
-            boxFill = Make.Rect(root, 169, 15, 302, 48, Px.Hex("#1a0e0a"), Z + 11);
-            line = Make.Text(root, "", 176, 21, FontKind.Body, 16, Px.Hex("#f0dcc0"), Z + 12, Align.Left, Px.Hex("#0c0706"), 288);
-            arrow = Make.Rect(root, 0, 0, 7, 7, Gold, Z + 9);
-            arrow.transform.rotation = Quaternion.Euler(0, 0, 45);
-            root.gameObject.SetActive(false);
-        }
-#endif
-
         // ---- overlay ----------------------------------------------------------------------------
 
         /// <summary>The box round the holes. No holes (a text-only step such as 2.3) is the whole canvas: a full dim, no rim, no arrow.</summary>
@@ -118,24 +103,24 @@ namespace Athanor.Game
             foreach (var run in runs)
                 {
                     float w = run.width, h2 = run.height;
-                    var r = Make.Rect(cells, run.xMin, run.yMin, w, h2, new Color(0.03f, 0.01f, 0.07f, dim ? 0.88f : 0f), Z);
-                    if (!free) Make.Click(r.gameObject, new Vector2(w, h2), Z, () => { bump = 1; if (advanceOnClick && Time.unscaledTime >= armed) advance = true; });
+                    var r = Spawn.Rect(cells, run.xMin, run.yMin, w, h2, new Color(0.03f, 0.01f, 0.07f, dim ? 0.88f : 0f), Z);
+                    if (!free) Spawn.Click(r.gameObject, new Vector2(w, h2), Z, () => { bump = 1; if (advanceOnClick && Time.unscaledTime >= armed) advance = true; });
                 }
             if (advanceOnClick)   // a read step: a click in the lit holes advances too, and never reaches the bench
-                Make.Click(Make.Rect(cells, 0, 0, Px.W, Px.H, Color.clear, Z - 1).gameObject, new Vector2(Px.W, Px.H), Z - 1, () => { if (Time.unscaledTime >= armed) advance = true; });
+                Spawn.Click(Spawn.Rect(cells, 0, 0, Px.W, Px.H, Color.clear, Z - 1).gameObject, new Vector2(Px.W, Px.H), Z - 1, () => { if (Time.unscaledTime >= armed) advance = true; });
             // rim and arrow around the union of the holes
             var u = Union(holes);
             bool full = u.width >= Px.W - 1 && u.height >= Px.H - 1;
             rimOn = (dim || free) && !full; rimRect = u;
             rimRects = full ? new Rect[0] : holes;
-            for (int k = 0; k < 4 * rimRects.Length; k++) rim.Add(Make.Rect(cells, 0, 0, 2, 2, Gold, Z + 5));
+            for (int k = 0; k < 4 * rimRects.Length; k++) rim.Add(Spawn.Rect(cells, 0, 0, 2, 2, Gold, Z + 5));
             Dev.Hook("[tut] " + text + (lines != null ? " | " + string.Join(" / ", lines) : "") + " (dim cells " + cells.childCount + ")");
             PlaceRim(1);
             arrow.gameObject.SetActive(rimOn);
             // the held popup: score parts under the text box
             if (lines != null)
                 for (int k = 0; k < lines.Length; k++)
-                    extra.Add(Make.Text(cells, lines[k], 320, 70 + k * 20, FontKind.Body, 16, k == lines.Length - 1 ? Px.Hex("#fff6b8") : Px.Hex("#f0dcc0"), Z + 12, Align.Centre, Px.Hex("#0c0706")));
+                    extra.Add(Spawn.Text(cells, lines[k], 320, 70 + k * 20, FontKind.Body, 16, k == lines.Length - 1 ? Px.Hex("#fff6b8") : Px.Hex("#f0dcc0"), Z + 12, Align.Centre, Px.Hex("#0c0706")));
             // SPEC change 17: height = 12 + lines x pitch (+12 on a read step), never lower than y 100
             int pitch = Loc.Vi ? 16 : 12, maxLines = Loc.Vi ? 3 : 4;
             int n = Mathf.Clamp(Mathf.CeilToInt(line.Width / 288f), 1, maxLines);
@@ -207,7 +192,7 @@ namespace Athanor.Game
             Show(Loc.T("tutorial.3_6"), new[] { Union(rects) }, true, true, new[] { HudView.Number(brokenTotal) });
             for (int i = 0; i < lay.Length; i++)
             {
-                var r = Make.Sprite(cells, lay[i].Id, Px.Mid(rects[i].x, rects[i].y, rects[i].width, rects[i].height), Z + 6);
+                var r = Spawn.Sprite(cells, lay[i].Id, Px.Mid(rects[i].x, rects[i].y, rects[i].width, rects[i].height), Z + 6);
                 r.color = i == lay.Length - 1 ? new Color(0.45f, 0.45f, 0.45f, 0.35f) : Color.white;
             }
             yield return null;

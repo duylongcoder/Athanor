@@ -18,22 +18,6 @@ namespace Athanor.Game
         /// <summary>A greyed button: no hover, no press, and a click does nothing.</summary>
         public bool Disabled { get => disabled; set { disabled = value; if (value) over = down = false; if (label != null) label.Color = value ? Px.Hex("#8a7a6a") : Px.Hex("#fff6b8"); } }
 
-        /// <summary>key: the Lang key of the label, which follows the language. x, y: art-space top-left corner. onClick is optional;
-        /// a view that is baked hooks Clicked in its own Bind instead.</summary>
-        public static UiButton Create(Transform parent, string key, float x, float y, int order, Action onClick = null)
-        {
-            var go = Make.Root("Button " + key, parent).gameObject;
-            go.transform.position = Px.Mid(x, y, W, H);
-            var b = go.AddComponent<UiButton>();
-            b.body = Make.Sprite(go.transform, "button_up", go.transform.position, order);
-            b.label = Make.TextKey(go.transform, key, 0, 0, FontKind.Title, 16, Px.Hex("#fff6b8"), order + 2, Align.Centre, Px.Hex("#3b0d1e"));
-            Make.Click(go, new Vector2(W, H), order);
-            b.Bind();
-            if (onClick != null) b.Clicked += onClick;
-            b.Update();
-            return b;
-        }
-
         void Awake() { if (GetComponent<Clickable>() != null) Bind(); }
 
         /// <summary>Hooks this button's Clickable to it. Safe to call more than once: it assigns, it does not add.</summary>

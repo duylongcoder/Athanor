@@ -14,7 +14,7 @@ aliases: []
 `public sealed class Label` : `MonoBehaviour`
 - Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Support/Label.cs:11-116`
 
-> A line of pixel text with an optional one-pixel drop shadow. A label made from a Lang key (Make.TextKey) rewrites itself when the language changes; every label swaps its font to the language's.
+> A line of pixel text with an optional one-pixel drop shadow. A label bound to a Lang key (Bind) rewrites itself when the language changes; every label swaps its font to the language's.
 
 ## Members
 | Kind | Signature | Line | Note |
@@ -35,10 +35,10 @@ aliases: []
 | property | `public float Width` | 115 |  |
 
 ## Uses
-[[Art]], [[FontKind]], [[Loc]], [[Make]]
+[[Art]], [[FontKind]], [[Fonts]], [[Loc]]
 
 ## Used by
-[[BenchView]], [[Card]], [[CardView]], [[CatalystChoiceView]], [[EventView]], [[GoalRow]], [[GoalToast]], [[GoalsView]], [[HudView]], [[JournalView]], [[Make]], [[Motion]], [[PauseMenu]], [[ReactionCutscene]], [[Row]], [[RunOverView]], [[SimpleCutscene]], [[TitleView]], [[Tooltip]], [[TutorialController]], [[UiButton]]
+[[BenchView]], [[Card]], [[CardView]], [[CatalystChoiceView]], [[EventView]], [[GoalRow]], [[GoalToast]], [[GoalsView]], [[HudView]], [[JournalView]], [[Motion]], [[PauseMenu]], [[ReactionCutscene]], [[Row]], [[RunOverView]], [[SimpleCutscene]], [[Spawn]], [[TitleView]], [[Tooltip]], [[TutorialController]], [[UiButton]]
 
 ## Tested by
 [[LabelLineBoxTests]], [[PrefabBakeTests]], [[RunOverDepthTests]], [[SceneBakeTests]]

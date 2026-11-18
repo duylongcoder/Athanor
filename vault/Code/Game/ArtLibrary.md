@@ -14,7 +14,7 @@ aliases: []
 `public sealed class ArtLibrary` : `ScriptableObject`
 - Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Support/ArtLibrary.cs:8-42`
 
-> Every sprite, effect sheet, font and material the game looks up by name. Built by Athanor > Build Scene.
+> Every sprite, effect sheet, font and material the game looks up by name. Built by Athanor > Refresh Art Library.
 
 ## Members
 | Kind | Signature | Line | Note |
@@ -31,7 +31,7 @@ aliases: []
 [[FlipbookSheet]]
 
 ## Used by
-[[Art]], [[DepthTestBuilder]], [[EditorGlobals]], [[GameFlow]], [[SceneBuilder]]
+[[Art]], [[ArtLibraryBuilder]], [[EditorGlobals]], [[GameFlow]]
 
 ## Tested by
 [[DepthLayerTests]]

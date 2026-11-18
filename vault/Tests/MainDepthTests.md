@@ -10,10 +10,10 @@ count: 6
 `Athanor/Assets/Tests/EditModeGame/MainDepthTests.cs` — 6 tests
 
 ## Covers
-[[Bench]], [[BenchView]], [[CameraSway]], [[DepthLayer]], [[DepthMath]], [[DepthRig]], [[GameFlow]], [[Make]], [[PointerInput]], [[Px]], [[TileView]]
+[[Bench]], [[BenchView]], [[CameraSway]], [[DepthLayer]], [[DepthMath]], [[DepthRig]], [[GameFlow]], [[PointerInput]], [[Px]], [[Spawn]], [[TileView]]
 
 ## Tests
-- `MakeChildren_OfAWorldLayerParent_DrawOnTheWorldLayer`
+- `SpawnChildren_OfAWorldLayerParent_DrawOnTheWorldLayer`
 - `TileGroup_AtRest_KeepsTheFaceOnItsArtPixels`
 - `TileIcon_MovedByLocalPosition_StaysOnTheTile`
 - `ShakeFromScreenFx_MovesTheWorldPicture_AndFlatModeIgnoresIt`

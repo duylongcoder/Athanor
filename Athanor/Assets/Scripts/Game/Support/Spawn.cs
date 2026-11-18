@@ -1,16 +1,18 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 
 namespace Athanor.Game
 {
-    /// <summary>Logo is the "Athanor" lettering: Alagard in every language. The other kinds follow the language (Loc).</summary>
-    public enum FontKind { Title, Body, Name, Tiny, Logo, Numeral }
+    /// <summary>Horizontal anchor of a <see cref="Spawn.Text"/>.</summary>
     public enum Align { Left, Centre, Right }
 
-    /// <summary>Factories for the sprites, text and lights the views are built from.</summary>
-    public static class Make
+    /// <summary>
+    /// Run-time spawners: the objects the game makes while it plays (float numbers, fly-in icons, tutorial rects, link motes, rarity stars).
+    /// Everything that is on screen from the start is a scene object or a prefab, not made here.
+    /// </summary>
+    public static class Spawn
     {
+        /// <summary>An empty child that draws with its parent (same layer).</summary>
         public static Transform Root(string name, Transform parent = null)
         {
             var go = new GameObject(name);
@@ -31,13 +33,6 @@ namespace Athanor.Game
             r.sharedMaterial = material != null ? material : Art.Lib.unlit;
             r.sortingOrder = order;
             return r;
-        }
-
-        /// <summary>A sprite placed by the art-space position of its top-left corner.</summary>
-        public static SpriteRenderer SpriteAt(Transform parent, string sprite, float x, float y, int order, Material material = null)
-        {
-            var s = Art.Lib.Sprite(sprite);
-            return Sprite(parent, sprite, Px.Mid(x, y, s.rect.width, s.rect.height), order, material);
         }
 
         /// <summary>A filled rectangle in art space.</summary>
@@ -79,43 +74,12 @@ namespace Athanor.Game
             return label;
         }
 
-        /// <summary>Text for a Lang key: it rewrites itself, and swaps its font, when the language changes.</summary>
-        public static Label TextKey(Transform parent, string key, float x, float y, FontKind font, int size, Color color, int order,
-            Align align = Align.Left, Color? shadow = null, float width = 0, params (string name, object value)[] args)
-        {
-            var label = Text(parent, Loc.T(key, args), x, y, font, size, color, order, align, shadow, width);
-            label.Bind(key, args);
-            return label;
-        }
-
-        /// <summary>The font of a kind in the language showing. Vietnamese uses SVN-Coder's Crux for all four kinds, never for the logo.</summary>
-        public static TMP_FontAsset FontFor(FontKind kind)
-        {
-            if (kind == FontKind.Logo || kind == FontKind.Numeral) return Art.Lib.title;   // Numeral: digits only, so the English face and size in every language
-            if (Loc.Vi && Art.Lib.crux != null) return Art.Lib.crux;
-            return kind == FontKind.Title ? Art.Lib.title : kind == FontKind.Body ? Art.Lib.body : kind == FontKind.Name ? Art.Lib.label : Art.Lib.tiny;
-        }
-
-        /// <summary>The point size for a kind: Tiny 8 is Crux 16 in Vietnamese (the marks need the height); the rest keep their size.</summary>
-        public static float SizeFor(FontKind kind, int size) => kind == FontKind.Tiny && Loc.Vi && Art.Lib.crux != null ? size * 2 : size;
-
-        /// <summary>
-        /// The half-leading of a font at a point size, in whole pixels (rounded up): how far below the top of a line box as
-        /// tall as the size (the mockup's CSS, line-height = size) the font's ascent line sits. TMP puts the ascent line at
-        /// the box top instead. Crux (ascent 7, descent -2 at 16): 11 px at 48, 7 at 32.
-        /// </summary>
-        public static int HalfLeading(UnityEngine.TextCore.FaceInfo face, float size)
-        {
-            float scale = size / face.pointSize;
-            return Mathf.Max(0, Mathf.CeilToInt((size - (face.ascentLine - face.descentLine) * scale) / 2 - 0.001f));
-        }
-
         static TextMeshPro Tmp(GameObject go, string text, FontKind font, int size, Color color, int order, Align align, float width)
         {
             var t = go.AddComponent<TextMeshPro>();
-            t.font = FontFor(font);
+            t.font = Fonts.FontFor(font);
             t.isOrthographic = true;
-            t.fontSize = SizeFor(font, size);
+            t.fontSize = Fonts.SizeFor(font, size);
             t.color = color;
             t.richText = true;
             t.extraPadding = false;
@@ -132,24 +96,7 @@ namespace Athanor.Game
             return t;
         }
 
-        /// <summary>A round 2D light. squash below 1 flattens it into an ellipse lying on a surface.</summary>
-        public static Light2D Light(Transform parent, Vector3 worldPos, float radius, Color color, float intensity, float squash = 1)
-        {
-            var go = new GameObject("light");
-            go.transform.SetParent(parent, false);
-            if (parent != null) go.layer = parent.gameObject.layer;
-            go.transform.position = worldPos;
-            go.transform.localScale = new Vector3(1, squash, 1);
-            var l = go.AddComponent<Light2D>();
-            l.lightType = Light2D.LightType.Point;
-            l.pointLightInnerRadius = 0;
-            l.pointLightOuterRadius = radius;
-            l.falloffIntensity = 0.7f;
-            l.color = color;
-            l.intensity = intensity;
-            return l;
-        }
-
+        /// <summary>Makes a game object clickable: a rectangle of the given size, drawn at order, that calls onClick.</summary>
         public static Clickable Click(GameObject go, Vector2 size, int order, System.Action onClick = null)
         {
             var c = go.AddComponent<Clickable>();

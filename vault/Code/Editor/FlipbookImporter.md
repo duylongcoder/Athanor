@@ -23,7 +23,4 @@ aliases: []
 | method | `public static string Import()` | 26 |  |
 
 ## Uses
-[[FlipbookSheet]], [[SceneBuilder]]
-
-## Used by
-[[SceneBuilder]]
+[[ArtLibraryBuilder]], [[FlipbookSheet]]

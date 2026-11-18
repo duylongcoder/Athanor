@@ -24,8 +24,5 @@ aliases: []
 ## Uses
 [[Art]], [[ArtLibrary]], [[Loc]], [[SparkMesh]]
 
-## Used by
-[[DepthTestBuilder]], [[DepthTestEvidence]], [[MainDepthEvidence]], [[SceneBuilder]], [[ViewBaker]]
-
 ## Tested by
 [[LocTests]]

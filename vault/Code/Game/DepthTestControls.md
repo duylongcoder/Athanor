@@ -28,6 +28,3 @@ aliases: []
 
 ## Uses
 [[CameraSway]], [[DepthMood]], [[DepthRig]], [[DepthSwitch]], [[TileView]]
-
-## Used by
-[[DepthTestBuilder]], [[DepthTestEvidence]]

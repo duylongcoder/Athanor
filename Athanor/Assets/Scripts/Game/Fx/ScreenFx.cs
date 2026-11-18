@@ -24,17 +24,6 @@ namespace Athanor.Game
             cam = camera.transform; camHome = cam.position;
         }
 
-#if UNITY_EDITOR
-        /// <summary>Bake source for the Screen Fx object of Main.unity (ViewBaker.BakeScreenFx): the white flash and the black fade, full screen.</summary>
-        public void Build()
-        {
-            flash = Make.Rect(transform, 0, 0, Px.W, Px.H, Color.clear, 480);
-            flash.name = "Flash"; flash.sharedMaterial = Art.Lib.glow;
-            black = Make.Rect(transform, -8, -8, Px.W + 16, Px.H + 16, Color.clear, 500);
-            black.name = "Fade";
-        }
-#endif
-
         public void Flash(float peak, float seconds) { flashPeak = peak; flashLeft = flashTime = seconds; }
         public void Shake(float pixels, float seconds) { shakeSize = pixels; shakeLeft = shakeTime = seconds; }
 

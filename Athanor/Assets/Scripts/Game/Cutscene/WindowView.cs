@@ -33,26 +33,6 @@ namespace Athanor.Game
             centre = layer != null ? (Vector3)layer.rest : pane.transform.position;
         }
 
-#if UNITY_EDITOR
-        /// <summary>Bake source for the Window object of Main.unity (ViewBaker.BakeWindow): finds the pane in the workshop and makes the effect sprites (hidden).</summary>
-        public void Build(Transform workshop)
-        {
-            var found = workshop.Find("window");
-            pane = found != null ? found.GetComponent<SpriteRenderer>() : null;
-            if (pane == null) return;
-            var layer = pane.GetComponent<DepthLayer>();
-            var at = layer != null ? (Vector3)layer.rest : pane.transform.position;
-            var fx = Make.Root("WindowFx", workshop);
-            for (int i = 0; i < Motes; i++) { motes[i] = Make.Sprite(fx, "dot", at, Order); motes[i].transform.localScale = new Vector3(0.25f, 0.25f, 1); }
-            for (int i = 0; i < Drips; i++) drips[i] = Make.Sprite(fx, "window_drip", at, Order);
-            glow = Make.Glow(fx, at, 18, Color.clear, Order);
-            point = Make.Sprite(fx, "dot", at, Order); point.transform.localScale = new Vector3(0.5f, 0.5f, 1);
-            HideEffects();
-            // in the HD-2D bench the effects sit just in front of the pane, in its depth
-            if (layer != null) DepthLayer.AddGroup(fx.gameObject, layer.z + 0.5f).Apply(DepthMath.RestDistance);
-        }
-#endif
-
         /// <summary>The pre-blurred window pictures (depth effects on) instead of the sharp ones (off). Redraws the pane.</summary>
         public bool Soft
         {

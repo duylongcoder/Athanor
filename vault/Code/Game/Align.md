@@ -4,7 +4,7 @@ type: code
 layer: Game
 kind: enum
 namespace: Athanor.Game
-file: Athanor/Assets/Scripts/Game/Support/Make.cs
+file: Athanor/Assets/Scripts/Game/Support/Spawn.cs
 tags: [code/game, kind/enum]
 aliases: []
 ---
@@ -12,13 +12,10 @@ aliases: []
 # Align
 
 `public enum Align`
-- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Support/Make.cs:9-9`
+- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Support/Spawn.cs:7-7`
 
 ## Members
 `Left`, `Centre`, `Right`
 
 ## Used by
-[[BenchView]], [[CardView]], [[DepthTestBuilder]], [[Make]], [[ReactionCutscene]], [[SimpleCutscene]], [[Tooltip]], [[TutorialController]], [[UiButton]]
-
-## Tested by
-[[LabelLineBoxTests]]
+[[BenchView]], [[Spawn]], [[TutorialController]]

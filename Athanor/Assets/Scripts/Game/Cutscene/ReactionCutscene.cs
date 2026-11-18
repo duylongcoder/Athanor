@@ -15,7 +15,7 @@ namespace Athanor.Game
         const float CX = 320, Rim = 161, FloorY = 292, GatherEnd = 2.05f, Burst = 2.3f, Reveal = 2.9f, Count = 3.4f, Settled = 4.5f, AutoEnd = 7.5f;
         const int O = 300;
 
-        // the parts below are the Reaction Cutscene object of Main.unity (baked by ViewBaker.BakeReaction); others are given by Bind
+        // the parts below are the Reaction Cutscene object of Main.unity (authored in the scene); others are given by Bind
         [SerializeField] GameObject room;
         GameObject[] others;
         [SerializeField] Transform stage;
@@ -43,58 +43,6 @@ namespace Athanor.Game
             this.others = others;
             Stage(false);
         }
-
-#if UNITY_EDITOR
-        /// <summary>
-        /// Bake source for the Reaction Cutscene object of Main.unity (ViewBaker.BakeReaction): the stage and its UI under the cutscene room,
-        /// both hidden. The room and the objects it hides are left as they are; Bind hides the stage and the room at run time.
-        /// </summary>
-        public void Build(GameObject cutsceneRoom)
-        {
-            room = cutsceneRoom;
-            var t = stage = Make.Root("Reaction", room.transform);
-            rune = Make.Sprite(t, "rune_circle", Px.At(CX, FloorY), O + 2, Art.Lib.glow);
-            runeLight = Make.Light(t, Px.At(CX, FloorY), 230, Color.white, 0, 0.4f);
-            liquidFrames = new[] { Art.Lib.Sprite("liquid_0"), Art.Lib.Sprite("liquid_1"), Art.Lib.Sprite("liquid_2"), Art.Lib.Sprite("liquid_3") };
-            liquid = Make.Sprite(t, "liquid_0", Px.At(CX, Rim), O + 5, Art.Lib.glow);
-            liquidGlow = Make.Glow(t, Px.At(CX, Rim), 100, Color.clear, O + 5);
-            liquidGlow.transform.localScale = new Vector3(100 / 32f, 45 / 32f, 1);
-            liquidLight = Make.Light(t, Px.At(CX, Rim - 20), 200, Color.white, 0, 0.85f);
-            pillar = Make.Sprite(t, "pillar", Px.Mid(CX - 44.5f, 0, 89, 161), O + 6, Art.Lib.glow);
-            for (int k = 0; k < rings.Length; k++) rings[k] = Make.Sprite(t, "floor_ring", Px.At(CX, FloorY), O + 2, Art.Lib.glow);
-            for (int k = 0; k < rays.Length; k++)
-            {
-                rays[k] = Make.Root("ray", t);
-                var r = Make.Sprite(rays[k], "ray", Vector3.zero, O + 7, Art.Lib.glow);
-                r.transform.localPosition = new Vector3(22 + 75, 0, 0);
-            }
-            for (int i = 0; i < MaxMats; i++)
-            {
-                matGlow[i] = Make.Glow(t, Vector3.zero, 34, Color.clear, O + 9);
-                mats[i] = Make.Sprite(t, "dot", Vector3.zero, O + 10);
-                mats[i].transform.localScale = new Vector3(2, 2, 1);
-                matLight[i] = Make.Light(t, Vector3.zero, 90, Color.white, 0);
-            }
-            resultGlow = Make.Glow(t, Vector3.zero, 70, Color.clear, O + 8);
-            result = Make.Sprite(t, "dot", Vector3.zero, O + 11);
-            result.transform.localScale = new Vector3(3, 3, 1);
-            resultLight = Make.Light(t, Vector3.zero, 260, Color.white, 0);
-
-            ui = Make.Root("Reaction UI", room.transform);
-            Make.Rect(ui, 0, 0, Px.W, 30, Color.black, O + 40); Make.Rect(ui, 0, Px.H - 30, Px.W, 30, Color.black, O + 40);
-            Make.Rect(ui, 0, 30, Px.W, 1, Px.Hex("#8c5a14"), O + 41); Make.Rect(ui, 0, Px.H - 31, Px.W, 1, Px.Hex("#8c5a14"), O + 41);
-            var faint = Px.Hex("#7a5a3a");
-            headerLeft = Make.Text(ui, "", 12, 9, FontKind.Body, 16, faint, O + 45);
-            headerRight = Make.Text(ui, "", Px.W - 12, 9, FontKind.Body, 16, faint, O + 45, Align.Right);
-            skipHint = Make.Text(ui, "CLICK TO SKIP", CX, Px.H - 19, FontKind.Tiny, 8, Px.Hex("#5a4028"), O + 45, Align.Centre);
-            banner = Make.TextKey(ui, "cutscene.new_discovery", CX, 38, FontKind.Title, 32, Px.Hex("#f8d250"), O + 45, Align.Centre, Px.Hex("#3a1a08"));
-            title = Make.Text(ui, "", CX, 180, FontKind.Title, 48, Color.white, O + 45, Align.Centre, Px.Hex("#0b2b3a"));
-            plus = Make.Text(ui, "", CX - 84, 230, FontKind.Title, 32, Px.Hex("#f8d250"), O + 45, Align.Centre, Px.Hex("#3a1a08"));
-            times = Make.Text(ui, "", CX - 16, 230, FontKind.Title, 32, Px.Hex("#ee6a3c"), O + 45, Align.Centre, Px.Hex("#3b0d1e"));
-            total = Make.Text(ui, "", CX + 66, 230, FontKind.Title, 32, Px.Hex("#fff6b8"), O + 45, Align.Centre, Px.Hex("#3a1a08"));
-            stage.gameObject.SetActive(false); ui.gameObject.SetActive(false);
-        }
-#endif
 
         void Stage(bool on)
         {

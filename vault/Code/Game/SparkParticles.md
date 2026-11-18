@@ -25,7 +25,7 @@ aliases: []
 | method | `public void Emit(Sparks owner, Vector2 pos, Vector2 vel, Color color, float life, int order, float gravity, bool sparkle, float drag)` | 28 |  |
 
 ## Uses
-[[Art]], [[Make]], [[SparkMesh]], [[Sparks]]
+[[Art]], [[SparkMesh]], [[Sparks]]
 
 ## Used by
 [[Sparks]]

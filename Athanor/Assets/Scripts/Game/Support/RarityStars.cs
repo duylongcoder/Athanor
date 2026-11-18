@@ -7,7 +7,7 @@ namespace Athanor.Game
     /// <summary>
     /// The rarity glyph (SPEC changes 21-24): up to four 7x7 stars on an 8 px pitch, tinted, each with a dark outline made of
     /// four offset dark copies. The root sits at the top-left of the row. Built once and reused; showing a rarity allocates nothing.
-    /// Serializable so a baked view keeps its rows; the corner-pivot glyph is made at runtime and set when stars are shown.
+    /// Serializable so a prefab keeps its rows; the corner-pivot glyph is made at runtime and set when stars are shown.
     /// </summary>
     [Serializable]
     public sealed class RarityStars
@@ -23,21 +23,21 @@ namespace Athanor.Game
         /// <summary>Where the row's top-left corner is (world position; the row hangs to the right and down).</summary>
         public Transform Root => root;
 
-        /// <summary>For the serializer: a baked row is filled in from the prefab.</summary>
+        /// <summary>For the serializer: a row stored in a prefab is filled in from it.</summary>
         public RarityStars() { }
 
         public RarityStars(Transform parent, int order)
         {
-            root = Make.Root("stars", parent);
+            root = Spawn.Root("stars", parent);
             for (int i = 0; i < Max; i++)
             {
                 var corner = new Vector3(i * Pitch, 0, 0);   // the sprite hangs from its top-left corner, so every edge is on a whole pixel
                 for (int k = 0; k < 4; k++)
                 {
-                    var e = edge[i * 4 + k] = Make.Sprite(root, "star", Vector3.zero, order);
+                    var e = edge[i * 4 + k] = Spawn.Sprite(root, "star", Vector3.zero, order);
                     e.transform.localPosition = corner + (Vector3)Offsets[k];
                 }
-                fill[i] = Make.Sprite(root, "star", Vector3.zero, order + 1);
+                fill[i] = Spawn.Sprite(root, "star", Vector3.zero, order + 1);
                 fill[i].transform.localPosition = corner;
             }
             Show(0, Color.white);

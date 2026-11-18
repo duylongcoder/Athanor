@@ -72,13 +72,13 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | TileView | TileView | Game | class | Athanor/Assets/Scripts/Game/Bench/TileView.cs | 10 | One of the nine bench tiles: its hover highlight and, when occupied, the material standing on it. |
 | GameFlow | GameFlow | Game | class | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 15 | Owns the run and moves the game between its screens. |
 | FlowState | FlowState | Game | enum | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 12 |  |
-| TitleChoice | TitleChoice | Game | enum | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 132 |  |
+| TitleChoice | TitleChoice | Game | enum | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 131 |  |
 | Save | Save | Game | class | Athanor/Assets/Scripts/Game/Boot/Save.cs | 8 | Keeps the journal and the profile between sessions in PlayerPrefs (browser storage in a web build). |
 | Cutscene | Cutscene | Game | class | Athanor/Assets/Scripts/Game/Cutscene/Cutscene.cs | 7 | A sequence that plays to its end unless the player clicks to skip ahead. |
 | DepthLook | DepthLook | Game | class | Athanor/Assets/Scripts/Game/Cutscene/DepthLook.cs | 9 | What a depth looks like from the bench: the intro line under its name and the view through the window. Pure choices, no scene; the pictures and effects are drawn by WindowView. |
 | ReactionCutscene | ReactionCutscene | Game | class | Athanor/Assets/Scripts/Game/Cutscene/ReactionCutscene.cs | 13 | The full discovery sequence: two materials spiral into the cauldron, the rune circle lights, a flash, and the new material rises on a column of light with its name and potency. Everything is a functio |
 | SimpleCutscene | SimpleCutscene | Game | class | Athanor/Assets/Scripts/Game/Cutscene/SimpleCutscene.cs | 14 | The short story beats built from text and a few effects: the intro, the descent between depths, and the ending. A click finishes the line being written, then moves on. |
-| Loop | Loop | Game | class | Athanor/Assets/Scripts/Game/Cutscene/SimpleCutscene.cs | 319 | A stream of glowing particles played as a loop instead of emitted: rate x life fixed slots, each reborn every life seconds at a hashed place and speed, so its position is a function of the clock. A sl |
+| Loop | Loop | Game | class | Athanor/Assets/Scripts/Game/Cutscene/SimpleCutscene.cs | 281 | A stream of glowing particles played as a loop instead of emitted: rate x life fixed slots, each reborn every life seconds at a hashed place and speed, so its position is a function of the clock. A sl |
 | TutorialRules | TutorialRules | Game | class | Athanor/Assets/Scripts/Game/Cutscene/TutorialController.cs | 11 | The decisions around the tutorial that need no scene, so they can be tested. What Begin does is the Core rule TutorialScript.Plan. |
 | TutorialController | TutorialController | Game | class | Athanor/Assets/Scripts/Game/Cutscene/TutorialController.cs | 31 | Plays the scripted tutorial over the bench: a dark screen with lit holes and a pulsing gold rim, an arrow, a text box at the top, click locks, and popups held until read. It reads the game's state; it |
 | WindowView | WindowView | Game | class | Athanor/Assets/Scripts/Game/Cutscene/WindowView.cs | 11 | The workshop window shows what the current depth "sees" and plays one tiny looping effect (docs/devlogs/phase-5-lore.md): 1 dust motes up a shaft, 2 drips down the glass, 3 a breathing amber glow, 4 r |
@@ -88,7 +88,7 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | DepthMood | DepthMood | Game | class | Athanor/Assets/Scripts/Game/Depth/DepthMood.cs | 13 | The five depth presets of the HD-2D test scene (docs/mockup/hd2d/SPEC.md, "Depth presets", with the URP conversions of "Mapping mockup values to Unity"): ambient light, moonbeam, bloom, vignette, the  |
 | Preset | Preset | Game | struct | Athanor/Assets/Scripts/Game/Depth/DepthMood.cs | 17 | One depth's look. |
 | DepthRig | DepthRig | Game | class | Athanor/Assets/Scripts/Game/Depth/DepthRig.cs | 12 | The camera split of the HD-2D bench. The world camera is a perspective camera at distance D from the art plane; it renders the layers under this object into a RenderTexture of 640K x 360K pixels (K =  |
-| DepthStage | DepthStage | Game | class | Athanor/Assets/Scripts/Game/Depth/DepthStage.cs | 10 | The HD-2D bench of the main scene as the game sees it: the rig (world camera, UI camera), the sway, the per-depth moods and the effects switch, built by SceneBuilder. GameFlow talks to this and nothin |
+| DepthStage | DepthStage | Game | class | Athanor/Assets/Scripts/Game/Depth/DepthStage.cs | 10 | The HD-2D bench of the main scene as the game sees it: the rig (world camera, UI camera), the sway, the per-depth moods and the effects switch, all objects of Main.unity. GameFlow talks to this and no |
 | DepthSwitch | DepthSwitch | Game | class | Athanor/Assets/Scripts/Game/Depth/DepthSwitch.cs | 11 | The "all effects off" switch of the depth test scene. Off: the far layers show the original sharp sprites and the fog sheets and the foreground are hidden, so the world at rest is today's bench. On: t |
 | SpriteSwap | SpriteSwap | Game | struct | Athanor/Assets/Scripts/Game/Depth/DepthSwitch.cs | 15 | A sprite that has a sharp picture and a pre-blurred one of the same centre. |
 | FlameSwap | FlameSwap | Game | struct | Athanor/Assets/Scripts/Game/Depth/DepthSwitch.cs | 23 | A flame whose frames have a sharp set and a pre-blurred set. |
@@ -109,22 +109,23 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | Lane | Lane | Game | class | Athanor/Assets/Scripts/Game/Fx/Sparks.cs | 25 |  |
 | Anim | Anim | Game | class | Athanor/Assets/Scripts/Game/Support/Anim.cs | 11 | Beats (Wait), easing curves, and Over for per-frame scripts that are not a move or a fade (the spark trails in GameFlow). Moves, fades and scales of objects go through Motion (PrimeTween, snapped to p |
 | Art | Art | Game | class | Athanor/Assets/Scripts/Game/Support/Art.cs | 4 | The art library the running game uses. GameFlow sets it from its serialized field; the Game tests set it in GameTestSetup. |
-| ArtLibrary | ArtLibrary | Game | class | Athanor/Assets/Scripts/Game/Support/ArtLibrary.cs | 8 | Every sprite, effect sheet, font and material the game looks up by name. Built by Athanor > Build Scene. |
+| ArtLibrary | ArtLibrary | Game | class | Athanor/Assets/Scripts/Game/Support/ArtLibrary.cs | 8 | Every sprite, effect sheet, font and material the game looks up by name. Built by Athanor > Refresh Art Library. |
 | AudioMute | AudioMute | Game | class | Athanor/Assets/Scripts/Game/Support/AudioMute.cs | 11 | Silences audio while the browser tab is hidden, the app is paused or the window has lost focus. No sound ships in Phase 5, so this is a hook: it sets AudioListener.pause and is audible once sound land |
 | AudioMuteHook | AudioMuteHook | Game | class | Athanor/Assets/Scripts/Game/Support/AudioMute.cs | 33 | Feeds the browser's tab visibility and Unity's pause and focus into AudioMute. |
 | Clickable | Clickable | Game | class | Athanor/Assets/Scripts/Game/Support/Clickable.cs | 7 | A rectangle around this object that the pointer can hover and click. The highest order under the pointer wins. |
 | Dev | Dev | Game | class | Athanor/Assets/Scripts/Game/Support/Dev.cs | 9 | Log lines that exist only as the hook of tools/web/webtest.mjs ([tut], [drive], [loc]). The calls, and the strings they build, are compiled out of a release build; a development build and the editor k |
+| Fonts | Fonts | Game | class | Athanor/Assets/Scripts/Game/Support/Fonts.cs | 10 | Which font a FontKind uses in the language showing, and the size and line box that go with it. |
+| FontKind | FontKind | Game | enum | Athanor/Assets/Scripts/Game/Support/Fonts.cs | 7 |  |
 | Haptics | Haptics | Game | class | Athanor/Assets/Scripts/Game/Support/Haptics.cs | 11 | Short vibration pulses for rare, meaningful moments (never clicks or Ignite). Only where the browser can vibrate (Android Chrome); Supported is false on desktop, iOS and in the editor, and the Setting |
 | KindColors | KindColors | Game | class | Athanor/Assets/Scripts/Game/Support/KindColors.cs | 4 | The label colour for each kind of material. |
-| Label | Label | Game | class | Athanor/Assets/Scripts/Game/Support/Label.cs | 11 | A line of pixel text with an optional one-pixel drop shadow. A label made from a Lang key (Make.TextKey) rewrites itself when the language changes; every label swaps its font to the language's. |
+| Label | Label | Game | class | Athanor/Assets/Scripts/Game/Support/Label.cs | 11 | A line of pixel text with an optional one-pixel drop shadow. A label bound to a Lang key (Bind) rewrites itself when the language changes; every label swaps its font to the language's. |
 | Loc | Loc | Game | class | Athanor/Assets/Scripts/Game/Support/Loc.cs | 12 | The language the game is showing: the loaded Lang (Vietnamese falls back to English), the font set that goes with it and helpers for the words views share. Views never hold text; they ask for a key. E |
-| Make | Make | Game | class | Athanor/Assets/Scripts/Game/Support/Make.cs | 12 | Factories for the sprites, text and lights the views are built from. |
-| FontKind | FontKind | Game | enum | Athanor/Assets/Scripts/Game/Support/Make.cs | 8 |  |
-| Align | Align | Game | enum | Athanor/Assets/Scripts/Game/Support/Make.cs | 9 |  |
 | Motion | Motion | Game | class | Athanor/Assets/Scripts/Game/Support/Motion.cs | 16 | One-shot tweens on PrimeTween, kept in one place so every move is snapped to whole pixels (Px.Snap). Each call takes its start value explicitly and returns the Tween: group several with Sequence.Creat |
 | PointerInput | PointerInput | Game | class | Athanor/Assets/Scripts/Game/Support/PointerInput.cs | 8 | Mouse or touch position in world space, press state for this frame, and hover/click dispatch to Clickables. |
 | Px | Px | Game | class | Athanor/Assets/Scripts/Game/Support/Px.cs | 9 | The art is laid out on a 640x360 canvas with y running down from the top-left corner. The world uses one unit per pixel with the origin at the screen centre and y up. |
 | RarityStars | RarityStars | Game | class | Athanor/Assets/Scripts/Game/Support/RarityStars.cs | 13 | The rarity glyph (SPEC changes 21-24): up to four 7x7 stars on an 8 px pitch, tinted, each with a dark outline made of four offset dark copies. The root sits at the top-left of the row. Built once and |
+| Spawn | Spawn | Game | class | Athanor/Assets/Scripts/Game/Support/Spawn.cs | 13 | Run-time spawners: the objects the game makes while it plays (float numbers, fly-in icons, tutorial rects, link motes, rarity stars). Everything that is on screen from the start is a scene object or a |
+| Align | Align | Game | enum | Athanor/Assets/Scripts/Game/Support/Spawn.cs | 7 |  |
 | Wording | Wording | Game | class | Athanor/Assets/Scripts/Game/Support/Wording.cs | 9 | The words and colours the Phase 3 screens share: rarities, aspects, event effects and goal rewards. |
 | ChoiceCard | ChoiceCard | Game | class | Athanor/Assets/Scripts/Game/Ui/CatalystChoiceView.cs | 11 | What one card of the chooser shows. |
 | CatalystChoiceView | CatalystChoiceView | Game | class | Athanor/Assets/Scripts/Game/Ui/CatalystChoiceView.cs | 23 | Three parchment cards, pick one: a catalyst after a depth is cleared, or an aspect at the start of a run and of depths 3 and 5. An aspect's card shows the tile it would land on. |
@@ -141,17 +142,13 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | TitleView | TitleView | Game | class | Athanor/Assets/Scripts/Game/Ui/TitleView.cs | 8 | The title, shown over the candlelit workshop. |
 | Tooltip | Tooltip | Game | class | Athanor/Assets/Scripts/Game/Ui/Tooltip.cs | 9 | A small panel with a title and two lines of text that appears beside whatever the pointer rests on. A hand card's tip adds a row under the name with its stars and tier word, and the panel grows by tha |
 | UiButton | UiButton | Game | class | Athanor/Assets/Scripts/Game/Ui/UiButton.cs | 7 | A 120x26 red button with a label: brightens under the pointer, sinks when pressed. |
+| ArtLibraryBuilder | ArtLibraryBuilder | Editor | class | Athanor/Assets/Editor/ArtLibraryBuilder.cs | 12 | Collects the sprites, effect sheets, fonts and materials into Assets/Art/ArtLibrary.asset, the one lookup the game uses by name. Run it after new art or effect sheets are imported (the sprite and flip |
 | AtlasBuilder | AtlasBuilder | Editor | class | Athanor/Assets/Editor/AtlasBuilder.cs | 27 | Two art steps that run after tools/art/export.mjs, both idempotent: 1. Sprite sheets: the numbered frames of each animation (Background/flame_small_0..7.png ...) are merged into one Multiple-mode shee |
-| DepthTestBuilder | DepthTestBuilder | Editor | class | Athanor/Assets/Editor/DepthTestBuilder.cs | 19 | Builds Assets/Scenes/DepthTest.unity, the HD-2D prototype (task 5b-05, docs/devlogs/phase-4-depth.md "Prototype plan"): the workshop bench of the main scene (built by SceneBuilder.BuildWorkshop), the  |
-| DepthTestEvidence | DepthTestEvidence | Editor | class | Athanor/Assets/Editor/DepthTestEvidence.cs | 23 | Renders the 5b-05 evidence of the depth test scene to PNG from the editor (cameras rendered into textures): the main scene's bench against the depth scene's rest frame (with pixel diffs), the five pre |
 | FlipbookImporter | FlipbookImporter | Editor | class | Athanor/Assets/Editor/FlipbookImporter.cs | 14 | Turns each pixelfx sheet in Assets/Art/Fx/Sheets (name.png + name.json, written by tools/fx/export.sh) into sliced sprites and a FlipbookSheet asset, then adds them to the art library so Fx.Spawn(name |
 | FontBuilder | FontBuilder | Editor | class | Athanor/Assets/Editor/FontBuilder.cs | 10 | Bakes the pixel fonts into TextMeshPro bitmap font assets at their native size (crisp, point-filtered). |
 | LayoutData | LayoutData | Editor | class | Athanor/Assets/Editor/LayoutData.cs | 11 |  |
-| MainDepthEvidence | MainDepthEvidence | Editor | class | Athanor/Assets/Editor/MainDepthEvidence.cs | 15 | Evidence frames of the HD-2D main scene (5b-07a), edit mode, no lights (the editor does not draw point or sprite lights): unity run Athanor -- -executeMethod MainDepthEvidence.CaptureBatch |
-| SceneBuilder | SceneBuilder | Editor | class | Athanor/Assets/Editor/SceneBuilder.cs | 16 | Builds Assets/Scenes/Main.unity and the art library from the exported sprites. Run it again after regenerating art (node tools/art/export.mjs) or exporting effect sheets. Hand edits to the scene are o |
 | EditorGlobals | EditorGlobals | Editor | class | Athanor/Assets/Editor/Shared/EditorGlobals.cs | 10 | Sets the globals GameFlow and Sparks would set from their serialized fields at runtime (Art.Lib, Loc.Use, SparkMesh.BaseMaterial), loading the assets through the AssetDatabase. The batch tools (-execu |
 | SpriteImportRules | SpriteImportRules | Editor | class | Athanor/Assets/Editor/SpriteImportRules.cs | 10 | Every texture under Assets/Art is pixel art: a point-filtered, uncompressed sprite at 1 pixel per unit. The one exception is Assets/Art/Depth (the HD-2D layers): its pre-blurred pictures (*_far, *_nea |
-| ViewBaker | ViewBaker | Editor | class | Athanor/Assets/Editor/ViewBaker.cs | 15 | Phase 6 only (deleted in Task 16): builds a view the old way once, keeps a reference picture, saves it as a prefab, puts the prefab into Main.unity and sets the GameFlow field. Then Compare checks the |
 | ViewCapture | ViewCapture | Editor | class | Athanor/Assets/Editor/ViewCapture.cs | 7 | Renders a GameObject alone (in an otherwise empty scene) to a 640x360 image, the way the UI camera draws it. |
 | WebBuild | WebBuild | Editor | class | Athanor/Assets/Editor/WebBuild.cs | 10 | Builds the game for the browser into Build/web. Also callable from the command line: unity build Athanor --target WebGL --execute-method WebBuild.Build |
 | BalanceMatrixTests | BalanceMatrixTests | Tests | class | Athanor/Assets/Tests/EditMode/BalanceMatrixTests.cs | 13 | The informed scripted player on fixed profiles, to see what each part of Phase 3 does to the win rate. dotnet test tools/CoreTests --filter BalanceMatrix -l "console;verbosity=detailed" |
@@ -181,14 +178,14 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | DepthLookTests | DepthLookTests | Tests | class | Athanor/Assets/Tests/EditModeGame/DepthLookTests.cs | 5 |  |
 | GameTestSetup | GameTestSetup | Tests | class | Athanor/Assets/Tests/EditModeGame/GameTestSetup.cs | 7 | Once per run of the Game tests: the language files, art library and particle material the game would get from GameFlow and Sparks. |
 | HudTests | HudTests | Tests | class | Athanor/Assets/Tests/EditModeGame/HudTests.cs | 9 | The Redraw button is live only while a redraw is left and the bench is in play. |
-| LabelLineBoxTests | LabelLineBoxTests | Tests | class | Athanor/Assets/Tests/EditModeGame/LabelLineBoxTests.cs | 14 | Line-box text (the Descent's depth name, SPEC (f)): the mockup sets it in a CSS line box as tall as the size, so the glyphs sit a half-leading below the box top; TMP puts the baseline one ascender dow |
+| LabelLineBoxTests | LabelLineBoxTests | Tests | class | Athanor/Assets/Tests/EditModeGame/LabelLineBoxTests.cs | 15 | Line-box text (the Descent's depth name, SPEC (f)): the mockup sets it in a CSS line box as tall as the size, so the glyphs sit a half-leading below the box top; TMP puts the baseline one ascender dow |
 | LocTests | LocTests | Tests | class | Athanor/Assets/Tests/EditModeGame/LocTests.cs | 12 | The Game layer's language: Vietnamese draws from SVN-Coder's Crux, every key resolves, and the core's English notes are translated. |
 | MainDepthTests | MainDepthTests | Tests | class | Athanor/Assets/Tests/EditModeGame/MainDepthTests.cs | 11 | The HD-2D bench in the main scene (5b-07a): layers, the tiles' depth group, clicks through the world ray, the shake. |
 | MainDevHookTests | MainDevHookTests | Tests | class | Athanor/Assets/Tests/EditModeGame/MainDevHookTests.cs | 11 | The dev-only hooks tools/web/mainhd2d.mjs drives (5b-07b): F6 mood steps, F10 tile faces in UI units, the bench's place / unplace lines. The key handling is guarded by Application.isEditor \|\| Debug.is |
 | MainSceneFixture | MainSceneFixture | Tests | class | Athanor/Assets/Tests/EditModeGame/MainSceneFixture.cs | 14 | Main.unity opened beside the test scene, for the views that are scene objects and not prefabs. Dispose closes it without saving. |
 | MotionTests | MotionTests | Tests | class | Athanor/Assets/Tests/EditModeGame/MotionTests.cs | 13 | Motion's helpers make live PrimeTween tweens. PrimeTween refuses a payload over 16 bytes: it logs an error and returns a dead tween, which a Sequence then refuses too (the rack flight and the catalyst |
 | PauseTests | PauseTests | Tests | class | Athanor/Assets/Tests/EditModeGame/PauseTests.cs | 10 | The pause menu: time stops and comes back on every exit, Esc toggles, nothing opens in the tutorial, Quit leaves the stored run data alone. |
-| PrefabBakeTests | PrefabBakeTests | Tests | class | Athanor/Assets/Tests/EditModeGame/PrefabBakeTests.cs | 13 | Baked objects must behave like the ones Build made: a label keeps its key, a button still clicks. |
+| PrefabBakeTests | PrefabBakeTests | Tests | class | Athanor/Assets/Tests/EditModeGame/PrefabBakeTests.cs | 13 | The shipped prefabs keep what the views need: a label keeps its key, a button still clicks, the tooltip makes its panel. |
 | PrefabFixture | PrefabFixture | Tests | class | Athanor/Assets/Tests/EditModeGame/PrefabFixture.cs | 9 | A copy of a prefab for one test. Call Destroy in [TearDown] (or a finally). |
 | RunOverDepthTests | RunOverDepthTests | Tests | class | Athanor/Assets/Tests/EditModeGame/RunOverDepthTests.cs | 15 | The run-over depth row (owner, phase-5-prep 2026-11-16): a won run says "Planted at depth n" on one line with no value; a lost run says "Depth reached" with "n of 5". The view is reused, so each path  |
 | SaveTests | SaveTests | Tests | class | Athanor/Assets/Tests/EditModeGame/SaveTests.cs | 9 | The journal and the profile survive a round trip through PlayerPrefs, and a damaged save never stops the game. |
@@ -551,18 +548,17 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | BenchView | property | Hud | 18 | public HudView Hud |
 | BenchView | property | TileCount | 20 | public int TileCount |
 | BenchView | property | Pick | 25 | struct Pick |
-| BenchView | method | Build | 51 | public void Build(TileData[] tileData, HudView hudInstance, CardView card) |
-| BenchView | method | Bind | 90 | public void Bind(ContentDb content) |
-| BenchView | method | Bind | 102 | public void Bind(RunState state, Journal book) |
-| BenchView | method | TileCentre | 110 | public Vector3 TileCentre(int i) |
-| BenchView | method | RackSlot | 112 | public Vector3 RackSlot(int i) |
-| BenchView | method | PreviewOnRack | 114 | public void PreviewOnRack(int i, string id) |
-| BenchView | method | Tile | 119 | public TileView Tile(int i) |
-| BenchView | method | Refresh | 122 | public void Refresh(bool deal = false) |
-| BenchView | method | ClearLinks | 202 | public void ClearLinks() |
-| BenchView | method | FloatText | 205 | public IEnumerator FloatText(string text, Vector3 from, Color color, float seconds = 0.8f, bool small = false) |
-| BenchView | method | PlaceLine | 254 | public static string PlaceLine(int tile) |
-| BenchView | method | UnplaceLine | 255 | public static string UnplaceLine(int tile) |
+| BenchView | method | Bind | 50 | public void Bind(ContentDb content) |
+| BenchView | method | Bind | 62 | public void Bind(RunState state, Journal book) |
+| BenchView | method | TileCentre | 70 | public Vector3 TileCentre(int i) |
+| BenchView | method | RackSlot | 72 | public Vector3 RackSlot(int i) |
+| BenchView | method | PreviewOnRack | 74 | public void PreviewOnRack(int i, string id) |
+| BenchView | method | Tile | 79 | public TileView Tile(int i) |
+| BenchView | method | Refresh | 82 | public void Refresh(bool deal = false) |
+| BenchView | method | ClearLinks | 162 | public void ClearLinks() |
+| BenchView | method | FloatText | 165 | public IEnumerator FloatText(string text, Vector3 from, Color color, float seconds = 0.8f, bool small = false) |
+| BenchView | method | PlaceLine | 214 | public static string PlaceLine(int tile) |
+| BenchView | method | UnplaceLine | 215 | public static string UnplaceLine(int tile) |
 | From | value | None | 24 | None |
 | From | value | Hand | 24 | Hand |
 | From | value | Tile | 24 | Tile |
@@ -571,11 +567,10 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | CardView | field | id | 11 | public string id |
 | CardView | field | home | 12 | public Vector3 home |
 | CardView | field | Dimmed | 13 | public bool Lifted, Selected, Dimmed |
-| CardView | method | Build | 27 | public void Build(MaterialData m, Transform parent, int order) |
-| CardView | method | Show | 59 | public void Show(MaterialData m, int order) |
-| CardView | method | Fan | 80 | public void Fan(float visible, int front) |
-| CardView | method | DealIn | 105 | public void DealIn(float wait) |
-| CardView | method | Contains | 107 | public bool Contains(Vector2 world) |
+| CardView | method | Show | 24 | public void Show(MaterialData m, int order) |
+| CardView | method | Fan | 45 | public void Fan(float visible, int front) |
+| CardView | method | DealIn | 70 | public void DealIn(float wait) |
+| CardView | method | Contains | 72 | public bool Contains(Vector2 world) |
 | Dust | field | count | 11 | public int count = 46 |
 | Dust | field | material | 13 | public Material material |
 | Dust | field | sprite | 14 | public Sprite sprite |
@@ -615,38 +610,36 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | TileView | property | Shut | 27 | public bool Shut |
 | TileView | property | Marked | 28 | public bool Marked |
 | TileView | property | Icon | 29 | public SpriteRenderer Icon |
-| TileView | method | Build | 33 | public void Build(int i, TileData data, Transform parent) |
-| TileView | property | FaceCentre | 60 | public Vector2 FaceCentre |
-| TileView | property | FaceSize | 61 | public Vector2 FaceSize |
-| TileView | method | Contains | 63 | public bool Contains(Vector2 world) |
-| TileView | method | SetState | 67 | public void SetState(Color? marker, bool shut) |
-| TileView | method | Show | 77 | public void Show(MaterialData m, bool pop) |
-| TileView | method | Clear | 90 | public void Clear() |
-| TileView | method | Flash | 98 | public void Flash(Color c) |
-| TileView | method | Consume | 101 | public IEnumerator Consume() |
+| TileView | property | FaceCentre | 32 | public Vector2 FaceCentre |
+| TileView | property | FaceSize | 33 | public Vector2 FaceSize |
+| TileView | method | Contains | 35 | public bool Contains(Vector2 world) |
+| TileView | method | SetState | 39 | public void SetState(Color? marker, bool shut) |
+| TileView | method | Show | 49 | public void Show(MaterialData m, bool pop) |
+| TileView | method | Clear | 62 | public void Clear() |
+| TileView | method | Flash | 70 | public void Flash(Color c) |
+| TileView | method | Consume | 73 | public IEnumerator Consume() |
 | GameFlow | field | library | 18 | public ArtLibrary library |
 | GameFlow | field | cutsceneRoom | 21 | public GameObject workshop, cutsceneRoom |
 | GameFlow | field | mainCamera | 22 | public Camera mainCamera |
 | GameFlow | field | depthStage | 24 | public DepthStage depthStage |
-| GameFlow | property | I | 26 | public static GameFlow I |
-| GameFlow | property | Db | 27 | public ContentDb Db |
-| GameFlow | property | Journal | 28 | public Journal Journal |
-| GameFlow | property | Profile | 30 | public Profile Profile |
-| GameFlow | property | Run | 31 | public RunState Run |
-| GameFlow | property | Bench | 33 | public BenchView Bench |
-| GameFlow | property | State | 34 | public FlowState State |
-| GameFlow | property | RunOver | 37 | public RunOverView RunOver |
-| GameFlow | field | Auto | 39 | public bool Auto |
-| GameFlow | field | AutoHook | 42 | public const string AutoHook = |
-| GameFlow | method | ToggleAuto | 45 | public void ToggleAuto() |
-| GameFlow | method | NextMood | 54 | public static int NextMood(int mood) |
-| GameFlow | method | MoodLine | 55 | public static string MoodLine(int mood) |
-| GameFlow | method | EffectsLine | 56 | public static string EffectsLine(bool on) |
-| GameFlow | property | JournalView | 118 | public JournalView JournalView |
-| GameFlow | method | JournalAfterQuit | 454 | public static Journal JournalAfterQuit(bool sandbox, Journal current) |
-| GameFlow | method | ProfileAfterQuit | 456 | public static Profile ProfileAfterQuit(bool sandbox, Profile current, ContentDb db) |
-| GameFlow | method | Ignite | 497 | public void Ignite() |
-| GameFlow | method | SettleIgnite | 505 | public static IgniteOutcome SettleIgnite(RunState run, Journal journal, bool sandbox) |
+| GameFlow | property | Db | 26 | public ContentDb Db |
+| GameFlow | property | Journal | 27 | public Journal Journal |
+| GameFlow | property | Profile | 29 | public Profile Profile |
+| GameFlow | property | Run | 30 | public RunState Run |
+| GameFlow | property | Bench | 32 | public BenchView Bench |
+| GameFlow | property | State | 33 | public FlowState State |
+| GameFlow | property | RunOver | 36 | public RunOverView RunOver |
+| GameFlow | field | Auto | 38 | public bool Auto |
+| GameFlow | field | AutoHook | 41 | public const string AutoHook = |
+| GameFlow | method | ToggleAuto | 44 | public void ToggleAuto() |
+| GameFlow | method | NextMood | 53 | public static int NextMood(int mood) |
+| GameFlow | method | MoodLine | 54 | public static string MoodLine(int mood) |
+| GameFlow | method | EffectsLine | 55 | public static string EffectsLine(bool on) |
+| GameFlow | property | JournalView | 117 | public JournalView JournalView |
+| GameFlow | method | JournalAfterQuit | 452 | public static Journal JournalAfterQuit(bool sandbox, Journal current) |
+| GameFlow | method | ProfileAfterQuit | 454 | public static Profile ProfileAfterQuit(bool sandbox, Profile current, ContentDb db) |
+| GameFlow | method | Ignite | 495 | public void Ignite() |
+| GameFlow | method | SettleIgnite | 503 | public static IgniteOutcome SettleIgnite(RunState run, Journal journal, bool sandbox) |
 | FlowState | value | Boot | 12 | Boot |
 | FlowState | value | Title | 12 | Title |
 | FlowState | value | Intro | 12 | Intro |
@@ -660,9 +653,9 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | FlowState | value | AspectChoice | 12 | AspectChoice |
 | FlowState | value | Event | 12 | Event |
 | FlowState | value | Goals | 12 | Goals |
-| TitleChoice | value | Begin | 132 | Begin |
-| TitleChoice | value | HowToPlay | 132 | HowToPlay |
-| TitleChoice | value | Intro | 132 | Intro |
+| TitleChoice | value | Begin | 131 | Begin |
+| TitleChoice | value | HowToPlay | 131 | HowToPlay |
+| TitleChoice | value | Intro | 131 | Intro |
 | Save | field | Key | 10 | public const string Key = "athanor.journal.v1", IntroKey = "athanor.intro.v1", ProfileKey = "athanor.profile.v1", TutorialKey = "athanor.tutorial.v1", SettingsKey = |
 | Save | method | LoadJournal | 14 | public static Journal LoadJournal() |
 | Save | method | StoreJournal | 24 | public static void StoreJournal(Journal journal) |
@@ -689,39 +682,35 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | DepthLook | method | ThemedWindow | 27 | public static bool ThemedWindow(bool inRun, bool tutorial, bool sandbox) |
 | DepthLook | method | WindowSprite | 30 | public static string WindowSprite(int depth) |
 | ReactionCutscene | method | Bind | 41 | public void Bind(GameObject[] others) |
-| ReactionCutscene | method | Build | 52 | public void Build(GameObject cutsceneRoom) |
-| ReactionCutscene | method | Setup | 106 | public void Setup(ReactionEvent e, ContentDb content, float hurry = 1) |
-| ReactionCutscene | method | Play | 132 | public override IEnumerator Play() |
-| SimpleCutscene | method | Build | 38 | public void Build(GameObject cutsceneRoom, GameObject workshopRoot, GameObject benchRoot) |
-| SimpleCutscene | method | Play | 71 | public override IEnumerator Play() |
-| SimpleCutscene | method | Close | 88 | public void Close() |
-| SimpleCutscene | method | Intro | 107 | public IEnumerator Intro() |
-| SimpleCutscene | method | Descent | 143 | public IEnumerator Descent(int depth, string depthName, Color colour, Action midway) |
-| SimpleCutscene | method | DepthIntro | 202 | public IEnumerator DepthIntro(string key) |
-| SimpleCutscene | method | Ending | 218 | public IEnumerator Ending(MaterialData ultimate) |
-| Loop | ctor | Loop | 326 | public Loop(Transform parent, string name, int order, float rate, float life, float x0, float x1, float y0, float y1, float vx0, float vx1, float vy0, float vy1, float gravity, float sparkle) |
-| Loop | method | Draw | 337 | public void Draw(float t, float strength, Color color) |
+| ReactionCutscene | method | Setup | 54 | public void Setup(ReactionEvent e, ContentDb content, float hurry = 1) |
+| ReactionCutscene | method | Play | 80 | public override IEnumerator Play() |
+| SimpleCutscene | method | Play | 33 | public override IEnumerator Play() |
+| SimpleCutscene | method | Close | 50 | public void Close() |
+| SimpleCutscene | method | Intro | 69 | public IEnumerator Intro() |
+| SimpleCutscene | method | Descent | 105 | public IEnumerator Descent(int depth, string depthName, Color colour, Action midway) |
+| SimpleCutscene | method | DepthIntro | 164 | public IEnumerator DepthIntro(string key) |
+| SimpleCutscene | method | Ending | 180 | public IEnumerator Ending(MaterialData ultimate) |
+| Loop | ctor | Loop | 288 | public Loop(Transform parent, string name, int order, float rate, float life, float x0, float x1, float y0, float y1, float vx0, float vx1, float vy0, float vy1, float gravity, float sparkle) |
+| Loop | method | Draw | 299 | public void Draw(float t, float strength, Color color) |
 | TutorialRules | method | MarkDone | 14 | public static void MarkDone() |
 | TutorialRules | method | AnswerSkipQuestion | 20 | public static bool AnswerSkipQuestion(bool playIt) |
 | TutorialController | property | Trial | 50 | public int Trial |
 | TutorialController | property | Finished | 52 | public bool Finished |
 | TutorialController | field | Shown | 54 | public readonly List<long> Shown = new List<long>() |
 | TutorialController | method | Bind | 57 | public void Bind(GameFlow flow) |
-| TutorialController | method | Build | 61 | public void Build() |
-| TutorialController | method | Union | 77 | public static Rect Union(Rect[] r) |
-| TutorialController | method | Abort | 177 | public void Abort() |
-| TutorialController | method | AfterEvent | 261 | public IEnumerator AfterEvent(ReactionEvent e, int index) |
-| TutorialController | method | AfterIgnite | 301 | public IEnumerator AfterIgnite(IgniteOutcomeView o) |
-| TutorialController | method | AfterChoose | 326 | public void AfterChoose(string catalystId, string name) |
-| TutorialController | method | OnOffer | 336 | public IEnumerator OnOffer() |
-| TutorialController | method | OfferTaken | 343 | public void OfferTaken() |
-| TutorialController | method | Drive | 354 | public IEnumerator Drive() |
-| TutorialController | property | IgniteOutcomeView | 405 | public sealed class IgniteOutcomeView |
+| TutorialController | method | Union | 62 | public static Rect Union(Rect[] r) |
+| TutorialController | method | Abort | 162 | public void Abort() |
+| TutorialController | method | AfterEvent | 246 | public IEnumerator AfterEvent(ReactionEvent e, int index) |
+| TutorialController | method | AfterIgnite | 286 | public IEnumerator AfterIgnite(IgniteOutcomeView o) |
+| TutorialController | method | AfterChoose | 311 | public void AfterChoose(string catalystId, string name) |
+| TutorialController | method | OnOffer | 321 | public IEnumerator OnOffer() |
+| TutorialController | method | OfferTaken | 328 | public void OfferTaken() |
+| TutorialController | method | Drive | 339 | public IEnumerator Drive() |
+| TutorialController | property | IgniteOutcomeView | 390 | public sealed class IgniteOutcomeView |
 | WindowView | method | Bind | 28 | public void Bind() |
-| WindowView | method | Build | 38 | public void Build(Transform workshop) |
-| WindowView | property | Soft | 57 | public bool Soft |
-| WindowView | method | Show | 70 | public void Show(int depth) |
-| WindowView | method | ShowNight | 84 | public void ShowNight() |
+| WindowView | property | Soft | 37 | public bool Soft |
+| WindowView | method | Show | 50 | public void Show(int depth) |
+| WindowView | method | ShowNight | 64 | public void ShowNight() |
 | CameraSway | field | swayOn | 14 | public bool swayOn = true |
 | CameraSway | field | amplitude | 16 | public float amplitude = DepthMath.SwayAmplitude |
 | CameraSway | field | external | 20 | public Vector2 external |
@@ -859,12 +848,11 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | Fx | method | Spawn | 9 | public static Flipbook Spawn(string name, Vector2 pos, Transform parent = null, int sortingOrder = 50) |
 | ScreenFx | property | I | 9 | public static ScreenFx I |
 | ScreenFx | method | Bind | 19 | public void Bind(Camera camera, CameraSway worldSway = null) |
-| ScreenFx | method | Build | 29 | public void Build() |
-| ScreenFx | method | Flash | 38 | public void Flash(float peak, float seconds) |
-| ScreenFx | method | Shake | 39 | public void Shake(float pixels, float seconds) |
-| ScreenFx | method | FadeOut | 41 | public IEnumerator FadeOut(float seconds) |
-| ScreenFx | method | FadeIn | 42 | public IEnumerator FadeIn(float seconds) |
-| ScreenFx | method | SetBlack | 43 | public void SetBlack(float a) |
+| ScreenFx | method | Flash | 27 | public void Flash(float peak, float seconds) |
+| ScreenFx | method | Shake | 28 | public void Shake(float pixels, float seconds) |
+| ScreenFx | method | FadeOut | 30 | public IEnumerator FadeOut(float seconds) |
+| ScreenFx | method | FadeIn | 31 | public IEnumerator FadeIn(float seconds) |
+| ScreenFx | method | SetBlack | 32 | public void SetBlack(float a) |
 | SparkMesh | property | Vert | 15 | struct Vert |
 | SparkMesh | property | Quad | 16 | struct Quad |
 | SparkMesh | field | DotScale | 19 | public const float DotScale = 0.25f |
@@ -923,6 +911,15 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | Clickable | field | onUp | 11 | public Action onClick, onEnter, onExit, onDown, onUp |
 | Clickable | method | Contains | 13 | public bool Contains(Vector2 world) |
 | Dev | method | Hook | 12 | public static void Hook(string line) |
+| Fonts | method | FontFor | 13 | public static TMP_FontAsset FontFor(FontKind kind) |
+| Fonts | method | SizeFor | 21 | public static float SizeFor(FontKind kind, int size) |
+| Fonts | method | HalfLeading | 28 | public static int HalfLeading(UnityEngine.TextCore.FaceInfo face, float size) |
+| FontKind | value | Title | 7 | Title |
+| FontKind | value | Body | 7 | Body |
+| FontKind | value | Name | 7 | Name |
+| FontKind | value | Tiny | 7 | Tiny |
+| FontKind | value | Logo | 7 | Logo |
+| FontKind | value | Numeral | 7 | Numeral |
 | Haptics | field | Discovery | 13 | public const int Discovery = 20, DepthCleared = 40, RunEnded = 60 |
 | Haptics | field | Enabled | 16 | public static bool Enabled = true |
 | Haptics | field | ForceSupported | 18 | public static bool? ForceSupported |
@@ -965,27 +962,6 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | Loc | method | Upper | 112 | public static string Upper(string s) |
 | Loc | method | DepthName | 115 | public static string DepthName(ContentDb db, int depth) |
 | Loc | method | Number | 118 | public static string Number(long n) |
-| Make | method | Root | 14 | public static Transform Root(string name, Transform parent = null) |
-| Make | method | Sprite | 23 | public static SpriteRenderer Sprite(Transform parent, string sprite, Vector3 worldPos, int order, Material material = null) |
-| Make | method | SpriteAt | 37 | public static SpriteRenderer SpriteAt(Transform parent, string sprite, float x, float y, int order, Material material = null) |
-| Make | method | Rect | 44 | public static SpriteRenderer Rect(Transform parent, float x, float y, float w, float h, Color color, int order) |
-| Make | method | Glow | 54 | public static SpriteRenderer Glow(Transform parent, Vector3 worldPos, float radius, Color color, int order) |
-| Make | method | Text | 63 | public static Label Text(Transform parent, string text, float x, float y, FontKind font, int size, Color color, int order, Align align = Align.Left, Color? shadow = null, float width = 0) |
-| Make | method | TextKey | 83 | public static Label TextKey(Transform parent, string key, float x, float y, FontKind font, int size, Color color, int order, Align align = Align.Left, Color? shadow = null, float width = 0, params (st |
-| Make | method | FontFor | 92 | public static TMP_FontAsset FontFor(FontKind kind) |
-| Make | method | SizeFor | 100 | public static float SizeFor(FontKind kind, int size) |
-| Make | method | HalfLeading | 107 | public static int HalfLeading(UnityEngine.TextCore.FaceInfo face, float size) |
-| Make | method | Light | 136 | public static Light2D Light(Transform parent, Vector3 worldPos, float radius, Color color, float intensity, float squash = 1) |
-| Make | method | Click | 153 | public static Clickable Click(GameObject go, Vector2 size, int order, System.Action onClick = null) |
-| FontKind | value | Title | 8 | Title |
-| FontKind | value | Body | 8 | Body |
-| FontKind | value | Name | 8 | Name |
-| FontKind | value | Tiny | 8 | Tiny |
-| FontKind | value | Logo | 8 | Logo |
-| FontKind | value | Numeral | 8 | Numeral |
-| Align | value | Left | 9 | Left |
-| Align | value | Centre | 9 | Centre |
-| Align | value | Right | 9 | Right |
 | Motion | method | Move | 19 | public static Tween Move(Transform t, Vector3 from, Vector3 to, float seconds, Ease ease = Ease.Linear) |
 | Motion | method | MoveLocal | 23 | public static Tween MoveLocal(Transform t, Vector3 from, Vector3 to, float seconds, Ease ease = Ease.Linear) |
 | Motion | property | ArcPath | 30 | sealed class ArcPath |
@@ -1025,6 +1001,15 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | RarityStars | method | SetAlpha | 81 | public void SetAlpha(float a) |
 | RarityStars | method | SetOrder | 88 | public void SetOrder(int order) |
 | RarityStars | method | SetActive | 94 | public void SetActive(bool on) |
+| Spawn | method | Root | 16 | public static Transform Root(string name, Transform parent = null) |
+| Spawn | method | Sprite | 25 | public static SpriteRenderer Sprite(Transform parent, string sprite, Vector3 worldPos, int order, Material material = null) |
+| Spawn | method | Rect | 39 | public static SpriteRenderer Rect(Transform parent, float x, float y, float w, float h, Color color, int order) |
+| Spawn | method | Glow | 49 | public static SpriteRenderer Glow(Transform parent, Vector3 worldPos, float radius, Color color, int order) |
+| Spawn | method | Text | 58 | public static Label Text(Transform parent, string text, float x, float y, FontKind font, int size, Color color, int order, Align align = Align.Left, Color? shadow = null, float width = 0) |
+| Spawn | method | Click | 100 | public static Clickable Click(GameObject go, Vector2 size, int order, System.Action onClick = null) |
+| Align | value | Left | 7 | Left |
+| Align | value | Centre | 7 | Centre |
+| Align | value | Right | 7 | Right |
 | Wording | method | RarityColor | 11 | public static Color RarityColor(string rarity) |
 | Wording | method | RarityTone | 23 | public static Color RarityTone(string rarity) |
 | Wording | method | RarityWord | 35 | public static string RarityWord(string rarity) |
@@ -1123,15 +1108,16 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | TitleView | method | Progress | 217 | public void Progress(int known, int total, int goalsDone, int goals) |
 | TitleView | method | Close | 224 | public void Close() |
 | Tooltip | method | Bind | 22 | public void Bind() |
-| Tooltip | method | Build | 31 | public void Build(Transform parent) |
-| Tooltip | method | Show | 45 | public void Show(string heading, string text, Vector2 anchor, float clearance = 20, string rarity = null) |
-| Tooltip | method | Hide | 71 | public void Hide() |
+| Tooltip | method | Show | 32 | public void Show(string heading, string text, Vector2 anchor, float clearance = 20, string rarity = null) |
+| Tooltip | method | Hide | 58 | public void Hide() |
 | UiButton | field | W | 9 | public const int W = 120, H = 26 |
 | UiButton | field | Clicked | 15 | public event Action Clicked |
 | UiButton | property | Text | 17 | public Label Text |
 | UiButton | property | Disabled | 19 | public bool Disabled |
-| UiButton | method | Create | 23 | public static UiButton Create(Transform parent, string key, float x, float y, int order, Action onClick = null) |
-| UiButton | method | Bind | 40 | public void Bind() |
+| UiButton | method | Bind | 24 | public void Bind() |
+| ArtLibraryBuilder | method | Refresh | 19 | public static void Refresh() |
+| ArtLibraryBuilder | method | RefreshBatch | 22 | public static void RefreshBatch() |
+| ArtLibraryBuilder | method | RefreshLibrary | 25 | public static ArtLibrary RefreshLibrary() |
 | AtlasBuilder | field | ArtDir | 29 | public const string ArtDir = "Assets/Art", AtlasDir = "Assets/Art/Atlases", LibraryPath = |
 | AtlasBuilder | field | Padding | 30 | public const int Padding = 2, MaxSize = 2048, SheetGap = 2 |
 | AtlasBuilder | field | DepthDir | 34 | public const string DepthDir = |
@@ -1147,20 +1133,6 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | AtlasBuilder | method | BuildSpriteSheets | 131 | public static string BuildSpriteSheets() |
 | AtlasBuilder | method | Assign | 290 | public static Dictionary<string, List<string>> Assign() |
 | AtlasBuilder | method | BuildAtlases | 309 | public static string BuildAtlases() |
-| DepthTestBuilder | field | ScenePath | 21 | public const string ScenePath = "Assets/Scenes/DepthTest.unity", Dir = |
-| DepthTestBuilder | field | WallZ | 27 | public const float WallZ = -400f, WindowZ = -398f, WallCandleZ = -392f, BackFogZ = -300f, DustZ = -300f, FrontFogZ = 40f, ForegroundZ = 180f |
-| DepthTestBuilder | method | Build | 35 | public static string Build() |
-| DepthTestBuilder | property | World | 125 | internal struct World |
-| DepthTestBuilder | method | ComposeWorld | 132 | internal static World ComposeWorld(DepthRig rig, Transform world, Transform workshop, LayoutData layout, ArtLibrary lib, Material tableMat, Material fogMat, Light2D ambient, Volume volume, TiltShift t |
-| DepthTestBuilder | method | BuildBatch | 220 | public static void BuildBatch() |
-| DepthTestBuilder | method | Art | 222 | internal static Sprite Art(string name) |
-| DepthTestBuilder | method | Leaf | 230 | internal static void Leaf(GameObject go, float z) |
-| DepthTestBuilder | method | FogSheet | 232 | internal static SpriteRenderer FogSheet(Transform parent, string name, string sprite, float x, float y, float w, float h, int order, float speed, float z, Material mat) |
-| DepthTestBuilder | method | EnsureMaterial | 270 | internal static Material EnsureMaterial(string path, string shaderName) |
-| DepthTestBuilder | method | BuildVolume | 281 | internal static VolumeProfile BuildVolume() |
-| DepthTestBuilder | method | EnsureRenderer | 307 | internal static int EnsureRenderer(Material tilt) |
-| DepthTestEvidence | method | CaptureBatch | 31 | public static void CaptureBatch() |
-| DepthTestEvidence | method | Capture | 38 | public static string Capture() |
 | FlipbookImporter | field | Dir | 16 | public const string Dir = |
 | FlipbookImporter | method | Import | 26 | public static string Import() |
 | FontBuilder | method | BuildBatch | 15 | public static void BuildBatch() |
@@ -1171,49 +1143,18 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | LayoutData | field | candles | 16 | public PointData[] candles |
 | LayoutData | method | Placed | 19 | public RectData Placed(string name) |
 | LayoutData | field | Path | 25 | public const string Path = |
-| MainDepthEvidence | method | CaptureBatch | 19 | public static void CaptureBatch() |
-| MainDepthEvidence | method | Capture | 43 | public static string Capture() |
-| SceneBuilder | method | Build | 23 | public static string Build() |
-| SceneBuilder | method | BuildBatch | 117 | public static void BuildBatch() |
-| SceneBuilder | method | AllBatch | 120 | public static void AllBatch() |
-| SceneBuilder | method | RefreshLibrary | 129 | public static ArtLibrary RefreshLibrary() |
-| SceneBuilder | method | BuildWorkshop | 181 | internal static Transform BuildWorkshop(LayoutData layout) |
 | EditorGlobals | method | Inject | 13 | public static void Inject() |
 | SpriteImportRules | method | GetVersion | 14 | public override uint GetVersion() |
 | SpriteImportRules | method | IsSoftDepthArt | 17 | public static bool IsSoftDepthArt(string assetPath) |
 | SpriteImportRules | method | IsDepthFog | 25 | public static bool IsDepthFog(string assetPath) |
-| ViewBaker | field | ScenePath | 18 | public const string ScenePath = |
-| ViewBaker | field | ViewDir | 20 | public const string ViewDir = |
-| ViewBaker | field | PartDir | 22 | public const string PartDir = |
-| ViewBaker | field | EvidenceDir | 24 | public const string EvidenceDir = |
-| ViewBaker | method | Db | 51 | public static ContentDb Db() |
-| ViewBaker | method | Bake | 58 | public static void Bake<T>(string name, string flowField, Action<T> build, Action<T> beforeSave = null, string[] keepHidden = null) where T : MonoBehaviour |
-| ViewBaker | method | BakePart | 79 | public static void BakePart<T>(string name, Func<T> build) where T : Component |
-| ViewBaker | method | BakeInScene | 95 | public static void BakeInScene<T>(string name, string flowField, Action<T> build, bool asPrefab) where T : MonoBehaviour |
-| ViewBaker | method | Compare | 117 | public static void Compare(string name, Action<GameObject> prepare = null, string[] keepHidden = null) |
-| ViewBaker | method | CompareRunOver | 132 | public static void CompareRunOver() |
-| ViewBaker | method | CompareGoalToast | 133 | public static void CompareGoalToast() |
-| ViewBaker | method | CompareEvent | 134 | public static void CompareEvent() |
-| ViewBaker | method | CompareCatalystChoice | 135 | public static void CompareCatalystChoice() |
-| ViewBaker | method | ComparePause | 136 | public static void ComparePause() |
-| ViewBaker | method | CompareHud | 164 | public static void CompareHud() |
-| ViewBaker | method | CompareTitle | 177 | public static void CompareTitle() |
-| ViewBaker | method | BakeCard | 198 | public static void BakeCard() |
-| ViewBaker | method | BakeBench | 210 | public static void BakeBench() |
-| ViewBaker | method | BakeScreenFx | 222 | public static void BakeScreenFx() |
-| ViewBaker | method | BakeWindow | 228 | public static void BakeWindow() |
-| ViewBaker | method | BakeTutorial | 237 | public static void BakeTutorial() |
-| ViewBaker | method | BakeReaction | 243 | public static void BakeReaction() |
-| ViewBaker | method | BakeStory | 255 | public static void BakeStory() |
 | ViewCapture | method | Render | 14 | public static Texture2D Render(GameObject root, params string[] keepHidden) |
 | ViewCapture | method | Save | 51 | public static void Save(Texture2D tex, string path) |
 | ViewCapture | method | Load | 58 | public static Texture2D Load(string path) |
 | ViewCapture | method | Differ | 66 | public static float Differ(Texture2D a, Texture2D b) |
-| WebBuild | field | Output | 12 | public const string Output = "Build/web", DevOutput = "Build/web-dev", DepthOutput = |
+| WebBuild | field | Output | 12 | public const string Output = "Build/web", DevOutput = |
 | WebBuild | method | Build | 15 | public static void Build() |
 | WebBuild | method | BuildQuick | 19 | public static void BuildQuick() |
 | WebBuild | method | BuildDev | 26 | public static void BuildDev() |
-| WebBuild | method | BuildDepthTest | 34 | public static void BuildDepthTest() |
 | BalanceMatrixTests | method | With | 15 | public static Unlocks With(ContentDb db, bool starters, bool catalysts) |
 | BalanceMatrixTests | method | Autoplay | 25 | public static RunState Autoplay(ContentDb db, int seed, RunOptions options) |
 | BalanceMatrixTests | method | Line | 34 | public static string Line(ContentDb db, string label, Func<int, RunOptions> options, int seeds) |
@@ -1320,11 +1261,11 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | HudTests | method | CanRedraw_UntilTheLastRedrawIsUsed | 14 | public void CanRedraw_UntilTheLastRedrawIsUsed() |
 | HudTests | method | CanRedraw_IsFalse_OffTheBench_EvenWithRedrawsLeft | 28 | public void CanRedraw_IsFalse_OffTheBench_EvenWithRedrawsLeft() |
 | HudTests | method | CanRedraw_IsFalse_WithNoRun | 39 | public void CanRedraw_IsFalse_WithNoRun() |
-| LabelLineBoxTests | method | HalfLeading_Crux48_IsElevenPixels | 37 | public void HalfLeading_Crux48_IsElevenPixels() |
-| LabelLineBoxTests | method | LineBoxTitle_InVietnamese_MovesFaceAndShadowDownByCruxHalfLeading | 46 | public void LineBoxTitle_InVietnamese_MovesFaceAndShadowDownByCruxHalfLeading() |
-| LabelLineBoxTests | method | LineBoxTitle_SizeSwitchTo32_FollowsTheNewSize | 56 | public void LineBoxTitle_SizeSwitchTo32_FollowsTheNewSize() |
-| LabelLineBoxTests | method | LineBoxTitle_InEnglish_DoesNotMove | 66 | public void LineBoxTitle_InEnglish_DoesNotMove() |
-| LabelLineBoxTests | method | PlainTitle_InVietnamese_DoesNotMove | 75 | public void PlainTitle_InVietnamese_DoesNotMove() |
+| LabelLineBoxTests | method | HalfLeading_Crux48_IsElevenPixels | 43 | public void HalfLeading_Crux48_IsElevenPixels() |
+| LabelLineBoxTests | method | LineBoxTitle_InVietnamese_MovesFaceAndShadowDownByCruxHalfLeading | 52 | public void LineBoxTitle_InVietnamese_MovesFaceAndShadowDownByCruxHalfLeading() |
+| LabelLineBoxTests | method | LineBoxTitle_SizeSwitchTo32_FollowsTheNewSize | 62 | public void LineBoxTitle_SizeSwitchTo32_FollowsTheNewSize() |
+| LabelLineBoxTests | method | LineBoxTitle_InEnglish_DoesNotMove | 72 | public void LineBoxTitle_InEnglish_DoesNotMove() |
+| LabelLineBoxTests | method | PlainTitle_InVietnamese_DoesNotMove | 81 | public void PlainTitle_InVietnamese_DoesNotMove() |
 | LocTests | method | Use_WithInjectedFiles_ServesTheirText | 19 | public void Use_WithInjectedFiles_ServesTheirText() |
 | LocTests | method | Use_NullFile_Throws | 32 | public void Use_NullFile_Throws() |
 | LocTests | method | ViJsonCharacters_AllInCruxAtlas_NoneMissing | 40 | public void ViJsonCharacters_AllInCruxAtlas_NoneMissing() |
@@ -1338,21 +1279,21 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | LocTests | method | ReadLangFromUrl_WithLangParam_ReturnsCode | 123 | public void ReadLangFromUrl_WithLangParam_ReturnsCode() |
 | MainDepthTests | method | SetUp | 18 | public void SetUp() |
 | MainDepthTests | method | TearDown | 37 | public void TearDown() |
-| MainDepthTests | method | MakeChildren_OfAWorldLayerParent_DrawOnTheWorldLayer | 40 | public void MakeChildren_OfAWorldLayerParent_DrawOnTheWorldLayer() |
-| MainDepthTests | method | TileGroup_AtRest_KeepsTheFaceOnItsArtPixels | 51 | public void TileGroup_AtRest_KeepsTheFaceOnItsArtPixels() |
-| MainDepthTests | method | TileIcon_MovedByLocalPosition_StaysOnTheTile | 69 | public void TileIcon_MovedByLocalPosition_StaysOnTheTile() |
-| MainDepthTests | method | ShakeFromScreenFx_MovesTheWorldPicture_AndFlatModeIgnoresIt | 78 | public void ShakeFromScreenFx_MovesTheWorldPicture_AndFlatModeIgnoresIt() |
-| MainDepthTests | method | PointerBench_AllNineTiles_HitAtRestAtSwayExtremesAndUnderShake | 93 | public void PointerBench_AllNineTiles_HitAtRestAtSwayExtremesAndUnderShake() |
-| MainDepthTests | method | MainScene_HasTheRigWorldAndUiCameras_AndTheStageIsWired | 119 | public void MainScene_HasTheRigWorldAndUiCameras_AndTheStageIsWired() |
+| MainDepthTests | method | SpawnChildren_OfAWorldLayerParent_DrawOnTheWorldLayer | 40 | public void SpawnChildren_OfAWorldLayerParent_DrawOnTheWorldLayer() |
+| MainDepthTests | method | TileGroup_AtRest_KeepsTheFaceOnItsArtPixels | 53 | public void TileGroup_AtRest_KeepsTheFaceOnItsArtPixels() |
+| MainDepthTests | method | TileIcon_MovedByLocalPosition_StaysOnTheTile | 71 | public void TileIcon_MovedByLocalPosition_StaysOnTheTile() |
+| MainDepthTests | method | ShakeFromScreenFx_MovesTheWorldPicture_AndFlatModeIgnoresIt | 80 | public void ShakeFromScreenFx_MovesTheWorldPicture_AndFlatModeIgnoresIt() |
+| MainDepthTests | method | PointerBench_AllNineTiles_HitAtRestAtSwayExtremesAndUnderShake | 95 | public void PointerBench_AllNineTiles_HitAtRestAtSwayExtremesAndUnderShake() |
+| MainDepthTests | method | MainScene_HasTheRigWorldAndUiCameras_AndTheStageIsWired | 121 | public void MainScene_HasTheRigWorldAndUiCameras_AndTheStageIsWired() |
 | MainDevHookTests | method | NextMood_StepsOneToFive_AndWraps | 14 | public void NextMood_StepsOneToFive_AndWraps() |
 | MainDevHookTests | method | HookLines_ForEachHook_MatchTheScriptPatterns | 23 | public void HookLines_ForEachHook_MatchTheScriptPatterns() |
 | MainDevHookTests | method | DrawnFace_AtRestView_IsTheInsetFaceInUiUnits | 33 | public void DrawnFace_AtRestView_IsTheInsetFaceInUiUnits() |
 | MainDevHookTests | method | DrawnFace_WithSway_MovesTheFaceButNotAtTheAnchorRow | 42 | public void DrawnFace_WithSway_MovesTheFaceButNotAtTheAnchorRow() |
 | MainSceneFixture | field | Flow | 20 | public readonly GameFlow Flow |
 | MainSceneFixture | ctor | MainSceneFixture | 23 | public MainSceneFixture() |
-| MainSceneFixture | method | Field | 31 | public static T Field<T>(object owner, string name) |
-| MainSceneFixture | method | FlowField | 39 | public T FlowField<T>(string name) where T : Component |
-| MainSceneFixture | method | Dispose | 41 | public void Dispose() |
+| MainSceneFixture | method | Field | 35 | public static T Field<T>(object owner, string name) |
+| MainSceneFixture | method | FlowField | 43 | public T FlowField<T>(string name) where T : Component |
+| MainSceneFixture | method | Dispose | 46 | public void Dispose() |
 | MotionTests | method | Clean | 20 | public void Clean() |
 | MotionTests | method | Arc_IsAlive_AndCanJoinASequence | 27 | public void Arc_IsAlive_AndCanJoinASequence() |
 | MotionTests | method | Arc_EndsOnItsTarget_OnWholePixels | 36 | public void Arc_EndsOnItsTarget_OnWholePixels() |
@@ -1367,33 +1308,33 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | PauseTests | method | AfterQuit_ProfileAndJournalAreWhatIsStored_AndStorageIsNotWritten | 116 | public void AfterQuit_ProfileAndJournalAreWhatIsStored_AndStorageIsNotWritten() |
 | PauseTests | method | Quit_AfterADiscovery_JournalInStorageHasIt | 133 | public void Quit_AfterADiscovery_JournalInStorageHasIt() |
 | PauseTests | method | SettleIgnite_Sandbox_StoresNothing | 152 | public void SettleIgnite_Sandbox_StoresNothing() |
-| PrefabBakeTests | method | Relabel_KeyedLabelAfterPrefabRoundTrip_FollowsTheLanguage | 37 | public void Relabel_KeyedLabelAfterPrefabRoundTrip_FollowsTheLanguage() |
-| PrefabBakeTests | method | Relabel_PlainLabelAfterPrefabRoundTrip_KeepsItsText | 46 | public void Relabel_PlainLabelAfterPrefabRoundTrip_KeepsItsText() |
-| PrefabBakeTests | method | Click_ButtonAfterPrefabRoundTrip_RaisesClicked | 54 | public void Click_ButtonAfterPrefabRoundTrip_RaisesClicked() |
-| PrefabBakeTests | method | Click_DisabledButtonAfterPrefabRoundTrip_DoesNothing | 65 | public void Click_DisabledButtonAfterPrefabRoundTrip_DoesNothing() |
-| PrefabBakeTests | method | Text_ButtonAfterPrefabRoundTrip_KeepsLabelAndBody | 77 | public void Text_ButtonAfterPrefabRoundTrip_KeepsLabelAndBody() |
-| PrefabBakeTests | method | Disabled_SetBeforePrefabRoundTrip_StaysDisabled | 86 | public void Disabled_SetBeforePrefabRoundTrip_StaysDisabled() |
-| PrefabBakeTests | method | ShowDepth_RunOverPrefab_WritesTheDepthRow | 95 | public void ShowDepth_RunOverPrefab_WritesTheDepthRow() |
-| PrefabBakeTests | method | Click_RunOverPrefabButton_PicksItsChoice | 111 | public void Click_RunOverPrefabButton_PicksItsChoice(int index, bool again) |
-| PrefabBakeTests | method | Show_EventPrefab_ListsTheOptions | 145 | public void Show_EventPrefab_ListsTheOptions() |
-| PrefabBakeTests | method | Click_EventPrefabLastOptionThenContinue_ShowsTheOutcomeAndCloses | 163 | public void Click_EventPrefabLastOptionThenContinue_ShowsTheOutcomeAndCloses() |
-| PrefabBakeTests | method | Add_GoalToastPrefab_ShowsTheGoalName | 194 | public void Add_GoalToastPrefab_ShowsTheGoalName() |
-| PrefabBakeTests | method | Click_ShowingGoalToastPrefab_SkipsToTheSlideOut | 212 | public void Click_ShowingGoalToastPrefab_SkipsToTheSlideOut() |
-| PrefabBakeTests | method | Show_CatalystChoicePrefab_FillsThreeCards | 241 | public void Show_CatalystChoicePrefab_FillsThreeCards() |
-| PrefabBakeTests | method | Show_CatalystChoicePrefabRareCard_DrawsThreeStars | 259 | public void Show_CatalystChoicePrefabRareCard_DrawsThreeStars() |
-| PrefabBakeTests | method | Click_CatalystChoicePrefabCardAfterTheDeal_PicksItsId | 284 | public void Click_CatalystChoicePrefabCardAfterTheDeal_PicksItsId() |
-| PrefabBakeTests | method | Open_PausePrefab_ShowsTheMenu | 307 | public void Open_PausePrefab_ShowsTheMenu() |
-| PrefabBakeTests | method | Click_PausePrefabResume_ClosesAndRestoresTime | 325 | public void Click_PausePrefabResume_ClosesAndRestoresTime() |
-| PrefabBakeTests | method | Click_PausePrefabCancelOnTheQuitQuestion_BacksOutToTheMenu | 343 | public void Click_PausePrefabCancelOnTheQuitQuestion_BacksOutToTheMenu() |
-| PrefabBakeTests | method | Click_PausePrefabOutsideTheDialog_Resumes | 363 | public void Click_PausePrefabOutsideTheDialog_Resumes() |
-| PrefabBakeTests | method | Bind_GoalsPrefab_MakesOneRowPerGoal | 387 | public void Bind_GoalsPrefab_MakesOneRowPerGoal() |
-| PrefabBakeTests | method | Open_GoalsPrefabFreshProfile_WritesEveryGoal | 403 | public void Open_GoalsPrefabFreshProfile_WritesEveryGoal() |
-| PrefabBakeTests | method | Click_GoalsPrefabClose_ClosesAndTellsTheOwner | 424 | public void Click_GoalsPrefabClose_ClosesAndTellsTheOwner() |
-| PrefabBakeTests | method | Bind_JournalPrefab_MakesOneCellPerMaterial | 446 | public void Bind_JournalPrefab_MakesOneCellPerMaterial() |
-| PrefabBakeTests | method | Click_JournalPrefabCell_ShowsThatMaterial | 462 | public void Click_JournalPrefabCell_ShowsThatMaterial() |
-| PrefabBakeTests | method | Click_JournalPrefabPageLabel_TurnsTheGridPage | 484 | public void Click_JournalPrefabPageLabel_TurnsTheGridPage() |
-| PrefabBakeTests | method | Click_JournalPrefabClose_ClosesAndTellsTheOwner | 506 | public void Click_JournalPrefabClose_ClosesAndTellsTheOwner() |
-| PrefabBakeTests | method | Show_TooltipAfterPrefabRoundTrip_HasItsSlicedPanel | 527 | public void Show_TooltipAfterPrefabRoundTrip_HasItsSlicedPanel() |
+| PrefabBakeTests | method | Relabel_KeyedLabelInPrefab_FollowsTheLanguage | 34 | public void Relabel_KeyedLabelInPrefab_FollowsTheLanguage() |
+| PrefabBakeTests | method | Relabel_PlainLabelInPrefab_KeepsItsText | 44 | public void Relabel_PlainLabelInPrefab_KeepsItsText() |
+| PrefabBakeTests | method | Click_ButtonInPrefab_RaisesClicked | 55 | public void Click_ButtonInPrefab_RaisesClicked() |
+| PrefabBakeTests | method | Click_DisabledButtonInPrefab_DoesNothing | 66 | public void Click_DisabledButtonInPrefab_DoesNothing() |
+| PrefabBakeTests | method | Text_ButtonInPrefab_HasLabelAndBody | 78 | public void Text_ButtonInPrefab_HasLabelAndBody() |
+| PrefabBakeTests | method | Disabled_SetOnAButton_IsKeptInTheSerializedState | 87 | public void Disabled_SetOnAButton_IsKeptInTheSerializedState() |
+| PrefabBakeTests | method | ShowDepth_RunOverPrefab_WritesTheDepthRow | 96 | public void ShowDepth_RunOverPrefab_WritesTheDepthRow() |
+| PrefabBakeTests | method | Click_RunOverPrefabButton_PicksItsChoice | 112 | public void Click_RunOverPrefabButton_PicksItsChoice(int index, bool again) |
+| PrefabBakeTests | method | Show_EventPrefab_ListsTheOptions | 146 | public void Show_EventPrefab_ListsTheOptions() |
+| PrefabBakeTests | method | Click_EventPrefabLastOptionThenContinue_ShowsTheOutcomeAndCloses | 164 | public void Click_EventPrefabLastOptionThenContinue_ShowsTheOutcomeAndCloses() |
+| PrefabBakeTests | method | Add_GoalToastPrefab_ShowsTheGoalName | 195 | public void Add_GoalToastPrefab_ShowsTheGoalName() |
+| PrefabBakeTests | method | Click_ShowingGoalToastPrefab_SkipsToTheSlideOut | 213 | public void Click_ShowingGoalToastPrefab_SkipsToTheSlideOut() |
+| PrefabBakeTests | method | Show_CatalystChoicePrefab_FillsThreeCards | 242 | public void Show_CatalystChoicePrefab_FillsThreeCards() |
+| PrefabBakeTests | method | Show_CatalystChoicePrefabRareCard_DrawsThreeStars | 260 | public void Show_CatalystChoicePrefabRareCard_DrawsThreeStars() |
+| PrefabBakeTests | method | Click_CatalystChoicePrefabCardAfterTheDeal_PicksItsId | 285 | public void Click_CatalystChoicePrefabCardAfterTheDeal_PicksItsId() |
+| PrefabBakeTests | method | Open_PausePrefab_ShowsTheMenu | 308 | public void Open_PausePrefab_ShowsTheMenu() |
+| PrefabBakeTests | method | Click_PausePrefabResume_ClosesAndRestoresTime | 326 | public void Click_PausePrefabResume_ClosesAndRestoresTime() |
+| PrefabBakeTests | method | Click_PausePrefabCancelOnTheQuitQuestion_BacksOutToTheMenu | 344 | public void Click_PausePrefabCancelOnTheQuitQuestion_BacksOutToTheMenu() |
+| PrefabBakeTests | method | Click_PausePrefabOutsideTheDialog_Resumes | 364 | public void Click_PausePrefabOutsideTheDialog_Resumes() |
+| PrefabBakeTests | method | Bind_GoalsPrefab_MakesOneRowPerGoal | 388 | public void Bind_GoalsPrefab_MakesOneRowPerGoal() |
+| PrefabBakeTests | method | Open_GoalsPrefabFreshProfile_WritesEveryGoal | 404 | public void Open_GoalsPrefabFreshProfile_WritesEveryGoal() |
+| PrefabBakeTests | method | Click_GoalsPrefabClose_ClosesAndTellsTheOwner | 425 | public void Click_GoalsPrefabClose_ClosesAndTellsTheOwner() |
+| PrefabBakeTests | method | Bind_JournalPrefab_MakesOneCellPerMaterial | 447 | public void Bind_JournalPrefab_MakesOneCellPerMaterial() |
+| PrefabBakeTests | method | Click_JournalPrefabCell_ShowsThatMaterial | 463 | public void Click_JournalPrefabCell_ShowsThatMaterial() |
+| PrefabBakeTests | method | Click_JournalPrefabPageLabel_TurnsTheGridPage | 485 | public void Click_JournalPrefabPageLabel_TurnsTheGridPage() |
+| PrefabBakeTests | method | Click_JournalPrefabClose_ClosesAndTellsTheOwner | 507 | public void Click_JournalPrefabClose_ClosesAndTellsTheOwner() |
+| PrefabBakeTests | method | Show_TooltipInBenchPrefab_HasItsSlicedPanel | 528 | public void Show_TooltipInBenchPrefab_HasItsSlicedPanel() |
 | PrefabBakeTests | method | Bind_TitlePrefab_ShowsTheLogoText | 550 | public void Bind_TitlePrefab_ShowsTheLogoText() |
 | PrefabBakeTests | method | Click_TitlePrefabBegin_SetsBeginPressed | 567 | public void Click_TitlePrefabBegin_SetsBeginPressed() |
 | PrefabBakeTests | method | Click_TitlePrefabSettingsThenLanguage_SwitchesTheLanguageAndBackCloses | 584 | public void Click_TitlePrefabSettingsThenLanguage_SwitchesTheLanguageAndBackCloses() |

@@ -28,7 +28,7 @@ aliases: []
 [[PointerInput]]
 
 ## Used by
-[[Card]], [[CatalystChoiceView]], [[EventView]], [[GoalToast]], [[GoalsView]], [[HudView]], [[JournalCell]], [[JournalView]], [[Make]], [[PauseMenu]], [[PointerInput]], [[Row]], [[RunOverView]], [[TitleView]], [[UiButton]]
+[[Card]], [[CatalystChoiceView]], [[EventView]], [[GoalToast]], [[GoalsView]], [[HudView]], [[JournalCell]], [[JournalView]], [[PauseMenu]], [[PointerInput]], [[Row]], [[RunOverView]], [[Spawn]], [[TitleView]], [[UiButton]]
 
 ## Tested by
 [[PauseTests]], [[PrefabBakeTests]]

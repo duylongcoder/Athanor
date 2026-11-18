@@ -24,4 +24,4 @@ aliases: []
 | field | `public bool loop` | 10 |  |
 
 ## Used by
-[[ArtLibrary]], [[Flipbook]], [[FlipbookImporter]], [[SceneBuilder]]
+[[ArtLibrary]], [[ArtLibraryBuilder]], [[Flipbook]], [[FlipbookImporter]]

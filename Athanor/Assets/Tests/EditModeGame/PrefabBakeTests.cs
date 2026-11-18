@@ -9,51 +9,52 @@ using UnityEngine;
 
 namespace Athanor.Tests
 {
-    /// <summary>Baked objects must behave like the ones Build made: a label keeps its key, a button still clicks.</summary>
+    /// <summary>The shipped prefabs keep what the views need: a label keeps its key, a button still clicks, the tooltip makes its panel.</summary>
     public class PrefabBakeTests
     {
-        const string Temp = "Assets/Tests/EditModeGame/Temp_Bake.prefab";
-        GameObject made, copy;
+        const string RunOverPrefab = "Assets/Prefabs/Views/RunOver.prefab";
+        PrefabFixture fixture;
 
         [TearDown] public void Clean()
         {
-            if (made != null) Object.DestroyImmediate(made);
-            if (copy != null) Object.DestroyImmediate(copy);
-            AssetDatabase.DeleteAsset(Temp);
+            fixture?.Destroy();
             Loc.Set(Loc.English);
         }
 
-        T RoundTrip<T>(GameObject go) where T : Component
-        {
-            made = go;
-            var prefab = PrefabUtility.SaveAsPrefabAsset(go, Temp);
-            copy = Object.Instantiate(prefab);
-            return copy.GetComponent<T>();
-        }
+        PrefabFixture Open(string path) => fixture = new PrefabFixture(path);
+
+        /// <summary>The "Descend again" button of the RunOver prefab: a UiButton with a keyed Label and a Clickable.</summary>
+        UiButton AgainButton() => Open(RunOverPrefab).Root.GetComponentsInChildren<UiButton>(true)[0];
+
+        static string KeyOf(Label l) => (string)typeof(Label).GetField("key", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(l);
 
         static void Relabel(Label l) => typeof(Label).GetMethod("Relabel", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(l, null);
 
         [Test]
-        public void Relabel_KeyedLabelAfterPrefabRoundTrip_FollowsTheLanguage()
+        public void Relabel_KeyedLabelInPrefab_FollowsTheLanguage()
         {
-            var label = RoundTrip<Label>(Make.TextKey(null, "ui.runover.again", 0, 0, FontKind.Title, 16, Color.white, 0).gameObject);
+            var label = AgainButton().Text;
+            Assert.AreEqual("ui.runover.again", KeyOf(label), "the key is kept in the prefab");
             Loc.Set(Loc.Vietnamese);
             Relabel(label);
             Assert.AreEqual(Loc.T("ui.runover.again"), label.Text);
         }
 
         [Test]
-        public void Relabel_PlainLabelAfterPrefabRoundTrip_KeepsItsText()
+        public void Relabel_PlainLabelInPrefab_KeepsItsText()
         {
-            var label = RoundTrip<Label>(Make.Text(null, "abc", 0, 0, FontKind.Body, 16, Color.white, 0).gameObject);
+            Open(RunOverPrefab);
+            var label = System.Array.Find(fixture.Root.GetComponentsInChildren<Label>(true), l => string.IsNullOrEmpty(KeyOf(l)));
+            Assert.IsNotNull(label, "the prefab has a label without a key");
+            label.Text = "abc";
             Relabel(label);
             Assert.AreEqual("abc", label.Text);
         }
 
         [Test]
-        public void Click_ButtonAfterPrefabRoundTrip_RaisesClicked()
+        public void Click_ButtonInPrefab_RaisesClicked()
         {
-            var button = RoundTrip<UiButton>(UiButton.Create(null, "ui.runover.again", 0, 0, 0).gameObject);
+            var button = AgainButton();
             button.Bind();
             int clicks = 0;
             button.Clicked += () => clicks++;
@@ -62,9 +63,9 @@ namespace Athanor.Tests
         }
 
         [Test]
-        public void Click_DisabledButtonAfterPrefabRoundTrip_DoesNothing()
+        public void Click_DisabledButtonInPrefab_DoesNothing()
         {
-            var button = RoundTrip<UiButton>(UiButton.Create(null, "ui.runover.again", 0, 0, 0).gameObject);
+            var button = AgainButton();
             button.Bind();
             button.Disabled = true;
             int clicks = 0;
@@ -74,20 +75,20 @@ namespace Athanor.Tests
         }
 
         [Test]
-        public void Text_ButtonAfterPrefabRoundTrip_KeepsLabelAndBody()
+        public void Text_ButtonInPrefab_HasLabelAndBody()
         {
-            var button = RoundTrip<UiButton>(UiButton.Create(null, "ui.runover.again", 0, 0, 0).gameObject);
+            var button = AgainButton();
             Assert.IsNotNull(button.Text, "label reference lost in the prefab");
             var body = typeof(UiButton).GetField("body", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(button) as SpriteRenderer;
             Assert.IsTrue(body != null, "body reference lost in the prefab");
         }
 
         [Test]
-        public void Disabled_SetBeforePrefabRoundTrip_StaysDisabled()
+        public void Disabled_SetOnAButton_IsKeptInTheSerializedState()
         {
-            var original = UiButton.Create(null, "ui.runover.again", 0, 0, 0);
-            original.Disabled = true;
-            var button = RoundTrip<UiButton>(original.gameObject);
+            var button = AgainButton();
+            button.Disabled = true;
+            Assert.IsTrue(new SerializedObject(button).FindProperty("disabled").boolValue, "a saved prefab would lose the flag");
             Assert.IsTrue(button.Disabled);
         }
 
@@ -524,11 +525,10 @@ namespace Athanor.Tests
 
         // the tooltip's 9-slice panel sprite is made by Sprite.Create: a prefab cannot keep it, Bind makes it again
         [Test]
-        public void Show_TooltipAfterPrefabRoundTrip_HasItsSlicedPanel()
+        public void Show_TooltipInBenchPrefab_HasItsSlicedPanel()
         {
-            var go = Make.Root("Tooltip").gameObject;
-            go.AddComponent<Tooltip>().Build(null);
-            var tip = RoundTrip<Tooltip>(go);
+            var tip = Open("Assets/Prefabs/Views/Bench.prefab").Root.GetComponentInChildren<Tooltip>(true);
+            Assert.IsNotNull(tip, "the Bench prefab holds the tooltip");
 
             tip.Bind();
             tip.Show("Name", "text", Vector2.zero);

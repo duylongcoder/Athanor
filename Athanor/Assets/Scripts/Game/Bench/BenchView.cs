@@ -43,46 +43,6 @@ namespace Athanor.Game
         Pick press, selected; Vector2 pressAt; bool dragging;
         float hoverTime; string hoverKey;
 
-#if UNITY_EDITOR
-        /// <summary>
-        /// Bake source for Prefabs/Views/Bench.prefab (ViewBaker.BakeBench): makes the tiles, links, rack, hand root, ghost and tooltip.
-        /// hud is the Hud prefab already instantiated under this object; card is Parts/Card.prefab. The game loads the baked result.
-        /// </summary>
-        public void Build(TileData[] tileData, HudView hudInstance, CardView card)
-        {
-            cardPrefab = card;
-            var tileRoot = Make.Root("Tiles", transform);
-            for (int i = 0; i < tiles.Length; i++)
-            {
-                tiles[i] = new GameObject("Tile " + i).AddComponent<TileView>();
-                tiles[i].Build(i, tileData[i], tileRoot);
-            }
-            links = Make.Root("Links", transform).gameObject.AddComponent<LinkView>();
-            // tiles an aspect has joined (a bridge, an open bench): a slow, steady line of their own colour
-            joins = Make.Root("Joins", transform).gameObject.AddComponent<LinkView>();
-            joins.color = new Color(1.6f, 1.25f, 0.45f); joins.speed = 0.08f; joins.arc = 3; joins.alpha = 0.7f;
-            hud = hudInstance;
-            hud.name = "Hud";
-
-            var rackRoot = Make.Root("Rack", transform);
-            Make.SpriteAt(rackRoot, "rack", RackX, RackY, 100);
-            for (int i = 0; i < RackSlots; i++)
-            {
-                int x = RackX + RackFirst + i * RackPitch, y = RackY + 2;
-                var s = slots[i] = new Slot { pos = Px.Mid(x, y, 26, 26) };
-                s.lit = Make.SpriteAt(rackRoot, "rack_slot_lit", x, y, 101);
-                s.icon = Make.Sprite(rackRoot, "dot", s.pos, 103);
-                s.lit.enabled = s.icon.enabled = false;
-            }
-            rackFull = Make.Text(rackRoot, "", 320, 246, FontKind.Tiny, 8, Px.Hex("#ee6a3c"), 104, Align.Centre, Px.Hex("#0c0706"));
-            handRoot = Make.Root("Hand", transform);
-            ghost = Make.Sprite(transform, "dot", Vector3.zero, 160);
-            ghost.enabled = false;
-            tip = Make.Root("Tooltip", transform).gameObject.AddComponent<Tooltip>();
-            tip.Build(transform);
-        }
-#endif
-
         /// <summary>
         /// Once, after the Bench prefab is in the scene: hands over the content, finishes the nested Hud and Tooltip and hooks the
         /// Hud's buttons. Run state comes later, with Bind(run, journal).
@@ -204,7 +164,7 @@ namespace Athanor.Game
         /// <summary>A number that rises from a point and fades.</summary>
         public IEnumerator FloatText(string text, Vector3 from, Color color, float seconds = 0.8f, bool small = false)
         {
-            var label = Make.Text(transform, text, 0, 0, small ? FontKind.Tiny : FontKind.Title, small ? 8 : 16, color, 170, Align.Centre, Px.Hex("#0c0706"));
+            var label = Spawn.Text(transform, text, 0, 0, small ? FontKind.Tiny : FontKind.Title, small ? 8 : 16, color, 170, Align.Centre, Px.Hex("#0c0706"));
             // it rises the whole time and fades over the last 30 %
             yield return Sequence.Create()
                 .Group(Motion.Move(label.transform, from + new Vector3(0, 6, 0), from + new Vector3(0, 28, 0), seconds, Ease.OutCubic))

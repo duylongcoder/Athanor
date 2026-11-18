@@ -23,6 +23,3 @@ aliases: []
 | field | `public PointData[] candles` | 16 |  |
 | method | `public RectData Placed(string name)` | 19 | Where a cropped full-frame layer (such as "workshop_table") sits. |
 | field | `public const string Path =` | 25 |  |
-
-## Used by
-[[DepthTestBuilder]], [[DepthTestEvidence]], [[SceneBuilder]], [[ViewBaker]]

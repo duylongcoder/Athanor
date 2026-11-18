@@ -1,3 +1,4 @@
+using System.Reflection;
 using Athanor.Game;
 using NUnit.Framework;
 using TMPro;
@@ -13,22 +14,27 @@ namespace Athanor.Tests
     /// </summary>
     public class LabelLineBoxTests
     {
-        GameObject root;
-
-        [SetUp] public void Build()
-        {
-            root = new GameObject("line box test");
-        }
+        PrefabFixture fixture;
 
         [TearDown] public void Restore()
         {
-            Object.DestroyImmediate(root);
+            fixture?.Destroy();
             Loc.Set(Loc.English);
+        }
+
+        /// <summary>A Title label with a shadow (the "Descend again" button's) from the RunOver prefab, with the language's font in place.</summary>
+        Label Plain()
+        {
+            fixture = new PrefabFixture("Assets/Prefabs/Views/RunOver.prefab");
+            var l = fixture.Root.GetComponentsInChildren<UiButton>(true)[0].Text;
+            typeof(Label).GetMethod("Relabel", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(l, null);   // what OnEnable does under a shown view
+            return l;
         }
 
         Label Name(int size)
         {
-            var l = Make.Text(root.transform, "Bậc Thang Rỉ Nước", 320, 128, FontKind.Title, size, Color.white, 0, Align.Centre, Color.black);
+            var l = Plain();
+            l.SetSize(size);
             l.LineBox = true;
             return l;
         }
@@ -39,7 +45,7 @@ namespace Athanor.Tests
             var crux = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Art/Fonts/Crux.asset");
             Assert.IsNotNull(crux, "run Athanor > Build Fonts");
             // (48 - (ascent 7 - descent -2) x 48/16) / 2 = 10.5, rounded up to a whole pixel
-            Assert.AreEqual(11, Make.HalfLeading(crux.faceInfo, 48));
+            Assert.AreEqual(11, Fonts.HalfLeading(crux.faceInfo, 48));
         }
 
         [Test]
@@ -75,7 +81,7 @@ namespace Athanor.Tests
         public void PlainTitle_InVietnamese_DoesNotMove()
         {
             Loc.Set(Loc.Vietnamese);
-            var l = Make.Text(root.transform, "Tạm dừng", 320, 88, FontKind.Title, 32, Color.white, 0, Align.Centre, Color.black);
+            var l = Plain();
             Assert.AreEqual(0f, l.main.transform.localPosition.y, 0.001f);
         }
     }
