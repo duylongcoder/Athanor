@@ -27,9 +27,8 @@ same command CI runs: `tools/ci/run.sh all` (or `lint`, `repo`, `core`).
 ## Rules for everyone
 
 - **Never** weaken a check to get green. Fix the code, or record the debt (below).
-- Existing findings are frozen in `tools/lint/baseline.json` (8 today: UL002–UL005, cleared in Task 20). The baseline only
-  shrinks. A new finding fails CI. Regenerate it only when you fixed some:
-  `python3 tools/lint/unity_lint.py --root Athanor --config tools/lint/lint.config.json --all --write-baseline tools/lint/baseline.json`
+- `tools/lint/baseline.json` is empty (Phase 6, Task 21): every lint finding is a CI failure. Do not add entries to it;
+  fix the code. If a rule must change, change the rule in `tools/lint/unity_lint.py` with a test.
 - A new rule goes in `tools/lint/unity_lint.py` or `tools/ci/check_repo.py` with a test, and a row in the table above.
 - `release-gate` needs the secrets `UNITY_LICENSE`, `UNITY_EMAIL`, `UNITY_PASSWORD`. Without them it fails on purpose:
   no unchecked release.
