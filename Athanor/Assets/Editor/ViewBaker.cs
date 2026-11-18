@@ -128,4 +128,5 @@ public static class ViewBaker
     public static void CompareGoalToast() => Compare("GoalToast");
     public static void CompareEvent() => Compare("Event");
     public static void CompareCatalystChoice() => Compare("CatalystChoice");
+    public static void ComparePause() => Compare("Pause");
 }

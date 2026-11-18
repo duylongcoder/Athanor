@@ -12,7 +12,7 @@ aliases: []
 # ViewBaker
 
 `public static class ViewBaker`
-- Layer: **Editor** · Source: `Athanor/Assets/Editor/ViewBaker.cs:15-131`
+- Layer: **Editor** · Source: `Athanor/Assets/Editor/ViewBaker.cs:15-132`
 
 > Phase 6 only (deleted in Task 16): builds a view the old way once, keeps a reference picture, saves it as a prefab, puts the prefab into Main.unity and sets the GameFlow field. Then Compare checks the prefab draws the same picture. unity run Athanor -- -executeMethod ViewBaker.Bake<Name> (no -quit: unity run rejects it)
 
@@ -32,6 +32,7 @@ aliases: []
 | method | `public static void CompareGoalToast()` | 128 |  |
 | method | `public static void CompareEvent()` | 129 |  |
 | method | `public static void CompareCatalystChoice()` | 130 |  |
+| method | `public static void ComparePause()` | 131 |  |
 
 ## Uses
 [[ContentData]], [[ContentDb]], [[EditorGlobals]], [[GameFlow]], [[Loc]], [[Save]], [[ViewCapture]]

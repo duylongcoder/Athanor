@@ -12,7 +12,7 @@ namespace Athanor.Game
     /// </summary>
     public sealed class PauseMenu : MonoBehaviour
     {
-        const int P = 800, X = 160, Y = 75;
+        const int Y = 75;      // the dialog's top edge in Pause.prefab; Layout moves the lower buttons from it
         /// <summary>The player confirmed "Quit this run?". The owner discards the run; the menu has already restored time.</summary>
         public event Action QuitConfirmed;
         /// <summary>Raised when the Vibration button changes the setting, so the owner can save it.</summary>
@@ -25,42 +25,30 @@ namespace Athanor.Game
         public bool IsOpen => menu != null && (menu.gameObject.activeSelf || confirm.gameObject.activeSelf);
         public bool Confirming => confirm != null && confirm.gameObject.activeSelf;
 
+        [SerializeField] Transform menu, confirm;
+        [SerializeField] UiButton resume, vibration, howTo, quit, quitYes, quitNo;
+        [SerializeField] Label howToHint;
+        [SerializeField] Clickable outside;
         Settings settings;
-        Transform menu, confirm;
-        UiButton resume, vibration, howTo, quit;
-        Label howToHint;
+        bool wired;
 
         /// <summary>The state of a pause: may it open, given the flow state and what is playing.</summary>
         public static bool Allowed(FlowState state, bool benchInput, bool inCutscene) =>
             state == FlowState.Bench && benchInput && !inCutscene;
 
-        public void Build(Settings playerSettings)
+        /// <summary>Takes the player's settings (Vibration writes to them) and hooks the clicks. GameFlow calls it once at start.</summary>
+        public void Bind(Settings playerSettings)
         {
             settings = playerSettings;
-            menu = Make.Root("Pause menu", transform);
-            var block = Make.Rect(menu, 0, 0, Px.W, Px.H, new Color(0, 0, 0, 0.7f), P - 1);
-            Make.Click(block.gameObject, new Vector2(Px.W, Px.H), P - 1, Close);                  // a click outside resumes
-            Make.SpriteAt(menu, "dialog", X, Y, P);
-            var body = Make.Root("dialog hit", menu); body.position = Px.Mid(X, Y, 320, 210);
-            Make.Click(body.gameObject, new Vector2(320, 210), P);
-            Make.TextKey(menu, "ui.pause.title", 320, Y + 10, FontKind.Title, 32, Px.Hex("#f8d250"), P + 2, Align.Centre, Px.Hex("#3a1a08"));
-            resume = UiButton.Create(menu, "ui.pause.resume", 260, Y + 50, P + 2, Close);
-            vibration = UiButton.Create(menu, "ui.pause.vibration", 260, Y + 80, P + 2, ToggleVibration);
-            howTo = UiButton.Create(menu, "ui.title.how_to_play", 260, Y + 110, P + 2, null);
-            howTo.Disabled = true;
-            howToHint = Make.TextKey(menu, "ui.pause.how_to_play_locked", 320, Y + 137, FontKind.Tiny, 8, Px.Hex("#c8ac84"), P + 2, Align.Centre, Px.Hex("#0c0706"));
-            quit = UiButton.Create(menu, "ui.pause.quit", 260, Y + 152, P + 2, () => { menu.gameObject.SetActive(false); confirm.gameObject.SetActive(true); });
-
-            confirm = Make.Root("Quit confirm", transform);
-            var cblock = Make.Rect(confirm, 0, 0, Px.W, Px.H, new Color(0, 0, 0, 0.7f), P - 1);
-            Make.Click(cblock.gameObject, new Vector2(Px.W, Px.H), P - 1);
-            Make.SpriteAt(confirm, "dialog", X, Y, P);
-            Make.TextKey(confirm, "ui.pause.quit_title", 320, Y + 18, FontKind.Title, 32, Px.Hex("#ee6a3c"), P + 2, Align.Centre, Px.Hex("#3a1a08"));
-            Make.TextKey(confirm, "ui.pause.quit_body1", 320, Y + 70, FontKind.Body, 16, Px.Hex("#f0dcc0"), P + 2, Align.Centre);
-            Make.TextKey(confirm, "ui.pause.quit_body2", 320, Y + 88, FontKind.Body, 16, Px.Hex("#a88a6a"), P + 2, Align.Centre);
-            UiButton.Create(confirm, "ui.common.cancel", 188, Y + 150, P + 2, () => { confirm.gameObject.SetActive(false); Layout(); menu.gameObject.SetActive(true); });
-            UiButton.Create(confirm, "ui.pause.quit_confirm", 332, Y + 150, P + 2, ConfirmQuit);
-            menu.gameObject.SetActive(false); confirm.gameObject.SetActive(false);
+            if (wired) return;
+            wired = true;
+            outside.onClick = Close;                        // a click outside resumes
+            resume.Bind(); vibration.Bind(); howTo.Bind(); quit.Bind(); quitYes.Bind(); quitNo.Bind();   // their Awake runs only when the menu first opens
+            resume.Clicked += Close;
+            vibration.Clicked += ToggleVibration;
+            quit.Clicked += AskQuit;
+            quitNo.Clicked += BackToMenu;
+            quitYes.Clicked += ConfirmQuit;
         }
 
         /// <summary>Lays the buttons out: without Vibration the rest move up 30 px.</summary>
@@ -99,10 +87,14 @@ namespace Athanor.Game
         /// <summary>Esc: opens; closes the menu; or backs out of the quit question to the menu.</summary>
         public void Toggle()
         {
-            if (Confirming) { confirm.gameObject.SetActive(false); Layout(); menu.gameObject.SetActive(true); }
+            if (Confirming) BackToMenu();
             else if (IsOpen) Close();
             else Open();
         }
+
+        void AskQuit() { menu.gameObject.SetActive(false); confirm.gameObject.SetActive(true); }
+
+        void BackToMenu() { confirm.gameObject.SetActive(false); Layout(); menu.gameObject.SetActive(true); }
 
         void ToggleVibration()
         {
@@ -126,6 +118,15 @@ namespace Athanor.Game
         }
 
         void OnDisable() { if (IsOpen) Close(); else if (Time.timeScale == 0f) Time.timeScale = 1f; }
-        void OnDestroy() { if (Time.timeScale == 0f && menu != null) Time.timeScale = 1f; }
+        void OnDestroy()
+        {
+            if (Time.timeScale == 0f && menu != null) Time.timeScale = 1f;
+            if (!wired) return;
+            resume.Clicked -= Close;
+            vibration.Clicked -= ToggleVibration;
+            quit.Clicked -= AskQuit;
+            quitNo.Clicked -= BackToMenu;
+            quitYes.Clicked -= ConfirmQuit;
+        }
     }
 }

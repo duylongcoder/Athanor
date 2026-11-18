@@ -1992,6 +1992,7 @@ MonoBehaviour:
   choice: {fileID: 866897250}
   eventView: {fileID: 480626881}
   toast: {fileID: 879152207}
+  pause: {fileID: 899813775}
 --- !u!114 &522944086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3579,6 +3580,74 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
+--- !u!1001 &899813774
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1283450690583834998, guid: fa3b335608c7073ab8284d1565e3c834, type: 3}
+      propertyPath: m_Name
+      value: Pause
+      objectReference: {fileID: 0}
+    - target: {fileID: 8002290841177168114, guid: fa3b335608c7073ab8284d1565e3c834, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8002290841177168114, guid: fa3b335608c7073ab8284d1565e3c834, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8002290841177168114, guid: fa3b335608c7073ab8284d1565e3c834, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8002290841177168114, guid: fa3b335608c7073ab8284d1565e3c834, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8002290841177168114, guid: fa3b335608c7073ab8284d1565e3c834, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8002290841177168114, guid: fa3b335608c7073ab8284d1565e3c834, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8002290841177168114, guid: fa3b335608c7073ab8284d1565e3c834, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8002290841177168114, guid: fa3b335608c7073ab8284d1565e3c834, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8002290841177168114, guid: fa3b335608c7073ab8284d1565e3c834, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8002290841177168114, guid: fa3b335608c7073ab8284d1565e3c834, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fa3b335608c7073ab8284d1565e3c834, type: 3}
+--- !u!114 &899813775 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3298156877250239995, guid: fa3b335608c7073ab8284d1565e3c834, type: 3}
+  m_PrefabInstance: {fileID: 899813774}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1de3693b67aa542ccbf5feddd5f8b9ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Athanor.Game::Athanor.Game.PauseMenu
 --- !u!1 &914809085
 GameObject:
   m_ObjectHideFlags: 0
@@ -7622,3 +7691,4 @@ SceneRoots:
   - {fileID: 879152206}
   - {fileID: 480626880}
   - {fileID: 866897249}
+  - {fileID: 899813774}

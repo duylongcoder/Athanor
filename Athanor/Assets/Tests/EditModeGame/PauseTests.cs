@@ -9,6 +9,7 @@ namespace Athanor.Tests
     /// <summary>The pause menu: time stops and comes back on every exit, Esc toggles, nothing opens in the tutorial, Quit leaves the stored run data alone.</summary>
     public class PauseTests
     {
+        PrefabFixture fixture;
         GameObject go;
         PauseMenu menu;
         readonly string[] keys = { Save.Key, Save.ProfileKey };
@@ -18,16 +19,17 @@ namespace Athanor.Tests
         {
             foreach (var k in keys) kept[k] = PlayerPrefs.GetString(k, null);
             Haptics.ForceSupported = null;
-            go = new GameObject("pause test");
-            menu = go.AddComponent<PauseMenu>();
-            menu.Build(new Settings());
+            fixture = new PrefabFixture("Assets/Prefabs/Views/Pause.prefab");
+            go = fixture.Root;
+            menu = fixture.Get<PauseMenu>();
+            menu.Bind(new Settings());
             Time.timeScale = 1f;
         }
 
         [TearDown] public void Restore()
         {
             Time.timeScale = 1f;
-            Object.DestroyImmediate(go);
+            fixture.Destroy();
             Haptics.ForceSupported = null;
             foreach (var k in keys) { if (kept[k] == null) PlayerPrefs.DeleteKey(k); else PlayerPrefs.SetString(k, kept[k]); }
         }

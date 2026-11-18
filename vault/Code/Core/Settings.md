@@ -34,4 +34,4 @@ aliases: []
 [[GameFlow]], [[MainDepthEvidence]], [[PauseMenu]], [[Save]], [[TitleView]]
 
 ## Tested by
-[[PauseTests]], [[SettingsHapticsTests]], [[SettingsTests]]
+[[PauseTests]], [[PrefabBakeTests]], [[SettingsHapticsTests]], [[SettingsTests]]

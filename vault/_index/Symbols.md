@@ -72,7 +72,7 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | TileView | TileView | Game | class | Athanor/Assets/Scripts/Game/Bench/TileView.cs | 10 | One of the nine bench tiles: its hover highlight and, when occupied, the material standing on it. |
 | GameFlow | GameFlow | Game | class | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 15 | Owns the run and moves the game between its screens. |
 | FlowState | FlowState | Game | enum | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 12 |  |
-| TitleChoice | TitleChoice | Game | enum | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 115 |  |
+| TitleChoice | TitleChoice | Game | enum | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 116 |  |
 | Save | Save | Game | class | Athanor/Assets/Scripts/Game/Boot/Save.cs | 8 | Keeps the journal and the profile between sessions in PlayerPrefs (browser storage in a web build). |
 | Cutscene | Cutscene | Game | class | Athanor/Assets/Scripts/Game/Cutscene/Cutscene.cs | 7 | A sequence that plays to its end unless the player clicks to skip ahead. |
 | DepthLook | DepthLook | Game | class | Athanor/Assets/Scripts/Game/Cutscene/DepthLook.cs | 9 | What a depth looks like from the bench: the intro line under its name and the view through the window. Pure choices, no scene; the pictures and effects are drawn by WindowView. |
@@ -638,10 +638,10 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | GameFlow | method | MoodLine | 54 | public static string MoodLine(int mood) |
 | GameFlow | method | EffectsLine | 55 | public static string EffectsLine(bool on) |
 | GameFlow | property | JournalView | 103 | public JournalView JournalView |
-| GameFlow | method | JournalAfterQuit | 428 | public static Journal JournalAfterQuit(bool sandbox, Journal current) |
-| GameFlow | method | ProfileAfterQuit | 430 | public static Profile ProfileAfterQuit(bool sandbox, Profile current, ContentDb db) |
-| GameFlow | method | Ignite | 471 | public void Ignite() |
-| GameFlow | method | SettleIgnite | 479 | public static IgniteOutcome SettleIgnite(RunState run, Journal journal, bool sandbox) |
+| GameFlow | method | JournalAfterQuit | 430 | public static Journal JournalAfterQuit(bool sandbox, Journal current) |
+| GameFlow | method | ProfileAfterQuit | 432 | public static Profile ProfileAfterQuit(bool sandbox, Profile current, ContentDb db) |
+| GameFlow | method | Ignite | 473 | public void Ignite() |
+| GameFlow | method | SettleIgnite | 481 | public static IgniteOutcome SettleIgnite(RunState run, Journal journal, bool sandbox) |
 | FlowState | value | Boot | 12 | Boot |
 | FlowState | value | Title | 12 | Title |
 | FlowState | value | Intro | 12 | Intro |
@@ -655,9 +655,9 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | FlowState | value | AspectChoice | 12 | AspectChoice |
 | FlowState | value | Event | 12 | Event |
 | FlowState | value | Goals | 12 | Goals |
-| TitleChoice | value | Begin | 115 | Begin |
-| TitleChoice | value | HowToPlay | 115 | HowToPlay |
-| TitleChoice | value | Intro | 115 | Intro |
+| TitleChoice | value | Begin | 116 | Begin |
+| TitleChoice | value | HowToPlay | 116 | HowToPlay |
+| TitleChoice | value | Intro | 116 | Intro |
 | Save | field | Key | 10 | public const string Key = "athanor.journal.v1", IntroKey = "athanor.intro.v1", ProfileKey = "athanor.profile.v1", TutorialKey = "athanor.tutorial.v1", SettingsKey = |
 | Save | method | LoadJournal | 14 | public static Journal LoadJournal() |
 | Save | method | StoreJournal | 24 | public static void StoreJournal(Journal journal) |
@@ -1086,11 +1086,11 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | PauseMenu | field | CanOpen | 23 | public Func<bool> CanOpen |
 | PauseMenu | property | IsOpen | 25 | public bool IsOpen |
 | PauseMenu | property | Confirming | 26 | public bool Confirming |
-| PauseMenu | method | Allowed | 34 | public static bool Allowed(FlowState state, bool benchInput, bool inCutscene) |
-| PauseMenu | method | Build | 37 | public void Build(Settings playerSettings) |
-| PauseMenu | method | Open | 79 | public bool Open() |
-| PauseMenu | method | Close | 90 | public void Close() |
-| PauseMenu | method | Toggle | 100 | public void Toggle() |
+| PauseMenu | method | Allowed | 36 | public static bool Allowed(FlowState state, bool benchInput, bool inCutscene) |
+| PauseMenu | method | Bind | 40 | public void Bind(Settings playerSettings) |
+| PauseMenu | method | Open | 67 | public bool Open() |
+| PauseMenu | method | Close | 78 | public void Close() |
+| PauseMenu | method | Toggle | 88 | public void Toggle() |
 | RunOverView | property | Again | 12 | public bool Again |
 | RunOverView | field | GoalsClicked | 14 | public event System.Action GoalsClicked |
 | RunOverView | method | Bind | 25 | public void Bind() |
@@ -1176,6 +1176,7 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | ViewBaker | method | CompareGoalToast | 128 | public static void CompareGoalToast() |
 | ViewBaker | method | CompareEvent | 129 | public static void CompareEvent() |
 | ViewBaker | method | CompareCatalystChoice | 130 | public static void CompareCatalystChoice() |
+| ViewBaker | method | ComparePause | 131 | public static void ComparePause() |
 | ViewCapture | method | Render | 13 | public static Texture2D Render(GameObject root) |
 | ViewCapture | method | Save | 49 | public static void Save(Texture2D tex, string path) |
 | ViewCapture | method | Load | 56 | public static Texture2D Load(string path) |
@@ -1323,16 +1324,16 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | MotionTests | method | Arc_IsAlive_AndCanJoinASequence | 27 | public void Arc_IsAlive_AndCanJoinASequence() |
 | MotionTests | method | Arc_EndsOnItsTarget_OnWholePixels | 36 | public void Arc_EndsOnItsTarget_OnWholePixels() |
 | MotionTests | method | EveryHelper_IsAlive | 45 | public void EveryHelper_IsAlive() |
-| PauseTests | method | Open_StopsTime_AndEveryExitRestoresIt | 36 | public void Open_StopsTime_AndEveryExitRestoresIt() |
-| PauseTests | method | Quit_RestoresTime_BeforeTheOwnerHearsOfIt | 51 | public void Quit_RestoresTime_BeforeTheOwnerHearsOfIt() |
-| PauseTests | method | Esc_Toggles_AndBacksOutOfTheQuitQuestion | 65 | public void Esc_Toggles_AndBacksOutOfTheQuitQuestion() |
-| PauseTests | method | Abort_TutorialRun_DoesNotMarkItDone | 76 | public void Abort_TutorialRun_DoesNotMarkItDone() |
-| PauseTests | method | Open_NotAllowed_IsRefused | 85 | public void Open_NotAllowed_IsRefused() |
-| PauseTests | method | Allowed_OnlyOnTheBenchWithInput_NotInCutscene_TutorialIsPausable | 93 | public void Allowed_OnlyOnTheBenchWithInput_NotInCutscene_TutorialIsPausable() |
-| PauseTests | method | VibrationButton_NoHaptics_IsHidden | 103 | public void VibrationButton_NoHaptics_IsHidden() |
-| PauseTests | method | AfterQuit_ProfileAndJournalAreWhatIsStored_AndStorageIsNotWritten | 111 | public void AfterQuit_ProfileAndJournalAreWhatIsStored_AndStorageIsNotWritten() |
-| PauseTests | method | Quit_AfterADiscovery_JournalInStorageHasIt | 128 | public void Quit_AfterADiscovery_JournalInStorageHasIt() |
-| PauseTests | method | SettleIgnite_Sandbox_StoresNothing | 147 | public void SettleIgnite_Sandbox_StoresNothing() |
+| PauseTests | method | Open_StopsTime_AndEveryExitRestoresIt | 38 | public void Open_StopsTime_AndEveryExitRestoresIt() |
+| PauseTests | method | Quit_RestoresTime_BeforeTheOwnerHearsOfIt | 53 | public void Quit_RestoresTime_BeforeTheOwnerHearsOfIt() |
+| PauseTests | method | Esc_Toggles_AndBacksOutOfTheQuitQuestion | 67 | public void Esc_Toggles_AndBacksOutOfTheQuitQuestion() |
+| PauseTests | method | Abort_TutorialRun_DoesNotMarkItDone | 78 | public void Abort_TutorialRun_DoesNotMarkItDone() |
+| PauseTests | method | Open_NotAllowed_IsRefused | 87 | public void Open_NotAllowed_IsRefused() |
+| PauseTests | method | Allowed_OnlyOnTheBenchWithInput_NotInCutscene_TutorialIsPausable | 95 | public void Allowed_OnlyOnTheBenchWithInput_NotInCutscene_TutorialIsPausable() |
+| PauseTests | method | VibrationButton_NoHaptics_IsHidden | 105 | public void VibrationButton_NoHaptics_IsHidden() |
+| PauseTests | method | AfterQuit_ProfileAndJournalAreWhatIsStored_AndStorageIsNotWritten | 113 | public void AfterQuit_ProfileAndJournalAreWhatIsStored_AndStorageIsNotWritten() |
+| PauseTests | method | Quit_AfterADiscovery_JournalInStorageHasIt | 130 | public void Quit_AfterADiscovery_JournalInStorageHasIt() |
+| PauseTests | method | SettleIgnite_Sandbox_StoresNothing | 149 | public void SettleIgnite_Sandbox_StoresNothing() |
 | PrefabBakeTests | method | Relabel_KeyedLabelAfterPrefabRoundTrip_FollowsTheLanguage | 37 | public void Relabel_KeyedLabelAfterPrefabRoundTrip_FollowsTheLanguage() |
 | PrefabBakeTests | method | Relabel_PlainLabelAfterPrefabRoundTrip_KeepsItsText | 46 | public void Relabel_PlainLabelAfterPrefabRoundTrip_KeepsItsText() |
 | PrefabBakeTests | method | Click_ButtonAfterPrefabRoundTrip_RaisesClicked | 54 | public void Click_ButtonAfterPrefabRoundTrip_RaisesClicked() |
@@ -1348,6 +1349,10 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | PrefabBakeTests | method | Show_CatalystChoicePrefab_FillsThreeCards | 241 | public void Show_CatalystChoicePrefab_FillsThreeCards() |
 | PrefabBakeTests | method | Show_CatalystChoicePrefabRareCard_DrawsThreeStars | 259 | public void Show_CatalystChoicePrefabRareCard_DrawsThreeStars() |
 | PrefabBakeTests | method | Click_CatalystChoicePrefabCardAfterTheDeal_PicksItsId | 284 | public void Click_CatalystChoicePrefabCardAfterTheDeal_PicksItsId() |
+| PrefabBakeTests | method | Open_PausePrefab_ShowsTheMenu | 307 | public void Open_PausePrefab_ShowsTheMenu() |
+| PrefabBakeTests | method | Click_PausePrefabResume_ClosesAndRestoresTime | 325 | public void Click_PausePrefabResume_ClosesAndRestoresTime() |
+| PrefabBakeTests | method | Click_PausePrefabCancelOnTheQuitQuestion_BacksOutToTheMenu | 343 | public void Click_PausePrefabCancelOnTheQuitQuestion_BacksOutToTheMenu() |
+| PrefabBakeTests | method | Click_PausePrefabOutsideTheDialog_Resumes | 363 | public void Click_PausePrefabOutsideTheDialog_Resumes() |
 | PrefabFixture | field | Root | 11 | public readonly GameObject Root |
 | PrefabFixture | ctor | PrefabFixture | 14 | public PrefabFixture(string prefabPath) |
 | PrefabFixture | method | Get | 22 | public T Get<T>() where T : Component |

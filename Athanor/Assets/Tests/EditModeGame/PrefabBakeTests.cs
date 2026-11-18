@@ -297,5 +297,85 @@ namespace Athanor.Tests
             }
             finally { Tween.StopAll(); f.Destroy(); }
         }
+
+        const string PausePrefab = "Assets/Prefabs/Views/Pause.prefab";
+
+        static Clickable PauseClick(GameObject root, string dialog, string button) =>
+            root.transform.Find(dialog).Find("Button " + button).GetComponent<Clickable>();
+
+        [Test]
+        public void Open_PausePrefab_ShowsTheMenu()
+        {
+            var f = new PrefabFixture(PausePrefab);
+            try
+            {
+                var menu = f.Get<PauseMenu>();
+                menu.Bind(new Settings());
+
+                Assert.IsTrue(menu.Open());
+
+                Assert.IsTrue(f.Root.transform.Find("Pause menu").gameObject.activeSelf);
+                Assert.IsTrue(menu.IsOpen);
+                Assert.AreEqual(0f, Time.timeScale);
+            }
+            finally { Time.timeScale = 1f; f.Destroy(); }
+        }
+
+        [Test]
+        public void Click_PausePrefabResume_ClosesAndRestoresTime()
+        {
+            var f = new PrefabFixture(PausePrefab);
+            try
+            {
+                var menu = f.Get<PauseMenu>();
+                menu.Bind(new Settings());
+                menu.Open();
+
+                PauseClick(f.Root, "Pause menu", "ui.pause.resume").onClick();
+
+                Assert.IsFalse(menu.IsOpen);
+                Assert.AreEqual(1f, Time.timeScale);
+            }
+            finally { Time.timeScale = 1f; f.Destroy(); }
+        }
+
+        [Test]
+        public void Click_PausePrefabCancelOnTheQuitQuestion_BacksOutToTheMenu()
+        {
+            var f = new PrefabFixture(PausePrefab);
+            try
+            {
+                var menu = f.Get<PauseMenu>();
+                menu.Bind(new Settings());
+                menu.Open();
+                PauseClick(f.Root, "Pause menu", "ui.pause.quit").onClick();
+
+                PauseClick(f.Root, "Quit confirm", "ui.common.cancel").onClick();
+
+                Assert.IsFalse(menu.Confirming);
+                Assert.IsTrue(menu.IsOpen);
+                Assert.AreEqual(0f, Time.timeScale);
+            }
+            finally { Time.timeScale = 1f; f.Destroy(); }
+        }
+
+        [Test]
+        public void Click_PausePrefabOutsideTheDialog_Resumes()
+        {
+            var f = new PrefabFixture(PausePrefab);
+            try
+            {
+                var menu = f.Get<PauseMenu>();
+                menu.Bind(new Settings());
+                menu.Open();
+
+                // the full-screen shade is the first child of the menu; its click is "a click outside"
+                f.Root.transform.Find("Pause menu").GetChild(0).GetComponent<Clickable>().onClick();
+
+                Assert.IsFalse(menu.IsOpen);
+                Assert.AreEqual(1f, Time.timeScale);
+            }
+            finally { Time.timeScale = 1f; f.Destroy(); }
+        }
     }
 }

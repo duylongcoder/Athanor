@@ -102,7 +102,8 @@ namespace Athanor.Game
         /// <summary>The journal screen, for the tutorial to point at parts of a page.</summary>
         public JournalView JournalView => journalView;
         long shownPotency;
-        PauseMenu pause;
+        /// <summary>The in-run pause menu (a prefab in Main.unity).</summary>
+        [SerializeField] PauseMenu pause;
         Coroutine tutRoutine;
         int escGuardFrame = -1;
         bool hurry, inCutscene, runEnded, autoReady, abandoned;
@@ -135,6 +136,7 @@ namespace Athanor.Game
             if (toast == null) throw new System.InvalidOperationException("GameFlow: toast is not set in the scene");
             if (eventView == null) throw new System.InvalidOperationException("GameFlow: eventView is not set in the scene");
             if (choice == null) throw new System.InvalidOperationException("GameFlow: choice is not set in the scene");
+            if (pause == null) throw new System.InvalidOperationException("GameFlow: pause is not set in the scene");
             I = this;
             Art.Lib = library;
             Loc.Use(langEn, langVi);
@@ -187,7 +189,7 @@ namespace Athanor.Game
             goalsView = Make.Root("Goals").gameObject.AddComponent<GoalsView>(); goalsView.Build(Db);
             goalsView.Closed += CloseGoals;
             toast.Bind();
-            pause = Make.Root("Pause").gameObject.AddComponent<PauseMenu>(); pause.Build(settings);
+            pause.Bind(settings);
             pause.CanOpen = CanPause;
             pause.Opened += OnPauseOpened;
             pause.Closed += OnPauseClosed;
