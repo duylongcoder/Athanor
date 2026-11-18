@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Reflection;
 using Athanor.Core;
 using Athanor.Game;
@@ -224,6 +225,77 @@ namespace Athanor.Tests
                 Assert.GreaterOrEqual(age, GoalToast.Stay + GoalToast.Slide);
             }
             finally { f.Destroy(); }
+        }
+
+        const string ChoicePrefab = "Assets/Prefabs/Views/CatalystChoice.prefab";
+
+        // three cards; the middle one is a Rare catalyst (stars and tier strip), the others plain
+        static List<ChoiceCard> ThreeCards() => new List<ChoiceCard>
+        {
+            new ChoiceCard { id = "a", sprite = "dot", name = "Alpha", text = "first" },
+            new ChoiceCard { id = "b", sprite = "dot", name = "Beta", text = "second", rarity = Rarities.Rare },
+            new ChoiceCard { id = "c", sprite = "dot", name = "Gamma", text = "third" },
+        };
+
+        [Test]
+        public void Show_CatalystChoicePrefab_FillsThreeCards()
+        {
+            var f = new PrefabFixture(ChoicePrefab);
+            try
+            {
+                var view = f.Get<CatalystChoiceView>();
+                view.Bind();
+
+                view.Choose("title", "line", ThreeCards(), _ => { }).MoveNext();     // up to the deal: the cards are written
+
+                Assert.AreEqual("Alpha", view.CardName(0).Text);
+                Assert.AreEqual("Beta", view.CardName(1).Text);
+                Assert.AreEqual("Gamma", view.CardName(2).Text);
+            }
+            finally { Tween.StopAll(); f.Destroy(); }
+        }
+
+        [Test]
+        public void Show_CatalystChoicePrefabRareCard_DrawsThreeStars()
+        {
+            var f = new PrefabFixture(ChoicePrefab);
+            try
+            {
+                var view = f.Get<CatalystChoiceView>();
+                view.Bind();
+
+                view.Choose("title", "line", ThreeCards(), _ => { }).MoveNext();
+
+                // each star is one fill sprite above four outline copies: 3 stars = 15 drawn sprites, every one the corner-pivot glyph
+                // (made at runtime, so not in the prefab; the baked centre-pivot "star" would sit on half pixels)
+                var drawn = new List<SpriteRenderer>();
+                foreach (var r in view.CornerStars(1).Root.GetComponentsInChildren<SpriteRenderer>(true)) if (r.enabled) drawn.Add(r);
+                Assert.AreEqual(3 * 5, drawn.Count);
+                foreach (var r in drawn)
+                {
+                    Assert.IsTrue(r.sprite != null, "a shown star has no sprite after the prefab round trip");
+                    Assert.AreEqual("star_corner", r.sprite.name);
+                }
+            }
+            finally { Tween.StopAll(); f.Destroy(); }
+        }
+
+        [Test]
+        public void Click_CatalystChoicePrefabCardAfterTheDeal_PicksItsId()
+        {
+            var f = new PrefabFixture(ChoicePrefab);
+            try
+            {
+                var view = f.Get<CatalystChoiceView>();
+                view.Bind();
+                var choose = view.Choose("title", "line", ThreeCards(), _ => { });
+                choose.MoveNext(); choose.MoveNext();             // the deal is over: the cards take a click
+
+                view.CardName(2).GetComponentInParent<Clickable>().onClick();
+
+                Assert.AreEqual("c", typeof(CatalystChoiceView).GetField("picked", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(view));
+            }
+            finally { Tween.StopAll(); f.Destroy(); }
         }
     }
 }

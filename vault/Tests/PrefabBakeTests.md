@@ -3,14 +3,14 @@ generated: true
 type: test
 file: Athanor/Assets/Tests/EditModeGame/PrefabBakeTests.cs
 tags: [test]
-count: 12
+count: 15
 ---
 
 # PrefabBakeTests
-`Athanor/Assets/Tests/EditModeGame/PrefabBakeTests.cs` — 12 tests
+`Athanor/Assets/Tests/EditModeGame/PrefabBakeTests.cs` — 15 tests
 
 ## Covers
-[[Clickable]], [[ContentData]], [[ContentDb]], [[EventView]], [[FontKind]], [[GoalReward]], [[GoalToast]], [[Journal]], [[Label]], [[Loc]], [[Make]], [[RunOptions]], [[RunOverView]], [[RunPhase]], [[RunState]], [[UiButton]], [[Unlocks]], [[Wording]]
+[[CatalystChoiceView]], [[ChoiceCard]], [[Clickable]], [[ContentData]], [[ContentDb]], [[EventView]], [[FontKind]], [[GoalReward]], [[GoalToast]], [[Journal]], [[Label]], [[Loc]], [[Make]], [[Rarities]], [[RunOptions]], [[RunOverView]], [[RunPhase]], [[RunState]], [[UiButton]], [[Unlocks]], [[Wording]]
 
 ## Tests
 - `Relabel_KeyedLabelAfterPrefabRoundTrip_FollowsTheLanguage`
@@ -25,3 +25,6 @@ count: 12
 - `Click_EventPrefabLastOptionThenContinue_ShowsTheOutcomeAndCloses`
 - `Add_GoalToastPrefab_ShowsTheGoalName`
 - `Click_ShowingGoalToastPrefab_SkipsToTheSlideOut`
+- `Show_CatalystChoicePrefab_FillsThreeCards`
+- `Show_CatalystChoicePrefabRareCard_DrawsThreeStars`
+- `Click_CatalystChoicePrefabCardAfterTheDeal_PicksItsId`

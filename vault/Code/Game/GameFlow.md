@@ -12,7 +12,7 @@ aliases: []
 # GameFlow
 
 `public sealed class GameFlow` : `MonoBehaviour`
-- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Boot/GameFlow.cs:15-767`
+- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Boot/GameFlow.cs:15-770`
 
 > Owns the run and moves the game between its screens.
 
@@ -37,11 +37,11 @@ aliases: []
 | method | `public static int NextMood(int mood)` | 53 | The depth mood after in the F6 cycle 1..5. |
 | method | `public static string MoodLine(int mood)` | 54 |  |
 | method | `public static string EffectsLine(bool on)` | 55 |  |
-| property | `public JournalView JournalView` | 101 | The journal screen, for the tutorial to point at parts of a page. |
-| method | `public static Journal JournalAfterQuit(bool sandbox, Journal current)` | 425 | The journal after a quit: what is stored, as if the page had been closed (a How-to-play sandbox keeps its throwaway). |
-| method | `public static Profile ProfileAfterQuit(bool sandbox, Profile current, ContentDb db)` | 427 | The profile after a quit: what is stored. A run counts only at the Ignite that ends it, so nothing is added. |
-| method | `public void Ignite()` | 468 | Spends a trial and plays out what happened. Ignored unless the bench is waiting for the player. |
-| method | `public static IgniteOutcome SettleIgnite(RunState run, Journal journal, bool sandbox)` | 476 | Ignites and stores the journal at once, so a discovery is in storage before anything else can happen (Quit, closed page). A sandbox stores nothing. |
+| property | `public JournalView JournalView` | 103 | The journal screen, for the tutorial to point at parts of a page. |
+| method | `public static Journal JournalAfterQuit(bool sandbox, Journal current)` | 428 | The journal after a quit: what is stored, as if the page had been closed (a How-to-play sandbox keeps its throwaway). |
+| method | `public static Profile ProfileAfterQuit(bool sandbox, Profile current, ContentDb db)` | 430 | The profile after a quit: what is stored. A run counts only at the Ignite that ends it, so nothing is added. |
+| method | `public void Ignite()` | 471 | Spends a trial and plays out what happened. Ignored unless the bench is waiting for the player. |
+| method | `public static IgniteOutcome SettleIgnite(RunState run, Journal journal, bool sandbox)` | 479 | Ignites and stores the journal at once, so a discovery is in storage before anything else can happen (Quit, closed page). A sandbox stores nothing. |
 
 ## Uses
 [[Anim]], [[Art]], [[ArtLibrary]], [[AudioMuteHook]], [[AutoMove]], [[AutoPlayer]], [[Bench]], [[BenchView]], [[CatalystChoiceView]], [[ContentData]], [[ContentDb]], [[DepthLook]], [[DepthMath]], [[DepthStage]], [[Dev]], [[EventView]], [[FlowState]], [[Fx]], [[GoalReward]], [[GoalToast]], [[GoalsView]], [[Haptics]], [[HudView]], [[IgniteOutcome]], [[Journal]], [[JournalView]], [[LayoutData]], [[Loc]], [[Make]], [[Motion]], [[PauseMenu]], [[PointerInput]], [[Profile]], [[Px]], [[ReactionCutscene]], [[ReactionEvent]], [[RunOptions]], [[RunOverView]], [[RunPhase]], [[RunState]], [[Save]], [[ScreenFx]], [[Settings]], [[SimpleCutscene]], [[Sparks]], [[TitleView]], [[TutorialController]], [[TutorialPlan]], [[TutorialRules]], [[TutorialScript]], [[Unlocks]], [[WindowView]]

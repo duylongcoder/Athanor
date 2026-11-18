@@ -84,8 +84,10 @@ namespace Athanor.Game
         static readonly float[] Moon = { 0.62f, 0.5f, 0.4f, 0.3f, 0.5f };
         static readonly string[] Accent = { "#7cc0f8", "#6ee6c8", "#c486f4", "#ee6a3c", "#fff6b8" };
 
-        ReactionCutscene reaction; SimpleCutscene story; WindowView window; TitleView title; JournalView journalView; CatalystChoiceView choice;
+        ReactionCutscene reaction; SimpleCutscene story; WindowView window; TitleView title; JournalView journalView;
         GoalsView goalsView;
+        /// <summary>The three-card chooser for catalysts and aspects (a prefab in Main.unity).</summary>
+        [SerializeField] CatalystChoiceView choice;
         /// <summary>The event dialog at the start of a depth (a prefab in Main.unity).</summary>
         [SerializeField] EventView eventView;
         /// <summary>The goal-complete toasts (a prefab in Main.unity).</summary>
@@ -132,6 +134,7 @@ namespace Athanor.Game
             if (runOver == null) throw new System.InvalidOperationException("GameFlow: runOver is not set in the scene");
             if (toast == null) throw new System.InvalidOperationException("GameFlow: toast is not set in the scene");
             if (eventView == null) throw new System.InvalidOperationException("GameFlow: eventView is not set in the scene");
+            if (choice == null) throw new System.InvalidOperationException("GameFlow: choice is not set in the scene");
             I = this;
             Art.Lib = library;
             Loc.Use(langEn, langVi);
@@ -177,7 +180,7 @@ namespace Athanor.Game
             tutorial = gameObject.AddComponent<TutorialController>(); tutorial.Build();
             journalView = Make.Root("Journal").gameObject.AddComponent<JournalView>(); journalView.Build(Db);
             journalView.Closed += CloseJournal;
-            choice = Make.Root("Catalyst Choice").gameObject.AddComponent<CatalystChoiceView>(); choice.Build();
+            choice.Bind();
             runOver.Bind();
             runOver.GoalsClicked += OpenGoals;
             eventView.Bind();

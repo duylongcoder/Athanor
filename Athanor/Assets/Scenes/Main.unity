@@ -1989,6 +1989,7 @@ MonoBehaviour:
   depthStage: {fileID: 539019352}
   runOver: {fileID: 411300214}
   Auto: 0
+  choice: {fileID: 866897250}
   eventView: {fileID: 480626881}
   toast: {fileID: 879152207}
 --- !u!114 &522944086
@@ -3279,6 +3280,74 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
+--- !u!1001 &866897249
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2647470660763808326, guid: b6ea250ece4a951959e470467a8a8e8d, type: 3}
+      propertyPath: m_Name
+      value: CatalystChoice
+      objectReference: {fileID: 0}
+    - target: {fileID: 2692811059427954753, guid: b6ea250ece4a951959e470467a8a8e8d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2692811059427954753, guid: b6ea250ece4a951959e470467a8a8e8d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2692811059427954753, guid: b6ea250ece4a951959e470467a8a8e8d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2692811059427954753, guid: b6ea250ece4a951959e470467a8a8e8d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2692811059427954753, guid: b6ea250ece4a951959e470467a8a8e8d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2692811059427954753, guid: b6ea250ece4a951959e470467a8a8e8d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2692811059427954753, guid: b6ea250ece4a951959e470467a8a8e8d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2692811059427954753, guid: b6ea250ece4a951959e470467a8a8e8d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2692811059427954753, guid: b6ea250ece4a951959e470467a8a8e8d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2692811059427954753, guid: b6ea250ece4a951959e470467a8a8e8d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b6ea250ece4a951959e470467a8a8e8d, type: 3}
+--- !u!114 &866897250 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9052986910001822737, guid: b6ea250ece4a951959e470467a8a8e8d, type: 3}
+  m_PrefabInstance: {fileID: 866897249}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d6f8f5a958c22135b46a8679dd5cca7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Athanor.Game::Athanor.Game.CatalystChoiceView
 --- !u!1001 &879152206
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7552,3 +7621,4 @@ SceneRoots:
   - {fileID: 411300213}
   - {fileID: 879152206}
   - {fileID: 480626880}
+  - {fileID: 866897249}

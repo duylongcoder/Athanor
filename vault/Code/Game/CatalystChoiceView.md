@@ -12,7 +12,7 @@ aliases: []
 # CatalystChoiceView
 
 `public sealed class CatalystChoiceView` : `MonoBehaviour`
-- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Ui/CatalystChoiceView.cs:23-204`
+- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Ui/CatalystChoiceView.cs:23-189`
 
 > Three parchment cards, pick one: a catalyst after a depth is cleared, or an aspect at the start of a run and of depths 3 and 5. An aspect's card shows the tile it would land on.
 
@@ -20,16 +20,18 @@ aliases: []
 | Kind | Signature | Line | Note |
 |---|---|---|---|
 | field | `public const string OpenHook =` | 29 | The development-build log line once the dealt cards take a click (tools/web/webtest.mjs and descents.mjs click a card after it). Not "[choice] ...": descents.mjs counts that one from GameFlow.Descend. |
-| method | `public void Build()` | 49 |  |
-| method | `public IEnumerator Choose(IReadOnlyList<CatalystData> offer, Action<string> done, float autoAfter = -1)` | 90 | The catalysts offered after a depth. |
-| method | `public IEnumerator Choose(IReadOnlyList<AspectInstance> offer, Action<string> done, float autoAfter = -1)` | 102 | The aspects offered at the start of a run and of depths 3 and 5. |
-| method | `public IEnumerator Choose(string title, string line, IReadOnlyList<ChoiceCard> offer, Action<string> done, float autoAfter = -1)` | 116 | Shows the cards and waits for a pick. autoAfter >= 0 takes the first card after that many seconds (scripted play). |
+| method | `public Label CardName(int i)` | 53 | The name label of card i. |
+| method | `public RarityStars CornerStars(int i)` | 55 | The star row in the top-left corner of card i. |
+| method | `public void Bind()` | 58 | Hooks the clicks. GameFlow calls it once at start; a test calls it after instantiating the prefab. |
+| method | `public IEnumerator Choose(IReadOnlyList<CatalystData> offer, Action<string> done, float autoAfter = -1)` | 75 | The catalysts offered after a depth. |
+| method | `public IEnumerator Choose(IReadOnlyList<AspectInstance> offer, Action<string> done, float autoAfter = -1)` | 87 | The aspects offered at the start of a run and of depths 3 and 5. |
+| method | `public IEnumerator Choose(string title, string line, IReadOnlyList<ChoiceCard> offer, Action<string> done, float autoAfter = -1)` | 101 | Shows the cards and waits for a pick. autoAfter >= 0 takes the first card after that many seconds (scripted play). |
 
 ## Uses
-[[Align]], [[Art]], [[AspectEffects]], [[AspectInstance]], [[Bench]], [[ChoiceCard]], [[Dev]], [[FontKind]], [[Label]], [[Loc]], [[Make]], [[Motion]], [[Px]], [[Rarities]], [[RarityStars]], [[RunState]], [[ScreenFx]], [[Sparks]], [[Wording]]
+[[Art]], [[AspectEffects]], [[AspectInstance]], [[Bench]], [[ChoiceCard]], [[Clickable]], [[Dev]], [[Label]], [[Loc]], [[Motion]], [[Px]], [[Rarities]], [[RarityStars]], [[RunState]], [[ScreenFx]], [[Sparks]], [[Wording]]
 
 ## Used by
 [[GameFlow]]
 
 ## Tested by
-[[ChoiceHookTests]]
+[[ChoiceHookTests]], [[PrefabBakeTests]]

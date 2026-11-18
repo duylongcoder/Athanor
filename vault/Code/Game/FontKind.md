@@ -18,7 +18,7 @@ aliases: []
 `Title`, `Body`, `Name`, `Tiny`, `Logo`, `Numeral`
 
 ## Used by
-[[BenchView]], [[CardView]], [[CatalystChoiceView]], [[DepthTestBuilder]], [[GoalsView]], [[HudView]], [[JournalView]], [[Label]], [[Make]], [[PauseMenu]], [[ReactionCutscene]], [[SimpleCutscene]], [[TitleView]], [[Tooltip]], [[TutorialController]], [[UiButton]]
+[[BenchView]], [[CardView]], [[DepthTestBuilder]], [[GoalsView]], [[HudView]], [[JournalView]], [[Label]], [[Make]], [[PauseMenu]], [[ReactionCutscene]], [[SimpleCutscene]], [[TitleView]], [[Tooltip]], [[TutorialController]], [[UiButton]]
 
 ## Tested by
 [[LabelLineBoxTests]], [[PrefabBakeTests]]

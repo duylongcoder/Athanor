@@ -72,7 +72,7 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | TileView | TileView | Game | class | Athanor/Assets/Scripts/Game/Bench/TileView.cs | 10 | One of the nine bench tiles: its hover highlight and, when occupied, the material standing on it. |
 | GameFlow | GameFlow | Game | class | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 15 | Owns the run and moves the game between its screens. |
 | FlowState | FlowState | Game | enum | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 12 |  |
-| TitleChoice | TitleChoice | Game | enum | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 113 |  |
+| TitleChoice | TitleChoice | Game | enum | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 115 |  |
 | Save | Save | Game | class | Athanor/Assets/Scripts/Game/Boot/Save.cs | 8 | Keeps the journal and the profile between sessions in PlayerPrefs (browser storage in a web build). |
 | Cutscene | Cutscene | Game | class | Athanor/Assets/Scripts/Game/Cutscene/Cutscene.cs | 7 | A sequence that plays to its end unless the player clicks to skip ahead. |
 | DepthLook | DepthLook | Game | class | Athanor/Assets/Scripts/Game/Cutscene/DepthLook.cs | 9 | What a depth looks like from the bench: the intro line under its name and the view through the window. Pure choices, no scene; the pictures and effects are drawn by WindowView. |
@@ -125,11 +125,11 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | Motion | Motion | Game | class | Athanor/Assets/Scripts/Game/Support/Motion.cs | 16 | One-shot tweens on PrimeTween, kept in one place so every move is snapped to whole pixels (Px.Snap). Each call takes its start value explicitly and returns the Tween: group several with Sequence.Creat |
 | PointerInput | PointerInput | Game | class | Athanor/Assets/Scripts/Game/Support/PointerInput.cs | 8 | Mouse or touch position in world space, press state for this frame, and hover/click dispatch to Clickables. |
 | Px | Px | Game | class | Athanor/Assets/Scripts/Game/Support/Px.cs | 9 | The art is laid out on a 640x360 canvas with y running down from the top-left corner. The world uses one unit per pixel with the origin at the screen centre and y up. |
-| RarityStars | RarityStars | Game | class | Athanor/Assets/Scripts/Game/Support/RarityStars.cs | 10 | The rarity glyph (SPEC changes 21-24): up to four 7x7 stars on an 8 px pitch, tinted, each with a dark outline made of four offset dark copies. The root sits at the top-left of the row. Built once and |
+| RarityStars | RarityStars | Game | class | Athanor/Assets/Scripts/Game/Support/RarityStars.cs | 13 | The rarity glyph (SPEC changes 21-24): up to four 7x7 stars on an 8 px pitch, tinted, each with a dark outline made of four offset dark copies. The root sits at the top-left of the row. Built once and |
 | Wording | Wording | Game | class | Athanor/Assets/Scripts/Game/Support/Wording.cs | 9 | The words and colours the Phase 3 screens share: rarities, aspects, event effects and goal rewards. |
 | ChoiceCard | ChoiceCard | Game | class | Athanor/Assets/Scripts/Game/Ui/CatalystChoiceView.cs | 11 | What one card of the chooser shows. |
 | CatalystChoiceView | CatalystChoiceView | Game | class | Athanor/Assets/Scripts/Game/Ui/CatalystChoiceView.cs | 23 | Three parchment cards, pick one: a catalyst after a depth is cleared, or an aspect at the start of a run and of depths 3 and 5. An aspect's card shows the tile it would land on. |
-| Card | Card | Game | class | Athanor/Assets/Scripts/Game/Ui/CatalystChoiceView.cs | 34 |  |
+| Card | Card | Game | class | Athanor/Assets/Scripts/Game/Ui/CatalystChoiceView.cs | 35 |  |
 | EventView | EventView | Game | class | Athanor/Assets/Scripts/Game/Ui/EventView.cs | 13 | The event at the start of a depth: what was found, the options that can be taken (each with what it costs and may give), then what came of the one chosen. |
 | EventView.Row | EventView.Row | Game | class | Athanor/Assets/Scripts/Game/Ui/EventView.cs | 19 |  |
 | GoalToast | GoalToast | Game | class | Athanor/Assets/Scripts/Game/Ui/GoalToast.cs | 11 | A small panel at the top of the screen that says a goal was completed and what it unlocked. Toasts queue; each stays 2.5 seconds or until clicked. It never blocks anything under it but itself. |
@@ -186,7 +186,7 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | MainDevHookTests | MainDevHookTests | Tests | class | Athanor/Assets/Tests/EditModeGame/MainDevHookTests.cs | 11 | The dev-only hooks tools/web/mainhd2d.mjs drives (5b-07b): F6 mood steps, F10 tile faces in UI units, the bench's place / unplace lines. The key handling is guarded by Application.isEditor \|\| Debug.is |
 | MotionTests | MotionTests | Tests | class | Athanor/Assets/Tests/EditModeGame/MotionTests.cs | 13 | Motion's helpers make live PrimeTween tweens. PrimeTween refuses a payload over 16 bytes: it logs an error and returns a dead tween, which a Sequence then refuses too (the rack flight and the catalyst |
 | PauseTests | PauseTests | Tests | class | Athanor/Assets/Tests/EditModeGame/PauseTests.cs | 10 | The pause menu: time stops and comes back on every exit, Esc toggles, nothing opens in the tutorial, Quit leaves the stored run data alone. |
-| PrefabBakeTests | PrefabBakeTests | Tests | class | Athanor/Assets/Tests/EditModeGame/PrefabBakeTests.cs | 12 | Baked objects must behave like the ones Build made: a label keeps its key, a button still clicks. |
+| PrefabBakeTests | PrefabBakeTests | Tests | class | Athanor/Assets/Tests/EditModeGame/PrefabBakeTests.cs | 13 | Baked objects must behave like the ones Build made: a label keeps its key, a button still clicks. |
 | PrefabFixture | PrefabFixture | Tests | class | Athanor/Assets/Tests/EditModeGame/PrefabFixture.cs | 8 | A copy of a prefab for one test. Call Destroy in [TearDown] (or a finally). |
 | RunOverDepthTests | RunOverDepthTests | Tests | class | Athanor/Assets/Tests/EditModeGame/RunOverDepthTests.cs | 15 | The run-over depth row (owner, phase-5-prep 2026-11-16): a won run says "Planted at depth n" on one line with no value; a lost run says "Depth reached" with "n of 5". The view is reused, so each path  |
 | SaveTests | SaveTests | Tests | class | Athanor/Assets/Tests/EditModeGame/SaveTests.cs | 9 | The journal and the profile survive a round trip through PlayerPrefs, and a damaged save never stops the game. |
@@ -637,11 +637,11 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | GameFlow | method | NextMood | 53 | public static int NextMood(int mood) |
 | GameFlow | method | MoodLine | 54 | public static string MoodLine(int mood) |
 | GameFlow | method | EffectsLine | 55 | public static string EffectsLine(bool on) |
-| GameFlow | property | JournalView | 101 | public JournalView JournalView |
-| GameFlow | method | JournalAfterQuit | 425 | public static Journal JournalAfterQuit(bool sandbox, Journal current) |
-| GameFlow | method | ProfileAfterQuit | 427 | public static Profile ProfileAfterQuit(bool sandbox, Profile current, ContentDb db) |
-| GameFlow | method | Ignite | 468 | public void Ignite() |
-| GameFlow | method | SettleIgnite | 476 | public static IgniteOutcome SettleIgnite(RunState run, Journal journal, bool sandbox) |
+| GameFlow | property | JournalView | 103 | public JournalView JournalView |
+| GameFlow | method | JournalAfterQuit | 428 | public static Journal JournalAfterQuit(bool sandbox, Journal current) |
+| GameFlow | method | ProfileAfterQuit | 430 | public static Profile ProfileAfterQuit(bool sandbox, Profile current, ContentDb db) |
+| GameFlow | method | Ignite | 471 | public void Ignite() |
+| GameFlow | method | SettleIgnite | 479 | public static IgniteOutcome SettleIgnite(RunState run, Journal journal, bool sandbox) |
 | FlowState | value | Boot | 12 | Boot |
 | FlowState | value | Title | 12 | Title |
 | FlowState | value | Intro | 12 | Intro |
@@ -655,9 +655,9 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | FlowState | value | AspectChoice | 12 | AspectChoice |
 | FlowState | value | Event | 12 | Event |
 | FlowState | value | Goals | 12 | Goals |
-| TitleChoice | value | Begin | 113 | Begin |
-| TitleChoice | value | HowToPlay | 113 | HowToPlay |
-| TitleChoice | value | Intro | 113 | Intro |
+| TitleChoice | value | Begin | 115 | Begin |
+| TitleChoice | value | HowToPlay | 115 | HowToPlay |
+| TitleChoice | value | Intro | 115 | Intro |
 | Save | field | Key | 10 | public const string Key = "athanor.journal.v1", IntroKey = "athanor.intro.v1", ProfileKey = "athanor.profile.v1", TutorialKey = "athanor.tutorial.v1", SettingsKey = |
 | Save | method | LoadJournal | 14 | public static Journal LoadJournal() |
 | Save | method | StoreJournal | 24 | public static void StoreJournal(Journal journal) |
@@ -1010,16 +1010,17 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | Px | method | Hex | 22 | public static Color Hex(string hex, float a = 1, float k = 1) |
 | Px | method | Alpha | 28 | public static Color Alpha(this Color c, float a) |
 | Px | method | Times | 29 | public static Color Times(this Color c, float k) |
-| RarityStars | field | Size | 12 | public const int Size = 7, Pitch = 8, Max = 4 |
-| RarityStars | property | Root | 20 | public Transform Root |
-| RarityStars | ctor | RarityStars | 22 | public RarityStars(Transform parent, int order) |
-| RarityStars | method | Count | 58 | public static int Count(string rarity) |
-| RarityStars | method | WidthOf | 61 | public static int WidthOf(int n) |
-| RarityStars | method | Show | 64 | public void Show(string rarity) |
-| RarityStars | method | Show | 67 | public void Show(int n, Color color) |
-| RarityStars | method | SetAlpha | 74 | public void SetAlpha(float a) |
-| RarityStars | method | SetOrder | 81 | public void SetOrder(int order) |
-| RarityStars | method | SetActive | 87 | public void SetActive(bool on) |
+| RarityStars | field | Size | 15 | public const int Size = 7, Pitch = 8, Max = 4 |
+| RarityStars | property | Root | 24 | public Transform Root |
+| RarityStars | ctor | RarityStars | 27 | public RarityStars() |
+| RarityStars | ctor | RarityStars | 29 | public RarityStars(Transform parent, int order) |
+| RarityStars | method | Count | 65 | public static int Count(string rarity) |
+| RarityStars | method | WidthOf | 68 | public static int WidthOf(int n) |
+| RarityStars | method | Show | 71 | public void Show(string rarity) |
+| RarityStars | method | Show | 74 | public void Show(int n, Color color) |
+| RarityStars | method | SetAlpha | 81 | public void SetAlpha(float a) |
+| RarityStars | method | SetOrder | 88 | public void SetOrder(int order) |
+| RarityStars | method | SetActive | 94 | public void SetActive(bool on) |
 | Wording | method | RarityColor | 11 | public static Color RarityColor(string rarity) |
 | Wording | method | RarityTone | 23 | public static Color RarityTone(string rarity) |
 | Wording | method | RarityWord | 35 | public static string RarityWord(string rarity) |
@@ -1042,12 +1043,15 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | ChoiceCard | field | tiles | 15 | public int[] tiles |
 | ChoiceCard | field | dimTiles | 16 | public int[] dimTiles |
 | CatalystChoiceView | field | OpenHook | 29 | public const string OpenHook = |
-| CatalystChoiceView | method | Build | 49 | public void Build() |
-| CatalystChoiceView | method | Choose | 90 | public IEnumerator Choose(IReadOnlyList<CatalystData> offer, Action<string> done, float autoAfter = -1) |
-| CatalystChoiceView | method | Choose | 102 | public IEnumerator Choose(IReadOnlyList<AspectInstance> offer, Action<string> done, float autoAfter = -1) |
-| CatalystChoiceView | method | Choose | 116 | public IEnumerator Choose(string title, string line, IReadOnlyList<ChoiceCard> offer, Action<string> done, float autoAfter = -1) |
-| Card | field | root | 36 | public Transform root |
-| Card | field | bench | 37 | public readonly SpriteRenderer[] bench = new SpriteRenderer[Bench.TileCount] |
+| CatalystChoiceView | method | CardName | 53 | public Label CardName(int i) |
+| CatalystChoiceView | method | CornerStars | 55 | public RarityStars CornerStars(int i) |
+| CatalystChoiceView | method | Bind | 58 | public void Bind() |
+| CatalystChoiceView | method | Choose | 75 | public IEnumerator Choose(IReadOnlyList<CatalystData> offer, Action<string> done, float autoAfter = -1) |
+| CatalystChoiceView | method | Choose | 87 | public IEnumerator Choose(IReadOnlyList<AspectInstance> offer, Action<string> done, float autoAfter = -1) |
+| CatalystChoiceView | method | Choose | 101 | public IEnumerator Choose(string title, string line, IReadOnlyList<ChoiceCard> offer, Action<string> done, float autoAfter = -1) |
+| Card | field | root | 37 | public Transform root |
+| Card | field | click | 38 | public Clickable click |
+| Card | field | bench | 39 | public SpriteRenderer[] bench = new SpriteRenderer[Bench.TileCount] |
 | EventView | method | OptionLabel | 35 | public Label OptionLabel(int i) |
 | EventView | property | Outcome | 37 | public Label Outcome |
 | EventView | method | Bind | 40 | public void Bind() |
@@ -1171,6 +1175,7 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | ViewBaker | method | CompareRunOver | 127 | public static void CompareRunOver() |
 | ViewBaker | method | CompareGoalToast | 128 | public static void CompareGoalToast() |
 | ViewBaker | method | CompareEvent | 129 | public static void CompareEvent() |
+| ViewBaker | method | CompareCatalystChoice | 130 | public static void CompareCatalystChoice() |
 | ViewCapture | method | Render | 13 | public static Texture2D Render(GameObject root) |
 | ViewCapture | method | Save | 49 | public static void Save(Texture2D tex, string path) |
 | ViewCapture | method | Load | 56 | public static Texture2D Load(string path) |
@@ -1252,7 +1257,7 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | TutorialTests | method | Plan_DoneFlagAndJournal_PicksRunAskSkipOrNone | 275 | public void Plan_DoneFlagAndJournal_PicksRunAskSkipOrNone(bool done, int journalEntries, TutorialPlan expected) |
 | TutorialTests | method | Plan_NotDone_RunsExactlyWhenShouldRunAndTheJournalIsEmpty | 279 | public void Plan_NotDone_RunsExactlyWhenShouldRunAndTheJournalIsEmpty(int journalEntries) |
 | AutoHookTests | method | ToggleAuto_FlipsTheScriptedPlayer_AndLogsTheNewState | 33 | public void ToggleAuto_FlipsTheScriptedPlayer_AndLogsTheNewState() |
-| ChoiceHookTests | method | Choose_LogsOpenHook_OnlyAfterTheDeal | 36 | public void Choose_LogsOpenHook_OnlyAfterTheDeal() |
+| ChoiceHookTests | method | Choose_LogsOpenHook_OnlyAfterTheDeal | 39 | public void Choose_LogsOpenHook_OnlyAfterTheDeal() |
 | DepthClickTests | method | SetUp | 25 | public void SetUp() |
 | DepthClickTests | method | TearDown | 43 | public void TearDown() |
 | DepthClickTests | method | ClickOnTileCentre_AtRestAndUnderMaximumSway_HitsThatTile | 59 | public void ClickOnTileCentre_AtRestAndUnderMaximumSway_HitsThatTile() |
@@ -1328,18 +1333,21 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | PauseTests | method | AfterQuit_ProfileAndJournalAreWhatIsStored_AndStorageIsNotWritten | 111 | public void AfterQuit_ProfileAndJournalAreWhatIsStored_AndStorageIsNotWritten() |
 | PauseTests | method | Quit_AfterADiscovery_JournalInStorageHasIt | 128 | public void Quit_AfterADiscovery_JournalInStorageHasIt() |
 | PauseTests | method | SettleIgnite_Sandbox_StoresNothing | 147 | public void SettleIgnite_Sandbox_StoresNothing() |
-| PrefabBakeTests | method | Relabel_KeyedLabelAfterPrefabRoundTrip_FollowsTheLanguage | 36 | public void Relabel_KeyedLabelAfterPrefabRoundTrip_FollowsTheLanguage() |
-| PrefabBakeTests | method | Relabel_PlainLabelAfterPrefabRoundTrip_KeepsItsText | 45 | public void Relabel_PlainLabelAfterPrefabRoundTrip_KeepsItsText() |
-| PrefabBakeTests | method | Click_ButtonAfterPrefabRoundTrip_RaisesClicked | 53 | public void Click_ButtonAfterPrefabRoundTrip_RaisesClicked() |
-| PrefabBakeTests | method | Click_DisabledButtonAfterPrefabRoundTrip_DoesNothing | 64 | public void Click_DisabledButtonAfterPrefabRoundTrip_DoesNothing() |
-| PrefabBakeTests | method | Text_ButtonAfterPrefabRoundTrip_KeepsLabelAndBody | 76 | public void Text_ButtonAfterPrefabRoundTrip_KeepsLabelAndBody() |
-| PrefabBakeTests | method | Disabled_SetBeforePrefabRoundTrip_StaysDisabled | 85 | public void Disabled_SetBeforePrefabRoundTrip_StaysDisabled() |
-| PrefabBakeTests | method | ShowDepth_RunOverPrefab_WritesTheDepthRow | 94 | public void ShowDepth_RunOverPrefab_WritesTheDepthRow() |
-| PrefabBakeTests | method | Click_RunOverPrefabButton_PicksItsChoice | 110 | public void Click_RunOverPrefabButton_PicksItsChoice(int index, bool again) |
-| PrefabBakeTests | method | Show_EventPrefab_ListsTheOptions | 144 | public void Show_EventPrefab_ListsTheOptions() |
-| PrefabBakeTests | method | Click_EventPrefabLastOptionThenContinue_ShowsTheOutcomeAndCloses | 162 | public void Click_EventPrefabLastOptionThenContinue_ShowsTheOutcomeAndCloses() |
-| PrefabBakeTests | method | Add_GoalToastPrefab_ShowsTheGoalName | 193 | public void Add_GoalToastPrefab_ShowsTheGoalName() |
-| PrefabBakeTests | method | Click_ShowingGoalToastPrefab_SkipsToTheSlideOut | 211 | public void Click_ShowingGoalToastPrefab_SkipsToTheSlideOut() |
+| PrefabBakeTests | method | Relabel_KeyedLabelAfterPrefabRoundTrip_FollowsTheLanguage | 37 | public void Relabel_KeyedLabelAfterPrefabRoundTrip_FollowsTheLanguage() |
+| PrefabBakeTests | method | Relabel_PlainLabelAfterPrefabRoundTrip_KeepsItsText | 46 | public void Relabel_PlainLabelAfterPrefabRoundTrip_KeepsItsText() |
+| PrefabBakeTests | method | Click_ButtonAfterPrefabRoundTrip_RaisesClicked | 54 | public void Click_ButtonAfterPrefabRoundTrip_RaisesClicked() |
+| PrefabBakeTests | method | Click_DisabledButtonAfterPrefabRoundTrip_DoesNothing | 65 | public void Click_DisabledButtonAfterPrefabRoundTrip_DoesNothing() |
+| PrefabBakeTests | method | Text_ButtonAfterPrefabRoundTrip_KeepsLabelAndBody | 77 | public void Text_ButtonAfterPrefabRoundTrip_KeepsLabelAndBody() |
+| PrefabBakeTests | method | Disabled_SetBeforePrefabRoundTrip_StaysDisabled | 86 | public void Disabled_SetBeforePrefabRoundTrip_StaysDisabled() |
+| PrefabBakeTests | method | ShowDepth_RunOverPrefab_WritesTheDepthRow | 95 | public void ShowDepth_RunOverPrefab_WritesTheDepthRow() |
+| PrefabBakeTests | method | Click_RunOverPrefabButton_PicksItsChoice | 111 | public void Click_RunOverPrefabButton_PicksItsChoice(int index, bool again) |
+| PrefabBakeTests | method | Show_EventPrefab_ListsTheOptions | 145 | public void Show_EventPrefab_ListsTheOptions() |
+| PrefabBakeTests | method | Click_EventPrefabLastOptionThenContinue_ShowsTheOutcomeAndCloses | 163 | public void Click_EventPrefabLastOptionThenContinue_ShowsTheOutcomeAndCloses() |
+| PrefabBakeTests | method | Add_GoalToastPrefab_ShowsTheGoalName | 194 | public void Add_GoalToastPrefab_ShowsTheGoalName() |
+| PrefabBakeTests | method | Click_ShowingGoalToastPrefab_SkipsToTheSlideOut | 212 | public void Click_ShowingGoalToastPrefab_SkipsToTheSlideOut() |
+| PrefabBakeTests | method | Show_CatalystChoicePrefab_FillsThreeCards | 241 | public void Show_CatalystChoicePrefab_FillsThreeCards() |
+| PrefabBakeTests | method | Show_CatalystChoicePrefabRareCard_DrawsThreeStars | 259 | public void Show_CatalystChoicePrefabRareCard_DrawsThreeStars() |
+| PrefabBakeTests | method | Click_CatalystChoicePrefabCardAfterTheDeal_PicksItsId | 284 | public void Click_CatalystChoicePrefabCardAfterTheDeal_PicksItsId() |
 | PrefabFixture | field | Root | 11 | public readonly GameObject Root |
 | PrefabFixture | ctor | PrefabFixture | 14 | public PrefabFixture(string prefabPath) |
 | PrefabFixture | method | Get | 22 | public T Get<T>() where T : Component |
