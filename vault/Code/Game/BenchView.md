@@ -37,7 +37,7 @@ aliases: []
 | method | `public static string UnplaceLine(int tile)` | 226 |  |
 
 ## Uses
-[[Align]], [[Bench]], [[CardView]], [[ChainPlanner]], [[ContentDb]], [[Dev]], [[FontKind]], [[HudView]], [[Journal]], [[Kind]], [[Label]], [[LayoutData]], [[LinkView]], [[Loc]], [[Make]], [[Motion]], [[PointerInput]], [[Px]], [[Rarities]], [[RunState]], [[TileView]], [[Tooltip]], [[Wording]]
+[[Align]], [[Art]], [[Bench]], [[CardView]], [[ChainPlanner]], [[ContentDb]], [[Dev]], [[FontKind]], [[HudView]], [[Journal]], [[Kind]], [[Label]], [[LayoutData]], [[LinkView]], [[Loc]], [[Make]], [[Motion]], [[PointerInput]], [[Px]], [[Rarities]], [[RunState]], [[TileView]], [[Tooltip]], [[Wording]]
 
 ## Used by
 [[DepthStage]], [[GameFlow]], [[MainDepthEvidence]]

@@ -33,7 +33,7 @@ aliases: []
 | method | `internal static int EnsureRenderer(Material tilt)` | 307 | A copy of the main 2D renderer with the two tilt-shift passes, listed in the pipeline asset after the main one (which stays the default and keeps no feature). Returns the copy's index in the pipeline's renderer list. |
 
 ## Uses
-[[Align]], [[ArtLibrary]], [[CameraSway]], [[DepthLayer]], [[DepthMath]], [[DepthMood]], [[DepthRig]], [[DepthSwitch]], [[DepthTable]], [[DepthTestControls]], [[DepthTiltShiftFeature]], [[Flame]], [[FlameSwap]], [[FogSheet]], [[FontKind]], [[LayoutData]], [[Make]], [[Px]], [[SceneBuilder]], [[SpriteSwap]], [[TileView]], [[TiltShift]]
+[[Align]], [[Art]], [[ArtLibrary]], [[CameraSway]], [[DepthLayer]], [[DepthMath]], [[DepthMood]], [[DepthRig]], [[DepthSwitch]], [[DepthTable]], [[DepthTestControls]], [[DepthTiltShiftFeature]], [[EditorGlobals]], [[Flame]], [[FlameSwap]], [[FogSheet]], [[FontKind]], [[LayoutData]], [[Make]], [[Px]], [[SceneBuilder]], [[SpriteSwap]], [[TileView]], [[TiltShift]]
 
 ## Used by
 [[DepthTestEvidence]], [[SceneBuilder]], [[WebBuild]]

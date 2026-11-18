@@ -30,7 +30,7 @@ aliases: []
 | property | `public static Rect HintsRect` | 191 | The latest hints under the grid. |
 
 ## Uses
-[[Align]], [[ContentDb]], [[FontKind]], [[HudView]], [[Journal]], [[Kind]], [[Label]], [[Loc]], [[Make]], [[Px]], [[Rarities]], [[RarityStars]], [[Wording]]
+[[Align]], [[Art]], [[ContentDb]], [[FontKind]], [[HudView]], [[Journal]], [[Kind]], [[Label]], [[Loc]], [[Make]], [[Px]], [[Rarities]], [[RarityStars]], [[Wording]]
 
 ## Used by
 [[GameFlow]], [[TutorialController]]

@@ -10,7 +10,7 @@ count: 1
 `Athanor/Assets/Tests/EditModeGame/ChoiceHookTests.cs` — 1 tests
 
 ## Covers
-[[ArtLibrary]], [[CatalystChoiceView]], [[ChoiceCard]], [[Make]]
+[[CatalystChoiceView]], [[ChoiceCard]]
 
 ## Tests
 - `Choose_LogsOpenHook_OnlyAfterTheDeal`

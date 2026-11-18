@@ -23,4 +23,4 @@ aliases: []
 | method | `public static string Capture()` | 43 |  |
 
 ## Uses
-[[ArtLibrary]], [[BenchView]], [[ContentData]], [[ContentDb]], [[DepthRig]], [[Dust]], [[GameFlow]], [[HudView]], [[LayoutData]], [[Make]], [[Px]], [[Save]], [[Settings]], [[TileView]], [[TitleView]]
+[[Art]], [[BenchView]], [[ContentData]], [[ContentDb]], [[DepthRig]], [[Dust]], [[EditorGlobals]], [[GameFlow]], [[HudView]], [[LayoutData]], [[Make]], [[Px]], [[Save]], [[Settings]], [[TileView]], [[TitleView]]

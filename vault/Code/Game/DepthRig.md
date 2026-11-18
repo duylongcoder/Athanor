@@ -44,7 +44,7 @@ aliases: []
 [[DepthLayer]], [[DepthMath]], [[DepthTable]], [[Px]]
 
 ## Used by
-[[CameraSway]], [[DepthStage]], [[DepthTestBuilder]], [[DepthTestControls]], [[DepthTestEvidence]], [[MainDepthEvidence]], [[PointerInput]], [[SceneBuilder]], [[ScreenFx]]
+[[CameraSway]], [[DepthStage]], [[DepthTestBuilder]], [[DepthTestControls]], [[DepthTestEvidence]], [[MainDepthEvidence]], [[PointerInput]], [[SceneBuilder]], [[ScreenFx]], [[ViewCapture]]
 
 ## Tested by
 [[DepthClickTests]], [[MainDepthTests]]

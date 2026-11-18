@@ -28,7 +28,7 @@ aliases: []
 | method | `public void SetBlack(float a)` | 36 |  |
 
 ## Uses
-[[CameraSway]], [[DepthRig]], [[Make]], [[Motion]], [[Px]]
+[[Art]], [[CameraSway]], [[DepthRig]], [[Make]], [[Motion]], [[Px]]
 
 ## Used by
 [[CatalystChoiceView]], [[EventView]], [[GameFlow]], [[ReactionCutscene]], [[SimpleCutscene]]

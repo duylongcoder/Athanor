@@ -2,6 +2,7 @@ using System.Reflection;
 using Athanor.Core;
 using Athanor.Game;
 using NUnit.Framework;
+using PrimeTween;
 using UnityEditor;
 using UnityEngine;
 
@@ -123,6 +124,63 @@ namespace Athanor.Tests
                 Assert.AreEqual(again, view.Again);
             }
             finally { f.Destroy(); }
+        }
+
+        // a fresh run that opens on an event: the first one in content.json a fresh run can meet at depth 1 (no aspect offer before it)
+        static RunState EventRun()
+        {
+            var db = new ContentDb(JsonUtility.FromJson<ContentData>(AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/Resources/content.json").text));
+            foreach (var e in db.Events)
+            {
+                var options = new RunOptions { Unlocks = Unlocks.Fresh(db), Events = true, ForceEvent = e.id, ForceEventAt = 1 };
+                var run = new RunState(db, new Journal(), 1, 1, options);
+                if (run.Phase == RunPhase.EventOffer) return run;
+            }
+            Assert.Fail("no event in content.json opens a fresh run at depth 1");
+            return null;
+        }
+
+        [Test]
+        public void Show_EventPrefab_ListsTheOptions()
+        {
+            var f = new PrefabFixture("Assets/Prefabs/Views/Event.prefab");
+            try
+            {
+                var view = f.Get<EventView>();
+                view.Bind();
+                var run = EventRun();
+
+                view.Show(run, null).MoveNext();            // up to the slide-in: heading and rows are written
+
+                Assert.AreEqual(Wording.OptionLabel(run.CurrentEvent, run.EventOptions[0]), view.OptionLabel(0).Text);
+                Assert.IsNotEmpty(view.OptionLabel(0).Text);
+            }
+            finally { Tween.StopAll(); f.Destroy(); }
+        }
+
+        [Test]
+        public void Click_EventPrefabLastOptionThenContinue_ShowsTheOutcomeAndCloses()
+        {
+            var f = new PrefabFixture("Assets/Prefabs/Views/Event.prefab");
+            try
+            {
+                var view = f.Get<EventView>();
+                view.Bind();
+                var run = EventRun();
+                int last = run.EventOptions.Count - 1;          // the walk-on option: no gain, so no screen flash
+                var show = view.Show(run, null);
+                show.MoveNext(); show.MoveNext();               // slide-in done, waiting for a pick
+
+                view.OptionLabel(last).GetComponentInParent<Clickable>().onClick();
+                show.MoveNext();                                // the pick is taken: outcome shown, waiting for Continue
+                Assert.IsNotEmpty(view.Outcome.Text);
+
+                view.GetComponentInChildren<UiButton>().GetComponent<Clickable>().onClick();
+                for (int i = 0; i < 4 && show.MoveNext(); i++) { }   // fade out, then hide
+
+                Assert.IsFalse(view.gameObject.activeSelf);
+            }
+            finally { Tween.StopAll(); f.Destroy(); }
         }
 
         // a goal with no reward item: the toast needs no content database for it

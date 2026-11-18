@@ -12,12 +12,12 @@ aliases: []
 # EventView.Row
 
 `sealed class EventView.Row`
-- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Ui/EventView.cs:18-21` · Nested in [[EventView]]
+- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Ui/EventView.cs:19-23` · Nested in [[EventView]]
 
 ## Members
 | Kind | Signature | Line | Note |
 |---|---|---|---|
-| field | `public Transform root` | 20 |  |
+| field | `public Transform root` | 21 |  |
 
 ## Uses
-[[Label]]
+[[Clickable]], [[Label]]

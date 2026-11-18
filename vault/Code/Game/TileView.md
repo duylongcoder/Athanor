@@ -38,7 +38,7 @@ aliases: []
 | method | `public IEnumerator Consume()` | 100 | The material sinks into the tile in a puff of its own colour. |
 
 ## Uses
-[[Anim]], [[Make]], [[Motion]], [[Px]], [[Sparks]]
+[[Anim]], [[Art]], [[Make]], [[Motion]], [[Px]], [[Sparks]]
 
 ## Used by
 [[BenchView]], [[DepthTestBuilder]], [[DepthTestControls]], [[DepthTestEvidence]], [[MainDepthEvidence]]

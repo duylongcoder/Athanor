@@ -31,7 +31,7 @@ aliases: []
 | method | `public void SetActive(bool on)` | 87 |  |
 
 ## Uses
-[[Make]], [[Px]], [[Rarities]], [[Wording]]
+[[Art]], [[Make]], [[Px]], [[Rarities]], [[Wording]]
 
 ## Used by
 [[Card]], [[CardView]], [[CatalystChoiceView]], [[JournalView]], [[Tooltip]]

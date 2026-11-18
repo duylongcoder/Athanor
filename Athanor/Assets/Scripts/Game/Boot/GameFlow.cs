@@ -85,7 +85,9 @@ namespace Athanor.Game
         static readonly string[] Accent = { "#7cc0f8", "#6ee6c8", "#c486f4", "#ee6a3c", "#fff6b8" };
 
         ReactionCutscene reaction; SimpleCutscene story; WindowView window; TitleView title; JournalView journalView; CatalystChoiceView choice;
-        EventView eventView; GoalsView goalsView;
+        GoalsView goalsView;
+        /// <summary>The event dialog at the start of a depth (a prefab in Main.unity).</summary>
+        [SerializeField] EventView eventView;
         /// <summary>The goal-complete toasts (a prefab in Main.unity).</summary>
         [SerializeField] GoalToast toast;
         readonly List<GoalReward> goalsThisRun = new List<GoalReward>();
@@ -129,6 +131,7 @@ namespace Athanor.Game
             if (library == null) throw new System.InvalidOperationException("GameFlow: library is not set in the scene");
             if (runOver == null) throw new System.InvalidOperationException("GameFlow: runOver is not set in the scene");
             if (toast == null) throw new System.InvalidOperationException("GameFlow: toast is not set in the scene");
+            if (eventView == null) throw new System.InvalidOperationException("GameFlow: eventView is not set in the scene");
             I = this;
             Art.Lib = library;
             Loc.Use(langEn, langVi);
@@ -177,7 +180,7 @@ namespace Athanor.Game
             choice = Make.Root("Catalyst Choice").gameObject.AddComponent<CatalystChoiceView>(); choice.Build();
             runOver.Bind();
             runOver.GoalsClicked += OpenGoals;
-            eventView = Make.Root("Event").gameObject.AddComponent<EventView>(); eventView.Build();
+            eventView.Bind();
             goalsView = Make.Root("Goals").gameObject.AddComponent<GoalsView>(); goalsView.Build(Db);
             goalsView.Closed += CloseGoals;
             toast.Bind();

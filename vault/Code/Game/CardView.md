@@ -30,7 +30,7 @@ aliases: []
 | method | `public bool Contains(Vector2 world)` | 89 |  |
 
 ## Uses
-[[Align]], [[FontKind]], [[Kind]], [[KindColors]], [[Label]], [[Loc]], [[Make]], [[Px]], [[RarityStars]]
+[[Align]], [[Art]], [[FontKind]], [[Kind]], [[KindColors]], [[Label]], [[Loc]], [[Make]], [[Px]], [[RarityStars]]
 
 ## Used by
 [[BenchView]]

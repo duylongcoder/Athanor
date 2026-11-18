@@ -26,7 +26,7 @@ aliases: []
 | method | `public IEnumerator Choose(string title, string line, IReadOnlyList<ChoiceCard> offer, Action<string> done, float autoAfter = -1)` | 116 | Shows the cards and waits for a pick. autoAfter >= 0 takes the first card after that many seconds (scripted play). |
 
 ## Uses
-[[Align]], [[AspectEffects]], [[AspectInstance]], [[Bench]], [[ChoiceCard]], [[Dev]], [[FontKind]], [[Label]], [[Loc]], [[Make]], [[Motion]], [[Px]], [[Rarities]], [[RarityStars]], [[RunState]], [[ScreenFx]], [[Sparks]], [[Wording]]
+[[Align]], [[Art]], [[AspectEffects]], [[AspectInstance]], [[Bench]], [[ChoiceCard]], [[Dev]], [[FontKind]], [[Label]], [[Loc]], [[Make]], [[Motion]], [[Px]], [[Rarities]], [[RarityStars]], [[RunState]], [[ScreenFx]], [[Sparks]], [[Wording]]
 
 ## Used by
 [[GameFlow]]

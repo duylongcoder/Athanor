@@ -23,4 +23,4 @@ aliases: []
 | method | `public static string Capture()` | 38 |  |
 
 ## Uses
-[[ArtLibrary]], [[DepthMood]], [[DepthRig]], [[DepthSwitch]], [[DepthTestBuilder]], [[DepthTestControls]], [[Dust]], [[Flame]], [[FogSheet]], [[LayoutData]], [[Make]], [[Px]], [[Save]], [[TileView]], [[TiltShift]]
+[[Art]], [[DepthMood]], [[DepthRig]], [[DepthSwitch]], [[DepthTestBuilder]], [[DepthTestControls]], [[Dust]], [[EditorGlobals]], [[Flame]], [[FogSheet]], [[LayoutData]], [[Make]], [[Px]], [[Save]], [[TileView]], [[TiltShift]]

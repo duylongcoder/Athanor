@@ -5,7 +5,7 @@ tags: [moc/skills]
 ---
 
 # Skills (slash commands)
-79 skills in `.claude/skills/`.
+78 skills in `.claude/skills/`.
 
 - `/adopt` — Brownfield audit — do existing artifacts actually work? Numbered migration plan. Unlike /project-stage-detect, checks compliance not existence.
 - `/architecture-decision` — Create an ADR documenting a technical decision: context, alternatives considered, consequences.
@@ -45,7 +45,6 @@ tags: [moc/skills]
 - `/playtest-report` — Structured playtest report template, or turn existing playtest notes into structured feedback.
 - `/project-settings` — Shows or changes a project setting and where its value comes from. Use to check or set one.
 - `/project-stage-detect` — Analyze project state, detect stage, identify gaps, recommend next steps. 'Where are we in development?'
-- `/prompt-master` — Generates optimized prompts for AI tools. Activates only when the user explicitly asks to write, fix, improve, or adapt a prompt for a specific AI tool (LLM, Cu
 - `/propagate-design-change` — Finds architecture decisions (ADRs) made stale by a changed GDD and walks through resolving each. Use when the user changed a number or rule in a GDD and asks w
 - `/prototype` — Asks a few questions, writes a one-page brief, builds a playable browser game as one HTML folder it plays and screenshots; with an engine set, a throwaway engin
 - `/qa-plan` — QA test plan for a sprint — classifies stories by Logic/Integration/Visual/UI, covers automated tests, manual cases, smoke scope.

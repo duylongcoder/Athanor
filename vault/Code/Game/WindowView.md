@@ -25,7 +25,7 @@ aliases: []
 | method | `public void ShowNight()` | 73 | Back to the original night sky with no effect (title screen, first-run tutorial, How to play). |
 
 ## Uses
-[[DepthLayer]], [[DepthLook]], [[DepthMath]], [[Dust]], [[Make]], [[Px]]
+[[Art]], [[DepthLayer]], [[DepthLook]], [[DepthMath]], [[Dust]], [[Make]], [[Px]]
 
 ## Used by
 [[DepthMood]], [[DepthStage]], [[DepthSwitch]], [[GameFlow]]

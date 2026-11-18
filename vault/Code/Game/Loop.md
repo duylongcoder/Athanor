@@ -23,4 +23,4 @@ aliases: []
 | method | `public void Draw(float t, float strength, Color color)` | 327 |  |
 
 ## Uses
-[[Make]], [[Px]], [[SparkMesh]]
+[[Art]], [[Px]], [[SparkMesh]]

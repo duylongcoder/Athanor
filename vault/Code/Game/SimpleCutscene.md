@@ -28,7 +28,7 @@ aliases: []
 | method | `public IEnumerator Ending(MaterialData ultimate)` | 208 | The ultimate substance over the cauldron. Stays on screen afterwards (the summary goes on top) until Close. |
 
 ## Uses
-[[Align]], [[Anim]], [[Cutscene]], [[DepthLook]], [[FontKind]], [[Label]], [[Loc]], [[Make]], [[Motion]], [[Px]], [[ScreenFx]], [[SparkMesh]], [[Sparks]]
+[[Align]], [[Anim]], [[Art]], [[Cutscene]], [[DepthLook]], [[FontKind]], [[Label]], [[Loc]], [[Make]], [[Motion]], [[Px]], [[ScreenFx]], [[SparkMesh]], [[Sparks]]
 
 ## Used by
 [[GameFlow]]

@@ -10,7 +10,7 @@ count: 7
 `Athanor/Assets/Tests/EditModeGame/SparksTests.cs` — 7 tests
 
 ## Covers
-[[ArtLibrary]], [[Make]], [[Particle]], [[SparkMesh]], [[Sparks]]
+[[Art]], [[Particle]], [[SparkMesh]], [[Sparks]]
 
 ## Tests
 - `Step_MatchesTheOldPool_PositionAndFade`

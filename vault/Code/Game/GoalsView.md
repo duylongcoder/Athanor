@@ -26,7 +26,7 @@ aliases: []
 | method | `public void Close()` | 124 |  |
 
 ## Uses
-[[Align]], [[ContentDb]], [[FontKind]], [[Journal]], [[Label]], [[Loc]], [[Make]], [[Profile]], [[Px]], [[Rarities]], [[Wording]]
+[[Align]], [[Art]], [[ContentDb]], [[FontKind]], [[Journal]], [[Label]], [[Loc]], [[Make]], [[Profile]], [[Px]], [[Rarities]], [[Wording]]
 
 ## Used by
 [[GameFlow]]

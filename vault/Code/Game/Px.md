@@ -28,7 +28,7 @@ aliases: []
 | method | `public static Color Times(this Color c, float k)` | 29 |  |
 
 ## Used by
-[[BenchView]], [[CardView]], [[CatalystChoiceView]], [[DepthMath]], [[DepthMood]], [[DepthRig]], [[DepthStage]], [[DepthTable]], [[DepthTestBuilder]], [[DepthTestEvidence]], [[Dust]], [[EventView]], [[GameFlow]], [[GoalToast]], [[GoalsView]], [[HudView]], [[JournalView]], [[LinkView]], [[Loop]], [[MainDepthEvidence]], [[Make]], [[Motion]], [[PauseMenu]], [[PointerInput]], [[RarityStars]], [[ReactionCutscene]], [[RunOverView]], [[SceneBuilder]], [[ScreenFx]], [[SimpleCutscene]], [[TileView]], [[TitleView]], [[Tooltip]], [[TutorialController]], [[UiButton]], [[WindowView]], [[Wording]]
+[[BenchView]], [[CardView]], [[CatalystChoiceView]], [[DepthMath]], [[DepthMood]], [[DepthRig]], [[DepthStage]], [[DepthTable]], [[DepthTestBuilder]], [[DepthTestEvidence]], [[Dust]], [[GameFlow]], [[GoalToast]], [[GoalsView]], [[HudView]], [[JournalView]], [[LinkView]], [[Loop]], [[MainDepthEvidence]], [[Make]], [[Motion]], [[PauseMenu]], [[PointerInput]], [[RarityStars]], [[ReactionCutscene]], [[RunOverView]], [[SceneBuilder]], [[ScreenFx]], [[SimpleCutscene]], [[TileView]], [[TitleView]], [[Tooltip]], [[TutorialController]], [[UiButton]], [[ViewCapture]], [[WindowView]], [[Wording]]
 
 ## Tested by
 [[DepthClickTests]], [[DepthLayerTests]], [[MainDepthTests]], [[TutorialFlowTests]]

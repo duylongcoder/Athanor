@@ -44,4 +44,4 @@ aliases: []
 [[BenchView]], [[CatalystChoiceView]], [[EventView]], [[GoalToast]], [[GoalsView]], [[JournalView]], [[RarityStars]], [[Tooltip]]
 
 ## Tested by
-[[LocTests]]
+[[LocTests]], [[PrefabBakeTests]]

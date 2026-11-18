@@ -18,11 +18,13 @@ Devlogs record decisions and results; specs/plans hold the designs. All of these
 - Phase 4: [[docs/devlogs/phase-4-depth|phase-4-depth.md]] — Depth layers / 2.5D feasibility and browser mockup (`docs/mockup/depth/`), awaiting owner review
 - Phase 5: [[docs/devlogs/phase-5-prep|phase-5-prep.md]] — Owner decisions and 5a/5b scope; plan [2026-11-15-athanor-phase5](../superpowers/plans/2026-11-15-athanor-phase5.md); fix briefs in [2026-11-15-athanor-phase5-briefs](../superpowers/plans/2026-11-15-athanor-phase5-briefs.md), [delta3](../superpowers/plans/2026-11-15-athanor-phase5-delta3.md); **5a signed off 2026-11-16** ([sign-off](../../production/qa/phase5a-signoff.md): PASS with accepted gaps); release build 10,724,285 B, 1,100,387 B left for 5b; committed (1792ba53 / 1e53c9d3); 5b step 1 done 2026-11-16 on `feature/phase5b-hd2d` (HD-2D mockup + SPEC, loops mockup, endings lore draft); G2 approved 2026-11-16, step 2 (5b-04 layer art, 5b-05 prototype, 5b-06 measure) in progress
 - Phase 5: [[docs/devlogs/phase-5-lore|phase-5-lore.md]] — Depth intro lines, window view per depth, audit of the 19 event texts
+- Phase 5: [[docs/devlogs/phase-5-close|phase-5-close.md]] — Phase 5 closed 2026-11-18: what shipped, final figures, undecided carry-overs
 
 ## Specs
 - [[docs/superpowers/specs/2026-11-11-athanor-design|2026-11-11-athanor-design]]
 - [[docs/superpowers/specs/2026-11-12-athanor-phase2-design|2026-11-12-athanor-phase2-design]]
 - [[docs/superpowers/specs/2026-11-12-athanor-phase3-design|2026-11-12-athanor-phase3-design]]
+- [[docs/superpowers/specs/2026-11-17-athanor-phase6-unity-refactor-design|2026-11-17-athanor-phase6-unity-refactor-design]]
 
 ## Plans
 - [[docs/superpowers/plans/2026-11-11-athanor|2026-11-11-athanor]]
@@ -32,3 +34,4 @@ Devlogs record decisions and results; specs/plans hold the designs. All of these
 - [[docs/superpowers/plans/2026-11-15-athanor-phase5-delta2|2026-11-15-athanor-phase5-delta2]]
 - [[docs/superpowers/plans/2026-11-15-athanor-phase5-delta3|2026-11-15-athanor-phase5-delta3]]
 - [[docs/superpowers/plans/2026-11-15-athanor-phase5|2026-11-15-athanor-phase5]]
+- [[docs/superpowers/plans/2026-11-18-athanor-phase6-unity-refactor|2026-11-18-athanor-phase6-unity-refactor]]

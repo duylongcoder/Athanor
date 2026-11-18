@@ -22,7 +22,7 @@ aliases: []
 | method | `public static Flipbook Spawn(string name, Vector2 pos, Transform parent = null, int sortingOrder = 50)` | 9 | Plays the named effect once at a world position. Returns null when that effect has not been exported. |
 
 ## Uses
-[[Flipbook]], [[Make]]
+[[Art]], [[Flipbook]]
 
 ## Used by
 [[GameFlow]], [[ReactionCutscene]]
