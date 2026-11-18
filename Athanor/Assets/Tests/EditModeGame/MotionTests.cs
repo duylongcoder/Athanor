@@ -42,7 +42,7 @@ namespace Athanor.Tests
         }
 
         [Test]
-        public void EveryHelper_IsAlive()
+        public void EveryHelper_WhenStarted_IsAlive()
         {
             var t = go.transform;
             Assert.IsTrue(Motion.Move(t, Vector3.zero, Vector3.one, 0.2f).isAlive);

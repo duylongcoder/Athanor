@@ -34,7 +34,7 @@ namespace Athanor.Tests
             Assert.AreEqual(3, new Satchel(new[] { "a", "b", "c" }, 1).Draw(5).Count);
         }
 
-        [Test] public void Draw_DoesNotReturnCardsStillOut()
+        [Test] public void Draw_WhenAllCardsAreAlreadyOut_DoesNotReturnCardsStillOut()
         {
             var s = new Satchel(new[] { "a", "b", "c" }, 1);
             s.Draw(3);
@@ -63,7 +63,7 @@ namespace Athanor.Tests
             Assert.IsFalse(k.AddHeatHint("p", 17));
         }
 
-        [Test] public void AddHint_NoDuplicates()
+        [Test] public void AddHint_WhenRepeated_AddsNoDuplicates()
         {
             var j = new Journal();
             Assert.IsTrue(j.AddHint("a", Kind.Potion)); Assert.IsFalse(j.AddHint("a", Kind.Potion));
@@ -71,7 +71,7 @@ namespace Athanor.Tests
             Assert.AreEqual(2, j.Hints.Count);
         }
 
-        [Test] public void RoundTripsThroughData()
+        [Test] public void Journal_WithAPairAndAHint_RoundTripsThroughData()
         {
             var j = new Journal(); j.Learn("a", "b"); j.AddHint("c", Kind.Beast);
             var k = Journal.FromData(j.ToData());
@@ -94,7 +94,7 @@ namespace Athanor.Tests
             Assert.IsTrue(k.IsKnown("ember_coal", "deep_tear"));
         }
 
-        [Test] public void IsComplete_OnlyWhenAllRecipesWithMaterialKnown()
+        [Test] public void IsComplete_WithSomeRecipesKnown_IsTrueOnlyWhenAllRecipesWithMaterialKnown()
         {
             var db = new ContentDb(TestContent.Combo());
             var j = new Journal();
@@ -106,7 +106,7 @@ namespace Athanor.Tests
             Assert.IsFalse(j.IsComplete("p", db));            // p is still in z, big and quad
         }
 
-        [Test] public void OpenHints_HiddenOnceComplete()
+        [Test] public void OpenHints_WhenAMaterialIsComplete_AreHiddenOnceComplete()
         {
             var db = new ContentDb(TestContent.Combo());
             var j = new Journal();

@@ -16,7 +16,7 @@ namespace Athanor.Tests
     /// </summary>
     public class RoleSimTests
     {
-        [Test] public void Newcomer_LearnsAndEventuallyWins()
+        [Test] public void Newcomer_OverFortyRuns_LearnsAndReachesTheDeep()
         {
             // a smoke test of the simulated newcomer: it must fill its journal and reach the deep
             var db = new ContentDb(TestContent.Load());
@@ -26,7 +26,7 @@ namespace Athanor.Tests
             Assert.That(career.Depth.Max(), Is.GreaterThanOrEqualTo(3), "deepest " + career.Depth.Max());
         }
 
-        [Test] public void Admin_WinsFromAFreshProfile()
+        [Test] public void Admin_WithinADozenRuns_WinsFromAFreshProfile()
         {
             var db = new ContentDb(TestContent.Load());
             var career = Sim.Play(db, true, 1, 12);

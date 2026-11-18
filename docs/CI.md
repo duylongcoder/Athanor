@@ -27,7 +27,7 @@ same command CI runs: `tools/ci/run.sh all` (or `lint`, `repo`, `core`).
 ## Rules for everyone
 
 - **Never** weaken a check to get green. Fix the code, or record the debt (below).
-- Existing findings are frozen in `tools/lint/baseline.json` (158 today: mostly UL100 test names). The baseline only
+- Existing findings are frozen in `tools/lint/baseline.json` (8 today: UL002–UL005, cleared in Task 20). The baseline only
   shrinks. A new finding fails CI. Regenerate it only when you fixed some:
   `python3 tools/lint/unity_lint.py --root Athanor --config tools/lint/lint.config.json --all --write-baseline tools/lint/baseline.json`
 - A new rule goes in `tools/lint/unity_lint.py` or `tools/ci/check_repo.py` with a test, and a row in the table above.

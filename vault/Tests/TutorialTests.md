@@ -15,11 +15,11 @@ count: 18
 ## Tests
 - `Satchel_Take_PullsANamedCard_FromDrawOrDiscard`
 - `Deal_ReplacesTheStartingHand_AndKeepsTheSatchelWhole`
-- `Deal_KeepsTheRack`
+- `Deal_AfterMakingADiscovery_KeepsTheRack`
 - `Deal_Refuses_TooManyCopies_NonStarters_LockedStarters_AndABusyBench`
 - `QuietBefore_HoldsAspectsAndEventsBack_UntilThatDepth`
 - `FirstOffer_IsFixed_ForTheFirstOfferOnly`
-- `FirstOffer_LeavesOutLockedCatalysts`
+- `FirstOffer_WithALockedCatalystNamed_LeavesOutLockedCatalysts`
 - `Preview_ScoresALayout_AndChangesNothing`
 - `ScoreParts_SplitsAScore_IntoItsFactors`
 - `Trial1_EmberCoalAndDeepTear_MakeSteamWisp_For40`

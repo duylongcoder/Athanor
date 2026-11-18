@@ -17,4 +17,4 @@ count: 5
 - `Draw_DifferentSeed_DifferentOrder`
 - `Draw_ReshufflesDiscard_WhenEmpty`
 - `Draw_ReturnsFewer_WhenNotEnoughCards`
-- `Draw_DoesNotReturnCardsStillOut`
+- `Draw_WhenAllCardsAreAlreadyOut_DoesNotReturnCardsStillOut`

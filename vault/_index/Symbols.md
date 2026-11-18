@@ -1155,17 +1155,17 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | WebBuild | method | Build | 15 | public static void Build() |
 | WebBuild | method | BuildQuick | 19 | public static void BuildQuick() |
 | WebBuild | method | BuildDev | 26 | public static void BuildDev() |
-| ContentTests | method | EventTexts_FitTheEventWindow | 316 | public void EventTexts_FitTheEventWindow() |
+| ContentTests | method | EventTexts_OfEveryEvent_FitTheEventWindow | 316 | public void EventTexts_OfEveryEvent_FitTheEventWindow() |
 | ContentTests | method | LoreEvents_DoNothing_AndTellTheStoryInOrder | 328 | public void LoreEvents_DoNothing_AndTellTheStoryInOrder() |
 | TestLang | method | Text | 12 | public static string Text(string code) |
-| LoreTests | method | TheLastLoreEvent_IsNotDrawn | 50 | public void TheLastLoreEvent_IsNotDrawn() |
-| LoreTests | method | WithoutALastLore_EveryLoreEventCanCome | 63 | public void WithoutALastLore_EveryLoreEventCanCome() |
+| LoreTests | method | TheLastLoreEvent_WhenRemembered_IsNotDrawn | 50 | public void TheLastLoreEvent_WhenRemembered_IsNotDrawn() |
+| LoreTests | method | WithoutALastLore_OverManySeeds_EveryLoreEventCanCome | 63 | public void WithoutALastLore_OverManySeeds_EveryLoreEventCanCome() |
 | LoreTests | method | ALastLore_ThatIsNotALoreEvent_ChangesNothing | 72 | public void ALastLore_ThatIsNotALoreEvent_ChangesNothing() |
 | LoreTests | method | InARun_ALoreEvent_IsNotShownTwiceInARow | 85 | public void InARun_ALoreEvent_IsNotShownTwiceInARow() |
 | LoreTests | method | AnotherLoreEvent_InBetween_LetsTheFirstComeBack | 98 | public void AnotherLoreEvent_InBetween_LetsTheFirstComeBack() |
 | LoreTests | method | ANonLoreEvent_InBetween_DoesNotLetItComeBack | 116 | public void ANonLoreEvent_InBetween_DoesNotLetItComeBack() |
-| LoreTests | method | SkippingALoreEvent_IsBalanceNeutral | 155 | public void SkippingALoreEvent_IsBalanceNeutral() |
-| LoreTests | method | Profile_RemembersOnlyLoreEvents | 183 | public void Profile_RemembersOnlyLoreEvents() |
+| LoreTests | method | SkippingALoreEvent_WhenPlayedWithAndWithoutIt_IsBalanceNeutral | 155 | public void SkippingALoreEvent_WhenPlayedWithAndWithoutIt_IsBalanceNeutral() |
+| LoreTests | method | Profile_WhenShownLoreBoonAndNullEvents_RemembersOnlyLoreEvents | 183 | public void Profile_WhenShownLoreBoonAndNullEvents_RemembersOnlyLoreEvents() |
 | LoreTests | method | Profile_LastLore_IsSaved_AndDroppedWhenNoLongerALoreEvent | 195 | public void Profile_LastLore_IsSaved_AndDroppedWhenNoLongerALoreEvent() |
 | SettingsTests | method | New_NoArguments_HasDefaultValues | 9 | public void New_NoArguments_HasDefaultValues() |
 | SettingsTests | method | New_NoArguments_SwayIsOn | 20 | public void New_NoArguments_SwayIsOn() |
@@ -1216,11 +1216,11 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | TestContent | method | Cat | 70 | public static CatalystData Cat(string effect, string kind = "", float amount = 0) |
 | TutorialTests | method | Satchel_Take_PullsANamedCard_FromDrawOrDiscard | 17 | public void Satchel_Take_PullsANamedCard_FromDrawOrDiscard() |
 | TutorialTests | method | Deal_ReplacesTheStartingHand_AndKeepsTheSatchelWhole | 45 | public void Deal_ReplacesTheStartingHand_AndKeepsTheSatchelWhole() |
-| TutorialTests | method | Deal_KeepsTheRack | 55 | public void Deal_KeepsTheRack() |
+| TutorialTests | method | Deal_AfterMakingADiscovery_KeepsTheRack | 55 | public void Deal_AfterMakingADiscovery_KeepsTheRack() |
 | TutorialTests | method | Deal_Refuses_TooManyCopies_NonStarters_LockedStarters_AndABusyBench | 65 | public void Deal_Refuses_TooManyCopies_NonStarters_LockedStarters_AndABusyBench() |
 | TutorialTests | method | QuietBefore_HoldsAspectsAndEventsBack_UntilThatDepth | 81 | public void QuietBefore_HoldsAspectsAndEventsBack_UntilThatDepth() |
 | TutorialTests | method | FirstOffer_IsFixed_ForTheFirstOfferOnly | 108 | public void FirstOffer_IsFixed_ForTheFirstOfferOnly() |
-| TutorialTests | method | FirstOffer_LeavesOutLockedCatalysts | 121 | public void FirstOffer_LeavesOutLockedCatalysts() |
+| TutorialTests | method | FirstOffer_WithALockedCatalystNamed_LeavesOutLockedCatalysts | 121 | public void FirstOffer_WithALockedCatalystNamed_LeavesOutLockedCatalysts() |
 | TutorialTests | method | Preview_ScoresALayout_AndChangesNothing | 140 | public void Preview_ScoresALayout_AndChangesNothing() |
 | TutorialTests | method | ScoreParts_SplitsAScore_IntoItsFactors | 156 | public void ScoreParts_SplitsAScore_IntoItsFactors() |
 | TutorialTests | method | Trial1_EmberCoalAndDeepTear_MakeSteamWisp_For40 | 182 | public void Trial1_EmberCoalAndDeepTear_MakeSteamWisp_For40() |
@@ -1264,7 +1264,7 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | DepthLookTests | method | ShowsRunIntro_OnlyDepthOneOfANormalRun_IsTrue | 37 | public void ShowsRunIntro_OnlyDepthOneOfANormalRun_IsTrue() |
 | DepthLookTests | method | ThemedWindow_OutsideANormalRun_IsFalse | 48 | public void ThemedWindow_OutsideANormalRun_IsFalse() |
 | GameTestSetup | method | Inject | 10 | public void Inject() |
-| HudTests | method | CanRedraw_UntilTheLastRedrawIsUsed | 14 | public void CanRedraw_UntilTheLastRedrawIsUsed() |
+| HudTests | method | CanRedraw_WhileRedrawsRemain_IsTrueUntilTheLastRedrawIsUsed | 14 | public void CanRedraw_WhileRedrawsRemain_IsTrueUntilTheLastRedrawIsUsed() |
 | HudTests | method | CanRedraw_IsFalse_OffTheBench_EvenWithRedrawsLeft | 28 | public void CanRedraw_IsFalse_OffTheBench_EvenWithRedrawsLeft() |
 | HudTests | method | CanRedraw_IsFalse_WithNoRun | 39 | public void CanRedraw_IsFalse_WithNoRun() |
 | LabelLineBoxTests | method | HalfLeading_Crux48_IsElevenPixels | 43 | public void HalfLeading_Crux48_IsElevenPixels() |
@@ -1303,7 +1303,7 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | MotionTests | method | Clean | 20 | public void Clean() |
 | MotionTests | method | Arc_IsAlive_AndCanJoinASequence | 27 | public void Arc_IsAlive_AndCanJoinASequence() |
 | MotionTests | method | Arc_EndsOnItsTarget_OnWholePixels | 36 | public void Arc_EndsOnItsTarget_OnWholePixels() |
-| MotionTests | method | EveryHelper_IsAlive | 45 | public void EveryHelper_IsAlive() |
+| MotionTests | method | EveryHelper_WhenStarted_IsAlive | 45 | public void EveryHelper_WhenStarted_IsAlive() |
 | PauseTests | method | Open_StopsTime_AndEveryExitRestoresIt | 38 | public void Open_StopsTime_AndEveryExitRestoresIt() |
 | PauseTests | method | Quit_RestoresTime_BeforeTheOwnerHearsOfIt | 53 | public void Quit_RestoresTime_BeforeTheOwnerHearsOfIt() |
 | PauseTests | method | Esc_Toggles_AndBacksOutOfTheQuitQuestion | 67 | public void Esc_Toggles_AndBacksOutOfTheQuitQuestion() |
@@ -1364,14 +1364,14 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | SaveTests | method | Restore | 20 | public void Restore() |
 | SaveTests | method | LoadProfile_WithNothingSaved_IsFresh_WithASeedOfItsOwn | 29 | public void LoadProfile_WithNothingSaved_IsFresh_WithASeedOfItsOwn() |
 | SaveTests | method | LoadProfile_WithGarbage_IsFresh | 38 | public void LoadProfile_WithGarbage_IsFresh() |
-| SaveTests | method | StoreThenLoadProfile_KeepsStatsGoalsAndUnlocks | 49 | public void StoreThenLoadProfile_KeepsStatsGoalsAndUnlocks() |
-| SaveTests | method | LoadProfile_DropsWhatTheContentNoLongerHas | 66 | public void LoadProfile_DropsWhatTheContentNoLongerHas() |
+| SaveTests | method | StoreThenLoadProfile_WithStatsAndCompletedGoals_KeepsStatsGoalsAndUnlocks | 49 | public void StoreThenLoadProfile_WithStatsAndCompletedGoals_KeepsStatsGoalsAndUnlocks() |
+| SaveTests | method | LoadProfile_WithIdsTheContentNoLongerHas_DropsThem | 66 | public void LoadProfile_WithIdsTheContentNoLongerHas_DropsThem() |
 | SaveTests | method | ResetProfile_ErasesTheProfile_AndKeepsTheJournal | 80 | public void ResetProfile_ErasesTheProfile_AndKeepsTheJournal() |
 | SaveTests | method | LoadJournal_WithGarbageString_ReturnsEmpty | 92 | public void LoadJournal_WithGarbageString_ReturnsEmpty() |
 | SaveTests | method | LoadJournal_WithOlderShape_ReturnsEmpty | 101 | public void LoadJournal_WithOlderShape_ReturnsEmpty() |
 | SaveTests | method | LoadJournal_WithNothingSaved_ReturnsEmpty | 110 | public void LoadJournal_WithNothingSaved_ReturnsEmpty() |
-| SaveTests | method | StoreThenLoad_KeepsRecipesAndHints | 117 | public void StoreThenLoad_KeepsRecipesAndHints() |
-| SaveTests | method | StoreThenLoad_KeepsComboRecipes | 129 | public void StoreThenLoad_KeepsComboRecipes() |
+| SaveTests | method | StoreThenLoadJournal_WithAPairAndAHint_KeepsRecipesAndHints | 117 | public void StoreThenLoadJournal_WithAPairAndAHint_KeepsRecipesAndHints() |
+| SaveTests | method | StoreThenLoadJournal_WithAThreeItemCombo_KeepsComboRecipes | 129 | public void StoreThenLoadJournal_WithAThreeItemCombo_KeepsComboRecipes() |
 | SaveTests | method | LoadJournal_Phase1PairKeys_StillLoad | 138 | public void LoadJournal_Phase1PairKeys_StillLoad() |
 | SaveTests | method | TutorialDone_DefaultsToFalse_AndRoundTrips | 145 | public void TutorialDone_DefaultsToFalse_AndRoundTrips() |
 | SceneBakeTests | method | ScreenFx_Baked_HasFlashAndFadeSprites_AndBindMakesItTheSingleton | 20 | public void ScreenFx_Baked_HasFlashAndFadeSprites_AndBindMakesItTheSingleton() |

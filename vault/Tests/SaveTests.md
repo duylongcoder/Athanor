@@ -15,13 +15,13 @@ count: 12
 ## Tests
 - `LoadProfile_WithNothingSaved_IsFresh_WithASeedOfItsOwn`
 - `LoadProfile_WithGarbage_IsFresh`
-- `StoreThenLoadProfile_KeepsStatsGoalsAndUnlocks`
-- `LoadProfile_DropsWhatTheContentNoLongerHas`
+- `StoreThenLoadProfile_WithStatsAndCompletedGoals_KeepsStatsGoalsAndUnlocks`
+- `LoadProfile_WithIdsTheContentNoLongerHas_DropsThem`
 - `ResetProfile_ErasesTheProfile_AndKeepsTheJournal`
 - `LoadJournal_WithGarbageString_ReturnsEmpty`
 - `LoadJournal_WithOlderShape_ReturnsEmpty`
 - `LoadJournal_WithNothingSaved_ReturnsEmpty`
-- `StoreThenLoad_KeepsRecipesAndHints`
-- `StoreThenLoad_KeepsComboRecipes`
+- `StoreThenLoadJournal_WithAPairAndAHint_KeepsRecipesAndHints`
+- `StoreThenLoadJournal_WithAThreeItemCombo_KeepsComboRecipes`
 - `LoadJournal_Phase1PairKeys_StillLoad`
 - `TutorialDone_DefaultsToFalse_AndRoundTrips`

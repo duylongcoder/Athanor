@@ -141,7 +141,7 @@ namespace Athanor.Tests
             Assert.IsTrue(r.Redraw()); Assert.IsFalse(r.Redraw()); Assert.AreEqual(0, r.RedrawsLeft);
         }
 
-        [Test] public void ExtraHand_Gives6Cards()
+        [Test] public void ExtraHand_WhenChosenAsCatalyst_Gives6Cards()
         {
             var d = Custom(new[] { 30, 900, 2500, 7000 }); d.catalysts = new[] { TestContent.Cat(Effects.ExtraHand) };
             var r = RunWith(d, 1, "a", "b");
@@ -151,7 +151,7 @@ namespace Athanor.Tests
             Assert.AreEqual(6, r.HandSize); Assert.AreEqual(6, Starters(r));
         }
 
-        [Test] public void SmallSatchel_DrawsWhatExists()
+        [Test] public void SmallSatchel_WithFewerCardsThanTheHand_DrawsWhatExists()
         {
             var d = Custom(new[] { 999999, 1, 1, 1 });
             d.materials = new[] { TestContent.Mat("a", "Ore", 0), TestContent.Mat("b", "Ore", 0), TestContent.Mat("x", "Metal", 1) };
@@ -200,7 +200,7 @@ namespace Athanor.Tests
             Assert.AreEqual(1, r.Owned("x")); Assert.AreEqual(1, r.Hand.Count(h => h == "x"));
         }
 
-        [Test] public void PlacedStarters_AlwaysReturnToTheSatchel()
+        [Test] public void PlacedStarters_AfterIgnite_AlwaysReturnToTheSatchel()
         {
             var r = RunWith(Custom(Far, ""), 1, "a", "b", "d");
             int before = r.SatchelSize;
@@ -229,7 +229,7 @@ namespace Athanor.Tests
             Assert.AreEqual(RunPhase.Won, r.Ignite().PhaseAfter);
         }
 
-        [Test] public void HasFired_ByRecipe()
+        [Test] public void HasFired_BeforeAndAfterIgnitingTheRecipe_ReportsByRecipe()
         {
             var d = Custom(Far, "");
             var r = RunWith(d, 1, "a", "b");
@@ -239,7 +239,7 @@ namespace Athanor.Tests
             Assert.IsTrue(r.HasFired(db.Recipes[0])); Assert.IsTrue(r.HasFired("b", "a"));
         }
 
-        [Test] public void Redraw_KeepsDiscoveries()
+        [Test] public void Redraw_AfterMakingADiscovery_KeepsDiscoveries()
         {
             var r = RunWith(Custom(Far, ""), 1, "a", "b");
             PlaceId(r, "a", 0); PlaceId(r, "b", 1); r.Ignite();
@@ -276,7 +276,7 @@ namespace Athanor.Tests
             Assert.AreEqual(RunState.RackSize, r.Hand.Count(h => h == "x" || h == "y"));
         }
 
-        [Test] public void MakingTheUltimate_WinsAtAnyDepth()
+        [Test] public void MakingTheUltimate_AtDepthOne_WinsAtAnyDepth()
         {
             var r = RunWith(Custom(Far, "x"), 1, "a", "b");
             PlaceId(r, "a", 0); PlaceId(r, "b", 1);
@@ -295,7 +295,7 @@ namespace Athanor.Tests
             Assert.AreEqual(RunPhase.Won, r.Ignite().PhaseAfter);   // "big" is that content's ultimate
         }
 
-        [Test] public void Bot_GivesARecipeTheCompanyItNeeds()
+        [Test] public void Bot_WithARecipeAskingForCompany_GivesItTheCompanyItNeeds()
         {
             // p(8) + q(5) is 13 of its own and 22 is asked: the second q(5) and t(4) must both touch the hub
             var d = TestContent.Combo();
@@ -307,7 +307,7 @@ namespace Athanor.Tests
             Assert.AreEqual(RunPhase.Won, r.Ignite().PhaseAfter, "bench " + string.Join(" ", r.Bench.Tiles.Select(t => t ?? ".")));
         }
 
-        [Test] public void Bot_GivesADiscoveryTheCompanyItNeeds()
+        [Test] public void Bot_WithAMadeDiscoveryAskingForCompany_GivesItTheCompanyItNeeds()
         {
             // x(6) + v(1) is 7 of its own and 20 is asked: the made x has to wait for two lively starters beside it
             var d = TestContent.Combo();
@@ -341,14 +341,14 @@ namespace Athanor.Tests
             }
         }
 
-        [Test] public void ScriptedRun_ReachesWon()
+        [Test] public void ScriptedRun_WithSeedOne_ReachesWon()
         {
             var db = new ContentDb(TestContent.Load());
             var run = Sim.Autoplay(db, 1);
             Assert.AreEqual(RunPhase.Won, run.Phase, "depth " + run.Depth + " potency " + run.Potency + "/" + run.Target);
         }
 
-        [Test] public void InformedPlayer_WinsMostSeeds()
+        [Test] public void InformedPlayer_Over40Seeds_WinsMostSeeds()
         {
             var db = new ContentDb(TestContent.Load());
             int wins = 0; var depths = new List<string>();
@@ -365,7 +365,7 @@ namespace Athanor.Tests
         }
 
         /// <summary>The balance pass left five-item combos as a rare peak, not the standard way to win.</summary>
-        [Test] public void InformedPlayer_RarelyFiresAFiveItemCombo()
+        [Test] public void InformedPlayer_Over40Seeds_RarelyFiresAFiveItemCombo()
         {
             var db = new ContentDb(TestContent.Load());
             int runsWith5 = 0;

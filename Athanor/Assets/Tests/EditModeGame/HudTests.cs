@@ -11,7 +11,7 @@ namespace Athanor.Tests
         static ContentDb Db() => new ContentDb(JsonUtility.FromJson<ContentData>(Resources.Load<TextAsset>("content").text));
 
         [Test]
-        public void CanRedraw_UntilTheLastRedrawIsUsed()
+        public void CanRedraw_WhileRedrawsRemain_IsTrueUntilTheLastRedrawIsUsed()
         {
             var r = new RunState(Db(), new Journal(), 5);
             Assert.AreEqual(RunPhase.Playing, r.Phase);

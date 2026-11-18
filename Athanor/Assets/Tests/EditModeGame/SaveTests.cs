@@ -46,7 +46,7 @@ namespace Athanor.Tests
         }
 
         [Test]
-        public void StoreThenLoadProfile_KeepsStatsGoalsAndUnlocks()
+        public void StoreThenLoadProfile_WithStatsAndCompletedGoals_KeepsStatsGoalsAndUnlocks()
         {
             var db = Db();
             var p = new Profile(321) { RunsStarted = 12, RunsWon = 1, DepthReached = 4, Ignites = 130, ChainLongest = 3, ComboLargest = 4, BestIgnite = 5000000000L };
@@ -63,7 +63,7 @@ namespace Athanor.Tests
         }
 
         [Test]
-        public void LoadProfile_DropsWhatTheContentNoLongerHas()
+        public void LoadProfile_WithIdsTheContentNoLongerHas_DropsThem()
         {
             PlayerPrefs.SetString(Save.ProfileKey, JsonUtility.ToJson(new ProfileData
             {
@@ -114,7 +114,7 @@ namespace Athanor.Tests
         }
 
         [Test]
-        public void StoreThenLoad_KeepsRecipesAndHints()
+        public void StoreThenLoadJournal_WithAPairAndAHint_KeepsRecipesAndHints()
         {
             var journal = new Journal();
             journal.Learn("ember_coal", "deep_tear");
@@ -126,7 +126,7 @@ namespace Athanor.Tests
         }
 
         [Test]
-        public void StoreThenLoad_KeepsComboRecipes()
+        public void StoreThenLoadJournal_WithAThreeItemCombo_KeepsComboRecipes()
         {
             var journal = new Journal();
             journal.Learn(new[] { "sulfur", "ember_coal", "iron_ore" });

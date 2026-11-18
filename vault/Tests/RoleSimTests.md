@@ -13,5 +13,5 @@ count: 2
 [[ContentDb]], [[Journal]]
 
 ## Tests
-- `Newcomer_LearnsAndEventuallyWins`
-- `Admin_WinsFromAFreshProfile`
+- `Newcomer_OverFortyRuns_LearnsAndReachesTheDeep`
+- `Admin_WithinADozenRuns_WinsFromAFreshProfile`

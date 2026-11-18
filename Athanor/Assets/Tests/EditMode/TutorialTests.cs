@@ -52,7 +52,7 @@ namespace Athanor.Tests
         }
 
         [Test]
-        public void Deal_KeepsTheRack()
+        public void Deal_AfterMakingADiscovery_KeepsTheRack()
         {
             var run = new RunState(db, new Journal(), 7);
             run.Deal(FirstHand);
@@ -118,7 +118,7 @@ namespace Athanor.Tests
         }
 
         [Test]
-        public void FirstOffer_LeavesOutLockedCatalysts()
+        public void FirstOffer_WithALockedCatalystNamed_LeavesOutLockedCatalysts()
         {
             var opts = new RunOptions { Unlocks = Unlocks.Fresh(db), FirstOffer = new[] { "crooked_mirror", "bellows" } };   // crooked_mirror is locked
             var run = new RunState(db, new Journal(), 7, 1, opts);

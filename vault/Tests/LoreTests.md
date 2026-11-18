@@ -13,12 +13,12 @@ count: 9
 [[AutoMove]], [[AutoPlayer]], [[ContentData]], [[ContentDb]], [[Journal]], [[Ops]], [[Profile]], [[ProfileData]], [[RunOptions]], [[RunPhase]], [[RunState]], [[Unlocks]]
 
 ## Tests
-- `TheLastLoreEvent_IsNotDrawn`
-- `WithoutALastLore_EveryLoreEventCanCome`
+- `TheLastLoreEvent_WhenRemembered_IsNotDrawn`
+- `WithoutALastLore_OverManySeeds_EveryLoreEventCanCome`
 - `ALastLore_ThatIsNotALoreEvent_ChangesNothing`
 - `InARun_ALoreEvent_IsNotShownTwiceInARow`
 - `AnotherLoreEvent_InBetween_LetsTheFirstComeBack`
 - `ANonLoreEvent_InBetween_DoesNotLetItComeBack`
-- `SkippingALoreEvent_IsBalanceNeutral`
-- `Profile_RemembersOnlyLoreEvents`
+- `SkippingALoreEvent_WhenPlayedWithAndWithoutIt_IsBalanceNeutral`
+- `Profile_WhenShownLoreBoonAndNullEvents_RemembersOnlyLoreEvents`
 - `Profile_LastLore_IsSaved_AndDroppedWhenNoLongerALoreEvent`
