@@ -141,6 +141,8 @@ production/session-state/
 # Build output of the rules test project (CLAUDE.md: never stage)
 /tools/CoreTests/bin/
 /tools/CoreTests/obj/
+/tools/CoreReports/bin/
+/tools/CoreReports/obj/
 test-results*.xml
 
 # Reference videos and screenshots (not committed)

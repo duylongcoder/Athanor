@@ -33,4 +33,4 @@ aliases: []
 [[AutoPlayer]], [[RunState]]
 
 ## Tested by
-[[IgniteTests]], [[Phase3Tests]], [[RoleSimTests]]
+[[IgniteTests]], [[Phase3Tests]]

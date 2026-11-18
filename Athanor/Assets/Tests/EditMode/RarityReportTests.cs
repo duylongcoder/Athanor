@@ -62,7 +62,7 @@ namespace Athanor.Tests
                     int wins = 0;
                     for (int s = 1; s <= seeds; s++)
                     {
-                        var run = Play(db, s, new RunOptions { Unlocks = BalanceMatrixTests.With(db, false, true), FirstOffer = new[] { cat.id } }, "bot", new int[4], new int[4]);
+                        var run = Play(db, s, new RunOptions { Unlocks = Sim.With(db, false, true), FirstOffer = new[] { cat.id } }, "bot", new int[4], new int[4]);
                         if (run.Phase == RunPhase.Won) wins++;
                     }
                     string r = Rarities.Of(cat.rarity); perRarity.TryGetValue(r, out var t); perRarity[r] = (t.wins + wins, t.runs + seeds);
@@ -81,7 +81,7 @@ namespace Athanor.Tests
                             var offered = new int[4]; var picked = new int[4]; int wins = 0;
                             for (int s = 1; s <= seeds; s++)
                             {
-                                var unlocks = fresh ? Unlocks.Fresh(db) : BalanceMatrixTests.With(db, false, true);
+                                var unlocks = fresh ? Unlocks.Fresh(db) : Sim.With(db, false, true);
                                 if (Play(db, s, new RunOptions { Unlocks = unlocks, Aspects = mods, Events = mods }, policy, offered, picked).Phase == RunPhase.Won) wins++;
                             }
                             int tot = Math.Max(1, offered.Sum());

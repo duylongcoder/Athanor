@@ -16,8 +16,8 @@ You are the content and balance designer. Content is data: `Athanor/Assets/Resou
 
 ## Verify (all three, quote results)
 1. `dotnet test tools/CoreTests` passes (content loads and validates).
-2. `dotnet test tools/CoreTests --filter FullyQualifiedName~BalanceMatrix -l "console;verbosity=detailed"`: report win rates per profile against the baseline in `docs/devlogs/phase-4-lore.md`; a move >3 points needs an explanation or a revert.
-3. `--filter EventReport` when events changed (hazard/gamble must keep >=70% of event-free wins).
+2. `dotnet run --project tools/CoreReports -- balance-matrix`: report win rates per profile against the baseline in `docs/devlogs/phase-4-lore.md`; a move >3 points needs an explanation or a revert.
+3. `dotnet run --project tools/CoreReports -- events` when events changed (hazard/gamble must keep >=70% of event-free wins).
 
 ## Boundary with framework agents
 Generic counterparts: `game-designer`, `systems-designer`, `economy-designer`.

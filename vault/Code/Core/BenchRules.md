@@ -44,4 +44,4 @@ aliases: []
 [[AutoPlayer]], [[ChainPlanner]], [[IgniteResolver]], [[RunState]], [[ScoreContext]]
 
 ## Tested by
-[[Phase3Tests]], [[RoleSimTests]]
+[[Phase3Tests]]

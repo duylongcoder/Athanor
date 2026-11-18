@@ -38,4 +38,4 @@ aliases: []
 [[AutoPlayer]], [[BenchView]], [[IgniteResolver]]
 
 ## Tested by
-[[ChainTests]], [[ContentTests]], [[Phase3Tests]], [[RoleSimTests]]
+[[ChainTests]], [[ContentTests]], [[Phase3Tests]]

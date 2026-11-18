@@ -21,4 +21,4 @@ aliases: []
 [[AutoPlayer]], [[GameFlow]]
 
 ## Tested by
-[[LoreTests]], [[Phase3Tests]], [[RarityReportTests]], [[RoleSimTests]], [[RunStateTests]]
+[[LoreTests]], [[Phase3Tests]], [[RarityReportTests]], [[RunStateTests]]

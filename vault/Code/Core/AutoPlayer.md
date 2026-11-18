@@ -37,4 +37,4 @@ aliases: []
 [[GameFlow]]
 
 ## Tested by
-[[LoreTests]], [[Phase3Tests]], [[RarityReportTests]], [[RoleSimTests]], [[RunStateTests]], [[TutorialFlowTests]]
+[[LoreTests]], [[Phase3Tests]], [[RarityReportTests]], [[RunStateTests]], [[TutorialFlowTests]]

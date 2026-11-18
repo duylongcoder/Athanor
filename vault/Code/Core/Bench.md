@@ -28,4 +28,4 @@ aliases: []
 [[AutoPlayer]], [[BenchRules]], [[BenchView]], [[Card]], [[CatalystChoiceView]], [[FlowState]], [[GameFlow]], [[IgniteResolver]], [[PauseMenu]], [[PointerInput]], [[RunState]], [[TutorialController]], [[TutorialScript]]
 
 ## Tested by
-[[ChainTests]], [[ContentTests]], [[IgniteTests]], [[MainDepthTests]], [[PauseTests]], [[Phase3Tests]], [[PrefabBakeTests]], [[RoleSimTests]], [[RunStateTests]], [[SceneBakeTests]], [[TutorialFlowTests]], [[TutorialTests]]
+[[ChainTests]], [[ContentTests]], [[IgniteTests]], [[MainDepthTests]], [[PauseTests]], [[Phase3Tests]], [[PrefabBakeTests]], [[RunStateTests]], [[SceneBakeTests]], [[TutorialFlowTests]], [[TutorialTests]]

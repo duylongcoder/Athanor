@@ -151,7 +151,6 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | SpriteImportRules | SpriteImportRules | Editor | class | Athanor/Assets/Editor/SpriteImportRules.cs | 10 | Every texture under Assets/Art is pixel art: a point-filtered, uncompressed sprite at 1 pixel per unit. The one exception is Assets/Art/Depth (the HD-2D layers): its pre-blurred pictures (*_far, *_nea |
 | ViewCapture | ViewCapture | Editor | class | Athanor/Assets/Editor/ViewCapture.cs | 7 | Renders a GameObject alone (in an otherwise empty scene) to a 640x360 image, the way the UI camera draws it. |
 | WebBuild | WebBuild | Editor | class | Athanor/Assets/Editor/WebBuild.cs | 10 | Builds the game for the browser into Build/web. Also callable from the command line: unity build Athanor --target WebGL --execute-method WebBuild.Build |
-| BalanceMatrixTests | BalanceMatrixTests | Tests | class | Athanor/Assets/Tests/EditMode/BalanceMatrixTests.cs | 13 | The informed scripted player on fixed profiles, to see what each part of Phase 3 does to the win rate. dotnet test tools/CoreTests --filter BalanceMatrix -l "console;verbosity=detailed" |
 | ChainTests | ChainTests | Tests | class | Athanor/Assets/Tests/EditMode/ChainTests.cs | 8 | The chain planner on TestContent.Combo(): p 8, q 5, r 2, s 9, t 4, v 1 (Reaction Index). |
 | ContentTests | ContentTests | Tests | class | Athanor/Assets/Tests/EditMode/ContentTests.cs | 9 |  |
 | IgniteTests | IgniteTests | Tests | class | Athanor/Assets/Tests/EditMode/IgniteTests.cs | 8 |  |
@@ -162,13 +161,14 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | RarityReportTests | RarityReportTests | Tests | class | Athanor/Assets/Tests/EditMode/RarityReportTests.cs | 17 | Opt-in (Explicit) report: does each rarity pay? Same seeds, the informed bot, but at every catalyst offer it follows one policy: take the first offered catalyst of one rarity (else the bot's pick), a  |
 | RarityTests | RarityTests | Tests | class | Athanor/Assets/Tests/EditMode/RarityTests.cs | 9 | Phase 5a-04: catalyst offers and event gifts draw by the optional content.json "rarityWeights" (Common..Legendary). |
 | RoleSimTests | RoleSimTests | Tests | class | Athanor/Assets/Tests/EditMode/RoleSimTests.cs | 17 | Two simulated players on the full Phase 3 game (unlocks, aspects, events), each starting from an empty journal and a fresh profile and keeping both from run to run. Admin: knows every recipe and how a |
-| Newcomer | Newcomer | Tests | class | Athanor/Assets/Tests/EditMode/RoleSimTests.cs | 21 |  |
-| Career | Career | Tests | class | Athanor/Assets/Tests/EditMode/RoleSimTests.cs | 334 |  |
 | RunStateTests | RunStateTests | Tests | class | Athanor/Assets/Tests/EditMode/RunStateTests.cs | 9 |  |
-| RunStats | RunStats | Tests | class | Athanor/Assets/Tests/EditMode/RunStateTests.cs | 294 | What happened over one scripted run, for the balance report. |
 | SatchelTests | SatchelTests | Tests | class | Athanor/Assets/Tests/EditMode/SatchelTests.cs | 8 |  |
 | JournalTests | JournalTests | Tests | class | Athanor/Assets/Tests/EditMode/SatchelTests.cs | 45 |  |
 | SettingsTests | SettingsTests | Tests | class | Athanor/Assets/Tests/EditMode/SettingsTests.cs | 6 |  |
+| Sim | Sim | Tests | class | Athanor/Assets/Tests/EditMode/Sim.cs | 12 | The simulated players and shared helpers behind the balance tests and the console reports in tools/CoreReports. No NUnit here: it compiles in the Unity test assembly, in tools/CoreTests and in tools/C |
+| Newcomer | Newcomer | Tests | class | Athanor/Assets/Tests/EditMode/Sim.cs | 73 |  |
+| Career | Career | Tests | class | Athanor/Assets/Tests/EditMode/Sim.cs | 386 |  |
+| RunStats | RunStats | Tests | class | Athanor/Assets/Tests/EditMode/Sim.cs | 484 | What happened over one scripted run, for the balance report. |
 | TestContent | TestContent | Tests | class | Athanor/Assets/Tests/EditMode/TestContent.cs | 6 | Loads the real content.json, inside Unity or under plain dotnet. |
 | TutorialTests | TutorialTests | Tests | class | Athanor/Assets/Tests/EditMode/TutorialTests.cs | 9 | Phase 4: the hooks the tutorial needs, and the tutorial script replayed with every number it shows. |
 | AutoHookTests | AutoHookTests | Tests | class | Athanor/Assets/Tests/EditModeGame/AutoHookTests.cs | 12 | F9 (the scripted player) is a toggle, so tools/web/descents.mjs cannot know its state from its own key presses: a press at the wrong moment left the scripted player off after depth 2 and the run stood |
@@ -1155,10 +1155,6 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | WebBuild | method | Build | 15 | public static void Build() |
 | WebBuild | method | BuildQuick | 19 | public static void BuildQuick() |
 | WebBuild | method | BuildDev | 26 | public static void BuildDev() |
-| BalanceMatrixTests | method | With | 15 | public static Unlocks With(ContentDb db, bool starters, bool catalysts) |
-| BalanceMatrixTests | method | Autoplay | 25 | public static RunState Autoplay(ContentDb db, int seed, RunOptions options) |
-| BalanceMatrixTests | method | Line | 34 | public static string Line(ContentDb db, string label, Func<int, RunOptions> options, int seeds) |
-| BalanceMatrixTests | method | RandomPlay | 68 | public static RunState RandomPlay(ContentDb db, int seed, RunOptions options) |
 | ContentTests | method | EventTexts_FitTheEventWindow | 316 | public void EventTexts_FitTheEventWindow() |
 | ContentTests | method | LoreEvents_DoNothing_AndTellTheStoryInOrder | 328 | public void LoreEvents_DoNothing_AndTellTheStoryInOrder() |
 | TestLang | method | Text | 12 | public static string Text(string code) |
@@ -1171,25 +1167,6 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | LoreTests | method | SkippingALoreEvent_IsBalanceNeutral | 155 | public void SkippingALoreEvent_IsBalanceNeutral() |
 | LoreTests | method | Profile_RemembersOnlyLoreEvents | 183 | public void Profile_RemembersOnlyLoreEvents() |
 | LoreTests | method | Profile_LastLore_IsSaved_AndDroppedWhenNoLongerALoreEvent | 195 | public void Profile_LastLore_IsSaved_AndDroppedWhenNoLongerALoreEvent() |
-| Newcomer | ctor | Newcomer | 29 | public Newcomer(ContentDb truth, Journal journal) |
-| Newcomer | method | List | 79 | public readonly List<(string a, string b)> targets = new List<(string, string)>() |
-| Newcomer | property | TriedCount | 80 | public int TriedCount |
-| Newcomer | property | ColdCount | 81 | public int ColdCount |
-| Newcomer | method | Status | 82 | public string Status(string a, string b) |
-| Newcomer | method | CanMakeNow | 83 | public bool CanMakeNow(string m) |
-| Newcomer | method | Decide | 126 | public bool Decide(RunState run) |
-| Newcomer | method | Learn | 318 | public void Learn(IgniteOutcome outcome, BenchRules rules) |
-| Career | field | FirstWin | 336 | public int FirstWin = -1 |
-| Career | field | Won | 337 | public readonly List<bool> Won = new List<bool>() |
-| Career | field | Depth | 338 | public readonly List<int> Depth = new List<int>(), Journal = new List<int>(), Goals = new List<int>(), Unlocked = new List<int>() |
-| Career | field | Stuck | 339 | public int Stuck |
-| Career | field | Knows | 340 | public string Knows = |
-| RunStats | field | BySize | 296 | public readonly int[] BySize = new int[ContentDb.MaxItems + 1] |
-| RunStats | field | FirstTrialClears | 297 | public int Ignites, LongestChain, Sputters, FirstTrialClears |
-| RunStats | field | UltimateByCombo | 298 | public bool UltimateByCombo |
-| RunStats | field | ComboMade | 299 | public readonly HashSet<string> ComboMade = new HashSet<string>() |
-| RunStats | field | Combos | 300 | public readonly Dictionary<string, int> Combos = new Dictionary<string, int>() |
-| RunStats | field | ClearedIn | 301 | public readonly List<string> ClearedIn = new List<string>() |
 | SettingsTests | method | New_NoArguments_HasDefaultValues | 9 | public void New_NoArguments_HasDefaultValues() |
 | SettingsTests | method | New_NoArguments_SwayIsOn | 20 | public void New_NoArguments_SwayIsOn() |
 | SettingsTests | method | ToJson_ThenFromJson_RoundTripsSwayOff | 26 | public void ToJson_ThenFromJson_RoundTripsSwayOff() |
@@ -1201,6 +1178,35 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | SettingsTests | method | FromJson_MissingFields_KeepDefaults | 86 | public void FromJson_MissingFields_KeepDefaults() |
 | SettingsTests | method | FromJson_OutOfRangeValues_ClampsVolumesAndLanguage | 95 | public void FromJson_OutOfRangeValues_ClampsVolumesAndLanguage() |
 | SettingsTests | method | RoundTrip_LanguageWithEscapes_Survives | 110 | public void RoundTrip_LanguageWithEscapes_Survives() |
+| Sim | method | With | 14 | public static Unlocks With(ContentDb db, bool starters, bool catalysts) |
+| Sim | method | Autoplay | 24 | public static RunState Autoplay(ContentDb db, int seed, RunOptions options) |
+| Sim | method | Line | 33 | public static string Line(ContentDb db, string label, Func<int, RunOptions> options, int seeds) |
+| Sim | method | RandomPlay | 47 | public static RunState RandomPlay(ContentDb db, int seed, RunOptions options) |
+| Sim | method | Play | 395 | public static Career Play(ContentDb db, bool admin, int player, int runs, bool aspects = true, bool events = true, List<string> log = null, int logFrom = 0, int taughtTier = 0) |
+| Sim | method | Pct | 448 | public static string Pct(double x) |
+| Sim | method | Describe | 450 | public static void Describe(string role, List<Career> careers, int runs, Action<string> w) |
+| Sim | method | Autoplay | 494 | public static RunState Autoplay(ContentDb db, int seed, List<string> log = null, RunStats stats = null) |
+| Sim | method | RandomPlay | 541 | public static RunState RandomPlay(ContentDb db, int seed) |
+| Sim | method | FullJournal | 563 | public static Journal FullJournal(ContentDb db) |
+| Newcomer | ctor | Newcomer | 81 | public Newcomer(ContentDb truth, Journal journal) |
+| Newcomer | method | List | 131 | public readonly List<(string a, string b)> targets = new List<(string, string)>() |
+| Newcomer | property | TriedCount | 132 | public int TriedCount |
+| Newcomer | property | ColdCount | 133 | public int ColdCount |
+| Newcomer | method | Status | 134 | public string Status(string a, string b) |
+| Newcomer | method | CanMakeNow | 135 | public bool CanMakeNow(string m) |
+| Newcomer | method | Decide | 178 | public bool Decide(RunState run) |
+| Newcomer | method | Learn | 370 | public void Learn(IgniteOutcome outcome, BenchRules rules) |
+| Career | field | FirstWin | 388 | public int FirstWin = -1 |
+| Career | field | Won | 389 | public readonly List<bool> Won = new List<bool>() |
+| Career | field | Depth | 390 | public readonly List<int> Depth = new List<int>(), Journal = new List<int>(), Goals = new List<int>(), Unlocked = new List<int>() |
+| Career | field | Stuck | 391 | public int Stuck |
+| Career | field | Knows | 392 | public string Knows = |
+| RunStats | field | BySize | 486 | public readonly int[] BySize = new int[ContentDb.MaxItems + 1] |
+| RunStats | field | FirstTrialClears | 487 | public int Ignites, LongestChain, Sputters, FirstTrialClears |
+| RunStats | field | UltimateByCombo | 488 | public bool UltimateByCombo |
+| RunStats | field | ComboMade | 489 | public readonly HashSet<string> ComboMade = new HashSet<string>() |
+| RunStats | field | Combos | 490 | public readonly Dictionary<string, int> Combos = new Dictionary<string, int>() |
+| RunStats | field | ClearedIn | 491 | public readonly List<string> ClearedIn = new List<string>() |
 | TestContent | method | Load | 8 | public static ContentData Load() |
 | TestContent | method | Tiny | 21 | public static ContentData Tiny() |
 | TestContent | method | Combo | 42 | public static ContentData Combo(int zMin = 15) |

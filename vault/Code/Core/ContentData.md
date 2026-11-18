@@ -33,4 +33,4 @@ aliases: []
 [[ContentDb]], [[GameFlow]], [[Lang]]
 
 ## Tested by
-[[ContentTests]], [[HudTests]], [[LoreTests]], [[PauseTests]], [[Phase3Tests]], [[PrefabBakeTests]], [[RarityTests]], [[RoleSimTests]], [[RunStateTests]], [[SaveTests]], [[TutorialFlowTests]], [[TutorialTests]]
+[[ContentTests]], [[HudTests]], [[LoreTests]], [[PauseTests]], [[Phase3Tests]], [[PrefabBakeTests]], [[RarityTests]], [[RunStateTests]], [[SaveTests]], [[TutorialFlowTests]], [[TutorialTests]]

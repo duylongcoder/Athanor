@@ -103,11 +103,11 @@ The build is Gzip-compressed with Unity's built-in fallback, so any static host 
   (a path to the last substance exists, tiers add up, the Reaction Index is spread across tiers), that a player
   who knows every recipe usually wins and that five-item combos stay rare.
 - After changing content or scoring, read the balance report:
-  `dotnet test tools/CoreTests --filter FullyQualifiedName~BalanceReport -l "console;verbosity=detailed"`.
-  `--filter BalanceMatrix` shows the win rate by profile (fresh, half, full) with and without aspects and events;
-  `--filter RoleReport` plays whole careers of two simulated players, one who knows every recipe and one who
+  `dotnet run --project tools/CoreReports -- balance` (add `DOTNET_ROLL_FORWARD=Major` on a machine with only a newer .NET runtime).
+  `-- balance-matrix` shows the win rate by profile (fresh, half, full) with and without aspects and events;
+  `-- roles` plays whole careers of two simulated players, one who knows every recipe and one who
   learns them from the journal (`ATHANOR_PLAYERS`, `ATHANOR_RUNS` set how many and how long);
-  `--filter EventReport` puts each event in the informed player's way and shows what it costs. A hazard or a
+  `-- events` puts each event in the informed player's way and shows what it costs (`-- newcomer` and `-- trace` print one simulated run step by step). A hazard or a
   gamble met once, at any depth it may come to, must leave at least 70% of the wins a run with no event has.
 - A goal is `{"id", "text", "stat", "target", "rewardKind": "starter" | "catalyst", "rewardRarity"}`. The content
   will not load when a reward bucket has more goals than locked items, so a goal can never pay out nothing.

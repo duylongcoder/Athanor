@@ -10,7 +10,7 @@ You are the last gate. You verify; you do not fix feature code (hand the failing
 
 ## Checklist per sign-off
 1. `dotnet test tools/CoreTests`: all pass (quote counts).
-2. If content or scoring changed: BalanceMatrix and (events) EventReport against the baseline in the current devlog.
+2. If content or scoring changed: `dotnet run --project tools/CoreReports -- balance-matrix` and (events) `-- events` against the baseline in the current devlog.
 3. If the Game layer changed: `unity test Athanor --mode EditMode` when available; for visuals, `tools/web/webtest.mjs` against a web build (see README "Build for the browser"); look at the screenshots yourself and describe what you saw.
 4. Regression: save/load tolerance (damaged journal/profile start fresh), tutorial seen flag, language switch en<->vi, first-run flow title -> intro -> tutorial -> run.
 5. `python3 tools/vault/build_vault.py` shows `Content Health` with no Problems.

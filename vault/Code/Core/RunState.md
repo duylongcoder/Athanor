@@ -74,4 +74,4 @@ aliases: []
 [[AutoPlayer]], [[BenchView]], [[CatalystChoiceView]], [[EventView]], [[GameFlow]], [[HudView]], [[Profile]], [[RunOverView]]
 
 ## Tested by
-[[ContentTests]], [[HudTests]], [[LoreTests]], [[PauseTests]], [[Phase3Tests]], [[PrefabBakeTests]], [[RarityReportTests]], [[RarityTests]], [[RoleSimTests]], [[RunOverDepthTests]], [[RunStateTests]], [[TutorialFlowTests]], [[TutorialTests]]
+[[ContentTests]], [[HudTests]], [[LoreTests]], [[PauseTests]], [[Phase3Tests]], [[PrefabBakeTests]], [[RarityReportTests]], [[RarityTests]], [[RunOverDepthTests]], [[RunStateTests]], [[TutorialFlowTests]], [[TutorialTests]]

@@ -10,7 +10,7 @@ count: 2
 `Athanor/Assets/Tests/EditMode/RoleSimTests.cs` — 2 tests
 
 ## Covers
-[[AutoMove]], [[AutoPlayer]], [[Bench]], [[BenchRules]], [[ChainPlanner]], [[ContentData]], [[ContentDb]], [[IgniteOutcome]], [[IgniteResolver]], [[Journal]], [[Profile]], [[RunOptions]], [[RunPhase]], [[RunState]], [[Unlocks]]
+[[ContentDb]], [[Journal]]
 
 ## Tests
 - `Newcomer_LearnsAndEventuallyWins`

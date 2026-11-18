@@ -37,4 +37,4 @@ same command CI runs: `tools/ci/run.sh all` (or `lint`, `repo`, `core`).
 ## Not covered by CI (still on a human)
 
 Visual and UI review: screenshots in `production/qa/evidence/` (see `.claude/docs/run-and-observe.md`). Balance
-numbers: `BalanceMatrix` and `EventReport` print figures to read; they do not assert.
+numbers: `dotnet run --project tools/CoreReports -- balance-matrix | events | roles | balance` print figures to read; they do not assert, so they are not tests.
