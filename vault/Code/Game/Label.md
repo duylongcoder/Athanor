@@ -38,7 +38,7 @@ aliases: []
 [[Art]], [[FontKind]], [[Loc]], [[Make]]
 
 ## Used by
-[[BenchView]], [[Card]], [[CardView]], [[CatalystChoiceView]], [[EventView]], [[EventView.Row]], [[GoalToast]], [[GoalsView]], [[GoalsView.Row]], [[HudView]], [[JournalView]], [[Make]], [[Motion]], [[PauseMenu]], [[ReactionCutscene]], [[RunOverView]], [[SimpleCutscene]], [[TitleView]], [[Tooltip]], [[TutorialController]], [[UiButton]]
+[[BenchView]], [[Card]], [[CardView]], [[CatalystChoiceView]], [[EventView]], [[GoalRow]], [[GoalToast]], [[GoalsView]], [[HudView]], [[JournalView]], [[Make]], [[Motion]], [[PauseMenu]], [[ReactionCutscene]], [[Row]], [[RunOverView]], [[SimpleCutscene]], [[TitleView]], [[Tooltip]], [[TutorialController]], [[UiButton]]
 
 ## Tested by
 [[LabelLineBoxTests]], [[PrefabBakeTests]], [[RunOverDepthTests]]

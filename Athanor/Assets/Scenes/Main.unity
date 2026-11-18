@@ -1989,6 +1989,7 @@ MonoBehaviour:
   depthStage: {fileID: 539019352}
   runOver: {fileID: 411300214}
   Auto: 0
+  goalsView: {fileID: 1461145399}
   choice: {fileID: 866897250}
   eventView: {fileID: 480626881}
   toast: {fileID: 879152207}
@@ -5713,6 +5714,74 @@ MonoBehaviour:
   haloAlpha: 0.55
   framesPerSecond: 11
   phase: 3.8999999
+--- !u!1001 &1461145398
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5221959333859616941, guid: cc5cccd256b446221a75980a8281b8d3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5221959333859616941, guid: cc5cccd256b446221a75980a8281b8d3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5221959333859616941, guid: cc5cccd256b446221a75980a8281b8d3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5221959333859616941, guid: cc5cccd256b446221a75980a8281b8d3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5221959333859616941, guid: cc5cccd256b446221a75980a8281b8d3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5221959333859616941, guid: cc5cccd256b446221a75980a8281b8d3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5221959333859616941, guid: cc5cccd256b446221a75980a8281b8d3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5221959333859616941, guid: cc5cccd256b446221a75980a8281b8d3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5221959333859616941, guid: cc5cccd256b446221a75980a8281b8d3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5221959333859616941, guid: cc5cccd256b446221a75980a8281b8d3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6033749843058318294, guid: cc5cccd256b446221a75980a8281b8d3, type: 3}
+      propertyPath: m_Name
+      value: Goals
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: cc5cccd256b446221a75980a8281b8d3, type: 3}
+--- !u!114 &1461145399 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7263749700136608634, guid: cc5cccd256b446221a75980a8281b8d3, type: 3}
+  m_PrefabInstance: {fileID: 1461145398}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fec74fb1761f17bb97fe9b28a840d25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Athanor.Game::Athanor.Game.GoalsView
 --- !u!1 &1470825100
 GameObject:
   m_ObjectHideFlags: 0
@@ -7692,3 +7761,4 @@ SceneRoots:
   - {fileID: 480626880}
   - {fileID: 866897249}
   - {fileID: 899813774}
+  - {fileID: 1461145398}

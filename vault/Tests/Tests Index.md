@@ -5,7 +5,7 @@ tags: [moc/tests]
 ---
 
 # Tests
-446 test methods in 35 files. Run: `dotnet test tools/CoreTests` (rules) or `unity test Athanor --mode EditMode`.
+449 test methods in 35 files. Run: `dotnet test tools/CoreTests` (rules) or `unity test Athanor --mode EditMode`.
 
 - [[ChainTests]] — 26 tests · covers [[Bench]], [[ChainPlan]], [[ChainPlanner]], [[ContentDb]]
 - [[ContentTests]] — 41 tests · covers [[Bench]], [[ChainPlanner]], [[ContentData]], [[ContentDb]], [[Ops]], [[RunState]]
@@ -20,7 +20,7 @@ tags: [moc/tests]
 - [[SatchelTests]] — 5 tests · covers [[Satchel]]
 - [[JournalTests]] — 10 tests · covers [[ContentDb]], [[Journal]], [[Kind]]
 - [[SettingsTests]] — 11 tests · covers [[Settings]]
-- [[TutorialTests]] — 18 tests · covers [[Bench]], [[ContentData]], [[ContentDb]], [[Effects]], [[IgniteOutcome]], [[Journal]], [[ReactionEvent]], [[RunOptions]]
+- [[TutorialTests]] — 18 tests · covers [[Bench]], [[ContentData]], [[ContentDb]], [[Effects]], [[IgniteOutcome]], [[Journal]], [[ReactionEvent]], [[Row]]
 - [[AutoHookTests]] — 1 tests · covers [[GameFlow]]
 - [[ChoiceHookTests]] — 1 tests · covers [[CatalystChoiceView]], [[ChoiceCard]]
 - [[DepthClickTests]] — 9 tests · covers [[DepthMath]], [[DepthRig]], [[FogSheet]], [[LayoutData]], [[Px]], [[TileView]], [[TiltShift]]
@@ -33,7 +33,7 @@ tags: [moc/tests]
 - [[MainDevHookTests]] — 4 tests · covers [[BenchView]], [[DepthMath]], [[GameFlow]]
 - [[MotionTests]] — 3 tests · covers [[Motion]]
 - [[PauseTests]] — 10 tests · covers [[Bench]], [[Clickable]], [[ContentData]], [[ContentDb]], [[FlowState]], [[GameFlow]], [[Haptics]], [[Journal]]
-- [[PrefabBakeTests]] — 19 tests · covers [[CatalystChoiceView]], [[ChoiceCard]], [[Clickable]], [[ContentData]], [[ContentDb]], [[EventView]], [[FontKind]], [[GoalReward]]
+- [[PrefabBakeTests]] — 22 tests · covers [[CatalystChoiceView]], [[ChoiceCard]], [[Clickable]], [[ContentData]], [[ContentDb]], [[EventView]], [[FontKind]], [[GoalReward]]
 - [[RunOverDepthTests]] — 4 tests · covers [[Label]], [[Loc]], [[RunOverView]], [[RunState]]
 - [[SaveTests]] — 12 tests · covers [[ContentData]], [[ContentDb]], [[Journal]], [[Kind]], [[Profile]], [[ProfileData]], [[Save]]
 - [[SettingsHapticsTests]] — 7 tests · covers [[AudioMute]], [[Haptics]], [[Save]], [[Settings]]

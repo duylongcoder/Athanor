@@ -9,9 +9,9 @@ tags: [code/game, kind/class]
 aliases: []
 ---
 
-# EventView.Row
+# Row
 
-`sealed class EventView.Row`
+`sealed class Row`
 - Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Ui/EventView.cs:19-23` · Nested in [[EventView]]
 
 ## Members
@@ -21,3 +21,9 @@ aliases: []
 
 ## Uses
 [[Clickable]], [[Label]]
+
+## Used by
+[[HudView]]
+
+## Tested by
+[[TutorialTests]]

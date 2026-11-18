@@ -72,7 +72,7 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | TileView | TileView | Game | class | Athanor/Assets/Scripts/Game/Bench/TileView.cs | 10 | One of the nine bench tiles: its hover highlight and, when occupied, the material standing on it. |
 | GameFlow | GameFlow | Game | class | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 15 | Owns the run and moves the game between its screens. |
 | FlowState | FlowState | Game | enum | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 12 |  |
-| TitleChoice | TitleChoice | Game | enum | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 116 |  |
+| TitleChoice | TitleChoice | Game | enum | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 117 |  |
 | Save | Save | Game | class | Athanor/Assets/Scripts/Game/Boot/Save.cs | 8 | Keeps the journal and the profile between sessions in PlayerPrefs (browser storage in a web build). |
 | Cutscene | Cutscene | Game | class | Athanor/Assets/Scripts/Game/Cutscene/Cutscene.cs | 7 | A sequence that plays to its end unless the player clicks to skip ahead. |
 | DepthLook | DepthLook | Game | class | Athanor/Assets/Scripts/Game/Cutscene/DepthLook.cs | 9 | What a depth looks like from the bench: the intro line under its name and the view through the window. Pure choices, no scene; the pictures and effects are drawn by WindowView. |
@@ -131,10 +131,10 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | CatalystChoiceView | CatalystChoiceView | Game | class | Athanor/Assets/Scripts/Game/Ui/CatalystChoiceView.cs | 23 | Three parchment cards, pick one: a catalyst after a depth is cleared, or an aspect at the start of a run and of depths 3 and 5. An aspect's card shows the tile it would land on. |
 | Card | Card | Game | class | Athanor/Assets/Scripts/Game/Ui/CatalystChoiceView.cs | 35 |  |
 | EventView | EventView | Game | class | Athanor/Assets/Scripts/Game/Ui/EventView.cs | 13 | The event at the start of a depth: what was found, the options that can be taken (each with what it costs and may give), then what came of the one chosen. |
-| EventView.Row | EventView.Row | Game | class | Athanor/Assets/Scripts/Game/Ui/EventView.cs | 19 |  |
+| Row | Row | Game | class | Athanor/Assets/Scripts/Game/Ui/EventView.cs | 19 |  |
+| GoalRow | GoalRow | Game | class | Athanor/Assets/Scripts/Game/Ui/GoalRow.cs | 6 | One row of the Goals page: the goal and its count, then the reward and its progress bar. |
 | GoalToast | GoalToast | Game | class | Athanor/Assets/Scripts/Game/Ui/GoalToast.cs | 11 | A small panel at the top of the screen that says a goal was completed and what it unlocked. Toasts queue; each stays 2.5 seconds or until clicked. It never blocks anything under it but itself. |
 | GoalsView | GoalsView | Game | class | Athanor/Assets/Scripts/Game/Ui/GoalsView.cs | 12 | The Goals page: every long-term goal with its progress, grouped by the rarity of what it unlocks. Before a goal is done its reward is named only by kind and rarity; afterwards the item it gave is show |
-| GoalsView.Row | GoalsView.Row | Game | class | Athanor/Assets/Scripts/Game/Ui/GoalsView.cs | 20 |  |
 | JournalView | JournalView | Game | class | Athanor/Assets/Scripts/Game/Ui/JournalView.cs | 12 | The journal: every material as an icon (a silhouette until it has been made), and for the selected one the reactions found so far, how many are still unknown, and any hints collected. |
 | PauseMenu | PauseMenu | Game | class | Athanor/Assets/Scripts/Game/Ui/PauseMenu.cs | 13 | The in-run pause: Resume, Vibration (only where the device can), How to play (greyed: title only) and Quit to title with a confirm. Time.timeScale is 0 while it is open; it is put back on every way ou |
 | RunOverView | RunOverView | Game | class | Athanor/Assets/Scripts/Game/Ui/RunOverView.cs | 9 | The summary at the end of a run, won or lost. |
@@ -637,11 +637,11 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | GameFlow | method | NextMood | 53 | public static int NextMood(int mood) |
 | GameFlow | method | MoodLine | 54 | public static string MoodLine(int mood) |
 | GameFlow | method | EffectsLine | 55 | public static string EffectsLine(bool on) |
-| GameFlow | property | JournalView | 103 | public JournalView JournalView |
-| GameFlow | method | JournalAfterQuit | 430 | public static Journal JournalAfterQuit(bool sandbox, Journal current) |
-| GameFlow | method | ProfileAfterQuit | 432 | public static Profile ProfileAfterQuit(bool sandbox, Profile current, ContentDb db) |
-| GameFlow | method | Ignite | 473 | public void Ignite() |
-| GameFlow | method | SettleIgnite | 481 | public static IgniteOutcome SettleIgnite(RunState run, Journal journal, bool sandbox) |
+| GameFlow | property | JournalView | 104 | public JournalView JournalView |
+| GameFlow | method | JournalAfterQuit | 433 | public static Journal JournalAfterQuit(bool sandbox, Journal current) |
+| GameFlow | method | ProfileAfterQuit | 435 | public static Profile ProfileAfterQuit(bool sandbox, Profile current, ContentDb db) |
+| GameFlow | method | Ignite | 476 | public void Ignite() |
+| GameFlow | method | SettleIgnite | 484 | public static IgniteOutcome SettleIgnite(RunState run, Journal journal, bool sandbox) |
 | FlowState | value | Boot | 12 | Boot |
 | FlowState | value | Title | 12 | Title |
 | FlowState | value | Intro | 12 | Intro |
@@ -655,9 +655,9 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | FlowState | value | AspectChoice | 12 | AspectChoice |
 | FlowState | value | Event | 12 | Event |
 | FlowState | value | Goals | 12 | Goals |
-| TitleChoice | value | Begin | 116 | Begin |
-| TitleChoice | value | HowToPlay | 116 | HowToPlay |
-| TitleChoice | value | Intro | 116 | Intro |
+| TitleChoice | value | Begin | 117 | Begin |
+| TitleChoice | value | HowToPlay | 117 | HowToPlay |
+| TitleChoice | value | Intro | 117 | Intro |
 | Save | field | Key | 10 | public const string Key = "athanor.journal.v1", IntroKey = "athanor.intro.v1", ProfileKey = "athanor.profile.v1", TutorialKey = "athanor.tutorial.v1", SettingsKey = |
 | Save | method | LoadJournal | 14 | public static Journal LoadJournal() |
 | Save | method | StoreJournal | 24 | public static void StoreJournal(Journal journal) |
@@ -1056,7 +1056,9 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | EventView | property | Outcome | 37 | public Label Outcome |
 | EventView | method | Bind | 40 | public void Bind() |
 | EventView | method | Show | 67 | public IEnumerator Show(RunState run, Action changed) |
-| EventView.Row | field | root | 21 | public Transform root |
+| Row | field | root | 21 | public Transform root |
+| GoalRow | field | reward | 8 | public Label text, count, reward |
+| GoalRow | field | icon | 9 | public SpriteRenderer track, fill, icon |
 | GoalToast | field | Stay | 15 | public const float Stay = 2.5f |
 | GoalToast | field | Slide | 17 | public const float Slide = 0.25f |
 | GoalToast | property | Item | 19 | struct Item |
@@ -1067,10 +1069,10 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | GoalToast | method | Clear | 52 | public void Clear() |
 | GoalsView | field | Closed | 17 | public event Action Closed |
 | GoalsView | property | IsOpen | 18 | public bool IsOpen |
-| GoalsView | method | Build | 34 | public void Build(ContentDb content) |
-| GoalsView | method | Open | 81 | public void Open(Profile profile, Journal journal) |
-| GoalsView | method | Close | 124 | public void Close() |
-| GoalsView.Row | field | root | 22 | public Transform root |
+| GoalsView | property | CloseClick | 33 | public Clickable CloseClick |
+| GoalsView | method | Bind | 39 | public void Bind(ContentDb content) |
+| GoalsView | method | Open | 62 | public void Open(Profile profile, Journal journal) |
+| GoalsView | method | Close | 105 | public void Close() |
 | JournalView | field | Closed | 19 | public event Action Closed |
 | JournalView | property | IsOpen | 20 | public bool IsOpen |
 | JournalView | method | Build | 42 | public void Build(ContentDb content) |
@@ -1168,15 +1170,16 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | ViewBaker | field | PartDir | 22 | public const string PartDir = |
 | ViewBaker | field | EvidenceDir | 24 | public const string EvidenceDir = |
 | ViewBaker | method | Db | 51 | public static ContentDb Db() |
-| ViewBaker | method | Bake | 55 | public static void Bake<T>(string name, string flowField, Action<T> build) where T : MonoBehaviour |
-| ViewBaker | method | BakePart | 74 | public static void BakePart<T>(string name, Func<T> build) where T : Component |
-| ViewBaker | method | BakeInScene | 90 | public static void BakeInScene<T>(string name, string flowField, Action<T> build, bool asPrefab) where T : MonoBehaviour |
-| ViewBaker | method | Compare | 112 | public static void Compare(string name, Action<GameObject> prepare = null) |
-| ViewBaker | method | CompareRunOver | 127 | public static void CompareRunOver() |
-| ViewBaker | method | CompareGoalToast | 128 | public static void CompareGoalToast() |
-| ViewBaker | method | CompareEvent | 129 | public static void CompareEvent() |
-| ViewBaker | method | CompareCatalystChoice | 130 | public static void CompareCatalystChoice() |
-| ViewBaker | method | ComparePause | 131 | public static void ComparePause() |
+| ViewBaker | method | Bake | 58 | public static void Bake<T>(string name, string flowField, Action<T> build, Action<T> beforeSave = null) where T : MonoBehaviour |
+| ViewBaker | method | BakePart | 79 | public static void BakePart<T>(string name, Func<T> build) where T : Component |
+| ViewBaker | method | BakeInScene | 95 | public static void BakeInScene<T>(string name, string flowField, Action<T> build, bool asPrefab) where T : MonoBehaviour |
+| ViewBaker | method | Compare | 117 | public static void Compare(string name, Action<GameObject> prepare = null) |
+| ViewBaker | method | CompareRunOver | 132 | public static void CompareRunOver() |
+| ViewBaker | method | CompareGoalToast | 133 | public static void CompareGoalToast() |
+| ViewBaker | method | CompareEvent | 134 | public static void CompareEvent() |
+| ViewBaker | method | CompareCatalystChoice | 135 | public static void CompareCatalystChoice() |
+| ViewBaker | method | ComparePause | 136 | public static void ComparePause() |
+| ViewBaker | method | CompareGoals | 139 | public static void CompareGoals() |
 | ViewCapture | method | Render | 13 | public static Texture2D Render(GameObject root) |
 | ViewCapture | method | Save | 49 | public static void Save(Texture2D tex, string path) |
 | ViewCapture | method | Load | 56 | public static Texture2D Load(string path) |
@@ -1353,6 +1356,9 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | PrefabBakeTests | method | Click_PausePrefabResume_ClosesAndRestoresTime | 325 | public void Click_PausePrefabResume_ClosesAndRestoresTime() |
 | PrefabBakeTests | method | Click_PausePrefabCancelOnTheQuitQuestion_BacksOutToTheMenu | 343 | public void Click_PausePrefabCancelOnTheQuitQuestion_BacksOutToTheMenu() |
 | PrefabBakeTests | method | Click_PausePrefabOutsideTheDialog_Resumes | 363 | public void Click_PausePrefabOutsideTheDialog_Resumes() |
+| PrefabBakeTests | method | Bind_GoalsPrefab_MakesOneRowPerGoal | 387 | public void Bind_GoalsPrefab_MakesOneRowPerGoal() |
+| PrefabBakeTests | method | Open_GoalsPrefabFreshProfile_WritesEveryGoal | 403 | public void Open_GoalsPrefabFreshProfile_WritesEveryGoal() |
+| PrefabBakeTests | method | Click_GoalsPrefabClose_ClosesAndTellsTheOwner | 424 | public void Click_GoalsPrefabClose_ClosesAndTellsTheOwner() |
 | PrefabFixture | field | Root | 11 | public readonly GameObject Root |
 | PrefabFixture | ctor | PrefabFixture | 14 | public PrefabFixture(string prefabPath) |
 | PrefabFixture | method | Get | 22 | public T Get<T>() where T : Component |

@@ -3,14 +3,14 @@ generated: true
 type: test
 file: Athanor/Assets/Tests/EditModeGame/PrefabBakeTests.cs
 tags: [test]
-count: 19
+count: 22
 ---
 
 # PrefabBakeTests
-`Athanor/Assets/Tests/EditModeGame/PrefabBakeTests.cs` — 19 tests
+`Athanor/Assets/Tests/EditModeGame/PrefabBakeTests.cs` — 22 tests
 
 ## Covers
-[[CatalystChoiceView]], [[ChoiceCard]], [[Clickable]], [[ContentData]], [[ContentDb]], [[EventView]], [[FontKind]], [[GoalReward]], [[GoalToast]], [[Journal]], [[Label]], [[Loc]], [[Make]], [[PauseMenu]], [[Rarities]], [[RunOptions]], [[RunOverView]], [[RunPhase]], [[RunState]], [[Settings]], [[UiButton]], [[Unlocks]], [[Wording]]
+[[CatalystChoiceView]], [[ChoiceCard]], [[Clickable]], [[ContentData]], [[ContentDb]], [[EventView]], [[FontKind]], [[GoalReward]], [[GoalRow]], [[GoalToast]], [[GoalsView]], [[Journal]], [[Label]], [[Loc]], [[Make]], [[PauseMenu]], [[Profile]], [[Rarities]], [[RunOptions]], [[RunOverView]], [[RunPhase]], [[RunState]], [[Settings]], [[UiButton]], [[Unlocks]], [[Wording]]
 
 ## Tests
 - `Relabel_KeyedLabelAfterPrefabRoundTrip_FollowsTheLanguage`
@@ -32,3 +32,6 @@ count: 19
 - `Click_PausePrefabResume_ClosesAndRestoresTime`
 - `Click_PausePrefabCancelOnTheQuitQuestion_BacksOutToTheMenu`
 - `Click_PausePrefabOutsideTheDialog_Resumes`
+- `Bind_GoalsPrefab_MakesOneRowPerGoal`
+- `Open_GoalsPrefabFreshProfile_WritesEveryGoal`
+- `Click_GoalsPrefabClose_ClosesAndTellsTheOwner`

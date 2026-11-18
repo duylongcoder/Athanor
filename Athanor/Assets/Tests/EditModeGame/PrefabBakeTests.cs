@@ -377,5 +377,67 @@ namespace Athanor.Tests
             }
             finally { Time.timeScale = 1f; f.Destroy(); }
         }
+
+        const string GoalsPrefab = "Assets/Prefabs/Views/Goals.prefab";
+
+        static ContentDb Content() =>
+            new ContentDb(JsonUtility.FromJson<ContentData>(AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/Resources/content.json").text));
+
+        [Test]
+        public void Bind_GoalsPrefab_MakesOneRowPerGoal()
+        {
+            var f = new PrefabFixture(GoalsPrefab);
+            try
+            {
+                var db = Content();
+                var view = f.Get<GoalsView>();
+
+                view.Bind(db);
+
+                Assert.AreEqual(db.Goals.Count, view.GetComponentsInChildren<GoalRow>(true).Length);
+            }
+            finally { f.Destroy(); }
+        }
+
+        [Test]
+        public void Open_GoalsPrefabFreshProfile_WritesEveryGoal()
+        {
+            var f = new PrefabFixture(GoalsPrefab);
+            try
+            {
+                var db = Content();
+                var view = f.Get<GoalsView>();
+                view.Bind(db);
+
+                view.Open(new Profile(), new Journal());
+
+                var shown = new List<string>();
+                foreach (var r in view.GetComponentsInChildren<GoalRow>(false)) shown.Add(r.text.Text);
+                var expected = new List<string>();
+                foreach (var g in db.Goals) expected.Add(Wording.GoalText(g));
+                CollectionAssert.AreEquivalent(expected, shown);       // every goal is in one of the three sections
+            }
+            finally { f.Destroy(); }
+        }
+
+        [Test]
+        public void Click_GoalsPrefabClose_ClosesAndTellsTheOwner()
+        {
+            var f = new PrefabFixture(GoalsPrefab);
+            try
+            {
+                var view = f.Get<GoalsView>();
+                view.Bind(Content());
+                view.Open(new Profile(), new Journal());
+                int closed = 0;
+                view.Closed += () => closed++;
+
+                view.CloseClick.onClick();
+
+                Assert.IsFalse(view.IsOpen);
+                Assert.AreEqual(1, closed);
+            }
+            finally { f.Destroy(); }
+        }
     }
 }

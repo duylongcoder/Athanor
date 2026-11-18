@@ -10,7 +10,7 @@ count: 18
 `Athanor/Assets/Tests/EditMode/TutorialTests.cs` — 18 tests
 
 ## Covers
-[[Bench]], [[ContentData]], [[ContentDb]], [[Effects]], [[IgniteOutcome]], [[Journal]], [[ReactionEvent]], [[RunOptions]], [[RunPhase]], [[RunState]], [[Satchel]], [[ScoreParts]], [[TutorialPlan]], [[TutorialScript]], [[TutorialTrial]], [[Unlocks]]
+[[Bench]], [[ContentData]], [[ContentDb]], [[Effects]], [[IgniteOutcome]], [[Journal]], [[ReactionEvent]], [[Row]], [[RunOptions]], [[RunPhase]], [[RunState]], [[Satchel]], [[ScoreParts]], [[TutorialPlan]], [[TutorialScript]], [[TutorialTrial]], [[Unlocks]]
 
 ## Tests
 - `Satchel_Take_PullsANamedCard_FromDrawOrDiscard`

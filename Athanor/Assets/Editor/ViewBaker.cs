@@ -51,14 +51,19 @@ public static class ViewBaker
     public static ContentDb Db() =>
         new ContentDb(JsonUtility.FromJson<ContentData>(AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/Resources/content.json").text));
 
-    /// <summary>Old Build in an empty scene, the "before" picture, the prefab; then the prefab into Main and onto GameFlow.flowField.</summary>
-    public static void Bake<T>(string name, string flowField, Action<T> build) where T : MonoBehaviour
+    /// <summary>
+    /// Old Build in an empty scene, the "before" picture, the prefab; then the prefab into Main and onto GameFlow.flowField.
+    /// beforeSave runs between the picture and the save (e.g. drop rows that Bind makes at runtime from a part prefab).
+    /// </summary>
+    public static void Bake<T>(string name, string flowField, Action<T> build, Action<T> beforeSave = null) where T : MonoBehaviour
     {
         Prepare();
         EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
         var go = new GameObject(name);
-        build(go.AddComponent<T>());
+        var view = go.AddComponent<T>();
+        build(view);
         ViewCapture.Save(ViewCapture.Render(go), EvidenceDir + "/" + name + "/before.png");
+        beforeSave?.Invoke(view);
         Directory.CreateDirectory(ViewDir);
         var prefab = PrefabUtility.SaveAsPrefabAsset(go, ViewDir + "/" + name + ".prefab");
 
@@ -129,4 +134,7 @@ public static class ViewBaker
     public static void CompareEvent() => Compare("Event");
     public static void CompareCatalystChoice() => Compare("CatalystChoice");
     public static void ComparePause() => Compare("Pause");
+
+    /// <summary>The Goals prefab with Bind(Db()) run on it, so its rows exist for the picture (the "before" has one empty row per goal).</summary>
+    public static void CompareGoals() => Compare("Goals", go => go.GetComponent<GoalsView>().Bind(Db()));
 }

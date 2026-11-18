@@ -85,7 +85,8 @@ namespace Athanor.Game
         static readonly string[] Accent = { "#7cc0f8", "#6ee6c8", "#c486f4", "#ee6a3c", "#fff6b8" };
 
         ReactionCutscene reaction; SimpleCutscene story; WindowView window; TitleView title; JournalView journalView;
-        GoalsView goalsView;
+        /// <summary>The Goals page (a prefab in Main.unity; its rows come from the GoalRow part).</summary>
+        [SerializeField] GoalsView goalsView;
         /// <summary>The three-card chooser for catalysts and aspects (a prefab in Main.unity).</summary>
         [SerializeField] CatalystChoiceView choice;
         /// <summary>The event dialog at the start of a depth (a prefab in Main.unity).</summary>
@@ -137,6 +138,7 @@ namespace Athanor.Game
             if (eventView == null) throw new System.InvalidOperationException("GameFlow: eventView is not set in the scene");
             if (choice == null) throw new System.InvalidOperationException("GameFlow: choice is not set in the scene");
             if (pause == null) throw new System.InvalidOperationException("GameFlow: pause is not set in the scene");
+            if (goalsView == null) throw new System.InvalidOperationException("GameFlow: goalsView is not set in the scene");
             I = this;
             Art.Lib = library;
             Loc.Use(langEn, langVi);
@@ -186,7 +188,7 @@ namespace Athanor.Game
             runOver.Bind();
             runOver.GoalsClicked += OpenGoals;
             eventView.Bind();
-            goalsView = Make.Root("Goals").gameObject.AddComponent<GoalsView>(); goalsView.Build(Db);
+            goalsView.Bind(Db);
             goalsView.Closed += CloseGoals;
             toast.Bind();
             pause.Bind(settings);
@@ -210,6 +212,7 @@ namespace Athanor.Game
         {
             PointerInput.Rig = null;
             if (runOver != null) runOver.GoalsClicked -= OpenGoals;
+            if (goalsView != null) goalsView.Closed -= CloseGoals;
             if (title != null) title.SettingsClosed -= SaveSettings;
             if (pause != null) { pause.Opened -= OnPauseOpened; pause.Closed -= OnPauseClosed; pause.QuitConfirmed -= AbandonRun; pause.VibrationChanged -= SaveSettings; }
             if (Bench != null && Bench.Hud != null) Bench.Hud.PauseClicked -= OpenPause;

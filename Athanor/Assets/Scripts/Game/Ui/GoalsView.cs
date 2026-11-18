@@ -11,63 +11,44 @@ namespace Athanor.Game
     /// </summary>
     public sealed class GoalsView : MonoBehaviour
     {
-        // the numbers match GOALS in tools/art/ui.mjs
-        const int O = 470, X = 20, Y = 15, LeftX = 14, RightX = 304, Top = 30, ColW = 282, RowH = 20, HeadH = 14, Pad = 10, BarW = 92;
+        // the numbers match GOALS in tools/art/ui.mjs; the page itself (Goals.prefab) is laid out in the prefab
+        const int X = 20, Y = 15, LeftX = 14, RightX = 304, Top = 30, ColW = 282, RowH = 20, HeadH = 14, Pad = 10, BarW = 92;
 
         public event Action Closed;
         public bool IsOpen => gameObject.activeSelf;
 
-        sealed class Row
-        {
-            public Transform root; public Label text, count, reward; public SpriteRenderer track, fill, icon;
-        }
-
+        [SerializeField] GoalRow rowPrefab;
+        [SerializeField] Label[] heads = new Label[3];
+        [SerializeField] Label found;
+        [SerializeField] Clickable outside, closeClick;
         ContentDb db;
-        readonly List<Row> rows = new List<Row>();
-        readonly Label[] heads = new Label[3];
-        Label found;
+        readonly List<GoalRow> rows = new List<GoalRow>();
+        bool wired;
 
-        static readonly Color Ink = Px.Hex("#3a2212"), Faded = Px.Hex("#7a5430"), Teal = Px.Hex("#11606a"), Pale = Px.Hex("#f0dcc0"), Dark = Px.Hex("#0c0706");
+        static readonly Color Ink = Px.Hex("#3a2212"), Faded = Px.Hex("#7a5430"), Teal = Px.Hex("#11606a");
         // which column each rarity's section is in, and in what order: Uncommon and Legendary on the left, Rare on the right
         static readonly string[] Sections = { Rarities.Uncommon, Rarities.Legendary, Rarities.Rare };
 
-        public void Build(ContentDb content)
+        /// <summary>The "Close" click at the top right of the page.</summary>
+        public Clickable CloseClick => closeClick;
+
+        /// <summary>
+        /// Takes the content and makes one row per goal from the GoalRow part (rows are not baked: a new goal needs its row).
+        /// Hooks the clicks. GameFlow calls it once at start; a test calls it after instantiating the prefab.
+        /// </summary>
+        public void Bind(ContentDb content)
         {
             db = content;
-            var t = transform;
-            var shade = Make.Rect(t, 0, 0, Px.W, Px.H, new Color(0, 0, 0, 0.97f), O - 1);
-            Make.Click(shade.gameObject, new Vector2(Px.W, Px.H), O - 1, Close);            // a click outside the page closes it
-            var panel = Make.SpriteAt(t, "goals", X, Y, O);
-            Make.Click(panel.gameObject, new Vector2(600, 330), O);
-            Make.TextKey(t, "ui.goals.title", X + 18, Y + 7, FontKind.Title, 16, Pale, O + 2, Align.Left, Dark);
-            found = Make.Text(t, "", X + 300, Y + 11, FontKind.Tiny, 8, Px.Hex("#a88a6a"), O + 2, Align.Centre);
-            var close = Make.TextKey(t, "ui.common.close", X + 582, Y + 7, FontKind.Title, 16, Pale, O + 2, Align.Right, Dark);
-            Make.Click(close.gameObject, new Vector2(60, 22), O + 3, Close).offset = new Vector2(-22, -8);
-            for (int i = 0; i < heads.Length; i++) heads[i] = Make.Text(t, "", 0, 0, FontKind.Tiny, 8, Faded, O + 2);
+            if (wired) return;
+            wired = true;
+            outside.onClick = Close;                          // a click outside the page closes it
+            closeClick.onClick = Close;
             for (int i = 0; i < db.Goals.Count; i++)
             {
-                var r = new Row { root = Make.Root("Goal " + i, t) };
-                r.text = Make.Text(r.root, "", 0, 0, FontKind.Body, 16, Ink, O + 2);
-                // two lines to a row: the goal and its count, then the reward and the bar. Body lettering sits 4 below its top edge
-                r.text.transform.localPosition = new Vector3(0, 3, 0);
-                r.count = Make.Text(r.root, "", 0, 0, FontKind.Tiny, 8, Faded, O + 2, Align.Right);
-                r.count.transform.localPosition = new Vector3(ColW - 2 * Pad, -2, 0);
-                r.reward = Make.Text(r.root, "", 0, 0, FontKind.Tiny, 8, Faded, O + 2);
-                r.reward.transform.localPosition = new Vector3(0, -11, 0);
-                r.track = Bar(r.root, Px.Hex("#b89860"));
-                r.fill = Bar(r.root, Px.Hex("#c8501e"));
-                r.icon = Make.Sprite(r.root, "dot", Vector3.zero, O + 3);
-                r.icon.transform.localPosition = new Vector3(ColW - 2 * Pad - 12, -RowH / 2f + 1, 0);
+                var r = Instantiate(rowPrefab, transform);       // at the view's origin, as the old loop made them; Open places them
+                r.name = "Goal " + i;
                 rows.Add(r);
             }
-            gameObject.SetActive(false);
-        }
-
-        static SpriteRenderer Bar(Transform parent, Color color)
-        {
-            var r = Make.Sprite(parent, "dot", Vector3.zero, O + 2);
-            r.name = "bar"; r.color = color;
-            return r;
         }
 
         /// <summary>A bar of the given width whose left end is BarW short of the row's right edge, 13 down from the row's top.</summary>
@@ -100,8 +81,8 @@ namespace Athanor.Game
                     var r = rows[used++];
                     bool complete = profile.IsComplete(g.id);
                     long progress = profile.Progress(g, db, journal);
-                    r.root.gameObject.SetActive(true);
-                    r.root.position = Px.At(x, y[col]);
+                    r.gameObject.SetActive(true);
+                    r.transform.position = Px.At(x, y[col]);
                     r.text.Text = Wording.GoalText(g); r.text.Color = complete ? Faded : Ink;
                     string item = profile.RewardOf(g.id);
                     r.count.Text = complete ? "" : Wording.Number(progress) + " / " + Wording.Number(g.target);
@@ -116,7 +97,7 @@ namespace Athanor.Game
                 }
                 y[col] += 4;
             }
-            for (int i = used; i < rows.Count; i++) rows[i].root.gameObject.SetActive(false);
+            for (int i = used; i < rows.Count; i++) rows[i].gameObject.SetActive(false);
             found.Text = Loc.T("ui.goals.complete", ("done", done), ("all", db.Goals.Count));
             gameObject.SetActive(true);
         }

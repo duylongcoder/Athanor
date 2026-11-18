@@ -46,7 +46,7 @@ aliases: []
 | method | `public void ClearNote()` | 254 |  |
 
 ## Uses
-[[Align]], [[Art]], [[ContentDb]], [[FontKind]], [[Journal]], [[Label]], [[Loc]], [[Make]], [[Px]], [[ReactionEvent]], [[RunPhase]], [[RunState]]
+[[Align]], [[Art]], [[ContentDb]], [[FontKind]], [[Journal]], [[Label]], [[Loc]], [[Make]], [[Px]], [[ReactionEvent]], [[Row]], [[RunPhase]], [[RunState]]
 
 ## Used by
 [[BenchView]], [[GameFlow]], [[JournalView]], [[MainDepthEvidence]], [[ReactionCutscene]], [[TutorialController]]
