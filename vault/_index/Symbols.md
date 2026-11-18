@@ -188,7 +188,7 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | PrefabBakeTests | PrefabBakeTests | Tests | class | Athanor/Assets/Tests/EditModeGame/PrefabBakeTests.cs | 13 | The shipped prefabs keep what the views need: a label keeps its key, a button still clicks, the tooltip makes its panel. |
 | PrefabFixture | PrefabFixture | Tests | class | Athanor/Assets/Tests/EditModeGame/PrefabFixture.cs | 9 | A copy of a prefab for one test. Call Destroy in [TearDown] (or a finally). |
 | RunOverDepthTests | RunOverDepthTests | Tests | class | Athanor/Assets/Tests/EditModeGame/RunOverDepthTests.cs | 15 | The run-over depth row (owner, phase-5-prep 2026-11-16): a won run says "Planted at depth n" on one line with no value; a lost run says "Depth reached" with "n of 5". The view is reused, so each path  |
-| SaveTests | SaveTests | Tests | class | Athanor/Assets/Tests/EditModeGame/SaveTests.cs | 9 | The journal and the profile survive a round trip through PlayerPrefs, and a damaged save never stops the game. |
+| SaveTests | SaveTests | Tests | class | Athanor/Assets/Tests/EditModeGame/SaveTests.cs | 11 | The journal and the profile survive a round trip through PlayerPrefs, and a damaged save never stops the game. |
 | SceneBakeTests | SceneBakeTests | Tests | class | Athanor/Assets/Tests/EditModeGame/SceneBakeTests.cs | 10 | The scene objects of Main.unity that are not prefabs (Task 15): their serialized parts are all there, and Bind finishes them. |
 | SettingsHapticsTests | SettingsHapticsTests | Tests | class | Athanor/Assets/Tests/EditModeGame/SettingsHapticsTests.cs | 9 | Saved settings (athanor.settings.v1), the haptics plan and the mute-on-hidden-tab hook. |
 | SparksTests | SparksTests | Tests | class | Athanor/Assets/Tests/EditModeGame/SparksTests.cs | 9 | Sparks on batched meshes: same motion and fade as the old SpriteRenderer pool, whole-pixel centres, HDR kept, no garbage. |
@@ -636,10 +636,10 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | GameFlow | method | MoodLine | 54 | public static string MoodLine(int mood) |
 | GameFlow | method | EffectsLine | 55 | public static string EffectsLine(bool on) |
 | GameFlow | property | JournalView | 117 | public JournalView JournalView |
-| GameFlow | method | JournalAfterQuit | 452 | public static Journal JournalAfterQuit(bool sandbox, Journal current) |
-| GameFlow | method | ProfileAfterQuit | 454 | public static Profile ProfileAfterQuit(bool sandbox, Profile current, ContentDb db) |
-| GameFlow | method | Ignite | 495 | public void Ignite() |
-| GameFlow | method | SettleIgnite | 503 | public static IgniteOutcome SettleIgnite(RunState run, Journal journal, bool sandbox) |
+| GameFlow | method | JournalAfterQuit | 455 | public static Journal JournalAfterQuit(bool sandbox, Journal current) |
+| GameFlow | method | ProfileAfterQuit | 457 | public static Profile ProfileAfterQuit(bool sandbox, Profile current, ContentDb db) |
+| GameFlow | method | Ignite | 498 | public void Ignite() |
+| GameFlow | method | SettleIgnite | 506 | public static IgniteOutcome SettleIgnite(RunState run, Journal journal, bool sandbox) |
 | FlowState | value | Boot | 12 | Boot |
 | FlowState | value | Title | 12 | Title |
 | FlowState | value | Intro | 12 | Intro |
@@ -669,7 +669,7 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | Cutscene | property | Skipped | 9 | protected bool Skipped |
 | Cutscene | property | Playing | 10 | protected bool Playing |
 | Cutscene | method | Play | 12 | public abstract IEnumerator Play() |
-| Cutscene | method | Skip | 14 | public void Skip() |
+| Cutscene | method | RequestSkip | 14 | public void RequestSkip() |
 | Cutscene | method | Begin | 17 | protected void Begin() |
 | Cutscene | method | ClearSkip | 18 | protected void ClearSkip() |
 | Cutscene | method | End | 19 | protected void End() |
@@ -1361,19 +1361,21 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | RunOverDepthTests | method | Lost_ShowsDepthReached_AndNOfFive | 48 | public void Lost_ShowsDepthReached_AndNOfFive() |
 | RunOverDepthTests | method | WonThenLost_OnTheSameView_RestoresTheLostRow | 56 | public void WonThenLost_OnTheSameView_RestoresTheLostRow() |
 | RunOverDepthTests | method | Relabel_AfterLanguageChange_KeepsEachPathsText | 68 | public void Relabel_AfterLanguageChange_KeepsEachPathsText() |
-| SaveTests | method | Restore | 20 | public void Restore() |
-| SaveTests | method | LoadProfile_WithNothingSaved_IsFresh_WithASeedOfItsOwn | 29 | public void LoadProfile_WithNothingSaved_IsFresh_WithASeedOfItsOwn() |
-| SaveTests | method | LoadProfile_WithGarbage_IsFresh | 38 | public void LoadProfile_WithGarbage_IsFresh() |
-| SaveTests | method | StoreThenLoadProfile_WithStatsAndCompletedGoals_KeepsStatsGoalsAndUnlocks | 49 | public void StoreThenLoadProfile_WithStatsAndCompletedGoals_KeepsStatsGoalsAndUnlocks() |
-| SaveTests | method | LoadProfile_WithIdsTheContentNoLongerHas_DropsThem | 66 | public void LoadProfile_WithIdsTheContentNoLongerHas_DropsThem() |
-| SaveTests | method | ResetProfile_ErasesTheProfile_AndKeepsTheJournal | 80 | public void ResetProfile_ErasesTheProfile_AndKeepsTheJournal() |
-| SaveTests | method | LoadJournal_WithGarbageString_ReturnsEmpty | 92 | public void LoadJournal_WithGarbageString_ReturnsEmpty() |
-| SaveTests | method | LoadJournal_WithOlderShape_ReturnsEmpty | 101 | public void LoadJournal_WithOlderShape_ReturnsEmpty() |
-| SaveTests | method | LoadJournal_WithNothingSaved_ReturnsEmpty | 110 | public void LoadJournal_WithNothingSaved_ReturnsEmpty() |
-| SaveTests | method | StoreThenLoadJournal_WithAPairAndAHint_KeepsRecipesAndHints | 117 | public void StoreThenLoadJournal_WithAPairAndAHint_KeepsRecipesAndHints() |
-| SaveTests | method | StoreThenLoadJournal_WithAThreeItemCombo_KeepsComboRecipes | 129 | public void StoreThenLoadJournal_WithAThreeItemCombo_KeepsComboRecipes() |
-| SaveTests | method | LoadJournal_Phase1PairKeys_StillLoad | 138 | public void LoadJournal_Phase1PairKeys_StillLoad() |
-| SaveTests | method | TutorialDone_DefaultsToFalse_AndRoundTrips | 145 | public void TutorialDone_DefaultsToFalse_AndRoundTrips() |
+| SaveTests | method | Restore | 22 | public void Restore() |
+| SaveTests | method | LoadProfile_WithNothingSaved_IsFresh_WithASeedOfItsOwn | 31 | public void LoadProfile_WithNothingSaved_IsFresh_WithASeedOfItsOwn() |
+| SaveTests | method | LoadProfile_WithGarbage_IsFresh | 40 | public void LoadProfile_WithGarbage_IsFresh() |
+| SaveTests | method | StoreThenLoadProfile_WithStatsAndCompletedGoals_KeepsStatsGoalsAndUnlocks | 51 | public void StoreThenLoadProfile_WithStatsAndCompletedGoals_KeepsStatsGoalsAndUnlocks() |
+| SaveTests | method | LoadProfile_WithIdsTheContentNoLongerHas_DropsThem | 68 | public void LoadProfile_WithIdsTheContentNoLongerHas_DropsThem() |
+| SaveTests | method | ResetProfile_ErasesTheProfile_AndKeepsTheJournal | 82 | public void ResetProfile_ErasesTheProfile_AndKeepsTheJournal() |
+| SaveTests | method | LoadJournal_WithGarbageString_ReturnsEmpty | 94 | public void LoadJournal_WithGarbageString_ReturnsEmpty() |
+| SaveTests | method | LoadJournal_CorruptData_ReturnsEmptyJournalAndWarns | 103 | public void LoadJournal_CorruptData_ReturnsEmptyJournalAndWarns() |
+| SaveTests | method | LoadProfile_CorruptData_ReturnsFreshProfileAndWarns | 112 | public void LoadProfile_CorruptData_ReturnsFreshProfileAndWarns() |
+| SaveTests | method | LoadJournal_WithOlderShape_ReturnsEmpty | 121 | public void LoadJournal_WithOlderShape_ReturnsEmpty() |
+| SaveTests | method | LoadJournal_WithNothingSaved_ReturnsEmpty | 130 | public void LoadJournal_WithNothingSaved_ReturnsEmpty() |
+| SaveTests | method | StoreThenLoadJournal_WithAPairAndAHint_KeepsRecipesAndHints | 137 | public void StoreThenLoadJournal_WithAPairAndAHint_KeepsRecipesAndHints() |
+| SaveTests | method | StoreThenLoadJournal_WithAThreeItemCombo_KeepsComboRecipes | 149 | public void StoreThenLoadJournal_WithAThreeItemCombo_KeepsComboRecipes() |
+| SaveTests | method | LoadJournal_Phase1PairKeys_StillLoad | 158 | public void LoadJournal_Phase1PairKeys_StillLoad() |
+| SaveTests | method | TutorialDone_DefaultsToFalse_AndRoundTrips | 165 | public void TutorialDone_DefaultsToFalse_AndRoundTrips() |
 | SceneBakeTests | method | ScreenFx_Baked_HasFlashAndFadeSprites_AndBindMakesItTheSingleton | 20 | public void ScreenFx_Baked_HasFlashAndFadeSprites_AndBindMakesItTheSingleton() |
 | SceneBakeTests | method | Window_Baked_HasPaneAndEveryEffectSprite_AndShowStartsAnEffect | 41 | public void Window_Baked_HasPaneAndEveryEffectSprite_AndShowStartsAnEffect() |
 | SceneBakeTests | method | Tutorial_Baked_HasItsBoxArrowAndCellRoot_ClosedUntilAStepShows | 62 | public void Tutorial_Baked_HasItsBoxArrowAndCellRoot_ClosedUntilAStepShows() |

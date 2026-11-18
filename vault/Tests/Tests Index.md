@@ -5,7 +5,7 @@ tags: [moc/tests]
 ---
 
 # Tests
-471 test methods in 37 files. Run: `dotnet test tools/CoreTests` (rules) or `unity test Athanor --mode EditMode`.
+473 test methods in 37 files. Run: `dotnet test tools/CoreTests` (rules) or `unity test Athanor --mode EditMode`.
 
 - [[ChainTests]] — 26 tests · covers [[Bench]], [[ChainPlan]], [[ChainPlanner]], [[ContentDb]]
 - [[ContentTests]] — 41 tests · covers [[Bench]], [[ChainPlanner]], [[ContentData]], [[ContentDb]], [[Ops]], [[RunState]]
@@ -35,7 +35,7 @@ tags: [moc/tests]
 - [[PauseTests]] — 10 tests · covers [[Bench]], [[Clickable]], [[ContentData]], [[ContentDb]], [[FlowState]], [[GameFlow]], [[Haptics]], [[Journal]]
 - [[PrefabBakeTests]] — 39 tests · covers [[Bench]], [[BenchView]], [[CardView]], [[CatalystChoiceView]], [[ChoiceCard]], [[Clickable]], [[ContentData]], [[ContentDb]]
 - [[RunOverDepthTests]] — 4 tests · covers [[Label]], [[Loc]], [[RunOverView]], [[RunState]]
-- [[SaveTests]] — 12 tests · covers [[ContentData]], [[ContentDb]], [[Journal]], [[Kind]], [[Profile]], [[ProfileData]], [[Save]]
+- [[SaveTests]] — 14 tests · covers [[ContentData]], [[ContentDb]], [[Journal]], [[Kind]], [[Profile]], [[ProfileData]], [[Save]]
 - [[SceneBakeTests]] — 5 tests · covers [[Bench]], [[ContentDb]], [[GameFlow]], [[Label]], [[ReactionCutscene]], [[ScreenFx]], [[SimpleCutscene]], [[TutorialController]]
 - [[SettingsHapticsTests]] — 7 tests · covers [[AudioMute]], [[Haptics]], [[Save]], [[Settings]]
 - [[SparksTests]] — 7 tests · covers [[Art]], [[Particle]], [[SparkMesh]], [[Sparks]]

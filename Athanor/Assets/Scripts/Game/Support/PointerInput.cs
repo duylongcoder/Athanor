@@ -58,13 +58,13 @@ namespace Athanor.Game
             if (top != Hover)
             {
                 var old = Hover; Hover = top;
-                old?.onExit?.Invoke();
-                top?.onEnter?.Invoke();
+                if (old != null && old.onExit != null) old.onExit();
+                if (top != null && top.onEnter != null) top.onEnter();
             }
             if (Down)
             {
                 pressedOn = Hover;
-                Hover?.onDown?.Invoke();
+                if (Hover != null && Hover.onDown != null) Hover.onDown();
                 AnyPress?.Invoke();
             }
             if (Up)

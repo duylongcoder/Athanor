@@ -22,7 +22,7 @@ aliases: []
 | property | `protected bool Skipped` | 9 |  |
 | property | `protected bool Playing` | 10 |  |
 | method | `public abstract IEnumerator Play()` | 12 |  |
-| method | `public void Skip()` | 14 |  |
+| method | `public void RequestSkip()` | 14 |  |
 | method | `protected void Begin()` | 17 | Call at the start of Play and whenever a skip has been dealt with. |
 | method | `protected void ClearSkip()` | 18 |  |
 | method | `protected void End()` | 19 |  |

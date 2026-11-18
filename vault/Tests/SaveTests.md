@@ -3,11 +3,11 @@ generated: true
 type: test
 file: Athanor/Assets/Tests/EditModeGame/SaveTests.cs
 tags: [test]
-count: 12
+count: 14
 ---
 
 # SaveTests
-`Athanor/Assets/Tests/EditModeGame/SaveTests.cs` — 12 tests
+`Athanor/Assets/Tests/EditModeGame/SaveTests.cs` — 14 tests
 
 ## Covers
 [[ContentData]], [[ContentDb]], [[Journal]], [[Kind]], [[Profile]], [[ProfileData]], [[Save]]
@@ -19,6 +19,8 @@ count: 12
 - `LoadProfile_WithIdsTheContentNoLongerHas_DropsThem`
 - `ResetProfile_ErasesTheProfile_AndKeepsTheJournal`
 - `LoadJournal_WithGarbageString_ReturnsEmpty`
+- `LoadJournal_CorruptData_ReturnsEmptyJournalAndWarns`
+- `LoadProfile_CorruptData_ReturnsFreshProfileAndWarns`
 - `LoadJournal_WithOlderShape_ReturnsEmpty`
 - `LoadJournal_WithNothingSaved_ReturnsEmpty`
 - `StoreThenLoadJournal_WithAPairAndAHint_KeepsRecipesAndHints`

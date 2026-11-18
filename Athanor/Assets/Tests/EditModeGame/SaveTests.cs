@@ -1,7 +1,9 @@
 using Athanor.Core;
 using Athanor.Game;
+using System.Text.RegularExpressions;
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.TestTools;
 
 namespace Athanor.Tests
 {
@@ -95,6 +97,24 @@ namespace Athanor.Tests
             var journal = Save.LoadJournal();
             Assert.AreEqual(0, journal.KnownPairs.Count);
             Assert.AreEqual(0, journal.Hints.Count);
+        }
+
+        [Test]
+        public void LoadJournal_CorruptData_ReturnsEmptyJournalAndWarns()
+        {
+            PlayerPrefs.SetString(Save.Key, "{{ not json at all");
+            LogAssert.Expect(LogType.Warning, new Regex("journal unreadable"));
+            var journal = Save.LoadJournal();
+            Assert.AreEqual(0, journal.KnownPairs.Count);
+        }
+
+        [Test]
+        public void LoadProfile_CorruptData_ReturnsFreshProfileAndWarns()
+        {
+            PlayerPrefs.SetString(Save.ProfileKey, "{{ not json at all");
+            LogAssert.Expect(LogType.Warning, new Regex("profile unreadable"));
+            var profile = Save.LoadProfile(Db());
+            Assert.AreEqual(0, profile.RunsStarted);
         }
 
         [Test]

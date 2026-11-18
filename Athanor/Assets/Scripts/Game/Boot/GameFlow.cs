@@ -187,7 +187,7 @@ namespace Athanor.Game
             bench.Bind(Db);
             if (depthStage != null) depthStage.PlaceTiles(Bench, Bench.TileCount);
             Bench.IgniteRequested += Ignite;
-            Bench.RedrawRequested += () => { if (State == FlowState.Bench && Run.Redraw()) Bench.Refresh(true); };
+            Bench.RedrawRequested += OnRedraw;
             Bench.JournalRequested += OpenJournal;
 
             reaction.Bind(new[] { workshop, Bench.gameObject });
@@ -222,6 +222,8 @@ namespace Athanor.Game
 
         void SaveSettings() => Save.StoreSettings(settings);
 
+        void OnRedraw() { if (State == FlowState.Bench && Run.Redraw()) Bench.Refresh(true); }
+
         void OnPauseOpened() => Bench.InputEnabled = false;
         void OnPauseClosed() { if (State == FlowState.Bench) Bench.InputEnabled = true; }
         void OpenPause() => pause.Open();
@@ -235,6 +237,7 @@ namespace Athanor.Game
             if (title != null) { title.SettingsClosed -= SaveSettings; title.JournalClicked -= OpenJournal; title.GoalsClicked -= OpenGoals; title.ResetConfirmed -= ResetProgress; }
             if (pause != null) { pause.Opened -= OnPauseOpened; pause.Closed -= OnPauseClosed; pause.QuitConfirmed -= AbandonRun; pause.VibrationChanged -= SaveSettings; }
             if (Bench != null && Bench.Hud != null) Bench.Hud.PauseClicked -= OpenPause;
+            if (Bench != null) { Bench.IgniteRequested -= Ignite; Bench.RedrawRequested -= OnRedraw; Bench.JournalRequested -= OpenJournal; }
             Time.timeScale = 1f;
         }
 
@@ -784,7 +787,7 @@ namespace Athanor.Game
             autoClock -= Time.deltaTime;
             if (autoClock > 0) return;
             autoClock = 0.45f;
-            reaction.Skip(); story.Skip();
+            reaction.RequestSkip(); story.RequestSkip();
             if (State != FlowState.Bench || Run == null || Run.Phase != RunPhase.Playing || !Bench.InputEnabled) return;
             if (autoReady && Run.CanIgnite) { autoReady = false; Ignite(); return; }
             var move = autoPlayer.Decide(Run);
