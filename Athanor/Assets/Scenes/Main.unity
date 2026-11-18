@@ -363,9 +363,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0
-    width: 1
-    height: 1
+    y: 0.055555556
+    width: 0.33333334
+    height: 0.3333333
   near clip plane: 0.1
   far clip plane: 50
   field of view: 60
@@ -1812,6 +1812,74 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
+--- !u!1001 &411300213
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3648607441377836410, guid: 5109155ed83f166e9abfdc4f221e6b72, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3648607441377836410, guid: 5109155ed83f166e9abfdc4f221e6b72, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3648607441377836410, guid: 5109155ed83f166e9abfdc4f221e6b72, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3648607441377836410, guid: 5109155ed83f166e9abfdc4f221e6b72, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3648607441377836410, guid: 5109155ed83f166e9abfdc4f221e6b72, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3648607441377836410, guid: 5109155ed83f166e9abfdc4f221e6b72, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3648607441377836410, guid: 5109155ed83f166e9abfdc4f221e6b72, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3648607441377836410, guid: 5109155ed83f166e9abfdc4f221e6b72, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3648607441377836410, guid: 5109155ed83f166e9abfdc4f221e6b72, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3648607441377836410, guid: 5109155ed83f166e9abfdc4f221e6b72, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5204981896977615415, guid: 5109155ed83f166e9abfdc4f221e6b72, type: 3}
+      propertyPath: m_Name
+      value: RunOver
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5109155ed83f166e9abfdc4f221e6b72, type: 3}
+--- !u!114 &411300214 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1331406248563231655, guid: 5109155ed83f166e9abfdc4f221e6b72, type: 3}
+  m_PrefabInstance: {fileID: 411300213}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d07dbb149c865e15a2d56d6704e103d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Athanor.Game::Athanor.Game.RunOverView
 --- !u!1 &522944084
 GameObject:
   m_ObjectHideFlags: 0
@@ -1851,6 +1919,7 @@ MonoBehaviour:
   cutsceneRoom: {fileID: 310397452}
   mainCamera: {fileID: 57964792}
   depthStage: {fileID: 539019352}
+  runOver: {fileID: 411300214}
   Auto: 0
 --- !u!114 &522944086
 MonoBehaviour:
@@ -7342,3 +7411,4 @@ SceneRoots:
   - {fileID: 1854752384}
   - {fileID: 310397453}
   - {fileID: 522944088}
+  - {fileID: 411300213}

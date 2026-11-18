@@ -809,8 +809,11 @@ Every remaining view follows Task 5's ten steps exactly. For each one:
    (`Row`, `Card`, `Slot`) get `[System.Serializable]` and public fields. Arrays sized in a field initializer keep it.
 3. **Move every click out of `Build`:** each `Make.Click(go, size, order, <lambda>)` becomes `x = Make.Click(go, size, order)` with a
    new `[SerializeField] Clickable x`, and the lambda's body moves verbatim into a named method assigned in `Bind`
-   (`x.onClick = Method;`). Each `UiButton.Create(..., <lambda>)` drops the lambda; `Bind` does `button.Clicked += Method;`
-   and `OnDestroy` does `-=`.
+   (`x.onClick = Method;`). Each `UiButton.Create(..., <lambda>)` drops the lambda; `Bind` does `button.Bind();` then
+   `button.Clicked += Method;`, and `OnDestroy` does `-=`. (Found in Task 5: a baked `UiButton` hooks its `Clickable` only in
+   its own `Awake`, which never runs in EditMode and at runtime only when a hidden view first opens; the view's `Bind` must not
+   depend on that. `PrefabBakeTests.Click_RunOverPrefabButton_PicksItsChoice` fails without it.)
+   Each view's test also clicks one button through its `Clickable` and asserts the effect.
 4. **Runtime-only objects stay runtime:** anything made with `Sprite.Create`, `new Texture2D`, `new RenderTexture`, `new Mesh` or
    `new Material` is created in `Bind` (or lazily on first use), never baked. Known cases: `Tooltip.cs:24` (9-slice panel sprite),
    `RarityStars.cs:51` (hanging star sprite), `WindowView.cs:160-161` (root texture/sprite), `SparkMesh`, `DepthTable`, `DepthRig`.

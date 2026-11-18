@@ -58,12 +58,6 @@
     {
       "rule": "UL005",
       "path": "Assets/Scripts/Game/Boot/GameFlow.cs",
-      "text": "RunOver.GoalsClicked += OpenGoals;",
-      "count": 1
-    },
-    {
-      "rule": "UL005",
-      "path": "Assets/Scripts/Game/Boot/GameFlow.cs",
       "text": "goalsView.Closed += CloseGoals;",
       "count": 1
     },

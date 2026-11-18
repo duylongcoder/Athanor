@@ -101,5 +101,27 @@ namespace Athanor.Tests
             }
             finally { f.Destroy(); }
         }
+
+        // the two buttons in hierarchy order: "Descend again" (index 0), then "Title" (index 1)
+        [TestCase(0, true)]
+        [TestCase(1, false)]
+        public void Click_RunOverPrefabButton_PicksItsChoice(int index, bool again)
+        {
+            var f = new PrefabFixture("Assets/Prefabs/Views/RunOver.prefab");
+            try
+            {
+                var view = f.Get<RunOverView>();
+                view.Bind();
+                view.gameObject.SetActive(true);            // Show opens it; Pick ignores a hidden summary
+                var buttons = view.GetComponentsInChildren<UiButton>(true);
+                Assert.AreEqual(2, buttons.Length);
+
+                buttons[index].GetComponent<Clickable>().onClick();
+                view.Pick(!again);                          // ignored once the click has chosen; counts if the click did nothing
+
+                Assert.AreEqual(again, view.Again);
+            }
+            finally { f.Destroy(); }
+        }
     }
 }

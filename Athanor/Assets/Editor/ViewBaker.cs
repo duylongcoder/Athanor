@@ -124,6 +124,5 @@ public static class ViewBaker
     }
 
     // One pair of entry points per view is added by its task (Bake<Name> is deleted with the view's Build).
-    public static void BakeRunOver() => Bake<RunOverView>("RunOver", "runOver", v => v.Build());
     public static void CompareRunOver() => Compare("RunOver");
 }

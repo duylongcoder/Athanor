@@ -8,7 +8,6 @@ namespace Athanor.Game
     /// <summary>The summary at the end of a run, won or lost.</summary>
     public sealed class RunOverView : MonoBehaviour
     {
-        const int O = 450, X = 160, Y = 75;
         /// <summary>True when the player chose to start another run rather than return to the title.</summary>
         public bool Again { get; private set; }
         /// <summary>The line about goals was clicked: show the Goals page over this one.</summary>
@@ -28,6 +27,7 @@ namespace Athanor.Game
             if (wired) return;
             wired = true;
             goalsClick.onClick = OnGoals;
+            again.Bind(); toTitle.Bind();       // the buttons' own Awake runs only when the dialog first opens
             again.Clicked += PickAgain;
             toTitle.Clicked += PickTitle;
         }
@@ -42,32 +42,6 @@ namespace Athanor.Game
         void OnGoals() { if (gameObject.activeSelf && !done) GoalsClicked?.Invoke(); }
         void PickAgain() => Pick(true);
         void PickTitle() => Pick(false);
-
-        /// <summary>Phase 6 bake source only; deleted in Step 6.</summary>
-        public void Build()
-        {
-            var t = transform;
-            shade = Make.Rect(t, 0, 0, Px.W, Px.H, Color.clear, O - 1);
-            Make.Click(shade.gameObject, new Vector2(Px.W, Px.H), O - 1);      // nothing underneath can be clicked
-            body = Make.Root("Dialog", t);
-            Make.SpriteAt(body, "dialog", X, Y, O);
-            heading = Make.Text(body, "", 320, Y + 14, FontKind.Title, 32, Px.Hex("#f8d250"), O + 2, Align.Centre, Px.Hex("#3a1a08"));
-            sub = Make.Text(body, "", 320, Y + 50, FontKind.Body, 16, Px.Hex("#f0dcc0"), O + 2, Align.Centre);
-            Make.Rect(body, X + 24, Y + 72, 272, 1, Px.Hex("#6a4428"), O + 1);
-            string[] rows = { "ui.runover.depth_reached", "ui.runover.discoveries", "ui.runover.journal", "ui.runover.goals" };
-            for (int i = 0; i < rows.Length; i++)
-            {
-                names[i] = Make.TextKey(body, rows[i], X + 28, Y + 78 + i * 17, FontKind.Body, 16, Px.Hex("#a88a6a"), O + 2);
-                values[i] = Make.Text(body, "", X + 292, Y + 76 + i * 17, FontKind.Title, 16, Px.Hex("#f0dcc0"), O + 2, Align.Right, Px.Hex("#0c0706"));
-            }
-            goalsLine = Make.Text(body, "", 320, Y + 147, FontKind.Tiny, 8, Px.Hex("#6ee6c8"), O + 2, Align.Centre);
-            goalsClick = Make.Click(goalsLine.gameObject, new Vector2(272, 12), O + 2);
-            goalsClick.offset = new Vector2(0, -4);
-            Make.Rect(body, X + 24, Y + 160, 272, 1, Px.Hex("#6a4428"), O + 1);
-            again = UiButton.Create(body, "ui.runover.again", X + 28, Y + 170, O + 2);
-            toTitle = UiButton.Create(body, "ui.runover.title", X + 172, Y + 170, O + 2);
-            gameObject.SetActive(false);
-        }
 
         /// <summary>Closes the summary with the given choice (also used by scripted play).</summary>
         public void Pick(bool again) { if (gameObject.activeSelf && !done) { Again = again; done = true; } }

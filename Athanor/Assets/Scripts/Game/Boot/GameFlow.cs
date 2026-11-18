@@ -173,7 +173,7 @@ namespace Athanor.Game
             journalView.Closed += CloseJournal;
             choice = Make.Root("Catalyst Choice").gameObject.AddComponent<CatalystChoiceView>(); choice.Build();
             runOver.Bind();
-            RunOver.GoalsClicked += OpenGoals;
+            runOver.GoalsClicked += OpenGoals;
             eventView = Make.Root("Event").gameObject.AddComponent<EventView>(); eventView.Build();
             goalsView = Make.Root("Goals").gameObject.AddComponent<GoalsView>(); goalsView.Build(Db);
             goalsView.Closed += CloseGoals;
