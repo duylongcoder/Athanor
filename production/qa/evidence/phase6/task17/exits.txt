@@ -1,0 +1,8 @@
+ci exit=0
+editmode exit=0
+build-release exit=0
+release-size 10961269
+build-dev exit=0
+webtest exit=0
+hd2d exit=1
+DONE
