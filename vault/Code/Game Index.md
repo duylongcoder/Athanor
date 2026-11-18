@@ -61,10 +61,10 @@ tags: [moc/code]
 - [[DepthLayer]] _class_ — One flat thing of the bench placed in depth: it is moved to its depth and enlarged by (D - z) / D, so that fro
 
 ## `Game/Depth/DepthMath.cs`
-- [[DepthMath]] _class_ — The projection maths of the HD-2D bench (docs/mockup/hd2d/SPEC.md, "Layer stack and projection"). Pure functio
+- [[DepthMath]] _class_ — The projection maths of the HD-2D bench (HD-2D mockup SPEC, "Layer stack and projection"; removed in P6-22, se
 
 ## `Game/Depth/DepthMood.cs`
-- [[DepthMood]] _class_ — The five depth presets of the HD-2D test scene (docs/mockup/hd2d/SPEC.md, "Depth presets", with the URP conver
+- [[DepthMood]] _class_ — The five depth presets of the HD-2D test scene (HD-2D mockup SPEC, "Depth presets", with the URP conversions o
 - [[Preset]] _struct_ — One depth's look.
 
 ## `Game/Depth/DepthRig.cs`

@@ -1,8 +1,0 @@
-loaded in 1.0 s, viewport 1280x720, scale 2
-canvas 1280x720 css 1280x720
-on the bench
-shot tiles-cleared-1280x720
-cleared: 0 cards taken back
-shot tiles-card-selected-1280x720
-ok   rest tile 0 point 0 art 218.2,166.0
-ok   rest tile 0 point 1 art 281.2,166.0

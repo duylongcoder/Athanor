@@ -8,7 +8,7 @@ using UnityEngine.Rendering.Universal;
 
 namespace Athanor.Tests
 {
-    /// <summary>The HD-2D projection maths (docs/mockup/hd2d/SPEC.md:42-72) and the rules that keep the depth art out of the shipped game.</summary>
+    /// <summary>The HD-2D projection maths (HD-2D mockup SPEC, "Layer stack and projection"; removed in P6-22, see git history) and the rules that keep the depth art out of the shipped game.</summary>
     public class DepthLayerTests
     {
         const float D = DepthMath.RestDistance;

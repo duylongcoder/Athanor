@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Athanor.Game
 {
     /// <summary>
-    /// The projection maths of the HD-2D bench (docs/mockup/hd2d/SPEC.md, "Layer stack and projection"). Pure functions,
+    /// The projection maths of the HD-2D bench (HD-2D mockup SPEC, "Layer stack and projection"; removed in P6-22, see git history). Pure functions,
     /// no scene. Depth z follows the SPEC: 0 is the plane where one unit is one art pixel, negative is away from the
     /// camera. In the Unity scene the camera looks along +z, so a layer at SPEC depth z sits at world z = -z.
     /// </summary>

@@ -128,7 +128,7 @@ namespace Athanor.Game
             midway?.Invoke();
             // 3. the name of the place
             small.Text = Loc.T("cutscene.depth", ("n", depth)); big.Text = depthName;
-            string introKey = DepthLook.IntroKey(depth);       // docs/mockup/phase5-ui SPEC (f): the line under the name; none past depth 5
+            string introKey = DepthLook.IntroKey(depth);       // Phase 5 UI mockup SPEC (f): the line under the name; none past depth 5
             intro.Text = introKey != null ? Loc.T(introKey) : "";
             intro.Alpha = 0;
             big.SetSize(depthName.Length > 20 ? 32 : 48);

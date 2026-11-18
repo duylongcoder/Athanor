@@ -2,7 +2,7 @@
 # 5b-06: the frame-time matrix. Needs the release builds served: Main on :8080 (Build/web), DepthTest on :8081 (Build/web-depth).
 #   bash tools/web/depthmatrix.sh <outDir>
 cd "$(dirname "$0")/../.." || exit 1
-E=${1:-production/qa/evidence/phase5/5b-06/perf}
+E=${1:?usage: bash tools/web/depthmatrix.sh <outDir>}
 D="wait:3,perf:default:15,key:5,wait:2,perf:depth5:15,key:e,wait:2,perf:fxoff_depth5:15"
 M="wait:3,perf:title:15"
 for sc in 2x:1280x720 3x:1920x1080; do s=${sc%%:*}; v=${sc##*:}

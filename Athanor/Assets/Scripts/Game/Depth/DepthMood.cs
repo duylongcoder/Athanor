@@ -6,7 +6,7 @@ using UnityEngine.Rendering.Universal;
 namespace Athanor.Game
 {
     /// <summary>
-    /// The five depth presets of the HD-2D test scene (docs/mockup/hd2d/SPEC.md, "Depth presets", with the URP conversions
+    /// The five depth presets of the HD-2D test scene (HD-2D mockup SPEC, "Depth presets", with the URP conversions
     /// of "Mapping mockup values to Unity"): ambient light, moonbeam, bloom, vignette, the fog sheets and the window view.
     /// Depth 0 is today's look (the main scene's single setting).
     /// </summary>
