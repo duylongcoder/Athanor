@@ -1996,6 +1996,7 @@ MonoBehaviour:
   eventView: {fileID: 480626881}
   toast: {fileID: 879152207}
   pause: {fileID: 899813775}
+  hudPrefab: {fileID: 8171617493609824607, guid: 2e2af5be95c1d4781a2a201e1b015f9f, type: 3}
 --- !u!114 &522944086
 MonoBehaviour:
   m_ObjectHideFlags: 0

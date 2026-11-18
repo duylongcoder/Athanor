@@ -33,7 +33,8 @@ namespace Athanor.Game
         Pick press, selected; Vector2 pressAt; bool dragging;
         float hoverTime; string hoverKey;
 
-        public void Build(LayoutData layout, ContentDb content, Transform parent)
+        /// <summary>hudPrefab is Parts/Hud.prefab; until the bench is a prefab itself (Task 14) the flow hands it in.</summary>
+        public void Build(LayoutData layout, ContentDb content, Transform parent, HudView hudPrefab)
         {
             db = content;
             transform.SetParent(parent, false);
@@ -47,8 +48,9 @@ namespace Athanor.Game
             // tiles an aspect has joined (a bridge, an open bench): a slow, steady line of their own colour
             joins = Make.Root("Joins", transform).gameObject.AddComponent<LinkView>();
             joins.color = new Color(1.6f, 1.25f, 0.45f); joins.speed = 0.08f; joins.arc = 3; joins.alpha = 0.7f;
-            Hud = Make.Root("Hud", transform).gameObject.AddComponent<HudView>();
-            Hud.Build(transform);
+            Hud = Instantiate(hudPrefab, transform, false);
+            Hud.name = "Hud";
+            Hud.Bind();
             Hud.IgniteClicked += () => { if (inputEnabled) IgniteRequested?.Invoke(); };
             Hud.JournalClicked += () => { if (inputEnabled) JournalRequested?.Invoke(); };
             Hud.RedrawClicked += () => { if (inputEnabled) RedrawRequested?.Invoke(); };

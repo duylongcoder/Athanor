@@ -243,7 +243,7 @@ public static class DepthTestBuilder
         return r;
     }
 
-    /// <summary>A static copy of the bench HUD's panels (HudView.Build, BenchView's rack) and a few of its labels, on the UI layer.</summary>
+    /// <summary>A static copy of the bench HUD's panels (the Hud prefab, BenchView's rack) and a few of its labels, on the UI layer.</summary>
     static void BuildHud(Transform parent)
     {
         const int O = 100;

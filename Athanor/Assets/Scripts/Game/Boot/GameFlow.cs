@@ -109,6 +109,8 @@ namespace Athanor.Game
         long shownPotency;
         /// <summary>The in-run pause menu (a prefab in Main.unity).</summary>
         [SerializeField] PauseMenu pause;
+        /// <summary>Parts/Hud.prefab: the bench instantiates it until the bench is a prefab itself.</summary>
+        [SerializeField] HudView hudPrefab;
         Coroutine tutRoutine;
         int escGuardFrame = -1;
         bool hurry, inCutscene, runEnded, autoReady, abandoned;
@@ -171,7 +173,8 @@ namespace Athanor.Game
             gameObject.AddComponent<ScreenFx>().Build(mainCamera, depthStage != null ? depthStage.sway : null);
             PointerInput.Rig = depthStage != null ? depthStage.rig : null;
             Bench = Make.Root("Bench").gameObject.AddComponent<BenchView>();
-            Bench.Build(layout, Db, null);
+            if (hudPrefab == null) throw new System.InvalidOperationException("GameFlow.hudPrefab is not set: bake Parts/Hud.prefab into Main.unity");
+            Bench.Build(layout, Db, null, hudPrefab);
             if (depthStage != null) depthStage.PlaceTiles(Bench, layout.tiles.Length);
             Bench.IgniteRequested += Ignite;
             Bench.RedrawRequested += () => { if (State == FlowState.Bench && Run.Redraw()) Bench.Refresh(true); };

@@ -7,7 +7,6 @@ namespace Athanor.Game
     /// <summary>The panels round the bench: depth and potency, catalysts, trials and redraws, the last-reaction note, journal and Ignite.</summary>
     public sealed class HudView : MonoBehaviour
     {
-        const int O = 100;
         public event Action IgniteClicked, JournalClicked, RedrawClicked, PauseClicked;
         /// <summary>Catalyst socket index the pointer is over, or -1.</summary>
         public int HoveredCatalyst { get; private set; } = -1;
@@ -18,7 +17,8 @@ namespace Athanor.Game
         const int AspectDy = 0;
         /// <summary>The pause button's picture (28x20 at 12,152) and its 44x44 hit box (4,140); SPEC item 11 deviation: the aspects shelf band is full, shown only while a pause can open.</summary>
         public const int PauseX = 12, PauseY = 152, PauseW = 28, PauseH = 20, PauseOrder = 650;
-        GameObject pauseGroup; SpriteRenderer pauseEdge;
+        [SerializeField] GameObject pauseGroup;
+        [SerializeField] SpriteRenderer pauseEdge;
         /// <summary>Index of the held aspect the pointer is over (in the strip under the depth panel), or -1.</summary>
         public int HoveredAspect { get; private set; } = -1;
         /// <summary>The most catalysts the sockets can show: four from clearing depths and two from shrines.</summary>
@@ -28,21 +28,21 @@ namespace Athanor.Game
         /// <summary>How far below the box's top the label is placed, so the word and its shadow sit centred in the fill.</summary>
         const int RedrawLabelY = 3;
 
-        Label depth, depthName, potency, potencyWord, target, trials, redraws, redrawsLabel, journalCount, igniteText, hintText;
-        readonly Label[] note = new Label[4];
-        SpriteRenderer barFill, barTip, ignite, ignitePulse;
-        readonly SpriteRenderer[] socketLit = new SpriteRenderer[MaxCatalysts], catalystIcon = new SpriteRenderer[MaxCatalysts];
-        readonly SpriteRenderer[] aspectSocket = new SpriteRenderer[MaxAspects], aspectIcon = new SpriteRenderer[MaxAspects];
-        readonly Label[] depthNote = new Label[3];
-        Label aspectsLabel;
+        [SerializeField] Label depth, depthName, potency, potencyWord, target, trials, redraws, redrawsLabel, journalCount, igniteText, hintText;
+        [SerializeField] Label aspectsLabel, redrawText;
+        [SerializeField] Label[] note = new Label[4], depthNote = new Label[3];
+        [SerializeField] SpriteRenderer barFill, barTip, ignite, ignitePulse, redrawFill;
+        [SerializeField] SpriteRenderer[] socketLit = new SpriteRenderer[MaxCatalysts], catalystIcon = new SpriteRenderer[MaxCatalysts];
+        [SerializeField] SpriteRenderer[] aspectSocket = new SpriteRenderer[MaxAspects], aspectIcon = new SpriteRenderer[MaxAspects];
+        // the hit boxes: one per catalyst socket and held aspect, then Redraw, pause, the journal book and Ignite
+        [SerializeField] Clickable[] socketHit = new Clickable[MaxCatalysts], aspectHit = new Clickable[MaxAspects];
+        [SerializeField] Clickable redrawHit, pauseHit, journalHit, igniteHit;
         float catalystPitch = 35;
-        float shown, bump; long goal, targetValue; bool canIgnite, igniteDown, canRedraw, redrawDown;
-        SpriteRenderer redrawFill;
-        Label redrawText;
+        float shown, bump; long goal, targetValue; bool canIgnite, igniteDown, canRedraw, redrawDown, wired;
 
-        static readonly Color Dim = Px.Hex("#a88a6a"), Pale = Px.Hex("#f0dcc0"), Gold = Px.Hex("#f8d250"), Ink = Px.Hex("#3a2212");
+        static readonly Color Gold = Px.Hex("#f8d250");
         static readonly Color RedrawUp = Px.Hex("#1d5a52"), RedrawOver = Px.Hex("#26706a"), RedrawPressed = Px.Hex("#143f3a"),
-            RedrawOff = Px.Hex("#3a2e28");
+            RedrawOff = Px.Hex("#3a2e28"), PauseEdgeColor = Px.Hex("#8a5a1e");
 
         /// <summary>The bench can be switched off under the pointer, which then never sends exit or release: forget them.</summary>
         void OnDisable()
@@ -73,87 +73,42 @@ namespace Athanor.Game
         /// <summary>Pitch of the small rows: Crux at 16 needs 12 px, Pixel Operator 8 keeps 10.</summary>
         static int Row => Loc.Vi ? 12 : 10;
 
-        public void Build(Transform parent)
+        /// <summary>Hooks the hit boxes to the hover and click handlers. Once per instance: the pointer calls them, nothing else does.</summary>
+        public void Bind()
         {
-            transform.SetParent(parent, false);
-            var t = transform; var dark = Px.Hex("#0c0706");
-            // top left: depth and potency
-            Make.SpriteAt(t, "hud_left", 8, 8, O);
-            depth = Make.Text(t, "", 16, 9, FontKind.Title, 32, Pale, O + 3, Align.Left, dark);
-            depthName = Make.Text(t, "", 17, 37, FontKind.Body, 16, Dim, O + 3);
-            potencyWord = Make.TextKey(t, "ui.hud.potency", 17, 52, FontKind.Tiny, 8, Dim, O + 3);
-            potency = Make.Text(t, "0", 70, 49, FontKind.Numeral, 16, Gold, O + 3, Align.Left, Px.Hex("#3a1a08"));
-            target = Make.Text(t, "", 153, 52, FontKind.Tiny, 8, Dim, O + 3, Align.Right);
-            barFill = Make.Rect(t, 18, 70, 1, 5, Color.white, O + 2); barFill.sprite = Art.Lib.Sprite("bar_fill");
-            barTip = Make.Rect(t, 18, 70, 1, 5, Color.white, O + 3);
-            // top right: catalysts, trials, redraws
-            Make.SpriteAt(t, "hud_right", 480, 8, O);
-            Make.TextKey(t, "ui.hud.catalysts", 489, 14, FontKind.Tiny, 8, Dim, O + 3);
-            for (int i = 0; i < MaxCatalysts; i++)
+            if (wired) return;
+            wired = true;
+            for (int i = 0; i < socketHit.Length; i++)
             {
-                int x = 488 + i * 35, index = i;
-                socketLit[i] = Make.SpriteAt(t, "socket_filled", x, 24, O + 1 + i * 2);
-                catalystIcon[i] = Make.Sprite(t, "dot", Px.Mid(x + 3, 27, 24, 24), O + 2 + i * 2);
-                var c = Make.Click(socketLit[i].gameObject, new Vector2(30, 30), O);
-                c.onEnter = () => HoveredCatalyst = index; c.onExit = () => { if (HoveredCatalyst == index) HoveredCatalyst = -1; };
+                int index = i;
+                socketHit[i].onEnter = () => HoveredCatalyst = index;
+                socketHit[i].onExit = () => { if (HoveredCatalyst == index) HoveredCatalyst = -1; };
             }
-            Make.TextKey(t, "ui.hud.trials", 489, 63, FontKind.Tiny, 8, Dim, O + 3);
-            trials = Make.Text(t, "", 534, 48, FontKind.Numeral, 32, Px.Hex("#ee6a3c"), O + 3, Align.Left, dark);
-            redrawsLabel = Make.TextKey(t, "ui.hud.redraws", 556, 63, FontKind.Tiny, 8, Dim, O + 3);
-            redraws = Make.Text(t, "", 611, 48, FontKind.Numeral, 32, Px.Hex("#6ee6c8"), O + 3, Align.Left, dark);
-            // the Redraw button, right under the counter: a dark one-pixel edge round a fill that greys out when no redraw can be made
-            Make.Rect(t, RedrawX, RedrawY, RedrawW, RedrawH, dark, O + 1);
-            redrawFill = Make.Rect(t, RedrawX + 1, RedrawY + 1, RedrawW - 2, RedrawH - 2, RedrawUp, O + 2);
-            redrawText = Make.TextKey(t, "ui.bench.redraw", RedrawX + RedrawW / 2f, RedrawY + RedrawLabelY, FontKind.Title, 16, Pale, O + 4, Align.Centre, dark);
-            var redrawZone = Make.Root("redraw", t); redrawZone.position = RedrawAnchor;
-            var rc = Make.Click(redrawZone.gameObject, new Vector2(RedrawW, RedrawH), O, () => { if (canRedraw) RedrawClicked?.Invoke(); });
-            rc.onEnter = () => RedrawHovered = true;
-            rc.onExit = () => { RedrawHovered = false; redrawDown = false; };
-            rc.onDown = () => redrawDown = true; rc.onUp = () => redrawDown = false;
-            // under the depth panel: the aspects this run holds, and what this depth's event changed
-            aspectsLabel = Make.TextKey(t, "ui.hud.aspects", 10, 88 + AspectDy, FontKind.Tiny, 8, Dim, O + 3, Align.Left, dark);
-            for (int i = 0; i < MaxAspects; i++)
+            for (int i = 0; i < aspectHit.Length; i++)
             {
-                int x = 9 + i * 29, index = i;
-                aspectSocket[i] = Make.SpriteAt(t, "aspect_socket", x, 98 + AspectDy, O + 1);
-                aspectIcon[i] = Make.Sprite(t, "dot", Px.Mid(x + 1, 99 + AspectDy, 24, 24), O + 2);
-                var c = Make.Click(aspectSocket[i].gameObject, new Vector2(26, 26), O);
-                c.onEnter = () => HoveredAspect = index; c.onExit = () => { if (HoveredAspect == index) HoveredAspect = -1; };
+                int index = i;
+                aspectHit[i].onEnter = () => HoveredAspect = index;
+                aspectHit[i].onExit = () => { if (HoveredAspect == index) HoveredAspect = -1; };
             }
-            // pause: a small button under the depth panel, the hit box larger than the picture (44 CSS px on a phone)
-            pauseGroup = Make.Root("pause", t).gameObject;
-            var pg = pauseGroup.transform;
-            pauseEdge = Make.Rect(pg, PauseX, PauseY, PauseW, PauseH, Px.Hex("#8a5a1e"), PauseOrder);
-            Make.Rect(pg, PauseX + 2, PauseY + 2, PauseW - 4, PauseH - 4, Px.Hex("#3a2412"), PauseOrder + 1);
-            Make.Rect(pg, PauseX + 3, PauseY + 3, PauseW - 6, PauseH - 6, Px.Hex("#1d1410"), PauseOrder + 1);
-            Make.Rect(pg, PauseX + 8, PauseY + 5, 4, 10, Pale, PauseOrder + 2); Make.Rect(pg, PauseX + 16, PauseY + 5, 4, 10, Pale, PauseOrder + 2);
-            var pz = Make.Root("hit", pg); pz.position = Px.Mid(PauseX - 8, PauseY - 12, 44, 44);
-            var pc = Make.Click(pz.gameObject, new Vector2(44, 44), PauseOrder + 4, () => PauseClicked?.Invoke());
-            pc.onEnter = () => { PauseHovered = true; pauseEdge.color = Gold; };
-            pc.onExit = () => { PauseHovered = false; pauseEdge.color = Px.Hex("#8a5a1e"); };
-            pauseGroup.SetActive(false);
-            for (int i = 0; i < depthNote.Length; i++) depthNote[i] = Make.Text(t, "", 10, 130 + AspectDy + i * Row, FontKind.Tiny, 8, Px.Hex("#6ee6c8"), O + 3, Align.Left, dark);
-            // bottom left: the last reaction and the latest hint
-            Make.SpriteAt(t, "note", 4, 262, O);
-            Make.TextKey(t, "ui.hud.last_reaction", 10, 266, FontKind.Tiny, 8, Px.Hex("#7a5430"), O + 3);
-            for (int i = 0; i < 4; i++) note[i] = Make.Text(t, "", 10, 273 + i * 10, FontKind.Body, 16, Ink, O + 3);
-            note[2].Color = Px.Hex("#11606a"); note[3].Color = Px.Hex("#9a3414");
-            Make.TextKey(t, "ui.hud.hint", 10, 318, FontKind.Tiny, 8, Px.Hex("#7a5430"), O + 3);
-            // two lines: the longest hint ("Phoenix Feather stirs near a crystal.") wraps once
-            hintText = Make.Text(t, "", 10, 322, FontKind.Body, 16, Px.Hex("#4a1f7a"), O + 3, Align.Left, null, 112);
-            hintText.main.lineSpacing = -30;
-            // bottom right: journal and Ignite
-            Make.SpriteAt(t, "corner", 514, 284, O);
-            var book = Make.SpriteAt(t, "book", 520, 290, O + 2);
-            Make.TextKey(t, "ui.hud.journal", 542, 289, FontKind.Title, 16, Pale, O + 3);
-            journalCount = Make.Text(t, "", 630, 294, FontKind.Tiny, 8, Dim, O + 3, Align.Right);
-            Make.Click(book.gameObject, new Vector2(118, 22), O, () => JournalClicked?.Invoke()).offset = new Vector2(46, 0);
-            ignite = Make.SpriteAt(t, "ignite_up", 519, 310, O + 1);
-            ignitePulse = Make.Rect(t, 521, 312, 108, 28, Color.clear, O + 2); ignitePulse.sharedMaterial = Art.Lib.glow;
-            igniteText = Make.TextKey(t, "ui.hud.ignite", 575, 306, FontKind.Title, 32, Px.Hex("#fff6b8"), O + 4, Align.Centre, Px.Hex("#3b0d1e"));
-            var ic = Make.Click(ignite.gameObject, new Vector2(112, 36), O, () => { if (canIgnite) IgniteClicked?.Invoke(); });
-            ic.onDown = () => igniteDown = true; ic.onUp = () => igniteDown = false; ic.onExit = () => igniteDown = false;
+            redrawHit.onClick = PressRedraw; redrawHit.onEnter = EnterRedraw; redrawHit.onExit = ExitRedraw;
+            redrawHit.onDown = DownRedraw; redrawHit.onUp = UpRedraw;
+            pauseHit.onClick = PressPause; pauseHit.onEnter = EnterPause; pauseHit.onExit = ExitPause;
+            journalHit.onClick = PressJournal;
+            igniteHit.onClick = PressIgnite; igniteHit.onDown = DownIgnite; igniteHit.onUp = UpIgnite; igniteHit.onExit = UpIgnite;
         }
+
+        void PressRedraw() { if (canRedraw) RedrawClicked?.Invoke(); }
+        void EnterRedraw() => RedrawHovered = true;
+        void ExitRedraw() { RedrawHovered = false; redrawDown = false; }
+        void DownRedraw() => redrawDown = true;
+        void UpRedraw() => redrawDown = false;
+        void PressPause() => PauseClicked?.Invoke();
+        void EnterPause() { PauseHovered = true; pauseEdge.color = Gold; }
+        void ExitPause() { PauseHovered = false; pauseEdge.color = PauseEdgeColor; }
+        void PressJournal() => JournalClicked?.Invoke();
+        void PressIgnite() { if (canIgnite) IgniteClicked?.Invoke(); }
+        void DownIgnite() => igniteDown = true;
+        void UpIgnite() => igniteDown = false;
 
         /// <summary>
         /// Everything except the potency number, which is animated separately. keepRedraw leaves the Redraw button and its

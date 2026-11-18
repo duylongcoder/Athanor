@@ -160,6 +160,19 @@ public static class ViewBaker
     static void RefreshTitleSettings(TitleView v) =>
         typeof(TitleView).GetMethod("RefreshSettings", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).Invoke(v, null);
 
+    /// <summary>The Hud prefab alone against the "before" picture of the old Build: within 0.1 %.</summary>
+    public static void CompareHud()
+    {
+        Prepare();
+        EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
+        var go = (GameObject)PrefabUtility.InstantiatePrefab(AssetDatabase.LoadAssetAtPath<GameObject>(PartDir + "/Hud.prefab"));
+        var after = ViewCapture.Render(go);
+        ViewCapture.Save(after, EvidenceDir + "/Hud/after.png");
+        float p = ViewCapture.Differ(ViewCapture.Load(EvidenceDir + "/Hud/before.png"), after);
+        Debug.Log("[phase6] Hud " + p.ToString("0.000") + " % px differ");
+        if (p > MaxDiffer) throw new Exception("[phase6] Hud differs by " + p.ToString("0.000") + " %, limit " + MaxDiffer);
+    }
+
     /// <summary>The Title prefab in the same pose as its "before" pictures: all four must match within 0.1 %.</summary>
     public static void CompareTitle()
     {

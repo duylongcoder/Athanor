@@ -56,7 +56,7 @@ public static class MainDepthEvidence
         // the bench: the real BenchView (tiles in depth groups, HUD, rack) bound to nothing
         var db = new ContentDb(JsonUtility.FromJson<ContentData>(File.ReadAllText("Assets/Resources/content.json")));
         var bench = Make.Root("Bench").gameObject.AddComponent<BenchView>();
-        bench.Build(layout, db, null);
+        bench.Build(layout, db, null, AssetDatabase.LoadAssetAtPath<HudView>(ViewBaker.PartDir + "/Hud.prefab"));
         stage.PlaceTiles(bench, layout.tiles.Length);
         string[] ids = { "ember_coal", "moondust", "iron_ore" }; int[] at = { 0, 4, 8 };
         for (int i = 0; i < 3; i++) bench.Tile(at[i]).Show(db.Material(ids[i]), false);

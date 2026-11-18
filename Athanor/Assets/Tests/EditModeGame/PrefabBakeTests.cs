@@ -650,5 +650,115 @@ namespace Athanor.Tests
             }
             finally { f.Destroy(); }
         }
+
+        const string HudPrefab = "Assets/Prefabs/Parts/Hud.prefab";
+
+        static T HudField<T>(HudView view, string name) =>
+            (T)typeof(HudView).GetField(name, BindingFlags.Instance | BindingFlags.NonPublic).GetValue(view);
+
+        static ContentDb ContentFromResources() => new ContentDb(JsonUtility.FromJson<ContentData>(Resources.Load<TextAsset>("content").text));
+
+        [Test]
+        public void Bind_HudPrefab_ShowsTheDepthNumber()
+        {
+            var f = new PrefabFixture(HudPrefab);
+            try
+            {
+                var db = ContentFromResources();
+                var run = new RunState(db, new Journal(), 5);
+                var view = f.Get<HudView>();
+                view.Bind();
+
+                view.Show(run, db, new Journal(), true);
+
+                Assert.AreEqual(Loc.T("ui.hud.depth", ("n", run.Depth)), HudField<Label>(view, "depth").Text);
+                Assert.AreEqual(run.TrialsLeft.ToString(), HudField<Label>(view, "trials").Text);
+            }
+            finally { f.Destroy(); }
+        }
+
+        [Test]
+        public void Hover_HudPrefabSocketAndAspect_SetsAndClearsTheHoveredIndex()
+        {
+            var f = new PrefabFixture(HudPrefab);
+            try
+            {
+                var view = f.Get<HudView>();
+                view.Bind();
+                var socket = HudField<Clickable[]>(view, "socketHit");
+                var aspect = HudField<Clickable[]>(view, "aspectHit");
+
+                socket[2].onEnter();
+                aspect[1].onEnter();
+                Assert.AreEqual(2, view.HoveredCatalyst);
+                Assert.AreEqual(1, view.HoveredAspect);
+
+                socket[0].onExit();                       // leaving another socket leaves the hover alone
+                Assert.AreEqual(2, view.HoveredCatalyst);
+                socket[2].onExit();
+                aspect[1].onExit();
+                Assert.AreEqual(-1, view.HoveredCatalyst);
+                Assert.AreEqual(-1, view.HoveredAspect);
+            }
+            finally { f.Destroy(); }
+        }
+
+        [Test]
+        public void Click_HudPrefabRedraw_RaisesRedrawClickedOnlyWhileARedrawIsLeft()
+        {
+            var f = new PrefabFixture(HudPrefab);
+            try
+            {
+                var db = ContentFromResources();
+                var run = new RunState(db, new Journal(), 5);
+                var view = f.Get<HudView>();
+                view.Bind();
+                var hit = HudField<Clickable>(view, "redrawHit");
+                int raised = 0;
+                view.RedrawClicked += () => raised++;
+
+                hit.onClick();                            // nothing shown yet: the button is not live
+                Assert.AreEqual(0, raised);
+                view.Show(run, db, new Journal(), false);
+                hit.onEnter();
+                hit.onClick();
+
+                Assert.AreEqual(1, raised);
+                Assert.IsTrue(view.RedrawHovered);
+                hit.onExit();
+                Assert.IsFalse(view.RedrawHovered);
+            }
+            finally { f.Destroy(); }
+        }
+
+        [Test]
+        public void Click_HudPrefabPauseJournalAndIgnite_RaiseTheirEvents()
+        {
+            var f = new PrefabFixture(HudPrefab);
+            try
+            {
+                var db = ContentFromResources();
+                var run = new RunState(db, new Journal(), 5);
+                var view = f.Get<HudView>();
+                view.Bind();
+                int pause = 0, journal = 0, ignite = 0;
+                view.PauseClicked += () => pause++;
+                view.JournalClicked += () => journal++;
+                view.IgniteClicked += () => ignite++;
+
+                HudField<Clickable>(view, "pauseHit").onEnter();
+                HudField<Clickable>(view, "pauseHit").onClick();
+                HudField<Clickable>(view, "journalHit").onClick();
+                HudField<Clickable>(view, "igniteHit").onClick();          // nothing to ignite: swallowed
+
+                Assert.AreEqual(1, pause);
+                Assert.IsTrue(view.PauseHovered);
+                Assert.AreEqual(1, journal);
+                Assert.AreEqual(0, ignite);
+                view.Show(run, db, new Journal(), true);
+                Assert.AreEqual(run.CanIgnite, HudField<bool>(view, "canIgnite"));
+            }
+            finally { f.Destroy(); }
+        }
     }
 }
