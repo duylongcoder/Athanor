@@ -97,16 +97,12 @@ public static class MainDepthEvidence
         rig.worldCamera.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
 
         // the Settings panel with the sway switch
-        var title = Make.Root("Title").gameObject.AddComponent<TitleView>();
+        var title = ((GameObject)PrefabUtility.InstantiatePrefab(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Views/Title.prefab"))).GetComponent<TitleView>();
         var settings = new Settings();
-        title.Build(settings);
+        title.Bind(settings);
         typeof(TitleView).GetMethod("OpenSettings", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(title, null);
         bench.gameObject.SetActive(false);
         title.gameObject.SetActive(true);
-        var root = (Transform)typeof(TitleView).GetField("root", BindingFlags.NonPublic | BindingFlags.Instance)?.GetValue(title);
-        if (root != null) root.gameObject.SetActive(true);
-        foreach (var f in typeof(TitleView).GetFields(BindingFlags.NonPublic | BindingFlags.Instance))
-            if (f.Name == "panel") ((Transform)f.GetValue(title)).gameObject.SetActive(true);
         Save(Full(rig, 2), "12-settings-sway-on-2x.png");
         settings.sway = false;
         typeof(TitleView).GetMethod("RefreshSettings", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(title, null);

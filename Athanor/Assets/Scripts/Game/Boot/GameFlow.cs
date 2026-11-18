@@ -84,7 +84,9 @@ namespace Athanor.Game
         static readonly float[] Moon = { 0.62f, 0.5f, 0.4f, 0.3f, 0.5f };
         static readonly string[] Accent = { "#7cc0f8", "#6ee6c8", "#c486f4", "#ee6a3c", "#fff6b8" };
 
-        ReactionCutscene reaction; SimpleCutscene story; WindowView window; TitleView title;
+        ReactionCutscene reaction; SimpleCutscene story; WindowView window;
+        /// <summary>The title screen (a prefab in Main.unity).</summary>
+        [SerializeField] TitleView title;
         /// <summary>The journal (a prefab in Main.unity; its cells come from the JournalCell part).</summary>
         [SerializeField] JournalView journalView;
         /// <summary>The Goals page (a prefab in Main.unity; its rows come from the GoalRow part).</summary>
@@ -140,6 +142,7 @@ namespace Athanor.Game
             if (eventView == null) throw new System.InvalidOperationException("GameFlow: eventView is not set in the scene");
             if (choice == null) throw new System.InvalidOperationException("GameFlow: choice is not set in the scene");
             if (pause == null) throw new System.InvalidOperationException("GameFlow: pause is not set in the scene");
+            if (title == null) throw new System.InvalidOperationException("GameFlow: title is not set in the scene");
             if (goalsView == null) throw new System.InvalidOperationException("GameFlow: goalsView is not set in the scene");
             if (journalView == null) throw new System.InvalidOperationException("GameFlow: journalView is not set in the scene");
             I = this;
@@ -178,7 +181,7 @@ namespace Athanor.Game
             story = gameObject.AddComponent<SimpleCutscene>(); story.Build(cutsceneRoom, workshop, Bench.gameObject);
             window = gameObject.AddComponent<WindowView>(); window.Build(workshop.transform);
             if (depthStage != null) { depthStage.window = window; if (depthStage.effects != null) depthStage.effects.window = window; window.Soft = depthStage.effects == null || depthStage.effects.effectsOn; }
-            title = Make.Root("Title").gameObject.AddComponent<TitleView>(); title.Build(settings);
+            title.Bind(settings);
             title.SettingsClosed += SaveSettings;
             title.JournalClicked += OpenJournal;
             title.GoalsClicked += OpenGoals;
@@ -217,7 +220,7 @@ namespace Athanor.Game
             if (runOver != null) runOver.GoalsClicked -= OpenGoals;
             if (goalsView != null) goalsView.Closed -= CloseGoals;
             if (journalView != null) journalView.Closed -= CloseJournal;
-            if (title != null) title.SettingsClosed -= SaveSettings;
+            if (title != null) { title.SettingsClosed -= SaveSettings; title.JournalClicked -= OpenJournal; title.GoalsClicked -= OpenGoals; title.ResetConfirmed -= ResetProgress; }
             if (pause != null) { pause.Opened -= OnPauseOpened; pause.Closed -= OnPauseClosed; pause.QuitConfirmed -= AbandonRun; pause.VibrationChanged -= SaveSettings; }
             if (Bench != null && Bench.Hud != null) Bench.Hud.PauseClicked -= OpenPause;
             Time.timeScale = 1f;

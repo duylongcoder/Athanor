@@ -8,12 +8,14 @@ public static class ViewCapture
 {
     /// <summary>
     /// Draws root to a 640x360 texture. Root and every hidden object under it are made active for the shot, then restored: a view
-    /// that hides a part until it is needed (the goal toast's panel) is still compared whole.
+    /// that hides a part until it is needed (the goal toast's panel) is still compared whole. Objects named in keepHidden stay hidden
+    /// (a view with several dialogs that never show together).
     /// </summary>
-    public static Texture2D Render(GameObject root)
+    public static Texture2D Render(GameObject root, params string[] keepHidden)
     {
         var hidden = new System.Collections.Generic.List<GameObject>();
-        foreach (var t in root.GetComponentsInChildren<Transform>(true)) if (!t.gameObject.activeSelf) hidden.Add(t.gameObject);
+        foreach (var t in root.GetComponentsInChildren<Transform>(true))
+            if (!t.gameObject.activeSelf && (keepHidden == null || System.Array.IndexOf(keepHidden, t.name) < 0)) hidden.Add(t.gameObject);
         foreach (var g in hidden) g.SetActive(true);
         GameObject camGo = null;
         RenderTexture rt = null;

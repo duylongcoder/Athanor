@@ -55,14 +55,14 @@ public static class ViewBaker
     /// Old Build in an empty scene, the "before" picture, the prefab; then the prefab into Main and onto GameFlow.flowField.
     /// beforeSave runs between the picture and the save (e.g. drop rows that Bind makes at runtime from a part prefab).
     /// </summary>
-    public static void Bake<T>(string name, string flowField, Action<T> build, Action<T> beforeSave = null) where T : MonoBehaviour
+    public static void Bake<T>(string name, string flowField, Action<T> build, Action<T> beforeSave = null, string[] keepHidden = null) where T : MonoBehaviour
     {
         Prepare();
         EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
         var go = new GameObject(name);
         var view = go.AddComponent<T>();
         build(view);
-        ViewCapture.Save(ViewCapture.Render(go), EvidenceDir + "/" + name + "/before.png");
+        ViewCapture.Save(ViewCapture.Render(go, keepHidden), EvidenceDir + "/" + name + "/before.png");
         beforeSave?.Invoke(view);
         Directory.CreateDirectory(ViewDir);
         var prefab = PrefabUtility.SaveAsPrefabAsset(go, ViewDir + "/" + name + ".prefab");
@@ -111,17 +111,17 @@ public static class ViewBaker
     }
 
     /// <summary>
-    /// The prefab alone in an empty scene against the "before" picture. Throws (non-zero exit) above 0.1 %. prepare runs on the
+    /// (keepHidden: names of hidden objects the picture leaves hidden.) The prefab alone in an empty scene against the "before" picture. Throws (non-zero exit) above 0.1 %. prepare runs on the
     /// instance before the picture (e.g. Bind(Db()) for a view whose rows come from content).
     /// </summary>
-    public static void Compare(string name, Action<GameObject> prepare = null)
+    public static void Compare(string name, Action<GameObject> prepare = null, string[] keepHidden = null)
     {
         Prepare();
         EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
         var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(ViewDir + "/" + name + ".prefab");
         var go = (GameObject)PrefabUtility.InstantiatePrefab(prefab);
         prepare?.Invoke(go);
-        var after = ViewCapture.Render(go);
+        var after = ViewCapture.Render(go, keepHidden);
         ViewCapture.Save(after, EvidenceDir + "/" + name + "/after.png");
         float p = ViewCapture.Differ(ViewCapture.Load(EvidenceDir + "/" + name + "/before.png"), after);
         Debug.Log("[phase6] " + name + " " + p.ToString("0.000") + " % px differ");
@@ -135,9 +135,49 @@ public static class ViewBaker
     public static void CompareCatalystChoice() => Compare("CatalystChoice");
     public static void ComparePause() => Compare("Pause");
 
-    /// <summary>The Journal prefab with Bind(Db()) run on it, so its cells exist for the picture (the "before" has one cell per material).</summary>
-    public static void CompareJournal() => Compare("Journal", go => go.GetComponent<JournalView>().Bind(Db()));
+    /// <summary>
+    /// The Title as one fixed frame: 1.5 s into its fade-in (the logo and subtitle are fully in) with the glow at a set colour, because
+    /// the glow pulses with Time.time. The same pose is used for the "before" and the prefab picture.
+    /// </summary>
+    static void PoseTitle(TitleView v)
+    {
+        var flags = System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic;
+        typeof(TitleView).GetField("age", flags).SetValue(v, 1.5f);
+        typeof(TitleView).GetMethod("Update", flags).Invoke(v, null);
+        ((SpriteRenderer)typeof(TitleView).GetField("glow", flags).GetValue(v)).color = new Color(1f, 0.55f, 0.2f, 0.4f);
+    }
 
-    /// <summary>The Goals prefab with Bind(Db()) run on it, so its rows exist for the picture (the "before" has one empty row per goal).</summary>
-    public static void CompareGoals() => Compare("Goals", go => go.GetComponent<GoalsView>().Bind(Db()));
+    // The Title has three dialogs that never show together, so it is compared as four pictures: the title alone, then each dialog over it.
+    static readonly string[] TitleDialogs = { "Confirm", "Skip", "Settings" };
+
+    static string[] TitleHides(string shown)
+    {
+        var hide = new System.Collections.Generic.List<string>(TitleDialogs);
+        hide.Remove(shown);
+        return hide.ToArray();
+    }
+
+    static void RefreshTitleSettings(TitleView v) =>
+        typeof(TitleView).GetMethod("RefreshSettings", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).Invoke(v, null);
+
+    /// <summary>The Title prefab in the same pose as its "before" pictures: all four must match within 0.1 %.</summary>
+    public static void CompareTitle()
+    {
+        Compare("Title", go => PoseTitle(go.GetComponent<TitleView>()), TitleDialogs);
+        Prepare();
+        EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
+        var go = (GameObject)PrefabUtility.InstantiatePrefab(AssetDatabase.LoadAssetAtPath<GameObject>(ViewDir + "/Title.prefab"));
+        var view = go.GetComponent<TitleView>();
+        view.Bind(new Settings());
+        PoseTitle(view);
+        RefreshTitleSettings(view);
+        foreach (var d in TitleDialogs)
+        {
+            var after = ViewCapture.Render(go, TitleHides(d));
+            ViewCapture.Save(after, EvidenceDir + "/Title/after-" + d + ".png");
+            float p = ViewCapture.Differ(ViewCapture.Load(EvidenceDir + "/Title/before-" + d + ".png"), after);
+            Debug.Log("[phase6] Title " + d + " " + p.ToString("0.000") + " % px differ");
+            if (p > MaxDiffer) throw new Exception("[phase6] Title " + d + " differs by " + p.ToString("0.000") + " %, limit " + MaxDiffer);
+        }
+    }
 }

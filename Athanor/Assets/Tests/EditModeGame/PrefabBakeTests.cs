@@ -538,5 +538,117 @@ namespace Athanor.Tests
             Assert.AreEqual(new Vector4(4, 4, 4, 4), panel.sprite.border);
             Assert.AreEqual(new Vector2(176, 58), panel.size);
         }
+
+        const string TitlePrefab = "Assets/Prefabs/Views/Title.prefab";
+
+        static Clickable TitleClick(GameObject root, string button) => root.transform.Find("Button " + button).GetComponent<Clickable>();
+
+        static T TitleField<T>(TitleView view, string name) =>
+            (T)typeof(TitleView).GetField(name, BindingFlags.Instance | BindingFlags.NonPublic).GetValue(view);
+
+        [Test]
+        public void Bind_TitlePrefab_ShowsTheLogoText()
+        {
+            var f = new PrefabFixture(TitlePrefab);
+            try
+            {
+                var view = f.Get<TitleView>();
+                view.Bind(new Settings());
+
+                view.Open(0, 0, 0, 0);
+
+                Assert.IsTrue(f.Root.activeSelf);
+                Assert.AreEqual(Loc.T("ui.title.logo"), TitleField<Label>(view, "logo").Text);
+            }
+            finally { f.Destroy(); }
+        }
+
+        [Test]
+        public void Click_TitlePrefabBegin_SetsBeginPressed()
+        {
+            var f = new PrefabFixture(TitlePrefab);
+            try
+            {
+                var view = f.Get<TitleView>();
+                view.Bind(new Settings());
+                view.Open(0, 0, 0, 0);
+
+                TitleClick(f.Root, "ui.title.begin").onClick();
+
+                Assert.IsTrue(view.BeginPressed);
+            }
+            finally { f.Destroy(); }
+        }
+
+        [Test]
+        public void Click_TitlePrefabSettingsThenLanguage_SwitchesTheLanguageAndBackCloses()
+        {
+            var f = new PrefabFixture(TitlePrefab);
+            try
+            {
+                var settings = new Settings();
+                var view = f.Get<TitleView>();
+                view.Bind(settings);
+                view.Open(0, 0, 0, 0);
+                int closed = 0;
+                view.SettingsClosed += () => closed++;
+
+                TitleClick(f.Root, "ui.title.settings").onClick();
+                Assert.IsTrue(view.Asking);
+                f.Root.transform.Find("Settings").Find("cell language").Find("hit").GetComponent<Clickable>().onClick();
+
+                Assert.IsTrue(Loc.Vi);
+                Assert.AreEqual(Loc.Vietnamese, settings.language);
+
+                f.Root.transform.Find("Settings").Find("Button ui.common.back").GetComponent<Clickable>().onClick();
+
+                Assert.IsFalse(view.Asking);
+                Assert.AreEqual(1, closed);
+            }
+            finally { f.Destroy(); }
+        }
+
+        [Test]
+        public void Click_TitlePrefabEraseLink_AsksThenConfirmingRaisesResetConfirmed()
+        {
+            var f = new PrefabFixture(TitlePrefab);
+            try
+            {
+                var view = f.Get<TitleView>();
+                view.Bind(new Settings());
+                view.Open(0, 0, 0, 0);
+                int reset = 0;
+                view.ResetConfirmed += () => reset++;
+                TitleClick(f.Root, "ui.title.settings").onClick();
+
+                TitleField<Label>(view, "resetLabel").GetComponent<Clickable>().onClick();
+                Assert.IsTrue(f.Root.transform.Find("Confirm").gameObject.activeSelf);
+                f.Root.transform.Find("Confirm").Find("Button ui.title.erase").GetComponent<Clickable>().onClick();
+
+                Assert.AreEqual(1, reset);
+                Assert.IsFalse(f.Root.transform.Find("Confirm").gameObject.activeSelf);
+            }
+            finally { f.Destroy(); }
+        }
+
+        [Test]
+        public void AskSkip_TitlePrefab_AnswersPlayFromTheSkipDialog()
+        {
+            var f = new PrefabFixture(TitlePrefab);
+            try
+            {
+                var view = f.Get<TitleView>();
+                view.Bind(new Settings());
+                view.Open(0, 0, 0, 0);
+                bool? answer = null;
+                view.AskSkip(play => answer = play);
+
+                f.Root.transform.Find("Skip").Find("Button ui.title.skip_prompt_play").GetComponent<Clickable>().onClick();
+
+                Assert.AreEqual(true, answer);
+                Assert.IsFalse(f.Root.transform.Find("Skip").gameObject.activeSelf);
+            }
+            finally { f.Destroy(); }
+        }
     }
 }
