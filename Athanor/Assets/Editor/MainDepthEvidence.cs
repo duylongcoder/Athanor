@@ -45,7 +45,6 @@ public static class MainDepthEvidence
         Directory.CreateDirectory(Out);
         EditorGlobals.Inject();
         var lib = Art.Lib;
-        var layout = JsonUtility.FromJson<LayoutData>(File.ReadAllText("Assets/Resources/layout.json"));
         EditorSceneManager.OpenScene("Assets/Scenes/Main.unity", OpenSceneMode.Single);
         var flow = Object.FindFirstObjectByType<GameFlow>();
         var stage = flow.depthStage; var rig = stage.rig;
@@ -53,11 +52,11 @@ public static class MainDepthEvidence
         foreach (var d in Object.FindObjectsByType<Dust>(FindObjectsSortMode.None)) d.gameObject.SetActive(false);
         var report = new System.Text.StringBuilder();
 
-        // the bench: the real BenchView (tiles in depth groups, HUD, rack) bound to nothing
+        // the bench: the real BenchView from the scene (tiles in depth groups, HUD, rack) bound to nothing
         var db = new ContentDb(JsonUtility.FromJson<ContentData>(File.ReadAllText("Assets/Resources/content.json")));
-        var bench = Make.Root("Bench").gameObject.AddComponent<BenchView>();
-        bench.Build(layout, db, null, AssetDatabase.LoadAssetAtPath<HudView>(ViewBaker.PartDir + "/Hud.prefab"));
-        stage.PlaceTiles(bench, layout.tiles.Length);
+        var bench = flow.Bench;
+        bench.Bind(db);
+        stage.PlaceTiles(bench, bench.TileCount);
         string[] ids = { "ember_coal", "moondust", "iron_ore" }; int[] at = { 0, 4, 8 };
         for (int i = 0; i < 3; i++) bench.Tile(at[i]).Show(db.Material(ids[i]), false);
         foreach (var tile in new[] { 0, 4, 8 }) typeof(TileView).GetMethod("Update", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(bench.Tile(tile), null);

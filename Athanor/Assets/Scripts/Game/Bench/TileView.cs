@@ -11,15 +11,13 @@ namespace Athanor.Game
     {
         public int index;
         public Vector3 centre;            // world position of the middle of the top face
-        // serialized so a tile built in the editor and saved in a scene (DepthTestBuilder) still works when the scene reopens
+        // serialized so a tile baked into the Bench prefab (or built in the editor and saved in a scene) works when it is loaded
         [SerializeField, HideInInspector] Vector2 faceCentre, faceSize;
         [SerializeField, HideInInspector] SpriteRenderer face, ring, shadow, icon, halo, lid, cross, mark;
-        [SerializeField, HideInInspector] Color markColor;
+        [SerializeField, HideInInspector] Color markColor, glow, flashColor;
         [SerializeField, HideInInspector] Light2D glowLight;
-        Color glow;
         bool glows;
         float flash, appear = 1;
-        Color flashColor;
 
         public string Material { get; private set; }
         public bool Hovered { get; set; }
@@ -30,6 +28,8 @@ namespace Athanor.Game
         public bool Marked => mark.enabled;
         public SpriteRenderer Icon => icon;
 
+#if UNITY_EDITOR
+        /// <summary>Bake source (ViewBaker, the depth test builders): makes the tile's parts. The game loads them from the Bench prefab.</summary>
         public void Build(int i, TileData data, Transform parent)
         {
             index = i;
@@ -54,6 +54,7 @@ namespace Athanor.Game
             SetState(null, false);
             Clear();
         }
+#endif
 
         /// <summary>The face the tile is hit-tested on: centre and size in flat world units.</summary>
         public Vector2 FaceCentre => faceCentre;

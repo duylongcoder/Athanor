@@ -193,4 +193,28 @@ public static class ViewBaker
             if (p > MaxDiffer) throw new Exception("[phase6] Title " + d + " differs by " + p.ToString("0.000") + " %, limit " + MaxDiffer);
         }
     }
+
+    /// <summary>Parts/Card.prefab: one card, shown for the first starting material (the game calls Show for each hand card).</summary>
+    public static void BakeCard() => BakePart<CardView>("Card", () =>
+    {
+        var card = new GameObject("Card").AddComponent<CardView>();
+        card.Build(Db().Starters[0], null, 0);
+        return card;
+    });
+
+    /// <summary>
+    /// Prefabs/Views/Bench.prefab, in Main.unity (the bench sits in the HD-2D scene): the tiles from Editor/layout.json, the rack, the links,
+    /// the Hud prefab nested, the card prefab as a reference. The depth groups are not baked: GameFlow places the tiles at run time as before.
+    /// Its "before" picture is the browser baseline (Task 0, mainhd2d.mjs hud).
+    /// </summary>
+    public static void BakeBench() => BakeInScene<BenchView>("Bench", "bench", v =>
+    {
+        var layout = JsonUtility.FromJson<LayoutData>(File.ReadAllText(LayoutData.Path));
+        var hud = (HudView)PrefabUtility.InstantiatePrefab(AssetDatabase.LoadAssetAtPath<HudView>(PartDir + "/Hud.prefab"), v.transform);
+        v.Build(layout.tiles, hud, AssetDatabase.LoadAssetAtPath<CardView>(PartDir + "/Card.prefab"));
+        // the tooltip's 9-slice panel is made by Sprite.Create, which no prefab keeps; Tooltip.Bind makes it again at run time. Leaving it
+        // on the scene object would store it in Main.unity as an override.
+        var tip = v.GetComponentInChildren<Tooltip>(true);
+        ((SpriteRenderer)typeof(Tooltip).GetField("panel", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(tip)).sprite = null;
+    }, asPrefab: true);
 }

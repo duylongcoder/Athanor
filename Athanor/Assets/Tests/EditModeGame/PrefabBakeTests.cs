@@ -760,5 +760,88 @@ namespace Athanor.Tests
             }
             finally { f.Destroy(); }
         }
+
+        const string BenchPrefab = "Assets/Prefabs/Views/Bench.prefab";
+
+        static T Field<T>(object owner, string name) =>
+            (T)owner.GetType().GetField(name, BindingFlags.Instance | BindingFlags.NonPublic).GetValue(owner);
+
+        [Test]
+        public void Refresh_BenchPrefab_HasNineTiles()
+        {
+            var f = new PrefabFixture(BenchPrefab);
+            try
+            {
+                var db = ContentFromResources();
+                var run = new RunState(db, new Journal(), 5);
+                var view = f.Get<BenchView>();
+                view.Bind(db);
+                view.Bind(run, new Journal());
+
+                view.Refresh();
+
+                Assert.AreEqual(Athanor.Core.Bench.TileCount, view.TileCount);
+                for (int i = 0; i < view.TileCount; i++)
+                {
+                    Assert.IsNotNull(view.Tile(i), "tile " + i);
+                    Assert.AreEqual(i, view.Tile(i).index);
+                    Assert.Greater(view.Tile(i).FaceSize.x, 0, "tile " + i + " keeps its face");
+                }
+                Assert.IsNotNull(view.Hud, "the Hud prefab is nested in the Bench");
+            }
+            finally { f.Destroy(); }
+        }
+
+        [Test]
+        public void Refresh_BenchPrefab_DealsOneCardPerStartingMaterialFromTheCardPrefab()
+        {
+            var f = new PrefabFixture(BenchPrefab);
+            try
+            {
+                var db = ContentFromResources();
+                var run = new RunState(db, new Journal(), 5);
+                var view = f.Get<BenchView>();
+                view.Bind(db);
+                view.Bind(run, new Journal());
+
+                view.Refresh();
+
+                int starters = 0;
+                foreach (var id in run.Hand) if (db.Material(id).tier == 0) starters++;
+                var cards = f.Root.GetComponentsInChildren<CardView>(true);
+                Assert.AreEqual(starters, cards.Length);
+                Assert.Greater(starters, 0);
+                var first = db.Material(run.Hand[cards[0].handIndex]);
+                Assert.AreEqual(first.id, cards[0].id);
+                Assert.AreEqual(first.name.Split(' ')[0], Field<Label>(cards[0], "line1").Text);
+            }
+            finally { f.Destroy(); }
+        }
+
+        [Test]
+        public void Show_CardPrefab_OneWordNameHidesTheSecondLine()
+        {
+            var f = new PrefabFixture("Assets/Prefabs/Parts/Card.prefab");
+            try
+            {
+                var db = ContentFromResources();
+                MaterialData one = null, two = null;
+                foreach (var m in db.Starters)
+                {
+                    if (m.tier != 0) continue;
+                    if (one == null && !m.name.Contains(" ")) one = m;
+                    if (two == null && m.name.Contains(" ")) two = m;
+                }
+                var card = f.Get<CardView>();
+
+                card.Show(two ?? one, 110);
+                bool shownFor2 = Field<Label>(card, "line2").gameObject.activeSelf;
+                card.Show(one ?? two, 110);
+
+                Assert.AreEqual(two != null, shownFor2);
+                Assert.AreEqual(one == null, Field<Label>(card, "line2").gameObject.activeSelf);
+            }
+            finally { f.Destroy(); }
+        }
     }
 }

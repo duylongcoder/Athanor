@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Writes every sprite the game uses into the Unity project, plus Resources/layout.json and a contact sheet.
+// Writes every sprite the game uses into the Unity project, plus Editor/layout.json and a contact sheet.
 //   node tools/art/export.mjs
 import { writeFileSync, mkdirSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
@@ -70,7 +70,7 @@ const layout = {
   candles: S.CANDLES.map(([x, y]) => ({ x, y })), cauldron: S.CAULDRON,
   card: CARD, rack: RACK, journal: JOURNAL, goals: GOALS, option: OPTION,
 };
-writeFileSync(join(assets, 'Resources/layout.json'), JSON.stringify(layout, null, 1));
+writeFileSync(join(assets, 'Editor/layout.json'), JSON.stringify(layout, null, 1));
 
 // contact sheet of every icon at 4x for a quick look
 const all = [...content.materials.map((m) => ICONS[m.id]), ...content.catalysts.map((c) => CATALYST_ICONS[c.id]),
@@ -94,7 +94,7 @@ writeFileSync(join(here, 'out/journal.png'), menus.png());
 const goalsPage = new Canvas(640, 360); goalsPage.fillStyle = '#1a1220'; goalsPage.fillRect(0, 0, 640, 360);
 goalsPage.drawImage(ui.goals, 20, 15); goalsPage.drawImage(ui.option_up, 176, 200); goalsPage.drawImage(ui.toast, 170, 4);
 writeFileSync(join(here, 'out/goals.png'), goalsPage.png());
-console.log(`${count} sprites written to Athanor/Assets/Art, layout.json to Resources`);
+console.log(`${count} sprites written to Athanor/Assets/Art, layout.json to Editor`);
 
 // window views: export-window.mjs stays its own script (it can run alone) but one command rebuilds all art.
 // A failure there is reported by name and fails this command; nothing is swallowed.

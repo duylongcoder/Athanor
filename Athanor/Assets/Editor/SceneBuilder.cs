@@ -25,7 +25,7 @@ public static class SceneBuilder
         EditorGlobals.Inject();
         var lib = BuildLibrary();
         Art.Lib = lib;
-        var layout = JsonUtility.FromJson<LayoutData>(File.ReadAllText("Assets/Resources/layout.json"));
+        var layout = JsonUtility.FromJson<LayoutData>(File.ReadAllText(LayoutData.Path));
         var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
 
         RenderSettings.skybox = null;               // 2D: the default skybox material is dead weight in the build

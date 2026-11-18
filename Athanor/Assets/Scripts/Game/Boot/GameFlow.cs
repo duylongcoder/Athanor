@@ -29,7 +29,8 @@ namespace Athanor.Game
         /// <summary>What the player keeps between runs besides the journal: stats, goals done, items won.</summary>
         public Profile Profile { get; private set; }
         public RunState Run { get; private set; }
-        public BenchView Bench { get; private set; }
+        /// <summary>The bench (Prefabs/Views/Bench.prefab in Main.unity): tiles, hand, rack and the Hud.</summary>
+        public BenchView Bench => bench;
         public FlowState State { get; private set; }
         /// <summary>The run summary (a prefab in Main.unity).</summary>
         [SerializeField] RunOverView runOver;
@@ -109,8 +110,7 @@ namespace Athanor.Game
         long shownPotency;
         /// <summary>The in-run pause menu (a prefab in Main.unity).</summary>
         [SerializeField] PauseMenu pause;
-        /// <summary>Parts/Hud.prefab: the bench instantiates it until the bench is a prefab itself.</summary>
-        [SerializeField] HudView hudPrefab;
+        [SerializeField] BenchView bench;
         Coroutine tutRoutine;
         int escGuardFrame = -1;
         bool hurry, inCutscene, runEnded, autoReady, abandoned;
@@ -162,7 +162,6 @@ namespace Athanor.Game
 #endif
             PrimeTweenConfig.SetTweensCapacity(200);   // a long chain runs many FloatTexts, Consumes and rack flights at once
             Db = new ContentDb(JsonUtility.FromJson<ContentData>(contentJson.text));
-            var layout = JsonUtility.FromJson<LayoutData>(Resources.Load<TextAsset>("layout").text);
             Journal = Save.LoadJournal();
             Profile = Save.LoadProfile(Db);
             unlocks = Unlocks.For(Db, Profile);
@@ -172,10 +171,9 @@ namespace Athanor.Game
 
             gameObject.AddComponent<ScreenFx>().Build(mainCamera, depthStage != null ? depthStage.sway : null);
             PointerInput.Rig = depthStage != null ? depthStage.rig : null;
-            Bench = Make.Root("Bench").gameObject.AddComponent<BenchView>();
-            if (hudPrefab == null) throw new System.InvalidOperationException("GameFlow.hudPrefab is not set: bake Parts/Hud.prefab into Main.unity");
-            Bench.Build(layout, Db, null, hudPrefab);
-            if (depthStage != null) depthStage.PlaceTiles(Bench, layout.tiles.Length);
+            if (bench == null) throw new System.InvalidOperationException("GameFlow.bench is not set: bake Prefabs/Views/Bench.prefab into Main.unity");
+            bench.Bind(Db);
+            if (depthStage != null) depthStage.PlaceTiles(Bench, Bench.TileCount);
             Bench.IgniteRequested += Ignite;
             Bench.RedrawRequested += () => { if (State == FlowState.Bench && Run.Redraw()) Bench.Refresh(true); };
             Bench.JournalRequested += OpenJournal;

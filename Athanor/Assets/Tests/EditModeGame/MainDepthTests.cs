@@ -1,4 +1,3 @@
-using System.IO;
 using System.Linq;
 using Athanor.Game;
 using NUnit.Framework;
@@ -14,26 +13,23 @@ namespace Athanor.Tests
         GameObject root;
         DepthRig rig;
         TileView[] tiles;
-        LayoutData layout;
 
         [SetUp]
         public void SetUp()
         {
-            layout = JsonUtility.FromJson<LayoutData>(File.ReadAllText("Assets/Resources/layout.json"));
             root = new GameObject("main depth test");
             var cam = new GameObject("world camera").AddComponent<Camera>();
             cam.transform.SetParent(root.transform, false);
             rig = root.AddComponent<DepthRig>();
             rig.worldCamera = cam;
             rig.Apply();
-            tiles = new TileView[layout.tiles.Length];
-            var tileRoot = Make.Root("Tiles", root.transform);
+            var bench = ((GameObject)PrefabUtility.InstantiatePrefab(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Views/Bench.prefab"), root.transform)).GetComponent<BenchView>();
+            tiles = new TileView[bench.TileCount];
             for (int i = 0; i < tiles.Length; i++)
             {
-                tiles[i] = new GameObject("Tile " + i).AddComponent<TileView>();
-                tiles[i].Build(i, layout.tiles[i], tileRoot);
+                tiles[i] = bench.Tile(i);
                 foreach (var t in tiles[i].GetComponentsInChildren<Transform>(true)) t.gameObject.layer = DepthRig.WorldLayer;
-                DepthLayer.AddGroup(tiles[i].gameObject, DepthMath.TableZ(layout.tiles[i].y) + 0.2f).Apply(rig.distance);
+                DepthLayer.AddGroup(tiles[i].gameObject, DepthMath.TableZ(Px.H / 2f - tiles[i].centre.y) + 0.2f).Apply(rig.distance);
             }
         }
 
@@ -57,8 +53,7 @@ namespace Athanor.Tests
             var cam = rig.worldCamera;
             for (int i = 0; i < tiles.Length; i++)
             {
-                var f = layout.tiles[i].face;
-                Vector2 flat = Px.Mid(f.x, f.y, f.w, f.h);
+                Vector2 flat = tiles[i].FaceCentre;
                 var child = tiles[i].transform.GetChild(0);
                 var shown = tiles[i].transform.position;      // group at (0,0,z): children keep flat local coordinates
                 Assert.AreEqual(0f, shown.x, 1e-4f);
@@ -108,8 +103,7 @@ namespace Athanor.Tests
                         rig.SetView(sway, shake);
                         for (int i = 0; i < tiles.Length; i++)
                         {
-                            var f = layout.tiles[i].face;
-                            Vector2 flat = Px.Mid(f.x, f.y, f.w, f.h);
+                            Vector2 flat = tiles[i].FaceCentre;
                             var world = DepthMath.Place(flat, DepthMath.TableZ(Px.H / 2f - flat.y));
                             Vector3 vp = rig.worldCamera.WorldToViewportPoint(world);
                             PointerInput.Resolve(new Vector2((vp.x - 0.5f) * Px.W, (vp.y - 0.5f) * Px.H));

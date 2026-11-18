@@ -147,9 +147,6 @@ tags: [moc/code]
 ## `Game/Support/Label.cs`
 - [[Label]] _class_ — A line of pixel text with an optional one-pixel drop shadow. A label made from a Lang key (Make.TextKey) rewri
 
-## `Game/Support/LayoutData.cs`
-- [[LayoutData]] _class_ — 
-
 ## `Game/Support/Loc.cs`
 - [[Loc]] _class_ — The language the game is showing: the loaded Lang (Vietnamese falls back to English), the font set that goes w
 
@@ -190,6 +187,9 @@ tags: [moc/code]
 
 ## `Game/Ui/GoalsView.cs`
 - [[GoalsView]] _class_ — The Goals page: every long-term goal with its progress, grouped by the rarity of what it unlocks. Before a goa
+
+## `Game/Ui/JournalCell.cs`
+- [[JournalCell]] _class_ — One cell of the journal's grid: the material's icon with its click. An Uncommon or better starting material al
 
 ## `Game/Ui/JournalView.cs`
 - [[JournalView]] _class_ — The journal: every material as an icon (a silhouette until it has been made), and for the selected one the rea

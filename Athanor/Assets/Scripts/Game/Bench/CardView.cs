@@ -12,39 +12,64 @@ namespace Athanor.Game
         public Vector3 home;              // world position of the card's centre when at rest
         public bool Lifted, Selected, Dimmed;
 
-        SpriteRenderer frame, glow, icon;
-        RarityStars stars;
-        Label line1, line2, kind;
-        Transform lettering, picture;         // the lettering and the icon, which slide left while the next card covers this one's right
+        // serialized so Parts/Card.prefab keeps its parts; Show fills them in for one material
+        [SerializeField] SpriteRenderer frame, glow, icon;
+        [SerializeField] RarityStars stars;
+        [SerializeField] Label line1, line2, kind;
+        [SerializeField] Transform lettering, picture;         // the lettering and the icon, which slide left while the next card covers this one's right
         float lift, delay, shift, slid;
         int baseOrder, frontOrder, shownOrder;
 
         static readonly Color Ink = Px.Hex("#3a2212");
 
+#if UNITY_EDITOR
+        /// <summary>Bake source for Parts/Card.prefab (ViewBaker.BakeCard): the parts of a card, shown for one material. The game instantiates the prefab.</summary>
         public void Build(MaterialData m, Transform parent, int order)
         {
             transform.SetParent(parent, false);
-            id = m.id; baseOrder = order;
             // children are laid out around the card centre; the frame sprite carries a 3x4 drop shadow on its right and bottom
             frame = Make.Sprite(transform, "card", Vector3.zero, order);
             frame.transform.localPosition = new Vector3(1.5f, -2, 0);
             lettering = Make.Root("lettering", transform);
             picture = Make.Root("picture", transform);
-            glow = Make.Glow(picture, Vector3.zero, 18, string.IsNullOrEmpty(m.glow) ? Color.clear : Px.Hex(m.glow, 0.45f), order + 1);
+            glow = Make.Glow(picture, Vector3.zero, 18, Color.clear, order + 1);
             glow.transform.localPosition = new Vector3(0, 15, 0);
             glow.transform.localScale = new Vector3(0.75f, 0.42f, 1);
             icon = Make.Sprite(picture, m.id, Vector3.zero, order + 2);
             icon.transform.localPosition = new Vector3(0, 15, 0);
-            var words = m.name.Split(' ');
-            string a = words[0], b = words.Length > 1 ? string.Join(" ", words, 1, words.Length - 1) : null;
-            line1 = Text(a, b == null ? -3 : 2, FontKind.Name, 16, Ink);
-            if (b != null) { line2 = Text(b, -8, FontKind.Name, 16, Ink); line1.Lines = 2; line2.Lines = 2; }
-            kind = Text(Loc.Upper(Loc.Kind(m.kind)), -24, FontKind.Tiny, 8, Px.Hex(KindColors.Of(m.kind)));
+            line1 = Text("", 2, FontKind.Name, 16, Ink);
+            line2 = Text("", -8, FontKind.Name, 16, Ink);
+            kind = Text("", -24, FontKind.Tiny, 8, Ink);
             // rarity: n stars at (x+3, y+3) of the card (SPEC 21); the frame's top-left corner is (-W/2, H/2)
             stars = new RarityStars(transform, order + 3);
             stars.Root.localPosition = new Vector3(-W / 2 + 3, H / 2 - 3, 0);
+            baseOrder = order;
+            Show(m, order);
+        }
+
+        Label Text(string s, float y, FontKind font, int size, Color c)
+        {
+            var l = Make.Text(lettering, s, 0, 0, font, size, c, baseOrder + 3, Align.Centre);
+            l.transform.localPosition = new Vector3(0, y, 0);
+            return l;
+        }
+#endif
+
+        /// <summary>The per-material part of a card: its icon and glow, name (one or two lines), kind, rarity stars and sorting order.</summary>
+        public void Show(MaterialData m, int order)
+        {
+            id = m.id; baseOrder = order;
+            glow.color = string.IsNullOrEmpty(m.glow) ? Color.clear : Px.Hex(m.glow, 0.45f);
+            icon.sprite = Art.Lib.Sprite(m.id);
+            var words = m.name.Split(' ');
+            string a = words[0], b = words.Length > 1 ? string.Join(" ", words, 1, words.Length - 1) : null;
+            line1.Text = a; line1.transform.localPosition = new Vector3(0, b == null ? -3 : 2, 0);
+            line1.Lines = b == null ? 1 : 2;
+            line2.gameObject.SetActive(b != null);
+            if (b != null) { line2.Text = b; line2.Lines = 2; }
+            kind.Text = Loc.Upper(Loc.Kind(m.kind)); kind.Color = Px.Hex(KindColors.Of(m.kind));
             stars.Show(m.rarity);
-            shownOrder = order;
+            shownOrder = -1; SetOrder(order);       // -1: apply the order whatever the card showed before
         }
 
         /// <summary>
@@ -56,7 +81,7 @@ namespace Athanor.Game
         {
             // Never so far that the name starts off the card's left edge, over the card before. (Up to the edge itself:
             // in a hand of six an eight-letter name is as wide as the part of the card that shows.)
-            float widest = Mathf.Max(line1.Width, line2 != null ? line2.Width : 0, kind.Width);
+            float widest = Mathf.Max(line1.Width, line2.gameObject.activeSelf ? line2.Width : 0, kind.Width);
             shift = slid = Mathf.Max(0, Mathf.Min((W - visible) / 2f, W / 2f + 1 - widest / 2f));
             frontOrder = front;
             Slide();
@@ -73,14 +98,7 @@ namespace Athanor.Game
             if (order == shownOrder) return;
             shownOrder = order;
             frame.sortingOrder = order; glow.sortingOrder = order + 1; icon.sortingOrder = order + 2; stars.SetOrder(order + 3);
-            line1.Order = order + 3; if (line2 != null) line2.Order = order + 3; kind.Order = order + 3;
-        }
-
-        Label Text(string s, float y, FontKind font, int size, Color c)
-        {
-            var l = Make.Text(lettering, s, 0, 0, font, size, c, baseOrder + 3, Align.Centre);
-            l.transform.localPosition = new Vector3(0, y, 0);
-            return l;
+            line1.Order = order + 3; line2.Order = order + 3; kind.Order = order + 3;
         }
 
         /// <summary>Starts below the screen and slides up after a short stagger.</summary>
@@ -106,7 +124,7 @@ namespace Athanor.Game
             float a = Dimmed ? 0.35f : 1;
             frame.color = icon.color = Color.white.Alpha(a);
             stars.SetAlpha(a);
-            line1.Alpha = a; if (line2 != null) line2.Alpha = a; kind.Alpha = a;
+            line1.Alpha = a; line2.Alpha = a; kind.Alpha = a;
         }
     }
 }

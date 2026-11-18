@@ -10,7 +10,7 @@ count: 9
 `Athanor/Assets/Tests/EditModeGame/DepthClickTests.cs` — 9 tests
 
 ## Covers
-[[DepthMath]], [[DepthRig]], [[FogSheet]], [[LayoutData]], [[Px]], [[TileView]], [[TiltShift]]
+[[BenchView]], [[DepthMath]], [[DepthRig]], [[FogSheet]], [[Px]], [[TileView]], [[TiltShift]]
 
 ## Tests
 - `ClickOnTileCentre_AtRestAndUnderMaximumSway_HitsThatTile`

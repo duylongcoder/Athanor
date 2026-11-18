@@ -31,7 +31,7 @@ aliases: []
 | method | `public static Settings FromJson(string json)` | 52 | Reads settings; null, empty or unreadable text gives defaults. Missing fields keep defaults; values are clamped. |
 
 ## Used by
-[[GameFlow]], [[MainDepthEvidence]], [[PauseMenu]], [[Save]], [[TitleView]]
+[[GameFlow]], [[MainDepthEvidence]], [[PauseMenu]], [[Save]], [[TitleView]], [[ViewBaker]]
 
 ## Tested by
 [[PauseTests]], [[PrefabBakeTests]], [[SettingsHapticsTests]], [[SettingsTests]]

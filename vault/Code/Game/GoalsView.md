@@ -30,7 +30,7 @@ aliases: []
 [[Art]], [[Clickable]], [[ContentDb]], [[GoalRow]], [[Journal]], [[Label]], [[Loc]], [[Profile]], [[Px]], [[Rarities]], [[Wording]]
 
 ## Used by
-[[GameFlow]], [[ViewBaker]]
+[[GameFlow]]
 
 ## Tested by
 [[PrefabBakeTests]]

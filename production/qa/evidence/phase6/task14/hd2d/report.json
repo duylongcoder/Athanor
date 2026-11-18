@@ -1,0 +1,282 @@
+{
+ "url": "http://localhost:8080/",
+ "viewport": "640x360",
+ "scale": 1,
+ "canvas": "640x360 css 640x360",
+ "load_seconds": 1.8,
+ "hudShot": "hud-bench-640x360.png",
+ "tiles_sway": "27/27",
+ "tiles_shake": "27/27",
+ "checks": [
+  {
+   "name": "sway tile 0 point 0",
+   "ok": true,
+   "detail": "art 218.2,166.1"
+  },
+  {
+   "name": "sway tile 0 point 3",
+   "ok": true,
+   "detail": "art 281.2,146.9"
+  },
+  {
+   "name": "sway tile 0 point 4",
+   "ok": true,
+   "detail": "art 249.6,156.5"
+  },
+  {
+   "name": "sway tile 1 point 0",
+   "ok": true,
+   "detail": "art 290.2,166.1"
+  },
+  {
+   "name": "sway tile 1 point 3",
+   "ok": true,
+   "detail": "art 350.2,146.9"
+  },
+  {
+   "name": "sway tile 1 point 4",
+   "ok": true,
+   "detail": "art 320.2,156.5"
+  },
+  {
+   "name": "sway tile 2 point 0",
+   "ok": true,
+   "detail": "art 359.1,166.0"
+  },
+  {
+   "name": "sway tile 2 point 3",
+   "ok": true,
+   "detail": "art 422.2,146.9"
+  },
+  {
+   "name": "sway tile 2 point 4",
+   "ok": true,
+   "detail": "art 390.7,156.5"
+  },
+  {
+   "name": "sway tile 3 point 0",
+   "ok": true,
+   "detail": "art 207.0,197.0"
+  },
+  {
+   "name": "sway tile 3 point 3",
+   "ok": true,
+   "detail": "art 277.0,179.0"
+  },
+  {
+   "name": "sway tile 3 point 4",
+   "ok": true,
+   "detail": "art 242.0,188.0"
+  },
+  {
+   "name": "sway tile 4 point 0",
+   "ok": true,
+   "detail": "art 287.0,197.0"
+  },
+  {
+   "name": "sway tile 4 point 3",
+   "ok": true,
+   "detail": "art 353.0,179.0"
+  },
+  {
+   "name": "sway tile 4 point 4",
+   "ok": true,
+   "detail": "art 320.0,188.0"
+  },
+  {
+   "name": "sway tile 5 point 0",
+   "ok": true,
+   "detail": "art 363.0,197.0"
+  },
+  {
+   "name": "sway tile 5 point 3",
+   "ok": true,
+   "detail": "art 433.0,179.0"
+  },
+  {
+   "name": "sway tile 5 point 4",
+   "ok": true,
+   "detail": "art 398.0,188.0"
+  },
+  {
+   "name": "sway tile 6 point 0",
+   "ok": true,
+   "detail": "art 196.2,229.1"
+  },
+  {
+   "name": "sway tile 6 point 3",
+   "ok": true,
+   "detail": "art 273.1,210.1"
+  },
+  {
+   "name": "sway tile 6 point 4",
+   "ok": true,
+   "detail": "art 234.4,219.4"
+  },
+  {
+   "name": "sway tile 7 point 0",
+   "ok": true,
+   "detail": "art 283.1,229.0"
+  },
+  {
+   "name": "sway tile 7 point 3",
+   "ok": true,
+   "detail": "art 357.0,210.1"
+  },
+  {
+   "name": "sway tile 7 point 4",
+   "ok": true,
+   "detail": "art 319.8,219.5"
+  },
+  {
+   "name": "sway tile 8 point 0",
+   "ok": true,
+   "detail": "art 367.1,229.0"
+  },
+  {
+   "name": "sway tile 8 point 3",
+   "ok": true,
+   "detail": "art 443.9,210.1"
+  },
+  {
+   "name": "sway tile 8 point 4",
+   "ok": true,
+   "detail": "art 405.4,219.5"
+  },
+  {
+   "name": "shake tile 0 point 0",
+   "ok": true,
+   "detail": "art 218.1,166.1"
+  },
+  {
+   "name": "shake tile 0 point 3",
+   "ok": true,
+   "detail": "art 281.1,146.9"
+  },
+  {
+   "name": "shake tile 0 point 4",
+   "ok": true,
+   "detail": "art 249.4,156.5"
+  },
+  {
+   "name": "shake tile 1 point 0",
+   "ok": true,
+   "detail": "art 289.8,165.9"
+  },
+  {
+   "name": "shake tile 1 point 3",
+   "ok": true,
+   "detail": "art 350.2,147.1"
+  },
+  {
+   "name": "shake tile 1 point 4",
+   "ok": true,
+   "detail": "art 319.8,156.5"
+  },
+  {
+   "name": "shake tile 2 point 0",
+   "ok": true,
+   "detail": "art 359.1,166.1"
+  },
+  {
+   "name": "shake tile 2 point 3",
+   "ok": true,
+   "detail": "art 421.8,147.0"
+  },
+  {
+   "name": "shake tile 2 point 4",
+   "ok": true,
+   "detail": "art 390.7,156.4"
+  },
+  {
+   "name": "shake tile 3 point 0",
+   "ok": true,
+   "detail": "art 207.0,197.0"
+  },
+  {
+   "name": "shake tile 3 point 3",
+   "ok": true,
+   "detail": "art 277.0,179.0"
+  },
+  {
+   "name": "shake tile 3 point 4",
+   "ok": true,
+   "detail": "art 242.0,188.0"
+  },
+  {
+   "name": "shake tile 4 point 0",
+   "ok": true,
+   "detail": "art 287.0,197.0"
+  },
+  {
+   "name": "shake tile 4 point 3",
+   "ok": true,
+   "detail": "art 353.0,179.0"
+  },
+  {
+   "name": "shake tile 4 point 4",
+   "ok": true,
+   "detail": "art 320.0,188.0"
+  },
+  {
+   "name": "shake tile 5 point 0",
+   "ok": true,
+   "detail": "art 363.0,197.0"
+  },
+  {
+   "name": "shake tile 5 point 3",
+   "ok": true,
+   "detail": "art 433.0,179.0"
+  },
+  {
+   "name": "shake tile 5 point 4",
+   "ok": true,
+   "detail": "art 398.0,188.0"
+  },
+  {
+   "name": "shake tile 6 point 0",
+   "ok": true,
+   "detail": "art 195.9,229.0"
+  },
+  {
+   "name": "shake tile 6 point 3",
+   "ok": true,
+   "detail": "art 273.2,210.1"
+  },
+  {
+   "name": "shake tile 6 point 4",
+   "ok": true,
+   "detail": "art 234.3,219.4"
+  },
+  {
+   "name": "shake tile 7 point 0",
+   "ok": true,
+   "detail": "art 283.1,229.0"
+  },
+  {
+   "name": "shake tile 7 point 3",
+   "ok": true,
+   "detail": "art 356.9,209.9"
+  },
+  {
+   "name": "shake tile 7 point 4",
+   "ok": true,
+   "detail": "art 320.2,219.5"
+  },
+  {
+   "name": "shake tile 8 point 0",
+   "ok": true,
+   "detail": "art 367.1,228.9"
+  },
+  {
+   "name": "shake tile 8 point 3",
+   "ok": true,
+   "detail": "art 443.9,210.1"
+  },
+  {
+   "name": "shake tile 8 point 4",
+   "ok": true,
+   "detail": "art 405.5,219.5"
+  }
+ ]
+}

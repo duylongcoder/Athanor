@@ -35,4 +35,4 @@ aliases: []
 [[Art]], [[Make]], [[Px]], [[Rarities]], [[Wording]]
 
 ## Used by
-[[Card]], [[CardView]], [[CatalystChoiceView]], [[JournalView]], [[Tooltip]]
+[[Card]], [[CardView]], [[CatalystChoiceView]], [[JournalCell]], [[JournalView]], [[Tooltip]]

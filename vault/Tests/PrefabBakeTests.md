@@ -3,14 +3,14 @@ generated: true
 type: test
 file: Athanor/Assets/Tests/EditModeGame/PrefabBakeTests.cs
 tags: [test]
-count: 22
+count: 39
 ---
 
 # PrefabBakeTests
-`Athanor/Assets/Tests/EditModeGame/PrefabBakeTests.cs` — 22 tests
+`Athanor/Assets/Tests/EditModeGame/PrefabBakeTests.cs` — 39 tests
 
 ## Covers
-[[CatalystChoiceView]], [[ChoiceCard]], [[Clickable]], [[ContentData]], [[ContentDb]], [[EventView]], [[FontKind]], [[GoalReward]], [[GoalRow]], [[GoalToast]], [[GoalsView]], [[Journal]], [[Label]], [[Loc]], [[Make]], [[PauseMenu]], [[Profile]], [[Rarities]], [[RunOptions]], [[RunOverView]], [[RunPhase]], [[RunState]], [[Settings]], [[UiButton]], [[Unlocks]], [[Wording]]
+[[Bench]], [[BenchView]], [[CardView]], [[CatalystChoiceView]], [[ChoiceCard]], [[Clickable]], [[ContentData]], [[ContentDb]], [[EventView]], [[FontKind]], [[GoalReward]], [[GoalRow]], [[GoalToast]], [[GoalsView]], [[HudView]], [[Journal]], [[JournalCell]], [[JournalView]], [[Label]], [[Loc]], [[Make]], [[PauseMenu]], [[Profile]], [[Rarities]], [[RunOptions]], [[RunOverView]], [[RunPhase]], [[RunState]], [[Settings]], [[TitleView]], [[Tooltip]], [[UiButton]], [[Unlocks]], [[Wording]]
 
 ## Tests
 - `Relabel_KeyedLabelAfterPrefabRoundTrip_FollowsTheLanguage`
@@ -35,3 +35,20 @@ count: 22
 - `Bind_GoalsPrefab_MakesOneRowPerGoal`
 - `Open_GoalsPrefabFreshProfile_WritesEveryGoal`
 - `Click_GoalsPrefabClose_ClosesAndTellsTheOwner`
+- `Bind_JournalPrefab_MakesOneCellPerMaterial`
+- `Click_JournalPrefabCell_ShowsThatMaterial`
+- `Click_JournalPrefabPageLabel_TurnsTheGridPage`
+- `Click_JournalPrefabClose_ClosesAndTellsTheOwner`
+- `Show_TooltipAfterPrefabRoundTrip_HasItsSlicedPanel`
+- `Bind_TitlePrefab_ShowsTheLogoText`
+- `Click_TitlePrefabBegin_SetsBeginPressed`
+- `Click_TitlePrefabSettingsThenLanguage_SwitchesTheLanguageAndBackCloses`
+- `Click_TitlePrefabEraseLink_AsksThenConfirmingRaisesResetConfirmed`
+- `AskSkip_TitlePrefab_AnswersPlayFromTheSkipDialog`
+- `Bind_HudPrefab_ShowsTheDepthNumber`
+- `Hover_HudPrefabSocketAndAspect_SetsAndClearsTheHoveredIndex`
+- `Click_HudPrefabRedraw_RaisesRedrawClickedOnlyWhileARedrawIsLeft`
+- `Click_HudPrefabPauseJournalAndIgnite_RaiseTheirEvents`
+- `Refresh_BenchPrefab_HasNineTiles`
+- `Refresh_BenchPrefab_DealsOneCardPerStartingMaterialFromTheCardPrefab`
+- `Show_CardPrefab_OneWordNameHidesTheSecondLine`

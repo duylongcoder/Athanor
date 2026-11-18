@@ -5,7 +5,7 @@ tags: [moc/tests]
 ---
 
 # Tests
-449 test methods in 35 files. Run: `dotnet test tools/CoreTests` (rules) or `unity test Athanor --mode EditMode`.
+466 test methods in 35 files. Run: `dotnet test tools/CoreTests` (rules) or `unity test Athanor --mode EditMode`.
 
 - [[ChainTests]] — 26 tests · covers [[Bench]], [[ChainPlan]], [[ChainPlanner]], [[ContentDb]]
 - [[ContentTests]] — 41 tests · covers [[Bench]], [[ChainPlanner]], [[ContentData]], [[ContentDb]], [[Ops]], [[RunState]]
@@ -23,17 +23,17 @@ tags: [moc/tests]
 - [[TutorialTests]] — 18 tests · covers [[Bench]], [[ContentData]], [[ContentDb]], [[Effects]], [[IgniteOutcome]], [[Journal]], [[ReactionEvent]], [[Row]]
 - [[AutoHookTests]] — 1 tests · covers [[GameFlow]]
 - [[ChoiceHookTests]] — 1 tests · covers [[CatalystChoiceView]], [[ChoiceCard]]
-- [[DepthClickTests]] — 9 tests · covers [[DepthMath]], [[DepthRig]], [[FogSheet]], [[LayoutData]], [[Px]], [[TileView]], [[TiltShift]]
+- [[DepthClickTests]] — 9 tests · covers [[BenchView]], [[DepthMath]], [[DepthRig]], [[FogSheet]], [[Px]], [[TileView]], [[TiltShift]]
 - [[DepthLayerTests]] — 9 tests · covers [[ArtLibrary]], [[DepthLayer]], [[DepthMath]], [[Px]]
 - [[DepthLookTests]] — 8 tests · covers [[DepthLook]]
 - [[HudTests]] — 3 tests · covers [[ContentData]], [[ContentDb]], [[HudView]], [[Journal]], [[RunOptions]], [[RunPhase]], [[RunState]], [[Unlocks]]
 - [[LabelLineBoxTests]] — 5 tests · covers [[Align]], [[FontKind]], [[Label]], [[Loc]], [[Make]]
 - [[LocTests]] — 11 tests · covers [[EditorGlobals]], [[Lang]], [[Loc]], [[Wording]]
-- [[MainDepthTests]] — 6 tests · covers [[Bench]], [[CameraSway]], [[DepthLayer]], [[DepthMath]], [[DepthRig]], [[GameFlow]], [[LayoutData]], [[Make]]
+- [[MainDepthTests]] — 6 tests · covers [[Bench]], [[BenchView]], [[CameraSway]], [[DepthLayer]], [[DepthMath]], [[DepthRig]], [[GameFlow]], [[Make]]
 - [[MainDevHookTests]] — 4 tests · covers [[BenchView]], [[DepthMath]], [[GameFlow]]
 - [[MotionTests]] — 3 tests · covers [[Motion]]
 - [[PauseTests]] — 10 tests · covers [[Bench]], [[Clickable]], [[ContentData]], [[ContentDb]], [[FlowState]], [[GameFlow]], [[Haptics]], [[Journal]]
-- [[PrefabBakeTests]] — 22 tests · covers [[CatalystChoiceView]], [[ChoiceCard]], [[Clickable]], [[ContentData]], [[ContentDb]], [[EventView]], [[FontKind]], [[GoalReward]]
+- [[PrefabBakeTests]] — 39 tests · covers [[Bench]], [[BenchView]], [[CardView]], [[CatalystChoiceView]], [[ChoiceCard]], [[Clickable]], [[ContentData]], [[ContentDb]]
 - [[RunOverDepthTests]] — 4 tests · covers [[Label]], [[Loc]], [[RunOverView]], [[RunState]]
 - [[SaveTests]] — 12 tests · covers [[ContentData]], [[ContentDb]], [[Journal]], [[Kind]], [[Profile]], [[ProfileData]], [[Save]]
 - [[SettingsHapticsTests]] — 7 tests · covers [[AudioMute]], [[Haptics]], [[Save]], [[Settings]]

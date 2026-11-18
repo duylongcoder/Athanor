@@ -10,7 +10,7 @@ count: 6
 `Athanor/Assets/Tests/EditModeGame/MainDepthTests.cs` — 6 tests
 
 ## Covers
-[[Bench]], [[CameraSway]], [[DepthLayer]], [[DepthMath]], [[DepthRig]], [[GameFlow]], [[LayoutData]], [[Make]], [[PointerInput]], [[Px]], [[TileView]]
+[[Bench]], [[BenchView]], [[CameraSway]], [[DepthLayer]], [[DepthMath]], [[DepthRig]], [[GameFlow]], [[Make]], [[PointerInput]], [[Px]], [[TileView]]
 
 ## Tests
 - `MakeChildren_OfAWorldLayerParent_DrawOnTheWorldLayer`

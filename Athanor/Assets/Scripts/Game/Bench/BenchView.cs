@@ -15,45 +15,54 @@ namespace Athanor.Game
     {
         public event Action IgniteRequested, RedrawRequested, JournalRequested;
         public bool InputEnabled { get => inputEnabled; set { inputEnabled = value; if (run != null) Hud.Show(run, db, journal, value); if (!value) DropEverything(); } }
-        public HudView Hud { get; private set; }
+        public HudView Hud => hud;
+        /// <summary>How many tiles the bench holds (nine).</summary>
+        public int TileCount => tiles.Length;
 
         const int RackX = 130, RackY = 256, RackFirst = 6, RackPitch = 31, RackSlots = 12, CardY = 290, HandX = 128, HandW = 386;
 
         enum From { None, Hand, Tile }
         struct Pick { public From from; public int handIndex, tile; public string id; public bool Is => from != From.None; }
-        sealed class Slot { public SpriteRenderer icon, lit; public int handIndex = -1; public string id; public Vector3 pos; }
+        [Serializable] sealed class Slot { public SpriteRenderer icon, lit; public Vector3 pos; [NonSerialized] public int handIndex = -1; [NonSerialized] public string id; }
 
         RunState run; ContentDb db; Journal journal;
         bool inputEnabled;
-        readonly TileView[] tiles = new TileView[Bench.TileCount];
+        // the parts of the Bench prefab: nine tiles, the rack wells, the two link layers, the nested Hud and Tooltip, the hand's root
+        [SerializeField] TileView[] tiles = new TileView[Bench.TileCount];
+        [SerializeField] Slot[] slots = new Slot[RackSlots];
+        [SerializeField] LinkView links, joins;
+        [SerializeField] HudView hud;
+        [SerializeField] Tooltip tip;
+        [SerializeField] CardView cardPrefab;
+        [SerializeField] Transform handRoot;
+        [SerializeField] SpriteRenderer ghost;
+        [SerializeField] Label rackFull;
         readonly List<CardView> cards = new List<CardView>();
-        readonly Slot[] slots = new Slot[RackSlots];
-        LinkView links, joins; Tooltip tip; Transform handRoot; SpriteRenderer ghost; Label rackFull;
+        bool bound;
         readonly string[] tileNote = new string[Bench.TileCount], tileNoteTitle = new string[Bench.TileCount];
         Pick press, selected; Vector2 pressAt; bool dragging;
         float hoverTime; string hoverKey;
 
-        /// <summary>hudPrefab is Parts/Hud.prefab; until the bench is a prefab itself (Task 14) the flow hands it in.</summary>
-        public void Build(LayoutData layout, ContentDb content, Transform parent, HudView hudPrefab)
+#if UNITY_EDITOR
+        /// <summary>
+        /// Bake source for Prefabs/Views/Bench.prefab (ViewBaker.BakeBench): makes the tiles, links, rack, hand root, ghost and tooltip.
+        /// hud is the Hud prefab already instantiated under this object; card is Parts/Card.prefab. The game loads the baked result.
+        /// </summary>
+        public void Build(TileData[] tileData, HudView hudInstance, CardView card)
         {
-            db = content;
-            transform.SetParent(parent, false);
+            cardPrefab = card;
             var tileRoot = Make.Root("Tiles", transform);
             for (int i = 0; i < tiles.Length; i++)
             {
                 tiles[i] = new GameObject("Tile " + i).AddComponent<TileView>();
-                tiles[i].Build(i, layout.tiles[i], tileRoot);
+                tiles[i].Build(i, tileData[i], tileRoot);
             }
             links = Make.Root("Links", transform).gameObject.AddComponent<LinkView>();
             // tiles an aspect has joined (a bridge, an open bench): a slow, steady line of their own colour
             joins = Make.Root("Joins", transform).gameObject.AddComponent<LinkView>();
             joins.color = new Color(1.6f, 1.25f, 0.45f); joins.speed = 0.08f; joins.arc = 3; joins.alpha = 0.7f;
-            Hud = Instantiate(hudPrefab, transform, false);
-            Hud.name = "Hud";
-            Hud.Bind();
-            Hud.IgniteClicked += () => { if (inputEnabled) IgniteRequested?.Invoke(); };
-            Hud.JournalClicked += () => { if (inputEnabled) JournalRequested?.Invoke(); };
-            Hud.RedrawClicked += () => { if (inputEnabled) RedrawRequested?.Invoke(); };
+            hud = hudInstance;
+            hud.name = "Hud";
 
             var rackRoot = Make.Root("Rack", transform);
             Make.SpriteAt(rackRoot, "rack", RackX, RackY, 100);
@@ -71,6 +80,23 @@ namespace Athanor.Game
             ghost.enabled = false;
             tip = Make.Root("Tooltip", transform).gameObject.AddComponent<Tooltip>();
             tip.Build(transform);
+        }
+#endif
+
+        /// <summary>
+        /// Once, after the Bench prefab is in the scene: hands over the content, finishes the nested Hud and Tooltip and hooks the
+        /// Hud's buttons. Run state comes later, with Bind(run, journal).
+        /// </summary>
+        public void Bind(ContentDb content)
+        {
+            if (bound) return;
+            bound = true;
+            db = content;
+            tip.Bind();
+            hud.Bind();
+            hud.IgniteClicked += () => { if (inputEnabled) IgniteRequested?.Invoke(); };
+            hud.JournalClicked += () => { if (inputEnabled) JournalRequested?.Invoke(); };
+            hud.RedrawClicked += () => { if (inputEnabled) RedrawRequested?.Invoke(); };
         }
 
         public void Bind(RunState state, Journal book)
@@ -122,8 +148,9 @@ namespace Athanor.Game
             for (int k = 0; k < n; k++)
             {
                 var m = db.Material(run.Hand[starters[k]]);
-                var card = new GameObject("Card " + m.id).AddComponent<CardView>();
-                card.Build(m, handRoot, 110 + k * 4);
+                var card = Instantiate(cardPrefab, handRoot, false);
+                card.name = "Card " + m.id;
+                card.Show(m, 110 + k * 4);
                 card.Fan(k < n - 1 ? pitch : CardView.W, 110 + n * 4);     // every card but the last has the next one over its right
                 card.handIndex = starters[k];
                 card.home = Px.Snap(Px.Mid(startX + k * pitch, CardY, CardView.W, CardView.H));

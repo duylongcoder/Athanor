@@ -18,7 +18,7 @@ aliases: []
 `Left`, `Centre`, `Right`
 
 ## Used by
-[[BenchView]], [[CardView]], [[DepthTestBuilder]], [[HudView]], [[JournalView]], [[Make]], [[ReactionCutscene]], [[SimpleCutscene]], [[TitleView]], [[Tooltip]], [[TutorialController]], [[UiButton]]
+[[BenchView]], [[CardView]], [[DepthTestBuilder]], [[Make]], [[ReactionCutscene]], [[SimpleCutscene]], [[Tooltip]], [[TutorialController]], [[UiButton]]
 
 ## Tested by
 [[LabelLineBoxTests]]

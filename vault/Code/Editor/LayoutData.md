@@ -1,18 +1,18 @@
 ---
 generated: true
 type: code
-layer: Game
+layer: Editor
 kind: class
-namespace: Athanor.Game
-file: Athanor/Assets/Scripts/Game/Support/LayoutData.cs
-tags: [code/game, kind/class]
+namespace: -
+file: Athanor/Assets/Editor/LayoutData.cs
+tags: [code/editor, kind/class]
 aliases: []
 ---
 
 # LayoutData
 
 `public class LayoutData`
-- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Support/LayoutData.cs:11-24`
+- Layer: **Editor** · Source: `Athanor/Assets/Editor/LayoutData.cs:11-26`
 
 ## Members
 | Kind | Signature | Line | Note |
@@ -22,9 +22,7 @@ aliases: []
 | field | `public RectData[] placed` | 15 |  |
 | field | `public PointData[] candles` | 16 |  |
 | method | `public RectData Placed(string name)` | 19 | Where a cropped full-frame layer (such as "workshop_table") sits. |
+| field | `public const string Path =` | 25 |  |
 
 ## Used by
-[[BenchView]], [[DepthTestBuilder]], [[DepthTestEvidence]], [[GameFlow]], [[MainDepthEvidence]], [[SceneBuilder]]
-
-## Tested by
-[[DepthClickTests]], [[MainDepthTests]]
+[[DepthTestBuilder]], [[DepthTestEvidence]], [[SceneBuilder]], [[ViewBaker]]

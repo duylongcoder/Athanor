@@ -1,4 +1,3 @@
-using System.IO;
 using System.Linq;
 using Athanor.Game;
 using NUnit.Framework;
@@ -19,30 +18,25 @@ namespace Athanor.Tests
         GameObject root;
         DepthRig rig;
         TileView[] tiles;
-        LayoutData layout;
 
         [SetUp]
         public void SetUp()
         {
-            layout = JsonUtility.FromJson<LayoutData>(File.ReadAllText("Assets/Resources/layout.json"));
             root = new GameObject("depth click test");
             var cam = new GameObject("world camera").AddComponent<Camera>();
             cam.transform.SetParent(root.transform, false);
             rig = root.AddComponent<DepthRig>();
             rig.worldCamera = cam;
             rig.Apply();
-            tiles = new TileView[layout.tiles.Length];
-            for (int i = 0; i < tiles.Length; i++)
-            {
-                tiles[i] = new GameObject("Tile " + i).AddComponent<TileView>();
-                tiles[i].Build(i, layout.tiles[i], root.transform);
-            }
+            var bench = ((GameObject)PrefabUtility.InstantiatePrefab(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Views/Bench.prefab"), root.transform)).GetComponent<BenchView>();
+            tiles = new TileView[bench.TileCount];
+            for (int i = 0; i < tiles.Length; i++) tiles[i] = bench.Tile(i);
         }
 
         [TearDown]
         public void TearDown() => Object.DestroyImmediate(root);
 
-        Vector2 FaceCentre(int i) { var f = layout.tiles[i].face; return Px.Mid(f.x, f.y, f.w, f.h); }
+        Vector2 FaceCentre(int i) => tiles[i].FaceCentre;
 
         int[] Hits(Vector2 flat) => Enumerable.Range(0, tiles.Length).Where(i => tiles[i].Contains(flat)).ToArray();
 

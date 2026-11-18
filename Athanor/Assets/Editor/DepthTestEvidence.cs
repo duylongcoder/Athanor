@@ -41,7 +41,7 @@ public static class DepthTestEvidence
         var log = new StringBuilder();
         EditorGlobals.Inject();
         var lib = Art.Lib;
-        var layout = JsonUtility.FromJson<LayoutData>(File.ReadAllText("Assets/Resources/layout.json"));
+        var layout = JsonUtility.FromJson<LayoutData>(File.ReadAllText(LayoutData.Path));
 
         // ---- the main scene's bench (orthographic, 640x360, as the game renders it before the upscale)
         EditorSceneManager.OpenScene("Assets/Scenes/Main.unity", OpenSceneMode.Single);

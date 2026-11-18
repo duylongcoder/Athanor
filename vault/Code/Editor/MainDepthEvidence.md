@@ -12,7 +12,7 @@ aliases: []
 # MainDepthEvidence
 
 `public static class MainDepthEvidence`
-- Layer: **Editor** · Source: `Athanor/Assets/Editor/MainDepthEvidence.cs:15-118`
+- Layer: **Editor** · Source: `Athanor/Assets/Editor/MainDepthEvidence.cs:15-113`
 
 > Evidence frames of the HD-2D main scene (5b-07a), edit mode, no lights (the editor does not draw point or sprite lights): unity run Athanor -- -executeMethod MainDepthEvidence.CaptureBatch
 
@@ -23,4 +23,4 @@ aliases: []
 | method | `public static string Capture()` | 43 |  |
 
 ## Uses
-[[Art]], [[BenchView]], [[ContentData]], [[ContentDb]], [[DepthRig]], [[Dust]], [[EditorGlobals]], [[GameFlow]], [[HudView]], [[LayoutData]], [[Make]], [[Px]], [[Save]], [[Settings]], [[TileView]], [[TitleView]]
+[[Art]], [[Bench]], [[ContentData]], [[ContentDb]], [[DepthRig]], [[Dust]], [[EditorGlobals]], [[GameFlow]], [[HudView]], [[Px]], [[Save]], [[Settings]], [[TileView]], [[TitleView]]
