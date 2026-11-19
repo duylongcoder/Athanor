@@ -35,6 +35,26 @@ namespace Athanor.Tests
         }
 
         [Test]
+        public void Palette_Asset_HasTodaysColours()
+        {
+            var p = AssetDatabase.LoadAssetAtPath<Palette>("Assets/Data/Palette.asset");
+            Assert.IsNotNull(p, "Assets/Data/Palette.asset");
+            void Is(string hex, Color got, string name) => Assert.AreEqual(Px.Hex(hex), got, name);
+            Is("#a8a0a8", p.rarityText.common, "rarityText.common"); Is("#8ad04a", p.rarityText.uncommon, "rarityText.uncommon");
+            Is("#7cc0f8", p.rarityText.rare, "rarityText.rare"); Is("#ffa63a", p.rarityText.legendary, "rarityText.legendary");
+            Is("#5a5058", p.rarityTone.common, "rarityTone.common"); Is("#3a6a14", p.rarityTone.uncommon, "rarityTone.uncommon");
+            Is("#1c5a96", p.rarityTone.rare, "rarityTone.rare"); Is("#8a4a08", p.rarityTone.legendary, "rarityTone.legendary");
+            Is("#f8d250", p.gold, "gold"); Is("#a8b8c4", p.anchor, "anchor"); Is("#ffa63a", p.warm, "warm");
+            Is("#6ee6c8", p.echo, "echo"); Is("#c486f4", p.attuned, "attuned"); Is("#8ad04a", p.seed, "seed");
+            Is("#d49a5c", p.fallow, "fallow"); Is("#cfc8c4", p.heavy, "heavy"); Is("#7cc0f8", p.cold, "cold");
+            Is("#ee6a3c", p.volatileTile, "volatileTile"); Is("#e06a1c", p.kiln, "kiln"); Is("#f890b8", p.pivot, "pivot");
+            Is("#f0dcc0", p.defaultGlow, "defaultGlow");
+            Is("#3a2212", p.ink, "ink"); Is("#7a5430", p.faded, "faded"); Is("#11606a", p.teal, "teal");
+            Is("#8a5a1e", p.edge, "edge"); Is("#c8501e", p.pipOn, "pipOn"); Is("#b89860", p.pipOff, "pipOff");
+            Is("#fff6b8", p.buttonText, "buttonText");
+        }
+
+        [Test]
         public void IgniteSequence_MainScene_KeepsTodaysTiming()
         {
             using (var main = new MainSceneFixture())

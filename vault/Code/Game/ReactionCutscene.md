@@ -24,7 +24,7 @@ aliases: []
 | method | `public override IEnumerator Play()` | 84 |  |
 
 ## Uses
-[[Anim]], [[Art]], [[ContentDb]], [[Cutscene]], [[Fx]], [[FxRefs]], [[HudView]], [[Label]], [[Loc]], [[Px]], [[ReactionEvent]], [[Sparks]], [[Spawn]]
+[[Anim]], [[Art]], [[ContentDb]], [[Cutscene]], [[Fx]], [[FxRefs]], [[HudView]], [[Label]], [[Loc]], [[Palette]], [[Px]], [[ReactionEvent]], [[Sparks]], [[Spawn]]
 
 ## Used by
 [[GameFlow]], [[IgniteSequence]]

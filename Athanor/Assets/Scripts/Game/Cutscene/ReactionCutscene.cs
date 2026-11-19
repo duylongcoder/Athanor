@@ -64,7 +64,7 @@ namespace Athanor.Game
             for (int i = 0; i < matCount; i++)
             {
                 var m = db.Material(e.Items[i]);
-                matCol[i] = Px.Hex(string.IsNullOrEmpty(m.glow) ? "#f0dcc0" : m.glow);
+                matCol[i] = string.IsNullOrEmpty(m.glow) ? Art.Palette.defaultGlow : Px.Hex(m.glow);
                 mats[i].sprite = Art.Lib.Sprite(m.id);
                 names.Add(m.name);
             }
@@ -203,7 +203,7 @@ namespace Athanor.Game
             bool counting = T > Count;
             float cf = Mathf.Clamp01((T - Count) / 0.9f);
             total.Text = multiplier > 1 ? "= " + HudView.Number((long)(ev.Potency * Anim.OutCubic(cf))) : "";
-            total.Color = cf >= 1 ? Color.white : Px.Hex("#fff6b8");
+            total.Color = cf >= 1 ? Color.white : Art.Palette.buttonText;
             plus.Alpha = times.Alpha = total.Alpha = counting ? 1 : 0;
             if (multiplier <= 1) plus.transform.position = Px.At(CX, 230);
             else plus.transform.position = Px.At(CX - 84, 230);

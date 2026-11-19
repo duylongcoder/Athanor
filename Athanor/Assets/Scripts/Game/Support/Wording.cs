@@ -11,10 +11,10 @@ namespace Athanor.Game
         {
             switch (Rarities.Of(rarity))
             {
-                case Rarities.Uncommon: return Px.Hex("#8ad04a");
-                case Rarities.Rare: return Px.Hex("#7cc0f8");
-                case Rarities.Legendary: return Px.Hex("#ffa63a");
-                default: return Px.Hex("#a8a0a8");
+                case Rarities.Uncommon: return Art.Palette.rarityText.uncommon;
+                case Rarities.Rare: return Art.Palette.rarityText.rare;
+                case Rarities.Legendary: return Art.Palette.rarityText.legendary;
+                default: return Art.Palette.rarityText.common;
             }
         }
 
@@ -23,10 +23,10 @@ namespace Athanor.Game
         {
             switch (Rarities.Of(rarity))
             {
-                case Rarities.Uncommon: return Px.Hex("#3a6a14");
-                case Rarities.Rare: return Px.Hex("#1c5a96");
-                case Rarities.Legendary: return Px.Hex("#8a4a08");
-                default: return Px.Hex("#5a5058");
+                case Rarities.Uncommon: return Art.Palette.rarityTone.uncommon;
+                case Rarities.Rare: return Art.Palette.rarityTone.rare;
+                case Rarities.Legendary: return Art.Palette.rarityTone.legendary;
+                default: return Art.Palette.rarityTone.common;
             }
         }
 
@@ -38,23 +38,23 @@ namespace Athanor.Game
         {
             switch (effect)
             {
-                case AspectEffects.Doubled: case AspectEffects.Bridge: case AspectEffects.OpenBench: return Px.Hex("#f8d250");
-                case AspectEffects.Anchor: return Px.Hex("#a8b8c4");
-                case AspectEffects.Heated: return Px.Hex("#ffa63a");
-                case AspectEffects.Echo: case AspectEffects.Crossroads: return Px.Hex("#6ee6c8");
-                case AspectEffects.Attuned: return Px.Hex("#c486f4");
-                case AspectEffects.Seed: return Px.Hex("#8ad04a");
-                case AspectEffects.Fallow: return Px.Hex("#d49a5c");
-                case AspectEffects.Heavy: return Px.Hex("#cfc8c4");
-                case AspectEffects.Cold: return Px.Hex("#7cc0f8");
-                case AspectEffects.Volatile: return Px.Hex("#ee6a3c");
-                case AspectEffects.Kiln: return Px.Hex("#e06a1c");
-                case AspectEffects.Pivot: return Px.Hex("#f890b8");
-                default: return Px.Hex("#f0dcc0");
+                case AspectEffects.Doubled: case AspectEffects.Bridge: case AspectEffects.OpenBench: return Art.Palette.gold;
+                case AspectEffects.Anchor: return Art.Palette.anchor;
+                case AspectEffects.Heated: return Art.Palette.warm;
+                case AspectEffects.Echo: case AspectEffects.Crossroads: return Art.Palette.echo;
+                case AspectEffects.Attuned: return Art.Palette.attuned;
+                case AspectEffects.Seed: return Art.Palette.seed;
+                case AspectEffects.Fallow: return Art.Palette.fallow;
+                case AspectEffects.Heavy: return Art.Palette.heavy;
+                case AspectEffects.Cold: return Art.Palette.cold;
+                case AspectEffects.Volatile: return Art.Palette.volatileTile;
+                case AspectEffects.Kiln: return Art.Palette.kiln;
+                case AspectEffects.Pivot: return Art.Palette.pivot;
+                default: return Art.Palette.defaultGlow;
             }
         }
 
-        public static readonly Color Warm = Px.Hex("#ffa63a");
+        public static Color Warm => Art.Palette.warm;
 
         /// <summary>An aspect's rule, with the kind an attuned tile drew written in. cost: false leaves the trade-off's price out.</summary>
         public static string AspectRule(AspectInstance a, bool cost = true)

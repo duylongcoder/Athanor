@@ -75,8 +75,8 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | LinkView | LinkView | Game | class | Athanor/Assets/Scripts/Game/Bench/LinkView.cs | 7 | Motes of light travelling between neighbouring tiles whose reaction is already in the journal. |
 | TileView | TileView | Game | class | Athanor/Assets/Scripts/Game/Bench/TileView.cs | 10 | One of the nine bench tiles: its hover highlight and, when occupied, the material standing on it. |
 | GameFlow | GameFlow | Game | class | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 13 | Owns the run and moves the game between its screens. |
-| RunTiming | RunTiming | Game | struct | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 83 | Waits and shake of the descent and the end of a run, in seconds. |
-| TitleChoice | TitleChoice | Game | enum | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 136 |  |
+| RunTiming | RunTiming | Game | struct | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 85 | Waits and shake of the descent and the end of a run, in seconds. |
+| TitleChoice | TitleChoice | Game | enum | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 138 |  |
 | IgniteSequence | IgniteSequence | Game | class | Athanor/Assets/Scripts/Game/Boot/IgniteSequence.cs | 15 | The choreography of one Ignite: the chain of reactions (flash, draw-in, burst, points), the discovery beat and cutscene, the flight of what was made to the rack, the spent tiles and the final potency. |
 | Timing | Timing | Game | struct | Athanor/Assets/Scripts/Game/Boot/IgniteSequence.cs | 19 | Paces, waits and durations, in seconds unless the name says otherwise. |
 | Look | Look | Game | struct | Athanor/Assets/Scripts/Game/Boot/IgniteSequence.cs | 52 | Bursts, offsets, sizes and colours. |
@@ -133,6 +133,8 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | Label | Label | Game | class | Athanor/Assets/Scripts/Game/Support/Label.cs | 11 | A line of pixel text with an optional one-pixel drop shadow. A label bound to a Lang key (Bind) rewrites itself when the language changes; every label swaps its font to the language's. |
 | Loc | Loc | Game | class | Athanor/Assets/Scripts/Game/Support/Loc.cs | 12 | The language the game is showing: the loaded Lang (Vietnamese falls back to English), the font set that goes with it and helpers for the words views share. Views never hold text; they ask for a key. E |
 | Motion | Motion | Game | class | Athanor/Assets/Scripts/Game/Support/Motion.cs | 16 | One-shot tweens on PrimeTween, kept in one place so every move is snapped to whole pixels (Px.Snap). Each call takes its start value explicitly and returns the Tween: group several with Sequence.Creat |
+| RarityColors | RarityColors | Game | struct | Athanor/Assets/Scripts/Game/Support/Palette.cs | 8 | One colour per rarity, for code that switches on the rarity. |
+| Palette | Palette | Game | class | Athanor/Assets/Scripts/Game/Support/Palette.cs | 18 | The colours two or more files share, by role (Assets/Data/Palette.asset). A colour only one file uses stays on that file's view. GameFlow publishes it as Art.Palette. |
 | PointerInput | PointerInput | Game | class | Athanor/Assets/Scripts/Game/Support/PointerInput.cs | 8 | Mouse or touch position in world space, press state for this frame, and hover/click dispatch to Clickables. |
 | Px | Px | Game | class | Athanor/Assets/Scripts/Game/Support/Px.cs | 9 | The art is laid out on a 640x360 canvas with y running down from the top-left corner. The world uses one unit per pixel with the origin at the screen centre and y up. |
 | RarityStars | RarityStars | Game | class | Athanor/Assets/Scripts/Game/Support/RarityStars.cs | 13 | The rarity glyph (SPEC changes 21-24): up to four 7x7 stars on an 8 px pitch, tinted, each with a dark outline made of four offset dark copies. The root sits at the top-left of the row. Built once and |
@@ -646,23 +648,23 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | HudView | property | HoveredAspect | 23 | public int HoveredAspect |
 | HudView | field | MaxCatalysts | 25 | public const int MaxCatalysts = 6, MaxAspects = 3 |
 | HudView | field | RedrawX | 27 | public const int RedrawX = 556, RedrawY = 88, RedrawW = 76, RedrawH = 20 |
-| HudView | method | SetPauseShown | 55 | public void SetPauseShown(bool shown) |
-| HudView | property | PauseShown | 61 | public bool PauseShown |
-| HudView | property | PauseAnchor | 62 | public Vector3 PauseAnchor |
-| HudView | property | PotencyPosition | 64 | public Vector3 PotencyPosition |
-| HudView | method | CatalystAnchor | 66 | public Vector3 CatalystAnchor(int i) |
-| HudView | method | AspectAnchor | 67 | public Vector3 AspectAnchor(int i) |
-| HudView | property | RedrawAnchor | 69 | public Vector3 RedrawAnchor |
-| HudView | method | CanRedraw | 71 | public static bool CanRedraw(RunState run) |
-| HudView | method | Number | 72 | public static string Number(long n) |
-| HudView | method | Bind | 77 | public void Bind() |
-| HudView | method | Show | 117 | public void Show(RunState run, ContentDb db, Journal journal, bool inputEnabled, bool keepRedraw = false) |
-| HudView | method | SetPotency | 165 | public void SetPotency(long value, bool instant = false) |
-| HudView | method | Note | 168 | public void Note(ReactionEvent e, ContentDb db) |
-| HudView | method | Hint | 192 | public void Hint(HintData h, ContentDb db) |
-| HudView | method | HintLine | 199 | public static string HintLine(HintData h, ContentDb db, bool withName = true) |
-| HudView | method | Bump | 207 | public void Bump() |
-| HudView | method | ClearNote | 209 | public void ClearNote() |
+| HudView | method | SetPauseShown | 56 | public void SetPauseShown(bool shown) |
+| HudView | property | PauseShown | 62 | public bool PauseShown |
+| HudView | property | PauseAnchor | 63 | public Vector3 PauseAnchor |
+| HudView | property | PotencyPosition | 65 | public Vector3 PotencyPosition |
+| HudView | method | CatalystAnchor | 67 | public Vector3 CatalystAnchor(int i) |
+| HudView | method | AspectAnchor | 68 | public Vector3 AspectAnchor(int i) |
+| HudView | property | RedrawAnchor | 70 | public Vector3 RedrawAnchor |
+| HudView | method | CanRedraw | 72 | public static bool CanRedraw(RunState run) |
+| HudView | method | Number | 73 | public static string Number(long n) |
+| HudView | method | Bind | 78 | public void Bind() |
+| HudView | method | Show | 118 | public void Show(RunState run, ContentDb db, Journal journal, bool inputEnabled, bool keepRedraw = false) |
+| HudView | method | SetPotency | 166 | public void SetPotency(long value, bool instant = false) |
+| HudView | method | Note | 169 | public void Note(ReactionEvent e, ContentDb db) |
+| HudView | method | Hint | 193 | public void Hint(HintData h, ContentDb db) |
+| HudView | method | HintLine | 200 | public static string HintLine(HintData h, ContentDb db, bool withName = true) |
+| HudView | method | Bump | 208 | public void Bump() |
+| HudView | method | ClearNote | 210 | public void ClearNote() |
 | LinkView | field | color | 11 | public Color color = new Color(2.2f, 1.7f, 0.8f) |
 | LinkView | field | speed | 12 | public float speed = 0.35f, arc = 7, alpha = 0.9f |
 | LinkView | method | Set | 16 | public void Set(List<(Vector3 a, Vector3 b)> pairs) |
@@ -684,33 +686,33 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | TileView | method | Flash | 82 | public void Flash(Color c) |
 | TileView | method | Consume | 85 | public IEnumerator Consume() |
 | GameFlow | field | library | 16 | public ArtLibrary library |
-| GameFlow | field | cutsceneRoom | 19 | public GameObject workshop, cutsceneRoom |
-| GameFlow | field | mainCamera | 20 | public Camera mainCamera |
-| GameFlow | field | depthStage | 22 | public DepthStage depthStage |
-| GameFlow | property | Db | 24 | public ContentDb Db |
-| GameFlow | property | Journal | 25 | public Journal Journal |
-| GameFlow | property | Profile | 27 | public Profile Profile |
-| GameFlow | property | Run | 28 | public RunState Run |
-| GameFlow | property | Bench | 30 | public BenchView Bench |
-| GameFlow | property | State | 32 | public FlowState State |
-| GameFlow | property | Flow | 34 | public ScreenFlow Flow |
-| GameFlow | property | RunOver | 38 | public RunOverView RunOver |
-| GameFlow | field | Auto | 40 | public bool Auto |
-| GameFlow | field | AutoHook | 43 | public const string AutoHook = |
-| GameFlow | method | ToggleAuto | 46 | public void ToggleAuto() |
-| GameFlow | method | NextMood | 55 | public static int NextMood(int mood) |
-| GameFlow | method | MoodLine | 56 | public static string MoodLine(int mood) |
-| GameFlow | method | EffectsLine | 57 | public static string EffectsLine(bool on) |
-| GameFlow | property | JournalView | 123 | public JournalView JournalView |
-| GameFlow | method | JournalAfterQuit | 460 | public static Journal JournalAfterQuit(bool sandbox, Journal current) |
-| GameFlow | method | ProfileAfterQuit | 462 | public static Profile ProfileAfterQuit(bool sandbox, Profile current, ContentDb db) |
-| GameFlow | method | Ignite | 499 | public void Ignite() |
-| GameFlow | method | SettleIgnite | 506 | public static IgniteOutcome SettleIgnite(RunState run, Journal journal, bool sandbox) |
-| RunTiming | field | endingWait | 86 | public float descendWait, endingWait |
-| RunTiming | field | lossWait | 88 | public float lossShake, lossShakeSeconds, lossWait |
-| TitleChoice | value | Begin | 136 | Begin |
-| TitleChoice | value | HowToPlay | 136 | HowToPlay |
-| TitleChoice | value | Intro | 136 | Intro |
+| GameFlow | field | cutsceneRoom | 21 | public GameObject workshop, cutsceneRoom |
+| GameFlow | field | mainCamera | 22 | public Camera mainCamera |
+| GameFlow | field | depthStage | 24 | public DepthStage depthStage |
+| GameFlow | property | Db | 26 | public ContentDb Db |
+| GameFlow | property | Journal | 27 | public Journal Journal |
+| GameFlow | property | Profile | 29 | public Profile Profile |
+| GameFlow | property | Run | 30 | public RunState Run |
+| GameFlow | property | Bench | 32 | public BenchView Bench |
+| GameFlow | property | State | 34 | public FlowState State |
+| GameFlow | property | Flow | 36 | public ScreenFlow Flow |
+| GameFlow | property | RunOver | 40 | public RunOverView RunOver |
+| GameFlow | field | Auto | 42 | public bool Auto |
+| GameFlow | field | AutoHook | 45 | public const string AutoHook = |
+| GameFlow | method | ToggleAuto | 48 | public void ToggleAuto() |
+| GameFlow | method | NextMood | 57 | public static int NextMood(int mood) |
+| GameFlow | method | MoodLine | 58 | public static string MoodLine(int mood) |
+| GameFlow | method | EffectsLine | 59 | public static string EffectsLine(bool on) |
+| GameFlow | property | JournalView | 125 | public JournalView JournalView |
+| GameFlow | method | JournalAfterQuit | 464 | public static Journal JournalAfterQuit(bool sandbox, Journal current) |
+| GameFlow | method | ProfileAfterQuit | 466 | public static Profile ProfileAfterQuit(bool sandbox, Profile current, ContentDb db) |
+| GameFlow | method | Ignite | 503 | public void Ignite() |
+| GameFlow | method | SettleIgnite | 510 | public static IgniteOutcome SettleIgnite(RunState run, Journal journal, bool sandbox) |
+| RunTiming | field | endingWait | 88 | public float descendWait, endingWait |
+| RunTiming | field | lossWait | 90 | public float lossShake, lossShakeSeconds, lossWait |
+| TitleChoice | value | Begin | 138 | Begin |
+| TitleChoice | value | HowToPlay | 138 | HowToPlay |
+| TitleChoice | value | Intro | 138 | Intro |
 | IgniteSequence | property | Hurry | 96 | public bool Hurry |
 | IgniteSequence | method | Bind | 99 | public void Bind(BenchView bench, ReactionCutscene reaction, FxRefs fx, ScreenFlow flow) |
 | IgniteSequence | method | Play | 108 | public IEnumerator Play(IgniteOutcome outcome, RunState run, ContentDb db, long potencyBefore, TutorialController tutorial, bool auto) |
@@ -1031,7 +1033,8 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | Anim | method | OutBack | 29 | public static float OutBack(float t) |
 | Anim | method | Hump | 31 | public static float Hump(float t) |
 | Art | field | Lib | 9 | public static ArtLibrary Lib |
-| Art | method | ResetStatics | 13 | public static void ResetStatics() |
+| Art | field | Palette | 12 | public static Palette Palette |
+| Art | method | ResetStatics | 16 | public static void ResetStatics() |
 | ArtLibrary | field | sprites | 10 | public Sprite[] sprites |
 | ArtLibrary | field | sheets | 11 | public FlipbookSheet[] sheets |
 | ArtLibrary | field | tiny | 12 | public TMP_FontAsset title, body, label, tiny |
@@ -1116,6 +1119,16 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | Motion | method | StopOn | 57 | public static void StopOn(Component owner) |
 | Motion | method | Wait | 67 | public static IEnumerator Wait(Tween tween, Func<bool> hurry = null) |
 | Motion | method | Wait | 73 | public static IEnumerator Wait(Sequence sequence, Func<bool> hurry = null) |
+| RarityColors | field | legendary | 10 | public Color common, uncommon, rare, legendary |
+| Palette | field | rarityText | 22 | public RarityColors rarityText |
+| Palette | field | rarityTone | 24 | public RarityColors rarityTone |
+| Palette | field | gold | 27 | public Color gold |
+| Palette | field | pivot | 28 | public Color anchor, warm, echo, attuned, seed, fallow, heavy, cold, volatileTile, kiln, pivot |
+| Palette | field | defaultGlow | 32 | public Color defaultGlow |
+| Palette | field | teal | 34 | public Color ink, faded, teal |
+| Palette | field | edge | 36 | public Color edge |
+| Palette | field | pipOff | 38 | public Color pipOn, pipOff |
+| Palette | field | buttonText | 40 | public Color buttonText |
 | PointerInput | property | World | 10 | public static Vector2 World |
 | PointerInput | property | Rig | 12 | public static DepthRig Rig |
 | PointerInput | property | Bench | 15 | public static Vector2 Bench |
@@ -1164,7 +1177,7 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | Wording | method | RarityTone | 22 | public static Color RarityTone(string rarity) |
 | Wording | method | RarityWord | 34 | public static string RarityWord(string rarity) |
 | Wording | method | AspectColor | 37 | public static Color AspectColor(string effect) |
-| Wording | field | Warm | 57 | public static readonly Color Warm = Px.Hex("#ffa63a") |
+| Wording | property | Warm | 57 | public static Color Warm |
 | Wording | method | AspectRule | 60 | public static string AspectRule(AspectInstance a, bool cost = true) |
 | Wording | method | AspectCost | 82 | public static string AspectCost(AspectInstance a) |
 | Wording | method | Effect | 90 | public static string Effect(EffectData fx) |
@@ -1182,12 +1195,12 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | ChoiceCard | field | tiles | 15 | public int[] tiles |
 | ChoiceCard | field | dimTiles | 16 | public int[] dimTiles |
 | CatalystChoiceView | field | OpenHook | 32 | public const string OpenHook = |
-| CatalystChoiceView | method | CardName | 58 | public Label CardName(int i) |
-| CatalystChoiceView | method | CornerStars | 60 | public RarityStars CornerStars(int i) |
-| CatalystChoiceView | method | Bind | 65 | public void Bind(FxRefs effects) |
-| CatalystChoiceView | method | Choose | 84 | public IEnumerator Choose(IReadOnlyList<CatalystData> offer, Action<string> done, float autoAfter = -1) |
-| CatalystChoiceView | method | Choose | 96 | public IEnumerator Choose(IReadOnlyList<AspectInstance> offer, Action<string> done, float autoAfter = -1) |
-| CatalystChoiceView | method | Choose | 110 | public IEnumerator Choose(string title, string line, IReadOnlyList<ChoiceCard> offer, Action<string> done, float autoAfter = -1) |
+| CatalystChoiceView | method | CardName | 60 | public Label CardName(int i) |
+| CatalystChoiceView | method | CornerStars | 62 | public RarityStars CornerStars(int i) |
+| CatalystChoiceView | method | Bind | 67 | public void Bind(FxRefs effects) |
+| CatalystChoiceView | method | Choose | 86 | public IEnumerator Choose(IReadOnlyList<CatalystData> offer, Action<string> done, float autoAfter = -1) |
+| CatalystChoiceView | method | Choose | 98 | public IEnumerator Choose(IReadOnlyList<AspectInstance> offer, Action<string> done, float autoAfter = -1) |
+| CatalystChoiceView | method | Choose | 112 | public IEnumerator Choose(string title, string line, IReadOnlyList<ChoiceCard> offer, Action<string> done, float autoAfter = -1) |
 | Card | field | root | 40 | public Transform root |
 | Card | field | click | 41 | public Clickable click |
 | Card | field | bench | 42 | public SpriteRenderer[] bench = new SpriteRenderer[Bench.TileCount] |
@@ -1208,25 +1221,25 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | GoalToast | method | Clear | 59 | public void Clear() |
 | GoalsView | field | Closed | 17 | public event Action Closed |
 | GoalsView | property | IsOpen | 18 | public bool IsOpen |
-| GoalsView | property | CloseClick | 33 | public Clickable CloseClick |
-| GoalsView | method | Bind | 39 | public void Bind(ContentDb content) |
-| GoalsView | method | Open | 62 | public void Open(Profile profile, Journal journal) |
-| GoalsView | method | Close | 105 | public void Close() |
+| GoalsView | property | CloseClick | 35 | public Clickable CloseClick |
+| GoalsView | method | Bind | 41 | public void Bind(ContentDb content) |
+| GoalsView | method | Open | 64 | public void Open(Profile profile, Journal journal) |
+| GoalsView | method | Close | 107 | public void Close() |
 | JournalCell | field | icon | 12 | public SpriteRenderer icon |
 | JournalCell | field | click | 13 | public Clickable click |
 | JournalView | field | Closed | 19 | public event Action Closed |
 | JournalView | property | IsOpen | 20 | public bool IsOpen |
 | JournalView | field | PerPage | 23 | public const int PerPage = Cols * Rows |
-| JournalView | property | Title | 44 | public Label Title |
-| JournalView | property | CloseClick | 46 | public Clickable CloseClick |
-| JournalView | property | PageClick | 48 | public Clickable PageClick |
-| JournalView | method | Bind | 54 | public void Bind(ContentDb content) |
-| JournalView | method | Open | 112 | public void Open(Journal book, Func<string, bool> openStarters = null) |
-| JournalView | method | Close | 163 | public void Close() |
-| JournalView | method | ShowMaterial | 174 | public Rect ShowMaterial(string id) |
-| JournalView | property | IndexRect | 181 | public static Rect IndexRect |
-| JournalView | property | RecipesRect | 183 | public static Rect RecipesRect |
-| JournalView | property | HintsRect | 185 | public static Rect HintsRect |
+| JournalView | property | Title | 47 | public Label Title |
+| JournalView | property | CloseClick | 49 | public Clickable CloseClick |
+| JournalView | property | PageClick | 51 | public Clickable PageClick |
+| JournalView | method | Bind | 57 | public void Bind(ContentDb content) |
+| JournalView | method | Open | 115 | public void Open(Journal book, Func<string, bool> openStarters = null) |
+| JournalView | method | Close | 166 | public void Close() |
+| JournalView | method | ShowMaterial | 177 | public Rect ShowMaterial(string id) |
+| JournalView | property | IndexRect | 184 | public static Rect IndexRect |
+| JournalView | property | RecipesRect | 186 | public static Rect RecipesRect |
+| JournalView | property | HintsRect | 188 | public static Rect HintsRect |
 | PauseMenu | field | QuitConfirmed | 17 | public event Action QuitConfirmed |
 | PauseMenu | field | VibrationChanged | 19 | public event Action VibrationChanged |
 | PauseMenu | field | Closed | 21 | public event Action Opened, Closed |
@@ -1434,8 +1447,9 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | LabelLineBoxTests | method | LineBoxTitle_SizeSwitchTo32_FollowsTheNewSize | 62 | public void LineBoxTitle_SizeSwitchTo32_FollowsTheNewSize() |
 | LabelLineBoxTests | method | LineBoxTitle_InEnglish_DoesNotMove | 72 | public void LineBoxTitle_InEnglish_DoesNotMove() |
 | LabelLineBoxTests | method | PlainTitle_InVietnamese_DoesNotMove | 81 | public void PlainTitle_InVietnamese_DoesNotMove() |
-| LayoutPinTests | method | IgniteSequence_MainScene_KeepsTodaysTiming | 38 | public void IgniteSequence_MainScene_KeepsTodaysTiming() |
-| LayoutPinTests | method | IgniteSequence_MainScene_KeepsTodaysLook | 59 | public void IgniteSequence_MainScene_KeepsTodaysLook() |
+| LayoutPinTests | method | Palette_Asset_HasTodaysColours | 38 | public void Palette_Asset_HasTodaysColours() |
+| LayoutPinTests | method | IgniteSequence_MainScene_KeepsTodaysTiming | 58 | public void IgniteSequence_MainScene_KeepsTodaysTiming() |
+| LayoutPinTests | method | IgniteSequence_MainScene_KeepsTodaysLook | 79 | public void IgniteSequence_MainScene_KeepsTodaysLook() |
 | LocTests | method | Use_WithInjectedFiles_ServesTheirText | 19 | public void Use_WithInjectedFiles_ServesTheirText() |
 | LocTests | method | Use_NullFile_Throws | 32 | public void Use_NullFile_Throws() |
 | LocTests | method | ViJsonCharacters_AllInCruxAtlas_NoneMissing | 40 | public void ViJsonCharacters_AllInCruxAtlas_NoneMissing() |

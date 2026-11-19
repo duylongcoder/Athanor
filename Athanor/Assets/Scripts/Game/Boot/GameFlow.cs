@@ -14,6 +14,8 @@ namespace Athanor.Game
     {
         /// <summary>The art library (sprites and effect sheets); GameFlow publishes it as <see cref="Art.Lib"/>.</summary>
         public ArtLibrary library;
+        /// <summary>The colours files share (Assets/Data/Palette.asset); GameFlow publishes it as <see cref="Art.Palette"/>.</summary>
+        [SerializeField] Palette palette;
         /// <summary>content.json and the two language files, set in the scene. Awake throws when one is empty.</summary>
         [SerializeField] TextAsset contentJson, langEn, langVi;
         public GameObject workshop, cutsceneRoom;
@@ -152,6 +154,7 @@ namespace Athanor.Game
             if (langEn == null) throw new System.InvalidOperationException("GameFlow: langEn is not set in the scene");
             if (langVi == null) throw new System.InvalidOperationException("GameFlow: langVi is not set in the scene");
             if (library == null) throw new System.InvalidOperationException("GameFlow: library is not set in the scene");
+            if (palette == null) throw new System.InvalidOperationException("GameFlow: palette is not set in the scene");
             if (runOver == null) throw new System.InvalidOperationException("GameFlow: runOver is not set in the scene");
             if (toast == null) throw new System.InvalidOperationException("GameFlow: toast is not set in the scene");
             if (eventView == null) throw new System.InvalidOperationException("GameFlow: eventView is not set in the scene");
@@ -168,6 +171,7 @@ namespace Athanor.Game
             if (goalsView == null) throw new System.InvalidOperationException("GameFlow: goalsView is not set in the scene");
             if (journalView == null) throw new System.InvalidOperationException("GameFlow: journalView is not set in the scene");
             Art.Lib = library;
+            Art.Palette = palette;
             Loc.Use(langEn, langVi);
             settings = Save.LoadSettings();
             Loc.InitFromPlayer(settings.language);

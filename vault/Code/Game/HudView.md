@@ -12,7 +12,7 @@ aliases: []
 # HudView
 
 `public sealed class HudView` : `MonoBehaviour`
-- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Bench/HudView.cs:8-242`
+- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Bench/HudView.cs:8-243`
 
 > The panels round the bench: depth and potency, catalysts, trials and redraws, the last-reaction note, journal and Ignite.
 
@@ -27,26 +27,26 @@ aliases: []
 | property | `public int HoveredAspect` | 23 | Index of the held aspect the pointer is over (in the strip under the depth panel), or -1. |
 | field | `public const int MaxCatalysts = 6, MaxAspects = 3` | 25 | The most catalysts the sockets can show: four from clearing depths and two from shrines. |
 | field | `public const int RedrawX = 556, RedrawY = 88, RedrawW = 76, RedrawH = 20` | 27 | The Redraw button in art space: under the right panel, right below the redraws-left counter. |
-| method | `public void SetPauseShown(bool shown)` | 55 | Shows or hides the pause button (and its hit box): shown only while the bench is the player's. |
-| property | `public bool PauseShown` | 61 |  |
-| property | `public Vector3 PauseAnchor` | 62 |  |
-| property | `public Vector3 PotencyPosition` | 64 |  |
-| method | `public Vector3 CatalystAnchor(int i)` | 66 | Where a tooltip about a held catalyst or aspect points. |
-| method | `public Vector3 AspectAnchor(int i)` | 67 |  |
-| property | `public Vector3 RedrawAnchor` | 69 | Where the Redraw tooltip (and the tutorial's highlight) points: the button's centre. |
-| method | `public static bool CanRedraw(RunState run)` | 71 | The Redraw button is live: a redraw is left and the bench is being played (not an offer, not a cleared depth). |
-| method | `public static string Number(long n)` | 72 |  |
-| method | `public void Bind()` | 77 | Hooks the hit boxes to the hover and click handlers. Once per instance: the pointer calls them, nothing else does. |
-| method | `public void Show(RunState run, ContentDb db, Journal journal, bool inputEnabled, bool keepRedraw = false)` | 117 | Everything except the potency number, which is animated separately. keepRedraw leaves the Redraw button and its counter as they are: GameFlow.Resolve passes it while an Ignite plays out, so they do not show the outcome early. |
-| method | `public void SetPotency(long value, bool instant = false)` | 165 |  |
-| method | `public void Note(ReactionEvent e, ContentDb db)` | 168 | Writes one reaction on the note: what went in, what came of it and its potency. |
-| method | `public void Hint(HintData h, ContentDb db)` | 192 |  |
-| method | `public static string HintLine(HintData h, ContentDb db, bool withName = true)` | 199 | "Ember Coal stirs near a potion.", or for a recipe the bench was too dull for, "Ember Coal needs heat 14." |
-| method | `public void Bump()` | 207 | A short kick of the potency number when points land on it. |
-| method | `public void ClearNote()` | 209 |  |
+| method | `public void SetPauseShown(bool shown)` | 56 | Shows or hides the pause button (and its hit box): shown only while the bench is the player's. |
+| property | `public bool PauseShown` | 62 |  |
+| property | `public Vector3 PauseAnchor` | 63 |  |
+| property | `public Vector3 PotencyPosition` | 65 |  |
+| method | `public Vector3 CatalystAnchor(int i)` | 67 | Where a tooltip about a held catalyst or aspect points. |
+| method | `public Vector3 AspectAnchor(int i)` | 68 |  |
+| property | `public Vector3 RedrawAnchor` | 70 | Where the Redraw tooltip (and the tutorial's highlight) points: the button's centre. |
+| method | `public static bool CanRedraw(RunState run)` | 72 | The Redraw button is live: a redraw is left and the bench is being played (not an offer, not a cleared depth). |
+| method | `public static string Number(long n)` | 73 |  |
+| method | `public void Bind()` | 78 | Hooks the hit boxes to the hover and click handlers. Once per instance: the pointer calls them, nothing else does. |
+| method | `public void Show(RunState run, ContentDb db, Journal journal, bool inputEnabled, bool keepRedraw = false)` | 118 | Everything except the potency number, which is animated separately. keepRedraw leaves the Redraw button and its counter as they are: GameFlow.Resolve passes it while an Ignite plays out, so they do not show the outcome early. |
+| method | `public void SetPotency(long value, bool instant = false)` | 166 |  |
+| method | `public void Note(ReactionEvent e, ContentDb db)` | 169 | Writes one reaction on the note: what went in, what came of it and its potency. |
+| method | `public void Hint(HintData h, ContentDb db)` | 193 |  |
+| method | `public static string HintLine(HintData h, ContentDb db, bool withName = true)` | 200 | "Ember Coal stirs near a potion.", or for a recipe the bench was too dull for, "Ember Coal needs heat 14." |
+| method | `public void Bump()` | 208 | A short kick of the potency number when points land on it. |
+| method | `public void ClearNote()` | 210 |  |
 
 ## Uses
-[[Art]], [[Clickable]], [[ContentDb]], [[Journal]], [[Label]], [[Loc]], [[Px]], [[ReactionEvent]], [[Row]], [[RunPhase]], [[RunState]]
+[[Art]], [[Clickable]], [[ContentDb]], [[Journal]], [[Label]], [[Loc]], [[Palette]], [[Px]], [[ReactionEvent]], [[Row]], [[RunPhase]], [[RunState]]
 
 ## Used by
 [[BenchView]], [[GoldenShots]], [[IgniteSequence]], [[JournalView]], [[ReactionCutscene]], [[TutorialController]]

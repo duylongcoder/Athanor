@@ -25,7 +25,9 @@ namespace Athanor.Game
         readonly List<GoalRow> rows = new List<GoalRow>();
         bool wired;
 
-        static readonly Color Ink = Px.Hex("#3a2212"), Faded = Px.Hex("#7a5430"), Teal = Px.Hex("#11606a");
+        static Color Ink => Art.Palette.ink;
+        static Color Faded => Art.Palette.faded;
+        static Color Teal => Art.Palette.teal;
         // which column each rarity's section is in, and in what order: Uncommon and Legendary on the left, Rare on the right
         static readonly string[] Sections = { Rarities.Uncommon, Rarities.Legendary, Rarities.Rare };
 

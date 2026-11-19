@@ -8,8 +8,11 @@ namespace Athanor.Game
         /// <summary>The library; null until GameFlow.Awake or a test/editor setup assigns it.</summary>
         public static ArtLibrary Lib;
 
-        /// <summary>Forgets the library before the first scene (domain reload off).</summary>
+        /// <summary>The colours files share (Assets/Data/Palette.asset); null until GameFlow.Awake or a test/editor setup assigns it.</summary>
+        public static Palette Palette;
+
+        /// <summary>Forgets the library and the palette before the first scene (domain reload off).</summary>
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-        public static void ResetStatics() => Lib = null;
+        public static void ResetStatics() { Lib = null; Palette = null; }
     }
 }

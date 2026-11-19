@@ -32,7 +32,7 @@ aliases: []
 | method | `public void Close()` | 228 |  |
 
 ## Uses
-[[Anim]], [[Clickable]], [[Dev]], [[FxRefs]], [[Haptics]], [[Label]], [[Loc]], [[Px]], [[Settings]], [[Sparks]], [[UiButton]]
+[[Anim]], [[Art]], [[Clickable]], [[Dev]], [[FxRefs]], [[Haptics]], [[Label]], [[Loc]], [[Palette]], [[Px]], [[Settings]], [[Sparks]], [[UiButton]]
 
 ## Used by
 [[GameFlow]], [[GoldenShots]]

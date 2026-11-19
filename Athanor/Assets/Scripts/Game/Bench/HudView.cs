@@ -40,9 +40,10 @@ namespace Athanor.Game
         float catalystPitch = 35;
         float shown, bump; long goal, targetValue; bool canIgnite, igniteDown, canRedraw, redrawDown, wired;
 
-        static readonly Color Gold = Px.Hex("#f8d250");
+        static Color Gold => Art.Palette.gold;
         static readonly Color RedrawUp = Px.Hex("#1d5a52"), RedrawOver = Px.Hex("#26706a"), RedrawPressed = Px.Hex("#143f3a"),
-            RedrawOff = Px.Hex("#3a2e28"), PauseEdgeColor = Px.Hex("#8a5a1e");
+            RedrawOff = Px.Hex("#3a2e28");
+        static Color PauseEdgeColor => Art.Palette.edge;
 
         /// <summary>The bench can be switched off under the pointer, which then never sends exit or release: forget them.</summary>
         void OnDisable()
@@ -177,7 +178,7 @@ namespace Athanor.Game
                     note[i].Text = line;
                 }
                 note[3].Text = "";
-                note[2].Color = Px.Hex("#7a5430");
+                note[2].Color = Art.Palette.faded;
                 return;
             }
             // a pair is written out; a combo names its hub and counts the rest (the journal has the full recipe)

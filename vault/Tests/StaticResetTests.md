@@ -10,7 +10,7 @@ count: 8
 `Athanor/Assets/Tests/EditModeGame/StaticResetTests.cs` — 8 tests
 
 ## Covers
-[[Art]], [[AudioMute]], [[DepthRig]], [[EditorGlobals]], [[Haptics]], [[Loc]], [[PointerInput]], [[RarityStars]], [[SparkMesh]], [[TiltShift]]
+[[Art]], [[AudioMute]], [[DepthRig]], [[EditorGlobals]], [[Haptics]], [[Loc]], [[Palette]], [[PointerInput]], [[RarityStars]], [[SparkMesh]], [[TiltShift]]
 
 ## Tests
 - `ResetStatics_Loc_DropsChangedHandlersAndGoesBackToEnglish`

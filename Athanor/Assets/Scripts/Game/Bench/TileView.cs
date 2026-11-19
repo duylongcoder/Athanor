@@ -63,7 +63,7 @@ namespace Athanor.Game
             if (Material == m.id) return;
             Material = m.id;
             glows = !string.IsNullOrEmpty(m.glow);
-            glow = Px.Hex(glows ? m.glow : "#f0dcc0");
+            glow = glows ? Px.Hex(m.glow) : Art.Palette.defaultGlow;
             icon.sprite = Art.Lib.Sprite(m.id);
             icon.enabled = shadow.enabled = ring.enabled = halo.enabled = true;
             icon.color = Color.white;

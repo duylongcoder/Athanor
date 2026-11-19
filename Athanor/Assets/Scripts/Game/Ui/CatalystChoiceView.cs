@@ -52,7 +52,9 @@ namespace Athanor.Game
         string picked;
         bool open, wired;
 
-        static readonly Color Off = Px.Hex("#b89860"), On = Px.Hex("#c8501e"), Joined = Px.Hex("#7a5430");
+        static Color Off => Art.Palette.pipOff;
+        static Color On => Art.Palette.pipOn;
+        static Color Joined => Art.Palette.faded;
 
         /// <summary>The name label of card i.</summary>
         public Label CardName(int i) => cards[i].name;

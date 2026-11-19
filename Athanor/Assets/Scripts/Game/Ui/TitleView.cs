@@ -131,7 +131,7 @@ namespace Athanor.Game
 
         void PaintCell(int i)
         {
-            cellEdge[i].color = cellOver[i] ? Px.Hex("#f8d250") : Px.Hex("#8a5a1e");
+            cellEdge[i].color = cellOver[i] ? Art.Palette.gold : Art.Palette.edge;
             cellFill[i].color = cellOver[i] ? Px.Hex("#4a2c14") : Px.Hex("#2a1810");
         }
 

@@ -26,7 +26,7 @@ aliases: []
 | method | `public void Bind()` | 24 | Hooks this button's Clickable to it. Safe to call more than once: it assigns, it does not add. |
 
 ## Uses
-[[Art]], [[Clickable]], [[Label]], [[Px]]
+[[Art]], [[Clickable]], [[Label]], [[Palette]], [[Px]]
 
 ## Used by
 [[EventView]], [[PauseMenu]], [[RunOverView]], [[TitleView]]

@@ -129,8 +129,10 @@ namespace Athanor.Tests
         public void ResetStatics_Art_ClearsTheLibrary()
         {
             Assert.IsNotNull(Art.Lib);
+            Assert.IsNotNull(Art.Palette);
             Art.ResetStatics();
             Assert.IsNull(Art.Lib);
+            Assert.IsNull(Art.Palette);
         }
     }
 }

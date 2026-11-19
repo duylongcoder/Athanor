@@ -13,6 +13,7 @@ public static class EditorGlobals
     public static void Inject()
     {
         Art.Lib = AssetDatabase.LoadAssetAtPath<ArtLibrary>("Assets/Art/ArtLibrary.asset");
+        Art.Palette = AssetDatabase.LoadAssetAtPath<Palette>("Assets/Data/Palette.asset");
         Loc.Use(AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/Resources/lang/en.json"),
                 AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/Resources/lang/vi.json"));
         SparkMesh.BaseMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/Resources/ParticleGlow.mat");

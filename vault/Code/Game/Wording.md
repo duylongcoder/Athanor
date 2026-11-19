@@ -23,7 +23,7 @@ aliases: []
 | method | `public static Color RarityTone(string rarity)` | 22 | The dark tone of a rarity: the catalyst strip, the tooltip's tier word and the Journal page's tier word (SPEC 22). |
 | method | `public static string RarityWord(string rarity)` | 34 | The tier word as the strip, tooltip and Journal show it: "RARE" / "HIẾM". |
 | method | `public static Color AspectColor(string effect)` | 37 | The colour of an aspect's marker on its tile and of its link. |
-| field | `public static readonly Color Warm = Px.Hex("#ffa63a")` | 57 |  |
+| property | `public static Color Warm` | 57 |  |
 | method | `public static string AspectRule(AspectInstance a, bool cost = true)` | 60 | An aspect's rule, with the kind an attuned tile drew written in. cost: false leaves the trade-off's price out. |
 | method | `public static string AspectCost(AspectInstance a)` | 82 | "COST: this tile is shut for the run.", or null for an aspect that costs nothing. |
 | method | `public static string Effect(EffectData fx)` | 90 | A few words for one event effect, as it is shown under an option before it is taken. |
@@ -38,7 +38,7 @@ aliases: []
 | method | `public static string Number(long n)` | 176 |  |
 
 ## Uses
-[[AspectEffects]], [[AspectInstance]], [[ContentDb]], [[EventNote]], [[Kind]], [[Lang]], [[Loc]], [[Ops]], [[Px]], [[Rarities]]
+[[Art]], [[AspectEffects]], [[AspectInstance]], [[ContentDb]], [[EventNote]], [[Kind]], [[Lang]], [[Loc]], [[Ops]], [[Palette]], [[Rarities]]
 
 ## Used by
 [[BenchView]], [[CatalystChoiceView]], [[EventView]], [[GoalToast]], [[GoalsView]], [[JournalView]], [[RarityStars]], [[Tooltip]]

@@ -16,7 +16,7 @@ namespace Athanor.Game
         /// <summary>The button's label, for text that carries an argument.</summary>
         public Label Text => label;
         /// <summary>A greyed button: no hover, no press, and a click does nothing.</summary>
-        public bool Disabled { get => disabled; set { disabled = value; if (value) over = down = false; if (label != null) label.Color = value ? Px.Hex("#8a7a6a") : Px.Hex("#fff6b8"); } }
+        public bool Disabled { get => disabled; set { disabled = value; if (value) over = down = false; if (label != null) label.Color = value ? Px.Hex("#8a7a6a") : Art.Palette.buttonText; } }
 
         void Awake() { if (GetComponent<Clickable>() != null) Bind(); }
 

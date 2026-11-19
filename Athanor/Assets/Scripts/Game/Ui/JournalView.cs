@@ -38,7 +38,10 @@ namespace Athanor.Game
         int selected;
         bool wired;
 
-        static readonly Color Ink = Px.Hex("#3a2212"), Faded = Px.Hex("#7a5430"), Teal = Px.Hex("#11606a"), Purple = Px.Hex("#4a1f7a");
+        static Color Ink => Art.Palette.ink;
+        static Color Faded => Art.Palette.faded;
+        static Color Teal => Art.Palette.teal;
+        static readonly Color Purple = Px.Hex("#4a1f7a");
 
         /// <summary>The selected material's name on the right-hand page.</summary>
         public Label Title => title;
@@ -203,7 +206,7 @@ namespace Athanor.Game
             pageTier.Text = rated ? Wording.RarityWord(m.rarity) : "";
             pageTier.Color = Wording.RarityTone(m.rarity);
             for (int pip = 0; pip < PipCount; pip++)
-                pips[pip].color = !known ? Color.clear : pip < m.reactivity ? Px.Hex("#c8501e") : Px.Hex("#b89860").Alpha(0.5f);
+                pips[pip].color = !known ? Color.clear : pip < m.reactivity ? Art.Palette.pipOn : Art.Palette.pipOff.Alpha(0.5f);
 
             var text = new List<(string, Color)>();
             if (locked) { text.Add((Loc.T("ui.journal.locked_text"), Faded)); text.Add((Loc.T("ui.journal.locked_how"), Faded)); }
