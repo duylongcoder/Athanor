@@ -59,6 +59,8 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | Rng | Rng | Core | class | Athanor/Assets/Scripts/Core/Satchel.cs | 7 | Small deterministic RNG so shuffles match between Unity and the dotnet test run. |
 | Satchel | Satchel | Core | class | Athanor/Assets/Scripts/Core/Satchel.cs | 20 | The player's deck of starting materials: a draw pile, a discard pile, and the cards currently out. |
 | ScoreParts | ScoreParts | Core | class | Athanor/Assets/Scripts/Core/ScoreParts.cs | 7 | One reaction's potency split into the factors the tutorial names: Total = Base x Used x First x Step x Bonus. Bonus is everything else (catalysts, the hub's tile, events); 1 when nothing else applied. |
+| ScreenFlow | ScreenFlow | Core | class | Athanor/Assets/Scripts/Core/ScreenFlow.cs | 9 | The screen state machine: which screen is up and which moves are allowed. No Unity types. |
+| FlowState | FlowState (Core) | Core | enum | Athanor/Assets/Scripts/Core/ScreenFlow.cs | 6 |  |
 | Settings | Settings | Core | class | Athanor/Assets/Scripts/Core/Settings.cs | 12 | Player settings: volumes, haptics and language. Unity-free; Game stores the JSON (PlayerPrefs, key athanor.settings.v1). Public fields so JsonUtility can read it too; ToJson/FromJson are hand-written  |
 | Reader | Reader | Core | class | Athanor/Assets/Scripts/Core/Settings.cs | 62 |  |
 | TutorialLay | TutorialLay | Core | struct | Athanor/Assets/Scripts/Core/Tutorial.cs | 13 | One material laid on one tile. This material goes on this tile, not just any lit tile: another arrangement of the same materials can break the chain (trial 3 then scores 40 and does not clear the dept |
@@ -73,7 +75,7 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | LinkView | LinkView | Game | class | Athanor/Assets/Scripts/Game/Bench/LinkView.cs | 7 | Motes of light travelling between neighbouring tiles whose reaction is already in the journal. |
 | TileView | TileView | Game | class | Athanor/Assets/Scripts/Game/Bench/TileView.cs | 10 | One of the nine bench tiles: its hover highlight and, when occupied, the material standing on it. |
 | GameFlow | GameFlow | Game | class | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 15 | Owns the run and moves the game between its screens. |
-| FlowState | FlowState | Game | enum | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 12 |  |
+| FlowState | FlowState (Game) | Game | enum | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 12 |  |
 | TitleChoice | TitleChoice | Game | enum | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 133 |  |
 | Save | Save | Game | class | Athanor/Assets/Scripts/Game/Boot/Save.cs | 8 | Keeps the journal and the profile between sessions in PlayerPrefs (browser storage in a web build). |
 | Cutscene | Cutscene | Game | class | Athanor/Assets/Scripts/Game/Cutscene/Cutscene.cs | 7 | A sequence that plays to its end unless the player clicks to skip ahead. |
@@ -173,6 +175,7 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | RunStateTests | RunStateTests | Tests | class | Athanor/Assets/Tests/EditMode/RunStateTests.cs | 9 |  |
 | SatchelTests | SatchelTests | Tests | class | Athanor/Assets/Tests/EditMode/SatchelTests.cs | 8 |  |
 | JournalTests | JournalTests | Tests | class | Athanor/Assets/Tests/EditMode/SatchelTests.cs | 45 |  |
+| ScreenFlowTests | ScreenFlowTests | Tests | class | Athanor/Assets/Tests/EditMode/ScreenFlowTests.cs | 6 |  |
 | SettingsTests | SettingsTests | Tests | class | Athanor/Assets/Tests/EditMode/SettingsTests.cs | 6 |  |
 | Sim | Sim | Tests | class | Athanor/Assets/Tests/EditMode/Sim.cs | 12 | The simulated players and shared helpers behind the balance tests and the console reports in tools/CoreReports. No NUnit here: it compiles in the Unity test assembly, in tools/CoreTests and in tools/C |
 | Newcomer | Newcomer | Tests | class | Athanor/Assets/Tests/EditMode/Sim.cs | 73 |  |
@@ -536,6 +539,35 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | ScoreParts | field | Step | 10 | public int Used, First, Step |
 | ScoreParts | field | Bonus | 11 | public double Bonus |
 | ScoreParts | method | Of | 14 | public static ScoreParts Of(ContentDb db, ReactionEvent e) |
+| ScreenFlow | property | State | 14 | public FlowState State |
+| ScreenFlow | property | JournalFrom | 17 | public FlowState JournalFrom |
+| ScreenFlow | property | InCutscene | 20 | public bool InCutscene |
+| ScreenFlow | property | Sandbox | 23 | public bool Sandbox |
+| ScreenFlow | field | Changed | 26 | public event Action<FlowState, FlowState> Changed |
+| ScreenFlow | method | Enter | 29 | public void Enter(FlowState state) |
+| ScreenFlow | method | OpenJournal | 38 | public bool OpenJournal(bool titleAsking) |
+| ScreenFlow | method | CloseJournal | 50 | public bool CloseJournal() |
+| ScreenFlow | method | OpenGoals | 58 | public bool OpenGoals(bool titleAsking) |
+| ScreenFlow | method | CloseGoals | 70 | public bool CloseGoals() |
+| ScreenFlow | method | StartIgnite | 78 | public bool StartIgnite(bool canIgnite) |
+| ScreenFlow | method | CanPause | 86 | public bool CanPause(bool benchInput, bool runPlaying) |
+| ScreenFlow | method | CanAbandon | 90 | public bool CanAbandon(bool runEnded) |
+| ScreenFlow | property | CanResetProgress | 93 | public bool CanResetProgress |
+| ScreenFlow | method | BeginSandbox | 96 | public void BeginSandbox() |
+| ScreenFlow | method | EndSandbox | 99 | public void EndSandbox() |
+| FlowState | value | Boot | 6 | Boot |
+| FlowState | value | Title | 6 | Title |
+| FlowState | value | Intro | 6 | Intro |
+| FlowState | value | Bench | 6 | Bench |
+| FlowState | value | Resolving | 6 | Resolving |
+| FlowState | value | Journal | 6 | Journal |
+| FlowState | value | Descent | 6 | Descent |
+| FlowState | value | CatalystChoice | 6 | CatalystChoice |
+| FlowState | value | Ending | 6 | Ending |
+| FlowState | value | RunOver | 6 | RunOver |
+| FlowState | value | AspectChoice | 6 | AspectChoice |
+| FlowState | value | Event | 6 | Event |
+| FlowState | value | Goals | 6 | Goals |
 | Settings | field | MaxVolume | 14 | public const int MaxVolume = 10 |
 | Settings | field | version | 17 | public int version = 1 |
 | Settings | field | music | 19 | public int music = 7 |

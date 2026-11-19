@@ -32,7 +32,7 @@ aliases: []
 | method | `public void Toggle()` | 88 | Esc: opens; closes the menu; or backs out of the quit question to the menu. |
 
 ## Uses
-[[Bench]], [[Clickable]], [[FlowState]], [[Haptics]], [[Label]], [[Loc]], [[Px]], [[Settings]], [[UiButton]]
+[[Bench]], [[Clickable]], [[Haptics]], [[Label]], [[Loc]], [[Px]], [[Settings]], [[UiButton]]
 
 ## Used by
 [[GameFlow]], [[GoldenShots]]

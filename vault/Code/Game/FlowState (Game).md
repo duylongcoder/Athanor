@@ -6,7 +6,7 @@ kind: enum
 namespace: Athanor.Game
 file: Athanor/Assets/Scripts/Game/Boot/GameFlow.cs
 tags: [code/game, kind/enum]
-aliases: []
+aliases: [FlowState]
 ---
 
 # FlowState
@@ -19,9 +19,3 @@ aliases: []
 
 ## Uses
 [[Bench]], [[Journal]]
-
-## Used by
-[[GameFlow]], [[PauseMenu]], [[TutorialController]]
-
-## Tested by
-[[PauseTests]]

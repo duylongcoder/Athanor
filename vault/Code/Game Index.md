@@ -28,7 +28,7 @@ tags: [moc/code]
 
 ## `Game/Boot/GameFlow.cs`
 - [[GameFlow]] _class_ — Owns the run and moves the game between its screens.
-- [[FlowState]] _enum_ — 
+- [[FlowState (Game)]] _enum_ — 
 - [[TitleChoice]] _enum_ — 
 
 ## `Game/Boot/Save.cs`

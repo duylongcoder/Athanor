@@ -5,7 +5,7 @@ tags: [moc/tests]
 ---
 
 # Tests
-510 test methods in 42 files. Run: `dotnet test tools/CoreTests` (rules) or `unity test Athanor --mode EditMode`.
+530 test methods in 43 files. Run: `dotnet test tools/CoreTests` (rules) or `unity test Athanor --mode EditMode`.
 
 - [[ChainTests]] — 26 tests · covers [[Bench]], [[ChainPlan]], [[ChainPlanner]], [[ContentDb]]
 - [[ContentTests]] — 41 tests · covers [[Bench]], [[ChainPlanner]], [[ContentData]], [[ContentDb]], [[Ops]]
@@ -20,6 +20,7 @@ tags: [moc/tests]
 - [[RunStateTests]] — 31 tests · covers [[AutoMove]], [[AutoPlayer]], [[Bench]], [[ContentData]], [[ContentDb]], [[Effects]], [[IgniteOutcome]], [[Journal]]
 - [[SatchelTests]] — 5 tests · covers [[Satchel]]
 - [[JournalTests]] — 10 tests · covers [[ContentDb]], [[Journal]], [[Kind]]
+- [[ScreenFlowTests]] — 20 tests · covers [[Bench]], [[Journal]], [[ScreenFlow]]
 - [[SettingsTests]] — 11 tests · covers [[Settings]]
 - [[TutorialTests]] — 18 tests · covers [[Bench]], [[ContentData]], [[ContentDb]], [[Effects]], [[IgniteOutcome]], [[Journal]], [[ReactionEvent]], [[Row]]
 - [[AutoHookTests]] — 1 tests · covers [[GameFlow]]
@@ -34,7 +35,7 @@ tags: [moc/tests]
 - [[MainDevHookTests]] — 4 tests · covers [[BenchView]], [[DepthMath]], [[GameFlow]]
 - [[MotionTests]] — 3 tests · covers [[Motion]]
 - [[NoteTextTests]] — 13 tests · covers [[EditorGlobals]], [[EventNote]], [[Kind]], [[Loc]], [[Wording]]
-- [[PauseTests]] — 10 tests · covers [[Bench]], [[Clickable]], [[ContentData]], [[ContentDb]], [[FlowState]], [[GameFlow]], [[Haptics]], [[Journal]]
+- [[PauseTests]] — 10 tests · covers [[Bench]], [[Clickable]], [[ContentData]], [[ContentDb]], [[GameFlow]], [[Haptics]], [[Journal]], [[PauseMenu]]
 - [[PrefabBakeTests]] — 40 tests · covers [[Bench]], [[BenchView]], [[CardView]], [[CatalystChoiceView]], [[ChoiceCard]], [[Clickable]], [[ContentData]], [[ContentDb]]
 - [[RunOverDepthTests]] — 4 tests · covers [[ContentData]], [[ContentDb]], [[Label]], [[Loc]], [[RunOverView]]
 - [[SaveTests]] — 14 tests · covers [[ContentData]], [[ContentDb]], [[Journal]], [[Kind]], [[Profile]], [[ProfileData]], [[Save]]
