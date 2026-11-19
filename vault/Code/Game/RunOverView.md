@@ -32,7 +32,7 @@ aliases: []
 [[Clickable]], [[ContentDb]], [[GoalReward]], [[Journal]], [[Label]], [[Loc]], [[Motion]], [[Px]], [[RunState]], [[UiButton]]
 
 ## Used by
-[[GameFlow]]
+[[GameFlow]], [[GoldenShots]]
 
 ## Tested by
 [[PrefabBakeTests]], [[RunOverDepthTests]]

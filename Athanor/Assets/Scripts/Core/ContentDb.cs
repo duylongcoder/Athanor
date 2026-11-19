@@ -141,6 +141,35 @@ namespace Athanor.Core
                 }
                 if (!free) throw new ArgumentException("event cannot be left: no option without a cost on " + e.id);
             }
+            ValidateRules(data);
+        }
+
+        /// <summary>The tuning numbers from content.json.</summary>
+        public RulesData Rules => data.rules;
+
+        /// <summary>The last depth of a run: the number of named depths.</summary>
+        public int FinalDepth => data.depthNames.Length;
+
+        static void ValidateRules(ContentData data)
+        {
+            var r = data.rules;
+            if (r == null) throw new ArgumentException("content has no rules block");
+            if (data.depthNames == null || data.depthNames.Length < 1) throw new ArgumentException("depthNames must name at least one depth");
+            if (data.depthTargets == null || data.depthTargets.Length != data.depthNames.Length - 1)
+                throw new ArgumentException("depthTargets must be one fewer than depthNames");
+            if (r.handMin < 1) throw new ArgumentException("rules.handMin must be 1 or more");
+            if (r.handBase < r.handMin) throw new ArgumentException("rules.handBase must be at least handMin");
+            if (r.trials < 1 || r.trialsFinalDepth < 1) throw new ArgumentException("rules.trials and trialsFinalDepth must be 1 or more");
+            if (r.redraws < 0) throw new ArgumentException("rules.redraws must be 0 or more");
+            if (r.starterCopies < 1 || r.offerSize < 1 || r.rackSize < 1) throw new ArgumentException("rules.starterCopies, offerSize and rackSize must be 1 or more");
+            if (r.pouchCards < 0) throw new ArgumentException("rules.pouchCards must be 0 or more");
+            if (r.firstReactionMult < 1) throw new ArgumentException("rules.firstReactionMult must be 1 or more");
+            if (r.aspectDepths == null) throw new ArgumentException("rules.aspectDepths must be listed");
+            var final = data.depthNames.Length;
+            if (r.aspectDepths.Any(d => d < 1 || d > final)) throw new ArgumentException("rules.aspectDepths must be 1 to " + final);
+            var top = data.materials.Length == 0 ? 0 : data.materials.Max(m => m.tier);
+            if (r.potencyByTier == null || r.potencyByTier.Length < top + 1)
+                throw new ArgumentException("rules.potencyByTier must have an entry for every tier up to " + top);
         }
 
         /// <summary>The locked items of one reward bucket, by id.</summary>

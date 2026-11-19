@@ -17,7 +17,26 @@ All shapes are plain `[Serializable]` classes in `ContentData.cs` ([[ContentData
 | `events[].options[]` | `{label,requires,cost[],outcomes[]}` | `requires` ∈ `Ops.Needs`; one outcome drawn by weight | |
 | `…outcomes[]` | `{weight,text,gain[]}`; effect = `{op,arg,amount,amount2}` | `op` ∈ [[Ops]] | |
 | `goals[]` | `{id,text,stat,target,rewardKind,rewardRarity}` | `stat` ∈ [[StatIds]]; loader fails if a reward bucket has more goals than locked items | [[Goals]] |
+| `rules` | flat object, see below | required; [[ContentDb]] throws without it and validates ranges | [[RulesData]] |
 | `depthTargets[]`, `depthNames[]`, `ultimate`, `noEventWeight` | ints / strings | 4 targets for 5 depths; `ultimate` = id of the last substance | [[Depths]] |
+
+### `rules`  (the run's tuning numbers, type [[RulesData]])
+| Field | Meaning | Today |
+|---|---|---|
+| `handMin` | smallest hand size | 3 |
+| `handBase` | hand size a run starts with | 5 |
+| `trials` | trials per depth | 4 |
+| `trialsFinalDepth` | trials at the final depth | 6 |
+| `redraws` | redraws per run | 2 |
+| `starterCopies` | copies of each starter material in the bench deck | 2 |
+| `offerSize` | catalyst cards offered after a depth | 3 |
+| `rackSize` | bench rack slots | 12 |
+| `pouchCards` | cards the pouch adds to the hand | 1 |
+| `firstReactionMult` | multiplier on the first reaction of a trial | 2 |
+| `aspectDepths[]` | depths (1-based) at which the run offers an aspect | 1, 3, 5 |
+| `potencyByTier[]` | base potency by material tier (index = tier) | 0, 20, 60, 180, 500, 1500 |
+
+Nothing reads these yet (P7-3 adds the block and validation; later tasks switch the rules over).
 
 Balance rules the tests enforce: a path to the ultimate exists; tiers add up; Reaction Index spread across tiers; an informed player usually wins; 5-item combos stay rare; a hazard/gamble met once leaves ≥70% of event-free wins. Reports: README "Changing the game" (`BalanceReport`, `BalanceMatrix`, `RoleReport`, `EventReport`).
 

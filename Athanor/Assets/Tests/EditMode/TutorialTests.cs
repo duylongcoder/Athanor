@@ -98,6 +98,7 @@ namespace Athanor.Tests
         /// <summary>Two starters, one recipe, targets of 1, four catalysts: every reaction clears a depth.</summary>
         static ContentDb MiniWithCatalysts() => new ContentDb(new ContentData
         {
+            rules = TestContent.Rules(),
             materials = new[] { TestContent.Mat("a", "Ore", 0, 6), TestContent.Mat("b", "Potion", 0, 4), TestContent.Mat("x", "Metal", 1, 5) },
             recipes = new[] { TestContent.Rec(new[] { "a", "b" }, 0, "x") },
             catalysts = new[] { TestContent.Cat(Effects.ChainPlus), TestContent.Cat(Effects.ExtraTrial), TestContent.Cat(Effects.ExtraRedraw), TestContent.Cat(Effects.PairBonus, "", 2) },

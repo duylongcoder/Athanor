@@ -24,6 +24,7 @@ namespace Athanor.Tests
         /// <summary>a+b = x; targets of 1, so one reaction clears a depth; no catalysts, so every offer is empty; no "no event" weight.</summary>
         static ContentDb Mini(params EventData[] events) => new ContentDb(new ContentData
         {
+            rules = TestContent.Rules(),
             materials = new[] { TestContent.Mat("a", "Ore", 0, 6), TestContent.Mat("b", "Potion", 0, 4), TestContent.Mat("x", "Metal", 1, 5) },
             recipes = new[] { TestContent.Rec(new[] { "a", "b" }, 0, "x") },
             catalysts = new CatalystData[0], depthTargets = new[] { 1, 1, 1, 1 }, depthNames = new[] { "1", "2", "3", "4", "5" }, ultimate = "",

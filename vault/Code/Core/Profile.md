@@ -46,7 +46,7 @@ aliases: []
 [[ContentDb]], [[GoalReward]], [[IgniteOutcome]], [[Journal]], [[ProfileData]], [[Rng]], [[RunPhase]], [[RunState]], [[StatIds]]
 
 ## Used by
-[[GameFlow]], [[GoalsView]], [[Save]], [[Unlocks]]
+[[GameFlow]], [[GoalsView]], [[GoldenShots]], [[Save]], [[Unlocks]]
 
 ## Tested by
 [[LoreTests]], [[PauseTests]], [[Phase3Tests]], [[PrefabBakeTests]], [[SaveTests]], [[TutorialFlowTests]]

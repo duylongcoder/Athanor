@@ -5,7 +5,7 @@ tags: [moc/tests]
 ---
 
 # Tests
-473 test methods in 37 files. Run: `dotnet test tools/CoreTests` (rules) or `unity test Athanor --mode EditMode`.
+480 test methods in 39 files. Run: `dotnet test tools/CoreTests` (rules) or `unity test Athanor --mode EditMode`.
 
 - [[ChainTests]] — 26 tests · covers [[Bench]], [[ChainPlan]], [[ChainPlanner]], [[ContentDb]]
 - [[ContentTests]] — 41 tests · covers [[Bench]], [[ChainPlanner]], [[ContentData]], [[ContentDb]], [[Ops]], [[RunState]]
@@ -16,6 +16,7 @@ tags: [moc/tests]
 - [[RarityReportTests]] — 1 tests · covers [[AutoMove]], [[AutoPlayer]], [[ContentDb]], [[Journal]], [[Rarities]], [[RunOptions]], [[RunPhase]], [[RunState]]
 - [[RarityTests]] — 9 tests · covers [[ContentData]], [[ContentDb]], [[Effects]], [[Journal]], [[Ops]], [[Rarities]], [[RunOptions]], [[RunPhase]]
 - [[RoleSimTests]] — 2 tests · covers [[ContentDb]], [[Journal]]
+- [[RulesTests]] — 7 tests · covers [[ContentData]], [[ContentDb]]
 - [[RunStateTests]] — 31 tests · covers [[AutoMove]], [[AutoPlayer]], [[Bench]], [[ContentData]], [[ContentDb]], [[Effects]], [[IgniteOutcome]], [[Journal]]
 - [[SatchelTests]] — 5 tests · covers [[Satchel]]
 - [[JournalTests]] — 10 tests · covers [[ContentDb]], [[Journal]], [[Kind]]

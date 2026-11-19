@@ -24,9 +24,36 @@ namespace Athanor.Core
     [Serializable] public class EventOption { public string label, requires; public EffectData[] cost; public EventOutcome[] outcomes; }
     [Serializable] public class EventData { public string id, name, text, type; public int minDepth, maxDepth, weight; public EventOption[] options; }
 
+    /// <summary>The run's tuning numbers, read from the "rules" block of content.json. Required: ContentDb throws without it.</summary>
+    [Serializable]
+    public class RulesData
+    {
+        /// <summary>Smallest hand size and the hand size a run starts with.</summary>
+        public int handMin, handBase;
+        /// <summary>Trials per depth, and at the final depth.</summary>
+        public int trials, trialsFinalDepth;
+        /// <summary>Redraws per run.</summary>
+        public int redraws;
+        /// <summary>Copies of each starter material in the bench deck.</summary>
+        public int starterCopies;
+        /// <summary>Catalyst cards offered after a depth.</summary>
+        public int offerSize;
+        /// <summary>Bench rack slots.</summary>
+        public int rackSize;
+        /// <summary>Cards the pouch adds to the hand.</summary>
+        public int pouchCards;
+        /// <summary>Multiplier on the first reaction of a trial.</summary>
+        public int firstReactionMult;
+        /// <summary>Depths (1-based) at which the run offers an aspect.</summary>
+        public int[] aspectDepths;
+        /// <summary>Base potency by material tier; index is the tier.</summary>
+        public long[] potencyByTier;
+    }
+
     [Serializable]
     public class ContentData
     {
+        public RulesData rules;
         public MaterialData[] materials;
         public RecipeData[] recipes;
         public CatalystData[] catalysts;

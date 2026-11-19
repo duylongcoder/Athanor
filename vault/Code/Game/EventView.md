@@ -28,7 +28,7 @@ aliases: []
 [[Art]], [[Clickable]], [[Dev]], [[Label]], [[Lang]], [[Loc]], [[Motion]], [[RunState]], [[ScreenFx]], [[UiButton]], [[Wording]]
 
 ## Used by
-[[GameFlow]]
+[[GameFlow]], [[GoldenShots]]
 
 ## Tested by
 [[PrefabBakeTests]]

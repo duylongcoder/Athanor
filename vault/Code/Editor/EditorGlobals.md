@@ -24,5 +24,8 @@ aliases: []
 ## Uses
 [[Art]], [[ArtLibrary]], [[Loc]], [[SparkMesh]]
 
+## Used by
+[[GoldenShots]]
+
 ## Tested by
 [[LocTests]]

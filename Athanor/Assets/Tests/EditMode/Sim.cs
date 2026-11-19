@@ -87,10 +87,12 @@ namespace Athanor.Tests
                 known = journal.KnownPairs.Count;
                 belief = new ContentDb(new ContentData
                 {
+                    rules = truth.Rules,
                     materials = truth.Materials.ToArray(),
                     recipes = truth.Recipes.Where(r => journal.IsKnown(r.items)).ToArray(),
                     catalysts = truth.Catalysts.ToArray(),
                     depthTargets = Enumerable.Range(1, 4).Select(truth.TargetFor).ToArray(),
+                    depthNames = new[] { "1", "2", "3", "4", "5" },
                     ultimate = truth.Ultimate,
                 });
                 bot = new AutoPlayer(belief) { HintValue = 1, RedrawWhenIdle = false, SeekFrontier = true };

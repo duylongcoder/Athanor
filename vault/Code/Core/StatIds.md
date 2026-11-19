@@ -12,15 +12,15 @@ aliases: []
 # StatIds
 
 `public static class StatIds`
-- Layer: **Core** · Source: `Athanor/Assets/Scripts/Core/ContentData.cs:115-124`
+- Layer: **Core** · Source: `Athanor/Assets/Scripts/Core/ContentData.cs:142-151`
 
 > The stats a goal can watch.
 
 ## Members
 | Kind | Signature | Line | Note |
 |---|---|---|---|
-| field | `public const string RunsStarted = "runsStarted", RunsWon = "runsWon", WonNoRedraw = "wonNoRedraw", DepthReached = "depthReached", Ignites = "ignites",` | 117 |  |
-| property | `public static readonly string[] All =` | 120 |  |
+| field | `public const string RunsStarted = "runsStarted", RunsWon = "runsWon", WonNoRedraw = "wonNoRedraw", DepthReached = "depthReached", Ignites = "ignites",` | 144 |  |
+| property | `public static readonly string[] All =` | 147 |  |
 
 ## Used by
 [[ContentDb]], [[Profile]]

@@ -12,15 +12,15 @@ aliases: []
 # Effects
 
 `public static class Effects`
-- Layer: **Core** · Source: `Athanor/Assets/Scripts/Core/ContentData.cs:68-84`
+- Layer: **Core** · Source: `Athanor/Assets/Scripts/Core/ContentData.cs:95-111`
 
 > The catalyst effect names used in content.json.
 
 ## Members
 | Kind | Signature | Line | Note |
 |---|---|---|---|
-| field | `public const string KindDouble = "KindDouble", CentreTwice = "CentreTwice", FirstTriple = "FirstTriple", Diagonals = "Diagonals", ExtraTrial = "ExtraT` | 70 |  |
-| property | `public static readonly string[] All =` | 78 |  |
+| field | `public const string KindDouble = "KindDouble", CentreTwice = "CentreTwice", FirstTriple = "FirstTriple", Diagonals = "Diagonals", ExtraTrial = "ExtraT` | 97 |  |
+| property | `public static readonly string[] All =` | 105 |  |
 
 ## Used by
 [[AutoPlayer]], [[ContentDb]], [[IgniteResolver]], [[RunState]]

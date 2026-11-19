@@ -49,7 +49,7 @@ aliases: []
 [[Art]], [[Clickable]], [[ContentDb]], [[Journal]], [[Label]], [[Loc]], [[Px]], [[ReactionEvent]], [[Row]], [[RunPhase]], [[RunState]]
 
 ## Used by
-[[BenchView]], [[GameFlow]], [[JournalView]], [[ReactionCutscene]], [[TutorialController]]
+[[BenchView]], [[GameFlow]], [[GoldenShots]], [[JournalView]], [[ReactionCutscene]], [[TutorialController]]
 
 ## Tested by
 [[HudTests]], [[PrefabBakeTests]]

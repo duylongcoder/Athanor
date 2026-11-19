@@ -29,13 +29,14 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | ChainStep | ChainStep | Core | class | Athanor/Assets/Scripts/Core/Chain.cs | 11 | One thing the bench does during an Ignite. A reaction: the hub and the neighbours it consumed (Tiles[0] is the hub, the rest ascending). A sputter: a combo of three or more whose layout was standing r |
 | ChainPlan | ChainPlan | Core | class | Athanor/Assets/Scripts/Core/Chain.cs | 20 |  |
 | ChainPlanner | ChainPlanner | Core | class | Athanor/Assets/Scripts/Core/Chain.cs | 32 | Works out what a bench does, with no side effects. Each round the liveliest tile (highest Reaction Index, earlier tile on a tie) that has a recipe around it becomes the hub; the largest recipe it can  |
-| ContentData | ContentData | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 28 |  |
-| ProfileData | ProfileData | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 49 |  |
-| Rarities | Rarities | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 59 |  |
-| Effects | Effects | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 68 | The catalyst effect names used in content.json. |
-| AspectEffects | AspectEffects | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 87 | The aspect effect names used in content.json. |
-| Ops | Ops | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 99 | The event effect names (EffectData.op) and option requirements used in content.json. |
-| StatIds | StatIds | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 115 | The stats a goal can watch. |
+| RulesData | RulesData | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 29 | The run's tuning numbers, read from the "rules" block of content.json. Required: ContentDb throws without it. |
+| ContentData | ContentData | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 54 |  |
+| ProfileData | ProfileData | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 76 |  |
+| Rarities | Rarities | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 86 |  |
+| Effects | Effects | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 95 | The catalyst effect names used in content.json. |
+| AspectEffects | AspectEffects | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 114 | The aspect effect names used in content.json. |
+| Ops | Ops | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 126 | The event effect names (EffectData.op) and option requirements used in content.json. |
+| StatIds | StatIds | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 142 | The stats a goal can watch. |
 | Kind | Kind | Core | enum | Athanor/Assets/Scripts/Core/ContentData.cs | 5 |  |
 | ContentDb | ContentDb | Core | class | Athanor/Assets/Scripts/Core/ContentDb.cs | 10 | Validated, indexed view of the game's content. |
 | Bench | Bench | Core | class | Athanor/Assets/Scripts/Core/Ignite.cs | 7 | The 3x3 bench: tile index = row * 3 + column, null where empty. |
@@ -151,8 +152,10 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | FontBuilder | FontBuilder | Editor | class | Athanor/Assets/Editor/FontBuilder.cs | 10 | Bakes the pixel fonts into TextMeshPro bitmap font assets at their native size (crisp, point-filtered). |
 | LayoutData | LayoutData | Editor | class | Athanor/Assets/Editor/LayoutData.cs | 11 |  |
 | EditorGlobals | EditorGlobals | Editor | class | Athanor/Assets/Editor/Shared/EditorGlobals.cs | 10 | Sets the globals GameFlow and Sparks would set from their serialized fields at runtime (Art.Lib, Loc.Use, SparkMesh.BaseMaterial), loading the assets through the AssetDatabase. The batch tools (-execu |
+| GoldenShots | GoldenShots | Editor | class | Athanor/Assets/Editor/Shared/GoldenShots.cs | 17 | The golden shots: one picture of every view in a fixed, seeded state, in English and Vietnamese. Each view is built the way its prefab test builds it (instantiate, Bind, Show / Open), never through Up |
+| Reserialize | Reserialize | Editor | class | Athanor/Assets/Editor/Shared/Reserialize.cs | 11 | Rewrites every view prefab and the data assets in the current serializer format, so a field added to a component is stored with its value. Phase 7 uses it after a number moves from code to a prefab. M |
+| ViewCapture | ViewCapture | Editor | class | Athanor/Assets/Editor/Shared/ViewCapture.cs | 8 | Renders a GameObject alone (in an otherwise empty scene) to a 640x360 image, the way the UI camera draws it. |
 | SpriteImportRules | SpriteImportRules | Editor | class | Athanor/Assets/Editor/SpriteImportRules.cs | 10 | Every texture under Assets/Art is pixel art: a point-filtered, uncompressed sprite at 1 pixel per unit. The one exception is Assets/Art/Depth (the HD-2D layers): its pre-blurred pictures (*_far, *_nea |
-| ViewCapture | ViewCapture | Editor | class | Athanor/Assets/Editor/ViewCapture.cs | 7 | Renders a GameObject alone (in an otherwise empty scene) to a 640x360 image, the way the UI camera draws it. |
 | WebBuild | WebBuild | Editor | class | Athanor/Assets/Editor/WebBuild.cs | 10 | Builds the game for the browser into Build/web. Also callable from the command line: unity build Athanor --target WebGL --execute-method WebBuild.Build |
 | ChainTests | ChainTests | Tests | class | Athanor/Assets/Tests/EditMode/ChainTests.cs | 8 | The chain planner on TestContent.Combo(): p 8, q 5, r 2, s 9, t 4, v 1 (Reaction Index). |
 | ContentTests | ContentTests | Tests | class | Athanor/Assets/Tests/EditMode/ContentTests.cs | 9 |  |
@@ -164,14 +167,15 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | RarityReportTests | RarityReportTests | Tests | class | Athanor/Assets/Tests/EditMode/RarityReportTests.cs | 17 | Opt-in (Explicit) report: does each rarity pay? Same seeds, the informed bot, but at every catalyst offer it follows one policy: take the first offered catalyst of one rarity (else the bot's pick), a  |
 | RarityTests | RarityTests | Tests | class | Athanor/Assets/Tests/EditMode/RarityTests.cs | 9 | Phase 5a-04: catalyst offers and event gifts draw by the optional content.json "rarityWeights" (Common..Legendary). |
 | RoleSimTests | RoleSimTests | Tests | class | Athanor/Assets/Tests/EditMode/RoleSimTests.cs | 17 | Two simulated players on the full Phase 3 game (unlocks, aspects, events), each starting from an empty journal and a fresh profile and keeping both from run to run. Admin: knows every recipe and how a |
+| RulesTests | RulesTests | Tests | class | Athanor/Assets/Tests/EditMode/RulesTests.cs | 7 |  |
 | RunStateTests | RunStateTests | Tests | class | Athanor/Assets/Tests/EditMode/RunStateTests.cs | 9 |  |
 | SatchelTests | SatchelTests | Tests | class | Athanor/Assets/Tests/EditMode/SatchelTests.cs | 8 |  |
 | JournalTests | JournalTests | Tests | class | Athanor/Assets/Tests/EditMode/SatchelTests.cs | 45 |  |
 | SettingsTests | SettingsTests | Tests | class | Athanor/Assets/Tests/EditMode/SettingsTests.cs | 6 |  |
 | Sim | Sim | Tests | class | Athanor/Assets/Tests/EditMode/Sim.cs | 12 | The simulated players and shared helpers behind the balance tests and the console reports in tools/CoreReports. No NUnit here: it compiles in the Unity test assembly, in tools/CoreTests and in tools/C |
 | Newcomer | Newcomer | Tests | class | Athanor/Assets/Tests/EditMode/Sim.cs | 73 |  |
-| Career | Career | Tests | class | Athanor/Assets/Tests/EditMode/Sim.cs | 386 |  |
-| RunStats | RunStats | Tests | class | Athanor/Assets/Tests/EditMode/Sim.cs | 484 | What happened over one scripted run, for the balance report. |
+| Career | Career | Tests | class | Athanor/Assets/Tests/EditMode/Sim.cs | 388 |  |
+| RunStats | RunStats | Tests | class | Athanor/Assets/Tests/EditMode/Sim.cs | 486 | What happened over one scripted run, for the balance report. |
 | TestContent | TestContent | Tests | class | Athanor/Assets/Tests/EditMode/TestContent.cs | 6 | Loads the real content.json, inside Unity or under plain dotnet. |
 | TutorialTests | TutorialTests | Tests | class | Athanor/Assets/Tests/EditMode/TutorialTests.cs | 9 | Phase 4: the hooks the tutorial needs, and the tutorial script replayed with every number it shows. |
 | AutoHookTests | AutoHookTests | Tests | class | Athanor/Assets/Tests/EditModeGame/AutoHookTests.cs | 12 | F9 (the scripted player) is a toggle, so tools/web/descents.mjs cannot know its state from its own key presses: a press at the wrong moment left the scripted player off after depth 2 and the run stood |
@@ -180,6 +184,7 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | DepthLayerTests | DepthLayerTests | Tests | class | Athanor/Assets/Tests/EditModeGame/DepthLayerTests.cs | 12 | The HD-2D projection maths (HD-2D mockup SPEC, "Layer stack and projection"; removed in P6-22, see git history) and the rules that keep the depth art out of the shipped game. |
 | DepthLookTests | DepthLookTests | Tests | class | Athanor/Assets/Tests/EditModeGame/DepthLookTests.cs | 5 |  |
 | GameTestSetup | GameTestSetup | Tests | class | Athanor/Assets/Tests/EditModeGame/GameTestSetup.cs | 7 | Once per run of the Game tests: the language files, art library and particle material the game would get from GameFlow and Sparks. |
+| GoldenShotTests | GoldenShotTests | Tests | class | Athanor/Assets/Tests/EditModeGame/GoldenShotTests.cs | 7 | Every view, in both languages, still looks like the picture recorded in production/qa/evidence/phase7/baseline/golden. |
 | HudTests | HudTests | Tests | class | Athanor/Assets/Tests/EditModeGame/HudTests.cs | 9 | The Redraw button is live only while a redraw is left and the bench is in play. |
 | LabelLineBoxTests | LabelLineBoxTests | Tests | class | Athanor/Assets/Tests/EditModeGame/LabelLineBoxTests.cs | 15 | Line-box text (the Descent's depth name, SPEC (f)): the mockup sets it in a CSS line box as tall as the size, so the glyphs sit a half-leading below the box top; TMP puts the baseline one ascender dow |
 | LocTests | LocTests | Tests | class | Athanor/Assets/Tests/EditModeGame/LocTests.cs | 12 | The Game layer's language: Vietnamese draws from SVN-Coder's Crux, every key resolves, and the core's English notes are translated. |
@@ -259,38 +264,49 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | ChainPlanner | method | ShortAt | 64 | public static RecipeData ShortAt(string[] tiles, int hub, ContentDb db, BenchRules rules) |
 | ChainPlanner | method | Plan | 109 | public static ChainPlan Plan(string[] tiles, ContentDb db, bool diagonals, bool sputters = true) |
 | ChainPlanner | method | Plan | 112 | public static ChainPlan Plan(string[] tiles, ContentDb db, BenchRules rules, bool sputters = true) |
-| ContentData | field | materials | 30 | public MaterialData[] materials |
-| ContentData | field | recipes | 31 | public RecipeData[] recipes |
-| ContentData | field | catalysts | 32 | public CatalystData[] catalysts |
-| ContentData | field | depthTargets | 33 | public int[] depthTargets |
-| ContentData | field | depthNames | 34 | public string[] depthNames |
-| ContentData | field | ultimate | 35 | public string ultimate |
-| ContentData | field | goals | 36 | public GoalData[] goals |
-| ContentData | field | aspects | 37 | public AspectData[] aspects |
-| ContentData | field | events | 38 | public EventData[] events |
-| ContentData | field | noEventWeight | 39 | public int noEventWeight |
-| ContentData | field | rarityWeights | 41 | public int[] rarityWeights |
-| ProfileData | field | version | 51 | public int version = 1, rewardSeed |
-| ProfileData | field | comboLargest | 52 | public int runsStarted, runsWon, wonNoRedraw, depthReached, ignites, chainLongest, comboLargest |
-| ProfileData | field | bestIgnite | 53 | public long bestIgnite |
-| ProfileData | field | unlockedCatalysts | 54 | public string[] completed, unlockedStarters, unlockedCatalysts |
-| ProfileData | field | rewards | 55 | public RewardLogData[] rewards |
-| ProfileData | field | lastLore | 56 | public string lastLore |
-| Rarities | field | Common | 61 | public const string Common = "Common", Uncommon = "Uncommon", Rare = "Rare", Legendary = |
-| Rarities | property | All | 62 | public static readonly string[] All = |
-| Rarities | method | Rank | 63 | public static int Rank(string rarity) |
-| Rarities | method | Of | 64 | public static string Of(string rarity) |
-| Effects | field | KindDouble | 70 | public const string KindDouble = "KindDouble", CentreTwice = "CentreTwice", FirstTriple = "FirstTriple", Diagonals = "Diagonals", ExtraTrial = "ExtraTrial", ExtraHand = "ExtraHand", DiscoveryTriple =  |
-| Effects | property | All | 78 | public static readonly string[] All = |
-| AspectEffects | field | Doubled | 89 | public const string Doubled = "Doubled", Anchor = "Anchor", Heated = "Heated", Echo = "Echo", Attuned = "Attuned", Seed = "Seed", Fallow = "Fallow", Heavy = "Heavy", Cold = "Cold", Volatile = "Volatil |
-| AspectEffects | property | All | 92 | public static readonly string[] All = |
-| Ops | field | Trials | 101 | public const string Trials = "Trials", Hand = "Hand", Redraws = "Redraws", RiShift = "RiShift", GiveDiscovery = "GiveDiscovery", LoseRack = "LoseRack", LoseCard = "LoseCard", FirstTriple = "FirstTripl |
-| Ops | property | All | 104 | public static readonly string[] All = |
-| Ops | field | NeedRack | 109 | public const string NeedRack = "Rack", NeedCatalyst = "Catalyst", NeedTrial = "Trial", NeedRedraw = |
-| Ops | property | Needs | 110 | public static readonly string[] Needs = |
-| Ops | property | Types | 111 | public static readonly string[] Types = |
-| StatIds | field | RunsStarted | 117 | public const string RunsStarted = "runsStarted", RunsWon = "runsWon", WonNoRedraw = "wonNoRedraw", DepthReached = "depthReached", Ignites = "ignites", ChainLongest = "chainLongest", ComboLargest = "co |
-| StatIds | property | All | 120 | public static readonly string[] All = |
+| RulesData | field | handBase | 32 | public int handMin, handBase |
+| RulesData | field | trialsFinalDepth | 34 | public int trials, trialsFinalDepth |
+| RulesData | field | redraws | 36 | public int redraws |
+| RulesData | field | starterCopies | 38 | public int starterCopies |
+| RulesData | field | offerSize | 40 | public int offerSize |
+| RulesData | field | rackSize | 42 | public int rackSize |
+| RulesData | field | pouchCards | 44 | public int pouchCards |
+| RulesData | field | firstReactionMult | 46 | public int firstReactionMult |
+| RulesData | field | aspectDepths | 48 | public int[] aspectDepths |
+| RulesData | field | potencyByTier | 50 | public long[] potencyByTier |
+| ContentData | field | rules | 56 | public RulesData rules |
+| ContentData | field | materials | 57 | public MaterialData[] materials |
+| ContentData | field | recipes | 58 | public RecipeData[] recipes |
+| ContentData | field | catalysts | 59 | public CatalystData[] catalysts |
+| ContentData | field | depthTargets | 60 | public int[] depthTargets |
+| ContentData | field | depthNames | 61 | public string[] depthNames |
+| ContentData | field | ultimate | 62 | public string ultimate |
+| ContentData | field | goals | 63 | public GoalData[] goals |
+| ContentData | field | aspects | 64 | public AspectData[] aspects |
+| ContentData | field | events | 65 | public EventData[] events |
+| ContentData | field | noEventWeight | 66 | public int noEventWeight |
+| ContentData | field | rarityWeights | 68 | public int[] rarityWeights |
+| ProfileData | field | version | 78 | public int version = 1, rewardSeed |
+| ProfileData | field | comboLargest | 79 | public int runsStarted, runsWon, wonNoRedraw, depthReached, ignites, chainLongest, comboLargest |
+| ProfileData | field | bestIgnite | 80 | public long bestIgnite |
+| ProfileData | field | unlockedCatalysts | 81 | public string[] completed, unlockedStarters, unlockedCatalysts |
+| ProfileData | field | rewards | 82 | public RewardLogData[] rewards |
+| ProfileData | field | lastLore | 83 | public string lastLore |
+| Rarities | field | Common | 88 | public const string Common = "Common", Uncommon = "Uncommon", Rare = "Rare", Legendary = |
+| Rarities | property | All | 89 | public static readonly string[] All = |
+| Rarities | method | Rank | 90 | public static int Rank(string rarity) |
+| Rarities | method | Of | 91 | public static string Of(string rarity) |
+| Effects | field | KindDouble | 97 | public const string KindDouble = "KindDouble", CentreTwice = "CentreTwice", FirstTriple = "FirstTriple", Diagonals = "Diagonals", ExtraTrial = "ExtraTrial", ExtraHand = "ExtraHand", DiscoveryTriple =  |
+| Effects | property | All | 105 | public static readonly string[] All = |
+| AspectEffects | field | Doubled | 116 | public const string Doubled = "Doubled", Anchor = "Anchor", Heated = "Heated", Echo = "Echo", Attuned = "Attuned", Seed = "Seed", Fallow = "Fallow", Heavy = "Heavy", Cold = "Cold", Volatile = "Volatil |
+| AspectEffects | property | All | 119 | public static readonly string[] All = |
+| Ops | field | Trials | 128 | public const string Trials = "Trials", Hand = "Hand", Redraws = "Redraws", RiShift = "RiShift", GiveDiscovery = "GiveDiscovery", LoseRack = "LoseRack", LoseCard = "LoseCard", FirstTriple = "FirstTripl |
+| Ops | property | All | 131 | public static readonly string[] All = |
+| Ops | field | NeedRack | 136 | public const string NeedRack = "Rack", NeedCatalyst = "Catalyst", NeedTrial = "Trial", NeedRedraw = |
+| Ops | property | Needs | 137 | public static readonly string[] Needs = |
+| Ops | property | Types | 138 | public static readonly string[] Types = |
+| StatIds | field | RunsStarted | 144 | public const string RunsStarted = "runsStarted", RunsWon = "runsWon", WonNoRedraw = "wonNoRedraw", DepthReached = "depthReached", Ignites = "ignites", ChainLongest = "chainLongest", ComboLargest = "co |
+| StatIds | property | All | 147 | public static readonly string[] All = |
 | Kind | value | Ore | 5 | Ore |
 | Kind | value | Metal | 5 | Metal |
 | Kind | value | Crystal | 5 | Crystal |
@@ -300,37 +316,39 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | Kind | value | Beast | 5 | Beast |
 | ContentDb | field | MinItems | 19 | public const int MinItems = 2, MaxItems = 5, MaxCopies = 2, MinReactivity = 1, MaxReactivity = 10 |
 | ContentDb | ctor | ContentDb | 23 | public ContentDb(ContentData data) |
-| ContentDb | method | LockedIn | 147 | public List<string> LockedIn(string rewardKind, string rarity) |
-| ContentDb | property | Starters | 155 | public IReadOnlyList<MaterialData> Starters |
-| ContentDb | property | Materials | 156 | public IReadOnlyList<MaterialData> Materials |
-| ContentDb | property | Recipes | 157 | public IReadOnlyList<RecipeData> Recipes |
-| ContentDb | property | Catalysts | 158 | public IReadOnlyList<CatalystData> Catalysts |
-| ContentDb | property | Goals | 159 | public IReadOnlyList<GoalData> Goals |
-| ContentDb | property | Aspects | 160 | public IReadOnlyList<AspectData> Aspects |
-| ContentDb | property | Events | 161 | public IReadOnlyList<EventData> Events |
-| ContentDb | property | NoEventWeight | 162 | public int NoEventWeight |
-| ContentDb | method | RarityWeight | 165 | public int RarityWeight(string rarity) |
-| ContentDb | property | UniformRarity | 168 | public bool UniformRarity |
-| ContentDb | method | DrawCatalysts | 171 | public List<CatalystData> DrawCatalysts(List<CatalystData> pool, int n, Rng rng) |
-| ContentDb | method | PickCatalyst | 180 | public CatalystData PickCatalyst(IList<CatalystData> pool, Rng rng) |
-| ContentDb | method | Catalyst | 189 | public CatalystData Catalyst(string id) |
-| ContentDb | property | Ultimate | 190 | public string Ultimate |
-| ContentDb | method | Material | 192 | public MaterialData Material(string id) |
-| ContentDb | method | Has | 193 | public bool Has(string id) |
-| ContentDb | method | KindOf | 194 | public Kind KindOf(string id) |
-| ContentDb | method | PartnersOf | 195 | public IEnumerable<string> PartnersOf(string id) |
-| ContentDb | method | Reactivity | 197 | public int Reactivity(string id) |
-| ContentDb | method | TotalReactivity | 198 | public int TotalReactivity(RecipeData r) |
-| ContentDb | method | KeyOf | 199 | public string KeyOf(RecipeData r) |
-| ContentDb | method | Company | 202 | public int Company(RecipeData r) |
-| ContentDb | method | RecipesContaining | 205 | public IReadOnlyList<RecipeData> RecipesContaining(string id) |
-| ContentDb | method | TryCombo | 208 | public bool TryCombo(IEnumerable<string> items, out RecipeData recipe) |
-| ContentDb | method | TryReact | 210 | public bool TryReact(string a, string b, out string result) |
-| ContentDb | method | TargetFor | 218 | public int TargetFor(int depth) |
-| ContentDb | method | DepthName | 224 | public string DepthName(int depth) |
-| ContentDb | method | BasePotency | 231 | public static long BasePotency(int tier) |
-| ContentDb | method | PairKey | 233 | public static string PairKey(string a, string b) |
-| ContentDb | method | ComboKey | 236 | public static string ComboKey(IEnumerable<string> items) |
+| ContentDb | property | Rules | 148 | public RulesData Rules |
+| ContentDb | property | FinalDepth | 151 | public int FinalDepth |
+| ContentDb | method | LockedIn | 176 | public List<string> LockedIn(string rewardKind, string rarity) |
+| ContentDb | property | Starters | 184 | public IReadOnlyList<MaterialData> Starters |
+| ContentDb | property | Materials | 185 | public IReadOnlyList<MaterialData> Materials |
+| ContentDb | property | Recipes | 186 | public IReadOnlyList<RecipeData> Recipes |
+| ContentDb | property | Catalysts | 187 | public IReadOnlyList<CatalystData> Catalysts |
+| ContentDb | property | Goals | 188 | public IReadOnlyList<GoalData> Goals |
+| ContentDb | property | Aspects | 189 | public IReadOnlyList<AspectData> Aspects |
+| ContentDb | property | Events | 190 | public IReadOnlyList<EventData> Events |
+| ContentDb | property | NoEventWeight | 191 | public int NoEventWeight |
+| ContentDb | method | RarityWeight | 194 | public int RarityWeight(string rarity) |
+| ContentDb | property | UniformRarity | 197 | public bool UniformRarity |
+| ContentDb | method | DrawCatalysts | 200 | public List<CatalystData> DrawCatalysts(List<CatalystData> pool, int n, Rng rng) |
+| ContentDb | method | PickCatalyst | 209 | public CatalystData PickCatalyst(IList<CatalystData> pool, Rng rng) |
+| ContentDb | method | Catalyst | 218 | public CatalystData Catalyst(string id) |
+| ContentDb | property | Ultimate | 219 | public string Ultimate |
+| ContentDb | method | Material | 221 | public MaterialData Material(string id) |
+| ContentDb | method | Has | 222 | public bool Has(string id) |
+| ContentDb | method | KindOf | 223 | public Kind KindOf(string id) |
+| ContentDb | method | PartnersOf | 224 | public IEnumerable<string> PartnersOf(string id) |
+| ContentDb | method | Reactivity | 226 | public int Reactivity(string id) |
+| ContentDb | method | TotalReactivity | 227 | public int TotalReactivity(RecipeData r) |
+| ContentDb | method | KeyOf | 228 | public string KeyOf(RecipeData r) |
+| ContentDb | method | Company | 231 | public int Company(RecipeData r) |
+| ContentDb | method | RecipesContaining | 234 | public IReadOnlyList<RecipeData> RecipesContaining(string id) |
+| ContentDb | method | TryCombo | 237 | public bool TryCombo(IEnumerable<string> items, out RecipeData recipe) |
+| ContentDb | method | TryReact | 239 | public bool TryReact(string a, string b, out string result) |
+| ContentDb | method | TargetFor | 247 | public int TargetFor(int depth) |
+| ContentDb | method | DepthName | 253 | public string DepthName(int depth) |
+| ContentDb | method | BasePotency | 260 | public static long BasePotency(int tier) |
+| ContentDb | method | PairKey | 262 | public static string PairKey(string a, string b) |
+| ContentDb | method | ComboKey | 265 | public static string ComboKey(IEnumerable<string> items) |
 | Bench | field | Size | 9 | public const int Size = 3, TileCount = 9, Centre = 4 |
 | Bench | field | Tiles | 10 | public readonly string[] Tiles = new string[TileCount] |
 | Bench | property | Count | 11 | public int Count |
@@ -1187,13 +1205,19 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | LayoutData | method | Placed | 19 | public RectData Placed(string name) |
 | LayoutData | field | Path | 25 | public const string Path = |
 | EditorGlobals | method | Inject | 13 | public static void Inject() |
+| GoldenShots | method | Names | 27 | public static IEnumerable<string> Names() |
+| GoldenShots | method | PathOf | 30 | public static string PathOf(string name, string lang) |
+| GoldenShots | method | WriteAll | 37 | public static void WriteAll() |
+| GoldenShots | method | Render | 53 | public static Texture2D Render(string name) |
+| Reserialize | method | All | 14 | public static void All() |
+| ViewCapture | method | Render | 15 | public static Texture2D Render(GameObject root, params string[] keepHidden) |
+| ViewCapture | method | RenderAsShown | 64 | public static Texture2D RenderAsShown(GameObject root) |
+| ViewCapture | method | Save | 73 | public static void Save(Texture2D tex, string path) |
+| ViewCapture | method | Load | 80 | public static Texture2D Load(string path) |
+| ViewCapture | method | Differ | 89 | public static float Differ(Texture2D a, Texture2D b) |
 | SpriteImportRules | method | GetVersion | 14 | public override uint GetVersion() |
 | SpriteImportRules | method | IsSoftDepthArt | 17 | public static bool IsSoftDepthArt(string assetPath) |
 | SpriteImportRules | method | IsDepthFog | 25 | public static bool IsDepthFog(string assetPath) |
-| ViewCapture | method | Render | 14 | public static Texture2D Render(GameObject root, params string[] keepHidden) |
-| ViewCapture | method | Save | 51 | public static void Save(Texture2D tex, string path) |
-| ViewCapture | method | Load | 58 | public static Texture2D Load(string path) |
-| ViewCapture | method | Differ | 66 | public static float Differ(Texture2D a, Texture2D b) |
 | WebBuild | field | Output | 12 | public const string Output = "Build/web", DevOutput = |
 | WebBuild | method | Build | 15 | public static void Build() |
 | WebBuild | method | BuildQuick | 19 | public static void BuildQuick() |
@@ -1201,15 +1225,17 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | ContentTests | method | EventTexts_OfEveryEvent_FitTheEventWindow | 316 | public void EventTexts_OfEveryEvent_FitTheEventWindow() |
 | ContentTests | method | LoreEvents_DoNothing_AndTellTheStoryInOrder | 328 | public void LoreEvents_DoNothing_AndTellTheStoryInOrder() |
 | TestLang | method | Text | 12 | public static string Text(string code) |
-| LoreTests | method | TheLastLoreEvent_WhenRemembered_IsNotDrawn | 50 | public void TheLastLoreEvent_WhenRemembered_IsNotDrawn() |
-| LoreTests | method | WithoutALastLore_OverManySeeds_EveryLoreEventCanCome | 63 | public void WithoutALastLore_OverManySeeds_EveryLoreEventCanCome() |
-| LoreTests | method | ALastLore_ThatIsNotALoreEvent_ChangesNothing | 72 | public void ALastLore_ThatIsNotALoreEvent_ChangesNothing() |
-| LoreTests | method | InARun_ALoreEvent_IsNotShownTwiceInARow | 85 | public void InARun_ALoreEvent_IsNotShownTwiceInARow() |
-| LoreTests | method | AnotherLoreEvent_InBetween_LetsTheFirstComeBack | 98 | public void AnotherLoreEvent_InBetween_LetsTheFirstComeBack() |
-| LoreTests | method | ANonLoreEvent_InBetween_DoesNotLetItComeBack | 116 | public void ANonLoreEvent_InBetween_DoesNotLetItComeBack() |
-| LoreTests | method | SkippingALoreEvent_WhenPlayedWithAndWithoutIt_IsBalanceNeutral | 155 | public void SkippingALoreEvent_WhenPlayedWithAndWithoutIt_IsBalanceNeutral() |
-| LoreTests | method | Profile_WhenShownLoreBoonAndNullEvents_RemembersOnlyLoreEvents | 183 | public void Profile_WhenShownLoreBoonAndNullEvents_RemembersOnlyLoreEvents() |
-| LoreTests | method | Profile_LastLore_IsSaved_AndDroppedWhenNoLongerALoreEvent | 195 | public void Profile_LastLore_IsSaved_AndDroppedWhenNoLongerALoreEvent() |
+| LoreTests | method | TheLastLoreEvent_WhenRemembered_IsNotDrawn | 51 | public void TheLastLoreEvent_WhenRemembered_IsNotDrawn() |
+| LoreTests | method | WithoutALastLore_OverManySeeds_EveryLoreEventCanCome | 64 | public void WithoutALastLore_OverManySeeds_EveryLoreEventCanCome() |
+| LoreTests | method | ALastLore_ThatIsNotALoreEvent_ChangesNothing | 73 | public void ALastLore_ThatIsNotALoreEvent_ChangesNothing() |
+| LoreTests | method | InARun_ALoreEvent_IsNotShownTwiceInARow | 86 | public void InARun_ALoreEvent_IsNotShownTwiceInARow() |
+| LoreTests | method | AnotherLoreEvent_InBetween_LetsTheFirstComeBack | 99 | public void AnotherLoreEvent_InBetween_LetsTheFirstComeBack() |
+| LoreTests | method | ANonLoreEvent_InBetween_DoesNotLetItComeBack | 117 | public void ANonLoreEvent_InBetween_DoesNotLetItComeBack() |
+| LoreTests | method | SkippingALoreEvent_WhenPlayedWithAndWithoutIt_IsBalanceNeutral | 156 | public void SkippingALoreEvent_WhenPlayedWithAndWithoutIt_IsBalanceNeutral() |
+| LoreTests | method | Profile_WhenShownLoreBoonAndNullEvents_RemembersOnlyLoreEvents | 184 | public void Profile_WhenShownLoreBoonAndNullEvents_RemembersOnlyLoreEvents() |
+| LoreTests | method | Profile_LastLore_IsSaved_AndDroppedWhenNoLongerALoreEvent | 196 | public void Profile_LastLore_IsSaved_AndDroppedWhenNoLongerALoreEvent() |
+| RulesTests | method | Rules_ShippedContent_HasTodaysValues | 10 | public void Rules_ShippedContent_HasTodaysValues() |
+| RulesTests | method | FinalDepth_ShippedContent_IsFive | 28 | public void FinalDepth_ShippedContent_IsFive() |
 | SettingsTests | method | New_NoArguments_HasDefaultValues | 9 | public void New_NoArguments_HasDefaultValues() |
 | SettingsTests | method | New_NoArguments_SwayIsOn | 20 | public void New_NoArguments_SwayIsOn() |
 | SettingsTests | method | ToJson_ThenFromJson_RoundTripsSwayOff | 26 | public void ToJson_ThenFromJson_RoundTripsSwayOff() |
@@ -1225,56 +1251,57 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | Sim | method | Autoplay | 24 | public static RunState Autoplay(ContentDb db, int seed, RunOptions options) |
 | Sim | method | Line | 33 | public static string Line(ContentDb db, string label, Func<int, RunOptions> options, int seeds) |
 | Sim | method | RandomPlay | 47 | public static RunState RandomPlay(ContentDb db, int seed, RunOptions options) |
-| Sim | method | Play | 395 | public static Career Play(ContentDb db, bool admin, int player, int runs, bool aspects = true, bool events = true, List<string> log = null, int logFrom = 0, int taughtTier = 0) |
-| Sim | method | Pct | 448 | public static string Pct(double x) |
-| Sim | method | Describe | 450 | public static void Describe(string role, List<Career> careers, int runs, Action<string> w) |
-| Sim | method | Autoplay | 494 | public static RunState Autoplay(ContentDb db, int seed, List<string> log = null, RunStats stats = null) |
-| Sim | method | RandomPlay | 541 | public static RunState RandomPlay(ContentDb db, int seed) |
-| Sim | method | FullJournal | 563 | public static Journal FullJournal(ContentDb db) |
+| Sim | method | Play | 397 | public static Career Play(ContentDb db, bool admin, int player, int runs, bool aspects = true, bool events = true, List<string> log = null, int logFrom = 0, int taughtTier = 0) |
+| Sim | method | Pct | 450 | public static string Pct(double x) |
+| Sim | method | Describe | 452 | public static void Describe(string role, List<Career> careers, int runs, Action<string> w) |
+| Sim | method | Autoplay | 496 | public static RunState Autoplay(ContentDb db, int seed, List<string> log = null, RunStats stats = null) |
+| Sim | method | RandomPlay | 543 | public static RunState RandomPlay(ContentDb db, int seed) |
+| Sim | method | FullJournal | 565 | public static Journal FullJournal(ContentDb db) |
 | Newcomer | ctor | Newcomer | 81 | public Newcomer(ContentDb truth, Journal journal) |
-| Newcomer | method | List | 131 | public readonly List<(string a, string b)> targets = new List<(string, string)>() |
-| Newcomer | property | TriedCount | 132 | public int TriedCount |
-| Newcomer | property | ColdCount | 133 | public int ColdCount |
-| Newcomer | method | Status | 134 | public string Status(string a, string b) |
-| Newcomer | method | CanMakeNow | 135 | public bool CanMakeNow(string m) |
-| Newcomer | method | Decide | 178 | public bool Decide(RunState run) |
-| Newcomer | method | Learn | 370 | public void Learn(IgniteOutcome outcome, BenchRules rules) |
-| Career | field | FirstWin | 388 | public int FirstWin = -1 |
-| Career | field | Won | 389 | public readonly List<bool> Won = new List<bool>() |
-| Career | field | Depth | 390 | public readonly List<int> Depth = new List<int>(), Journal = new List<int>(), Goals = new List<int>(), Unlocked = new List<int>() |
-| Career | field | Stuck | 391 | public int Stuck |
-| Career | field | Knows | 392 | public string Knows = |
-| RunStats | field | BySize | 486 | public readonly int[] BySize = new int[ContentDb.MaxItems + 1] |
-| RunStats | field | FirstTrialClears | 487 | public int Ignites, LongestChain, Sputters, FirstTrialClears |
-| RunStats | field | UltimateByCombo | 488 | public bool UltimateByCombo |
-| RunStats | field | ComboMade | 489 | public readonly HashSet<string> ComboMade = new HashSet<string>() |
-| RunStats | field | Combos | 490 | public readonly Dictionary<string, int> Combos = new Dictionary<string, int>() |
-| RunStats | field | ClearedIn | 491 | public readonly List<string> ClearedIn = new List<string>() |
+| Newcomer | method | List | 133 | public readonly List<(string a, string b)> targets = new List<(string, string)>() |
+| Newcomer | property | TriedCount | 134 | public int TriedCount |
+| Newcomer | property | ColdCount | 135 | public int ColdCount |
+| Newcomer | method | Status | 136 | public string Status(string a, string b) |
+| Newcomer | method | CanMakeNow | 137 | public bool CanMakeNow(string m) |
+| Newcomer | method | Decide | 180 | public bool Decide(RunState run) |
+| Newcomer | method | Learn | 372 | public void Learn(IgniteOutcome outcome, BenchRules rules) |
+| Career | field | FirstWin | 390 | public int FirstWin = -1 |
+| Career | field | Won | 391 | public readonly List<bool> Won = new List<bool>() |
+| Career | field | Depth | 392 | public readonly List<int> Depth = new List<int>(), Journal = new List<int>(), Goals = new List<int>(), Unlocked = new List<int>() |
+| Career | field | Stuck | 393 | public int Stuck |
+| Career | field | Knows | 394 | public string Knows = |
+| RunStats | field | BySize | 488 | public readonly int[] BySize = new int[ContentDb.MaxItems + 1] |
+| RunStats | field | FirstTrialClears | 489 | public int Ignites, LongestChain, Sputters, FirstTrialClears |
+| RunStats | field | UltimateByCombo | 490 | public bool UltimateByCombo |
+| RunStats | field | ComboMade | 491 | public readonly HashSet<string> ComboMade = new HashSet<string>() |
+| RunStats | field | Combos | 492 | public readonly Dictionary<string, int> Combos = new Dictionary<string, int>() |
+| RunStats | field | ClearedIn | 493 | public readonly List<string> ClearedIn = new List<string>() |
 | TestContent | method | Load | 8 | public static ContentData Load() |
 | TestContent | method | Tiny | 21 | public static ContentData Tiny() |
-| TestContent | method | Combo | 42 | public static ContentData Combo(int zMin = 15) |
-| TestContent | method | Mat | 66 | public static MaterialData Mat(string id, string kind, int tier, int reactivity = 5) |
-| TestContent | method | Rec | 68 | public static RecipeData Rec(string a, string b, string r) |
-| TestContent | method | Rec | 69 | public static RecipeData Rec(string[] items, int min, string r) |
-| TestContent | method | Cat | 70 | public static CatalystData Cat(string effect, string kind = "", float amount = 0) |
+| TestContent | method | Combo | 43 | public static ContentData Combo(int zMin = 15) |
+| TestContent | method | Rules | 69 | public static RulesData Rules() |
+| TestContent | method | Mat | 76 | public static MaterialData Mat(string id, string kind, int tier, int reactivity = 5) |
+| TestContent | method | Rec | 78 | public static RecipeData Rec(string a, string b, string r) |
+| TestContent | method | Rec | 79 | public static RecipeData Rec(string[] items, int min, string r) |
+| TestContent | method | Cat | 80 | public static CatalystData Cat(string effect, string kind = "", float amount = 0) |
 | TutorialTests | method | Satchel_Take_PullsANamedCard_FromDrawOrDiscard | 17 | public void Satchel_Take_PullsANamedCard_FromDrawOrDiscard() |
 | TutorialTests | method | Deal_ReplacesTheStartingHand_AndKeepsTheSatchelWhole | 45 | public void Deal_ReplacesTheStartingHand_AndKeepsTheSatchelWhole() |
 | TutorialTests | method | Deal_AfterMakingADiscovery_KeepsTheRack | 55 | public void Deal_AfterMakingADiscovery_KeepsTheRack() |
 | TutorialTests | method | Deal_Refuses_TooManyCopies_NonStarters_LockedStarters_AndABusyBench | 65 | public void Deal_Refuses_TooManyCopies_NonStarters_LockedStarters_AndABusyBench() |
 | TutorialTests | method | QuietBefore_HoldsAspectsAndEventsBack_UntilThatDepth | 81 | public void QuietBefore_HoldsAspectsAndEventsBack_UntilThatDepth() |
-| TutorialTests | method | FirstOffer_IsFixed_ForTheFirstOfferOnly | 108 | public void FirstOffer_IsFixed_ForTheFirstOfferOnly() |
-| TutorialTests | method | FirstOffer_WithALockedCatalystNamed_LeavesOutLockedCatalysts | 121 | public void FirstOffer_WithALockedCatalystNamed_LeavesOutLockedCatalysts() |
-| TutorialTests | method | Preview_ScoresALayout_AndChangesNothing | 140 | public void Preview_ScoresALayout_AndChangesNothing() |
-| TutorialTests | method | ScoreParts_SplitsAScore_IntoItsFactors | 156 | public void ScoreParts_SplitsAScore_IntoItsFactors() |
-| TutorialTests | method | Trial1_EmberCoalAndDeepTear_MakeSteamWisp_For40 | 182 | public void Trial1_EmberCoalAndDeepTear_MakeSteamWisp_For40() |
-| TutorialTests | method | Trial2_GlowmossAndIronOre_Fizzle_SpendATrial_AndHintPotionOnGlowmoss | 197 | public void Trial2_GlowmossAndIronOre_Fizzle_SpendATrial_AndHintPotionOnGlowmoss() |
-| TutorialTests | method | Trial3_Chain_SkyIronThenStarmetalOre_40And240_ClearsDepth1 | 211 | public void Trial3_Chain_SkyIronThenStarmetalOre_40And240_ClearsDepth1() |
-| TutorialTests | method | Depth2_CatalystTrial_ShowsTheCatalyst | 232 | public void Depth2_CatalystTrial_ShowsTheCatalyst(string catalyst, long score, double bonus) |
-| TutorialTests | method | Script_IsTheSame_WhateverTheSeed | 248 | public void Script_IsTheSame_WhateverTheSeed() |
-| TutorialTests | method | CatalystTrial_CoversTheOffer_AndNothingElse | 259 | public void CatalystTrial_CoversTheOffer_AndNothingElse() |
-| TutorialTests | method | ShouldRun_TutorialDoneFlag_RunsOnlyUntilDone | 267 | public void ShouldRun_TutorialDoneFlag_RunsOnlyUntilDone(bool done, bool expected) |
-| TutorialTests | method | Plan_DoneFlagAndJournal_PicksRunAskSkipOrNone | 275 | public void Plan_DoneFlagAndJournal_PicksRunAskSkipOrNone(bool done, int journalEntries, TutorialPlan expected) |
-| TutorialTests | method | Plan_NotDone_RunsExactlyWhenShouldRunAndTheJournalIsEmpty | 279 | public void Plan_NotDone_RunsExactlyWhenShouldRunAndTheJournalIsEmpty(int journalEntries) |
+| TutorialTests | method | FirstOffer_IsFixed_ForTheFirstOfferOnly | 109 | public void FirstOffer_IsFixed_ForTheFirstOfferOnly() |
+| TutorialTests | method | FirstOffer_WithALockedCatalystNamed_LeavesOutLockedCatalysts | 122 | public void FirstOffer_WithALockedCatalystNamed_LeavesOutLockedCatalysts() |
+| TutorialTests | method | Preview_ScoresALayout_AndChangesNothing | 141 | public void Preview_ScoresALayout_AndChangesNothing() |
+| TutorialTests | method | ScoreParts_SplitsAScore_IntoItsFactors | 157 | public void ScoreParts_SplitsAScore_IntoItsFactors() |
+| TutorialTests | method | Trial1_EmberCoalAndDeepTear_MakeSteamWisp_For40 | 183 | public void Trial1_EmberCoalAndDeepTear_MakeSteamWisp_For40() |
+| TutorialTests | method | Trial2_GlowmossAndIronOre_Fizzle_SpendATrial_AndHintPotionOnGlowmoss | 198 | public void Trial2_GlowmossAndIronOre_Fizzle_SpendATrial_AndHintPotionOnGlowmoss() |
+| TutorialTests | method | Trial3_Chain_SkyIronThenStarmetalOre_40And240_ClearsDepth1 | 212 | public void Trial3_Chain_SkyIronThenStarmetalOre_40And240_ClearsDepth1() |
+| TutorialTests | method | Depth2_CatalystTrial_ShowsTheCatalyst | 233 | public void Depth2_CatalystTrial_ShowsTheCatalyst(string catalyst, long score, double bonus) |
+| TutorialTests | method | Script_IsTheSame_WhateverTheSeed | 249 | public void Script_IsTheSame_WhateverTheSeed() |
+| TutorialTests | method | CatalystTrial_CoversTheOffer_AndNothingElse | 260 | public void CatalystTrial_CoversTheOffer_AndNothingElse() |
+| TutorialTests | method | ShouldRun_TutorialDoneFlag_RunsOnlyUntilDone | 268 | public void ShouldRun_TutorialDoneFlag_RunsOnlyUntilDone(bool done, bool expected) |
+| TutorialTests | method | Plan_DoneFlagAndJournal_PicksRunAskSkipOrNone | 276 | public void Plan_DoneFlagAndJournal_PicksRunAskSkipOrNone(bool done, int journalEntries, TutorialPlan expected) |
+| TutorialTests | method | Plan_NotDone_RunsExactlyWhenShouldRunAndTheJournalIsEmpty | 280 | public void Plan_NotDone_RunsExactlyWhenShouldRunAndTheJournalIsEmpty(int journalEntries) |
 | AutoHookTests | method | ToggleAuto_FlipsTheScriptedPlayer_AndLogsTheNewState | 33 | public void ToggleAuto_FlipsTheScriptedPlayer_AndLogsTheNewState() |
 | ChoiceHookTests | method | Choose_LogsOpenHook_OnlyAfterTheDeal | 39 | public void Choose_LogsOpenHook_OnlyAfterTheDeal() |
 | DepthClickTests | method | SetUp | 23 | public void SetUp() |
@@ -1307,6 +1334,7 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | DepthLookTests | method | ShowsRunIntro_OnlyDepthOneOfANormalRun_IsTrue | 37 | public void ShowsRunIntro_OnlyDepthOneOfANormalRun_IsTrue() |
 | DepthLookTests | method | ThemedWindow_OutsideANormalRun_IsFalse | 48 | public void ThemedWindow_OutsideANormalRun_IsFalse() |
 | GameTestSetup | method | Inject | 10 | public void Inject() |
+| GoldenShotTests | method | Render_Shot_MatchesTheGoldenImage | 10 | public void Render_Shot_MatchesTheGoldenImage(string name) |
 | HudTests | method | CanRedraw_WhileRedrawsRemain_IsTrueUntilTheLastRedrawIsUsed | 14 | public void CanRedraw_WhileRedrawsRemain_IsTrueUntilTheLastRedrawIsUsed() |
 | HudTests | method | CanRedraw_IsFalse_OffTheBench_EvenWithRedrawsLeft | 28 | public void CanRedraw_IsFalse_OffTheBench_EvenWithRedrawsLeft() |
 | HudTests | method | CanRedraw_IsFalse_WithNoRun | 39 | public void CanRedraw_IsFalse_WithNoRun() |

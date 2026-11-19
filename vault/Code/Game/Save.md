@@ -34,7 +34,7 @@ aliases: []
 [[ContentDb]], [[Journal]], [[Profile]], [[ProfileData]], [[Settings]]
 
 ## Used by
-[[AtlasBuilder]], [[GameFlow]], [[TutorialRules]], [[ViewCapture]]
+[[AtlasBuilder]], [[GameFlow]], [[GoldenShots]], [[TutorialRules]], [[ViewCapture]]
 
 ## Tested by
 [[PauseTests]], [[SaveTests]], [[SettingsHapticsTests]], [[TutorialFlowTests]]

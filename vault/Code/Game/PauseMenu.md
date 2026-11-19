@@ -35,7 +35,7 @@ aliases: []
 [[Bench]], [[Clickable]], [[FlowState]], [[Haptics]], [[Label]], [[Loc]], [[Px]], [[Settings]], [[UiButton]]
 
 ## Used by
-[[GameFlow]]
+[[GameFlow]], [[GoldenShots]]
 
 ## Tested by
 [[PauseTests]], [[PrefabBakeTests]]

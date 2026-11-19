@@ -25,7 +25,7 @@ aliases: []
 | field | `public int[] dimTiles` | 16 |  |
 
 ## Used by
-[[CatalystChoiceView]]
+[[CatalystChoiceView]], [[GoldenShots]]
 
 ## Tested by
 [[ChoiceHookTests]], [[PrefabBakeTests]]

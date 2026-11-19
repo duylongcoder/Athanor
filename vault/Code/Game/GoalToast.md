@@ -32,7 +32,7 @@ aliases: []
 [[Anim]], [[Art]], [[Clickable]], [[ContentDb]], [[GoalReward]], [[Label]], [[Loc]], [[Px]], [[Sparks]], [[Wording]]
 
 ## Used by
-[[GameFlow]]
+[[GameFlow]], [[GoldenShots]]
 
 ## Tested by
 [[PrefabBakeTests]]

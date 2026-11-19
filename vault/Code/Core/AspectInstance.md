@@ -27,4 +27,4 @@ aliases: []
 [[Kind]]
 
 ## Used by
-[[CatalystChoiceView]], [[RunState]], [[Wording]]
+[[CatalystChoiceView]], [[GoldenShots]], [[RunState]], [[Wording]]

@@ -37,7 +37,7 @@ aliases: []
 [[Bench]], [[RunOptions]], [[TutorialLay]], [[TutorialPlan]], [[TutorialTrial]], [[Unlocks]]
 
 ## Used by
-[[GameFlow]], [[TutorialController]]
+[[GameFlow]], [[GoldenShots]], [[TutorialController]]
 
 ## Tested by
 [[PauseTests]], [[TutorialFlowTests]], [[TutorialTests]]

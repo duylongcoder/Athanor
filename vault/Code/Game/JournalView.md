@@ -37,7 +37,7 @@ aliases: []
 [[Art]], [[Clickable]], [[ContentDb]], [[HudView]], [[Journal]], [[JournalCell]], [[Kind]], [[Label]], [[Loc]], [[Px]], [[Rarities]], [[RarityStars]], [[Wording]]
 
 ## Used by
-[[GameFlow]], [[TutorialController]]
+[[GameFlow]], [[GoldenShots]], [[TutorialController]]
 
 ## Tested by
 [[PrefabBakeTests]]

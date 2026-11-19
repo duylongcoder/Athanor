@@ -33,7 +33,7 @@ aliases: []
 [[Unlocks]]
 
 ## Used by
-[[GameFlow]], [[RunState]], [[TutorialScript]]
+[[GameFlow]], [[GoldenShots]], [[RunState]], [[TutorialScript]]
 
 ## Tested by
 [[HudTests]], [[LoreTests]], [[Phase3Tests]], [[PrefabBakeTests]], [[RarityReportTests]], [[RarityTests]], [[TutorialFlowTests]], [[TutorialTests]]

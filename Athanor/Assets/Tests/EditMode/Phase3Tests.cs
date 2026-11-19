@@ -19,6 +19,7 @@ namespace Athanor.Tests
         /// </summary>
         static ContentData Mini(int target = 1) => new ContentData
         {
+            rules = TestContent.Rules(),
             materials = new[] { TestContent.Mat("a", "Ore", 0, 6), TestContent.Mat("b", "Potion", 0, 4), TestContent.Mat("x", "Metal", 1, 5), TestContent.Mat("y", "Crystal", 2, 5) },
             recipes = new[] { TestContent.Rec(new[] { "a", "b" }, 0, "x"), TestContent.Rec(new[] { "x", "a" }, 0, "y") },
             catalysts = new CatalystData[0], depthTargets = new[] { target, target, target, target }, depthNames = Names, ultimate = "",

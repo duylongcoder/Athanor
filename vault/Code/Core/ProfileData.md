@@ -12,17 +12,17 @@ aliases: []
 # ProfileData
 
 `public class ProfileData`
-- Layer: **Core** · Source: `Athanor/Assets/Scripts/Core/ContentData.cs:49-57`
+- Layer: **Core** · Source: `Athanor/Assets/Scripts/Core/ContentData.cs:76-84`
 
 ## Members
 | Kind | Signature | Line | Note |
 |---|---|---|---|
-| field | `public int version = 1, rewardSeed` | 51 |  |
-| field | `public int runsStarted, runsWon, wonNoRedraw, depthReached, ignites, chainLongest, comboLargest` | 52 |  |
-| field | `public long bestIgnite` | 53 |  |
-| field | `public string[] completed, unlockedStarters, unlockedCatalysts` | 54 |  |
-| field | `public RewardLogData[] rewards` | 55 |  |
-| field | `public string lastLore` | 56 |  |
+| field | `public int version = 1, rewardSeed` | 78 |  |
+| field | `public int runsStarted, runsWon, wonNoRedraw, depthReached, ignites, chainLongest, comboLargest` | 79 |  |
+| field | `public long bestIgnite` | 80 |  |
+| field | `public string[] completed, unlockedStarters, unlockedCatalysts` | 81 |  |
+| field | `public RewardLogData[] rewards` | 82 |  |
+| field | `public string lastLore` | 83 |  |
 
 ## Used by
 [[Profile]], [[Save]]

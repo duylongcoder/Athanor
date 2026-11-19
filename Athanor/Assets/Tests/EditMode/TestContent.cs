@@ -29,6 +29,7 @@ namespace Athanor.Tests
                 },
                 recipes = new[] { Rec("a", "b", "x"), Rec("x", "c", "y") },
                 catalysts = new CatalystData[0],
+                rules = Rules(),
                 depthTargets = new[] { 300, 900, 2500, 7000 },
                 depthNames = new[] { "1", "2", "3", "4", "5" },
                 ultimate = "y",
@@ -57,11 +58,20 @@ namespace Athanor.Tests
                     Rec(new[] { "s", "p", "q", "t" }, 24, "quad"),
                 },
                 catalysts = new CatalystData[0],
+                rules = Rules(),
                 depthTargets = new[] { 300, 1500, 7500, 37500 },
                 depthNames = new[] { "1", "2", "3", "4", "5" },
                 ultimate = "big",
             };
         }
+
+        /// <summary>Today's shipped rules, for hand-built fixtures.</summary>
+        public static RulesData Rules() => new RulesData
+        {
+            handMin = 3, handBase = 5, trials = 4, trialsFinalDepth = 6, redraws = 2, starterCopies = 2, offerSize = 3,
+            rackSize = 12, pouchCards = 1, firstReactionMult = 2,
+            aspectDepths = new[] { 1, 3, 5 }, potencyByTier = new long[] { 0, 20, 60, 180, 500, 1500 },
+        };
 
         public static MaterialData Mat(string id, string kind, int tier, int reactivity = 5) =>
             new MaterialData { id = id, name = id, kind = kind, tier = tier, glow = "", reactivity = reactivity };

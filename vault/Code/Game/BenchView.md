@@ -40,7 +40,7 @@ aliases: []
 [[Align]], [[Art]], [[Bench]], [[CardView]], [[ChainPlanner]], [[ContentDb]], [[Dev]], [[FontKind]], [[HudView]], [[Journal]], [[Kind]], [[Label]], [[LinkView]], [[Loc]], [[Motion]], [[PointerInput]], [[Px]], [[Rarities]], [[RunState]], [[Spawn]], [[TileView]], [[Tooltip]], [[Wording]]
 
 ## Used by
-[[DepthStage]], [[GameFlow]]
+[[DepthStage]], [[GameFlow]], [[GoldenShots]]
 
 ## Tested by
 [[DepthClickTests]], [[MainDepthTests]], [[MainDevHookTests]], [[PrefabBakeTests]]

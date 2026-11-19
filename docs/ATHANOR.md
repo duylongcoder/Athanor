@@ -185,6 +185,7 @@ change go" table: `vault/Data/Data Design.md`. Summary:
 | `aspects[]` | `{id, name, text, effect, scope, group, amount, tradeOff}` |
 | `events[]` | `{id, name, text, type, minDepth, maxDepth, weight, options[{label, requires, cost[], outcomes[{weight, text, gain[]}]}]}` |
 | `goals[]` | `{id, text, stat, target, rewardKind, rewardRarity}` |
+| `rules` | flat object: `handMin, handBase, trials, trialsFinalDepth, redraws, starterCopies, offerSize, rackSize, pouchCards, firstReactionMult, aspectDepths[], potencyByTier[]`; required; table in `vault/Data/Data Design.md` |
 | `depthTargets[]`, `depthNames[]`, `ultimate`, `noEventWeight` | 4 targets for 5 depths; `ultimate` = `worldseed` |
 
 Text limits for events: name 22 characters, text 56, outcome 52. Item names (materials, catalysts, aspects) stay English in Vietnamese;

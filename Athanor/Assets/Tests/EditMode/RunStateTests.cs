@@ -251,9 +251,10 @@ namespace Athanor.Tests
         {
             var d = new ContentData
             {
+                rules = TestContent.Rules(),
                 materials = new[] { TestContent.Mat("a", "Ore", 0), TestContent.Mat("b", "Ore", 0), TestContent.Mat("x", "Metal", 1), TestContent.Mat("y", "Crystal", 2) },
                 recipes = new[] { TestContent.Rec("a", "b", "x"), TestContent.Rec("x", "x", "y") },
-                catalysts = new CatalystData[0], depthTargets = new[] { 1, 1, 1, 1 }, ultimate = "",
+                catalysts = new CatalystData[0], depthTargets = new[] { 1, 1, 1, 1 }, depthNames = new[] { "1", "2", "3", "4", "5" }, ultimate = "",
             };
             var r = new RunState(new ContentDb(d), new Journal(), 1);   // hand is always a,a,b,b
             IgniteOutcome o = null;

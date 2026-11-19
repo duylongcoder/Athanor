@@ -31,7 +31,7 @@ aliases: []
 [[Art]], [[AspectEffects]], [[AspectInstance]], [[Bench]], [[ChoiceCard]], [[Clickable]], [[Dev]], [[Label]], [[Loc]], [[Motion]], [[Px]], [[Rarities]], [[RarityStars]], [[RunState]], [[ScreenFx]], [[Sparks]], [[Wording]]
 
 ## Used by
-[[GameFlow]]
+[[GameFlow]], [[GoldenShots]]
 
 ## Tested by
 [[ChoiceHookTests]], [[PrefabBakeTests]]

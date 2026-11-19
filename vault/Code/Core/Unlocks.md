@@ -30,7 +30,7 @@ aliases: []
 [[ContentDb]], [[Profile]], [[Rarities]], [[Rng]]
 
 ## Used by
-[[GameFlow]], [[RunOptions]], [[RunState]], [[TutorialScript]]
+[[GameFlow]], [[GoldenShots]], [[RunOptions]], [[RunState]], [[TutorialScript]]
 
 ## Tested by
 [[HudTests]], [[LoreTests]], [[PauseTests]], [[Phase3Tests]], [[PrefabBakeTests]], [[RarityReportTests]], [[TutorialFlowTests]], [[TutorialTests]]
