@@ -16,6 +16,13 @@ namespace Athanor.Game
         /// <summary>World position of the centre of an art-space rectangle given by its top-left corner and size.</summary>
         public static Vector3 Mid(float x, float y, float w, float h) => At(x + w / 2f, y + h / 2f);
 
+        /// <summary>Puts a 4x4 "dot" sprite object over an art-space rectangle (top-left corner and size): the object's centre and scale.</summary>
+        public static void Fit(Transform t, float x, float y, float w, float h)
+        {
+            t.position = Mid(x, y, w, h);
+            t.localScale = new Vector3(w / 4f, h / 4f, 1);
+        }
+
         public static Vector3 Snap(Vector3 p) => new Vector3(Mathf.Round(p.x), Mathf.Round(p.y), p.z);
 
         /// <summary>Colour from "#rrggbb"; k scales brightness past 1 for glow, a is alpha.</summary>

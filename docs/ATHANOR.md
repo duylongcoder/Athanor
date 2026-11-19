@@ -123,7 +123,7 @@ builds a view at run time. Edit a screen in the Inspector, not in C#.
   is missing. It publishes the art library as `Art.Lib`, calls `Loc.Use(en, vi)` first thing, then `Bind(...)` once on each view.
 - **The `Bind` contract.** A view's references are serialized. `Bind(...)` does the one-time wiring that cannot be serialized: it
   hooks clicks (lambdas), takes the `ContentDb` or settings, and makes run-time-only objects (sprites from `Sprite.Create`, render
-  textures). A view has no `Build`. Run-time spawns that remain (tutorial dim cells, the Journal's corner stars, float text, motes)
+  textures). A view has no `Build`. Run-time spawns that remain (the tutorial's popup lines, the Journal's corner stars, float text, motes)
   go through `Spawn` (Root, Sprite, Rect, Glow, Text, Click); font choice is `Fonts`.
 - The `Build` methods of `TileView`, `CardView`, `BenchView` and the cutscenes were bake sources and are gone with the builders. A
   prefab is re-baked by editing it, not by code.
@@ -274,7 +274,8 @@ One line each. A decision is written here before it is relied on. Superseded and
   the four depth materials live in `Assets/Art/Depth/Materials/`.
 - 2026-11-18: the owner commits; agents never commit. A task ends at a checkpoint with a suggested Conventional Commit message
   and `Story: P6-<n>` in the body. The balance reports are a console program (`tools/CoreReports`), not tests.
-- 2026-11-19: this file replaces the devlogs, plans, specs, phase sign-offs and `docs/CI.md`.
+- 2026-11-19: this file replaces the devlogs, plans, specs, phase sign-offs and the old CI doc.
+- 2026-11-19: the tutorial's dark screen is one `Dim` sprite drawn "visible outside mask"; each lit window is a `SpriteMask` in a pooled `TutorialHole` (with its gold rim), and the click lock is one `Clickable` with the holes cut out of it. Nothing is built or destroyed per step except popup lines. Replaces the per-step grid of dim rectangles. The tutorial's numbers (rectangles each step lights, text box, popup lines, rim and arrow, timings) are Inspector fields of the Tutorial object (`TutorialTargets`, `TutorialStyle`); the scripted hands and lays stay in Core `TutorialScript`, pinned by tests.
 
 ---
 

@@ -79,8 +79,11 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | ReactionCutscene | ReactionCutscene | Game | class | Athanor/Assets/Scripts/Game/Cutscene/ReactionCutscene.cs | 13 | The full discovery sequence: two materials spiral into the cauldron, the rune circle lights, a flash, and the new material rises on a column of light with its name and potency. Everything is a functio |
 | SimpleCutscene | SimpleCutscene | Game | class | Athanor/Assets/Scripts/Game/Cutscene/SimpleCutscene.cs | 14 | The short story beats built from text and a few effects: the intro, the descent between depths, and the ending. A click finishes the line being written, then moves on. |
 | Loop | Loop | Game | class | Athanor/Assets/Scripts/Game/Cutscene/SimpleCutscene.cs | 281 | A stream of glowing particles played as a loop instead of emitted: rate x life fixed slots, each reborn every life seconds at a hashed place and speed, so its position is a function of the clock. A sl |
-| TutorialRules | TutorialRules | Game | class | Athanor/Assets/Scripts/Game/Cutscene/TutorialController.cs | 11 | The decisions around the tutorial that need no scene, so they can be tested. What Begin does is the Core rule TutorialScript.Plan. |
-| TutorialController | TutorialController | Game | class | Athanor/Assets/Scripts/Game/Cutscene/TutorialController.cs | 31 | Plays the scripted tutorial over the bench: a dark screen with lit holes and a pulsing gold rim, an arrow, a text box at the top, click locks, and popups held until read. It reads the game's state; it |
+| TutorialRules | TutorialRules | Game | class | Athanor/Assets/Scripts/Game/Cutscene/TutorialController.cs | 12 | The decisions around the tutorial that need no scene, so they can be tested. What Begin does is the Core rule TutorialScript.Plan. |
+| TutorialController | TutorialController | Game | class | Athanor/Assets/Scripts/Game/Cutscene/TutorialController.cs | 33 | Plays the scripted tutorial over the bench: a dark screen with lit holes and a pulsing gold rim, an arrow, a text box at the top, click locks, and popups held until read. It reads the game's state; it |
+| TutorialHole | TutorialHole | Game | class | Athanor/Assets/Scripts/Game/Cutscene/TutorialHole.cs | 10 | One lit window of the tutorial overlay: a SpriteMask that cuts a hole in the dim (the dim draws "visible outside mask"), and the four gold rim pieces round it. TutorialController keeps a few of these  |
+| TutorialTargets | TutorialTargets | Game | class | Athanor/Assets/Scripts/Game/Cutscene/TutorialSettings.cs | 12 | Where the tutorial points. Art space: 640x360, x to the right, y down from the top-left corner. Every rectangle a step lights comes from here (or from the view it talks about: the Journal's pages, the |
+| TutorialStyle | TutorialStyle | Game | class | Athanor/Assets/Scripts/Game/Cutscene/TutorialSettings.cs | 39 | How the tutorial overlay looks and feels: the text box, the popup lines, the rim and arrow, and their timings. |
 | WindowView | WindowView | Game | class | Athanor/Assets/Scripts/Game/Cutscene/WindowView.cs | 11 | The workshop window shows what the current depth "sees" and plays one tiny looping effect (docs/ATHANOR.md §8): 1 dust motes up a shaft, 2 drips down the glass, 3 a breathing amber glow, 4 roots creep |
 | CameraSway | CameraSway | Game | class | Athanor/Assets/Scripts/Game/Depth/CameraSway.cs | 11 | The idle sway and the world-only shake of the HD-2D bench. The sway moves the world camera (x = A sin(2 pi t / 6), y = A / 2 sin(2 pi t / 9), A = 4 art px) and re-aims it so the middle tile row (art y |
 | DepthLayer | DepthLayer | Game | class | Athanor/Assets/Scripts/Game/Depth/DepthLayer.cs | 10 | One flat thing of the bench placed in depth: it is moved to its depth and enlarged by (D - z) / D, so that from the camera at rest it covers exactly the art pixels it covers in the flat game. Sorting  |
@@ -112,7 +115,7 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | ArtLibrary | ArtLibrary | Game | class | Athanor/Assets/Scripts/Game/Support/ArtLibrary.cs | 8 | Every sprite, effect sheet, font and material the game looks up by name. Built by Athanor > Refresh Art Library. |
 | AudioMute | AudioMute | Game | class | Athanor/Assets/Scripts/Game/Support/AudioMute.cs | 11 | Silences audio while the browser tab is hidden, the app is paused or the window has lost focus. No sound ships in Phase 5, so this is a hook: it sets AudioListener.pause and is audible once sound land |
 | AudioMuteHook | AudioMuteHook | Game | class | Athanor/Assets/Scripts/Game/Support/AudioMute.cs | 33 | Feeds the browser's tab visibility and Unity's pause and focus into AudioMute. |
-| Clickable | Clickable | Game | class | Athanor/Assets/Scripts/Game/Support/Clickable.cs | 7 | A rectangle around this object that the pointer can hover and click. The highest order under the pointer wins. |
+| Clickable | Clickable | Game | class | Athanor/Assets/Scripts/Game/Support/Clickable.cs | 9 | A rectangle around this object that the pointer can hover and click. The highest order under the pointer wins. Holes (world-space rectangles) are cut out of it: the pointer there is not on this object |
 | Dev | Dev | Game | class | Athanor/Assets/Scripts/Game/Support/Dev.cs | 9 | Log lines that exist only as the hook of tools/web/webtest.mjs ([tut], [drive], [loc]). The calls, and the strings they build, are compiled out of a release build; a development build and the editor k |
 | Fonts | Fonts | Game | class | Athanor/Assets/Scripts/Game/Support/Fonts.cs | 10 | Which font a FontKind uses in the language showing, and the size and line box that go with it. |
 | FontKind | FontKind | Game | enum | Athanor/Assets/Scripts/Game/Support/Fonts.cs | 7 |  |
@@ -189,7 +192,7 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | PrefabFixture | PrefabFixture | Tests | class | Athanor/Assets/Tests/EditModeGame/PrefabFixture.cs | 9 | A copy of a prefab for one test. Call Destroy in [TearDown] (or a finally). |
 | RunOverDepthTests | RunOverDepthTests | Tests | class | Athanor/Assets/Tests/EditModeGame/RunOverDepthTests.cs | 15 | The run-over depth row (owner, phase-5-prep 2026-11-16): a won run says "Planted at depth n" on one line with no value; a lost run says "Depth reached" with "n of 5". The view is reused, so each path  |
 | SaveTests | SaveTests | Tests | class | Athanor/Assets/Tests/EditModeGame/SaveTests.cs | 11 | The journal and the profile survive a round trip through PlayerPrefs, and a damaged save never stops the game. |
-| SceneBakeTests | SceneBakeTests | Tests | class | Athanor/Assets/Tests/EditModeGame/SceneBakeTests.cs | 10 | The scene objects of Main.unity that are not prefabs (Task 15): their serialized parts are all there, and Bind finishes them. |
+| SceneBakeTests | SceneBakeTests | Tests | class | Athanor/Assets/Tests/EditModeGame/SceneBakeTests.cs | 11 | The scene objects of Main.unity that are not prefabs (Task 15): their serialized parts are all there, and Bind finishes them. |
 | SettingsHapticsTests | SettingsHapticsTests | Tests | class | Athanor/Assets/Tests/EditModeGame/SettingsHapticsTests.cs | 9 | Saved settings (athanor.settings.v1), the haptics plan and the mute-on-hidden-tab hook. |
 | SparksTests | SparksTests | Tests | class | Athanor/Assets/Tests/EditModeGame/SparksTests.cs | 9 | Sparks on batched meshes: same motion and fade as the old SpriteRenderer pool, whole-pixel centres, HDR kept, no garbage. |
 | TutorialFlowTests | TutorialFlowTests | Tests | class | Athanor/Assets/Tests/EditModeGame/TutorialFlowTests.cs | 11 | The tutorial's decisions, its sandbox and the scores it shows (the numbers TutorialTests pins in Core). |
@@ -692,21 +695,59 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | SimpleCutscene | method | Ending | 180 | public IEnumerator Ending(MaterialData ultimate) |
 | Loop | ctor | Loop | 288 | public Loop(Transform parent, string name, int order, float rate, float life, float x0, float x1, float y0, float y1, float vx0, float vx1, float vy0, float vy1, float gravity, float sparkle) |
 | Loop | method | Draw | 299 | public void Draw(float t, float strength, Color color) |
-| TutorialRules | method | MarkDone | 14 | public static void MarkDone() |
-| TutorialRules | method | AnswerSkipQuestion | 20 | public static bool AnswerSkipQuestion(bool playIt) |
-| TutorialController | property | Trial | 50 | public int Trial |
-| TutorialController | property | Finished | 52 | public bool Finished |
-| TutorialController | field | Shown | 54 | public readonly List<long> Shown = new List<long>() |
-| TutorialController | method | Bind | 57 | public void Bind(GameFlow flow) |
-| TutorialController | method | Union | 62 | public static Rect Union(Rect[] r) |
-| TutorialController | method | Abort | 162 | public void Abort() |
-| TutorialController | method | AfterEvent | 246 | public IEnumerator AfterEvent(ReactionEvent e, int index) |
-| TutorialController | method | AfterIgnite | 286 | public IEnumerator AfterIgnite(IgniteOutcomeView o) |
-| TutorialController | method | AfterChoose | 311 | public void AfterChoose(string catalystId, string name) |
-| TutorialController | method | OnOffer | 321 | public IEnumerator OnOffer() |
-| TutorialController | method | OfferTaken | 328 | public void OfferTaken() |
-| TutorialController | method | Drive | 339 | public IEnumerator Drive() |
-| TutorialController | property | IgniteOutcomeView | 390 | public sealed class IgniteOutcomeView |
+| TutorialRules | method | MarkDone | 15 | public static void MarkDone() |
+| TutorialRules | method | AnswerSkipQuestion | 21 | public static bool AnswerSkipQuestion(bool playIt) |
+| TutorialController | property | Trial | 55 | public int Trial |
+| TutorialController | property | Finished | 57 | public bool Finished |
+| TutorialController | field | Shown | 59 | public readonly List<long> Shown = new List<long>() |
+| TutorialController | method | Bind | 62 | public void Bind(GameFlow flow) |
+| TutorialController | method | Union | 74 | public static Rect Union(Rect[] r) |
+| TutorialController | method | Abort | 146 | public void Abort() |
+| TutorialController | method | AfterEvent | 236 | public IEnumerator AfterEvent(ReactionEvent e, int index) |
+| TutorialController | method | AfterIgnite | 276 | public IEnumerator AfterIgnite(IgniteOutcomeView o) |
+| TutorialController | method | AfterChoose | 301 | public void AfterChoose(string catalystId, string name) |
+| TutorialController | method | OnOffer | 311 | public IEnumerator OnOffer() |
+| TutorialController | method | OfferTaken | 318 | public void OfferTaken() |
+| TutorialController | method | Drive | 329 | public IEnumerator Drive() |
+| TutorialController | property | IgniteOutcomeView | 379 | public sealed class IgniteOutcomeView |
+| TutorialHole | method | Open | 18 | public void Open(Rect r, bool showRim) |
+| TutorialHole | method | Close | 30 | public void Close() |
+| TutorialHole | method | SetRimAlpha | 33 | public void SetRimAlpha(float a) |
+| TutorialTargets | field | hand | 16 | public Rect hand = new Rect(126, 284, 392, 80) |
+| TutorialTargets | field | ignite | 18 | public Rect ignite = new Rect(515, 304, 122, 42) |
+| TutorialTargets | field | journal | 20 | public Rect journal = new Rect(516, 284, 122, 24) |
+| TutorialTargets | field | rack | 22 | public Rect rack = new Rect(126, 252, 392, 32) |
+| TutorialTargets | field | offer | 24 | public Rect offer = new Rect(0, 60, 640, 240) |
+| TutorialTargets | field | tileSize | 28 | public Vector2 tileSize = new Vector2(72, 44) |
+| TutorialTargets | field | tileShift | 30 | public Vector2 tileShift = new Vector2(36, 24) |
+| TutorialTargets | field | redrawMargin | 34 | public float redrawMargin = 2 |
+| TutorialStyle | field | baseOrder | 43 | public int baseOrder = 600 |
+| TutorialStyle | field | popupOrderOffset | 44 | public int popupOrderOffset = 12 |
+| TutorialStyle | field | brokenOrderOffset | 45 | public int brokenOrderOffset = 6 |
+| TutorialStyle | field | boxPos | 49 | public Vector2 boxPos = new Vector2(168, 14) |
+| TutorialStyle | field | boxWidth | 50 | public float boxWidth = 304 |
+| TutorialStyle | field | boxBorder | 52 | public float boxBorder = 1 |
+| TutorialStyle | field | textInset | 54 | public Vector2 textInset = new Vector2(8, 7) |
+| TutorialStyle | field | textWrapWidth | 56 | public float textWrapWidth = 288 |
+| TutorialStyle | field | boxPadding | 58 | public float boxPadding = 12 |
+| TutorialStyle | field | readExtra | 59 | public float readExtra = 12 |
+| TutorialStyle | field | boxMaxHeight | 61 | public float boxMaxHeight = 86 |
+| TutorialStyle | field | linePitch | 63 | public int linePitch = 12, maxLines = 4 |
+| TutorialStyle | field | linePitchVi | 65 | public int linePitchVi = 16, maxLinesVi = 3 |
+| TutorialStyle | field | journalBoxDrop | 67 | public int journalBoxDrop = 248 |
+| TutorialStyle | field | popupPos | 71 | public Vector2 popupPos = new Vector2(320, 70) |
+| TutorialStyle | field | popupPitch | 72 | public float popupPitch = 20 |
+| TutorialStyle | field | popupFontSize | 73 | public int popupFontSize = 16 |
+| TutorialStyle | field | popupColor | 74 | public Color popupColor = new Color32(0xf0, 0xdc, 0xc0, 255) |
+| TutorialStyle | field | popupTotalColor | 76 | public Color popupTotalColor = new Color32(0xff, 0xf6, 0xb8, 255) |
+| TutorialStyle | field | popupShadow | 77 | public Color popupShadow = new Color32(0x0c, 0x07, 0x06, 255) |
+| TutorialStyle | field | brokenGhost | 81 | public Color brokenGhost = new Color(0.45f, 0.45f, 0.45f, 0.35f) |
+| TutorialStyle | field | clickGuard | 89 | public float clickGuard = 0.25f |
+| TutorialStyle | field | rimSpeed | 94 | public float rimSpeed = 5 |
+| TutorialStyle | field | bumpDecay | 96 | public float bumpDecay = 3 |
+| TutorialStyle | field | arrowAbove | 100 | public float arrowAbove = 10, arrowBelow = 8 |
+| TutorialStyle | field | arrowFlipY | 102 | public float arrowFlipY = 80 |
+| TutorialStyle | field | arrowBobSpeed | 103 | public float arrowBobSpeed = 6, arrowBobAmplitude = 2 |
 | WindowView | method | Bind | 28 | public void Bind() |
 | WindowView | property | Soft | 37 | public bool Soft |
 | WindowView | method | Show | 50 | public void Show(int depth) |
@@ -906,10 +947,11 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | AudioMute | method | SetPaused | 21 | public static void SetPaused(bool v) |
 | AudioMute | method | SetFocus | 22 | public static void SetFocus(bool v) |
 | AudioMute | method | Reset | 23 | public static void Reset() |
-| Clickable | field | offset | 9 | public Vector2 size, offset |
-| Clickable | field | order | 10 | public int order |
-| Clickable | field | onUp | 11 | public Action onClick, onEnter, onExit, onDown, onUp |
-| Clickable | method | Contains | 13 | public bool Contains(Vector2 world) |
+| Clickable | field | offset | 11 | public Vector2 size, offset |
+| Clickable | field | order | 12 | public int order |
+| Clickable | field | holes | 14 | public readonly List<Rect> holes = new List<Rect>() |
+| Clickable | field | onUp | 15 | public Action onClick, onEnter, onExit, onDown, onUp |
+| Clickable | method | Contains | 17 | public bool Contains(Vector2 world) |
 | Dev | method | Hook | 12 | public static void Hook(string line) |
 | Fonts | method | FontFor | 13 | public static TMP_FontAsset FontFor(FontKind kind) |
 | Fonts | method | SizeFor | 21 | public static float SizeFor(FontKind kind, int size) |
@@ -986,10 +1028,11 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | Px | field | W | 11 | public const int W = 640, H = 360 |
 | Px | method | At | 14 | public static Vector3 At(float x, float y) |
 | Px | method | Mid | 17 | public static Vector3 Mid(float x, float y, float w, float h) |
-| Px | method | Snap | 19 | public static Vector3 Snap(Vector3 p) |
-| Px | method | Hex | 22 | public static Color Hex(string hex, float a = 1, float k = 1) |
-| Px | method | Alpha | 28 | public static Color Alpha(this Color c, float a) |
-| Px | method | Times | 29 | public static Color Times(this Color c, float k) |
+| Px | method | Fit | 20 | public static void Fit(Transform t, float x, float y, float w, float h) |
+| Px | method | Snap | 26 | public static Vector3 Snap(Vector3 p) |
+| Px | method | Hex | 29 | public static Color Hex(string hex, float a = 1, float k = 1) |
+| Px | method | Alpha | 35 | public static Color Alpha(this Color c, float a) |
+| Px | method | Times | 36 | public static Color Times(this Color c, float k) |
 | RarityStars | field | Size | 15 | public const int Size = 7, Pitch = 8, Max = 4 |
 | RarityStars | property | Root | 24 | public Transform Root |
 | RarityStars | ctor | RarityStars | 27 | public RarityStars() |
@@ -1376,11 +1419,11 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | SaveTests | method | StoreThenLoadJournal_WithAThreeItemCombo_KeepsComboRecipes | 149 | public void StoreThenLoadJournal_WithAThreeItemCombo_KeepsComboRecipes() |
 | SaveTests | method | LoadJournal_Phase1PairKeys_StillLoad | 158 | public void LoadJournal_Phase1PairKeys_StillLoad() |
 | SaveTests | method | TutorialDone_DefaultsToFalse_AndRoundTrips | 165 | public void TutorialDone_DefaultsToFalse_AndRoundTrips() |
-| SceneBakeTests | method | ScreenFx_Baked_HasFlashAndFadeSprites_AndBindMakesItTheSingleton | 20 | public void ScreenFx_Baked_HasFlashAndFadeSprites_AndBindMakesItTheSingleton() |
-| SceneBakeTests | method | Window_Baked_HasPaneAndEveryEffectSprite_AndShowStartsAnEffect | 41 | public void Window_Baked_HasPaneAndEveryEffectSprite_AndShowStartsAnEffect() |
-| SceneBakeTests | method | Tutorial_Baked_HasItsBoxArrowAndCellRoot_ClosedUntilAStepShows | 62 | public void Tutorial_Baked_HasItsBoxArrowAndCellRoot_ClosedUntilAStepShows() |
-| SceneBakeTests | method | Reaction_Baked_HasEveryPart_AndBindHidesTheStageAndSwitchesTheOthers | 85 | public void Reaction_Baked_HasEveryPart_AndBindHidesTheStageAndSwitchesTheOthers() |
-| SceneBakeTests | method | Story_Baked_HasEveryPart_AndTheRayFacesAreTheRaySprites | 118 | public void Story_Baked_HasEveryPart_AndTheRayFacesAreTheRaySprites() |
+| SceneBakeTests | method | ScreenFx_Baked_HasFlashAndFadeSprites_AndBindMakesItTheSingleton | 21 | public void ScreenFx_Baked_HasFlashAndFadeSprites_AndBindMakesItTheSingleton() |
+| SceneBakeTests | method | Window_Baked_HasPaneAndEveryEffectSprite_AndShowStartsAnEffect | 42 | public void Window_Baked_HasPaneAndEveryEffectSprite_AndShowStartsAnEffect() |
+| SceneBakeTests | method | Tutorial_Baked_HasItsBoxArrowAndCellRoot_ClosedUntilAStepShows | 63 | public void Tutorial_Baked_HasItsBoxArrowAndCellRoot_ClosedUntilAStepShows() |
+| SceneBakeTests | method | Reaction_Baked_HasEveryPart_AndBindHidesTheStageAndSwitchesTheOthers | 92 | public void Reaction_Baked_HasEveryPart_AndBindHidesTheStageAndSwitchesTheOthers() |
+| SceneBakeTests | method | Story_Baked_HasEveryPart_AndTheRayFacesAreTheRaySprites | 125 | public void Story_Baked_HasEveryPart_AndTheRayFacesAreTheRaySprites() |
 | SettingsHapticsTests | method | Settings_StoredThenLoaded_RoundTrip | 28 | public void Settings_StoredThenLoaded_RoundTrip() |
 | SettingsHapticsTests | method | Settings_NothingOrGarbageSaved_GivesDefaults | 37 | public void Settings_NothingOrGarbageSaved_GivesDefaults() |
 | SettingsHapticsTests | method | Haptics_Plan_OnlyWhenEnabledAndSupported | 50 | public void Haptics_Plan_OnlyWhenEnabledAndSupported() |

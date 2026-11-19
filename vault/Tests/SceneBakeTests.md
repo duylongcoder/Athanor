@@ -10,7 +10,7 @@ count: 5
 `Athanor/Assets/Tests/EditModeGame/SceneBakeTests.cs` — 5 tests
 
 ## Covers
-[[Bench]], [[ContentDb]], [[GameFlow]], [[Label]], [[ReactionCutscene]], [[ScreenFx]], [[SimpleCutscene]], [[TutorialController]], [[WindowView]]
+[[Bench]], [[Clickable]], [[ContentDb]], [[GameFlow]], [[Label]], [[ReactionCutscene]], [[ScreenFx]], [[SimpleCutscene]], [[TutorialController]], [[TutorialHole]], [[WindowView]]
 
 ## Tests
 - `ScreenFx_Baked_HasFlashAndFadeSprites_AndBindMakesItTheSingleton`

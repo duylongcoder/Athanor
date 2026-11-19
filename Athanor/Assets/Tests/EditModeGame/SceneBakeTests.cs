@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Reflection;
 using Athanor.Game;
 using NUnit.Framework;
@@ -65,11 +66,17 @@ namespace Athanor.Tests
             Assert.IsNotNull(t, "GameFlow.tutorial");
             Assert.AreNotSame(main.Flow.gameObject, t.gameObject, "its own scene object, not GameFlow's");
             var root = F<Transform>(t, "root");
-            Assert.IsNotNull(root); Assert.IsNotNull(F<Transform>(t, "cells"));
+            Assert.IsNotNull(root); Assert.IsNotNull(F<Transform>(t, "extras"));
             Assert.IsNotNull(F<Label>(t, "line"));
             Assert.IsNotNull(F<SpriteRenderer>(t, "boxFill")); Assert.IsNotNull(F<SpriteRenderer>(t, "boxEdge")); Assert.IsNotNull(F<SpriteRenderer>(t, "arrow"));
             Assert.IsFalse(root.gameObject.activeSelf);
-            Assert.AreEqual(0, F<Transform>(t, "cells").childCount);
+            Assert.AreEqual(0, F<Transform>(t, "extras").childCount);
+            var dim = F<SpriteRenderer>(t, "dim");
+            Assert.IsNotNull(dim, "the dim"); Assert.AreEqual(SpriteMaskInteraction.VisibleOutsideMask, dim.maskInteraction, "the holes are an inverse mask");
+            Assert.IsNotNull(F<Clickable>(t, "lockPad")); Assert.IsNotNull(F<Clickable>(t, "readPad"));
+            var holes = F<List<TutorialHole>>(t, "holes");
+            Assert.GreaterOrEqual(holes.Count, 4, "a pool for the widest step (hand and three tiles)");
+            foreach (var h in holes) Assert.IsNotNull(h);
 
             t.Bind(main.Flow);
             Assert.AreSame(main.Flow, F<GameFlow>(t, "f"));
