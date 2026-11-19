@@ -1029,6 +1029,8 @@ MonoBehaviour:
   speed: 0.08
   arc: 3
   alpha: 0.7
+  moteScale: {x: 0.5, y: 0.5}
+  lift: 9
 --- !u!1 &890312182033096159
 GameObject:
   m_ObjectHideFlags: 0
@@ -2490,6 +2492,12 @@ MonoBehaviour:
   glow: {r: 0, g: 0, b: 0, a: 0}
   flashColor: {r: 0, g: 0, b: 0, a: 0}
   glowLight: {fileID: 8311935573440770653}
+  layout:
+    shutLid: {r: 0.03, g: 0.02, b: 0.05, a: 0.78}
+    hoverFace: {r: 1, g: 0.85, b: 0.45, a: 1}
+    consumeLift: {x: 0, y: 8, z: 0}
+    iconLift: 10
+    popRise: 8
 --- !u!1 &1762642760262819340
 GameObject:
   m_ObjectHideFlags: 0
@@ -2814,6 +2822,8 @@ MonoBehaviour:
   speed: 0.35
   arc: 7
   alpha: 0.9
+  moteScale: {x: 0.5, y: 0.5}
+  lift: 9
 --- !u!1 &2221987499244021600
 GameObject:
   m_ObjectHideFlags: 0
@@ -6520,6 +6530,12 @@ MonoBehaviour:
   glow: {r: 0, g: 0, b: 0, a: 0}
   flashColor: {r: 0, g: 0, b: 0, a: 0}
   glowLight: {fileID: 6336710651062113360}
+  layout:
+    shutLid: {r: 0.03, g: 0.02, b: 0.05, a: 0.78}
+    hoverFace: {r: 1, g: 0.85, b: 0.45, a: 1}
+    consumeLift: {x: 0, y: 8, z: 0}
+    iconLift: 10
+    popRise: 8
 --- !u!1 &3903295096772373739
 GameObject:
   m_ObjectHideFlags: 0
@@ -7613,6 +7629,12 @@ MonoBehaviour:
   glow: {r: 0, g: 0, b: 0, a: 0}
   flashColor: {r: 0, g: 0, b: 0, a: 0}
   glowLight: {fileID: 7307564906657122495}
+  layout:
+    shutLid: {r: 0.03, g: 0.02, b: 0.05, a: 0.78}
+    hoverFace: {r: 1, g: 0.85, b: 0.45, a: 1}
+    consumeLift: {x: 0, y: 8, z: 0}
+    iconLift: 10
+    popRise: 8
 --- !u!1 &4477896618857055683
 GameObject:
   m_ObjectHideFlags: 0
@@ -9797,6 +9819,12 @@ MonoBehaviour:
   glow: {r: 0, g: 0, b: 0, a: 0}
   flashColor: {r: 0, g: 0, b: 0, a: 0}
   glowLight: {fileID: 9017745651882299287}
+  layout:
+    shutLid: {r: 0.03, g: 0.02, b: 0.05, a: 0.78}
+    hoverFace: {r: 1, g: 0.85, b: 0.45, a: 1}
+    consumeLift: {x: 0, y: 8, z: 0}
+    iconLift: 10
+    popRise: 8
 --- !u!1 &5874600378235454989
 GameObject:
   m_ObjectHideFlags: 0
@@ -10234,6 +10262,12 @@ MonoBehaviour:
   glow: {r: 0, g: 0, b: 0, a: 0}
   flashColor: {r: 0, g: 0, b: 0, a: 0}
   glowLight: {fileID: 2324282203239022561}
+  layout:
+    shutLid: {r: 0.03, g: 0.02, b: 0.05, a: 0.78}
+    hoverFace: {r: 1, g: 0.85, b: 0.45, a: 1}
+    consumeLift: {x: 0, y: 8, z: 0}
+    iconLift: 10
+    popRise: 8
 --- !u!1 &6143387194806115065
 GameObject:
   m_ObjectHideFlags: 0
@@ -10985,6 +11019,14 @@ MonoBehaviour:
   handRoot: {fileID: 6773111518867600858}
   ghost: {fileID: 6177746073361138523}
   rackFull: {fileID: 3154058785495454252}
+  layout:
+    joinLift: {x: 0, y: -8, z: 0}
+    floatLiftFrom: {x: 0, y: 6, z: 0}
+    floatLiftTo: {x: 0, y: 28, z: 0}
+    floatShadow: {r: 0.047058824, g: 0.02745098, b: 0.023529412, a: 1}
+    ghostLift: 6
+    tileTipLift: {x: 0, y: 12, z: 0}
+    cardTipLift: {x: 0, y: 35, z: 0}
 --- !u!1 &6587872970794987436
 GameObject:
   m_ObjectHideFlags: 0
@@ -11054,6 +11096,12 @@ MonoBehaviour:
   glow: {r: 0, g: 0, b: 0, a: 0}
   flashColor: {r: 0, g: 0, b: 0, a: 0}
   glowLight: {fileID: 614171233095105740}
+  layout:
+    shutLid: {r: 0.03, g: 0.02, b: 0.05, a: 0.78}
+    hoverFace: {r: 1, g: 0.85, b: 0.45, a: 1}
+    consumeLift: {x: 0, y: 8, z: 0}
+    iconLift: 10
+    popRise: 8
 --- !u!1 &6684936391947216083
 GameObject:
   m_ObjectHideFlags: 0
@@ -13020,6 +13068,12 @@ MonoBehaviour:
   glow: {r: 0, g: 0, b: 0, a: 0}
   flashColor: {r: 0, g: 0, b: 0, a: 0}
   glowLight: {fileID: 8720223188725115334}
+  layout:
+    shutLid: {r: 0.03, g: 0.02, b: 0.05, a: 0.78}
+    hoverFace: {r: 1, g: 0.85, b: 0.45, a: 1}
+    consumeLift: {x: 0, y: 8, z: 0}
+    iconLift: 10
+    popRise: 8
 --- !u!1 &8222741842677739701
 GameObject:
   m_ObjectHideFlags: 0
@@ -13089,6 +13143,12 @@ MonoBehaviour:
   glow: {r: 0, g: 0, b: 0, a: 0}
   flashColor: {r: 0, g: 0, b: 0, a: 0}
   glowLight: {fileID: 5351100613822197158}
+  layout:
+    shutLid: {r: 0.03, g: 0.02, b: 0.05, a: 0.78}
+    hoverFace: {r: 1, g: 0.85, b: 0.45, a: 1}
+    consumeLift: {x: 0, y: 8, z: 0}
+    iconLift: 10
+    popRise: 8
 --- !u!1 &8266681368029124818
 GameObject:
   m_ObjectHideFlags: 0
@@ -13526,6 +13586,12 @@ MonoBehaviour:
   glow: {r: 0, g: 0, b: 0, a: 0}
   flashColor: {r: 0, g: 0, b: 0, a: 0}
   glowLight: {fileID: 3100665538490545128}
+  layout:
+    shutLid: {r: 0.03, g: 0.02, b: 0.05, a: 0.78}
+    hoverFace: {r: 1, g: 0.85, b: 0.45, a: 1}
+    consumeLift: {x: 0, y: 8, z: 0}
+    iconLift: 10
+    popRise: 8
 --- !u!1 &8601296434041742105
 GameObject:
   m_ObjectHideFlags: 0

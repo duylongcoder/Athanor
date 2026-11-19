@@ -17,6 +17,20 @@ namespace Athanor.Game
         [SerializeField] RarityStars stars;
         [SerializeField] Label line1, line2, kind;
         [SerializeField] Transform lettering, picture;         // the lettering and the icon, which slide left while the next card covers this one's right
+        /// <summary>Offsets and speeds of the card, stored in Card.prefab.</summary>
+        [System.Serializable]
+        public struct Layout
+        {
+            /// <summary>The name's height from the card's middle: a one-line name, and the first of two lines.</summary>
+            public float nameOneLine, nameTwoLines;
+            /// <summary>The icon slides left no further than this (it stays inside its window).</summary>
+            public float pictureSlideMax;
+            /// <summary>A dealt card starts this far below its place.</summary>
+            public float dealDrop;
+            /// <summary>How far a selected and a pointed-at card rise, how fast, and the selected one's bob (amplitude, speed).</summary>
+            public float selectedLift, liftedLift, liftSpeed, bobAmp, bobSpeed;
+        }
+        [SerializeField] Layout layout;
         float lift, delay, shift, slid;
         int baseOrder, frontOrder, shownOrder;
 
@@ -28,7 +42,7 @@ namespace Athanor.Game
             icon.sprite = Art.Lib.Sprite(m.id);
             var words = m.name.Split(' ');
             string a = words[0], b = words.Length > 1 ? string.Join(" ", words, 1, words.Length - 1) : null;
-            line1.Text = a; line1.transform.localPosition = new Vector3(0, b == null ? -3 : 2, 0);
+            line1.Text = a; line1.transform.localPosition = new Vector3(0, b == null ? layout.nameOneLine : layout.nameTwoLines, 0);
             line1.Lines = b == null ? 1 : 2;
             line2.gameObject.SetActive(b != null);
             if (b != null) { line2.Text = b; line2.Lines = 2; }
@@ -55,7 +69,7 @@ namespace Athanor.Game
         void Slide()
         {
             lettering.localPosition = new Vector3(-Mathf.Round(slid), 0, 0);
-            picture.localPosition = new Vector3(-Mathf.Round(Mathf.Min(slid, 10)), 0, 0);   // the icon stays inside its window
+            picture.localPosition = new Vector3(-Mathf.Round(Mathf.Min(slid, layout.pictureSlideMax)), 0, 0);   // the icon stays inside its window
         }
 
         void SetOrder(int order)
@@ -67,7 +81,7 @@ namespace Athanor.Game
         }
 
         /// <summary>Starts below the screen and slides up after a short stagger.</summary>
-        public void DealIn(float wait) { delay = wait; transform.position = home + new Vector3(0, -90, 0); }
+        public void DealIn(float wait) { delay = wait; transform.position = home + new Vector3(0, -layout.dealDrop, 0); }
 
         public bool Contains(Vector2 world)
         {
@@ -78,8 +92,8 @@ namespace Athanor.Game
         void Update()
         {
             if (delay > 0) { delay -= Time.deltaTime; return; }
-            lift = Mathf.MoveTowards(lift, Selected ? 14 : Lifted ? 9 : 0, Time.deltaTime * 90);
-            var target = home + new Vector3(0, lift + (Selected ? Mathf.Round(Mathf.Sin(Time.time * 3) * 1.5f) : 0), 0);
+            lift = Mathf.MoveTowards(lift, Selected ? layout.selectedLift : Lifted ? layout.liftedLift : 0, Time.deltaTime * layout.liftSpeed);
+            var target = home + new Vector3(0, lift + (Selected ? Mathf.Round(Mathf.Sin(Time.time * layout.bobSpeed) * layout.bobAmp) : 0), 0);
             transform.position = Px.Snap(Vector3.Lerp(transform.position, target, 1 - Mathf.Exp(-Time.deltaTime * 18)));
             bool front = Selected || Lifted;
             slid = Mathf.MoveTowards(slid, front ? 0 : shift, Time.deltaTime * 160);

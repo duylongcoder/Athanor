@@ -41,4 +41,4 @@ aliases: []
 [[BenchView]], [[Card]], [[CardView]], [[CatalystChoiceView]], [[EventView]], [[GoalRow]], [[GoalToast]], [[GoalsView]], [[HudView]], [[JournalView]], [[Motion]], [[PauseMenu]], [[ReactionCutscene]], [[Row]], [[RunOverView]], [[SimpleCutscene]], [[Spawn]], [[TitleView]], [[Tooltip]], [[TutorialController]], [[UiButton]]
 
 ## Tested by
-[[LabelLineBoxTests]], [[PrefabBakeTests]], [[RunOverDepthTests]], [[SceneBakeTests]]
+[[LabelLineBoxTests]], [[LayoutPinTests]], [[PrefabBakeTests]], [[RunOverDepthTests]], [[SceneBakeTests]]

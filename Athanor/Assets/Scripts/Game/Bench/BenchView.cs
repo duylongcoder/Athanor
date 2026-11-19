@@ -24,6 +24,22 @@ namespace Athanor.Game
 
         const int RackX = 130, RackY = 256, RackFirst = 6, RackPitch = 31, RackSlots = 12, CardY = 290, HandX = 128, HandW = 386;
 
+        /// <summary>Offsets and a colour of the bench, stored in Bench.prefab.</summary>
+        [Serializable]
+        public struct Layout
+        {
+            /// <summary>Where the hand-drawn links of a join start and end, from a tile's centre.</summary>
+            public Vector3 joinLift;
+            /// <summary>A floating number starts and ends this far above its point.</summary>
+            public Vector3 floatLiftFrom, floatLiftTo;
+            /// <summary>The floating number's outline.</summary>
+            public Color floatShadow;
+            /// <summary>The dragged material's ghost rides this far above the pointer.</summary>
+            public float ghostLift;
+            /// <summary>Where a tooltip points: above a tile's centre, above a card's top (half its height).</summary>
+            public Vector3 tileTipLift, cardTipLift;
+        }
+
         enum From { None, Hand, Tile }
         struct Pick { public From from; public int handIndex, tile; public string id; public bool Is => from != From.None; }
         [Serializable] sealed class Slot { public SpriteRenderer icon, lit; public Vector3 pos; [NonSerialized] public int handIndex = -1; [NonSerialized] public string id; }
@@ -40,6 +56,7 @@ namespace Athanor.Game
         [SerializeField] Transform handRoot;
         [SerializeField] SpriteRenderer ghost;
         [SerializeField] Label rackFull;
+        [SerializeField] Layout layout;
         readonly List<CardView> cards = new List<CardView>();
         bool bound;
         readonly string[] tileNote = new string[Bench.TileCount], tileNoteTitle = new string[Bench.TileCount];
@@ -159,7 +176,7 @@ namespace Athanor.Game
             foreach (int t in run.DepthBlocked) { tileNoteTitle[t] = Loc.T("ui.bench.shut_tile"); tileNote[t] = Loc.T("ui.bench.shut_tile_text"); }
             for (int i = 0; i < tiles.Length; i++) tiles[i].SetState(marks[i], run.Rules.Blocked[i]);
             var joined = new List<(Vector3, Vector3)>();
-            foreach (var (a, b) in run.Rules.Links) joined.Add((tiles[a].centre + new Vector3(0, -8, 0), tiles[b].centre + new Vector3(0, -8, 0)));
+            foreach (var (a, b) in run.Rules.Links) joined.Add((tiles[a].centre + layout.joinLift, tiles[b].centre + layout.joinLift));
             joins.Set(joined);
         }
 
@@ -169,10 +186,10 @@ namespace Athanor.Game
         /// <summary>A number that rises from a point and fades.</summary>
         public IEnumerator FloatText(string text, Vector3 from, Color color, float seconds = 0.8f, bool small = false)
         {
-            var label = Spawn.Text(transform, text, 0, 0, small ? FontKind.Tiny : FontKind.Title, small ? 8 : 16, color, 170, Align.Centre, Px.Hex("#0c0706"));
+            var label = Spawn.Text(transform, text, 0, 0, small ? FontKind.Tiny : FontKind.Title, small ? 8 : 16, color, 170, Align.Centre, layout.floatShadow);
             // it rises the whole time and fades over the last 30 %
             yield return Sequence.Create()
-                .Group(Motion.Move(label.transform, from + new Vector3(0, 6, 0), from + new Vector3(0, 28, 0), seconds, Ease.OutCubic))
+                .Group(Motion.Move(label.transform, from + layout.floatLiftFrom, from + layout.floatLiftTo, seconds, Ease.OutCubic))
                 .Insert(0.7f * seconds, Motion.Fade(label, 1, 0, 0.3f * seconds))
                 .ToYieldInstruction();
             Destroy(label.gameObject);
@@ -261,7 +278,7 @@ namespace Athanor.Game
                 ghost.sprite = Art.Lib.Sprite(press.id); ghost.enabled = true;
                 if (press.from == From.Tile) tiles[press.tile].Icon.color = Color.white.Alpha(0.3f);
             }
-            if (dragging) ghost.transform.position = Px.Snap(new Vector3(w.x, w.y + 6, 0));
+            if (dragging) ghost.transform.position = Px.Snap(new Vector3(w.x, w.y + layout.ghostLift, 0));
             if (PointerInput.Up && press.Is)
             {
                 if (dragging)
@@ -338,11 +355,11 @@ namespace Athanor.Game
                 // two lines: the panel has no room for a third
                 int ri = over.from == From.Tile ? run.Rules.Ri(db, over.tile, m.id) : m.reactivity;
                 body = Loc.T("ui.bench.material", ("kind", Loc.Kind(m.kind)), ("tier", m.tier), ("known", known), ("ri", ri)) + heat;
-                if (over.from == From.Tile) { anchor = tiles[over.tile].centre + new Vector3(0, 12, 0); clear = 22; }
+                if (over.from == From.Tile) { anchor = tiles[over.tile].centre + layout.tileTipLift; clear = 22; }
                 else
                 {
                     foreach (var s in slots) if (s.handIndex == over.handIndex) anchor = s.pos;
-                    foreach (var c in cards) if (c.handIndex == over.handIndex) anchor = c.home + new Vector3(0, CardView.H / 2f, 0);   // above the card
+                    foreach (var c in cards) if (c.handIndex == over.handIndex) anchor = c.home + layout.cardTipLift;   // above the card
                     clear = 16;
                     if (m.tier == 0) rarity = Rarities.Of(m.rarity);
                 }

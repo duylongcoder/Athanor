@@ -102,5 +102,91 @@ namespace Athanor.Tests
                 });
             }
         }
+        static T Part<T>(string prefab) where T : Component
+        {
+            var go = AssetDatabase.LoadAssetAtPath<GameObject>(prefab);
+            Assert.IsNotNull(go, prefab);
+            var c = go.GetComponentInChildren<T>(true);
+            Assert.IsNotNull(c, typeof(T).Name + " in " + prefab);
+            return c;
+        }
+
+        static void Rect4(SerializedObject so, string path, float x, float y, float w, float h) =>
+            Assert.AreEqual(new Rect(x, y, w, h), so.FindProperty(path).rectValue, path);
+
+        static void V2(SerializedObject so, string path, float x, float y) => Assert.AreEqual(new Vector2(x, y), so.FindProperty(path).vector2Value, path);
+
+        [Test]
+        public void HudView_Prefab_KeepsTodaysLayout()
+        {
+            var so = new SerializedObject(Part<HudView>("Assets/Prefabs/Parts/Hud.prefab"));
+            Floats(so, "layout", new Dictionary<string, float>
+            {
+                { "rowEn", 10 }, { "rowVi", 12 }, { "noteCharsEn", 19 }, { "noteCharsVi", 17 }, { "redrawLabelY", 3 }, { "pressedDy", 2 },
+                { "catalystPitch", 35 }, { "catalystSpread", 105 }, { "catalystSideBySide", 4 }, { "aspectPitch", 29 },
+                { "noteX", 10 }, { "noteTopAspects", 130 }, { "noteTop", 88 }, { "potencyX", 70 }, { "potencyTightX", 17 }, { "potencyY", 49 },
+                { "barWidth", 132 }, { "barHeight", 5 }, { "tightFrom", 70 }, { "tightGap", 4 }, { "tightTo", 153 },
+            });
+            Rect4(so, "layout.redrawRect", 556, 88, 76, 20); Rect4(so, "layout.pauseRect", 12, 152, 28, 20);
+            V2(so, "layout.socketOrigin", 488, 24); V2(so, "layout.socketSize", 30, 30); V2(so, "layout.iconOffset", 3, 3); V2(so, "layout.iconSize", 24, 24);
+            V2(so, "layout.aspectAnchor", 22, 111); V2(so, "layout.potencyAnchor", 96, 56); V2(so, "layout.barOrigin", 18, 70); V2(so, "layout.pulseAlpha", 0.1f, 0.2f);
+            Assert.AreEqual(new Vector3(0.25f, 1.25f, 1), so.FindProperty("layout.barTipScale").vector3Value);
+            Colour(so, "redrawUp", 0x1d5a52); Colour(so, "redrawOver", 0x26706a); Colour(so, "redrawPressed", 0x143f3a); Colour(so, "redrawOff", 0x3a2e28);
+            var pulse = so.FindProperty("layout.pulseColor").colorValue;
+            Assert.AreEqual(new Color(1, 0.75f, 0.35f, 1), pulse);
+            Assert.AreEqual(new Color(0.55f, 0.5f, 0.75f, 1), so.FindProperty("noTargetBar").colorValue);
+        }
+
+        [Test]
+        public void HudView_IgniteLabel_SitsWhereTheCodePutIt()
+        {
+            var hud = Part<HudView>("Assets/Prefabs/Parts/Hud.prefab");
+            var label = MainSceneFixture.Field<Label>(hud, "igniteText");
+            Assert.AreEqual(Px.At(575, 306), label.transform.position);
+        }
+
+        [Test]
+        public void BenchParts_Prefabs_KeepTodaysLayout()
+        {
+            var bench = new SerializedObject(Part<BenchView>("Assets/Prefabs/Views/Bench.prefab"));
+            Assert.AreEqual(new Vector3(0, -8, 0), bench.FindProperty("layout.joinLift").vector3Value);
+            Assert.AreEqual(new Vector3(0, 6, 0), bench.FindProperty("layout.floatLiftFrom").vector3Value);
+            Assert.AreEqual(new Vector3(0, 28, 0), bench.FindProperty("layout.floatLiftTo").vector3Value);
+            Assert.AreEqual(new Vector3(0, 12, 0), bench.FindProperty("layout.tileTipLift").vector3Value);
+            Assert.AreEqual(new Vector3(0, CardView.H / 2f, 0), bench.FindProperty("layout.cardTipLift").vector3Value);
+            Floats(bench, "layout", new Dictionary<string, float> { { "ghostLift", 6 } });
+            Colour(bench, "layout.floatShadow", 0x0c0706);
+
+            var tile = new SerializedObject(Part<TileView>("Assets/Prefabs/Views/Bench.prefab"));
+            var lid = tile.FindProperty("layout.shutLid").colorValue;
+            Assert.AreEqual(new Color(0.03f, 0.02f, 0.05f, 0.78f), lid);
+            Assert.AreEqual(new Color(1, 0.85f, 0.45f, 1), tile.FindProperty("layout.hoverFace").colorValue);
+            Assert.AreEqual(new Vector3(0, 8, 0), tile.FindProperty("layout.consumeLift").vector3Value);
+            Floats(tile, "layout", new Dictionary<string, float> { { "iconLift", 10 }, { "popRise", 8 } });
+
+            var card = new SerializedObject(Part<CardView>("Assets/Prefabs/Parts/Card.prefab"));
+            Floats(card, "layout", new Dictionary<string, float>
+            {
+                { "nameOneLine", -3 }, { "nameTwoLines", 2 }, { "pictureSlideMax", 10 }, { "dealDrop", 90 },
+                { "selectedLift", 14 }, { "liftedLift", 9 }, { "liftSpeed", 90 }, { "bobAmp", 1.5f }, { "bobSpeed", 3 },
+            });
+
+            var link = new SerializedObject(Part<LinkView>("Assets/Prefabs/Views/Bench.prefab"));
+            Assert.AreEqual(new Color(2.2f, 1.7f, 0.8f, 1), link.FindProperty("color").colorValue);
+            V2(link, "moteScale", 0.5f, 0.5f);
+            Assert.AreEqual(9, link.FindProperty("lift").floatValue);
+        }
+
+        [Test]
+        public void Dust_MainScene_KeepsTodaysLook()
+        {
+            using (var main = new MainSceneFixture())
+            {
+                var dust = main.Flow.gameObject.scene.GetRootGameObjects().SelectMany(g => g.GetComponentsInChildren<Dust>(true)).Single();
+                var so = new SerializedObject(dust);
+                Assert.AreEqual(new Color(0.7f, 0.85f, 1, 1), so.FindProperty("tint").colorValue);
+                Assert.AreEqual(0.3f, so.FindProperty("alphaBase").floatValue, 1e-4f); Assert.AreEqual(0.4f, so.FindProperty("alphaSwing").floatValue, 1e-4f);
+            }
+        }
     }
 }

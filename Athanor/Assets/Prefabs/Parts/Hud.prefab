@@ -9871,6 +9871,55 @@ MonoBehaviour:
   pauseHit: {fileID: 5673298845778374006}
   journalHit: {fileID: 2173669511391491345}
   igniteHit: {fileID: 1593611778566736418}
+  layout:
+    rowEn: 10
+    rowVi: 12
+    noteCharsEn: 19
+    noteCharsVi: 17
+    redrawRect:
+      serializedVersion: 2
+      x: 556
+      y: 88
+      width: 76
+      height: 20
+    pauseRect:
+      serializedVersion: 2
+      x: 12
+      y: 152
+      width: 28
+      height: 20
+    redrawLabelY: 3
+    pressedDy: 2
+    catalystPitch: 35
+    catalystSpread: 105
+    catalystSideBySide: 4
+    socketOrigin: {x: 488, y: 24}
+    socketSize: {x: 30, y: 30}
+    iconOffset: {x: 3, y: 3}
+    iconSize: {x: 24, y: 24}
+    aspectAnchor: {x: 22, y: 111}
+    potencyAnchor: {x: 96, y: 56}
+    aspectPitch: 29
+    noteX: 10
+    noteTopAspects: 130
+    noteTop: 88
+    potencyX: 70
+    potencyTightX: 17
+    potencyY: 49
+    barOrigin: {x: 18, y: 70}
+    barWidth: 132
+    barHeight: 5
+    tightFrom: 70
+    tightGap: 4
+    tightTo: 153
+    pulseColor: {r: 1, g: 0.75, b: 0.35, a: 1}
+    pulseAlpha: {x: 0.1, y: 0.2}
+    barTipScale: {x: 0.25, y: 1.25, z: 1}
+  redrawUp: {r: 0.11372549, g: 0.3529412, b: 0.32156864, a: 1}
+  redrawOver: {r: 0.14901961, g: 0.4392157, b: 0.41568628, a: 1}
+  redrawPressed: {r: 0.078431375, g: 0.24705882, b: 0.22745098, a: 1}
+  redrawOff: {r: 0.22745098, g: 0.18039216, b: 0.15686275, a: 1}
+  noTargetBar: {r: 0.55, g: 0.5, b: 0.75, a: 1}
 --- !u!1 &8320819842582975168
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,7 +5,7 @@ tags: [moc/tests]
 ---
 
 # Tests
-534 test methods in 44 files. Run: `dotnet test tools/CoreTests` (rules) or `unity test Athanor --mode EditMode`.
+539 test methods in 44 files. Run: `dotnet test tools/CoreTests` (rules) or `unity test Athanor --mode EditMode`.
 
 - [[ChainTests]] — 26 tests · covers [[Bench]], [[ChainPlan]], [[ChainPlanner]], [[ContentDb]]
 - [[ContentTests]] — 41 tests · covers [[Bench]], [[ChainPlanner]], [[ContentData]], [[ContentDb]], [[Ops]]
@@ -30,7 +30,7 @@ tags: [moc/tests]
 - [[DepthLookTests]] — 8 tests · covers [[DepthLook]]
 - [[HudTests]] — 3 tests · covers [[ContentData]], [[ContentDb]], [[HudView]], [[Journal]], [[RunOptions]], [[RunPhase]], [[RunState]], [[Unlocks]]
 - [[LabelLineBoxTests]] — 5 tests · covers [[Fonts]], [[Label]], [[Loc]], [[UiButton]]
-- [[LayoutPinTests]] — 3 tests · covers [[IgniteSequence]], [[Palette]], [[Px]]
+- [[LayoutPinTests]] — 7 tests · covers [[BenchView]], [[CardView]], [[Dust]], [[HudView]], [[IgniteSequence]], [[Label]], [[LinkView]], [[Palette]]
 - [[LocTests]] — 10 tests · covers [[EditorGlobals]], [[Lang]], [[Loc]]
 - [[MainDepthTests]] — 7 tests · covers [[Bench]], [[BenchView]], [[CameraSway]], [[DepthLayer]], [[DepthMath]], [[DepthMood]], [[DepthRig]], [[GameFlow]]
 - [[MainDevHookTests]] — 4 tests · covers [[BenchView]], [[DepthMath]], [[GameFlow]]
@@ -40,7 +40,7 @@ tags: [moc/tests]
 - [[PrefabBakeTests]] — 40 tests · covers [[Bench]], [[BenchView]], [[CardView]], [[CatalystChoiceView]], [[ChoiceCard]], [[Clickable]], [[ContentData]], [[ContentDb]]
 - [[RunOverDepthTests]] — 4 tests · covers [[ContentData]], [[ContentDb]], [[Label]], [[Loc]], [[RunOverView]]
 - [[SaveTests]] — 14 tests · covers [[ContentData]], [[ContentDb]], [[Journal]], [[Kind]], [[Profile]], [[ProfileData]], [[Save]]
-- [[SceneBakeTests]] — 6 tests · covers [[Bench]], [[Clickable]], [[ContentDb]], [[GameFlow]], [[Label]], [[ReactionCutscene]], [[ScreenFx]], [[SimpleCutscene]]
+- [[SceneBakeTests]] — 7 tests · covers [[Bench]], [[Clickable]], [[ContentDb]], [[GameFlow]], [[JournalView]], [[Label]], [[ReactionCutscene]], [[ScreenFx]]
 - [[SettingsHapticsTests]] — 7 tests · covers [[AudioMute]], [[Haptics]], [[Save]], [[Settings]]
 - [[SparksTests]] — 7 tests · covers [[Art]], [[Particle]], [[SparkMesh]], [[Sparks]]
 - [[StaticResetTests]] — 8 tests · covers [[Art]], [[AudioMute]], [[DepthRig]], [[EditorGlobals]], [[Haptics]], [[Loc]], [[Palette]], [[PointerInput]]

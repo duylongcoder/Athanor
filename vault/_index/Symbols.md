@@ -68,12 +68,16 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | TutorialScript | TutorialScript | Core | class | Athanor/Assets/Scripts/Core/Tutorial.cs | 32 | The tutorial (docs/ATHANOR.md §8, v2) as data. Every number the script shows is pinned by TutorialTests; change both together. |
 | TutorialPlan | TutorialPlan | Core | enum | Athanor/Assets/Scripts/Core/Tutorial.cs | 6 |  |
 | BenchView | BenchView | Game | class | Athanor/Assets/Scripts/Game/Bench/BenchView.cs | 14 | The main screen: nine tiles, the hand of cards, the rack of discoveries and the HUD. Materials are placed by dragging them onto a tile, or by clicking one and then a tile; clicking a placed one takes  |
-| From | From | Game | enum | Athanor/Assets/Scripts/Game/Bench/BenchView.cs | 27 |  |
+| BenchView.Layout | BenchView.Layout | Game | struct | Athanor/Assets/Scripts/Game/Bench/BenchView.cs | 29 | Offsets and a colour of the bench, stored in Bench.prefab. |
+| From | From | Game | enum | Athanor/Assets/Scripts/Game/Bench/BenchView.cs | 43 |  |
 | CardView | CardView | Game | class | Athanor/Assets/Scripts/Game/Bench/CardView.cs | 7 | A starting material in the hand, drawn as a parchment card. |
+| CardView.Layout | CardView.Layout | Game | struct | Athanor/Assets/Scripts/Game/Bench/CardView.cs | 22 | Offsets and speeds of the card, stored in Card.prefab. |
 | Dust | Dust | Game | class | Athanor/Assets/Scripts/Game/Bench/Dust.cs | 9 | Dust drifting down through the moonbeam: a loop, each mote's position a pure function of time, all of them drawn as one SparkMesh (one renderer) at order 8. |
 | HudView | HudView | Game | class | Athanor/Assets/Scripts/Game/Bench/HudView.cs | 8 | The panels round the bench: depth and potency, catalysts, trials and redraws, the last-reaction note, journal and Ignite. |
+| HudView.Layout | HudView.Layout | Game | struct | Athanor/Assets/Scripts/Game/Bench/HudView.cs | 29 | The HUD's layout numbers (art pixels, y down), stored in Hud.prefab. |
 | LinkView | LinkView | Game | class | Athanor/Assets/Scripts/Game/Bench/LinkView.cs | 7 | Motes of light travelling between neighbouring tiles whose reaction is already in the journal. |
 | TileView | TileView | Game | class | Athanor/Assets/Scripts/Game/Bench/TileView.cs | 10 | One of the nine bench tiles: its hover highlight and, when occupied, the material standing on it. |
+| TileView.Layout | TileView.Layout | Game | struct | Athanor/Assets/Scripts/Game/Bench/TileView.cs | 33 | Colours and offsets of the tile, stored in Bench.prefab. |
 | GameFlow | GameFlow | Game | class | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 13 | Owns the run and moves the game between its screens. |
 | RunTiming | RunTiming | Game | struct | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 85 | Waits and shake of the descent and the end of a run, in seconds. |
 | TitleChoice | TitleChoice | Game | enum | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 138 |  |
@@ -613,78 +617,116 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | BenchView | property | InputEnabled | 20 | public bool InputEnabled |
 | BenchView | property | Hud | 21 | public HudView Hud |
 | BenchView | property | TileCount | 23 | public int TileCount |
-| BenchView | property | Pick | 28 | struct Pick |
-| BenchView | method | Bind | 53 | public void Bind(ContentDb content, FxRefs fx) |
-| BenchView | method | Bind | 67 | public void Bind(RunState state, Journal book) |
-| BenchView | method | TileCentre | 75 | public Vector3 TileCentre(int i) |
-| BenchView | method | RackSlot | 77 | public Vector3 RackSlot(int i) |
-| BenchView | method | PreviewOnRack | 79 | public void PreviewOnRack(int i, string id) |
-| BenchView | method | Tile | 84 | public TileView Tile(int i) |
-| BenchView | method | Refresh | 87 | public void Refresh(bool deal = false) |
-| BenchView | method | ClearLinks | 167 | public void ClearLinks() |
-| BenchView | method | FloatText | 170 | public IEnumerator FloatText(string text, Vector3 from, Color color, float seconds = 0.8f, bool small = false) |
-| BenchView | method | PlaceLine | 219 | public static string PlaceLine(int tile) |
-| BenchView | method | UnplaceLine | 220 | public static string UnplaceLine(int tile) |
-| From | value | None | 27 | None |
-| From | value | Hand | 27 | Hand |
-| From | value | Tile | 27 | Tile |
+| BenchView | property | Pick | 44 | struct Pick |
+| BenchView | method | Bind | 70 | public void Bind(ContentDb content, FxRefs fx) |
+| BenchView | method | Bind | 84 | public void Bind(RunState state, Journal book) |
+| BenchView | method | TileCentre | 92 | public Vector3 TileCentre(int i) |
+| BenchView | method | RackSlot | 94 | public Vector3 RackSlot(int i) |
+| BenchView | method | PreviewOnRack | 96 | public void PreviewOnRack(int i, string id) |
+| BenchView | method | Tile | 101 | public TileView Tile(int i) |
+| BenchView | method | Refresh | 104 | public void Refresh(bool deal = false) |
+| BenchView | method | ClearLinks | 184 | public void ClearLinks() |
+| BenchView | method | FloatText | 187 | public IEnumerator FloatText(string text, Vector3 from, Color color, float seconds = 0.8f, bool small = false) |
+| BenchView | method | PlaceLine | 236 | public static string PlaceLine(int tile) |
+| BenchView | method | UnplaceLine | 237 | public static string UnplaceLine(int tile) |
+| BenchView.Layout | field | joinLift | 32 | public Vector3 joinLift |
+| BenchView.Layout | field | floatLiftTo | 34 | public Vector3 floatLiftFrom, floatLiftTo |
+| BenchView.Layout | field | floatShadow | 36 | public Color floatShadow |
+| BenchView.Layout | field | ghostLift | 38 | public float ghostLift |
+| BenchView.Layout | field | cardTipLift | 40 | public Vector3 tileTipLift, cardTipLift |
+| From | value | None | 43 | None |
+| From | value | Hand | 43 | Hand |
+| From | value | Tile | 43 | Tile |
 | CardView | field | W | 9 | public const int W = 74, H = 70 |
 | CardView | field | handIndex | 10 | public int handIndex |
 | CardView | field | id | 11 | public string id |
 | CardView | field | home | 12 | public Vector3 home |
 | CardView | field | Dimmed | 13 | public bool Lifted, Selected, Dimmed |
-| CardView | method | Show | 24 | public void Show(MaterialData m, int order) |
-| CardView | method | Fan | 45 | public void Fan(float visible, int front) |
-| CardView | method | DealIn | 70 | public void DealIn(float wait) |
-| CardView | method | Contains | 72 | public bool Contains(Vector2 world) |
+| CardView | method | Show | 38 | public void Show(MaterialData m, int order) |
+| CardView | method | Fan | 59 | public void Fan(float visible, int front) |
+| CardView | method | DealIn | 84 | public void DealIn(float wait) |
+| CardView | method | Contains | 86 | public bool Contains(Vector2 world) |
+| CardView.Layout | field | nameTwoLines | 25 | public float nameOneLine, nameTwoLines |
+| CardView.Layout | field | pictureSlideMax | 27 | public float pictureSlideMax |
+| CardView.Layout | field | dealDrop | 29 | public float dealDrop |
+| CardView.Layout | field | bobSpeed | 31 | public float selectedLift, liftedLift, liftSpeed, bobAmp, bobSpeed |
 | Dust | field | count | 11 | public int count = 46 |
 | Dust | field | material | 13 | public Material material |
 | Dust | field | sprite | 14 | public Sprite sprite |
+| Dust | field | tint | 16 | public Color tint |
+| Dust | field | alphaSwing | 17 | public float alphaBase, alphaSwing |
 | HudView | field | PauseClicked | 10 | public event Action IgniteClicked, JournalClicked, RedrawClicked, PauseClicked |
 | HudView | property | HoveredCatalyst | 12 | public int HoveredCatalyst |
 | HudView | property | RedrawHovered | 13 | public bool RedrawHovered |
 | HudView | property | PauseHovered | 15 | public bool PauseHovered |
-| HudView | field | PauseX | 19 | public const int PauseX = 12, PauseY = 152, PauseW = 28, PauseH = 20, PauseOrder = 650 |
+| HudView | field | PauseOrder | 17 | public const int PauseOrder = 650 |
 | HudView | property | HoveredAspect | 23 | public int HoveredAspect |
 | HudView | field | MaxCatalysts | 25 | public const int MaxCatalysts = 6, MaxAspects = 3 |
-| HudView | field | RedrawX | 27 | public const int RedrawX = 556, RedrawY = 88, RedrawW = 76, RedrawH = 20 |
-| HudView | method | SetPauseShown | 56 | public void SetPauseShown(bool shown) |
-| HudView | property | PauseShown | 62 | public bool PauseShown |
-| HudView | property | PauseAnchor | 63 | public Vector3 PauseAnchor |
-| HudView | property | PotencyPosition | 65 | public Vector3 PotencyPosition |
-| HudView | method | CatalystAnchor | 67 | public Vector3 CatalystAnchor(int i) |
-| HudView | method | AspectAnchor | 68 | public Vector3 AspectAnchor(int i) |
-| HudView | property | RedrawAnchor | 70 | public Vector3 RedrawAnchor |
-| HudView | method | CanRedraw | 72 | public static bool CanRedraw(RunState run) |
-| HudView | method | Number | 73 | public static string Number(long n) |
-| HudView | method | Bind | 78 | public void Bind() |
-| HudView | method | Show | 118 | public void Show(RunState run, ContentDb db, Journal journal, bool inputEnabled, bool keepRedraw = false) |
-| HudView | method | SetPotency | 166 | public void SetPotency(long value, bool instant = false) |
-| HudView | method | Note | 169 | public void Note(ReactionEvent e, ContentDb db) |
-| HudView | method | Hint | 193 | public void Hint(HintData h, ContentDb db) |
-| HudView | method | HintLine | 200 | public static string HintLine(HintData h, ContentDb db, bool withName = true) |
-| HudView | method | Bump | 208 | public void Bump() |
-| HudView | method | ClearNote | 210 | public void ClearNote() |
-| LinkView | field | color | 11 | public Color color = new Color(2.2f, 1.7f, 0.8f) |
+| HudView | method | SetPauseShown | 94 | public void SetPauseShown(bool shown) |
+| HudView | property | PauseShown | 100 | public bool PauseShown |
+| HudView | property | PauseAnchor | 101 | public Vector3 PauseAnchor |
+| HudView | property | RedrawRect | 104 | public Rect RedrawRect |
+| HudView | property | PauseRect | 106 | public Rect PauseRect |
+| HudView | property | PotencyPosition | 107 | public Vector3 PotencyPosition |
+| HudView | method | CatalystAnchor | 109 | public Vector3 CatalystAnchor(int i) |
+| HudView | method | AspectAnchor | 110 | public Vector3 AspectAnchor(int i) |
+| HudView | property | RedrawAnchor | 112 | public Vector3 RedrawAnchor |
+| HudView | method | CanRedraw | 114 | public static bool CanRedraw(RunState run) |
+| HudView | method | Number | 115 | public static string Number(long n) |
+| HudView | method | Bind | 120 | public void Bind() |
+| HudView | method | Show | 160 | public void Show(RunState run, ContentDb db, Journal journal, bool inputEnabled, bool keepRedraw = false) |
+| HudView | method | SetPotency | 208 | public void SetPotency(long value, bool instant = false) |
+| HudView | method | Note | 211 | public void Note(ReactionEvent e, ContentDb db) |
+| HudView | method | Hint | 235 | public void Hint(HintData h, ContentDb db) |
+| HudView | method | HintLine | 242 | public static string HintLine(HintData h, ContentDb db, bool withName = true) |
+| HudView | method | Bump | 250 | public void Bump() |
+| HudView | method | ClearNote | 252 | public void ClearNote() |
+| HudView.Layout | field | rowVi | 32 | public int rowEn, rowVi |
+| HudView.Layout | field | noteCharsVi | 34 | public int noteCharsEn, noteCharsVi |
+| HudView.Layout | field | redrawRect | 36 | public Rect redrawRect |
+| HudView.Layout | field | pauseRect | 38 | public Rect pauseRect |
+| HudView.Layout | field | redrawLabelY | 40 | public float redrawLabelY |
+| HudView.Layout | field | pressedDy | 42 | public float pressedDy |
+| HudView.Layout | field | catalystSpread | 44 | public float catalystPitch, catalystSpread |
+| HudView.Layout | field | catalystSideBySide | 45 | public int catalystSideBySide |
+| HudView.Layout | field | iconSize | 46 | public Vector2 socketOrigin, socketSize, iconOffset, iconSize |
+| HudView.Layout | field | potencyAnchor | 48 | public Vector2 aspectAnchor, potencyAnchor |
+| HudView.Layout | field | aspectPitch | 49 | public float aspectPitch |
+| HudView.Layout | field | noteTop | 51 | public float noteX, noteTopAspects, noteTop |
+| HudView.Layout | field | potencyY | 53 | public float potencyX, potencyTightX, potencyY |
+| HudView.Layout | field | barOrigin | 54 | public Vector2 barOrigin |
+| HudView.Layout | field | barHeight | 55 | public float barWidth, barHeight |
+| HudView.Layout | field | tightTo | 57 | public float tightFrom, tightGap, tightTo |
+| HudView.Layout | field | pulseColor | 59 | public Color pulseColor |
+| HudView.Layout | field | pulseAlpha | 60 | public Vector2 pulseAlpha |
+| HudView.Layout | field | barTipScale | 62 | public Vector3 barTipScale |
+| LinkView | field | color | 11 | public Color color |
 | LinkView | field | speed | 12 | public float speed = 0.35f, arc = 7, alpha = 0.9f |
-| LinkView | method | Set | 16 | public void Set(List<(Vector3 a, Vector3 b)> pairs) |
+| LinkView | field | moteScale | 14 | public Vector2 moteScale |
+| LinkView | field | lift | 15 | public float lift |
+| LinkView | method | Set | 19 | public void Set(List<(Vector3 a, Vector3 b)> pairs) |
 | TileView | field | index | 16 | public int index |
 | TileView | method | Bind | 19 | public void Bind(FxRefs effects) |
 | TileView | field | centre | 25 | public Vector3 centre |
-| TileView | property | Material | 34 | public string Material |
-| TileView | property | Hovered | 35 | public bool Hovered |
-| TileView | property | Pinged | 37 | public bool Pinged |
-| TileView | property | Shut | 39 | public bool Shut |
-| TileView | property | Marked | 40 | public bool Marked |
-| TileView | property | Icon | 41 | public SpriteRenderer Icon |
-| TileView | property | FaceCentre | 44 | public Vector2 FaceCentre |
-| TileView | property | FaceSize | 45 | public Vector2 FaceSize |
-| TileView | method | Contains | 47 | public bool Contains(Vector2 world) |
-| TileView | method | SetState | 51 | public void SetState(Color? marker, bool shut) |
-| TileView | method | Show | 61 | public void Show(MaterialData m, bool pop) |
-| TileView | method | Clear | 74 | public void Clear() |
-| TileView | method | Flash | 82 | public void Flash(Color c) |
-| TileView | method | Consume | 85 | public IEnumerator Consume() |
+| TileView | property | Material | 49 | public string Material |
+| TileView | property | Hovered | 50 | public bool Hovered |
+| TileView | property | Pinged | 52 | public bool Pinged |
+| TileView | property | Shut | 54 | public bool Shut |
+| TileView | property | Marked | 55 | public bool Marked |
+| TileView | property | Icon | 56 | public SpriteRenderer Icon |
+| TileView | property | FaceCentre | 59 | public Vector2 FaceCentre |
+| TileView | property | FaceSize | 60 | public Vector2 FaceSize |
+| TileView | method | Contains | 62 | public bool Contains(Vector2 world) |
+| TileView | method | SetState | 66 | public void SetState(Color? marker, bool shut) |
+| TileView | method | Show | 76 | public void Show(MaterialData m, bool pop) |
+| TileView | method | Clear | 89 | public void Clear() |
+| TileView | method | Flash | 97 | public void Flash(Color c) |
+| TileView | method | Consume | 100 | public IEnumerator Consume() |
+| TileView.Layout | field | shutLid | 36 | public Color shutLid |
+| TileView.Layout | field | hoverFace | 38 | public Color hoverFace |
+| TileView.Layout | field | consumeLift | 40 | public Vector3 consumeLift |
+| TileView.Layout | field | iconLift | 41 | public float iconLift |
+| TileView.Layout | field | popRise | 43 | public float popRise |
 | GameFlow | field | library | 16 | public ArtLibrary library |
 | GameFlow | field | cutsceneRoom | 21 | public GameObject workshop, cutsceneRoom |
 | GameFlow | field | mainCamera | 22 | public Camera mainCamera |
@@ -1450,6 +1492,10 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | LayoutPinTests | method | Palette_Asset_HasTodaysColours | 38 | public void Palette_Asset_HasTodaysColours() |
 | LayoutPinTests | method | IgniteSequence_MainScene_KeepsTodaysTiming | 58 | public void IgniteSequence_MainScene_KeepsTodaysTiming() |
 | LayoutPinTests | method | IgniteSequence_MainScene_KeepsTodaysLook | 79 | public void IgniteSequence_MainScene_KeepsTodaysLook() |
+| LayoutPinTests | method | HudView_Prefab_KeepsTodaysLayout | 120 | public void HudView_Prefab_KeepsTodaysLayout() |
+| LayoutPinTests | method | HudView_IgniteLabel_SitsWhereTheCodePutIt | 141 | public void HudView_IgniteLabel_SitsWhereTheCodePutIt() |
+| LayoutPinTests | method | BenchParts_Prefabs_KeepTodaysLayout | 149 | public void BenchParts_Prefabs_KeepTodaysLayout() |
+| LayoutPinTests | method | Dust_MainScene_KeepsTodaysLook | 181 | public void Dust_MainScene_KeepsTodaysLook() |
 | LocTests | method | Use_WithInjectedFiles_ServesTheirText | 19 | public void Use_WithInjectedFiles_ServesTheirText() |
 | LocTests | method | Use_NullFile_Throws | 32 | public void Use_NullFile_Throws() |
 | LocTests | method | ViJsonCharacters_AllInCruxAtlas_NoneMissing | 40 | public void ViJsonCharacters_AllInCruxAtlas_NoneMissing() |
@@ -1567,12 +1613,13 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | SaveTests | method | StoreThenLoadJournal_WithAThreeItemCombo_KeepsComboRecipes | 149 | public void StoreThenLoadJournal_WithAThreeItemCombo_KeepsComboRecipes() |
 | SaveTests | method | LoadJournal_Phase1PairKeys_StillLoad | 158 | public void LoadJournal_Phase1PairKeys_StillLoad() |
 | SaveTests | method | TutorialDone_DefaultsToFalse_AndRoundTrips | 165 | public void TutorialDone_DefaultsToFalse_AndRoundTrips() |
-| SceneBakeTests | method | GameFlow_Baked_HasSparksField | 21 | public void GameFlow_Baked_HasSparksField() |
-| SceneBakeTests | method | ScreenFx_Baked_HasFlashAndFadeSprites | 27 | public void ScreenFx_Baked_HasFlashAndFadeSprites() |
-| SceneBakeTests | method | Window_Baked_HasPaneAndEveryEffectSprite_AndShowStartsAnEffect | 47 | public void Window_Baked_HasPaneAndEveryEffectSprite_AndShowStartsAnEffect() |
-| SceneBakeTests | method | Tutorial_Baked_HasItsBoxArrowAndCellRoot_ClosedUntilAStepShows | 68 | public void Tutorial_Baked_HasItsBoxArrowAndCellRoot_ClosedUntilAStepShows() |
-| SceneBakeTests | method | Reaction_Baked_HasEveryPart_AndBindHidesTheStageAndSwitchesTheOthers | 97 | public void Reaction_Baked_HasEveryPart_AndBindHidesTheStageAndSwitchesTheOthers() |
-| SceneBakeTests | method | Story_Baked_HasEveryPart_AndTheRayFacesAreTheRaySprites | 131 | public void Story_Baked_HasEveryPart_AndTheRayFacesAreTheRaySprites() |
+| SceneBakeTests | method | TutorialTargets_RedrawAndJournalSteps_MatchTheViews | 21 | public void TutorialTargets_RedrawAndJournalSteps_MatchTheViews() |
+| SceneBakeTests | method | GameFlow_Baked_HasSparksField | 47 | public void GameFlow_Baked_HasSparksField() |
+| SceneBakeTests | method | ScreenFx_Baked_HasFlashAndFadeSprites | 53 | public void ScreenFx_Baked_HasFlashAndFadeSprites() |
+| SceneBakeTests | method | Window_Baked_HasPaneAndEveryEffectSprite_AndShowStartsAnEffect | 73 | public void Window_Baked_HasPaneAndEveryEffectSprite_AndShowStartsAnEffect() |
+| SceneBakeTests | method | Tutorial_Baked_HasItsBoxArrowAndCellRoot_ClosedUntilAStepShows | 94 | public void Tutorial_Baked_HasItsBoxArrowAndCellRoot_ClosedUntilAStepShows() |
+| SceneBakeTests | method | Reaction_Baked_HasEveryPart_AndBindHidesTheStageAndSwitchesTheOthers | 123 | public void Reaction_Baked_HasEveryPart_AndBindHidesTheStageAndSwitchesTheOthers() |
+| SceneBakeTests | method | Story_Baked_HasEveryPart_AndTheRayFacesAreTheRaySprites | 157 | public void Story_Baked_HasEveryPart_AndTheRayFacesAreTheRaySprites() |
 | SettingsHapticsTests | method | Settings_StoredThenLoaded_RoundTrip | 28 | public void Settings_StoredThenLoaded_RoundTrip() |
 | SettingsHapticsTests | method | Settings_NothingOrGarbageSaved_GivesDefaults | 37 | public void Settings_NothingOrGarbageSaved_GivesDefaults() |
 | SettingsHapticsTests | method | Haptics_Plan_OnlyWhenEnabledAndSupported | 50 | public void Haptics_Plan_OnlyWhenEnabledAndSupported() |

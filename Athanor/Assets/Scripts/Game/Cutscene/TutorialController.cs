@@ -228,7 +228,7 @@ namespace Athanor.Game
         Rect IgniteRect => targets.ignite;
         Rect JournalRect => targets.journal;
         Rect RackRect => targets.rack;
-        Rect RedrawRect { get { float m = targets.redrawMargin; return new Rect(HudView.RedrawX - m, HudView.RedrawY - m, HudView.RedrawW + 2 * m, HudView.RedrawH + 2 * m); } }
+        Rect RedrawRect { get { float m = targets.redrawMargin; var r = f.Bench.Hud.RedrawRect; return new Rect(r.x - m, r.y - m, r.width + 2 * m, r.height + 2 * m); } }
 
         // ---- hooks called by GameFlow during the Ignite -------------------------------------------
 

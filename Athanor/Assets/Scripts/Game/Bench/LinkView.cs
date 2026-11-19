@@ -8,8 +8,11 @@ namespace Athanor.Game
     {
         const int PerLink = 9;
         /// <summary>The colour of the motes (past 1 for glow), how fast they travel and how high they arc.</summary>
-        public Color color = new Color(2.2f, 1.7f, 0.8f);
+        public Color color;
         public float speed = 0.35f, arc = 7, alpha = 0.9f;
+        /// <summary>How big each mote is, and how far above the line between two tiles' centres the motes travel.</summary>
+        public Vector2 moteScale;
+        public float lift;
         readonly List<(Vector3 a, Vector3 b)> links = new List<(Vector3, Vector3)>();
         readonly List<SpriteRenderer> motes = new List<SpriteRenderer>();
 
@@ -19,7 +22,7 @@ namespace Athanor.Game
             while (motes.Count < links.Count * PerLink)
             {
                 var m = Spawn.Sprite(transform, "dot", Vector3.zero, 20, Art.Lib.glow);
-                m.transform.localScale = new Vector3(0.5f, 0.5f, 1);
+                m.transform.localScale = new Vector3(moteScale.x, moteScale.y, 1);
                 motes.Add(m);
             }
             for (int i = 0; i < motes.Count; i++) motes[i].enabled = i < links.Count * PerLink;
@@ -32,7 +35,7 @@ namespace Athanor.Game
                 for (int k = 0; k < PerLink; k++)
                 {
                     float f = (k / (float)PerLink + t * speed) % 1, s = Mathf.Sin(f * Mathf.PI);
-                    var p = Vector3.Lerp(links[l].a, links[l].b, f) + new Vector3(0, 9 + s * arc, 0);
+                    var p = Vector3.Lerp(links[l].a, links[l].b, f) + new Vector3(0, lift + s * arc, 0);
                     var m = motes[l * PerLink + k];
                     m.transform.position = Px.Snap(p);
                     m.color = new Color(color.r, color.g, color.b, alpha * s);

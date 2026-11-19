@@ -28,6 +28,21 @@ namespace Athanor.Game
         [SerializeField, HideInInspector] SpriteRenderer face, ring, shadow, icon, halo, lid, cross, mark;
         [SerializeField, HideInInspector] Color markColor, glow, flashColor;
         [SerializeField, HideInInspector] Light2D glowLight;
+        /// <summary>Colours and offsets of the tile, stored in Bench.prefab.</summary>
+        [System.Serializable]
+        public struct Layout
+        {
+            /// <summary>The lid over a shut tile.</summary>
+            public Color shutLid;
+            /// <summary>The face's glow while pointed at (alpha is the pulse).</summary>
+            public Color hoverFace;
+            /// <summary>The puff of Consume starts this far above the centre; the icon stands this far above it.</summary>
+            public Vector3 consumeLift;
+            public float iconLift;
+            /// <summary>A material popping in starts this far below its place.</summary>
+            public float popRise;
+        }
+        [SerializeField] Layout layout;
         bool glows;
         float flash, appear = 1;
 
@@ -51,7 +66,7 @@ namespace Athanor.Game
         public void SetState(Color? marker, bool shut)
         {
             Shut = shut;
-            lid.color = shut ? new Color(0.03f, 0.02f, 0.05f, 0.78f) : Color.clear;
+            lid.color = shut ? layout.shutLid : Color.clear;
             cross.enabled = shut;
             mark.enabled = marker.HasValue && !shut;
             markColor = marker ?? Color.white;
@@ -85,7 +100,7 @@ namespace Athanor.Game
         public IEnumerator Consume()
         {
             if (Material == null) yield break;
-            fx.Sparks.Burst(centre + new Vector3(0, 8, 0), 14, glow.Times(2), 40, 0.5f, 30, -20);
+            fx.Sparks.Burst(centre + layout.consumeLift, 14, glow.Times(2), 40, 0.5f, 30, -20);
             icon.color = Color.white;
             yield return Sequence.Create()
                 .Group(Motion.Fade(icon, 1, 0, 0.18f))
@@ -100,13 +115,13 @@ namespace Athanor.Game
             float t = Time.time;
             flash = Mathf.Max(0, flash - Time.deltaTime * 2.6f);
             float hover = Hovered ? 0.45f + 0.3f * Mathf.Sin(t * 5) : 0;
-            face.color = flash > 0 ? flashColor.Alpha(flash) : Hovered && !Shut ? new Color(1, 0.85f, 0.45f, hover)
+            face.color = flash > 0 ? flashColor.Alpha(flash) : Hovered && !Shut ? layout.hoverFace.Alpha(hover)
                 : Pinged ? markColor.Alpha(0.35f + 0.25f * Mathf.Sin(t * 6)) : Color.clear;
             if (Material == null) return;
             appear = Mathf.Min(1, appear + Time.deltaTime * 5);
             float pop = Anim.OutBack(appear);
             int bob = Mathf.RoundToInt(Mathf.Sin(t * 2 + index * 1.7f) * 1.5f);
-            icon.transform.localPosition = centre + new Vector3(0, 10 + bob + (1 - pop) * 8, 0);   // local: below a depth group the flat coordinates stay valid
+            icon.transform.localPosition = centre + new Vector3(0, layout.iconLift + bob + (1 - pop) * layout.popRise, 0);   // local: below a depth group the flat coordinates stay valid
             ring.color = glow.Times(1.6f).Alpha((0.55f + 0.25f * Mathf.Sin(t * 3 + index)) * appear);
             halo.color = glow.Alpha(glows ? 0.3f : 0.07f);
             glowLight.intensity = (glows ? 0.95f : 0.3f) * appear + flash * 0.8f;

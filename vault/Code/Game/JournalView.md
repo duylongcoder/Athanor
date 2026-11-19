@@ -40,4 +40,4 @@ aliases: []
 [[GameFlow]], [[GoldenShots]], [[TutorialController]]
 
 ## Tested by
-[[PrefabBakeTests]]
+[[PrefabBakeTests]], [[SceneBakeTests]]

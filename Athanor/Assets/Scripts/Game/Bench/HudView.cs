@@ -13,20 +13,54 @@ namespace Athanor.Game
         public bool RedrawHovered { get; private set; }
         /// <summary>The pointer is over the pause button's 44x44 hit box.</summary>
         public bool PauseHovered { get; private set; }
-        /// <summary>Unused offset kept at 0: the bench layout is unchanged; the pause button sits on the empty floor left of the table.</summary>
-        const int AspectDy = 0;
-        /// <summary>The pause button's picture (28x20 at 12,152) and its 44x44 hit box (4,140); SPEC item 11 deviation: the aspects shelf band is full, shown only while a pause can open.</summary>
-        public const int PauseX = 12, PauseY = 152, PauseW = 28, PauseH = 20, PauseOrder = 650;
+        /// <summary>The pause button's sort order.</summary>
+        public const int PauseOrder = 650;
+        /// <summary>The side of the "dot" sprite the bar is stretched from.</summary>
+        const float DotSize = 4;
         [SerializeField] GameObject pauseGroup;
         [SerializeField] SpriteRenderer pauseEdge;
         /// <summary>Index of the held aspect the pointer is over (in the strip under the depth panel), or -1.</summary>
         public int HoveredAspect { get; private set; } = -1;
         /// <summary>The most catalysts the sockets can show: four from clearing depths and two from shrines.</summary>
         public const int MaxCatalysts = 6, MaxAspects = 3;
-        /// <summary>The Redraw button in art space: under the right panel, right below the redraws-left counter.</summary>
-        public const int RedrawX = 556, RedrawY = 88, RedrawW = 76, RedrawH = 20;
-        /// <summary>How far below the box's top the label is placed, so the word and its shadow sit centred in the fill.</summary>
-        const int RedrawLabelY = 3;
+
+        /// <summary>The HUD's layout numbers (art pixels, y down), stored in Hud.prefab.</summary>
+        [Serializable]
+        public struct Layout
+        {
+            /// <summary>The pitch of the small note rows, English and Vietnamese (Crux at 16 needs 12 px, Pixel Operator 8 keeps 10).</summary>
+            public int rowEn, rowVi;
+            /// <summary>Characters per line of the sputter note, English and Vietnamese.</summary>
+            public int noteCharsEn, noteCharsVi;
+            /// <summary>The Redraw button in art space: under the right panel, right below the redraws-left counter.</summary>
+            public Rect redrawRect;
+            /// <summary>The pause button's picture (28x20 at 12,152; its hit box is 44x44 at 4,140). SPEC item 11 deviation: the aspects shelf band is full, shown only while a pause can open.</summary>
+            public Rect pauseRect;
+            /// <summary>How far below the Redraw box's top the label is placed, so the word and its shadow sit centred in the fill.</summary>
+            public float redrawLabelY;
+            /// <summary>How far the Ignite and Redraw labels sink while pressed.</summary>
+            public float pressedDy;
+            /// <summary>Catalyst sockets: pitch while few enough fit side by side (that many), the width they spread over when more overlap, the first socket's top-left, its size, the icon's offset in it and its size.</summary>
+            public float catalystPitch, catalystSpread;
+            public int catalystSideBySide;
+            public Vector2 socketOrigin, socketSize, iconOffset, iconSize;
+            /// <summary>Where a tooltip about a held aspect points (first one) and the pitch between them; the potency number's tooltip point.</summary>
+            public Vector2 aspectAnchor, potencyAnchor;
+            public float aspectPitch;
+            /// <summary>The depth notes: the left edge and the top of the first row with and without held aspects.</summary>
+            public float noteX, noteTopAspects, noteTop;
+            /// <summary>The potency number: left edge (and the tight one that replaces the word), top; the bar's top-left, full width and height.</summary>
+            public float potencyX, potencyTightX, potencyY;
+            public Vector2 barOrigin;
+            public float barWidth, barHeight;
+            /// <summary>A number long enough to run into the target takes the word's place when from + width + gap passes to - target width.</summary>
+            public float tightFrom, tightGap, tightTo;
+            /// <summary>The Ignite button's glow: colour and alpha (min, swing).</summary>
+            public Color pulseColor;
+            public Vector2 pulseAlpha;
+            /// <summary>The scale of the bar's bright tip.</summary>
+            public Vector3 barTipScale;
+        }
 
         [SerializeField] Label depth, depthName, potency, potencyWord, target, trials, redraws, redrawsLabel, journalCount, igniteText, hintText;
         [SerializeField] Label aspectsLabel, redrawText;
@@ -37,12 +71,16 @@ namespace Athanor.Game
         // the hit boxes: one per catalyst socket and held aspect, then Redraw, pause, the journal book and Ignite
         [SerializeField] Clickable[] socketHit = new Clickable[MaxCatalysts], aspectHit = new Clickable[MaxAspects];
         [SerializeField] Clickable redrawHit, pauseHit, journalHit, igniteHit;
-        float catalystPitch = 35;
+        [SerializeField] Layout layout;
+        /// <summary>The Redraw button's fill: at rest, pointed at, pressed and when no redraw is left.</summary>
+        [SerializeField] Color redrawUp, redrawOver, redrawPressed, redrawOff;
+        /// <summary>The potency bar's fill when the depth has no target.</summary>
+        [SerializeField] Color noTargetBar;
+        float catalystPitch = -1;   // the pitch of the sockets shown; -1 until Show
+        Vector3 igniteRest; bool igniteRestSet;
         float shown, bump; long goal, targetValue; bool canIgnite, igniteDown, canRedraw, redrawDown, wired;
 
         static Color Gold => Art.Palette.gold;
-        static readonly Color RedrawUp = Px.Hex("#1d5a52"), RedrawOver = Px.Hex("#26706a"), RedrawPressed = Px.Hex("#143f3a"),
-            RedrawOff = Px.Hex("#3a2e28");
         static Color PauseEdgeColor => Art.Palette.edge;
 
         /// <summary>The bench can be switched off under the pointer, which then never sends exit or release: forget them.</summary>
@@ -60,19 +98,23 @@ namespace Athanor.Game
             if (!shown) PauseHovered = false;
         }
         public bool PauseShown => pauseGroup != null && pauseGroup.activeSelf;
-        public Vector3 PauseAnchor => Px.Mid(PauseX, PauseY, PauseW, PauseH);
+        public Vector3 PauseAnchor => Px.Mid(layout.pauseRect.x, layout.pauseRect.y, layout.pauseRect.width, layout.pauseRect.height);
 
-        public Vector3 PotencyPosition => Px.At(96, 56);
+        /// <summary>The Redraw button in art space (top-left origin).</summary>
+        public Rect RedrawRect => layout.redrawRect;
+        /// <summary>The pause button's picture in art space (top-left origin).</summary>
+        public Rect PauseRect => layout.pauseRect;
+        public Vector3 PotencyPosition => Px.At(layout.potencyAnchor.x, layout.potencyAnchor.y);
         /// <summary>Where a tooltip about a held catalyst or aspect points.</summary>
-        public Vector3 CatalystAnchor(int i) => Px.At(503 + i * catalystPitch, 39);
-        public Vector3 AspectAnchor(int i) => Px.At(22 + i * 29, 111 + AspectDy);
+        public Vector3 CatalystAnchor(int i) => Px.Mid(layout.socketOrigin.x + i * (catalystPitch < 0 ? layout.catalystPitch : catalystPitch), layout.socketOrigin.y, layout.socketSize.x, layout.socketSize.y);
+        public Vector3 AspectAnchor(int i) => Px.At(layout.aspectAnchor.x + i * layout.aspectPitch, layout.aspectAnchor.y);
         /// <summary>Where the Redraw tooltip (and the tutorial's highlight) points: the button's centre.</summary>
-        public Vector3 RedrawAnchor => Px.Mid(RedrawX, RedrawY, RedrawW, RedrawH);
+        public Vector3 RedrawAnchor => Px.Mid(layout.redrawRect.x, layout.redrawRect.y, layout.redrawRect.width, layout.redrawRect.height);
         /// <summary>The Redraw button is live: a redraw is left and the bench is being played (not an offer, not a cleared depth).</summary>
         public static bool CanRedraw(RunState run) => run != null && run.Phase == RunPhase.Playing && run.RedrawsLeft > 0;
         public static string Number(long n) => Loc.Number(n);
         /// <summary>Pitch of the small rows: Crux at 16 needs 12 px, Pixel Operator 8 keeps 10.</summary>
-        static int Row => Loc.Vi ? 12 : 10;
+        int Row => Loc.Vi ? layout.rowVi : layout.rowEn;
 
         /// <summary>Hooks the hit boxes to the hover and click handlers. Once per instance: the pointer calls them, nothing else does.</summary>
         public void Bind()
@@ -132,16 +174,16 @@ namespace Athanor.Game
             }
             // four sockets side by side; a fifth or sixth (a shrine's gift) makes them overlap to fit the panel
             int held = Mathf.Min(run.Catalysts.Count, MaxCatalysts);
-            catalystPitch = held <= 4 ? 35 : 105f / (held - 1);
+            catalystPitch = held <= layout.catalystSideBySide ? layout.catalystPitch : layout.catalystSpread / (held - 1);
             for (int i = 0; i < MaxCatalysts; i++)
             {
                 bool has = i < held;
                 socketLit[i].enabled = catalystIcon[i].enabled = has;
                 socketLit[i].gameObject.SetActive(has);
                 if (!has) continue;
-                float x = Mathf.Round(488 + i * catalystPitch);
-                socketLit[i].transform.position = Px.Mid(x, 24, 30, 30);
-                catalystIcon[i].transform.position = Px.Mid(x + 3, 27, 24, 24);
+                float x = Mathf.Round(layout.socketOrigin.x + i * catalystPitch);
+                socketLit[i].transform.position = Px.Mid(x, layout.socketOrigin.y, layout.socketSize.x, layout.socketSize.y);
+                catalystIcon[i].transform.position = Px.Mid(x + layout.iconOffset.x, layout.socketOrigin.y + layout.iconOffset.y, layout.iconSize.x, layout.iconSize.y);
                 catalystIcon[i].sprite = Art.Lib.Sprite("cat_" + run.Catalysts[i].id);
             }
             aspectsLabel.gameObject.SetActive(run.Aspects.Count > 0);
@@ -153,9 +195,9 @@ namespace Athanor.Game
             }
             if (run.Aspects.Count == 0) HoveredAspect = -1;
             // what this depth's event left behind (shut and warm tiles show on the bench itself)
-            int line = 0, top = run.Aspects.Count > 0 ? 130 + AspectDy : 88 + AspectDy;
+            int line = 0; float top = run.Aspects.Count > 0 ? layout.noteTopAspects : layout.noteTop;
             foreach (var l in depthNote) l.Text = "";
-            void Say(string text) { if (line < depthNote.Length) { depthNote[line].Text = text; depthNote[line].transform.position = Px.At(10, top + line * Row); line++; } }
+            void Say(string text) { if (line < depthNote.Length) { depthNote[line].Text = text; depthNote[line].transform.position = Px.At(layout.noteX, top + line * Row); line++; } }
             if (run.RiShift != 0) Say(Loc.T("ui.hud.depth_ri", ("n", run.RiShift)));
             if (run.HandDelta != 0) Say(Loc.P("ui.hud.depth_hand", run.HandDelta));
             if (run.TripleFirst) Say(Loc.T("ui.hud.next_triple"));
@@ -174,7 +216,7 @@ namespace Athanor.Game
                 for (int i = 0; i < 3; i++)
                 {
                     string line = "";
-                    while (at < words.Length && (line.Length == 0 || i == 2 || line.Length + 1 + words[at].Length <= (Loc.Vi ? 17 : 19))) line += (line.Length > 0 ? " " : "") + words[at++];
+                    while (at < words.Length && (line.Length == 0 || i == 2 || line.Length + 1 + words[at].Length <= (Loc.Vi ? layout.noteCharsVi : layout.noteCharsEn))) line += (line.Length > 0 ? " " : "") + words[at++];
                     note[i].Text = line;
                 }
                 note[3].Text = "";
@@ -220,25 +262,27 @@ namespace Athanor.Game
             potency.Text = Number((long)Mathf.Round(shown));
             bump = Mathf.Max(0, bump - Time.deltaTime * 6);
             // a number long enough to run into the target takes the place of the word before it
-            bool tight = 70 + potency.Width + 4 > 153 - target.Width;
+            bool tight = layout.tightFrom + potency.Width + layout.tightGap > layout.tightTo - target.Width;
             potencyWord.gameObject.SetActive(!tight);
-            potency.transform.position = Px.At(tight ? 17 : 70, 49 - (bump > 0.5f ? 2 : bump > 0 ? 1 : 0));
+            int bumpDy = Mathf.CeilToInt(bump * 2);   // 2 px in the first half of the kick, 1 px in the second
+            potency.transform.position = Px.At(tight ? layout.potencyTightX : layout.potencyX, layout.potencyY - bumpDy);
             potency.Color = bump > 0.4f ? Color.white : Gold;
             float fill = targetValue > 0 ? Mathf.Clamp01(shown / targetValue) : 1;
-            int w = Mathf.RoundToInt(132 * fill);
+            int w = Mathf.RoundToInt(layout.barWidth * fill);
             barFill.enabled = barTip.enabled = w > 0;
-            barFill.transform.position = Px.Mid(18, 70, w, 5); barFill.transform.localScale = new Vector3(w / 4f, 1, 1);
-            barFill.color = targetValue > 0 ? Color.white : new Color(0.55f, 0.5f, 0.75f, 1);
-            barTip.transform.position = Px.Mid(18 + Mathf.Max(0, w - 1), 70, 1, 5); barTip.transform.localScale = new Vector3(0.25f, 1.25f, 1);
+            barFill.transform.position = Px.Mid(layout.barOrigin.x, layout.barOrigin.y, w, layout.barHeight); barFill.transform.localScale = new Vector3(w / DotSize, 1, 1);
+            barFill.color = targetValue > 0 ? Color.white : noTargetBar;
+            barTip.transform.position = Px.Mid(layout.barOrigin.x + Mathf.Max(0, w - 1), layout.barOrigin.y, 1, layout.barHeight); barTip.transform.localScale = layout.barTipScale;
 
             ignite.sprite = Art.Lib.Sprite(!canIgnite ? "ignite_off" : igniteDown ? "ignite_down" : "ignite_up");
             float pulse = 0.5f + 0.5f * Mathf.Sin(Time.time * 3);
-            ignitePulse.color = canIgnite && !igniteDown ? new Color(1, 0.75f, 0.35f, 0.1f + 0.2f * pulse) : Color.clear;
+            ignitePulse.color = canIgnite && !igniteDown ? layout.pulseColor.Alpha(layout.pulseAlpha.x + layout.pulseAlpha.y * pulse) : Color.clear;
             igniteText.Alpha = canIgnite ? 1 : 0.45f;
-            igniteText.transform.position = Px.At(575, 306 + (canIgnite && igniteDown ? 2 : 0));
-            redrawFill.color = !canRedraw ? RedrawOff : redrawDown ? RedrawPressed : RedrawHovered ? RedrawOver : RedrawUp;
+            if (!igniteRestSet) { igniteRest = igniteText.transform.position; igniteRestSet = true; }   // the label's place is the prefab's
+            igniteText.transform.position = igniteRest + new Vector3(0, canIgnite && igniteDown ? -layout.pressedDy : 0, 0);
+            redrawFill.color = !canRedraw ? redrawOff : redrawDown ? redrawPressed : RedrawHovered ? redrawOver : redrawUp;
             redrawText.Alpha = canRedraw ? 1 : 0.45f;
-            redrawText.transform.position = Px.At(RedrawX + RedrawW / 2f, RedrawY + RedrawLabelY + (canRedraw && redrawDown ? 2 : 0));
+            redrawText.transform.position = Px.At(layout.redrawRect.center.x, layout.redrawRect.y + layout.redrawLabelY + (canRedraw && redrawDown ? layout.pressedDy : 0));
         }
     }
 }
