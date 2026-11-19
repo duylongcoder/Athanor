@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using Athanor.Core;
 using UnityEngine;
 
@@ -151,37 +150,12 @@ namespace Athanor.Game
             return i < 0 || j < 0 ? english : Loc.C(Lang.OutcomeKey(e.id, i, j), english);
         }
 
-        static readonly (Regex re, System.Func<Match, string> make)[] NoteForms =
-        {
-            (new Regex(@"^([+-]?\d+) trials?$"), m => Loc.P("note.trials", long.Parse(m.Groups[1].Value))),
-            (new Regex(@"^([+-]?\d+) cards? in hand this depth$"), m => Loc.P("note.hand", long.Parse(m.Groups[1].Value))),
-            (new Regex(@"^([+-]?\d+) redraws?$"), m => Loc.P("note.redraws", long.Parse(m.Groups[1].Value))),
-            (new Regex(@"^Reaction Index ([+-]?\d+) this depth$"), m => Loc.T("note.ri_shift", ("n", int.Parse(m.Groups[1].Value)))),
-            (new Regex(@"^Found (.+)$"), m => Loc.T("note.found", ("item", m.Groups[1].Value))),
-            (new Regex(@"^Gave up (.+)$"), m => Loc.T("note.gave_up", ("item", m.Groups[1].Value))),
-            (new Regex(@"^Lost an? (.+) for this run$"), m => Loc.T("note.lost", ("item", m.Groups[1].Value))),
-            (new Regex(@"^Your next first reaction scores triple$"), m => Loc.T("note.first_triple")),
-            (new Regex(@"^(.+) reacts with something (.+)$"), m => Loc.T("note.hint", ("item", m.Groups[1].Value), ("kind", Loc.Vi ? Loc.Indef(m.Groups[2].Value) : Loc.Kind(m.Groups[2].Value)))),
-            (new Regex(@"^A tile is shut this depth$"), m => Loc.T("note.block_tile")),
-            (new Regex(@"^A tile is warm this depth: \+(\d+) Reaction Index$"), m => Loc.T("note.heat_tile", ("n", int.Parse(m.Groups[1].Value)))),
-            (new Regex(@"^(.+) became (.+)$"), m => Loc.T("note.became", ("a", m.Groups[1].Value), ("b", m.Groups[2].Value))),
-            (new Regex(@"^Received (.+)$"), m => Loc.T("note.received", ("item", m.Groups[1].Value))),
-        };
-
-        /// <summary>
-        /// A note the core wrote in English ("Found Ember Coal"), in this language. The core still writes English
-        /// (handoff: rules-engineer, notes as key + args); until then the sentence is matched back to its note.* key. No match: unchanged.
-        /// </summary>
-        public static string Note(string english)
-        {
-            if (!Loc.Vi) return english;
-            foreach (var (re, make) in NoteForms)
-            {
-                var m = re.Match(english);
-                if (m.Success) return make(m);
-            }
-            return english;
-        }
+        /// <summary>An event note (a key and its arguments from the core) in this language.</summary>
+        public static string NoteText(EventNote note) =>
+            note.plural
+                ? Loc.P(note.key, note.n)
+                : Loc.T(note.key, ("n", note.n), ("item", note.item), ("a", note.item), ("b", note.other),
+                    ("kind", Loc.Vi ? Loc.Indef(note.kind) : note.kind));
 
         /// <summary>"New Rare catalyst": the kind and rarity of a goal's reward, never the item. Short, so it ends before the progress bar.</summary>
         public static string RewardLine(GoalData g) =>

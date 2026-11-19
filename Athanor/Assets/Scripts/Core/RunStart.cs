@@ -16,7 +16,17 @@ namespace Athanor.Core
     public sealed class EventResult
     {
         public string Text;
-        public readonly List<string> Notes = new List<string>();
+        public readonly List<EventNote> Notes = new List<EventNote>();
+    }
+
+    /// <summary>One thing an event option did, as a lang key (note.*) and its arguments; the Game layer words it.</summary>
+    [Serializable]
+    public sealed class EventNote
+    {
+        public string key;
+        public int n;
+        public string item, other, kind;
+        public bool plural;   // the wording has a one/other form for n
     }
 
     // The start of a depth: aspects (run-long bench modifiers) and events (one-depth happenings).
@@ -283,19 +293,19 @@ namespace Athanor.Core
             {
                 case Ops.Trials:
                     TrialsLeft = Math.Max(1, TrialsLeft + n);
-                    result.Notes.Add((n > 0 ? "+" : "") + n + (Math.Abs(n) == 1 ? " trial" : " trials"));
+                    result.Notes.Add(new EventNote { key = "note.trials", n = n, plural = true });
                     break;
                 case Ops.Hand:
                     handDelta += n;
-                    result.Notes.Add((n > 0 ? "+" : "") + n + (Math.Abs(n) == 1 ? " card in hand this depth" : " cards in hand this depth"));
+                    result.Notes.Add(new EventNote { key = "note.hand", n = n, plural = true });
                     break;
                 case Ops.Redraws:
                     RedrawsLeft = Math.Max(0, RedrawsLeft + n);
-                    result.Notes.Add((n > 0 ? "+" : "") + n + (Math.Abs(n) == 1 ? " redraw" : " redraws"));
+                    result.Notes.Add(new EventNote { key = "note.redraws", n = n, plural = true });
                     break;
                 case Ops.RiShift:
                     riShift += n;
-                    result.Notes.Add("Reaction Index " + (n > 0 ? "+" : "") + n + " this depth");
+                    result.Notes.Add(new EventNote { key = "note.ri_shift", n = n });
                     break;
                 case Ops.GiveDiscovery:
                 {
@@ -303,7 +313,7 @@ namespace Athanor.Core
                     if (pool.Count == 0) break;
                     string id = pool[eventRng.Range(pool.Count)];
                     AddToRack(id, null);
-                    result.Notes.Add("Found " + db.Material(id).name);
+                    result.Notes.Add(new EventNote { key = "note.found", item = db.Material(id).name });
                     break;
                 }
                 case Ops.LoseRack:
@@ -314,7 +324,7 @@ namespace Athanor.Core
                         // the offering is the least of what is held
                         string id = rack.OrderBy(h => db.Material(h).tier).First();
                         hand.Remove(id);
-                        result.Notes.Add("Gave up " + db.Material(id).name);
+                        result.Notes.Add(new EventNote { key = "note.gave_up", item = db.Material(id).name });
                     }
                     break;
                 case Ops.LoseCard:
@@ -324,12 +334,12 @@ namespace Athanor.Core
                         if (cards.Count == 0 || satchel.Total <= MinSatchel) break;   // never thin the satchel below a hand
                         string id = cards[eventRng.Range(cards.Count)];
                         hand.Remove(id); satchel.Lose(id);
-                        result.Notes.Add("Lost a " + db.Material(id).name + " for this run");
+                        result.Notes.Add(new EventNote { key = "note.lost", item = db.Material(id).name });
                     }
                     break;
                 case Ops.FirstTriple:
                     tripleFirst = true;
-                    result.Notes.Add("Your next first reaction scores triple");
+                    result.Notes.Add(new EventNote { key = "note.first_triple" });
                     break;
                 case Ops.Hint:
                 {
@@ -344,7 +354,7 @@ namespace Athanor.Core
                             if (journal.IsKnown(recipe.items)) continue;
                             var partner = recipe.items.FirstOrDefault(i => i != m) ?? m;
                             if (!journal.AddHint(m, db.KindOf(partner))) continue;
-                            result.Notes.Add(db.Material(m).name + " reacts with something " + db.KindOf(partner));
+                            result.Notes.Add(new EventNote { key = "note.hint", item = db.Material(m).name, kind = db.KindOf(partner).ToString() });
                             told = true; break;
                         }
                         if (told) break;
@@ -362,7 +372,7 @@ namespace Athanor.Core
                     if (free.Count == 0) break;
                     int t = free[eventRng.Range(free.Count)];
                     depthBlocked.Add(t);
-                    result.Notes.Add("A tile is shut this depth");
+                    result.Notes.Add(new EventNote { key = "note.block_tile" });
                     break;
                 }
                 case Ops.HeatTile:
@@ -371,7 +381,7 @@ namespace Athanor.Core
                     if (free.Count == 0) break;
                     int t = free[eventRng.Range(free.Count)];
                     depthHeated.Add((t, n));
-                    result.Notes.Add("A tile is warm this depth: +" + n + " Reaction Index");
+                    result.Notes.Add(new EventNote { key = "note.heat_tile", n = n });
                     break;
                 }
                 case Ops.CatalystUpgrade:
@@ -381,7 +391,7 @@ namespace Athanor.Core
                     var (held, better) = ups[eventRng.Range(ups.Count)];
                     var got = better[eventRng.Range(better.Count)];
                     catalysts[catalysts.FindIndex(c => c.id == held.id)] = got;
-                    result.Notes.Add(held.name + " became " + got.name);
+                    result.Notes.Add(new EventNote { key = "note.became", item = held.name, other = got.name });
                     break;
                 }
                 case Ops.CatalystGift:
@@ -390,7 +400,7 @@ namespace Athanor.Core
                     if (pool.Count == 0) break;
                     var got = db.PickCatalyst(pool, eventRng);
                     catalysts.Add(got);
-                    result.Notes.Add("Received " + got.name);
+                    result.Notes.Add(new EventNote { key = "note.received", item = got.name });
                     break;
                 }
             }

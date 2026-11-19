@@ -3,14 +3,14 @@ generated: true
 type: test
 file: Athanor/Assets/Tests/EditModeGame/LocTests.cs
 tags: [test]
-count: 11
+count: 10
 ---
 
 # LocTests
-`Athanor/Assets/Tests/EditModeGame/LocTests.cs` — 11 tests
+`Athanor/Assets/Tests/EditModeGame/LocTests.cs` — 10 tests
 
 ## Covers
-[[EditorGlobals]], [[Lang]], [[Loc]], [[Wording]]
+[[EditorGlobals]], [[Lang]], [[Loc]]
 
 ## Tests
 - `Use_WithInjectedFiles_ServesTheirText`
@@ -22,5 +22,4 @@ count: 11
 - `Vietnamese_ChangesTheWords_AndEnglishComesBack`
 - `ItemNames_StayEnglish_InVietnamese`
 - `FormatNumber_ByLanguage_UsesLocaleSeparators`
-- `CoreNotes_AreTranslated_InVietnamese_AndLeftAloneInEnglish`
 - `ReadLangFromUrl_WithLangParam_ReturnsCode`

@@ -20,7 +20,10 @@ aliases: []
 | Kind | Signature | Line | Note |
 |---|---|---|---|
 | field | `public string Text` | 18 |  |
-| field | `public readonly List<string> Notes = new List<string>()` | 19 |  |
+| field | `public readonly List<EventNote> Notes = new List<EventNote>()` | 19 |  |
+
+## Uses
+[[EventNote]]
 
 ## Used by
 [[RunState]]

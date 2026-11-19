@@ -108,18 +108,6 @@ namespace Athanor.Tests
         }
 
         [Test]
-        public void CoreNotes_AreTranslated_InVietnamese_AndLeftAloneInEnglish()
-        {
-            Assert.AreEqual("Found Ember Coal", Wording.Note("Found Ember Coal"));
-            Loc.Set(Loc.Vietnamese);
-            Assert.AreEqual("Tìm thấy Ember Coal", Wording.Note("Found Ember Coal"));
-            Assert.AreEqual("Mất Ember Coal trong chuyến này", Wording.Note("Lost a Ember Coal for this run"));
-            Assert.AreEqual("+2 lượt", Wording.Note("+2 trials"));
-            Assert.AreEqual("Ember Coal hóa thành Sky Iron", Wording.Note("Ember Coal became Sky Iron"));
-            Assert.AreEqual("A sentence nobody knows", Wording.Note("A sentence nobody knows"));
-        }
-
-        [Test]
         public void ReadLangFromUrl_WithLangParam_ReturnsCode()
         {
             Assert.AreEqual("vi", Loc.FromUrl("http://localhost:8080/index.html?lang=vi"));

@@ -5,7 +5,7 @@ tags: [moc/tests]
 ---
 
 # Tests
-488 test methods in 39 files. Run: `dotnet test tools/CoreTests` (rules) or `unity test Athanor --mode EditMode`.
+500 test methods in 40 files. Run: `dotnet test tools/CoreTests` (rules) or `unity test Athanor --mode EditMode`.
 
 - [[ChainTests]] — 26 tests · covers [[Bench]], [[ChainPlan]], [[ChainPlanner]], [[ContentDb]]
 - [[ContentTests]] — 41 tests · covers [[Bench]], [[ChainPlanner]], [[ContentData]], [[ContentDb]], [[Ops]]
@@ -29,10 +29,11 @@ tags: [moc/tests]
 - [[DepthLookTests]] — 8 tests · covers [[DepthLook]]
 - [[HudTests]] — 3 tests · covers [[ContentData]], [[ContentDb]], [[HudView]], [[Journal]], [[RunOptions]], [[RunPhase]], [[RunState]], [[Unlocks]]
 - [[LabelLineBoxTests]] — 5 tests · covers [[Fonts]], [[Label]], [[Loc]], [[UiButton]]
-- [[LocTests]] — 11 tests · covers [[EditorGlobals]], [[Lang]], [[Loc]], [[Wording]]
+- [[LocTests]] — 10 tests · covers [[EditorGlobals]], [[Lang]], [[Loc]]
 - [[MainDepthTests]] — 6 tests · covers [[Bench]], [[BenchView]], [[CameraSway]], [[DepthLayer]], [[DepthMath]], [[DepthRig]], [[GameFlow]], [[PointerInput]]
 - [[MainDevHookTests]] — 4 tests · covers [[BenchView]], [[DepthMath]], [[GameFlow]]
 - [[MotionTests]] — 3 tests · covers [[Motion]]
+- [[NoteTextTests]] — 13 tests · covers [[EditorGlobals]], [[EventNote]], [[Kind]], [[Loc]], [[Wording]]
 - [[PauseTests]] — 10 tests · covers [[Bench]], [[Clickable]], [[ContentData]], [[ContentDb]], [[FlowState]], [[GameFlow]], [[Haptics]], [[Journal]]
 - [[PrefabBakeTests]] — 39 tests · covers [[Bench]], [[BenchView]], [[CardView]], [[CatalystChoiceView]], [[ChoiceCard]], [[Clickable]], [[ContentData]], [[ContentDb]]
 - [[RunOverDepthTests]] — 4 tests · covers [[ContentData]], [[ContentDb]], [[Label]], [[Loc]], [[RunOverView]]

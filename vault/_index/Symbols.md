@@ -52,7 +52,8 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | RunOptions | RunOptions | Core | class | Athanor/Assets/Scripts/Core/Profile.cs | 206 | Switches for a run. The default is a Phase 2 run: no aspects, no events, and (with no Unlocks) only what the content leaves open. |
 | AspectInstance | AspectInstance | Core | class | Athanor/Assets/Scripts/Core/RunStart.cs | 8 | An aspect as held by a run (or as offered): where it sits and, for an attuned tile, which kind it favours. |
 | EventResult | EventResult | Core | class | Athanor/Assets/Scripts/Core/RunStart.cs | 16 | What taking an event option did, for the screen. |
-| RunState | RunState | Core | class | Athanor/Assets/Scripts/Core/RunStart.cs | 23 | One run: descending through depths, spending trials, collecting catalysts. |
+| EventNote | EventNote | Core | class | Athanor/Assets/Scripts/Core/RunStart.cs | 24 | One thing an event option did, as a lang key (note.*) and its arguments; the Game layer words it. |
+| RunState | RunState | Core | class | Athanor/Assets/Scripts/Core/RunStart.cs | 33 | One run: descending through depths, spending trials, collecting catalysts. |
 | IgniteOutcome | IgniteOutcome | Core | class | Athanor/Assets/Scripts/Core/RunState.cs | 9 |  |
 | RunPhase | RunPhase | Core | enum | Athanor/Assets/Scripts/Core/RunState.cs | 7 |  |
 | Rng | Rng | Core | class | Athanor/Assets/Scripts/Core/Satchel.cs | 7 | Small deterministic RNG so shuffles match between Unity and the dotnet test run. |
@@ -130,7 +131,7 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | RarityStars | RarityStars | Game | class | Athanor/Assets/Scripts/Game/Support/RarityStars.cs | 13 | The rarity glyph (SPEC changes 21-24): up to four 7x7 stars on an 8 px pitch, tinted, each with a dark outline made of four offset dark copies. The root sits at the top-left of the row. Built once and |
 | Spawn | Spawn | Game | class | Athanor/Assets/Scripts/Game/Support/Spawn.cs | 13 | Run-time spawners: the objects the game makes while it plays (float numbers, fly-in icons, tutorial rects, link motes, rarity stars). Everything that is on screen from the start is a scene object or a |
 | Align | Align | Game | enum | Athanor/Assets/Scripts/Game/Support/Spawn.cs | 7 |  |
-| Wording | Wording | Game | class | Athanor/Assets/Scripts/Game/Support/Wording.cs | 9 | The words and colours the Phase 3 screens share: rarities, aspects, event effects and goal rewards. |
+| Wording | Wording | Game | class | Athanor/Assets/Scripts/Game/Support/Wording.cs | 8 | The words and colours the Phase 3 screens share: rarities, aspects, event effects and goal rewards. |
 | ChoiceCard | ChoiceCard | Game | class | Athanor/Assets/Scripts/Game/Ui/CatalystChoiceView.cs | 11 | What one card of the chooser shows. |
 | CatalystChoiceView | CatalystChoiceView | Game | class | Athanor/Assets/Scripts/Game/Ui/CatalystChoiceView.cs | 23 | Three parchment cards, pick one: a catalyst after a depth is cleared, or an aspect at the start of a run and of depths 3 and 5. An aspect's card shows the tile it would land on. |
 | Card | Card | Game | class | Athanor/Assets/Scripts/Game/Ui/CatalystChoiceView.cs | 35 |  |
@@ -192,6 +193,7 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | MainDevHookTests | MainDevHookTests | Tests | class | Athanor/Assets/Tests/EditModeGame/MainDevHookTests.cs | 11 | The dev-only hooks tools/web/mainhd2d.mjs drives (5b-07b): F6 mood steps, F10 tile faces in UI units, the bench's place / unplace lines. The key handling is guarded by Application.isEditor \|\| Debug.is |
 | MainSceneFixture | MainSceneFixture | Tests | class | Athanor/Assets/Tests/EditModeGame/MainSceneFixture.cs | 14 | Main.unity opened beside the test scene, for the views that are scene objects and not prefabs. Dispose closes it without saving. |
 | MotionTests | MotionTests | Tests | class | Athanor/Assets/Tests/EditModeGame/MotionTests.cs | 13 | Motion's helpers make live PrimeTween tweens. PrimeTween refuses a payload over 16 bytes: it logs an error and returns a dead tween, which a Sequence then refuses too (the rack flight and the catalyst |
+| NoteTextTests | NoteTextTests | Tests | class | Athanor/Assets/Tests/EditModeGame/NoteTextTests.cs | 8 | An event note (a key and its arguments from the core) reads as the English or Vietnamese sentence the regex-matched wording used to give. |
 | PauseTests | PauseTests | Tests | class | Athanor/Assets/Tests/EditModeGame/PauseTests.cs | 10 | The pause menu: time stops and comes back on every exit, Esc toggles, nothing opens in the tutorial, Quit leaves the stored run data alone. |
 | PrefabBakeTests | PrefabBakeTests | Tests | class | Athanor/Assets/Tests/EditModeGame/PrefabBakeTests.cs | 13 | The shipped prefabs keep what the views need: a label keeps its key, a button still clicks, the tooltip makes its panel. |
 | PrefabFixture | PrefabFixture | Tests | class | Athanor/Assets/Tests/EditModeGame/PrefabFixture.cs | 9 | A copy of a prefab for one test. Call Destroy in [TearDown] (or a finally). |
@@ -456,20 +458,24 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | AspectInstance | field | Tiles | 11 | public int[] Tiles = new int[0] |
 | AspectInstance | field | Kind | 12 | public string Kind |
 | EventResult | field | Text | 18 | public string Text |
-| EventResult | field | Notes | 19 | public readonly List<string> Notes = new List<string>() |
-| RunState | property | LastLore | 38 | public string LastLore |
-| RunState | property | Aspects | 40 | public IReadOnlyList<AspectInstance> Aspects |
-| RunState | property | AspectOffer | 41 | public IReadOnlyList<AspectInstance> AspectOffer |
-| RunState | property | CurrentEvent | 42 | public EventData CurrentEvent |
-| RunState | property | EventOptions | 44 | public IReadOnlyList<EventOption> EventOptions |
-| RunState | property | Rules | 45 | public BenchRules Rules |
-| RunState | property | RiShift | 47 | public int RiShift |
-| RunState | property | TripleFirst | 48 | public bool TripleFirst |
-| RunState | property | HandDelta | 50 | public int HandDelta |
-| RunState | method | ChooseAspect | 136 | public void ChooseAspect(string id) |
-| RunState | method | ChooseEventOption | 218 | public EventResult ChooseEventOption(int index) |
-| RunState | property | DepthBlocked | 400 | public IReadOnlyList<int> DepthBlocked |
-| RunState | property | DepthHeated | 401 | public IEnumerable<int> DepthHeated |
+| EventResult | field | Notes | 19 | public readonly List<EventNote> Notes = new List<EventNote>() |
+| EventNote | field | key | 26 | public string key |
+| EventNote | field | n | 27 | public int n |
+| EventNote | field | kind | 28 | public string item, other, kind |
+| EventNote | field | plural | 29 | public bool plural |
+| RunState | property | LastLore | 48 | public string LastLore |
+| RunState | property | Aspects | 50 | public IReadOnlyList<AspectInstance> Aspects |
+| RunState | property | AspectOffer | 51 | public IReadOnlyList<AspectInstance> AspectOffer |
+| RunState | property | CurrentEvent | 52 | public EventData CurrentEvent |
+| RunState | property | EventOptions | 54 | public IReadOnlyList<EventOption> EventOptions |
+| RunState | property | Rules | 55 | public BenchRules Rules |
+| RunState | property | RiShift | 57 | public int RiShift |
+| RunState | property | TripleFirst | 58 | public bool TripleFirst |
+| RunState | property | HandDelta | 60 | public int HandDelta |
+| RunState | method | ChooseAspect | 146 | public void ChooseAspect(string id) |
+| RunState | method | ChooseEventOption | 228 | public EventResult ChooseEventOption(int index) |
+| RunState | property | DepthBlocked | 410 | public IReadOnlyList<int> DepthBlocked |
+| RunState | property | DepthHeated | 411 | public IEnumerable<int> DepthHeated |
 | RunState | ctor | RunState | 34 | public RunState(ContentDb db, Journal journal, int seed, int startDepth = 1, RunOptions options = null) |
 | RunState | property | Depth | 51 | public int Depth |
 | RunState | property | Potency | 52 | public long Potency |
@@ -1068,23 +1074,23 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | Align | value | Left | 7 | Left |
 | Align | value | Centre | 7 | Centre |
 | Align | value | Right | 7 | Right |
-| Wording | method | RarityColor | 11 | public static Color RarityColor(string rarity) |
-| Wording | method | RarityTone | 23 | public static Color RarityTone(string rarity) |
-| Wording | method | RarityWord | 35 | public static string RarityWord(string rarity) |
-| Wording | method | AspectColor | 38 | public static Color AspectColor(string effect) |
-| Wording | field | Warm | 58 | public static readonly Color Warm = Px.Hex("#ffa63a") |
-| Wording | method | AspectRule | 61 | public static string AspectRule(AspectInstance a, bool cost = true) |
-| Wording | method | AspectCost | 83 | public static string AspectCost(AspectInstance a) |
-| Wording | method | Effect | 91 | public static string Effect(EffectData fx) |
-| Wording | method | OptionSummary | 121 | public static string OptionSummary(EventOption o) |
-| Wording | method | GoalText | 140 | public static string GoalText(GoalData g) |
-| Wording | method | OptionLabel | 143 | public static string OptionLabel(EventData e, EventOption o) |
-| Wording | method | OutcomeText | 147 | public static string OutcomeText(EventData e, EventOption o, string english) |
-| Wording | method | Note | 175 | public static string Note(string english) |
-| Wording | method | RewardLine | 187 | public static string RewardLine(GoalData g) |
-| Wording | method | ItemName | 191 | public static string ItemName(ContentDb db, string id) |
-| Wording | method | ItemSprite | 200 | public static string ItemSprite(ContentDb db, string id) |
-| Wording | method | Number | 202 | public static string Number(long n) |
+| Wording | method | RarityColor | 10 | public static Color RarityColor(string rarity) |
+| Wording | method | RarityTone | 22 | public static Color RarityTone(string rarity) |
+| Wording | method | RarityWord | 34 | public static string RarityWord(string rarity) |
+| Wording | method | AspectColor | 37 | public static Color AspectColor(string effect) |
+| Wording | field | Warm | 57 | public static readonly Color Warm = Px.Hex("#ffa63a") |
+| Wording | method | AspectRule | 60 | public static string AspectRule(AspectInstance a, bool cost = true) |
+| Wording | method | AspectCost | 82 | public static string AspectCost(AspectInstance a) |
+| Wording | method | Effect | 90 | public static string Effect(EffectData fx) |
+| Wording | method | OptionSummary | 120 | public static string OptionSummary(EventOption o) |
+| Wording | method | GoalText | 139 | public static string GoalText(GoalData g) |
+| Wording | method | OptionLabel | 142 | public static string OptionLabel(EventData e, EventOption o) |
+| Wording | method | OutcomeText | 146 | public static string OutcomeText(EventData e, EventOption o, string english) |
+| Wording | method | NoteText | 154 | public static string NoteText(EventNote note) |
+| Wording | method | RewardLine | 161 | public static string RewardLine(GoalData g) |
+| Wording | method | ItemName | 165 | public static string ItemName(ContentDb db, string id) |
+| Wording | method | ItemSprite | 174 | public static string ItemSprite(ContentDb db, string id) |
+| Wording | method | Number | 176 | public static string Number(long n) |
 | ChoiceCard | field | cost | 13 | public string id, sprite, name, text, kicker, cost |
 | ChoiceCard | field | rarity | 14 | public string rarity |
 | ChoiceCard | field | tiles | 15 | public int[] tiles |
@@ -1352,8 +1358,7 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | LocTests | method | Vietnamese_ChangesTheWords_AndEnglishComesBack | 85 | public void Vietnamese_ChangesTheWords_AndEnglishComesBack() |
 | LocTests | method | ItemNames_StayEnglish_InVietnamese | 96 | public void ItemNames_StayEnglish_InVietnamese() |
 | LocTests | method | FormatNumber_ByLanguage_UsesLocaleSeparators | 103 | public void FormatNumber_ByLanguage_UsesLocaleSeparators() |
-| LocTests | method | CoreNotes_AreTranslated_InVietnamese_AndLeftAloneInEnglish | 111 | public void CoreNotes_AreTranslated_InVietnamese_AndLeftAloneInEnglish() |
-| LocTests | method | ReadLangFromUrl_WithLangParam_ReturnsCode | 123 | public void ReadLangFromUrl_WithLangParam_ReturnsCode() |
+| LocTests | method | ReadLangFromUrl_WithLangParam_ReturnsCode | 111 | public void ReadLangFromUrl_WithLangParam_ReturnsCode() |
 | MainDepthTests | method | SetUp | 18 | public void SetUp() |
 | MainDepthTests | method | TearDown | 37 | public void TearDown() |
 | MainDepthTests | method | SpawnChildren_OfAWorldLayerParent_DrawOnTheWorldLayer | 40 | public void SpawnChildren_OfAWorldLayerParent_DrawOnTheWorldLayer() |
@@ -1375,6 +1380,19 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | MotionTests | method | Arc_IsAlive_AndCanJoinASequence | 27 | public void Arc_IsAlive_AndCanJoinASequence() |
 | MotionTests | method | Arc_EndsOnItsTarget_OnWholePixels | 36 | public void Arc_EndsOnItsTarget_OnWholePixels() |
 | MotionTests | method | EveryHelper_WhenStarted_IsAlive | 45 | public void EveryHelper_WhenStarted_IsAlive() |
+| NoteTextTests | method | NoteText_Trials_MatchesTheOldWording | 29 | public void NoteText_Trials_MatchesTheOldWording(string lang, int n, string expected) |
+| NoteTextTests | method | NoteText_Hand_MatchesTheOldWording | 38 | public void NoteText_Hand_MatchesTheOldWording(string lang, int n, string expected) |
+| NoteTextTests | method | NoteText_Redraws_MatchesTheOldWording | 47 | public void NoteText_Redraws_MatchesTheOldWording(string lang, int n, string expected) |
+| NoteTextTests | method | NoteText_RiShift_MatchesTheOldWording | 56 | public void NoteText_RiShift_MatchesTheOldWording(string lang, int n, string expected) |
+| NoteTextTests | method | NoteText_HeatTile_MatchesTheOldWording | 61 | public void NoteText_HeatTile_MatchesTheOldWording(string lang, int n, string expected) |
+| NoteTextTests | method | NoteText_Found_MatchesTheOldWording | 66 | public void NoteText_Found_MatchesTheOldWording(string lang, string expected) |
+| NoteTextTests | method | NoteText_GaveUp_MatchesTheOldWording | 71 | public void NoteText_GaveUp_MatchesTheOldWording(string lang, string expected) |
+| NoteTextTests | method | NoteText_Lost_MatchesTheOldWording | 77 | public void NoteText_Lost_MatchesTheOldWording(string lang, string expected) |
+| NoteTextTests | method | NoteText_Received_MatchesTheOldWording | 82 | public void NoteText_Received_MatchesTheOldWording(string lang, string expected) |
+| NoteTextTests | method | NoteText_Hint_MatchesTheOldWording | 87 | public void NoteText_Hint_MatchesTheOldWording(string lang, string expected) |
+| NoteTextTests | method | NoteText_Became_MatchesTheOldWording | 92 | public void NoteText_Became_MatchesTheOldWording(string lang, string expected) |
+| NoteTextTests | method | NoteText_FirstTriple_MatchesTheOldWording | 97 | public void NoteText_FirstTriple_MatchesTheOldWording(string lang, string expected) |
+| NoteTextTests | method | NoteText_BlockTile_MatchesTheOldWording | 102 | public void NoteText_BlockTile_MatchesTheOldWording(string lang, string expected) |
 | PauseTests | method | Open_StopsTime_AndEveryExitRestoresIt | 38 | public void Open_StopsTime_AndEveryExitRestoresIt() |
 | PauseTests | method | Quit_RestoresTime_BeforeTheOwnerHearsOfIt | 53 | public void Quit_RestoresTime_BeforeTheOwnerHearsOfIt() |
 | PauseTests | method | Esc_Toggles_AndBacksOutOfTheQuitQuestion | 67 | public void Esc_Toggles_AndBacksOutOfTheQuitQuestion() |

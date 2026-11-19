@@ -96,7 +96,7 @@ namespace Athanor.Game
             changed?.Invoke();
             for (int i = 0; i < MaxOptions; i++) rows[i].root.gameObject.SetActive(false);
             outcome.Text = Wording.OutcomeText(e, option, result.Text);
-            for (int i = 0; i < NoteCount; i++) notes[i].Text = i < result.Notes.Count ? Wording.Note(result.Notes[i]) : "";
+            for (int i = 0; i < NoteCount; i++) notes[i].Text = i < result.Notes.Count ? Wording.NoteText(result.Notes[i]) : "";
             if (result.Notes.Count > 0) ScreenFx.I.Flash(0.12f, 0.25f);
             proceed.gameObject.SetActive(true);
             Dev.Hook("[event] result");

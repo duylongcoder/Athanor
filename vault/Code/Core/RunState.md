@@ -12,26 +12,26 @@ aliases: []
 # RunState
 
 `public sealed partial class RunState`
-- Layer: **Core** · Source: `Athanor/Assets/Scripts/Core/RunStart.cs:23-402` (+ partial: `Athanor/Assets/Scripts/Core/RunState.cs:20`)
+- Layer: **Core** · Source: `Athanor/Assets/Scripts/Core/RunStart.cs:33-412` (+ partial: `Athanor/Assets/Scripts/Core/RunState.cs:20`)
 
 > One run: descending through depths, spending trials, collecting catalysts.
 
 ## Members
 | Kind | Signature | Line | Note |
 |---|---|---|---|
-| property | `public string LastLore` | 38 | The last Lore event seen: this run's latest, or the one the run started with. |
-| property | `public IReadOnlyList<AspectInstance> Aspects` | 40 |  |
-| property | `public IReadOnlyList<AspectInstance> AspectOffer` | 41 |  |
-| property | `public EventData CurrentEvent` | 42 |  |
-| property | `public IReadOnlyList<EventOption> EventOptions` | 44 | The options of the current event that can be taken now. |
-| property | `public BenchRules Rules` | 45 |  |
-| property | `public int RiShift` | 47 | This depth only: how much every material's Reaction Index is shifted, and whether the next first reaction triples. |
-| property | `public bool TripleFirst` | 48 |  |
-| property | `public int HandDelta` | 50 | This depth only: how many cards more or fewer each hand holds. |
-| method | `public void ChooseAspect(string id)` | 136 | Takes one of the offered aspects for the rest of the run and moves on to the event or the bench. |
-| method | `public EventResult ChooseEventOption(int index)` | 218 | Takes an option of the current event (an index into EventOptions), applies it and opens the bench. |
-| property | `public IReadOnlyList<int> DepthBlocked` | 400 | Tiles shut or warmed by this depth's event, for the screen. |
-| property | `public IEnumerable<int> DepthHeated` | 401 |  |
+| property | `public string LastLore` | 48 | The last Lore event seen: this run's latest, or the one the run started with. |
+| property | `public IReadOnlyList<AspectInstance> Aspects` | 50 |  |
+| property | `public IReadOnlyList<AspectInstance> AspectOffer` | 51 |  |
+| property | `public EventData CurrentEvent` | 52 |  |
+| property | `public IReadOnlyList<EventOption> EventOptions` | 54 | The options of the current event that can be taken now. |
+| property | `public BenchRules Rules` | 55 |  |
+| property | `public int RiShift` | 57 | This depth only: how much every material's Reaction Index is shifted, and whether the next first reaction triples. |
+| property | `public bool TripleFirst` | 58 |  |
+| property | `public int HandDelta` | 60 | This depth only: how many cards more or fewer each hand holds. |
+| method | `public void ChooseAspect(string id)` | 146 | Takes one of the offered aspects for the rest of the run and moves on to the event or the bench. |
+| method | `public EventResult ChooseEventOption(int index)` | 228 | Takes an option of the current event (an index into EventOptions), applies it and opens the bench. |
+| property | `public IReadOnlyList<int> DepthBlocked` | 410 | Tiles shut or warmed by this depth's event, for the screen. |
+| property | `public IEnumerable<int> DepthHeated` | 411 |  |
 | ctor | `public RunState(ContentDb db, Journal journal, int seed, int startDepth = 1, RunOptions options = null)` | 34 |  |
 | property | `public int Depth` | 51 |  |
 | property | `public long Potency` | 52 |  |
@@ -64,7 +64,7 @@ aliases: []
 | method | `public void ChooseCatalyst(string id)` | 279 | Takes one of the offered catalysts (or null when none were left to offer) and descends. |
 
 ## Uses
-[[AspectEffects]], [[AspectInstance]], [[Bench]], [[BenchRules]], [[ContentDb]], [[Effects]], [[EventResult]], [[IgniteOutcome]], [[IgniteResolver]], [[Journal]], [[Kind]], [[Ops]], [[Rarities]], [[ReactionEvent]], [[Rng]], [[RunOptions]], [[RunPhase]], [[Satchel]], [[ScoreContext]], [[Unlocks]]
+[[AspectEffects]], [[AspectInstance]], [[Bench]], [[BenchRules]], [[ContentDb]], [[Effects]], [[EventNote]], [[EventResult]], [[IgniteOutcome]], [[IgniteResolver]], [[Journal]], [[Kind]], [[Ops]], [[Rarities]], [[ReactionEvent]], [[Rng]], [[RunOptions]], [[RunPhase]], [[Satchel]], [[ScoreContext]], [[Unlocks]]
 
 ## Used by
 [[AutoPlayer]], [[BenchView]], [[EventView]], [[GameFlow]], [[GoldenShots]], [[HudView]], [[Profile]], [[RunOverView]]

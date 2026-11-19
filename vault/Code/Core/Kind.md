@@ -21,4 +21,4 @@ aliases: []
 [[AspectInstance]], [[BenchView]], [[CardView]], [[ContentDb]], [[GoldenShots]], [[Journal]], [[JournalView]], [[Loc]], [[RunState]], [[Wording]]
 
 ## Tested by
-[[JournalTests]], [[Phase3Tests]], [[SaveTests]]
+[[JournalTests]], [[NoteTextTests]], [[Phase3Tests]], [[SaveTests]]
