@@ -15,8 +15,19 @@
   ],
   "unity_object_types": [],
   "severity": {
-    "_comment": "error | warning | off. Mặc định mọi luật là error. Warning không làm CI fail."
+    "_comment": "error | warning | off. Mặc định mọi luật là error. Warning không làm CI fail.",
+    "UL009": "warning",
+    "UL010": "warning",
+    "UL011": "warning",
+    "UL012": "warning"
   },
   "commit_regex": "^(?:feat|fix|refactor|test|docs|chore|perf|build|ci|style|revert)(?:\\([a-z0-9._/-]+\\))?!?: \\S.{0,80}$",
-  "_commit_regex": "Scope is optional: CLAUDE.md uses `feat:` style Conventional Commits."
+  "_commit_regex": "Scope is optional: CLAUDE.md uses `feat:` style Conventional Commits.",
+  "platform_define_allowlist": [
+    "Assets/Scripts/Game/Support/Haptics.cs",
+    "Assets/Scripts/Game/Support/AudioMute.cs",
+    "Assets/Scripts/Game/Boot/GameFlow.cs",
+    "Assets/Scripts/Game/Boot/Save.cs",
+    "Assets/Scripts/Game/Support/Dev.cs"
+  ]
 }

@@ -49,6 +49,18 @@ RULES: dict[str, tuple[str, str]] = {
     "UL007": ("Secret bị hard-code", "Đưa ra biến môi trường/secret store; thu hồi key đã lộ."),
     "UL008": ("Logic thuần C# dùng UnityEngine/UnityEditor",
               "Tách phần phụ thuộc Unity ra adapter ngoài pure_logic_paths."),
+    "UL009": ("Màu hard-code trong lớp trình bày",
+              "Lấy màu từ theme/layout dữ liệu (palette), không viết Px.Hex(\"#...\") hay new Color(số) trong Scripts/Game."),
+    "UL010": ("Toạ độ/kích thước hard-code trong lớp trình bày",
+              "Đưa số vào layout.json hoặc hằng có tên; chỉ cho phép 0 và 1 trong Px.At/Px.Mid/new Rect/new Vector2/3."),
+    "UL011": ("static có thể ghi trong logic thuần",
+              "Giữ trạng thái trong đối tượng run/state được truyền vào; chỉ dùng static readonly/const."),
+    "UL012": ("static có thể ghi trong lớp trình bày",
+              "Dùng instance/ScriptableObject; nếu thật sự cần, thêm lớp vào static_allowlist và reset bằng RuntimeInitializeLoadType.SubsystemRegistration."),
+    "UL013": ("Thread/Task.Run/.Result/.Wait()/Timer không dùng được trên WebGL",
+              "WebGL chạy một luồng: dùng coroutine hoặc async/await trên main thread, không chặn bằng .Result/.Wait()."),
+    "UL014": ("#if nền tảng ngoài danh sách cho phép",
+              "Chỉ các file trong platform_define_allowlist (bridge) được dùng #if UNITY_WEBGL/STANDALONE/ANDROID/IOS."),
     "UL100": ("Tên test không theo Method_Condition_Result",
               "Ví dụ TakeDamage_WhenHealthReachesZero_RaisesDeathEvent."),
     "UL101": ("Test không có assertion", "Thêm Assert.* (hoặc helper Assert*/Verify*/Expect*)."),
@@ -86,6 +98,9 @@ DEFAULT_CONFIG: dict = {
     "catch_allow_types": ["OperationCanceledException", "TaskCanceledException"],
     "unity_object_types": [],
     "pure_logic_paths": ["Assets/_Game/Core"],
+    "presentation_paths": ["Assets/Scripts/Game"],
+    "static_allowlist": [],
+    "platform_define_allowlist": [],
     "test_path_regex": r"(^|/)(Tests?|EditMode|PlayMode)(/|$)",
     "test_name_regex": r"^[A-Za-z0-9]+(?:_[A-Za-z0-9]+){2,}$",
     "assertion_regex": r"\b(?:Assert|CollectionAssert|StringAssert|LogAssert|Assume)\b|\b(?:Assert|Verify|Expect|Should)\w*\s*\(",
@@ -481,6 +496,139 @@ def check_pure(s: Src, rel: str, cfg, emit):
         emit("UL008", m.start() + len(m.group(0)) - len(m.group(0).lstrip()), "tham chiếu UnityEngine/UnityEditor trong thư mục logic thuần")
 
 
+def _under(rel: str, paths) -> bool:
+    return any(rel == p.rstrip("/") or rel.startswith(p.rstrip("/") + "/") for p in paths)
+
+
+NUM_RX = re.compile(r"(?<![\w.])(?:0[xX][0-9a-fA-F]+|\d+\.?\d*(?:[eE][+-]?\d+)?|\.\d+)[fFdDmMuUlL]*")
+HEX_CALL_RX = re.compile(r"\bPx\s*\.\s*Hex\s*\(\s*[$@]*\"")
+COLOR_RX = re.compile(r"\bnew\s+Color(?:32)?\s*\(")
+LAYOUT_CALL_RX = re.compile(r"\bPx\s*\.\s*(?:At|Mid)\s*\(|\bnew\s+(?:Rect|Vector2|Vector3)\s*\(")
+
+
+def _args(masked: str, open_idx: int) -> str:
+    close = match_bracket(masked, open_idx, "(", ")")
+    return masked[open_idx + 1:close if close > open_idx else len(masked)]
+
+
+def _number_ok_in_layout(tok: str) -> bool:
+    body = tok.rstrip("fFdDmMuUlL")
+    if body.lower().startswith("0x"):
+        return False
+    try:
+        return float(body) in (0.0, 1.0)
+    except ValueError:
+        return False
+
+
+def check_literals(s: Src, rel: str, cfg, emit):
+    """UL009 (màu hard-code) và UL010 (toạ độ hard-code) trong presentation_paths."""
+    if not _under(rel, cfg["presentation_paths"]):
+        return
+    text = s.masked
+    for m in HEX_CALL_RX.finditer(text):
+        emit("UL009", m.start(), "Px.Hex với chuỗi màu hard-code")
+    for m in COLOR_RX.finditer(text):
+        if NUM_RX.search(_args(text, m.end() - 1)):
+            emit("UL009", m.start(), "new Color/Color32 với số hard-code")
+    for m in LAYOUT_CALL_RX.finditer(text):
+        for n in NUM_RX.finditer(_args(text, m.end() - 1)):
+            if not _number_ok_in_layout(n.group(0)):
+                emit("UL010", m.start(), f"số hard-code {n.group(0)} trong {m.group(0).strip()[:-1].strip()}")
+                break
+
+
+STATIC_DECL_RX = re.compile(r"(?<![\w.])static\s+((?:[\w.<>,\[\]?]+\s*)+?)\s*(=>|[;={(])")
+STATIC_SKIP_WORDS = {"class", "struct", "interface", "enum", "delegate", "operator", "implicit", "explicit", "record"}
+STATIC_MODIFIERS = {"public", "private", "protected", "internal", "new", "unsafe", "volatile", "extern",
+                    "readonly", "const", "event", "partial", "async", "override"}
+COLLECTION_TYPE_RX = re.compile(r"^(?:System\s*\.\s*Collections\s*\.\s*Generic\s*\.\s*)?(?:List|Dictionary|HashSet|Queue|Stack)\b")
+CLASS_RX = re.compile(r"\b(?:class|struct|record)\s+(\w+)[^{;]*\{")
+
+
+def find_statics(text: str):
+    """Trả về [(idx, kind, owner_class)], kind: mutable | collection."""
+    classes = []
+    for m in CLASS_RX.finditer(text):
+        o = m.end() - 1
+        classes.append((m.group(1), o, match_brace(text, o)))
+    out = []
+    for m in STATIC_DECL_RX.finditer(text):
+        if re.search(r"\busing\s+$", text[max(0, m.start() - 12):m.start()]):
+            continue
+        words = re.findall(r"[\w.<>,\[\]?]+", m.group(1))
+        term = m.group(2)
+        if term == "(" or term == "=>" or any(w in STATIC_SKIP_WORDS for w in words):
+            continue
+        body = [w for w in words if w not in STATIC_MODIFIERS]
+        if len(body) < 2 and "event" not in words:
+            continue
+        kind = None
+        if "event" in words:
+            kind = "mutable"
+        elif term == "{":
+            close = match_brace(text, m.end() - 1)
+            if re.search(r"\bset\b", text[m.end():close]):
+                kind = "mutable"
+        elif "const" in words:
+            kind = None
+        elif "readonly" not in words:
+            kind = "mutable"
+        elif COLLECTION_TYPE_RX.match(" ".join(body[:-1]).replace(" ", "")):
+            kind = "collection"
+        if kind:
+            owner = None
+            for name, o, c in classes:
+                if o < m.start() < c and (owner is None or o > owner[1]):
+                    owner = (name, o)
+            out.append((m.start(), kind, owner[0] if owner else None))
+    return out
+
+
+def check_statics(s: Src, rel: str, cfg, emit):
+    """UL011 (pure_logic_paths) và UL012 (presentation_paths)."""
+    text = s.masked
+    if _under(rel, cfg["pure_logic_paths"]):
+        for idx, kind, _ in find_statics(text):
+            if kind == "mutable":
+                emit("UL011", idx, "static có thể ghi trong Scripts/Core")
+    if _under(rel, cfg["presentation_paths"]):
+        allow = set(cfg["static_allowlist"])
+        for idx, kind, owner in find_statics(text):
+            if owner not in allow:
+                emit("UL012", idx, "static có thể ghi (hoặc collection static) ngoài static_allowlist")
+        if "SubsystemRegistration" not in text:
+            for m in CLASS_RX.finditer(text):
+                if m.group(1) in allow:
+                    emit("UL012", m.start(), f"lớp {m.group(1)} trong static_allowlist thiếu reset SubsystemRegistration")
+
+
+THREAD_PATTERNS = [
+    (re.compile(r"\bTask\s*\.\s*Run\b"), "Task.Run"),
+    (re.compile(r"\bnew\s+(?:System\s*\.\s*Threading\s*\.\s*)?Thread\s*\("), "new Thread"),
+    (re.compile(r"\)\s*\.\s*Result\b"), ".Result trên Task"),
+    (re.compile(r"\.\s*Wait\s*\(\s*\)"), ".Wait()"),
+    (re.compile(r"\bSystem\s*\.\s*Threading\s*\.\s*Timer\b"), "System.Threading.Timer"),
+]
+PLATFORM_DEFINE_RX = re.compile(r"^[ \t]*#[ \t]*(?:if|elif)\b[^\n]*", re.M)
+PLATFORM_SYMBOL_RX = re.compile(r"\bUNITY_(?:WEBGL|STANDALONE\w*|ANDROID|IOS)\b")
+
+
+def check_threads_and_platform(s: Src, rel: str, cfg, emit):
+    """UL013 và UL014 trong Assets/Scripts (không gồm Editor/ và test)."""
+    if not _under(rel, ["Assets/Scripts"]) or re.search(r"(^|/)Editor/", rel) or re.search(cfg["test_path_regex"], rel):
+        return
+    text = s.masked
+    for rx, what in THREAD_PATTERNS:
+        for m in rx.finditer(text):
+            emit("UL013", m.start(), f"{what}: WebGL chỉ có một luồng")
+    if rel not in cfg["platform_define_allowlist"]:
+        for m in PLATFORM_DEFINE_RX.finditer(text):
+            sym = PLATFORM_SYMBOL_RX.search(m.group(0))
+            if sym:
+                emit("UL014", m.start() + sym.start(), f"#if {sym.group(0)} ngoài platform_define_allowlist")
+
+
 UNITY_RANDOM_RX = re.compile(
     r"\b(?:UnityEngine\s*\.\s*)?Random\s*\.\s*(?!InitState\b)(?:Range|value|insideUnit\w*|onUnit\w*|rotation\w*|ColorHSV)\b")
 NONDET_PATTERNS = [
@@ -590,6 +738,10 @@ def lint_source(rel: str, raw: str, project: Project) -> list[Violation]:
         check_events(s, emit)
         check_async_void(s, emit)
         check_pure(s, rel, cfg, emit)
+        if not (re.search(cfg["test_path_regex"], rel) or re.search(r"(^|/)Editor/", rel)):
+            check_literals(s, rel, cfg, emit)
+            check_statics(s, rel, cfg, emit)
+        check_threads_and_platform(s, rel, cfg, emit)
         if re.search(cfg["test_path_regex"], rel) or "NUnit.Framework" in raw:
             check_tests(s, rel, cfg, emit)
     if match_any(rel, cfg["secret_globs"]) and not match_any(rel, cfg["exclude"]):

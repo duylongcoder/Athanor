@@ -344,6 +344,82 @@ class IgnoreTests(Base):
         self.assertEqual(rules_of(v), ["UL002"])
 
 
+class PresentationAndStaticRuleTests(Base):
+    GAME = "Assets/Scripts/Game/A.cs"
+    CORE = "Assets/Scripts/Core/A.cs"
+    PURE = {"pure_logic_paths": ["Assets/Scripts/Core"]}
+    PP = {"presentation_paths": ["Assets/Scripts/Game"]}
+
+    def test_ul009_hex_literal_in_game(self):
+        v = self.lint('class A { void F() { var c = Px.Hex("#ff00aa"); var d = new Color(0.2f, 0.4f, 0.6f); } }',
+                      rel=self.GAME, **self.PP)
+        self.assertIn("UL009", rules_of(v))
+
+    def test_ul009_hex_in_editor_ok(self):
+        v = self.lint('class A { void F() { var c = Px.Hex("#ff00aa"); } }',
+                      rel="Assets/Editor/A.cs", **self.PP)
+        self.assertNotIn("UL009", rules_of(v))
+
+    def test_ul010_px_at_literal(self):
+        v = self.lint("class A { void F() { var p = Px.At(575, 306); } }", rel=self.GAME, **self.PP)
+        self.assertIn("UL010", rules_of(v))
+
+    def test_ul010_vector_zero_one_ok(self):
+        v = self.lint("class A { void F() { var p = new Vector2(0, 1f); var q = new Vector3(1, 0f, 0); } }",
+                      rel=self.GAME, **self.PP)
+        self.assertNotIn("UL010", rules_of(v))
+
+    def test_ul011_mutable_static_in_core(self):
+        v = self.lint("class A { static int count; static event System.Action E; public static int P { get; set; } }",
+                      rel=self.CORE, **self.PURE)
+        self.assertIn("UL011", rules_of(v))
+        for src in ("class A { static int count; }", "class A { static event System.Action E; }",
+                    "class A { public static int P { get; set; } }"):
+            self.assertIn("UL011", rules_of(self.lint(src, rel=self.CORE, **self.PURE)), src)
+
+    def test_ul011_static_readonly_array_ok(self):
+        v = self.lint("class A { static readonly int[] Xs = {1,2}; const int K = 3; public static int P { get; } }",
+                      rel=self.CORE, **self.PURE)
+        self.assertNotIn("UL011", rules_of(v))
+
+    def test_ul012_static_list_not_allowlisted(self):
+        v = self.lint("class A { static readonly List<int> Cache = new List<int>(); }", rel=self.GAME, **self.PP)
+        self.assertIn("UL012", rules_of(v))
+
+    def test_ul012_allowlisted_without_reset(self):
+        v = self.lint("class Dev { static int n; }", rel=self.GAME, static_allowlist=["Dev"], **self.PP)
+        self.assertIn("UL012", rules_of(v))
+
+    def test_ul012_allowlisted_with_reset_ok(self):
+        src = """
+            class Dev {
+                static int n;
+                [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+                static void Reset() { n = 0; }
+            }"""
+        v = self.lint(src, rel=self.GAME, static_allowlist=["Dev"], **self.PP)
+        self.assertNotIn("UL012", rules_of(v))
+
+    def test_ul013_task_run(self):
+        v = self.lint("class A { void F() { Task.Run(() => 1); } }", rel="Assets/Scripts/Game/A.cs")
+        self.assertIn("UL013", rules_of(v))
+
+    def test_ul013_in_comment_ok(self):
+        v = self.lint('class A { void F() { /* Task.Run(x) */ var s = "new Thread(x)"; // t.Wait()\n } }',
+                      rel="Assets/Scripts/Game/A.cs")
+        self.assertNotIn("UL013", rules_of(v))
+
+    def test_ul014_webgl_define_outside_allowlist(self):
+        v = self.lint("class A {\n#if UNITY_WEBGL && !UNITY_EDITOR\n int x;\n#endif\n}",
+                      rel="Assets/Scripts/Game/A.cs", platform_define_allowlist=[])
+        self.assertIn("UL014", rules_of(v))
+
+    def test_ul014_in_allowlist_ok(self):
+        v = self.lint("class A {\n#if UNITY_WEBGL\n int x;\n#endif\n}",
+                      rel="Assets/Scripts/Game/A.cs", platform_define_allowlist=["Assets/Scripts/Game/A.cs"])
+        self.assertNotIn("UL014", rules_of(v))
+
+
 class ProjectCheckTests(Base):
     def test_meta_missing_and_orphan(self):
         self.write("Assets/A.cs", "class A {}")

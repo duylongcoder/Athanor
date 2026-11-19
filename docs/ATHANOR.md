@@ -291,6 +291,12 @@ One line each. A decision is written here before it is relied on. Superseded and
 |---|---|---|
 | Hard-rule code bugs: `Find*` in `Update`, swallowed `catch`, `?.` on a Unity object, event never unsubscribed, hard-coded secret | `unity_lint` UL001-UL007 | lint |
 | `UnityEngine` inside `Scripts/Core` | UL008 and `check_repo` CORE-PURITY | lint, repo-guard |
+| Hard-coded colour in `Scripts/Game` (`Px.Hex("#..")`, `new Color(<numbers>)`) | UL009 (warning until Phase 7 Task 16) | lint |
+| Hard-coded position or size in `Scripts/Game` (`Px.At`, `Px.Mid`, `new Rect`, `new Vector2/3` with a number other than 0 or 1) | UL010 (warning until Phase 7 Task 16) | lint |
+| Mutable `static` (field, event, property with a setter) in `Scripts/Core` | UL011 (warning until Phase 7 Task 5) | lint |
+| Mutable or collection `static` in `Scripts/Game` outside `static_allowlist`, or an allowlisted class without a `SubsystemRegistration` reset | UL012 (warning until Phase 7 Task 8) | lint |
+| `Task.Run`, `new Thread`, `.Result`, `.Wait()`, `System.Threading.Timer` in `Scripts/` (WebGL is single-threaded) | UL013 | lint |
+| `#if UNITY_WEBGL/STANDALONE*/ANDROID/IOS` outside `platform_define_allowlist` | UL014 | lint |
 | Bad tests: no assertion, `[Ignore]`/`[Explicit]`/`[Retry]`, `Thread.Sleep`, unseeded random or clock, name not `Method_Condition_Result` | UL100-UL105 | lint |
 | Missing or duplicate `.meta`, wrong `ProjectSettings` | UL200-UL203 | lint |
 | Build output staged (`bin`, `obj`, `Athanor/Build`, `test-results.xml`) | `check_repo` BUILD-OUTPUT, UL204 | repo-guard |
