@@ -1,0 +1,3 @@
+descents photographed: 2,3,4
+console: 6184 messages, 0 errors
+EXIT 0

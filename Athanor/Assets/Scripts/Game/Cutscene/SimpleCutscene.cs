@@ -28,6 +28,14 @@ namespace Athanor.Game
         [SerializeField] Label small, big, banner, prompt, intro;
         [SerializeField] Light2D iconLight;
         Color tint = Color.white;
+        FxRefs fx;
+
+        /// <summary>Takes the effect players. GameFlow calls it once at start.</summary>
+        public void Bind(FxRefs effects)
+        {
+            if (effects == null) throw new System.ArgumentNullException(nameof(effects));
+            fx = effects;
+        }
         float raysOn, runeOn, embers, streaks;      // strengths of the looping effects, driven by the scripts below
 
         public override IEnumerator Play() => Intro();
@@ -69,10 +77,10 @@ namespace Athanor.Game
         public IEnumerator Intro()
         {
             Begin();
-            ScreenFx.I.SetBlack(1);
+            fx.Screen.SetBlack(1);
             Stage(true, true);
             embers = 1;
-            yield return ScreenFx.I.FadeIn(0.9f);
+            yield return fx.Screen.FadeIn(0.9f);
             ClearSkip();
             for (int p = 0; p < IntroPages.Length; p++)
             {
@@ -94,7 +102,7 @@ namespace Athanor.Game
             prompt.Text = Loc.T("ui.common.click_to_begin");
             yield return Hold(8);
             End();
-            yield return ScreenFx.I.FadeOut(0.4f);
+            yield return fx.Screen.FadeOut(0.4f);
             Close();
         }
 
@@ -109,8 +117,8 @@ namespace Athanor.Game
             tint = colour;
             // 1. the win, over the bench
             banner.Text = Loc.T("cutscene.depth_cleared");
-            ScreenFx.I.Flash(0.3f, 0.5f); ScreenFx.I.Shake(2, 0.3f);
-            Sparks.I.Burst(Px.At(CX, 170), 70, new Color(2.2f, 1.7f, 0.6f), 210, 1.1f, O + 11, 50, 0.6f);
+            fx.Screen.Flash(0.3f, 0.5f); fx.Screen.Shake(2, 0.3f);
+            fx.Sparks.Burst(Px.At(CX, 170), 70, new Color(2.2f, 1.7f, 0.6f), 210, 1.1f, O + 11, 50, 0.6f);
             yield return Sequence.Create()
                 .Group(Motion.Fade(banner, 0, 1, 0.3f))
                 .Group(Motion.Move(banner.transform, Px.At(CX, 102), Px.At(CX, 88), 0.3f, Ease.OutBack))
@@ -180,12 +188,12 @@ namespace Athanor.Game
         public IEnumerator Ending(MaterialData ultimate)
         {
             Begin();
-            yield return ScreenFx.I.FadeOut(0.5f);
+            yield return fx.Screen.FadeOut(0.5f);
             Stage(true, true);
             tint = Px.Hex(string.IsNullOrEmpty(ultimate.glow) ? "#fff6b8" : ultimate.glow);
             icon.sprite = Art.Lib.Sprite(ultimate.id); icon.enabled = true;
             raysOn = 1; embers = 1;
-            yield return ScreenFx.I.FadeIn(1.1f);
+            yield return fx.Screen.FadeIn(1.1f);
             ClearSkip();
             string[] text = { Loc.T("story.ending.1"), Loc.T("story.ending.2"), Loc.T("story.ending.3") };
             for (int i = 0; i < text.Length; i++)
@@ -193,8 +201,8 @@ namespace Athanor.Game
                 yield return Type(lines[i], text[i]);
                 yield return Hold(0.9f);
             }
-            ScreenFx.I.Flash(0.5f, 0.8f);
-            Sparks.I.Burst(Px.At(CX, 150), 90, tint.Times(2.4f), 220, 1.4f, O + 6, 30);
+            fx.Screen.Flash(0.5f, 0.8f);
+            fx.Sparks.Burst(Px.At(CX, 150), 90, tint.Times(2.4f), 220, 1.4f, O + 6, 30);
             foreach (var l in lines) l.Text = "";
             banner.Text = Loc.T("cutscene.great_work"); banner.Alpha = 1; banner.transform.position = Px.At(CX, 44);
             prompt.Text = Loc.T("ui.common.click_to_continue");

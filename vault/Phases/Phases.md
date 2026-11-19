@@ -45,7 +45,7 @@ Decisions in force and carry-overs, copied from `docs/ATHANOR.md` sections 4 and
 - **Version string and release notes** for the Phase 5 build are not done; `project.yaml` stays 0.4.0 and the changelog entry is a draft.
 - **Remote branch** `origin/feature/2.5D_test-phase-4` is merged and can go; only on the owner's command.
 - **Accepted test gaps:** shake click 25/45 in the harness (latency, not a bug); 1x HUD garble seen only in software rendering (SwiftShader) and not on release with a GPU; depth 5 descent frames not photographed; Vietnamese half-leading offsets of 2 to 7 px on some banners, tight Vietnamese catalyst lines and tall buttons; fog grain judged by eye only; no Legendary material exists so a Legendary Journal frame was never shot (do not add one for a screenshot); the lost-run summary is covered by tests only.
-- **Singletons left:** `ScreenFx.I` and `Sparks.I` are still static handles.
+- ~~**Singletons left:** `ScreenFx.I` and `Sparks.I`~~ closed in Phase 7 Task 7: both are passed through `Bind` as an `FxRefs` (GameFlow builds it from its `screenFx` and `sparks` fields).
 - **Leftover DepthTest tools:** `tools/web/depthmatrix.sh`, `depthprobe.mjs`, `depthshimmer.py`, `depthshimmer.sh` still exist although the prototype they measured is gone; the Phase 6 spec called for deleting them.
 - **studio-tests were removed** in Phase 6. The framework skills `skill-test` and `skill-improve` are left in place, but their fixtures are gone.
 - **Remaining Phase 6 work:** graphify of `Athanor/` is Task 30; EditMode must end at 0 failed and 0 skipped.

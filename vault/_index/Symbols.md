@@ -74,13 +74,13 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | TileView | TileView | Game | class | Athanor/Assets/Scripts/Game/Bench/TileView.cs | 10 | One of the nine bench tiles: its hover highlight and, when occupied, the material standing on it. |
 | GameFlow | GameFlow | Game | class | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 15 | Owns the run and moves the game between its screens. |
 | FlowState | FlowState | Game | enum | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 12 |  |
-| TitleChoice | TitleChoice | Game | enum | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 131 |  |
+| TitleChoice | TitleChoice | Game | enum | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 133 |  |
 | Save | Save | Game | class | Athanor/Assets/Scripts/Game/Boot/Save.cs | 8 | Keeps the journal and the profile between sessions in PlayerPrefs (browser storage in a web build). |
 | Cutscene | Cutscene | Game | class | Athanor/Assets/Scripts/Game/Cutscene/Cutscene.cs | 7 | A sequence that plays to its end unless the player clicks to skip ahead. |
 | DepthLook | DepthLook | Game | class | Athanor/Assets/Scripts/Game/Cutscene/DepthLook.cs | 9 | What a depth looks like from the bench: the intro line under its name and the view through the window. Pure choices, no scene; the pictures and effects are drawn by WindowView. |
 | ReactionCutscene | ReactionCutscene | Game | class | Athanor/Assets/Scripts/Game/Cutscene/ReactionCutscene.cs | 13 | The full discovery sequence: two materials spiral into the cauldron, the rune circle lights, a flash, and the new material rises on a column of light with its name and potency. Everything is a functio |
 | SimpleCutscene | SimpleCutscene | Game | class | Athanor/Assets/Scripts/Game/Cutscene/SimpleCutscene.cs | 14 | The short story beats built from text and a few effects: the intro, the descent between depths, and the ending. A click finishes the line being written, then moves on. |
-| Loop | Loop | Game | class | Athanor/Assets/Scripts/Game/Cutscene/SimpleCutscene.cs | 281 | A stream of glowing particles played as a loop instead of emitted: rate x life fixed slots, each reborn every life seconds at a hashed place and speed, so its position is a function of the clock. A sl |
+| Loop | Loop | Game | class | Athanor/Assets/Scripts/Game/Cutscene/SimpleCutscene.cs | 289 | A stream of glowing particles played as a loop instead of emitted: rate x life fixed slots, each reborn every life seconds at a hashed place and speed, so its position is a function of the clock. A sl |
 | TutorialRules | TutorialRules | Game | class | Athanor/Assets/Scripts/Game/Cutscene/TutorialController.cs | 12 | The decisions around the tutorial that need no scene, so they can be tested. What Begin does is the Core rule TutorialScript.Plan. |
 | TutorialController | TutorialController | Game | class | Athanor/Assets/Scripts/Game/Cutscene/TutorialController.cs | 33 | Plays the scripted tutorial over the bench: a dark screen with lit holes and a pulsing gold rim, an arrow, a text box at the top, click locks, and popups held until read. It reads the game's state; it |
 | TutorialHole | TutorialHole | Game | class | Athanor/Assets/Scripts/Game/Cutscene/TutorialHole.cs | 10 | One lit window of the tutorial overlay: a SpriteMask that cuts a hole in the dim (the dim draws "visible outside mask"), and the four gold rim pieces round it. TutorialController keeps a few of these  |
@@ -106,12 +106,13 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | Flipbook | Flipbook | Game | class | Athanor/Assets/Scripts/Game/Fx/Flipbook.cs | 8 | Plays a FlipbookSheet on a SpriteRenderer. |
 | FlipbookSheet | FlipbookSheet | Game | class | Athanor/Assets/Scripts/Game/Fx/FlipbookSheet.cs | 6 | One exported effect: its frames in order and how long each is shown. |
 | Fx | Fx | Game | class | Athanor/Assets/Scripts/Game/Fx/Fx.cs | 6 | Spawns exported pixelfx effects by name. |
+| FxRefs | FxRefs | Game | class | Athanor/Assets/Scripts/Game/Fx/FxRefs.cs | 6 | The scene's two effect players, handed to every view that flashes, shakes or throws sparks (no statics). |
 | ScreenFx | ScreenFx | Game | class | Athanor/Assets/Scripts/Game/Fx/ScreenFx.cs | 7 | Whole-screen effects: a white flash, camera shake, and fading to and from black. |
 | SparkMesh | SparkMesh | Game | class | Athanor/Assets/Scripts/Game/Fx/SparkMesh.cs | 13 | Many 1 px dots and 5x5 sparkles drawn as one mesh at one sorting order: one renderer and at most two draws (one per texture) instead of a SpriteRenderer each. Fill it every frame with Begin, Add, End. |
 | SparkParticles | SparkParticles | Game | class | Athanor/Assets/Scripts/Game/Fx/SparkParticles.cs | 13 | Sparks drawn by ParticleSystems (docs/ATHANOR.md §2), only compiled with ATHANOR_SPARK_PARTICLES. Not shipped: it pulls the ParticleSystem engine module into the wasm, which was the thing measured. On |
 | Sparks | Sparks | Game | class | Athanor/Assets/Scripts/Game/Fx/Sparks.cs | 13 | Glowing pixel particles: bursts, trails and rising embers. Particles are plain structs integrated here; each sorting order is one lane drawn by one SparkMesh (one renderer, at most two draws), so a bu |
-| Particle | Particle | Game | struct | Athanor/Assets/Scripts/Game/Fx/Sparks.cs | 20 |  |
-| Lane | Lane | Game | class | Athanor/Assets/Scripts/Game/Fx/Sparks.cs | 25 |  |
+| Particle | Particle | Game | struct | Athanor/Assets/Scripts/Game/Fx/Sparks.cs | 18 |  |
+| Lane | Lane | Game | class | Athanor/Assets/Scripts/Game/Fx/Sparks.cs | 23 |  |
 | Anim | Anim | Game | class | Athanor/Assets/Scripts/Game/Support/Anim.cs | 11 | Beats (Wait), easing curves, and Over for per-frame scripts that are not a move or a fade (the spark trails in GameFlow). Moves, fades and scales of objects go through Motion (PrimeTween, snapped to p |
 | Art | Art | Game | class | Athanor/Assets/Scripts/Game/Support/Art.cs | 4 | The art library the running game uses. GameFlow sets it from its serialized field; the Game tests set it in GameTestSetup. |
 | ArtLibrary | ArtLibrary | Game | class | Athanor/Assets/Scripts/Game/Support/ArtLibrary.cs | 8 | Every sprite, effect sheet, font and material the game looks up by name. Built by Athanor > Refresh Art Library. |
@@ -202,6 +203,7 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | SceneBakeTests | SceneBakeTests | Tests | class | Athanor/Assets/Tests/EditModeGame/SceneBakeTests.cs | 11 | The scene objects of Main.unity that are not prefabs (Task 15): their serialized parts are all there, and Bind finishes them. |
 | SettingsHapticsTests | SettingsHapticsTests | Tests | class | Athanor/Assets/Tests/EditModeGame/SettingsHapticsTests.cs | 9 | Saved settings (athanor.settings.v1), the haptics plan and the mute-on-hidden-tab hook. |
 | SparksTests | SparksTests | Tests | class | Athanor/Assets/Tests/EditModeGame/SparksTests.cs | 9 | Sparks on batched meshes: same motion and fade as the old SpriteRenderer pool, whole-pixel centres, HDR kept, no garbage. |
+| TestFx | TestFx | Tests | class | Athanor/Assets/Tests/EditModeGame/TestFx.cs | 10 | Effect players for a test that binds a view: a ScreenFx with its flash and fade sprites, and a Sparks. |
 | TutorialFlowTests | TutorialFlowTests | Tests | class | Athanor/Assets/Tests/EditModeGame/TutorialFlowTests.cs | 11 | The tutorial's decisions, its sandbox and the scores it shows (the numbers TutorialTests pins in Core). |
 
 ## Members
@@ -572,17 +574,17 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | BenchView | property | Hud | 18 | public HudView Hud |
 | BenchView | property | TileCount | 20 | public int TileCount |
 | BenchView | property | Pick | 25 | struct Pick |
-| BenchView | method | Bind | 50 | public void Bind(ContentDb content) |
-| BenchView | method | Bind | 62 | public void Bind(RunState state, Journal book) |
-| BenchView | method | TileCentre | 70 | public Vector3 TileCentre(int i) |
-| BenchView | method | RackSlot | 72 | public Vector3 RackSlot(int i) |
-| BenchView | method | PreviewOnRack | 74 | public void PreviewOnRack(int i, string id) |
-| BenchView | method | Tile | 79 | public TileView Tile(int i) |
-| BenchView | method | Refresh | 82 | public void Refresh(bool deal = false) |
-| BenchView | method | ClearLinks | 162 | public void ClearLinks() |
-| BenchView | method | FloatText | 165 | public IEnumerator FloatText(string text, Vector3 from, Color color, float seconds = 0.8f, bool small = false) |
-| BenchView | method | PlaceLine | 214 | public static string PlaceLine(int tile) |
-| BenchView | method | UnplaceLine | 215 | public static string UnplaceLine(int tile) |
+| BenchView | method | Bind | 50 | public void Bind(ContentDb content, FxRefs fx) |
+| BenchView | method | Bind | 64 | public void Bind(RunState state, Journal book) |
+| BenchView | method | TileCentre | 72 | public Vector3 TileCentre(int i) |
+| BenchView | method | RackSlot | 74 | public Vector3 RackSlot(int i) |
+| BenchView | method | PreviewOnRack | 76 | public void PreviewOnRack(int i, string id) |
+| BenchView | method | Tile | 81 | public TileView Tile(int i) |
+| BenchView | method | Refresh | 84 | public void Refresh(bool deal = false) |
+| BenchView | method | ClearLinks | 164 | public void ClearLinks() |
+| BenchView | method | FloatText | 167 | public IEnumerator FloatText(string text, Vector3 from, Color color, float seconds = 0.8f, bool small = false) |
+| BenchView | method | PlaceLine | 216 | public static string PlaceLine(int tile) |
+| BenchView | method | UnplaceLine | 217 | public static string UnplaceLine(int tile) |
 | From | value | None | 24 | None |
 | From | value | Hand | 24 | Hand |
 | From | value | Tile | 24 | Tile |
@@ -626,22 +628,23 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | LinkView | field | color | 11 | public Color color = new Color(2.2f, 1.7f, 0.8f) |
 | LinkView | field | speed | 12 | public float speed = 0.35f, arc = 7, alpha = 0.9f |
 | LinkView | method | Set | 16 | public void Set(List<(Vector3 a, Vector3 b)> pairs) |
-| TileView | field | index | 12 | public int index |
-| TileView | field | centre | 13 | public Vector3 centre |
-| TileView | property | Material | 22 | public string Material |
-| TileView | property | Hovered | 23 | public bool Hovered |
-| TileView | property | Pinged | 25 | public bool Pinged |
-| TileView | property | Shut | 27 | public bool Shut |
-| TileView | property | Marked | 28 | public bool Marked |
-| TileView | property | Icon | 29 | public SpriteRenderer Icon |
-| TileView | property | FaceCentre | 32 | public Vector2 FaceCentre |
-| TileView | property | FaceSize | 33 | public Vector2 FaceSize |
-| TileView | method | Contains | 35 | public bool Contains(Vector2 world) |
-| TileView | method | SetState | 39 | public void SetState(Color? marker, bool shut) |
-| TileView | method | Show | 49 | public void Show(MaterialData m, bool pop) |
-| TileView | method | Clear | 62 | public void Clear() |
-| TileView | method | Flash | 70 | public void Flash(Color c) |
-| TileView | method | Consume | 73 | public IEnumerator Consume() |
+| TileView | field | index | 13 | public int index |
+| TileView | method | Bind | 16 | public void Bind(FxRefs effects) |
+| TileView | field | centre | 22 | public Vector3 centre |
+| TileView | property | Material | 31 | public string Material |
+| TileView | property | Hovered | 32 | public bool Hovered |
+| TileView | property | Pinged | 34 | public bool Pinged |
+| TileView | property | Shut | 36 | public bool Shut |
+| TileView | property | Marked | 37 | public bool Marked |
+| TileView | property | Icon | 38 | public SpriteRenderer Icon |
+| TileView | property | FaceCentre | 41 | public Vector2 FaceCentre |
+| TileView | property | FaceSize | 42 | public Vector2 FaceSize |
+| TileView | method | Contains | 44 | public bool Contains(Vector2 world) |
+| TileView | method | SetState | 48 | public void SetState(Color? marker, bool shut) |
+| TileView | method | Show | 58 | public void Show(MaterialData m, bool pop) |
+| TileView | method | Clear | 71 | public void Clear() |
+| TileView | method | Flash | 79 | public void Flash(Color c) |
+| TileView | method | Consume | 82 | public IEnumerator Consume() |
 | GameFlow | field | library | 18 | public ArtLibrary library |
 | GameFlow | field | cutsceneRoom | 21 | public GameObject workshop, cutsceneRoom |
 | GameFlow | field | mainCamera | 22 | public Camera mainCamera |
@@ -659,11 +662,11 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | GameFlow | method | NextMood | 53 | public static int NextMood(int mood) |
 | GameFlow | method | MoodLine | 54 | public static string MoodLine(int mood) |
 | GameFlow | method | EffectsLine | 55 | public static string EffectsLine(bool on) |
-| GameFlow | property | JournalView | 117 | public JournalView JournalView |
-| GameFlow | method | JournalAfterQuit | 455 | public static Journal JournalAfterQuit(bool sandbox, Journal current) |
-| GameFlow | method | ProfileAfterQuit | 457 | public static Profile ProfileAfterQuit(bool sandbox, Profile current, ContentDb db) |
-| GameFlow | method | Ignite | 498 | public void Ignite() |
-| GameFlow | method | SettleIgnite | 506 | public static IgniteOutcome SettleIgnite(RunState run, Journal journal, bool sandbox) |
+| GameFlow | property | JournalView | 119 | public JournalView JournalView |
+| GameFlow | method | JournalAfterQuit | 460 | public static Journal JournalAfterQuit(bool sandbox, Journal current) |
+| GameFlow | method | ProfileAfterQuit | 462 | public static Profile ProfileAfterQuit(bool sandbox, Profile current, ContentDb db) |
+| GameFlow | method | Ignite | 503 | public void Ignite() |
+| GameFlow | method | SettleIgnite | 511 | public static IgniteOutcome SettleIgnite(RunState run, Journal journal, bool sandbox) |
 | FlowState | value | Boot | 12 | Boot |
 | FlowState | value | Title | 12 | Title |
 | FlowState | value | Intro | 12 | Intro |
@@ -677,9 +680,9 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | FlowState | value | AspectChoice | 12 | AspectChoice |
 | FlowState | value | Event | 12 | Event |
 | FlowState | value | Goals | 12 | Goals |
-| TitleChoice | value | Begin | 131 | Begin |
-| TitleChoice | value | HowToPlay | 131 | HowToPlay |
-| TitleChoice | value | Intro | 131 | Intro |
+| TitleChoice | value | Begin | 133 | Begin |
+| TitleChoice | value | HowToPlay | 133 | HowToPlay |
+| TitleChoice | value | Intro | 133 | Intro |
 | Save | field | Key | 10 | public const string Key = "athanor.journal.v1", IntroKey = "athanor.intro.v1", ProfileKey = "athanor.profile.v1", TutorialKey = "athanor.tutorial.v1", SettingsKey = |
 | Save | method | LoadJournal | 14 | public static Journal LoadJournal() |
 | Save | method | StoreJournal | 24 | public static void StoreJournal(Journal journal) |
@@ -705,17 +708,18 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | DepthLook | method | ShowsRunIntro | 24 | public static bool ShowsRunIntro(int depth, bool tutorial, bool sandbox) |
 | DepthLook | method | ThemedWindow | 27 | public static bool ThemedWindow(bool inRun, bool tutorial, bool sandbox) |
 | DepthLook | method | WindowSprite | 30 | public static string WindowSprite(int depth) |
-| ReactionCutscene | method | Bind | 41 | public void Bind(GameObject[] others) |
-| ReactionCutscene | method | Setup | 54 | public void Setup(ReactionEvent e, ContentDb content, float hurry = 1) |
-| ReactionCutscene | method | Play | 80 | public override IEnumerator Play() |
-| SimpleCutscene | method | Play | 33 | public override IEnumerator Play() |
-| SimpleCutscene | method | Close | 50 | public void Close() |
-| SimpleCutscene | method | Intro | 69 | public IEnumerator Intro() |
-| SimpleCutscene | method | Descent | 105 | public IEnumerator Descent(int depth, string depthName, Color colour, Action midway) |
-| SimpleCutscene | method | DepthIntro | 164 | public IEnumerator DepthIntro(string key) |
-| SimpleCutscene | method | Ending | 180 | public IEnumerator Ending(MaterialData ultimate) |
-| Loop | ctor | Loop | 288 | public Loop(Transform parent, string name, int order, float rate, float life, float x0, float x1, float y0, float y1, float vx0, float vx1, float vy0, float vy1, float gravity, float sparkle) |
-| Loop | method | Draw | 299 | public void Draw(float t, float strength, Color color) |
+| ReactionCutscene | method | Bind | 43 | public void Bind(GameObject[] others, FxRefs fx) |
+| ReactionCutscene | method | Setup | 58 | public void Setup(ReactionEvent e, ContentDb content, float hurry = 1) |
+| ReactionCutscene | method | Play | 84 | public override IEnumerator Play() |
+| SimpleCutscene | method | Bind | 34 | public void Bind(FxRefs effects) |
+| SimpleCutscene | method | Play | 41 | public override IEnumerator Play() |
+| SimpleCutscene | method | Close | 58 | public void Close() |
+| SimpleCutscene | method | Intro | 77 | public IEnumerator Intro() |
+| SimpleCutscene | method | Descent | 113 | public IEnumerator Descent(int depth, string depthName, Color colour, Action midway) |
+| SimpleCutscene | method | DepthIntro | 172 | public IEnumerator DepthIntro(string key) |
+| SimpleCutscene | method | Ending | 188 | public IEnumerator Ending(MaterialData ultimate) |
+| Loop | ctor | Loop | 296 | public Loop(Transform parent, string name, int order, float rate, float life, float x0, float x1, float y0, float y1, float vx0, float vx1, float vy0, float vy1, float gravity, float sparkle) |
+| Loop | method | Draw | 307 | public void Draw(float t, float strength, Color color) |
 | TutorialRules | method | MarkDone | 15 | public static void MarkDone() |
 | TutorialRules | method | AnswerSkipQuestion | 21 | public static bool AnswerSkipQuestion(bool playIt) |
 | TutorialController | property | Trial | 55 | public int Trial |
@@ -908,13 +912,15 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | FlipbookSheet | field | durations | 9 | public float[] durations |
 | FlipbookSheet | field | loop | 10 | public bool loop |
 | Fx | method | Spawn | 9 | public static Flipbook Spawn(string name, Vector2 pos, Transform parent = null, int sortingOrder = 50) |
-| ScreenFx | property | I | 9 | public static ScreenFx I |
-| ScreenFx | method | Bind | 19 | public void Bind(Camera camera, CameraSway worldSway = null) |
-| ScreenFx | method | Flash | 27 | public void Flash(float peak, float seconds) |
-| ScreenFx | method | Shake | 28 | public void Shake(float pixels, float seconds) |
-| ScreenFx | method | FadeOut | 30 | public IEnumerator FadeOut(float seconds) |
-| ScreenFx | method | FadeIn | 31 | public IEnumerator FadeIn(float seconds) |
-| ScreenFx | method | SetBlack | 32 | public void SetBlack(float a) |
+| FxRefs | field | Screen | 9 | public readonly ScreenFx Screen |
+| FxRefs | field | Sparks | 11 | public readonly Sparks Sparks |
+| FxRefs | ctor | FxRefs | 13 | public FxRefs(ScreenFx screen, Sparks sparks) |
+| ScreenFx | method | Bind | 18 | public void Bind(Camera camera, CameraSway worldSway = null) |
+| ScreenFx | method | Flash | 25 | public void Flash(float peak, float seconds) |
+| ScreenFx | method | Shake | 26 | public void Shake(float pixels, float seconds) |
+| ScreenFx | method | FadeOut | 28 | public IEnumerator FadeOut(float seconds) |
+| ScreenFx | method | FadeIn | 29 | public IEnumerator FadeIn(float seconds) |
+| ScreenFx | method | SetBlack | 30 | public void SetBlack(float a) |
 | SparkMesh | property | Vert | 15 | struct Vert |
 | SparkMesh | property | Quad | 16 | struct Quad |
 | SparkMesh | field | DotScale | 19 | public const float DotScale = 0.25f |
@@ -930,22 +936,21 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | SparkParticles | property | LiveCount | 24 | public int LiveCount |
 | SparkParticles | method | Clear | 26 | public void Clear() |
 | SparkParticles | method | Emit | 28 | public void Emit(Sparks owner, Vector2 pos, Vector2 vel, Color color, float life, int order, float gravity, bool sparkle, float drag) |
-| Sparks | property | I | 15 | public static Sparks I |
-| Sparks | field | TrailRate | 18 | public const float TrailRate = 60 |
-| Sparks | property | LiveCount | 42 | public int LiveCount |
-| Sparks | property | LaneCount | 57 | public int LaneCount |
-| Sparks | method | LaneMesh | 60 | public SparkMesh LaneMesh(int order) |
-| Sparks | method | Emit | 63 | public void Emit(Vector2 pos, Vector2 vel, Color color, float life, int order, float gravity = 0, bool sparkle = false, float drag = 0) |
-| Sparks | method | Trail | 80 | public void Trail(Vector2 pos, Vector2 vel, Color color, float life, int order, float gravity = 0, bool sparkle = false, float drag = 0) |
-| Sparks | method | TrailCount | 92 | public static int TrailCount(float dt, float r) |
-| Sparks | method | Burst | 95 | public void Burst(Vector2 pos, int count, Color color, float speed, float life, int order, float gravity = 0, float squash = 1) |
-| Sparks | method | Clear | 104 | public void Clear() |
-| Sparks | method | Step | 113 | public static bool Step(ref Particle p, float dt) |
-| Sparks | method | Shade | 124 | public static Color Shade(in Particle p) |
-| Sparks | method | Advance | 141 | public void Advance(float dt) |
-| Sparks | method | Draw | 152 | public void Draw() |
-| Particle | field | vel | 22 | public Vector2 pos, vel |
-| Lane | field | order | 27 | public int order |
+| Sparks | field | TrailRate | 16 | public const float TrailRate = 60 |
+| Sparks | property | LiveCount | 40 | public int LiveCount |
+| Sparks | property | LaneCount | 55 | public int LaneCount |
+| Sparks | method | LaneMesh | 58 | public SparkMesh LaneMesh(int order) |
+| Sparks | method | Emit | 61 | public void Emit(Vector2 pos, Vector2 vel, Color color, float life, int order, float gravity = 0, bool sparkle = false, float drag = 0) |
+| Sparks | method | Trail | 78 | public void Trail(Vector2 pos, Vector2 vel, Color color, float life, int order, float gravity = 0, bool sparkle = false, float drag = 0) |
+| Sparks | method | TrailCount | 90 | public static int TrailCount(float dt, float r) |
+| Sparks | method | Burst | 93 | public void Burst(Vector2 pos, int count, Color color, float speed, float life, int order, float gravity = 0, float squash = 1) |
+| Sparks | method | Clear | 102 | public void Clear() |
+| Sparks | method | Step | 111 | public static bool Step(ref Particle p, float dt) |
+| Sparks | method | Shade | 122 | public static Color Shade(in Particle p) |
+| Sparks | method | Advance | 139 | public void Advance(float dt) |
+| Sparks | method | Draw | 150 | public void Draw() |
+| Particle | field | vel | 20 | public Vector2 pos, vel |
+| Lane | field | order | 25 | public int order |
 | Anim | method | Over | 14 | public static IEnumerator Over(float seconds, Action<float> step) |
 | Anim | method | Wait | 21 | public static IEnumerator Wait(float seconds, Func<bool> skip = null) |
 | Anim | method | OutCubic | 26 | public static float OutCubic(float t) |
@@ -1098,17 +1103,17 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | CatalystChoiceView | field | OpenHook | 29 | public const string OpenHook = |
 | CatalystChoiceView | method | CardName | 55 | public Label CardName(int i) |
 | CatalystChoiceView | method | CornerStars | 57 | public RarityStars CornerStars(int i) |
-| CatalystChoiceView | method | Bind | 60 | public void Bind() |
-| CatalystChoiceView | method | Choose | 77 | public IEnumerator Choose(IReadOnlyList<CatalystData> offer, Action<string> done, float autoAfter = -1) |
-| CatalystChoiceView | method | Choose | 89 | public IEnumerator Choose(IReadOnlyList<AspectInstance> offer, Action<string> done, float autoAfter = -1) |
-| CatalystChoiceView | method | Choose | 103 | public IEnumerator Choose(string title, string line, IReadOnlyList<ChoiceCard> offer, Action<string> done, float autoAfter = -1) |
+| CatalystChoiceView | method | Bind | 62 | public void Bind(FxRefs effects) |
+| CatalystChoiceView | method | Choose | 81 | public IEnumerator Choose(IReadOnlyList<CatalystData> offer, Action<string> done, float autoAfter = -1) |
+| CatalystChoiceView | method | Choose | 93 | public IEnumerator Choose(IReadOnlyList<AspectInstance> offer, Action<string> done, float autoAfter = -1) |
+| CatalystChoiceView | method | Choose | 107 | public IEnumerator Choose(string title, string line, IReadOnlyList<ChoiceCard> offer, Action<string> done, float autoAfter = -1) |
 | Card | field | root | 37 | public Transform root |
 | Card | field | click | 38 | public Clickable click |
 | Card | field | bench | 39 | public SpriteRenderer[] bench = new SpriteRenderer[Bench.TileCount] |
 | EventView | method | OptionLabel | 35 | public Label OptionLabel(int i) |
 | EventView | property | Outcome | 37 | public Label Outcome |
-| EventView | method | Bind | 40 | public void Bind() |
-| EventView | method | Show | 67 | public IEnumerator Show(RunState run, Action changed) |
+| EventView | method | Bind | 42 | public void Bind(FxRefs effects) |
+| EventView | method | Show | 71 | public IEnumerator Show(RunState run, Action changed) |
 | Row | field | root | 21 | public Transform root |
 | GoalRow | field | reward | 8 | public Label text, count, reward |
 | GoalRow | field | icon | 9 | public SpriteRenderer track, fill, icon |
@@ -1117,9 +1122,9 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | GoalToast | property | Item | 19 | struct Item |
 | GoalToast | property | Title | 29 | public Label Title |
 | GoalToast | property | Line | 31 | public Label Line |
-| GoalToast | method | Bind | 34 | public void Bind() |
-| GoalToast | method | Add | 40 | public void Add(IEnumerable<GoalReward> rewards, ContentDb db) |
-| GoalToast | method | Clear | 52 | public void Clear() |
+| GoalToast | method | Bind | 34 | public void Bind(FxRefs effects) |
+| GoalToast | method | Add | 47 | public void Add(IEnumerable<GoalReward> rewards, ContentDb db) |
+| GoalToast | method | Clear | 59 | public void Clear() |
 | GoalsView | field | Closed | 17 | public event Action Closed |
 | GoalsView | property | IsOpen | 18 | public bool IsOpen |
 | GoalsView | property | CloseClick | 33 | public Clickable CloseClick |
@@ -1166,11 +1171,11 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | TitleView | method | ClearBegin | 16 | public void ClearBegin() |
 | TitleView | field | SettingsClosed | 17 | public event Action JournalClicked, GoalsClicked, ResetConfirmed, SettingsClosed |
 | TitleView | property | Asking | 19 | public bool Asking |
-| TitleView | method | Bind | 44 | public void Bind(Settings playerSettings) |
-| TitleView | method | AskSkip | 108 | public void AskSkip(Action<bool> answer) |
-| TitleView | method | Open | 206 | public void Open(int known, int total, int goalsDone, int goals) |
-| TitleView | method | Progress | 217 | public void Progress(int known, int total, int goalsDone, int goals) |
-| TitleView | method | Close | 224 | public void Close() |
+| TitleView | method | Bind | 46 | public void Bind(Settings playerSettings, FxRefs effects) |
+| TitleView | method | AskSkip | 112 | public void AskSkip(Action<bool> answer) |
+| TitleView | method | Open | 210 | public void Open(int known, int total, int goalsDone, int goals) |
+| TitleView | method | Progress | 221 | public void Progress(int known, int total, int goalsDone, int goals) |
+| TitleView | method | Close | 228 | public void Close() |
 | Tooltip | method | Bind | 22 | public void Bind() |
 | Tooltip | method | Show | 32 | public void Show(string heading, string text, Vector2 anchor, float clearance = 20, string rarity = null) |
 | Tooltip | method | Hide | 58 | public void Hide() |
@@ -1411,37 +1416,38 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | PrefabBakeTests | method | Disabled_SetOnAButton_IsKeptInTheSerializedState | 87 | public void Disabled_SetOnAButton_IsKeptInTheSerializedState() |
 | PrefabBakeTests | method | ShowDepth_RunOverPrefab_WritesTheDepthRow | 96 | public void ShowDepth_RunOverPrefab_WritesTheDepthRow() |
 | PrefabBakeTests | method | Click_RunOverPrefabButton_PicksItsChoice | 112 | public void Click_RunOverPrefabButton_PicksItsChoice(int index, bool again) |
-| PrefabBakeTests | method | Show_EventPrefab_ListsTheOptions | 146 | public void Show_EventPrefab_ListsTheOptions() |
-| PrefabBakeTests | method | Click_EventPrefabLastOptionThenContinue_ShowsTheOutcomeAndCloses | 164 | public void Click_EventPrefabLastOptionThenContinue_ShowsTheOutcomeAndCloses() |
-| PrefabBakeTests | method | Add_GoalToastPrefab_ShowsTheGoalName | 195 | public void Add_GoalToastPrefab_ShowsTheGoalName() |
-| PrefabBakeTests | method | Click_ShowingGoalToastPrefab_SkipsToTheSlideOut | 213 | public void Click_ShowingGoalToastPrefab_SkipsToTheSlideOut() |
-| PrefabBakeTests | method | Show_CatalystChoicePrefab_FillsThreeCards | 242 | public void Show_CatalystChoicePrefab_FillsThreeCards() |
-| PrefabBakeTests | method | Show_CatalystChoicePrefabRareCard_DrawsThreeStars | 260 | public void Show_CatalystChoicePrefabRareCard_DrawsThreeStars() |
-| PrefabBakeTests | method | Click_CatalystChoicePrefabCardAfterTheDeal_PicksItsId | 285 | public void Click_CatalystChoicePrefabCardAfterTheDeal_PicksItsId() |
-| PrefabBakeTests | method | Open_PausePrefab_ShowsTheMenu | 308 | public void Open_PausePrefab_ShowsTheMenu() |
-| PrefabBakeTests | method | Click_PausePrefabResume_ClosesAndRestoresTime | 326 | public void Click_PausePrefabResume_ClosesAndRestoresTime() |
-| PrefabBakeTests | method | Click_PausePrefabCancelOnTheQuitQuestion_BacksOutToTheMenu | 344 | public void Click_PausePrefabCancelOnTheQuitQuestion_BacksOutToTheMenu() |
-| PrefabBakeTests | method | Click_PausePrefabOutsideTheDialog_Resumes | 364 | public void Click_PausePrefabOutsideTheDialog_Resumes() |
-| PrefabBakeTests | method | Bind_GoalsPrefab_MakesOneRowPerGoal | 388 | public void Bind_GoalsPrefab_MakesOneRowPerGoal() |
-| PrefabBakeTests | method | Open_GoalsPrefabFreshProfile_WritesEveryGoal | 404 | public void Open_GoalsPrefabFreshProfile_WritesEveryGoal() |
-| PrefabBakeTests | method | Click_GoalsPrefabClose_ClosesAndTellsTheOwner | 425 | public void Click_GoalsPrefabClose_ClosesAndTellsTheOwner() |
-| PrefabBakeTests | method | Bind_JournalPrefab_MakesOneCellPerMaterial | 447 | public void Bind_JournalPrefab_MakesOneCellPerMaterial() |
-| PrefabBakeTests | method | Click_JournalPrefabCell_ShowsThatMaterial | 463 | public void Click_JournalPrefabCell_ShowsThatMaterial() |
-| PrefabBakeTests | method | Click_JournalPrefabPageLabel_TurnsTheGridPage | 485 | public void Click_JournalPrefabPageLabel_TurnsTheGridPage() |
-| PrefabBakeTests | method | Click_JournalPrefabClose_ClosesAndTellsTheOwner | 507 | public void Click_JournalPrefabClose_ClosesAndTellsTheOwner() |
-| PrefabBakeTests | method | Show_TooltipInBenchPrefab_HasItsSlicedPanel | 528 | public void Show_TooltipInBenchPrefab_HasItsSlicedPanel() |
-| PrefabBakeTests | method | Bind_TitlePrefab_ShowsTheLogoText | 550 | public void Bind_TitlePrefab_ShowsTheLogoText() |
-| PrefabBakeTests | method | Click_TitlePrefabBegin_SetsBeginPressed | 567 | public void Click_TitlePrefabBegin_SetsBeginPressed() |
-| PrefabBakeTests | method | Click_TitlePrefabSettingsThenLanguage_SwitchesTheLanguageAndBackCloses | 584 | public void Click_TitlePrefabSettingsThenLanguage_SwitchesTheLanguageAndBackCloses() |
-| PrefabBakeTests | method | Click_TitlePrefabEraseLink_AsksThenConfirmingRaisesResetConfirmed | 612 | public void Click_TitlePrefabEraseLink_AsksThenConfirmingRaisesResetConfirmed() |
-| PrefabBakeTests | method | AskSkip_TitlePrefab_AnswersPlayFromTheSkipDialog | 635 | public void AskSkip_TitlePrefab_AnswersPlayFromTheSkipDialog() |
-| PrefabBakeTests | method | Bind_HudPrefab_ShowsTheDepthNumber | 662 | public void Bind_HudPrefab_ShowsTheDepthNumber() |
-| PrefabBakeTests | method | Hover_HudPrefabSocketAndAspect_SetsAndClearsTheHoveredIndex | 681 | public void Hover_HudPrefabSocketAndAspect_SetsAndClearsTheHoveredIndex() |
-| PrefabBakeTests | method | Click_HudPrefabRedraw_RaisesRedrawClickedOnlyWhileARedrawIsLeft | 707 | public void Click_HudPrefabRedraw_RaisesRedrawClickedOnlyWhileARedrawIsLeft() |
-| PrefabBakeTests | method | Click_HudPrefabPauseJournalAndIgnite_RaiseTheirEvents | 735 | public void Click_HudPrefabPauseJournalAndIgnite_RaiseTheirEvents() |
-| PrefabBakeTests | method | Refresh_BenchPrefab_HasNineTiles | 770 | public void Refresh_BenchPrefab_HasNineTiles() |
-| PrefabBakeTests | method | Refresh_BenchPrefab_DealsOneCardPerStartingMaterialFromTheCardPrefab | 796 | public void Refresh_BenchPrefab_DealsOneCardPerStartingMaterialFromTheCardPrefab() |
-| PrefabBakeTests | method | Show_CardPrefab_OneWordNameHidesTheSecondLine | 822 | public void Show_CardPrefab_OneWordNameHidesTheSecondLine() |
+| PrefabBakeTests | method | Bind_EventPrefabWithoutFx_Throws | 146 | public void Bind_EventPrefabWithoutFx_Throws() |
+| PrefabBakeTests | method | Show_EventPrefab_ListsTheOptions | 158 | public void Show_EventPrefab_ListsTheOptions() |
+| PrefabBakeTests | method | Click_EventPrefabLastOptionThenContinue_ShowsTheOutcomeAndCloses | 176 | public void Click_EventPrefabLastOptionThenContinue_ShowsTheOutcomeAndCloses() |
+| PrefabBakeTests | method | Add_GoalToastPrefab_ShowsTheGoalName | 207 | public void Add_GoalToastPrefab_ShowsTheGoalName() |
+| PrefabBakeTests | method | Click_ShowingGoalToastPrefab_SkipsToTheSlideOut | 225 | public void Click_ShowingGoalToastPrefab_SkipsToTheSlideOut() |
+| PrefabBakeTests | method | Show_CatalystChoicePrefab_FillsThreeCards | 254 | public void Show_CatalystChoicePrefab_FillsThreeCards() |
+| PrefabBakeTests | method | Show_CatalystChoicePrefabRareCard_DrawsThreeStars | 272 | public void Show_CatalystChoicePrefabRareCard_DrawsThreeStars() |
+| PrefabBakeTests | method | Click_CatalystChoicePrefabCardAfterTheDeal_PicksItsId | 297 | public void Click_CatalystChoicePrefabCardAfterTheDeal_PicksItsId() |
+| PrefabBakeTests | method | Open_PausePrefab_ShowsTheMenu | 320 | public void Open_PausePrefab_ShowsTheMenu() |
+| PrefabBakeTests | method | Click_PausePrefabResume_ClosesAndRestoresTime | 338 | public void Click_PausePrefabResume_ClosesAndRestoresTime() |
+| PrefabBakeTests | method | Click_PausePrefabCancelOnTheQuitQuestion_BacksOutToTheMenu | 356 | public void Click_PausePrefabCancelOnTheQuitQuestion_BacksOutToTheMenu() |
+| PrefabBakeTests | method | Click_PausePrefabOutsideTheDialog_Resumes | 376 | public void Click_PausePrefabOutsideTheDialog_Resumes() |
+| PrefabBakeTests | method | Bind_GoalsPrefab_MakesOneRowPerGoal | 400 | public void Bind_GoalsPrefab_MakesOneRowPerGoal() |
+| PrefabBakeTests | method | Open_GoalsPrefabFreshProfile_WritesEveryGoal | 416 | public void Open_GoalsPrefabFreshProfile_WritesEveryGoal() |
+| PrefabBakeTests | method | Click_GoalsPrefabClose_ClosesAndTellsTheOwner | 437 | public void Click_GoalsPrefabClose_ClosesAndTellsTheOwner() |
+| PrefabBakeTests | method | Bind_JournalPrefab_MakesOneCellPerMaterial | 459 | public void Bind_JournalPrefab_MakesOneCellPerMaterial() |
+| PrefabBakeTests | method | Click_JournalPrefabCell_ShowsThatMaterial | 475 | public void Click_JournalPrefabCell_ShowsThatMaterial() |
+| PrefabBakeTests | method | Click_JournalPrefabPageLabel_TurnsTheGridPage | 497 | public void Click_JournalPrefabPageLabel_TurnsTheGridPage() |
+| PrefabBakeTests | method | Click_JournalPrefabClose_ClosesAndTellsTheOwner | 519 | public void Click_JournalPrefabClose_ClosesAndTellsTheOwner() |
+| PrefabBakeTests | method | Show_TooltipInBenchPrefab_HasItsSlicedPanel | 540 | public void Show_TooltipInBenchPrefab_HasItsSlicedPanel() |
+| PrefabBakeTests | method | Bind_TitlePrefab_ShowsTheLogoText | 562 | public void Bind_TitlePrefab_ShowsTheLogoText() |
+| PrefabBakeTests | method | Click_TitlePrefabBegin_SetsBeginPressed | 579 | public void Click_TitlePrefabBegin_SetsBeginPressed() |
+| PrefabBakeTests | method | Click_TitlePrefabSettingsThenLanguage_SwitchesTheLanguageAndBackCloses | 596 | public void Click_TitlePrefabSettingsThenLanguage_SwitchesTheLanguageAndBackCloses() |
+| PrefabBakeTests | method | Click_TitlePrefabEraseLink_AsksThenConfirmingRaisesResetConfirmed | 624 | public void Click_TitlePrefabEraseLink_AsksThenConfirmingRaisesResetConfirmed() |
+| PrefabBakeTests | method | AskSkip_TitlePrefab_AnswersPlayFromTheSkipDialog | 647 | public void AskSkip_TitlePrefab_AnswersPlayFromTheSkipDialog() |
+| PrefabBakeTests | method | Bind_HudPrefab_ShowsTheDepthNumber | 674 | public void Bind_HudPrefab_ShowsTheDepthNumber() |
+| PrefabBakeTests | method | Hover_HudPrefabSocketAndAspect_SetsAndClearsTheHoveredIndex | 693 | public void Hover_HudPrefabSocketAndAspect_SetsAndClearsTheHoveredIndex() |
+| PrefabBakeTests | method | Click_HudPrefabRedraw_RaisesRedrawClickedOnlyWhileARedrawIsLeft | 719 | public void Click_HudPrefabRedraw_RaisesRedrawClickedOnlyWhileARedrawIsLeft() |
+| PrefabBakeTests | method | Click_HudPrefabPauseJournalAndIgnite_RaiseTheirEvents | 747 | public void Click_HudPrefabPauseJournalAndIgnite_RaiseTheirEvents() |
+| PrefabBakeTests | method | Refresh_BenchPrefab_HasNineTiles | 782 | public void Refresh_BenchPrefab_HasNineTiles() |
+| PrefabBakeTests | method | Refresh_BenchPrefab_DealsOneCardPerStartingMaterialFromTheCardPrefab | 808 | public void Refresh_BenchPrefab_DealsOneCardPerStartingMaterialFromTheCardPrefab() |
+| PrefabBakeTests | method | Show_CardPrefab_OneWordNameHidesTheSecondLine | 834 | public void Show_CardPrefab_OneWordNameHidesTheSecondLine() |
 | PrefabFixture | field | Root | 12 | public readonly GameObject Root |
 | PrefabFixture | ctor | PrefabFixture | 15 | public PrefabFixture(string prefabPath) |
 | PrefabFixture | method | Get | 23 | public T Get<T>() where T : Component |
@@ -1465,11 +1471,12 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | SaveTests | method | StoreThenLoadJournal_WithAThreeItemCombo_KeepsComboRecipes | 149 | public void StoreThenLoadJournal_WithAThreeItemCombo_KeepsComboRecipes() |
 | SaveTests | method | LoadJournal_Phase1PairKeys_StillLoad | 158 | public void LoadJournal_Phase1PairKeys_StillLoad() |
 | SaveTests | method | TutorialDone_DefaultsToFalse_AndRoundTrips | 165 | public void TutorialDone_DefaultsToFalse_AndRoundTrips() |
-| SceneBakeTests | method | ScreenFx_Baked_HasFlashAndFadeSprites_AndBindMakesItTheSingleton | 21 | public void ScreenFx_Baked_HasFlashAndFadeSprites_AndBindMakesItTheSingleton() |
-| SceneBakeTests | method | Window_Baked_HasPaneAndEveryEffectSprite_AndShowStartsAnEffect | 42 | public void Window_Baked_HasPaneAndEveryEffectSprite_AndShowStartsAnEffect() |
-| SceneBakeTests | method | Tutorial_Baked_HasItsBoxArrowAndCellRoot_ClosedUntilAStepShows | 63 | public void Tutorial_Baked_HasItsBoxArrowAndCellRoot_ClosedUntilAStepShows() |
-| SceneBakeTests | method | Reaction_Baked_HasEveryPart_AndBindHidesTheStageAndSwitchesTheOthers | 92 | public void Reaction_Baked_HasEveryPart_AndBindHidesTheStageAndSwitchesTheOthers() |
-| SceneBakeTests | method | Story_Baked_HasEveryPart_AndTheRayFacesAreTheRaySprites | 125 | public void Story_Baked_HasEveryPart_AndTheRayFacesAreTheRaySprites() |
+| SceneBakeTests | method | GameFlow_Baked_HasSparksField | 21 | public void GameFlow_Baked_HasSparksField() |
+| SceneBakeTests | method | ScreenFx_Baked_HasFlashAndFadeSprites | 27 | public void ScreenFx_Baked_HasFlashAndFadeSprites() |
+| SceneBakeTests | method | Window_Baked_HasPaneAndEveryEffectSprite_AndShowStartsAnEffect | 47 | public void Window_Baked_HasPaneAndEveryEffectSprite_AndShowStartsAnEffect() |
+| SceneBakeTests | method | Tutorial_Baked_HasItsBoxArrowAndCellRoot_ClosedUntilAStepShows | 68 | public void Tutorial_Baked_HasItsBoxArrowAndCellRoot_ClosedUntilAStepShows() |
+| SceneBakeTests | method | Reaction_Baked_HasEveryPart_AndBindHidesTheStageAndSwitchesTheOthers | 97 | public void Reaction_Baked_HasEveryPart_AndBindHidesTheStageAndSwitchesTheOthers() |
+| SceneBakeTests | method | Story_Baked_HasEveryPart_AndTheRayFacesAreTheRaySprites | 131 | public void Story_Baked_HasEveryPart_AndTheRayFacesAreTheRaySprites() |
 | SettingsHapticsTests | method | Settings_StoredThenLoaded_RoundTrip | 28 | public void Settings_StoredThenLoaded_RoundTrip() |
 | SettingsHapticsTests | method | Settings_NothingOrGarbageSaved_GivesDefaults | 37 | public void Settings_NothingOrGarbageSaved_GivesDefaults() |
 | SettingsHapticsTests | method | Haptics_Plan_OnlyWhenEnabledAndSupported | 50 | public void Haptics_Plan_OnlyWhenEnabledAndSupported() |
@@ -1484,6 +1491,8 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | SparksTests | method | SparkMesh_SnapsCentres_ToWholePixels_AndKeepsHdrColours | 71 | public void SparkMesh_SnapsCentres_ToWholePixels_AndKeepsHdrColours() |
 | SparksTests | method | Sparks_UsesOneLanePerSortingOrder_AndClearEmptiesThem | 97 | public void Sparks_UsesOneLanePerSortingOrder_AndClearEmptiesThem() |
 | SparksTests | method | Sparks_SteadyState_AllocatesNothing | 115 | public void Sparks_SteadyState_AllocatesNothing() |
+| TestFx | method | DestroyLeftovers | 16 | public void DestroyLeftovers() |
+| TestFx | method | Make | 23 | public static FxRefs Make(Transform parent) |
 | TutorialFlowTests | method | Union_WithNoHoles_IsTheWholeCanvas_SoATextOnlyStepDimsEverythingAndDrawsNoRim | 33 | public void Union_WithNoHoles_IsTheWholeCanvas_SoATextOnlyStepDimsEverythingAndDrawsNoRim() |
 | TutorialFlowTests | method | Union_OfHoles_IsTheirBoundingBox | 40 | public void Union_OfHoles_IsTheirBoundingBox() |
 | TutorialFlowTests | method | Plan_FreshSave_RunsTheTutorial | 47 | public void Plan_FreshSave_RunsTheTutorial() |

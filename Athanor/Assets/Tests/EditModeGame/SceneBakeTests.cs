@@ -18,7 +18,13 @@ namespace Athanor.Tests
         static T F<T>(object o, string n) => MainSceneFixture.Field<T>(o, n);
 
         [Test]
-        public void ScreenFx_Baked_HasFlashAndFadeSprites_AndBindMakesItTheSingleton()
+        public void GameFlow_Baked_HasSparksField()
+        {
+            Assert.IsNotNull(main.FlowField<Sparks>("sparks"), "GameFlow.sparks");
+        }
+
+        [Test]
+        public void ScreenFx_Baked_HasFlashAndFadeSprites()
         {
             var fx = main.FlowField<ScreenFx>("screenFx");
             Assert.IsNotNull(fx, "GameFlow.screenFx");
@@ -31,7 +37,6 @@ namespace Athanor.Tests
             try
             {
                 fx.Bind(cam);
-                Assert.AreSame(fx, ScreenFx.I);
                 fx.SetBlack(1);
                 Assert.AreEqual(1f, black.color.a);
             }
@@ -112,13 +117,14 @@ namespace Athanor.Tests
             Assert.IsFalse(stage.gameObject.activeSelf); Assert.IsFalse(ui.gameObject.activeSelf);
 
             var other = new GameObject("other"); other.SetActive(false); room.SetActive(true);
+            var rx = TestFx.Make(null);
             try
             {
-                r.Bind(new[] { other });
+                r.Bind(new[] { other }, rx);
                 Assert.IsTrue(other.activeSelf, "what the cutscene hides is shown again");
                 Assert.IsFalse(room.activeSelf, "the room is hidden");
             }
-            finally { Object.DestroyImmediate(other); }
+            finally { Object.DestroyImmediate(other); Object.DestroyImmediate(rx.Screen.gameObject); }
         }
 
         [Test]

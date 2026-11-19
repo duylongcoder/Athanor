@@ -6,7 +6,6 @@ namespace Athanor.Game
     /// <summary>Whole-screen effects: a white flash, camera shake, and fading to and from black.</summary>
     public sealed class ScreenFx : MonoBehaviour
     {
-        public static ScreenFx I { get; private set; }
         [SerializeField] SpriteRenderer flash, black;
         Transform cam;
         Vector3 camHome;
@@ -15,10 +14,9 @@ namespace Athanor.Game
         float flashLeft, flashTime, flashPeak, shakeLeft, shakeTime, shakeSize;
 
         /// <summary>camera is the camera the shake moves, unless a depth rig is given: then the shake moves the world only
-        /// (owner gate G2 #6), except in a cutscene, which is flat and shakes with its camera. Makes this the scene's ScreenFx.I.</summary>
+        /// (owner gate G2 #6), except in a cutscene, which is flat and shakes with its camera.</summary>
         public void Bind(Camera camera, CameraSway worldSway = null)
         {
-            I = this;
             world = worldSway;
             rig = worldSway != null ? worldSway.GetComponent<DepthRig>() : null;
             cam = camera.transform; camHome = cam.position;

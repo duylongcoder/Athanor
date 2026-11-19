@@ -56,9 +56,13 @@ namespace Athanor.Game
         /// <summary>The star row in the top-left corner of card i.</summary>
         public RarityStars CornerStars(int i) => cards[i].cornerStars;
 
+        FxRefs fx;
+
         /// <summary>Hooks the clicks. GameFlow calls it once at start; a test calls it after instantiating the prefab.</summary>
-        public void Bind()
+        public void Bind(FxRefs effects)
         {
+            if (effects == null) throw new System.ArgumentNullException(nameof(effects));
+            fx = effects;
             if (wired) return;
             wired = true;
             for (int i = 0; i < cards.Length; i++)
@@ -157,8 +161,8 @@ namespace Athanor.Game
             int chosen = 0;
             for (int i = 0; i < count; i++) if (cards[i].id == picked) chosen = i;
             cards[chosen].lit.enabled = true;
-            ScreenFx.I.Flash(0.22f, 0.35f);
-            Sparks.I.Burst(cards[chosen].root.position, 40, new Color(2.2f, 1.7f, 0.6f), 150, 0.8f, O + 8, 60);
+            fx.Screen.Flash(0.22f, 0.35f);
+            fx.Sparks.Burst(cards[chosen].root.position, 40, new Color(2.2f, 1.7f, 0.6f), 150, 0.8f, O + 8, 60);
             // the others fall at once; the chosen card hops 10 px first, then falls after them
             const float Away = 0.55f, Hop = 0.45f * Away;
             var away = Sequence.Create()

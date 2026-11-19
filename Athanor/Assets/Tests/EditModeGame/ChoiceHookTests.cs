@@ -23,7 +23,7 @@ namespace Athanor.Tests
         {
             fixture = new PrefabFixture("Assets/Prefabs/Views/CatalystChoice.prefab");
             view = fixture.Get<CatalystChoiceView>();
-            view.Bind();
+            view.Bind(TestFx.Make(fixture.Root.transform));
             heard.Clear();
             Application.logMessageReceived += Hear;
         }

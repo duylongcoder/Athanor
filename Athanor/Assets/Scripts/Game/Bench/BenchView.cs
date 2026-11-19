@@ -47,11 +47,13 @@ namespace Athanor.Game
         /// Once, after the Bench prefab is in the scene: hands over the content, finishes the nested Hud and Tooltip and hooks the
         /// Hud's buttons. Run state comes later, with Bind(run, journal).
         /// </summary>
-        public void Bind(ContentDb content)
+        public void Bind(ContentDb content, FxRefs fx)
         {
+            if (fx == null) throw new System.ArgumentNullException(nameof(fx));
             if (bound) return;
             bound = true;
             db = content;
+            foreach (var t in tiles) if (t != null) t.Bind(fx);
             tip.Bind();
             hud.Bind();
             hud.IgniteClicked += () => { if (inputEnabled) IgniteRequested?.Invoke(); };

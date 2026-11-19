@@ -9,7 +9,16 @@ namespace Athanor.Game
     /// <summary>One of the nine bench tiles: its hover highlight and, when occupied, the material standing on it.</summary>
     public sealed class TileView : MonoBehaviour
     {
+        FxRefs fx;
         public int index;
+
+        /// <summary>Takes the effect players (BenchView calls it).</summary>
+        public void Bind(FxRefs effects)
+        {
+            if (effects == null) throw new System.ArgumentNullException(nameof(effects));
+            fx = effects;
+        }
+
         public Vector3 centre;            // world position of the middle of the top face
         // serialized: the tile lives in Prefabs/Views/Bench.prefab, so what it needs is kept in the prefab
         [SerializeField, HideInInspector] Vector2 faceCentre, faceSize;
@@ -73,7 +82,7 @@ namespace Athanor.Game
         public IEnumerator Consume()
         {
             if (Material == null) yield break;
-            Sparks.I.Burst(centre + new Vector3(0, 8, 0), 14, glow.Times(2), 40, 0.5f, 30, -20);
+            fx.Sparks.Burst(centre + new Vector3(0, 8, 0), 14, glow.Times(2), 40, 0.5f, 30, -20);
             icon.color = Color.white;
             yield return Sequence.Create()
                 .Group(Motion.Fade(icon, 1, 0, 0.18f))

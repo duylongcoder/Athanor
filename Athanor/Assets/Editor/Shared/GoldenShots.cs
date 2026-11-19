@@ -94,6 +94,23 @@ public static class GoldenShots
 
     // ---- helpers ------------------------------------------------------------------------------------
 
+    /// <summary>Effect players for a shot's view (the shots fire none): a ScreenFx with its two sprites and a Sparks, under the view.</summary>
+    static FxRefs Fx(GameObject parent)
+    {
+        var go = new GameObject("fx");
+        go.transform.SetParent(parent.transform, false);
+        var screen = go.AddComponent<ScreenFx>();
+        var so = new SerializedObject(screen);
+        foreach (var n in new[] { "flash", "black" })
+        {
+            var g = new GameObject(n);
+            g.transform.SetParent(go.transform, false);
+            so.FindProperty(n).objectReferenceValue = g.AddComponent<SpriteRenderer>();
+        }
+        so.ApplyModifiedPropertiesWithoutUndo();
+        return new FxRefs(screen, go.AddComponent<Sparks>());
+    }
+
     static GameObject Instance(string path)
     {
         var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
@@ -116,7 +133,7 @@ public static class GoldenShots
     {
         var go = Instance(Views + "Title.prefab");
         var view = go.GetComponent<TitleView>();
-        view.Bind(new Settings());
+        view.Bind(new Settings(), Fx(go));
         view.Open(0, 0, 0, 0);
         // Open runs Update once on the real clock (fade-in by deltaTime, glow pulse by Time.time): pin it to the finished fade and the
         // pulse at its midpoint, so the shot does not depend on how long the Editor took
@@ -131,7 +148,7 @@ public static class GoldenShots
     {
         var go = Instance(Views + "Bench.prefab");
         var view = go.GetComponent<BenchView>();
-        view.Bind(db);
+        view.Bind(db, Fx(go));
         view.Bind(run, journal);
         view.InputEnabled = false;       // Ignite is off: no pulse
         view.Refresh();
@@ -202,7 +219,7 @@ public static class GoldenShots
     {
         var go = Instance(Views + "CatalystChoice.prefab");
         var view = go.GetComponent<CatalystChoiceView>();
-        view.Bind();
+        view.Bind(Fx(go));
         var cards = new List<ChoiceCard>
         {
             new ChoiceCard { id = "a", sprite = "dot", name = "Alpha", text = "first" },
@@ -233,7 +250,7 @@ public static class GoldenShots
     {
         var go = Instance(Views + "Event.prefab");
         var view = go.GetComponent<EventView>();
-        view.Bind();
+        view.Bind(Fx(go));
         var run = EventRun();
         int last = run.EventOptions.Count - 1;      // the walk-on option: no gain, so no screen flash
         var show = view.Show(run, null);
@@ -269,7 +286,7 @@ public static class GoldenShots
     {
         var go = Instance(Views + "GoalToast.prefab");
         var toast = go.GetComponent<GoalToast>();
-        toast.Bind();
+        toast.Bind(Fx(go));
         toast.Add(new[] { new GoalReward { Goal = new GoalData { id = "g_depth2", text = "Reach depth 2" } } }, null);
         var update = typeof(GoalToast).GetMethod("Update", BindingFlags.Instance | BindingFlags.NonPublic);
         update.Invoke(toast, null);                 // takes the goal off the queue

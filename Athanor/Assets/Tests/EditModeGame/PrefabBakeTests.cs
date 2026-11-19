@@ -143,13 +143,25 @@ namespace Athanor.Tests
         }
 
         [Test]
+        public void Bind_EventPrefabWithoutFx_Throws()
+        {
+            var f = new PrefabFixture("Assets/Prefabs/Views/Event.prefab");
+            try
+            {
+                var view = f.Get<EventView>();
+                Assert.Throws<System.ArgumentNullException>(() => view.Bind(null));
+            }
+            finally { Tween.StopAll(); f.Destroy(); }
+        }
+
+        [Test]
         public void Show_EventPrefab_ListsTheOptions()
         {
             var f = new PrefabFixture("Assets/Prefabs/Views/Event.prefab");
             try
             {
                 var view = f.Get<EventView>();
-                view.Bind();
+                view.Bind(TestFx.Make(f.Root.transform));
                 var run = EventRun();
 
                 view.Show(run, null).MoveNext();            // up to the slide-in: heading and rows are written
@@ -167,7 +179,7 @@ namespace Athanor.Tests
             try
             {
                 var view = f.Get<EventView>();
-                view.Bind();
+                view.Bind(TestFx.Make(f.Root.transform));
                 var run = EventRun();
                 int last = run.EventOptions.Count - 1;          // the walk-on option: no gain, so no screen flash
                 var show = view.Show(run, null);
@@ -198,7 +210,7 @@ namespace Athanor.Tests
             try
             {
                 var toast = f.Get<GoalToast>();
-                toast.Bind();
+                toast.Bind(TestFx.Make(f.Root.transform));
 
                 toast.Add(OneGoal(), null);
                 Tick(toast);
@@ -216,7 +228,7 @@ namespace Athanor.Tests
             try
             {
                 var toast = f.Get<GoalToast>();
-                toast.Bind();
+                toast.Bind(TestFx.Make(f.Root.transform));
                 toast.Add(OneGoal(), null);
                 Tick(toast);
 
@@ -245,7 +257,7 @@ namespace Athanor.Tests
             try
             {
                 var view = f.Get<CatalystChoiceView>();
-                view.Bind();
+                view.Bind(TestFx.Make(f.Root.transform));
 
                 view.Choose("title", "line", ThreeCards(), _ => { }).MoveNext();     // up to the deal: the cards are written
 
@@ -263,7 +275,7 @@ namespace Athanor.Tests
             try
             {
                 var view = f.Get<CatalystChoiceView>();
-                view.Bind();
+                view.Bind(TestFx.Make(f.Root.transform));
 
                 view.Choose("title", "line", ThreeCards(), _ => { }).MoveNext();
 
@@ -288,7 +300,7 @@ namespace Athanor.Tests
             try
             {
                 var view = f.Get<CatalystChoiceView>();
-                view.Bind();
+                view.Bind(TestFx.Make(f.Root.transform));
                 var choose = view.Choose("title", "line", ThreeCards(), _ => { });
                 choose.MoveNext(); choose.MoveNext();             // the deal is over: the cards take a click
 
@@ -553,7 +565,7 @@ namespace Athanor.Tests
             try
             {
                 var view = f.Get<TitleView>();
-                view.Bind(new Settings());
+                view.Bind(new Settings(), TestFx.Make(f.Root.transform));
 
                 view.Open(0, 0, 0, 0);
 
@@ -570,7 +582,7 @@ namespace Athanor.Tests
             try
             {
                 var view = f.Get<TitleView>();
-                view.Bind(new Settings());
+                view.Bind(new Settings(), TestFx.Make(f.Root.transform));
                 view.Open(0, 0, 0, 0);
 
                 TitleClick(f.Root, "ui.title.begin").onClick();
@@ -588,7 +600,7 @@ namespace Athanor.Tests
             {
                 var settings = new Settings();
                 var view = f.Get<TitleView>();
-                view.Bind(settings);
+                view.Bind(settings, TestFx.Make(f.Root.transform));
                 view.Open(0, 0, 0, 0);
                 int closed = 0;
                 view.SettingsClosed += () => closed++;
@@ -615,7 +627,7 @@ namespace Athanor.Tests
             try
             {
                 var view = f.Get<TitleView>();
-                view.Bind(new Settings());
+                view.Bind(new Settings(), TestFx.Make(f.Root.transform));
                 view.Open(0, 0, 0, 0);
                 int reset = 0;
                 view.ResetConfirmed += () => reset++;
@@ -638,7 +650,7 @@ namespace Athanor.Tests
             try
             {
                 var view = f.Get<TitleView>();
-                view.Bind(new Settings());
+                view.Bind(new Settings(), TestFx.Make(f.Root.transform));
                 view.Open(0, 0, 0, 0);
                 bool? answer = null;
                 view.AskSkip(play => answer = play);
@@ -775,7 +787,7 @@ namespace Athanor.Tests
                 var db = ContentFromResources();
                 var run = new RunState(db, new Journal(), 5);
                 var view = f.Get<BenchView>();
-                view.Bind(db);
+                view.Bind(db, TestFx.Make(f.Root.transform));
                 view.Bind(run, new Journal());
 
                 view.Refresh();
@@ -801,7 +813,7 @@ namespace Athanor.Tests
                 var db = ContentFromResources();
                 var run = new RunState(db, new Journal(), 5);
                 var view = f.Get<BenchView>();
-                view.Bind(db);
+                view.Bind(db, TestFx.Make(f.Root.transform));
                 view.Bind(run, new Journal());
 
                 view.Refresh();

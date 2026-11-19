@@ -12,7 +12,7 @@ aliases: []
 # TitleView
 
 `public sealed class TitleView` : `MonoBehaviour`
-- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Ui/TitleView.cs:8-240`
+- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Ui/TitleView.cs:8-244`
 
 > The title, shown over the candlelit workshop.
 
@@ -25,14 +25,14 @@ aliases: []
 | method | `public void ClearBegin()` | 16 | Forgets a Begin that was answered by the skip question. |
 | field | `public event Action JournalClicked, GoalsClicked, ResetConfirmed, SettingsClosed` | 17 |  |
 | property | `public bool Asking` | 19 | The Settings panel or the "erase progress?" question is up: the buttons under it do nothing. |
-| method | `public void Bind(Settings playerSettings)` | 44 | Takes the player's settings (the title edits them and raises SettingsClosed when the panel closes) and hooks every click. GameFlow calls it once at start. |
-| method | `public void AskSkip(Action<bool> answer)` | 108 | Asks "Skip the tutorial?"; answer(true) = play it, answer(false) = skip. |
-| method | `public void Open(int known, int total, int goalsDone, int goals)` | 206 |  |
-| method | `public void Progress(int known, int total, int goalsDone, int goals)` | 217 | The line under the buttons: how much of the journal and of the goals is done. |
-| method | `public void Close()` | 224 |  |
+| method | `public void Bind(Settings playerSettings, FxRefs effects)` | 46 | Takes the player's settings (the title edits them and raises SettingsClosed when the panel closes) and hooks every click. GameFlow calls it once at start. |
+| method | `public void AskSkip(Action<bool> answer)` | 112 | Asks "Skip the tutorial?"; answer(true) = play it, answer(false) = skip. |
+| method | `public void Open(int known, int total, int goalsDone, int goals)` | 210 |  |
+| method | `public void Progress(int known, int total, int goalsDone, int goals)` | 221 | The line under the buttons: how much of the journal and of the goals is done. |
+| method | `public void Close()` | 228 |  |
 
 ## Uses
-[[Anim]], [[Clickable]], [[Dev]], [[Haptics]], [[Label]], [[Loc]], [[Px]], [[Settings]], [[Sparks]], [[UiButton]]
+[[Anim]], [[Clickable]], [[Dev]], [[FxRefs]], [[Haptics]], [[Label]], [[Loc]], [[Px]], [[Settings]], [[Sparks]], [[UiButton]]
 
 ## Used by
 [[GameFlow]], [[GoldenShots]]

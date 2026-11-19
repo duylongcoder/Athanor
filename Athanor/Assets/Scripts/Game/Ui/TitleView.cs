@@ -39,10 +39,14 @@ namespace Athanor.Game
         [SerializeField] SpriteRenderer glow, shade;
         float age;
 
+        FxRefs fx;
+
         /// <summary>Takes the player's settings (the title edits them and raises SettingsClosed when the panel closes) and hooks every
         /// click. GameFlow calls it once at start.</summary>
-        public void Bind(Settings playerSettings)
+        public void Bind(Settings playerSettings, FxRefs effects)
         {
+            if (effects == null) throw new System.ArgumentNullException(nameof(effects));
+            fx = effects;
             settings = playerSettings;
             if (wired) return;
             wired = true;
@@ -233,8 +237,8 @@ namespace Athanor.Game
             for (int i = 0; i < outline.Length; i++) { outline[i].transform.position = at + Edge[i]; outline[i].Alpha = k; }
             glow.color = new Color(1f, 0.55f, 0.2f, k * (0.28f + 0.12f * pulse));
             // embers drifting up past the title
-            if (Sparks.I != null && UnityEngine.Random.value < 9 * Time.deltaTime)
-                Sparks.I.Emit(Px.At(UnityEngine.Random.Range(120f, 520f), 300), new Vector2(UnityEngine.Random.Range(-6f, 6f), UnityEngine.Random.Range(18f, 42f)),
+            if (fx != null && UnityEngine.Random.value < 9 * Time.deltaTime)
+                fx.Sparks.Emit(Px.At(UnityEngine.Random.Range(120f, 520f), 300), new Vector2(UnityEngine.Random.Range(-6f, 6f), UnityEngine.Random.Range(18f, 42f)),
                     new Color(2.2f, 1.2f, 0.4f, 0.9f), 4f, O + 2, -2, UnityEngine.Random.value < 0.3f);
         }
     }

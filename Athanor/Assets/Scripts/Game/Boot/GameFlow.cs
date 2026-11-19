@@ -90,6 +90,8 @@ namespace Athanor.Game
         [SerializeField] SimpleCutscene story;
         /// <summary>The camera shake and the flash and fade of the whole screen (the Screen Fx object of Main.unity).</summary>
         [SerializeField] ScreenFx screenFx;
+        [SerializeField] Sparks sparks;
+        FxRefs fx;
         /// <summary>The workshop window's effects (the Window object of Main.unity).</summary>
         [SerializeField] WindowView window;
         /// <summary>The tutorial overlay (the Tutorial object of Main.unity).</summary>
@@ -153,6 +155,7 @@ namespace Athanor.Game
             if (choice == null) throw new System.InvalidOperationException("GameFlow: choice is not set in the scene");
             if (pause == null) throw new System.InvalidOperationException("GameFlow: pause is not set in the scene");
             if (screenFx == null) throw new System.InvalidOperationException("GameFlow: screenFx is not set in the scene");
+            if (sparks == null) throw new System.InvalidOperationException("GameFlow: sparks is not set in the scene");
             if (reaction == null) throw new System.InvalidOperationException("GameFlow: reaction is not set in the scene");
             if (story == null) throw new System.InvalidOperationException("GameFlow: story is not set in the scene");
             if (window == null) throw new System.InvalidOperationException("GameFlow: window is not set in the scene");
@@ -181,19 +184,21 @@ namespace Athanor.Game
             var light = GameObject.Find("Ambient Light"); if (light != null) ambient = light.GetComponent<Light2D>();
             var beam = workshop.transform.Find("Moonbeam"); if (beam != null) moon = beam.GetComponent<Light2D>();
 
+            fx = new FxRefs(screenFx, sparks);
             screenFx.Bind(mainCamera, depthStage != null ? depthStage.sway : null);
             PointerInput.Rig = depthStage != null ? depthStage.rig : null;
             if (bench == null) throw new System.InvalidOperationException("GameFlow.bench is not set: put Prefabs/Views/Bench.prefab in Main.unity and assign it");
-            bench.Bind(Db);
+            bench.Bind(Db, fx);
             if (depthStage != null) depthStage.PlaceTiles(Bench, Bench.TileCount);
             Bench.IgniteRequested += Ignite;
             Bench.RedrawRequested += OnRedraw;
             Bench.JournalRequested += OpenJournal;
 
-            reaction.Bind(new[] { workshop, Bench.gameObject });
+            reaction.Bind(new[] { workshop, Bench.gameObject }, fx);
+            story.Bind(fx);
             window.Bind();
             if (depthStage != null) { depthStage.window = window; if (depthStage.effects != null) depthStage.effects.window = window; window.Soft = depthStage.effects == null || depthStage.effects.effectsOn; }
-            title.Bind(settings);
+            title.Bind(settings, fx);
             title.SettingsClosed += SaveSettings;
             title.JournalClicked += OpenJournal;
             title.GoalsClicked += OpenGoals;
@@ -202,13 +207,13 @@ namespace Athanor.Game
             tutorial.Bind(this);
             journalView.Bind(Db);
             journalView.Closed += CloseJournal;
-            choice.Bind();
+            choice.Bind(fx);
             runOver.Bind();
             runOver.GoalsClicked += OpenGoals;
-            eventView.Bind();
+            eventView.Bind(fx);
             goalsView.Bind(Db);
             goalsView.Closed += CloseGoals;
-            toast.Bind();
+            toast.Bind(fx);
             pause.Bind(settings);
             pause.CanOpen = CanPause;
             pause.Opened += OnPauseOpened;
@@ -217,7 +222,7 @@ namespace Athanor.Game
             pause.VibrationChanged += SaveSettings;
             Bench.Hud.PauseClicked += OpenPause;
             Bench.gameObject.SetActive(false);
-            ScreenFx.I.SetBlack(1);
+            fx.Screen.SetBlack(1);
         }
 
         void SaveSettings() => Save.StoreSettings(settings);
@@ -252,7 +257,7 @@ namespace Athanor.Game
                 {
                     State = FlowState.Intro;
                     inCutscene = true; yield return story.Intro(); inCutscene = false;
-                    story.Close(); Sparks.I.Clear();
+                    story.Close(); fx.Sparks.Clear();
                     continue;
                 }
                 if (titleChoice == TitleChoice.HowToPlay) { yield return PlayTutorialReplay(); continue; }
@@ -289,7 +294,7 @@ namespace Athanor.Game
             title.Open(Journal.KnownPairs.Count, Db.Recipes.Count, Profile.Completed.Count, Db.Goals.Count);
             // a journal kept from before there were goals pays out the journal goals at once
             CheckGoals(false);
-            yield return ScreenFx.I.FadeIn(0.7f);
+            yield return fx.Screen.FadeIn(0.7f);
             titleChoice = TitleChoice.Begin;
             while (true)
             {
@@ -312,9 +317,9 @@ namespace Athanor.Game
                 }
                 yield return null;
             }
-            yield return ScreenFx.I.FadeOut(0.35f);
+            yield return fx.Screen.FadeOut(0.35f);
             title.Close();
-            Sparks.I.Clear();
+            fx.Sparks.Clear();
         }
 
         /// <summary>One run from the first trial to its summary. Starts and ends on a black screen.</summary>
@@ -338,7 +343,7 @@ namespace Athanor.Game
             Bench.InputEnabled = false;
             State = FlowState.Descent;
             Haptics.Pulse(Haptics.DepthCleared);
-            yield return ScreenFx.I.FadeIn(0.5f);
+            yield return fx.Screen.FadeIn(0.5f);
             if (DepthLook.ShowsRunIntro(Run.Depth, tut != null, sandbox))
             {
                 Dev.Hook("[intro] " + Run.Depth);
@@ -347,9 +352,9 @@ namespace Athanor.Game
             yield return StartOfDepth();
             if (tut != null) tutRoutine = StartCoroutine(RunTutorial());
             while (!runEnded) yield return null;
-            yield return ScreenFx.I.FadeOut(0.35f);
+            yield return fx.Screen.FadeOut(0.35f);
             story.Close();
-            Sparks.I.Clear();
+            fx.Sparks.Clear();
             Bench.InputEnabled = false;
         }
 
@@ -596,7 +601,7 @@ namespace Athanor.Game
             var grey = new Color(0.62f, 0.62f, 0.7f);
             var mid = Between(e);
             FlashTiles(e, grey.Alpha(0.5f));
-            Sparks.I.Burst(mid, 10, grey.Alpha(0.8f), 26, 0.7f, 150, -18);
+            fx.Sparks.Burst(mid, 10, grey.Alpha(0.8f), 26, 0.7f, 150, -18);
             Fx.Spawn("poof", mid, null, 150);
             // a plain fizzle is over quickly; one that taught something lingers and says so
             if (e.Hint != null) StartCoroutine(Bench.FloatText(Loc.T("ui.bench.new_hint"), mid + new Vector3(0, 8, 0), Px.Hex("#c486f4"), 1.1f, true));
@@ -608,7 +613,7 @@ namespace Athanor.Game
         {
             var dull = new Color(0.55f, 0.4f, 0.75f);
             FlashTiles(e, dull.Alpha(0.6f));
-            foreach (int t in e.Tiles) Sparks.I.Burst(Bench.TileCentre(t) + new Vector3(0, 10, 0), 5, dull.Alpha(0.8f), 22, 0.6f, 150, -14);
+            foreach (int t in e.Tiles) fx.Sparks.Burst(Bench.TileCentre(t) + new Vector3(0, 10, 0), 5, dull.Alpha(0.8f), 22, 0.6f, 150, -14);
             StartCoroutine(Bench.FloatText(Loc.T("ui.bench.spoiled"), Bench.TileCentre(e.Hub) + new Vector3(0, 20, 0), Px.Hex("#c486f4"), 1.0f, true));
             yield return Anim.Wait(0.6f * pace);
         }
@@ -619,8 +624,8 @@ namespace Athanor.Game
             Haptics.Pulse(Haptics.Discovery);
             var mid = Between(e);
             FlashTiles(e, Color.white);
-            ScreenFx.I.Shake(2, 0.35f);
-            Sparks.I.Burst(mid, 26, new Color(2.2f, 2.1f, 1.8f), 95, 0.5f, 150);
+            fx.Screen.Shake(2, 0.35f);
+            fx.Sparks.Burst(mid, 26, new Color(2.2f, 2.1f, 1.8f), 95, 0.5f, 150);
             yield return Anim.Wait(0.4f);
             reaction.Setup(e, Db, hurry);
             inCutscene = true;
@@ -648,10 +653,10 @@ namespace Athanor.Game
             yield return Anim.Wait(0.2f * pace);
             Bench.Tile(e.Hub).Clear();
             Bench.Tile(e.Hub).Show(m, true);
-            Sparks.I.Burst(mid, 14 + Mathf.Min(chain, 6) * 5 + (size - 2) * 8, colour.Times(2.2f), 60 + Mathf.Min(chain, 6) * 10, 0.55f, 150, 40);
+            fx.Sparks.Burst(mid, 14 + Mathf.Min(chain, 6) * 5 + (size - 2) * 8, colour.Times(2.2f), 60 + Mathf.Min(chain, 6) * 10, 0.55f, 150, 40);
             Fx.Spawn("collect-burst", mid, null, 150);
-            ScreenFx.I.Shake(Mathf.Min(1 + chain * 0.5f + (size - 2) * 0.6f, 5), 0.16f);
-            if (chain >= 2 || size >= 4) ScreenFx.I.Flash(Mathf.Min(0.05f * (chain + size - 2), 0.22f), 0.2f);
+            fx.Screen.Shake(Mathf.Min(1 + chain * 0.5f + (size - 2) * 0.6f, 5), 0.16f);
+            if (chain >= 2 || size >= 4) fx.Screen.Flash(Mathf.Min(0.05f * (chain + size - 2), 0.22f), 0.2f);
             string label = "+" + HudView.Number(e.Potency);
             StartCoroutine(Bench.FloatText(label, mid + new Vector3(0, 16, 0), Px.Hex("#f8d250"), 0.5f + 0.5f * pace));
             if (size >= 3) StartCoroutine(Bench.FloatText(Loc.T("ui.bench.combo", ("n", size)), mid + new Vector3(0, 30, 0), Px.Hex("#ee6a3c"), 0.9f, true));
@@ -666,7 +671,7 @@ namespace Athanor.Game
             yield return Anim.Over(seconds, t =>
             {
                 var p = Vector3.Lerp(from, to, Anim.InOut(t));
-                Sparks.I.Trail(p, Random.insideUnitCircle * 8, colour.Times(2), 0.25f, 151, 0, true);
+                fx.Sparks.Trail(p, Random.insideUnitCircle * 8, colour.Times(2), 0.25f, 151, 0, true);
             });
         }
 
@@ -678,13 +683,13 @@ namespace Athanor.Game
             yield return Anim.Over(seconds, t =>
             {
                 var p = Vector3.Lerp(from, to, Anim.InOut(t)) + new Vector3(0, Anim.Hump(t) * 34, 0);
-                Sparks.I.Trail(p, Random.insideUnitCircle * 8, gold, 0.3f, 172, 0, true);
-                Sparks.I.Trail(p, Random.insideUnitCircle * 14, gold.Alpha(0.7f), 0.25f, 171);
+                fx.Sparks.Trail(p, Random.insideUnitCircle * 8, gold, 0.3f, 172, 0, true);
+                fx.Sparks.Trail(p, Random.insideUnitCircle * 14, gold.Alpha(0.7f), 0.25f, 171);
             });
             shownPotency += points;
             Bench.Hud.SetPotency(shownPotency);
             Bench.Hud.Bump();
-            Sparks.I.Burst(to, 8, gold, 45, 0.3f, 172);
+            fx.Sparks.Burst(to, 8, gold, 45, 0.3f, 172);
         }
 
         /// <summary>The new material pops out between the two tiles, then arcs down into its well on the rack.</summary>
@@ -708,12 +713,12 @@ namespace Athanor.Game
                 .Group(Motion.Fade(halo, 0.6f, 0, fly));
             while (flight.isAlive)
             {
-                if (Random.value < 0.6f) Sparks.I.Trail(icon.transform.position, Random.insideUnitCircle * 10, colour.Times(2), 0.3f, 163);
+                if (Random.value < 0.6f) fx.Sparks.Trail(icon.transform.position, Random.insideUnitCircle * 10, colour.Times(2), 0.3f, 163);
                 yield return null;
             }
             Destroy(icon.gameObject); Destroy(halo.gameObject);
             Bench.PreviewOnRack(slot, m.id);
-            Sparks.I.Burst(to, 8, colour.Times(2), 40, 0.3f, 163);
+            fx.Sparks.Burst(to, 8, colour.Times(2), 40, 0.3f, 163);
         }
 
         // ---- between depths, and the end ------------------------------------------------------------
@@ -758,7 +763,7 @@ namespace Athanor.Game
             }
             else
             {
-                ScreenFx.I.Shake(3, 0.5f);
+                fx.Screen.Shake(3, 0.5f);
                 yield return Anim.Wait(0.9f);
             }
             Haptics.Pulse(Haptics.RunEnded);

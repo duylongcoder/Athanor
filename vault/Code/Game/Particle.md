@@ -12,12 +12,12 @@ aliases: []
 # Particle
 
 `public struct Particle`
-- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Fx/Sparks.cs:20-23` · Nested in [[Sparks]]
+- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Fx/Sparks.cs:18-21` · Nested in [[Sparks]]
 
 ## Members
 | Kind | Signature | Line | Note |
 |---|---|---|---|
-| field | `public Vector2 pos, vel` | 22 |  |
+| field | `public Vector2 pos, vel` | 20 |  |
 
 ## Used by
 [[Lane]]

@@ -36,9 +36,13 @@ namespace Athanor.Game
         /// <summary>What came of the option taken.</summary>
         public Label Outcome => outcome;
 
+        FxRefs fx;
+
         /// <summary>Hooks the clicks. GameFlow calls it once at start; a test calls it after instantiating the prefab.</summary>
-        public void Bind()
+        public void Bind(FxRefs effects)
         {
+            if (effects == null) throw new System.ArgumentNullException(nameof(effects));
+            fx = effects;
             if (wired) return;
             wired = true;
             for (int i = 0; i < MaxOptions; i++)
@@ -97,7 +101,7 @@ namespace Athanor.Game
             for (int i = 0; i < MaxOptions; i++) rows[i].root.gameObject.SetActive(false);
             outcome.Text = Wording.OutcomeText(e, option, result.Text);
             for (int i = 0; i < NoteCount; i++) notes[i].Text = i < result.Notes.Count ? Wording.NoteText(result.Notes[i]) : "";
-            if (result.Notes.Count > 0) ScreenFx.I.Flash(0.12f, 0.25f);
+            if (result.Notes.Count > 0) fx.Screen.Flash(0.12f, 0.25f);
             proceed.gameObject.SetActive(true);
             Dev.Hook("[event] result");
             while (!closing) yield return null;

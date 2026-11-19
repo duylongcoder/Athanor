@@ -3,17 +3,18 @@ generated: true
 type: test
 file: Athanor/Assets/Tests/EditModeGame/SceneBakeTests.cs
 tags: [test]
-count: 5
+count: 6
 ---
 
 # SceneBakeTests
-`Athanor/Assets/Tests/EditModeGame/SceneBakeTests.cs` — 5 tests
+`Athanor/Assets/Tests/EditModeGame/SceneBakeTests.cs` — 6 tests
 
 ## Covers
-[[Bench]], [[Clickable]], [[ContentDb]], [[GameFlow]], [[Label]], [[ReactionCutscene]], [[ScreenFx]], [[SimpleCutscene]], [[TutorialController]], [[TutorialHole]], [[WindowView]]
+[[Bench]], [[Clickable]], [[ContentDb]], [[GameFlow]], [[Label]], [[ReactionCutscene]], [[ScreenFx]], [[SimpleCutscene]], [[Sparks]], [[TutorialController]], [[TutorialHole]], [[WindowView]]
 
 ## Tests
-- `ScreenFx_Baked_HasFlashAndFadeSprites_AndBindMakesItTheSingleton`
+- `GameFlow_Baked_HasSparksField`
+- `ScreenFx_Baked_HasFlashAndFadeSprites`
 - `Window_Baked_HasPaneAndEveryEffectSprite_AndShowStartsAnEffect`
 - `Tutorial_Baked_HasItsBoxArrowAndCellRoot_ClosedUntilAStepShows`
 - `Reaction_Baked_HasEveryPart_AndBindHidesTheStageAndSwitchesTheOthers`

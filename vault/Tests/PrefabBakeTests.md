@@ -3,11 +3,11 @@ generated: true
 type: test
 file: Athanor/Assets/Tests/EditModeGame/PrefabBakeTests.cs
 tags: [test]
-count: 39
+count: 40
 ---
 
 # PrefabBakeTests
-`Athanor/Assets/Tests/EditModeGame/PrefabBakeTests.cs` — 39 tests
+`Athanor/Assets/Tests/EditModeGame/PrefabBakeTests.cs` — 40 tests
 
 ## Covers
 [[Bench]], [[BenchView]], [[CardView]], [[CatalystChoiceView]], [[ChoiceCard]], [[Clickable]], [[ContentData]], [[ContentDb]], [[EventView]], [[GoalReward]], [[GoalRow]], [[GoalToast]], [[GoalsView]], [[HudView]], [[Journal]], [[JournalCell]], [[JournalView]], [[Label]], [[Loc]], [[PauseMenu]], [[Profile]], [[Rarities]], [[RunOptions]], [[RunOverView]], [[RunPhase]], [[RunState]], [[Settings]], [[TitleView]], [[Tooltip]], [[UiButton]], [[Unlocks]], [[Wording]]
@@ -21,6 +21,7 @@ count: 39
 - `Disabled_SetOnAButton_IsKeptInTheSerializedState`
 - `ShowDepth_RunOverPrefab_WritesTheDepthRow`
 - `Click_RunOverPrefabButton_PicksItsChoice`
+- `Bind_EventPrefabWithoutFx_Throws`
 - `Show_EventPrefab_ListsTheOptions`
 - `Click_EventPrefabLastOptionThenContinue_ShowsTheOutcomeAndCloses`
 - `Add_GoalToastPrefab_ShowsTheGoalName`

@@ -391,7 +391,7 @@ Undecided or not done. None is decided by being listed.
    (SwiftShader) and not on release with a GPU; depth 5 descent frames not photographed; Vietnamese half-leading offsets of 2 to 7 px
    on some banners, tight Vietnamese catalyst lines and tall buttons; fog grain judged by eye only; no Legendary material exists so a
    Legendary Journal frame was never shot (do not add one for a screenshot); the lost-run summary is covered by tests only.
-7. **Singletons left:** `ScreenFx.I` and `Sparks.I` are still static handles.
+7. ~~**Singletons left:** `ScreenFx.I` and `Sparks.I`~~ closed in Phase 7 Task 7: both are passed through `Bind` as an `FxRefs` (GameFlow builds it from its `screenFx` and `sparks` fields).
 8. **Leftover DepthTest tools:** `tools/web/depthmatrix.sh`, `depthprobe.mjs`, `depthshimmer.py`, `depthshimmer.sh` still exist
    although the prototype they measured is gone; the Phase 6 spec called for deleting them.
 9. **studio-tests were removed** in Phase 6. The framework skills `skill-test` and `skill-improve` are left in place, but their

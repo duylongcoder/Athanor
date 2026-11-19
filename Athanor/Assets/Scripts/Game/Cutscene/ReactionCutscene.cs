@@ -37,9 +37,13 @@ namespace Athanor.Game
         int experiment;
         float gatherSpeed = 1;
 
+        FxRefs fx;
+
         /// <summary>others: everything that is switched off while the cutscene room is on screen (workshop, bench). Hides the stage.</summary>
-        public void Bind(GameObject[] others)
+        public void Bind(GameObject[] others, FxRefs fx)
         {
+            if (fx == null) throw new System.ArgumentNullException(nameof(fx));
+            this.fx = fx;
             this.others = others;
             Stage(false);
         }
@@ -80,12 +84,12 @@ namespace Athanor.Game
         public override IEnumerator Play()
         {
             Begin();
-            yield return ScreenFx.I.FadeOut(0.12f);
+            yield return fx.Screen.FadeOut(0.12f);
             Stage(true);
-            Sparks.I.Clear();
+            fx.Sparks.Clear();
             float T = 0; bool burst = false;
             Draw(0);
-            yield return ScreenFx.I.FadeIn(0.15f);
+            yield return fx.Screen.FadeIn(0.15f);
             ClearSkip();
             while (T < AutoEnd)
             {
@@ -99,8 +103,8 @@ namespace Athanor.Game
                 if (!burst && T >= GatherEnd)
                 {
                     burst = true;
-                    ScreenFx.I.Flash(1, 0.9f); ScreenFx.I.Shake(5, 0.9f);
-                    Sparks.I.Burst(Px.At(CX, Rim), 60, colRes.Times(2.5f), 190, 1.1f, O + 12, 40);
+                    fx.Screen.Flash(1, 0.9f); fx.Screen.Shake(5, 0.9f);
+                    fx.Sparks.Burst(Px.At(CX, Rim), 60, colRes.Times(2.5f), 190, 1.1f, O + 12, 40);
                     Fx.Spawn("implosion", Px.At(CX, Rim), room.transform, O + 12);
                     Fx.Spawn("holy-pillar", Px.At(CX, Rim), room.transform, O + 6);
                 }
@@ -109,10 +113,10 @@ namespace Athanor.Game
                 yield return null;
             }
             End();
-            yield return ScreenFx.I.FadeOut(0.15f);
-            Sparks.I.Clear();
+            yield return fx.Screen.FadeOut(0.15f);
+            fx.Sparks.Clear();
             Stage(false);
-            yield return ScreenFx.I.FadeIn(0.18f);
+            yield return fx.Screen.FadeIn(0.18f);
         }
 
         Vector3 SpiralPos(int i, float f)
@@ -130,7 +134,7 @@ namespace Athanor.Game
                 for (int i = 0; i < matCount; i++)
                 {
                     var c = matCol[i].Times(2);
-                    Sparks.I.Trail(SpiralPos(i, to / GatherEnd) + (Vector3)Random.insideUnitCircle * 5, Random.insideUnitCircle * 10, c, 0.45f, O + 9, 0, Random.value < 0.25f);
+                    fx.Sparks.Trail(SpiralPos(i, to / GatherEnd) + (Vector3)Random.insideUnitCircle * 5, Random.insideUnitCircle * 10, c, 0.45f, O + 9, 0, Random.value < 0.25f);
                 }
             }
             else if (to > Burst)
@@ -139,7 +143,7 @@ namespace Athanor.Game
                 for (int k = 0; k < n; k++)
                 {
                     var c = k % 3 == 0 ? new Color(2, 1.8f, 1.2f) : colRes.Times(2);
-                    Sparks.I.Emit(Px.At(CX + Random.Range(-60f, 60f), Rim), new Vector2(Random.Range(-45f, 45f), Random.Range(50f, 120f)), c, 1.6f, O + 8, -8, k % 4 == 0);
+                    fx.Sparks.Emit(Px.At(CX + Random.Range(-60f, 60f), Rim), new Vector2(Random.Range(-45f, 45f), Random.Range(50f, 120f)), c, 1.6f, O + 8, -8, k % 4 == 0);
                 }
             }
         }

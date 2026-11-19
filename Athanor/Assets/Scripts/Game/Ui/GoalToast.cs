@@ -31,7 +31,14 @@ namespace Athanor.Game
         public Label Line => line;
 
         /// <summary>Hooks the click. GameFlow calls it once at start; a test calls it after instantiating the prefab.</summary>
-        public void Bind() => click.onClick = SkipToEnd;
+        public void Bind(FxRefs effects)
+        {
+            if (effects == null) throw new System.ArgumentNullException(nameof(effects));
+            fx = effects;
+            click.onClick = SkipToEnd;
+        }
+
+        FxRefs fx;
 
         // a click on a showing toast sends it away now
         void SkipToEnd() { if (age >= 0) age = Mathf.Max(age, Stay + Slide); }
@@ -62,7 +69,7 @@ namespace Athanor.Game
                 if (next.sprite != null) icon.sprite = Art.Lib.Sprite(next.sprite);
                 age = 0;
                 panel.gameObject.SetActive(true);
-                if (Sparks.I != null) Sparks.I.Burst(Px.Mid(X, Y, W, H), 18, new Color(2.2f, 1.7f, 0.6f), 90, 0.6f, O + 3, 20);
+                if (fx != null) fx.Sparks.Burst(Px.Mid(X, Y, W, H), 18, new Color(2.2f, 1.7f, 0.6f), 90, 0.6f, O + 3, 20);
             }
             age += Time.deltaTime;
             // slides down from above the screen, waits, slides back up

@@ -12,8 +12,6 @@ namespace Athanor.Game
     /// </summary>
     public sealed class Sparks : MonoBehaviour
     {
-        public static Sparks I { get; private set; }
-
         /// <summary>Trail emitters call Trail once per frame; it emits this many particles per second, whatever the frame rate.</summary>
         public const float TrailRate = 60;
 
@@ -35,7 +33,7 @@ namespace Athanor.Game
         void Awake()
         {
             if (particleGlow == null) throw new System.InvalidOperationException("Sparks: particleGlow is not set in the scene");
-            I = this; SparkMesh.BaseMaterial = particleGlow;
+            SparkMesh.BaseMaterial = particleGlow;
         }
 
         /// <summary>Particles alive now, over all lanes.</summary>
