@@ -27,3 +27,6 @@ aliases: []
 | field | `public float vignette` | 27 | URP Vignette.intensity. |
 | field | `public float backFog, frontFog, fogMix` | 29 | Alpha of the back and the front fog sheet, and how far the fog's white is tinted toward the ambient colour. |
 | property | `public Color FogTint` | 32 | The fog sheets' colour: lerp(white, ambient, fogMix). |
+
+## Used by
+[[DepthStage]]

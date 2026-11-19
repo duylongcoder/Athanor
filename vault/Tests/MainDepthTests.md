@@ -3,14 +3,14 @@ generated: true
 type: test
 file: Athanor/Assets/Tests/EditModeGame/MainDepthTests.cs
 tags: [test]
-count: 6
+count: 7
 ---
 
 # MainDepthTests
-`Athanor/Assets/Tests/EditModeGame/MainDepthTests.cs` — 6 tests
+`Athanor/Assets/Tests/EditModeGame/MainDepthTests.cs` — 7 tests
 
 ## Covers
-[[Bench]], [[BenchView]], [[CameraSway]], [[DepthLayer]], [[DepthMath]], [[DepthRig]], [[GameFlow]], [[PointerInput]], [[Px]], [[Spawn]], [[TileView]]
+[[Bench]], [[BenchView]], [[CameraSway]], [[DepthLayer]], [[DepthMath]], [[DepthMood]], [[DepthRig]], [[GameFlow]], [[PointerInput]], [[Px]], [[Spawn]], [[TileView]]
 
 ## Tests
 - `SpawnChildren_OfAWorldLayerParent_DrawOnTheWorldLayer`
@@ -19,3 +19,4 @@ count: 6
 - `ShakeFromScreenFx_MovesTheWorldPicture_AndFlatModeIgnoresIt`
 - `PointerBench_AllNineTiles_HitAtRestAtSwayExtremesAndUnderShake`
 - `MainScene_HasTheRigWorldAndUiCameras_AndTheStageIsWired`
+- `DepthMoodPresets_MainScene_MatchTheOldGameFlowLooks`

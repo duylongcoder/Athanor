@@ -36,6 +36,9 @@ namespace Athanor.Game
             if (mood != null) mood.Set(Mathf.Clamp(depth, 1, 5), themedWindow);
         }
 
+        /// <summary>The look of a depth (1..5; others are clamped): ambient colour, moon, accent.</summary>
+        public DepthMood.Preset Look(int depth) => mood.presets[Mathf.Clamp(depth, 1, mood.presets.Length) - 1];
+
         /// <summary>The Settings switch: the idle sway on or off (the shake stays).</summary>
         public bool SwayOn { get => sway.swayOn; set => sway.swayOn = value; }
     }

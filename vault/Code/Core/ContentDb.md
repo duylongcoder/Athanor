@@ -59,7 +59,7 @@ aliases: []
 [[AspectEffects]], [[ContentData]], [[Effects]], [[Kind]], [[Ops]], [[Rarities]], [[Rng]], [[RulesData]], [[StatIds]]
 
 ## Used by
-[[AutoPlayer]], [[BenchRules]], [[BenchView]], [[ChainPlanner]], [[GameFlow]], [[GoalToast]], [[GoalsView]], [[GoldenShots]], [[HudView]], [[IgniteResolver]], [[Journal]], [[JournalView]], [[Loc]], [[Profile]], [[ReactionCutscene]], [[RunOverView]], [[RunState]], [[Save]], [[ScoreParts]], [[Unlocks]], [[Wording]]
+[[AutoPlayer]], [[BenchRules]], [[BenchView]], [[ChainPlanner]], [[GameFlow]], [[GoalToast]], [[GoalsView]], [[GoldenShots]], [[HudView]], [[IgniteResolver]], [[IgniteSequence]], [[Journal]], [[JournalView]], [[Loc]], [[Profile]], [[ReactionCutscene]], [[RunOverView]], [[RunState]], [[Save]], [[ScoreParts]], [[Unlocks]], [[Wording]]
 
 ## Tested by
 [[ChainTests]], [[ContentTests]], [[HudTests]], [[IgniteTests]], [[JournalTests]], [[LoreTests]], [[PauseTests]], [[Phase3Tests]], [[PrefabBakeTests]], [[RarityReportTests]], [[RarityTests]], [[RoleSimTests]], [[RulesTests]], [[RunOverDepthTests]], [[RunStateTests]], [[SaveTests]], [[SceneBakeTests]], [[TutorialFlowTests]], [[TutorialTests]]

@@ -29,7 +29,7 @@ aliases: []
 | method | `public static void Pulse(int ms)` | 47 |  |
 
 ## Used by
-[[GameFlow]], [[PauseMenu]], [[TitleView]]
+[[GameFlow]], [[IgniteSequence]], [[PauseMenu]], [[TitleView]]
 
 ## Tested by
 [[PauseTests]], [[SettingsHapticsTests]], [[StaticResetTests]]

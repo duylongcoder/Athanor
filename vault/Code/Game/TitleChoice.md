@@ -12,7 +12,7 @@ aliases: []
 # TitleChoice
 
 `enum TitleChoice`
-- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Boot/GameFlow.cs:133-133` · Nested in [[GameFlow]]
+- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Boot/GameFlow.cs:136-136` · Nested in [[GameFlow]]
 
 ## Members
 `Begin`, `HowToPlay`, `Intro`

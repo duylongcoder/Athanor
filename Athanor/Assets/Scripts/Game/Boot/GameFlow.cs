@@ -78,13 +78,16 @@ namespace Athanor.Game
                 }
         }
 
-        // the room's ambient colour, the moonbeam's strength and the accent colour, one per depth
-        static readonly Color[] Ambient =
+        /// <summary>Waits and shake of the descent and the end of a run, in seconds.</summary>
+        [System.Serializable]
+        public struct RunTiming
         {
-            new Color(0.52f, 0.52f, 1f), new Color(0.40f, 0.62f, 0.86f), new Color(0.62f, 0.42f, 0.95f), new Color(0.86f, 0.40f, 0.46f), new Color(0.78f, 0.74f, 0.58f),
-        };
-        static readonly float[] Moon = { 0.62f, 0.5f, 0.4f, 0.3f, 0.5f };
-        static readonly string[] Accent = { "#7cc0f8", "#6ee6c8", "#c486f4", "#ee6a3c", "#fff6b8" };
+            /// <summary>Wait before the descent cutscene (the potency counter finishes) and before the ending.</summary>
+            public float descendWait, endingWait;
+            /// <summary>A lost run: shake strength, shake length, wait.</summary>
+            public float lossShake, lossShakeSeconds, lossWait;
+        }
+        [SerializeField] RunTiming runTiming;
 
         /// <summary>The discovery sequence (the Reaction Cutscene object of Main.unity).</summary>
         [SerializeField] ReactionCutscene reaction;
@@ -94,6 +97,8 @@ namespace Athanor.Game
         [SerializeField] ScreenFx screenFx;
         [SerializeField] Sparks sparks;
         FxRefs fx;
+        /// <summary>The Ignite choreography (on the GameFlow object of Main.unity).</summary>
+        [SerializeField] IgniteSequence ignite;
         /// <summary>The workshop window's effects (the Window object of Main.unity).</summary>
         [SerializeField] WindowView window;
         /// <summary>The tutorial overlay (the Tutorial object of Main.unity).</summary>
@@ -113,17 +118,15 @@ namespace Athanor.Game
         readonly List<GoalReward> goalsThisRun = new List<GoalReward>();
         Unlocks unlocks;
         Settings settings;
-        Light2D ambient, moon;
         AutoPlayer autoPlayer;
         /// <summary>The journal screen, for the tutorial to point at parts of a page.</summary>
         public JournalView JournalView => journalView;
-        long shownPotency;
         /// <summary>The in-run pause menu (a prefab in Main.unity).</summary>
         [SerializeField] PauseMenu pause;
         [SerializeField] BenchView bench;
         Coroutine tutRoutine;
         int escGuardFrame = -1;
-        bool hurry, runEnded, autoReady, abandoned;
+        bool runEnded, autoReady, abandoned;
         float autoClock;
         int runs;
         TutorialController tut;
@@ -156,6 +159,7 @@ namespace Athanor.Game
             if (pause == null) throw new System.InvalidOperationException("GameFlow: pause is not set in the scene");
             if (screenFx == null) throw new System.InvalidOperationException("GameFlow: screenFx is not set in the scene");
             if (sparks == null) throw new System.InvalidOperationException("GameFlow: sparks is not set in the scene");
+            if (ignite == null) throw new System.InvalidOperationException("GameFlow: ignite is not set in the scene");
             if (reaction == null) throw new System.InvalidOperationException("GameFlow: reaction is not set in the scene");
             if (story == null) throw new System.InvalidOperationException("GameFlow: story is not set in the scene");
             if (window == null) throw new System.InvalidOperationException("GameFlow: window is not set in the scene");
@@ -181,8 +185,6 @@ namespace Athanor.Game
             Profile = Save.LoadProfile(Db);
             unlocks = Unlocks.For(Db, Profile);
             autoPlayer = new AutoPlayer(Db);
-            var light = GameObject.Find("Ambient Light"); if (light != null) ambient = light.GetComponent<Light2D>();
-            var beam = workshop.transform.Find("Moonbeam"); if (beam != null) moon = beam.GetComponent<Light2D>();
 
             fx = new FxRefs(screenFx, sparks);
             screenFx.Bind(mainCamera, depthStage != null ? depthStage.sway : null);
@@ -195,6 +197,7 @@ namespace Athanor.Game
             Bench.JournalRequested += OpenJournal;
 
             reaction.Bind(new[] { workshop, Bench.gameObject }, fx);
+            ignite.Bind(Bench, reaction, fx, flow);
             story.Bind(fx);
             window.Bind();
             if (depthStage != null) { depthStage.window = window; if (depthStage.effects != null) depthStage.effects.window = window; window.Soft = depthStage.effects == null || depthStage.effects.effectsOn; }
@@ -333,7 +336,7 @@ namespace Athanor.Game
             options.LastLore = Profile.LastLore;
             Run = new RunState(Db, Journal, tutorialRun ? TutorialScript.Seed : System.Environment.TickCount * 31 + runs, 1, options);
             if (tutorialRun) { Run.Deal(TutorialScript.Reaction.Hand); tut = tutorial; } else tut = null;
-            runEnded = false; abandoned = false; shownPotency = 0;
+            runEnded = false; abandoned = false;
             goalsThisRun.Clear();
             Profile.RunStarted(); Profile.DepthBegan(Run.Depth);
             CheckGoals();
@@ -481,12 +484,9 @@ namespace Athanor.Game
             if (State == FlowState.Bench) Bench.InputEnabled = true;
         }
 
-        /// <summary>Lighting for a depth: the deeper, the stranger the colour and the weaker the moon.</summary>
+        /// <summary>Lighting for a depth, read from the scene's presets (<see cref="DepthStage.Look"/>): the deeper, the stranger the colour and the weaker the moon.</summary>
         void Mood(int depth, bool inRun = true)
         {
-            int i = Mathf.Clamp(depth, 1, Ambient.Length) - 1;
-            if (ambient != null) ambient.color = Ambient[i];
-            if (moon != null) moon.intensity = Moon[i];
             if (window == null) return;
             if (depthStage != null) depthStage.ShowMood(depth, DepthLook.ThemedWindow(inRun, tut != null, sandbox));
             // the view through the window changes with the depth, inside a normal run only; the title and the tutorials keep the night sky
@@ -510,13 +510,10 @@ namespace Athanor.Game
             return outcome;
         }
 
-        bool IsDiscovery(string id) => Db.Material(id).tier > 0;
-
         IEnumerator Resolve()
         {
             Bench.InputEnabled = false;
-            hurry = false;
-            shownPotency = Run.Potency;
+            long potencyBefore = Run.Potency;
             // the run is settled first: whatever is skipped from here on, nothing can be lost
             var outcome = SettleIgnite(Run, Journal, sandbox);
             Profile.IgniteResolved(outcome);
@@ -529,44 +526,7 @@ namespace Athanor.Game
             // the run is settled already: keep the Redraw button as it was until the chain has played (Bench.Refresh below updates it)
             Bench.Hud.Show(Run, Db, Journal, false, keepRedraw: true);
 
-            int n = 0, shows = 0;
-            foreach (var e in outcome.Events)
-            {
-                float pace = hurry || Auto ? 0.4f : Mathf.Max(0.55f, 1 - n * 0.07f);
-                if (e.Sputter) { Bench.Hud.Note(e, Db); yield return Sputter(e, pace); }
-                else if (e.Result == null) { Bench.Hud.Note(e, Db); yield return Fizzle(e, pace); if (tut != null) yield return tut.AfterEvent(e, n); }
-                else
-                {
-                    if (e.Discovery) yield return Discover(e, 1 + 0.4f * Mathf.Min(shows++, 3));
-                    Bench.Hud.Note(e, Db);
-                    yield return React(e, pace, n);
-                    if (tut != null) yield return tut.AfterEvent(e, n);
-                    n++;
-                }
-            }
-            // what the chain made and left standing flies to the rack; everything else on the bench is spent
-            int kept = outcome.Made.Count(m => m);
-            int slot = Mathf.Max(0, Run.Hand.Count(IsDiscovery) - kept);
-            float endPace = hurry || Auto ? 0.4f : 0.8f;
-            for (int i = 0; i < Core.Bench.TileCount; i++)
-            {
-                var tile = Bench.Tile(i);
-                if (tile.Material == null) continue;
-                if (outcome.Made[i] && outcome.Final[i] != null)
-                {
-                    var m = Db.Material(outcome.Final[i]);
-                    tile.Clear();
-                    StartCoroutine(ToRack(m, GlowOf(m), tile.centre + new Vector3(0, 12, 0), slot++, endPace));
-                    yield return Anim.Wait(0.08f);
-                }
-                else StartCoroutine(tile.Consume());
-            }
-            yield return Anim.Wait(kept > 0 ? 0.85f * endPace : 0.3f);
-            foreach (var id in outcome.Dropped)
-                StartCoroutine(Bench.FloatText(Loc.T("ui.bench.lost", ("item", Db.Material(id).name)), Px.At(320, 232), Px.Hex("#ee6a3c"), 1.6f));
-            shownPotency = Run.Potency;
-            Bench.Hud.SetPotency(shownPotency);
-            if (tut != null) yield return tut.AfterIgnite(new TutorialController.IgniteOutcomeView { Events = outcome.Events });
+            yield return ignite.Play(outcome, Run, Db, potencyBefore, tut, Auto);
             Bench.Refresh(true);
             // goals this Ignite completed are announced now that it has played out, so they never interrupt it
             // (those of a run's last Ignite wait for the summary, after the ending)
@@ -582,150 +542,16 @@ namespace Athanor.Game
             }
         }
 
-        static Color GlowOf(MaterialData m) => Px.Hex(string.IsNullOrEmpty(m.glow) ? "#f0dcc0" : m.glow);
-        /// <summary>Where a reaction shows: over its hub; for a pair that did nothing, between the two.</summary>
-        Vector3 Between(ReactionEvent e) => e.Result != null
-            ? Bench.TileCentre(e.Hub) + new Vector3(0, 12, 0)
-            : (Bench.TileCentre(e.Tiles[0]) + Bench.TileCentre(e.Tiles[e.Tiles.Length - 1])) / 2 + new Vector3(0, 12, 0);
-
-        void FlashTiles(ReactionEvent e, Color c) { foreach (int t in e.Tiles) Bench.Tile(t).Flash(c); }
-
-        /// <summary>A pair with no recipe: a grey puff, and a hint if there was something new to say.</summary>
-        IEnumerator Fizzle(ReactionEvent e, float pace)
-        {
-            var grey = new Color(0.62f, 0.62f, 0.7f);
-            var mid = Between(e);
-            FlashTiles(e, grey.Alpha(0.5f));
-            fx.Sparks.Burst(mid, 10, grey.Alpha(0.8f), 26, 0.7f, 150, -18);
-            Fx.Spawn("poof", mid, null, 150);
-            // a plain fizzle is over quickly; one that taught something lingers and says so
-            if (e.Hint != null) StartCoroutine(Bench.FloatText(Loc.T("ui.bench.new_hint"), mid + new Vector3(0, 8, 0), Px.Hex("#c486f4"), 1.1f, true));
-            yield return Anim.Wait((e.Hint != null ? 0.55f : 0.24f) * pace);
-        }
-
-        /// <summary>A combo that stood ready and lost a material to a livelier reaction: a dull cough over its tiles.</summary>
-        IEnumerator Sputter(ReactionEvent e, float pace)
-        {
-            var dull = new Color(0.55f, 0.4f, 0.75f);
-            FlashTiles(e, dull.Alpha(0.6f));
-            foreach (int t in e.Tiles) fx.Sparks.Burst(Bench.TileCentre(t) + new Vector3(0, 10, 0), 5, dull.Alpha(0.8f), 22, 0.6f, 150, -14);
-            StartCoroutine(Bench.FloatText(Loc.T("ui.bench.spoiled"), Bench.TileCentre(e.Hub) + new Vector3(0, 20, 0), Px.Hex("#c486f4"), 1.0f, true));
-            yield return Anim.Wait(0.6f * pace);
-        }
-
-        /// <summary>A recipe nobody has seen before: a beat of held breath on the bench, then the full cutscene.</summary>
-        IEnumerator Discover(ReactionEvent e, float hurry)
-        {
-            Haptics.Pulse(Haptics.Discovery);
-            var mid = Between(e);
-            FlashTiles(e, Color.white);
-            fx.Screen.Shake(2, 0.35f);
-            fx.Sparks.Burst(mid, 26, new Color(2.2f, 2.1f, 1.8f), 95, 0.5f, 150);
-            yield return Anim.Wait(0.4f);
-            reaction.Setup(e, Db, hurry);
-            flow.InCutscene = true;
-            yield return reaction.Play();
-            flow.InCutscene = false;
-        }
-
-        /// <summary>
-        /// A reaction on the bench: the tiles flash, the neighbours are drawn into the hub, the new material
-        /// stands up there (ready for the next link of the chain) and the points fly to the counter.
-        /// </summary>
-        IEnumerator React(ReactionEvent e, float pace, int chain)
-        {
-            var m = Db.Material(e.Result);
-            var colour = GlowOf(m);
-            var mid = Between(e);
-            int size = e.Tiles.Length;
-            FlashTiles(e, colour);
-            for (int k = 1; k < size; k++)
-            {
-                var from = Bench.TileCentre(e.Tiles[k]) + new Vector3(0, 10, 0);
-                StartCoroutine(Bench.Tile(e.Tiles[k]).Consume());
-                StartCoroutine(Drawn(from, mid, colour, 0.22f * pace));
-            }
-            yield return Anim.Wait(0.2f * pace);
-            Bench.Tile(e.Hub).Clear();
-            Bench.Tile(e.Hub).Show(m, true);
-            fx.Sparks.Burst(mid, 14 + Mathf.Min(chain, 6) * 5 + (size - 2) * 8, colour.Times(2.2f), 60 + Mathf.Min(chain, 6) * 10, 0.55f, 150, 40);
-            Fx.Spawn("collect-burst", mid, null, 150);
-            fx.Screen.Shake(Mathf.Min(1 + chain * 0.5f + (size - 2) * 0.6f, 5), 0.16f);
-            if (chain >= 2 || size >= 4) fx.Screen.Flash(Mathf.Min(0.05f * (chain + size - 2), 0.22f), 0.2f);
-            string label = "+" + HudView.Number(e.Potency);
-            StartCoroutine(Bench.FloatText(label, mid + new Vector3(0, 16, 0), Px.Hex("#f8d250"), 0.5f + 0.5f * pace));
-            if (size >= 3) StartCoroutine(Bench.FloatText(Loc.T("ui.bench.combo", ("n", size)), mid + new Vector3(0, 30, 0), Px.Hex("#ee6a3c"), 0.9f, true));
-            else if (chain >= 1) StartCoroutine(Bench.FloatText(Loc.T("ui.bench.chain", ("n", chain + 1)), mid + new Vector3(0, 30, 0), Px.Hex("#6ee6c8"), 0.9f, true));
-            StartCoroutine(Points(mid, e.Potency, 0.5f * pace));
-            yield return Anim.Wait(0.5f * pace);
-        }
-
-        /// <summary>A consumed material streaks into the hub.</summary>
-        IEnumerator Drawn(Vector3 from, Vector3 to, Color colour, float seconds)
-        {
-            yield return Anim.Over(seconds, t =>
-            {
-                var p = Vector3.Lerp(from, to, Anim.InOut(t));
-                fx.Sparks.Trail(p, Random.insideUnitCircle * 8, colour.Times(2), 0.25f, 151, 0, true);
-            });
-        }
-
-        /// <summary>A bright mote carries the points to the potency counter; they are added when it lands.</summary>
-        IEnumerator Points(Vector3 from, long points, float seconds)
-        {
-            var to = Bench.Hud.PotencyPosition;
-            var gold = new Color(2.4f, 1.9f, 0.7f);
-            yield return Anim.Over(seconds, t =>
-            {
-                var p = Vector3.Lerp(from, to, Anim.InOut(t)) + new Vector3(0, Anim.Hump(t) * 34, 0);
-                fx.Sparks.Trail(p, Random.insideUnitCircle * 8, gold, 0.3f, 172, 0, true);
-                fx.Sparks.Trail(p, Random.insideUnitCircle * 14, gold.Alpha(0.7f), 0.25f, 171);
-            });
-            shownPotency += points;
-            Bench.Hud.SetPotency(shownPotency);
-            Bench.Hud.Bump();
-            fx.Sparks.Burst(to, 8, gold, 45, 0.3f, 172);
-        }
-
-        /// <summary>The new material pops out between the two tiles, then arcs down into its well on the rack.</summary>
-        IEnumerator ToRack(MaterialData m, Color colour, Vector3 from, int slot, float pace)
-        {
-            var halo = Spawn.Glow(Bench.transform, from, 26, colour.Alpha(0.6f), 164);
-            var icon = Spawn.Sprite(Bench.transform, m.id, from, 165);
-            float pop = 0.3f * pace, fly = 0.4f * pace;
-            var up = from + new Vector3(0, 8, 0);
-            yield return Sequence.Create()
-                .Group(Motion.Scale(icon.transform, 0, 2, pop, Ease.OutBack))
-                .Group(Motion.Move(icon.transform, from, up, pop))
-                .Group(Motion.Move(halo.transform, from, up, pop))
-                .ToYieldInstruction();
-            yield return Anim.Wait(0.12f * pace);
-            Vector3 start = icon.transform.position, to = Bench.RackSlot(slot);
-            var flight = Sequence.Create()
-                .Group(Motion.Arc(icon.transform, start, to, 20, fly, Ease.InOutSine))
-                .Group(Motion.Arc(halo.transform, start, to, 20, fly, Ease.InOutSine))
-                .Group(Motion.Scale(icon.transform, 2, 1, fly, Ease.InOutSine))
-                .Group(Motion.Fade(halo, 0.6f, 0, fly));
-            while (flight.isAlive)
-            {
-                if (Random.value < 0.6f) fx.Sparks.Trail(icon.transform.position, Random.insideUnitCircle * 10, colour.Times(2), 0.3f, 163);
-                yield return null;
-            }
-            Destroy(icon.gameObject); Destroy(halo.gameObject);
-            Bench.PreviewOnRack(slot, m.id);
-            fx.Sparks.Burst(to, 8, colour.Times(2), 40, 0.3f, 163);
-        }
-
         // ---- between depths, and the end ------------------------------------------------------------
 
         IEnumerator Descend()
         {
             flow.Enter(FlowState.Descent);
-            yield return Anim.Wait(0.6f);                    // let the potency counter finish
+            yield return Anim.Wait(runTiming.descendWait);   // let the potency counter finish
             int next = Run.Depth + 1;
             flow.InCutscene = true;
             Dev.Hook("[descent] " + next);       // development builds only: tools/web/descents.mjs waits for it
-            yield return story.Descent(next, Loc.DepthName(Db, next), Px.Hex(Accent[Mathf.Clamp(next, 1, Accent.Length) - 1]), () => Mood(next));
+            yield return story.Descent(next, Loc.DepthName(Db, next), depthStage != null ? depthStage.Look(next).accent : Color.white, () => Mood(next));
             flow.InCutscene = false;
             flow.Enter(FlowState.CatalystChoice);
             Dev.Hook("[choice] " + Run.Depth);      // development builds only: tools/web evidence scripts wait for it
@@ -738,7 +564,6 @@ namespace Athanor.Game
             if (tut != null) { tut.OfferTaken(); tut.AfterChoose(picked, pickedName); }
             Profile.DepthBegan(Run.Depth);
             CheckGoals();
-            shownPotency = 0;
             Bench.gameObject.SetActive(true);
             Bench.Hud.SetPotency(0, true);
             Bench.Refresh();
@@ -751,15 +576,15 @@ namespace Athanor.Game
             if (won)
             {
                 flow.Enter(FlowState.Ending);
-                yield return Anim.Wait(0.6f);
+                yield return Anim.Wait(runTiming.endingWait);
                 flow.InCutscene = true;
                 yield return story.Ending(Db.Material(Db.Ultimate));
                 flow.InCutscene = false;
             }
             else
             {
-                fx.Screen.Shake(3, 0.5f);
-                yield return Anim.Wait(0.9f);
+                fx.Screen.Shake(runTiming.lossShake, runTiming.lossShakeSeconds);
+                yield return Anim.Wait(runTiming.lossWait);
             }
             Haptics.Pulse(Haptics.RunEnded);
             ToastGoals(earned);
@@ -781,7 +606,7 @@ namespace Athanor.Game
             var kb = Keyboard.current;
             if (kb != null) DevKeys(kb);
             if (kb != null && kb.f9Key.wasPressedThisFrame && (Application.isEditor || Debug.isDebugBuild)) ToggleAuto();
-            if (State == FlowState.Resolving && !flow.InCutscene && PointerInput.Down) hurry = true;
+            if (State == FlowState.Resolving && !flow.InCutscene && PointerInput.Down) ignite.Hurry = true;
             if (Bench != null && Bench.Hud != null) Bench.Hud.SetPauseShown(!pause.IsOpen && CanPause());
             if (!Auto) return;
             autoClock -= Time.deltaTime;

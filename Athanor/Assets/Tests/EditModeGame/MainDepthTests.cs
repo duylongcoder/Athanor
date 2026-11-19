@@ -135,5 +135,38 @@ namespace Athanor.Tests
             }
             finally { EditorSceneManager.CloseScene(scene, true); }
         }
+
+        [Test]
+        public void DepthMoodPresets_MainScene_MatchTheOldGameFlowLooks()
+        {
+            var ambient = new[] { new Color(0.52f, 0.52f, 1f), new Color(0.40f, 0.62f, 0.86f), new Color(0.62f, 0.42f, 0.95f), new Color(0.86f, 0.40f, 0.46f), new Color(0.78f, 0.74f, 0.58f) };
+            var moon = new[] { 0.62f, 0.5f, 0.4f, 0.3f, 0.5f };
+            // bloom threshold, bloom intensity, vignette, back fog, front fog, fog mix: DepthMood's old SPEC conversions
+            var rest = new[]
+            {
+                new[] { 1f + (0.80f - 0.80f), 1.1f * 0.55f / 0.55f, 0.34f * 0.30f / 0.30f, 0.40f, 0.14f, 0.45f },
+                new[] { 1f + (0.78f - 0.80f), 1.1f * 0.60f / 0.55f, 0.34f * 0.36f / 0.30f, 0.50f, 0.15f, 0.50f },
+                new[] { 1f + (0.74f - 0.80f), 1.1f * 0.75f / 0.55f, 0.34f * 0.42f / 0.30f, 0.55f, 0.15f, 0.55f },
+                new[] { 1f + (0.70f - 0.80f), 1.1f * 0.90f / 0.55f, 0.34f * 0.48f / 0.30f, 0.45f, 0.13f, 0.60f },
+                new[] { 1f + (0.76f - 0.80f), 1.1f * 0.65f / 0.55f, 0.34f * 0.55f / 0.30f, 0.62f, 0.16f, 0.50f },
+            };
+            var accent = new[] { "#7cc0f8", "#6ee6c8", "#c486f4", "#ee6a3c", "#fff6b8" };
+            using (var main = new MainSceneFixture())
+            {
+                var mood = Object.FindObjectsByType<DepthMood>(FindObjectsInactive.Include).Single();
+                Assert.AreEqual(5, mood.presets.Length);
+                const float tol = 1f / 255f + 1e-4f;
+                for (int d = 0; d < 5; d++)
+                {
+                    var p = mood.presets[d];
+                    var a = ambient[d]; var c = Px.Hex(accent[d]);
+                    Assert.AreEqual(a.r, p.ambient.r, tol, "ambient r depth " + (d + 1)); Assert.AreEqual(a.g, p.ambient.g, tol, "ambient g depth " + (d + 1)); Assert.AreEqual(a.b, p.ambient.b, tol, "ambient b depth " + (d + 1));
+                    Assert.AreEqual(moon[d], p.moon, 1e-4f, "moon depth " + (d + 1));
+                    var got = new[] { p.bloomThreshold, p.bloomIntensity, p.vignette, p.backFog, p.frontFog, p.fogMix };
+                    for (int k = 0; k < got.Length; k++) Assert.AreEqual(rest[d][k], got[k], 1e-4f, "post/fog value " + k + " depth " + (d + 1));
+                    Assert.AreEqual(c.r, p.accent.r, tol, "accent r depth " + (d + 1)); Assert.AreEqual(c.g, p.accent.g, tol, "accent g depth " + (d + 1)); Assert.AreEqual(c.b, p.accent.b, tol, "accent b depth " + (d + 1));
+                }
+            }
+        }
     }
 }

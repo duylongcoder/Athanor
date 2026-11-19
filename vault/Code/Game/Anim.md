@@ -28,4 +28,4 @@ aliases: []
 | method | `public static float Hump(float t)` | 31 | 0 at both ends, 1 in the middle. |
 
 ## Used by
-[[GameFlow]], [[GoalToast]], [[Motion]], [[ReactionCutscene]], [[SimpleCutscene]], [[TileView]], [[TitleView]]
+[[GameFlow]], [[GoalToast]], [[IgniteSequence]], [[Motion]], [[ReactionCutscene]], [[SimpleCutscene]], [[TileView]], [[TitleView]]

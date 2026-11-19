@@ -37,7 +37,7 @@ aliases: []
 [[Align]], [[Bench]], [[Clickable]], [[Dev]], [[FlowState]], [[FontKind]], [[GameFlow]], [[HudView]], [[Journal]], [[JournalView]], [[Label]], [[Loc]], [[Px]], [[ReactionEvent]], [[RunPhase]], [[ScoreParts]], [[Spawn]], [[TutorialHole]], [[TutorialRules]], [[TutorialScript]], [[TutorialStyle]], [[TutorialTargets]], [[TutorialTrial]]
 
 ## Used by
-[[GameFlow]]
+[[GameFlow]], [[IgniteSequence]]
 
 ## Tested by
 [[PauseTests]], [[SceneBakeTests]], [[TutorialFlowTests]]

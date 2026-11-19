@@ -75,7 +75,11 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | LinkView | LinkView | Game | class | Athanor/Assets/Scripts/Game/Bench/LinkView.cs | 7 | Motes of light travelling between neighbouring tiles whose reaction is already in the journal. |
 | TileView | TileView | Game | class | Athanor/Assets/Scripts/Game/Bench/TileView.cs | 10 | One of the nine bench tiles: its hover highlight and, when occupied, the material standing on it. |
 | GameFlow | GameFlow | Game | class | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 13 | Owns the run and moves the game between its screens. |
-| TitleChoice | TitleChoice | Game | enum | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 133 |  |
+| RunTiming | RunTiming | Game | struct | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 83 | Waits and shake of the descent and the end of a run, in seconds. |
+| TitleChoice | TitleChoice | Game | enum | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 136 |  |
+| IgniteSequence | IgniteSequence | Game | class | Athanor/Assets/Scripts/Game/Boot/IgniteSequence.cs | 15 | The choreography of one Ignite: the chain of reactions (flash, draw-in, burst, points), the discovery beat and cutscene, the flight of what was made to the rack, the spent tiles and the final potency. |
+| Timing | Timing | Game | struct | Athanor/Assets/Scripts/Game/Boot/IgniteSequence.cs | 19 | Paces, waits and durations, in seconds unless the name says otherwise. |
+| Look | Look | Game | struct | Athanor/Assets/Scripts/Game/Boot/IgniteSequence.cs | 52 | Bursts, offsets, sizes and colours. |
 | Save | Save | Game | class | Athanor/Assets/Scripts/Game/Boot/Save.cs | 8 | Keeps the journal and the profile between sessions in PlayerPrefs (browser storage in a web build). |
 | Cutscene | Cutscene | Game | class | Athanor/Assets/Scripts/Game/Cutscene/Cutscene.cs | 7 | A sequence that plays to its end unless the player clicks to skip ahead. |
 | DepthLook | DepthLook | Game | class | Athanor/Assets/Scripts/Game/Cutscene/DepthLook.cs | 9 | What a depth looks like from the bench: the intro line under its name and the view through the window. Pure choices, no scene; the pictures and effects are drawn by WindowView. |
@@ -103,6 +107,7 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | DepthTiltShiftFeature | DepthTiltShiftFeature | Game | class | Athanor/Assets/Scripts/Game/Depth/DepthTiltShiftFeature.cs | 9 | A full-screen pass of the tilt-shift (one blur direction per feature) that runs only for cameras with an enabled TiltShift, so the HUD camera and the main game's camera are never blurred. |
 | FogSheet | FogSheet | Game | class | Athanor/Assets/Scripts/Game/Depth/FogSheet.cs | 10 | A tiling fog sheet (a tiled SpriteRenderer with the "Athanor/Fog Lit" material) that drifts sideways in whole texels: the picture moves left by trunc(t * speed) texels (back sheet +4, front sheet -6 a |
 | TiltShift | TiltShift | Game | class | Athanor/Assets/Scripts/Game/Depth/TiltShift.cs | 12 | The tilt-shift of the world camera: sharp from art y 145 to 235, then a blur that rises over 110 rows (smoothstep) to sigma 1.5 art px (owner gate G2 #9, #10). Drawn by DepthTiltShiftFeature before bl |
+| BurstSpec | BurstSpec | Game | struct | Athanor/Assets/Scripts/Game/Fx/BurstSpec.cs | 8 | One serialized spark burst: what Sparks.Burst takes besides the position. |
 | Flame | Flame | Game | class | Athanor/Assets/Scripts/Game/Fx/Flame.cs | 7 | A flickering flame: cycles its frames and wavers the light and halo that go with it. |
 | Flipbook | Flipbook | Game | class | Athanor/Assets/Scripts/Game/Fx/Flipbook.cs | 8 | Plays a FlipbookSheet on a SpriteRenderer. |
 | FlipbookSheet | FlipbookSheet | Game | class | Athanor/Assets/Scripts/Game/Fx/FlipbookSheet.cs | 6 | One exported effect: its frames in order and how long each is shown. |
@@ -191,6 +196,7 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | GoldenShotTests | GoldenShotTests | Tests | class | Athanor/Assets/Tests/EditModeGame/GoldenShotTests.cs | 7 | Every view, in both languages, still looks like the picture recorded in production/qa/evidence/phase7/baseline/golden. |
 | HudTests | HudTests | Tests | class | Athanor/Assets/Tests/EditModeGame/HudTests.cs | 9 | The Redraw button is live only while a redraw is left and the bench is in play. |
 | LabelLineBoxTests | LabelLineBoxTests | Tests | class | Athanor/Assets/Tests/EditModeGame/LabelLineBoxTests.cs | 15 | Line-box text (the Descent's depth name, SPEC (f)): the mockup sets it in a CSS line box as tall as the size, so the glyphs sit a half-leading below the box top; TMP puts the baseline one ascender dow |
+| LayoutPinTests | LayoutPinTests | Tests | class | Athanor/Assets/Tests/EditModeGame/LayoutPinTests.cs | 11 | Phase 7: numbers that moved from code into Main.unity or a prefab equal the literals the code had. |
 | LocTests | LocTests | Tests | class | Athanor/Assets/Tests/EditModeGame/LocTests.cs | 12 | The Game layer's language: Vietnamese draws from SVN-Coder's Crux, every key resolves, and the core's English notes are translated. |
 | MainDepthTests | MainDepthTests | Tests | class | Athanor/Assets/Tests/EditModeGame/MainDepthTests.cs | 11 | The HD-2D bench in the main scene (5b-07a): layers, the tiles' depth group, clicks through the world ray, the shake. |
 | MainDevHookTests | MainDevHookTests | Tests | class | Athanor/Assets/Tests/EditModeGame/MainDevHookTests.cs | 11 | The dev-only hooks tools/web/mainhd2d.mjs drives (5b-07b): F6 mood steps, F10 tile faces in UI units, the bench's place / unplace lines. The key handling is guarded by Application.isEditor \|\| Debug.is |
@@ -695,14 +701,49 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | GameFlow | method | NextMood | 55 | public static int NextMood(int mood) |
 | GameFlow | method | MoodLine | 56 | public static string MoodLine(int mood) |
 | GameFlow | method | EffectsLine | 57 | public static string EffectsLine(bool on) |
-| GameFlow | property | JournalView | 119 | public JournalView JournalView |
-| GameFlow | method | JournalAfterQuit | 457 | public static Journal JournalAfterQuit(bool sandbox, Journal current) |
-| GameFlow | method | ProfileAfterQuit | 459 | public static Profile ProfileAfterQuit(bool sandbox, Profile current, ContentDb db) |
+| GameFlow | property | JournalView | 123 | public JournalView JournalView |
+| GameFlow | method | JournalAfterQuit | 460 | public static Journal JournalAfterQuit(bool sandbox, Journal current) |
+| GameFlow | method | ProfileAfterQuit | 462 | public static Profile ProfileAfterQuit(bool sandbox, Profile current, ContentDb db) |
 | GameFlow | method | Ignite | 499 | public void Ignite() |
 | GameFlow | method | SettleIgnite | 506 | public static IgniteOutcome SettleIgnite(RunState run, Journal journal, bool sandbox) |
-| TitleChoice | value | Begin | 133 | Begin |
-| TitleChoice | value | HowToPlay | 133 | HowToPlay |
-| TitleChoice | value | Intro | 133 | Intro |
+| RunTiming | field | endingWait | 86 | public float descendWait, endingWait |
+| RunTiming | field | lossWait | 88 | public float lossShake, lossShakeSeconds, lossWait |
+| TitleChoice | value | Begin | 136 | Begin |
+| TitleChoice | value | HowToPlay | 136 | HowToPlay |
+| TitleChoice | value | Intro | 136 | Intro |
+| IgniteSequence | property | Hurry | 96 | public bool Hurry |
+| IgniteSequence | method | Bind | 99 | public void Bind(BenchView bench, ReactionCutscene reaction, FxRefs fx, ScreenFlow flow) |
+| IgniteSequence | method | Play | 108 | public IEnumerator Play(IgniteOutcome outcome, RunState run, ContentDb db, long potencyBefore, TutorialController tutorial, bool auto) |
+| Timing | field | paceDecay | 22 | public float paceHurry, paceFloor, paceDecay |
+| Timing | field | endPace | 24 | public float endPaceHurry, endPace |
+| Timing | field | discoverHurryStep | 26 | public float discoverHurryBase, discoverHurryStep |
+| Timing | field | discoverHurryCap | 27 | public int discoverHurryCap |
+| Timing | field | discoverBeat | 29 | public float discoverBeat |
+| Timing | field | fizzleHintText | 31 | public float fizzleHintWait, fizzleWait, fizzleHintText |
+| Timing | field | sputterText | 33 | public float sputterWait, sputterText |
+| Timing | field | reactFlash | 35 | public float drawSeconds, drawWait, reactWait, pointsSeconds, reactShake, reactFlash |
+| Timing | field | comboText | 37 | public float pointsText, pointsTextPace, comboText |
+| Timing | field | discoverShake | 39 | public float discoverShake |
+| Timing | field | rackStagger | 41 | public float rackPop, rackFly, rackHold, rackStagger |
+| Timing | field | rackWaitNone | 43 | public float rackWaitKept, rackWaitNone |
+| Timing | field | lostText | 45 | public float lostText |
+| Timing | field | rackTrailChance | 47 | public float rackTrailChance |
+| Look | field | rackLand | 54 | public BurstSpec fizzleBurst, sputterBurst, discoverBurst, reactBurst, pointsLand, rackLand |
+| Look | field | sputterFlash | 56 | public Color fizzleFlash, sputterFlash |
+| Look | field | pointsTrailTint | 58 | public Color drawTint, rackTrailTint, pointsTint, pointsTrailTint |
+| Look | field | defaultGlow | 60 | public Color defaultGlow |
+| Look | field | lostText | 62 | public Color pointsText, comboText, chainText, hintText, spoiledText, lostText |
+| Look | field | rackUp | 64 | public Vector3 hubLift, hintTextLift, spoilTileLift, spoilTextLift, drawLift, pointsTextLift, comboTextLift, rackLift, rackUp |
+| Look | field | lostAt | 66 | public Vector2 lostAt |
+| Look | field | burstPerExtra | 68 | public int burstPerChain, burstChainCap, burstPerExtra |
+| Look | field | speedPerChain | 69 | public float speedPerChain |
+| Look | field | discoverShake | 71 | public float shakeBase, shakePerChain, shakePerExtra, shakeMax, discoverShake |
+| Look | field | flashSize | 73 | public int flashChain, flashSize |
+| Look | field | flashMax | 74 | public float flashPerStep, flashMax |
+| Look | field | rackLife | 76 | public float drawJitter, drawLife, pointsJitter, pointsJitter2, pointsLife, pointsLife2, pointsHump, rackJitter, rackLife |
+| Look | field | rackTrailOrder | 77 | public int drawOrder, pointsOrder, pointsOrder2, rackTrailOrder |
+| Look | field | arcHeight | 79 | public float haloSize, haloAlpha, popScale, arcHeight |
+| Look | field | iconOrder | 80 | public int haloOrder, iconOrder |
 | Save | field | Key | 10 | public const string Key = "athanor.journal.v1", IntroKey = "athanor.intro.v1", ProfileKey = "athanor.profile.v1", TutorialKey = "athanor.tutorial.v1", SettingsKey = |
 | Save | method | LoadJournal | 14 | public static Journal LoadJournal() |
 | Save | method | StoreJournal | 24 | public static void StoreJournal(Journal journal) |
@@ -834,7 +875,7 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | DepthMath | method | Projection | 102 | public static Matrix4x4 Projection(float d, Vector2 shift, float near, float far) |
 | DepthMath | method | ViewportRay | 114 | public static Ray ViewportRay(Vector2 viewport, Vector2 cam, Vector2 shift, float d = RestDistance) |
 | DepthMath | method | HitTable | 124 | public static bool HitTable(Ray ray, out Vector2 flat, float d = RestDistance, float front = TableFront, float back = TableBack, float topY = TableTopY, float rows = TableRows) |
-| DepthMood | field | presets | 36 | public Preset[] presets = Defaults() |
+| DepthMood | field | presets | 36 | public Preset[] presets |
 | DepthMood | field | depth | 38 | public int depth |
 | DepthMood | field | moon | 39 | public Light2D ambient, moon |
 | DepthMood | field | volume | 40 | public Volume volume |
@@ -844,9 +885,8 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | DepthMood | field | windowNight | 46 | public Sprite windowNight |
 | DepthMood | field | window | 48 | public WindowView window |
 | DepthMood | field | windowSharp | 49 | public Sprite[] windowSharp = new Sprite[0], windowSoft = new Sprite[0] |
-| DepthMood | method | Defaults | 53 | public static Preset[] Defaults() |
-| DepthMood | method | Set | 73 | public void Set(int d) |
-| DepthMood | method | Set | 76 | public void Set(int d, bool themedWindow) |
+| DepthMood | method | Set | 52 | public void Set(int d) |
+| DepthMood | method | Set | 55 | public void Set(int d, bool themedWindow) |
 | Preset | field | label | 20 | public string label |
 | Preset | field | ambient | 21 | public Color ambient |
 | Preset | field | moon | 22 | public float moon |
@@ -883,7 +923,8 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | DepthStage | method | PlaceTiles | 19 | public void PlaceTiles(BenchView bench, int count) |
 | DepthStage | method | SetFlat | 31 | public void SetFlat(bool flat) |
 | DepthStage | method | ShowMood | 34 | public void ShowMood(int depth, bool themedWindow) |
-| DepthStage | property | SwayOn | 40 | public bool SwayOn |
+| DepthStage | method | Look | 40 | public DepthMood.Preset Look(int depth) |
+| DepthStage | property | SwayOn | 43 | public bool SwayOn |
 | DepthSwitch | field | effectsOn | 30 | public bool effectsOn = true |
 | DepthSwitch | field | sprites | 31 | public SpriteSwap[] sprites = new SpriteSwap[0] |
 | DepthSwitch | field | flames | 32 | public FlameSwap[] flames = new FlameSwap[0] |
@@ -922,6 +963,13 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | TiltShift | method | IsOn | 31 | public static bool IsOn(Camera camera) |
 | TiltShift | method | Sigma | 34 | public static float Sigma(float artY, float top, float bottom, float feather, float maxSigma) |
 | TiltShift | method | Push | 46 | public void Push() |
+| BurstSpec | field | count | 10 | public int count |
+| BurstSpec | field | color | 11 | public Color color |
+| BurstSpec | field | life | 12 | public float speed, life |
+| BurstSpec | field | order | 13 | public int order |
+| BurstSpec | field | gravity | 14 | public float gravity |
+| BurstSpec | ctor | BurstSpec | 16 | public BurstSpec(int count, Color color, float speed, float life, int order, float gravity = 0) |
+| BurstSpec | method | Play | 22 | public void Play(Sparks sparks, Vector2 pos) |
 | Flame | field | frames | 9 | public Sprite[] frames |
 | Flame | field | halo | 10 | public SpriteRenderer body, halo |
 | Flame | field | glowLight | 11 | public Light2D glowLight |
@@ -1386,6 +1434,8 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | LabelLineBoxTests | method | LineBoxTitle_SizeSwitchTo32_FollowsTheNewSize | 62 | public void LineBoxTitle_SizeSwitchTo32_FollowsTheNewSize() |
 | LabelLineBoxTests | method | LineBoxTitle_InEnglish_DoesNotMove | 72 | public void LineBoxTitle_InEnglish_DoesNotMove() |
 | LabelLineBoxTests | method | PlainTitle_InVietnamese_DoesNotMove | 81 | public void PlainTitle_InVietnamese_DoesNotMove() |
+| LayoutPinTests | method | IgniteSequence_MainScene_KeepsTodaysTiming | 38 | public void IgniteSequence_MainScene_KeepsTodaysTiming() |
+| LayoutPinTests | method | IgniteSequence_MainScene_KeepsTodaysLook | 59 | public void IgniteSequence_MainScene_KeepsTodaysLook() |
 | LocTests | method | Use_WithInjectedFiles_ServesTheirText | 19 | public void Use_WithInjectedFiles_ServesTheirText() |
 | LocTests | method | Use_NullFile_Throws | 32 | public void Use_NullFile_Throws() |
 | LocTests | method | ViJsonCharacters_AllInCruxAtlas_NoneMissing | 40 | public void ViJsonCharacters_AllInCruxAtlas_NoneMissing() |
@@ -1404,6 +1454,7 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | MainDepthTests | method | ShakeFromScreenFx_MovesTheWorldPicture_AndFlatModeIgnoresIt | 80 | public void ShakeFromScreenFx_MovesTheWorldPicture_AndFlatModeIgnoresIt() |
 | MainDepthTests | method | PointerBench_AllNineTiles_HitAtRestAtSwayExtremesAndUnderShake | 95 | public void PointerBench_AllNineTiles_HitAtRestAtSwayExtremesAndUnderShake() |
 | MainDepthTests | method | MainScene_HasTheRigWorldAndUiCameras_AndTheStageIsWired | 121 | public void MainScene_HasTheRigWorldAndUiCameras_AndTheStageIsWired() |
+| MainDepthTests | method | DepthMoodPresets_MainScene_MatchTheOldGameFlowLooks | 140 | public void DepthMoodPresets_MainScene_MatchTheOldGameFlowLooks() |
 | MainDevHookTests | method | NextMood_StepsOneToFive_AndWraps | 14 | public void NextMood_StepsOneToFive_AndWraps() |
 | MainDevHookTests | method | HookLines_ForEachHook_MatchTheScriptPatterns | 23 | public void HookLines_ForEachHook_MatchTheScriptPatterns() |
 | MainDevHookTests | method | DrawnFace_AtRestView_IsTheInsetFaceInUiUnits | 33 | public void DrawnFace_AtRestView_IsTheInsetFaceInUiUnits() |

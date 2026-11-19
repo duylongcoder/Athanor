@@ -25,7 +25,7 @@ aliases: []
 [[Art]], [[Flipbook]], [[Spawn]]
 
 ## Used by
-[[GameFlow]], [[GoldenShots]], [[ReactionCutscene]]
+[[GoldenShots]], [[IgniteSequence]], [[ReactionCutscene]]
 
 ## Tested by
 [[Phase3Tests]]

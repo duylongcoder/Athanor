@@ -27,7 +27,7 @@ aliases: []
 [[Anim]], [[Art]], [[ContentDb]], [[Cutscene]], [[Fx]], [[FxRefs]], [[HudView]], [[Label]], [[Loc]], [[Px]], [[ReactionEvent]], [[Sparks]], [[Spawn]]
 
 ## Used by
-[[GameFlow]]
+[[GameFlow]], [[IgniteSequence]]
 
 ## Tested by
 [[SceneBakeTests]]

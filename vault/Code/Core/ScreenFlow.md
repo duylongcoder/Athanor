@@ -40,7 +40,7 @@ aliases: []
 [[Bench]], [[FlowState]], [[Journal]]
 
 ## Used by
-[[GameFlow]]
+[[GameFlow]], [[IgniteSequence]]
 
 ## Tested by
 [[ScreenFlowTests]]

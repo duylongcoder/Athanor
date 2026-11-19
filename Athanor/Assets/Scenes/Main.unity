@@ -6481,6 +6481,7 @@ GameObject:
   - component: {fileID: 522944087}
   - component: {fileID: 522944086}
   - component: {fileID: 522944085}
+  - component: {fileID: 522944089}
   m_Layer: 0
   m_Name: Game
   m_TagString: Untagged
@@ -6510,10 +6511,17 @@ MonoBehaviour:
   depthStage: {fileID: 539019352}
   runOver: {fileID: 411300214}
   Auto: 0
+  runTiming:
+    descendWait: 0.6
+    endingWait: 0.6
+    lossShake: 3
+    lossShakeSeconds: 0.5
+    lossWait: 0.9
   reaction: {fileID: 528720037}
   story: {fileID: 1969933994}
   screenFx: {fileID: 1655642882}
   sparks: {fileID: 522944086}
+  ignite: {fileID: 522944089}
   window: {fileID: 1437795077}
   tutorial: {fileID: 944113169}
   title: {fileID: 1274837566}
@@ -6564,6 +6572,149 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &522944089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 522944084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 779bbd3154f29459ba6bf91d1c5ccc0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Athanor.Game::Athanor.Game.IgniteSequence
+  timing:
+    paceHurry: 0.4
+    paceFloor: 0.55
+    paceDecay: 0.07
+    endPaceHurry: 0.4
+    endPace: 0.8
+    discoverHurryBase: 1
+    discoverHurryStep: 0.4
+    discoverHurryCap: 3
+    discoverBeat: 0.4
+    fizzleHintWait: 0.55
+    fizzleWait: 0.24
+    fizzleHintText: 1.1
+    sputterWait: 0.6
+    sputterText: 1
+    drawSeconds: 0.22
+    drawWait: 0.2
+    reactWait: 0.5
+    pointsSeconds: 0.5
+    reactShake: 0.16
+    reactFlash: 0.2
+    pointsText: 0.5
+    pointsTextPace: 0.5
+    comboText: 0.9
+    discoverShake: 0.35
+    rackPop: 0.3
+    rackFly: 0.4
+    rackHold: 0.12
+    rackStagger: 0.08
+    rackWaitKept: 0.85
+    rackWaitNone: 0.3
+    lostText: 1.6
+    rackTrailChance: 0.6
+  look:
+    fizzleBurst:
+      count: 10
+      color: {r: 0.62, g: 0.62, b: 0.7, a: 0.8}
+      speed: 26
+      life: 0.7
+      order: 150
+      gravity: -18
+    sputterBurst:
+      count: 5
+      color: {r: 0.55, g: 0.4, b: 0.75, a: 0.8}
+      speed: 22
+      life: 0.6
+      order: 150
+      gravity: -14
+    discoverBurst:
+      count: 26
+      color: {r: 2.2, g: 2.1, b: 1.8, a: 1}
+      speed: 95
+      life: 0.5
+      order: 150
+      gravity: 0
+    reactBurst:
+      count: 14
+      color: {r: 2.2, g: 2.2, b: 2.2, a: 1}
+      speed: 60
+      life: 0.55
+      order: 150
+      gravity: 40
+    pointsLand:
+      count: 8
+      color: {r: 2.4, g: 1.9, b: 0.7, a: 1}
+      speed: 45
+      life: 0.3
+      order: 172
+      gravity: 0
+    rackLand:
+      count: 8
+      color: {r: 2, g: 2, b: 2, a: 1}
+      speed: 40
+      life: 0.3
+      order: 163
+      gravity: 0
+    fizzleFlash: {r: 0.62, g: 0.62, b: 0.7, a: 0.5}
+    sputterFlash: {r: 0.55, g: 0.4, b: 0.75, a: 0.6}
+    drawTint: {r: 2, g: 2, b: 2, a: 1}
+    rackTrailTint: {r: 2, g: 2, b: 2, a: 1}
+    pointsTint: {r: 2.4, g: 1.9, b: 0.7, a: 1}
+    pointsTrailTint: {r: 2.4, g: 1.9, b: 0.7, a: 0.7}
+    defaultGlow: {r: 0.9411765, g: 0.8627451, b: 0.7529412, a: 1}
+    pointsText: {r: 0.972549, g: 0.8235294, b: 0.3137255, a: 1}
+    comboText: {r: 0.93333334, g: 0.41568628, b: 0.23529412, a: 1}
+    chainText: {r: 0.43137255, g: 0.9019608, b: 0.78431374, a: 1}
+    hintText: {r: 0.76862746, g: 0.5254902, b: 0.95686275, a: 1}
+    spoiledText: {r: 0.76862746, g: 0.5254902, b: 0.95686275, a: 1}
+    lostText: {r: 0.93333334, g: 0.41568628, b: 0.23529412, a: 1}
+    hubLift: {x: 0, y: 12, z: 0}
+    hintTextLift: {x: 0, y: 8, z: 0}
+    spoilTileLift: {x: 0, y: 10, z: 0}
+    spoilTextLift: {x: 0, y: 20, z: 0}
+    drawLift: {x: 0, y: 10, z: 0}
+    pointsTextLift: {x: 0, y: 16, z: 0}
+    comboTextLift: {x: 0, y: 30, z: 0}
+    rackLift: {x: 0, y: 12, z: 0}
+    rackUp: {x: 0, y: 8, z: 0}
+    lostAt: {x: 320, y: 232}
+    burstPerChain: 5
+    burstChainCap: 6
+    burstPerExtra: 8
+    speedPerChain: 10
+    shakeBase: 1
+    shakePerChain: 0.5
+    shakePerExtra: 0.6
+    shakeMax: 5
+    discoverShake: 2
+    flashChain: 2
+    flashSize: 4
+    flashPerStep: 0.05
+    flashMax: 0.22
+    drawJitter: 8
+    drawLife: 0.25
+    pointsJitter: 8
+    pointsJitter2: 14
+    pointsLife: 0.3
+    pointsLife2: 0.25
+    pointsHump: 34
+    rackJitter: 10
+    rackLife: 0.3
+    drawOrder: 151
+    pointsOrder: 172
+    pointsOrder2: 171
+    rackTrailOrder: 163
+    haloSize: 26
+    haloAlpha: 0.6
+    popScale: 2
+    arcHeight: 20
+    haloOrder: 164
+    iconOrder: 165
 --- !u!1 &523277648
 GameObject:
   m_ObjectHideFlags: 0

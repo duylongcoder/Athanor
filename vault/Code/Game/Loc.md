@@ -45,7 +45,7 @@ aliases: []
 [[ContentDb]], [[Kind]], [[Lang]], [[Rarities]]
 
 ## Used by
-[[BenchView]], [[CardView]], [[CatalystChoiceView]], [[EditorGlobals]], [[EventView]], [[Fonts]], [[GameFlow]], [[GoalToast]], [[GoalsView]], [[GoldenShots]], [[HudView]], [[JournalView]], [[Label]], [[PauseMenu]], [[ReactionCutscene]], [[RunOverView]], [[SimpleCutscene]], [[TitleView]], [[TutorialController]], [[Wording]]
+[[BenchView]], [[CardView]], [[CatalystChoiceView]], [[EditorGlobals]], [[EventView]], [[Fonts]], [[GameFlow]], [[GoalToast]], [[GoalsView]], [[GoldenShots]], [[HudView]], [[IgniteSequence]], [[JournalView]], [[Label]], [[PauseMenu]], [[ReactionCutscene]], [[RunOverView]], [[SimpleCutscene]], [[TitleView]], [[TutorialController]], [[Wording]]
 
 ## Tested by
 [[LabelLineBoxTests]], [[LocTests]], [[NoteTextTests]], [[PrefabBakeTests]], [[RunOverDepthTests]], [[StaticResetTests]]

@@ -32,8 +32,8 @@ namespace Athanor.Game
             public Color FogTint => Color.Lerp(Color.white, ambient, fogMix);
         }
 
-        /// <summary>Depth 1..5 (index 0..4).</summary>
-        public Preset[] presets = Defaults();
+        /// <summary>Depth 1..5 (index 0..4), set in Main.unity: ambient, moon and accent of GameFlow's old arrays, bloom threshold 1.0 + (bth - 0.80), bloom intensity 1.1 * bin / 0.55, vignette 0.34 * vi / 0.30 (HD-2D SPEC).</summary>
+        public Preset[] presets;
         /// <summary>The depth showing: 0 is today's look, 1..5 a preset.</summary>
         public int depth;
         public Light2D ambient, moon;
@@ -47,27 +47,6 @@ namespace Athanor.Game
         /// <summary>When set (the main scene), the window view is this one's job, not the sprite swap above.</summary>
         public WindowView window;
         public Sprite[] windowSharp = new Sprite[0], windowSoft = new Sprite[0];
-
-        /// <summary>The SPEC's presets. Ambient, moon and accent are the game's arrays (GameFlow); bloom threshold =
-        /// 1.0 + (bth - 0.80), bloom intensity = 1.1 * bin / 0.55, vignette = 0.34 * vi / 0.30.</summary>
-        public static Preset[] Defaults()
-        {
-            Preset P(string label, Color amb, float moon, string accent, float bth, float bin, float vi, float bf, float ff, float mix) =>
-                new Preset
-                {
-                    label = label, ambient = amb, moon = moon, accent = Px.Hex(accent),
-                    bloomThreshold = 1f + (bth - 0.80f), bloomIntensity = 1.1f * bin / 0.55f, vignette = 0.34f * vi / 0.30f,
-                    backFog = bf, frontFog = ff, fogMix = mix,
-                };
-            return new[]
-            {
-                P("1", new Color(0.52f, 0.52f, 1.00f), 0.62f, "#7cc0f8", 0.80f, 0.55f, 0.30f, 0.40f, 0.14f, 0.45f),
-                P("2", new Color(0.40f, 0.62f, 0.86f), 0.50f, "#6ee6c8", 0.78f, 0.60f, 0.36f, 0.50f, 0.15f, 0.50f),
-                P("3", new Color(0.62f, 0.42f, 0.95f), 0.40f, "#c486f4", 0.74f, 0.75f, 0.42f, 0.55f, 0.15f, 0.55f),
-                P("4", new Color(0.86f, 0.40f, 0.46f), 0.30f, "#ee6a3c", 0.70f, 0.90f, 0.48f, 0.45f, 0.13f, 0.60f),
-                P("5", new Color(0.78f, 0.74f, 0.58f), 0.50f, "#fff6b8", 0.76f, 0.65f, 0.55f, 0.62f, 0.16f, 0.50f),
-            };
-        }
 
         /// <summary>Shows depth d (0: today's look; 1..5: a preset).</summary>
         public void Set(int d) => Set(d, true);
