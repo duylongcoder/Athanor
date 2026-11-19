@@ -29,4 +29,4 @@ aliases: []
 [[AutoPlayer]], [[ContentDb]], [[RunState]], [[Wording]]
 
 ## Tested by
-[[ContentTests]], [[LoreTests]], [[Phase3Tests]], [[RarityTests]]
+[[ContentTests]], [[LoreTests]], [[Phase3Tests]], [[RarityTests]], [[RulesTests]]

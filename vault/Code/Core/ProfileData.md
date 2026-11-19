@@ -28,4 +28,4 @@ aliases: []
 [[Profile]], [[Save]]
 
 ## Tested by
-[[LoreTests]], [[Phase3Tests]], [[SaveTests]]
+[[LoreTests]], [[Phase3Tests]], [[RulesTests]], [[SaveTests]]

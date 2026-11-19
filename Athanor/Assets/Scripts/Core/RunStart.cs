@@ -62,9 +62,9 @@ namespace Athanor.Core
                 {
                     case AspectEffects.Doubled: r.HubMult[t] *= 2; break;
                     case AspectEffects.Volatile: r.HubMult[t] *= 3; break;
-                    case AspectEffects.Heated: r.RiBonus[t] += a.Data.amount > 0 ? (int)a.Data.amount : 3; break;
+                    case AspectEffects.Heated: r.RiBonus[t] += (int)a.Data.amount; break;
                     case AspectEffects.Attuned: r.AttunedKind[t] = a.Kind; break;
-                    case AspectEffects.Seed: r.SeedBonus[t] = a.Data.amount > 0 ? (int)a.Data.amount : 40; break;
+                    case AspectEffects.Seed: r.SeedBonus[t] = (int)a.Data.amount; break;
                     case AspectEffects.Heavy: r.Heavy[t] = true; break;
                     case AspectEffects.Cold: r.Blocked[t] = true; break;
                     case AspectEffects.Bridge: r.Links.Add((a.Tiles[0], a.Tiles[1])); break;
@@ -370,8 +370,8 @@ namespace Athanor.Core
                     var free = Enumerable.Range(0, Bench.TileCount).Where(t => !TileTaken(t) && depthHeated.All(h => h.tile != t)).ToList();
                     if (free.Count == 0) break;
                     int t = free[eventRng.Range(free.Count)];
-                    depthHeated.Add((t, n > 0 ? n : 3));
-                    result.Notes.Add("A tile is warm this depth: +" + (n > 0 ? n : 3) + " Reaction Index");
+                    depthHeated.Add((t, n));
+                    result.Notes.Add("A tile is warm this depth: +" + n + " Reaction Index");
                     break;
                 }
                 case Ops.CatalystUpgrade:

@@ -3,18 +3,22 @@ generated: true
 type: test
 file: Athanor/Assets/Tests/EditMode/RulesTests.cs
 tags: [test]
-count: 11
+count: 15
 ---
 
 # RulesTests
-`Athanor/Assets/Tests/EditMode/RulesTests.cs` — 11 tests
+`Athanor/Assets/Tests/EditMode/RulesTests.cs` — 15 tests
 
 ## Covers
-[[ContentData]], [[ContentDb]], [[Journal]], [[RulesData]], [[RunOptions]], [[RunPhase]], [[RunState]], [[Unlocks]]
+[[AspectEffects]], [[ContentData]], [[ContentDb]], [[Journal]], [[Ops]], [[Profile]], [[ProfileData]], [[RulesData]], [[RunOptions]], [[RunPhase]], [[RunState]], [[Unlocks]]
 
 ## Tests
 - `Rules_ShippedContent_HasTodaysValues`
 - `FinalDepth_ShippedContent_IsFive`
+- `Constructor_HeatedAspectWithoutAmount_Throws`
+- `Constructor_SeedAspectWithoutAmount_Throws`
+- `Constructor_HeatTileEffectWithoutAmount_Throws`
+- `Satchel_PouchModeZero_PutsWonStartersInTheSatchel`
 - `Constructor_NoRulesBlock_Throws`
 - `Constructor_PotencyTableShorterThanTiers_Throws`
 - `Constructor_AspectDepthOutsideTheRun_Throws`

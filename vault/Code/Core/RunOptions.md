@@ -12,7 +12,7 @@ aliases: []
 # RunOptions
 
 `public sealed class RunOptions`
-- Layer: **Core** · Source: `Athanor/Assets/Scripts/Core/Profile.cs:206-222`
+- Layer: **Core** · Source: `Athanor/Assets/Scripts/Core/Profile.cs:206-224`
 
 > Switches for a run. The default is a Phase 2 run: no aspects, no events, and (with no Unlocks) only what the content leaves open.
 
@@ -26,8 +26,9 @@ aliases: []
 | field | `public int QuietBefore` | 215 | The tutorial: no aspect offer and no event at a depth below this one. 0: none held back. |
 | field | `public string[] FirstOffer` | 217 | The tutorial: the catalysts the run's first offer shows, in this order. Locked, held or unknown ids are left out. |
 | field | `public string LastLore` | 219 | The Lore event seen last (Profile.LastLore): not drawn again until another Lore event has been seen. Null: none. |
-| field | `public static readonly RunOptions Legacy = new RunOptions()` | 220 |  |
-| method | `public static RunOptions Full(Unlocks unlocks)` | 221 |  |
+| field | `public int PouchMode = 2` | 221 | How unlocked starters reach the hand. 2 (the game): from their own pouch, PouchCards a hand. 0: two copies in the satchel. 1: one copy in the satchel. 0 and 1 are kept for the balance report. |
+| field | `public static readonly RunOptions Legacy = new RunOptions()` | 222 |  |
+| method | `public static RunOptions Full(Unlocks unlocks)` | 223 |  |
 
 ## Uses
 [[Unlocks]]

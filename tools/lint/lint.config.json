@@ -18,7 +18,7 @@
     "_comment": "error | warning | off. Mặc định mọi luật là error. Warning không làm CI fail.",
     "UL009": "warning",
     "UL010": "warning",
-    "UL011": "warning",
+    "UL011": "error",
     "UL012": "warning"
   },
   "commit_regex": "^(?:feat|fix|refactor|test|docs|chore|perf|build|ci|style|revert)(?:\\([a-z0-9._/-]+\\))?!?: \\S.{0,80}$",

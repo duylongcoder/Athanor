@@ -26,4 +26,4 @@ aliases: []
 [[AutoPlayer]], [[CatalystChoiceView]], [[ContentDb]], [[GoldenShots]], [[RunState]], [[Wording]]
 
 ## Tested by
-[[Phase3Tests]]
+[[Phase3Tests]], [[RulesTests]]

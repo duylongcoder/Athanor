@@ -27,24 +27,28 @@ static class Program
         }
     }
 
+    /// <summary>Pouch mode for every run the reports build, from ATHANOR_POUCH (default 2, the game).</summary>
+    static int Pouch => int.TryParse(Environment.GetEnvironmentVariable("ATHANOR_POUCH"), out int mode) ? mode : 2;
+
+    static RunOptions FullOptions(Unlocks unlocks) { var o = RunOptions.Full(unlocks); o.PouchMode = Pouch; return o; }
+
     static void BalanceMatrix()
     {
         var db = new ContentDb(TestContent.Load());
         Action<string> w = Console.WriteLine;
         int seeds = int.TryParse(Environment.GetEnvironmentVariable("ATHANOR_SEEDS"), out int n) ? n : 200;
-        RunState.PouchMode = int.TryParse(Environment.GetEnvironmentVariable("ATHANOR_POUCH"), out int mode) ? mode : 2;
-        w("MATRIX pouch mode " + RunState.PouchMode);
+        w("MATRIX pouch mode " + Pouch);
         foreach (bool mods in new[] { false, true })
         {
             string tag = mods ? " +aspects+events" : "";
-            w("MATRIX " + Sim.Line(db, "fresh" + tag, s => new RunOptions { Unlocks = Unlocks.Fresh(db), Aspects = mods, Events = mods }, seeds));
-            w("MATRIX " + Sim.Line(db, "fresh + all catalysts" + tag, s => new RunOptions { Unlocks = Sim.With(db, false, true), Aspects = mods, Events = mods }, seeds));
-            w("MATRIX " + Sim.Line(db, "fresh + all starters" + tag, s => new RunOptions { Unlocks = Sim.With(db, true, false), Aspects = mods, Events = mods }, seeds));
-            w("MATRIX " + Sim.Line(db, "half" + tag, s => new RunOptions { Unlocks = Unlocks.Half(db, s), Aspects = mods, Events = mods }, seeds));
-            w("MATRIX " + Sim.Line(db, "full" + tag, s => new RunOptions { Unlocks = Unlocks.All(db), Aspects = mods, Events = mods }, seeds));
+            w("MATRIX " + Sim.Line(db, "fresh" + tag, s => new RunOptions { PouchMode = Pouch, Unlocks = Unlocks.Fresh(db), Aspects = mods, Events = mods }, seeds));
+            w("MATRIX " + Sim.Line(db, "fresh + all catalysts" + tag, s => new RunOptions { PouchMode = Pouch, Unlocks = Sim.With(db, false, true), Aspects = mods, Events = mods }, seeds));
+            w("MATRIX " + Sim.Line(db, "fresh + all starters" + tag, s => new RunOptions { PouchMode = Pouch, Unlocks = Sim.With(db, true, false), Aspects = mods, Events = mods }, seeds));
+            w("MATRIX " + Sim.Line(db, "half" + tag, s => new RunOptions { PouchMode = Pouch, Unlocks = Unlocks.Half(db, s), Aspects = mods, Events = mods }, seeds));
+            w("MATRIX " + Sim.Line(db, "full" + tag, s => new RunOptions { PouchMode = Pouch, Unlocks = Unlocks.All(db), Aspects = mods, Events = mods }, seeds));
         }
-        w("MATRIX " + Sim.Line(db, "fresh, aspects only", s => new RunOptions { Unlocks = Unlocks.Fresh(db), Aspects = true }, seeds));
-        w("MATRIX " + Sim.Line(db, "fresh, events only", s => new RunOptions { Unlocks = Unlocks.Fresh(db), Events = true }, seeds));
+        w("MATRIX " + Sim.Line(db, "fresh, aspects only", s => new RunOptions { PouchMode = Pouch, Unlocks = Unlocks.Fresh(db), Aspects = true }, seeds));
+        w("MATRIX " + Sim.Line(db, "fresh, events only", s => new RunOptions { PouchMode = Pouch, Unlocks = Unlocks.Fresh(db), Events = true }, seeds));
     }
 
     /// <summary>
@@ -62,7 +66,7 @@ static class Program
         {
             int wins = 0;
             for (int seed = 1; seed <= seeds; seed++)
-                if (Sim.Autoplay(db, seed, new RunOptions { Unlocks = Unlocks.Fresh(db), Aspects = true, Events = force != null, ForceEvent = force, ForceEventAt = at }).Phase == RunPhase.Won) wins++;
+                if (Sim.Autoplay(db, seed, new RunOptions { PouchMode = Pouch, Unlocks = Unlocks.Fresh(db), Aspects = true, Events = force != null, ForceEvent = force, ForceEventAt = at }).Phase == RunPhase.Won) wins++;
             return wins;
         }
         int plain = Wins(null);
@@ -85,7 +89,7 @@ static class Program
             int wins = 0; var endedAt = new int[db.FinalDepth + 1];
             for (int seed = 1; seed <= seeds; seed++)
             {
-                var run = Sim.RandomPlay(db, seed, RunOptions.Full(full ? Unlocks.All(db) : Unlocks.Fresh(db)));
+                var run = Sim.RandomPlay(db, seed, FullOptions(full ? Unlocks.All(db) : Unlocks.Fresh(db)));
                 if (run.Phase == RunPhase.Won) wins++;
                 endedAt[run.Depth]++;
             }

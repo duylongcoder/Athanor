@@ -987,9 +987,9 @@ namespace Athanor.Tests
 
         [Test] public void HeatedTile_Adds3_AndSeedTile_Carries40()
         {
-            var heated = WithOnly(AspectEffects.Heated);
+            var heated = WithOnly(AspectEffects.Heated, amount: 3);
             Assert.AreEqual(3, heated.Rules.RiBonus[TileOf(heated)]);
-            var seed = WithOnly(AspectEffects.Seed);
+            var seed = WithOnly(AspectEffects.Seed, amount: 40);
             Assert.AreEqual(40, seed.Rules.SeedBonus[TileOf(seed)]);
             int t = TileOf(seed), hub = seed.Rules.Around(t)[0], other = seed.Rules.Around(hub).First(n => n != t);
             PlaceId(seed, "a", hub); PlaceId(seed, "b", other);

@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using NUnit.Framework;
 using Athanor.Core;
 
@@ -33,6 +34,27 @@ namespace Athanor.Tests
             var data = TestContent.Load();
             change(data);
             Assert.Throws<ArgumentException>(() => new ContentDb(data));
+        }
+
+        [Test] public void Constructor_HeatedAspectWithoutAmount_Throws() => Throws(d => d.aspects.First(a => a.effect == AspectEffects.Heated).amount = 0);
+        [Test] public void Constructor_SeedAspectWithoutAmount_Throws() => Throws(d => d.aspects.First(a => a.effect == AspectEffects.Seed).amount = 0);
+        [Test] public void Constructor_HeatTileEffectWithoutAmount_Throws() => Throws(d =>
+        {
+            foreach (var e in d.events) foreach (var o in e.options)
+                foreach (var fx in (o.cost ?? new EffectData[0]).Concat(o.outcomes.SelectMany(x => x.gain ?? new EffectData[0])))
+                    if (fx.op == Ops.HeatTile) fx.amount = 0;
+        });
+
+        [Test] public void Satchel_PouchModeZero_PutsWonStartersInTheSatchel()
+        {
+            var db = new ContentDb(TestContent.Load());
+            var p = Profile.FromData(new ProfileData { unlockedStarters = new[] { "salt_crystal", "hollow_bone" } }, db);
+            var two = new RunState(db, new Journal(), 1, 1, new RunOptions { Unlocks = Unlocks.For(db, p) });
+            var zero = new RunState(db, new Journal(), 1, 1, new RunOptions { Unlocks = Unlocks.For(db, p), PouchMode = 0 });
+            Assert.AreEqual(2, new RunOptions().PouchMode);
+            Assert.AreEqual(6, two.Hand.Count);   // mode 2: the pouch card comes on top of the five
+            Assert.AreEqual(5, zero.Hand.Count);  // mode 0: no pouch, the starters share the satchel
+            Assert.AreEqual(two.SatchelSize, zero.SatchelSize);
         }
 
         [Test] public void Constructor_NoRulesBlock_Throws() => Throws(d => d.rules = null);

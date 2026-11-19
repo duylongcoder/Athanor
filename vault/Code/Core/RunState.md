@@ -51,18 +51,17 @@ aliases: []
 | property | `public RunOptions Options` | 67 |  |
 | method | `public bool IsOpen(string id)` | 68 |  |
 | method | `public int Owned(string id)` | 72 | Copies of a material in the hand or on the bench. |
-| field | `public static int PouchMode = 2` | 79 | How unlocked starters reach the hand. 2 (the game): from their own pouch, PouchCards a hand. 0: two copies in the satchel. 1: one copy in the satchel. |
-| method | `public bool HasFired(string a, string b)` | 80 |  |
-| method | `public bool HasFired(RecipeData recipe)` | 81 |  |
-| property | `public int SatchelSize` | 82 |  |
-| method | `public bool Place(int handIndex, int tile)` | 139 |  |
-| method | `public bool Unplace(int tile)` | 148 |  |
-| method | `public bool Redraw()` | 157 | Throws away the starting materials in hand (not the bench, not discoveries) and draws again. |
-| method | `public bool Deal(IReadOnlyList<string> ids)` | 173 | The tutorial: puts the starting materials in hand back and deals exactly these instead. Discoveries on the rack stay. Only while playing, on an empty bench. False, and nothing changed, when an id is not an open starting material or the satchel has too few copies of it. |
-| method | `public ScoreContext NewContext()` | 186 | What a reaction's score depends on here and now (also used by the scripted player to plan). |
-| method | `public List<ReactionEvent> Preview(string[] tiles)` | 192 | What this layout (9 tiles, null where empty) would do if ignited now. Nothing changes: the journal and the recipes fired this run are copied. The tutorial uses it to show a broken chain beside the real one. |
-| method | `public IgniteOutcome Ignite()` | 200 |  |
-| method | `public void ChooseCatalyst(string id)` | 281 | Takes one of the offered catalysts (or null when none were left to offer) and descends. |
+| method | `public bool HasFired(string a, string b)` | 78 |  |
+| method | `public bool HasFired(RecipeData recipe)` | 79 |  |
+| property | `public int SatchelSize` | 80 |  |
+| method | `public bool Place(int handIndex, int tile)` | 137 |  |
+| method | `public bool Unplace(int tile)` | 146 |  |
+| method | `public bool Redraw()` | 155 | Throws away the starting materials in hand (not the bench, not discoveries) and draws again. |
+| method | `public bool Deal(IReadOnlyList<string> ids)` | 171 | The tutorial: puts the starting materials in hand back and deals exactly these instead. Discoveries on the rack stay. Only while playing, on an empty bench. False, and nothing changed, when an id is not an open starting material or the satchel has too few copies of it. |
+| method | `public ScoreContext NewContext()` | 184 | What a reaction's score depends on here and now (also used by the scripted player to plan). |
+| method | `public List<ReactionEvent> Preview(string[] tiles)` | 190 | What this layout (9 tiles, null where empty) would do if ignited now. Nothing changes: the journal and the recipes fired this run are copied. The tutorial uses it to show a broken chain beside the real one. |
+| method | `public IgniteOutcome Ignite()` | 198 |  |
+| method | `public void ChooseCatalyst(string id)` | 279 | Takes one of the offered catalysts (or null when none were left to offer) and descends. |
 
 ## Uses
 [[AspectEffects]], [[AspectInstance]], [[Bench]], [[BenchRules]], [[ContentDb]], [[Effects]], [[EventResult]], [[IgniteOutcome]], [[IgniteResolver]], [[Journal]], [[Kind]], [[Ops]], [[Rarities]], [[ReactionEvent]], [[Rng]], [[RunOptions]], [[RunPhase]], [[Satchel]], [[ScoreContext]], [[Unlocks]]

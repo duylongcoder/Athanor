@@ -41,9 +41,9 @@ namespace Athanor.Core
             eventRng = new Rng(seed ^ 0x7F4A7C15);
             // Starters won from goals do not thin the satchel: they wait in a pouch of their own, and each hand
             // takes rules.pouchCards of them on top of the usual draw. (Mode 0 and 1 put them in the satchel; kept for the balance report.)
-            var own = db.Starters.Where(m => IsOpen(m.id) && (PouchMode < 2 || !m.locked));
-            satchel = new Satchel(own.SelectMany(m => Enumerable.Repeat(m.id, m.locked && PouchMode == 1 ? 1 : db.Rules.starterCopies)), seed);
-            pouch = new Satchel(db.Starters.Where(m => IsOpen(m.id) && m.locked && PouchMode == 2).SelectMany(m => Enumerable.Repeat(m.id, db.Rules.starterCopies)), seed ^ 0x3C6EF372);
+            var own = db.Starters.Where(m => IsOpen(m.id) && (this.options.PouchMode < 2 || !m.locked));
+            satchel = new Satchel(own.SelectMany(m => Enumerable.Repeat(m.id, m.locked && this.options.PouchMode == 1 ? 1 : db.Rules.starterCopies)), seed);
+            pouch = new Satchel(db.Starters.Where(m => IsOpen(m.id) && m.locked && this.options.PouchMode == 2).SelectMany(m => Enumerable.Repeat(m.id, db.Rules.starterCopies)), seed ^ 0x3C6EF372);
             Depth = Math.Max(1, Math.Min(db.FinalDepth, startDepth));
             BeginDepth();
         }
@@ -72,11 +72,9 @@ namespace Athanor.Core
         public int Owned(string id) => hand.Count(h => h == id) + Bench.Tiles.Count(t => t == id);
         bool IsStarter(string id) => db.Material(id).tier == 0;
         /// <summary>A starting material that was won from a goal: it is drawn from the pouch, not the satchel.</summary>
-        bool IsPouch(string id) => PouchMode == 2 && db.Material(id).tier == 0 && db.Material(id).locked;
+        bool IsPouch(string id) => options.PouchMode == 2 && db.Material(id).tier == 0 && db.Material(id).locked;
         bool IsMain(string id) => IsStarter(id) && !IsPouch(id);
         Satchel DeckOf(string id) => IsPouch(id) ? pouch : satchel;
-        /// <summary>How unlocked starters reach the hand. 2 (the game): from their own pouch, PouchCards a hand. 0: two copies in the satchel. 1: one copy in the satchel.</summary>
-        public static int PouchMode = 2;
         public bool HasFired(string a, string b) => fired.Contains(ContentDb.PairKey(a, b));
         public bool HasFired(RecipeData recipe) => fired.Contains(db.KeyOf(recipe));
         public int SatchelSize => satchel.Total + pouch.Total;

@@ -49,4 +49,4 @@ aliases: []
 [[GameFlow]], [[GoalsView]], [[GoldenShots]], [[Save]], [[Unlocks]]
 
 ## Tested by
-[[LoreTests]], [[PauseTests]], [[Phase3Tests]], [[PrefabBakeTests]], [[SaveTests]], [[TutorialFlowTests]]
+[[LoreTests]], [[PauseTests]], [[Phase3Tests]], [[PrefabBakeTests]], [[RulesTests]], [[SaveTests]], [[TutorialFlowTests]]

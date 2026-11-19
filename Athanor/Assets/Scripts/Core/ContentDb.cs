@@ -121,6 +121,7 @@ namespace Athanor.Core
             {
                 if (string.IsNullOrEmpty(a.id) || !ids.Add(a.id)) throw new ArgumentException("duplicate or empty aspect id " + a.id);
                 if (Array.IndexOf(AspectEffects.All, a.effect) < 0) throw new ArgumentException("unknown aspect effect " + a.effect + " on " + a.id);
+                if ((a.effect == AspectEffects.Heated || a.effect == AspectEffects.Seed) && a.amount <= 0) throw new ArgumentException("aspect " + a.id + " needs an amount above 0");
             }
             ids.Clear();
             foreach (var e in Events)
@@ -136,6 +137,8 @@ namespace Athanor.Core
                     if (o.outcomes == null || o.outcomes.Length == 0) throw new ArgumentException("option with no outcome on " + e.id);
                     foreach (var fx in (o.cost ?? new EffectData[0]).Concat(o.outcomes.SelectMany(x => x.gain ?? new EffectData[0])))
                         if (Array.IndexOf(Ops.All, fx.op) < 0) throw new ArgumentException("unknown effect " + fx.op + " on " + e.id);
+                    foreach (var fx in (o.cost ?? new EffectData[0]).Concat(o.outcomes.SelectMany(x => x.gain ?? new EffectData[0])))
+                        if (fx.op == Ops.HeatTile && fx.amount <= 0) throw new ArgumentException("HeatTile needs an amount above 0 on " + e.id);
                     if (o.outcomes.Any(x => x.weight < 1)) throw new ArgumentException("outcome weight must be 1 or more on " + e.id);
                     if (string.IsNullOrEmpty(o.requires) && (o.cost == null || o.cost.Length == 0)) free = true;
                 }

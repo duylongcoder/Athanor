@@ -217,6 +217,8 @@ namespace Athanor.Core
         public string[] FirstOffer;
         /// <summary>The Lore event seen last (Profile.LastLore): not drawn again until another Lore event has been seen. Null: none.</summary>
         public string LastLore;
+        /// <summary>How unlocked starters reach the hand. 2 (the game): from their own pouch, PouchCards a hand. 0: two copies in the satchel. 1: one copy in the satchel. 0 and 1 are kept for the balance report.</summary>
+        public int PouchMode = 2;
         public static readonly RunOptions Legacy = new RunOptions();
         public static RunOptions Full(Unlocks unlocks) => new RunOptions { Unlocks = unlocks, Aspects = true, Events = true };
     }
