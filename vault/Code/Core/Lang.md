@@ -14,7 +14,7 @@ aliases: []
 `public sealed class Lang`
 - Layer: **Core** · Source: `Athanor/Assets/Scripts/Core/Lang.cs:20-304`
 
-> The player-facing text of one language, Unity-free. Lookup order: this language, then the fallback (English), then the text the caller supplies (content.json's English for content keys), then the key itself. Placeholders are named: {item}, {n}, {n:+} (always signed), {n:N0}. Plurals are two keys, key.one (|n| = 1) and key.other; a language without .one uses .other for every number. See docs/devlogs/phase-4-settings-localization.md.
+> The player-facing text of one language, Unity-free. Lookup order: this language, then the fallback (English), then the text the caller supplies (content.json's English for content keys), then the key itself. Placeholders are named: {item}, {n}, {n:+} (always signed), {n:N0}. Plurals are two keys, key.one (|n| = 1) and key.other; a language without .one uses .other for every number. See docs/ATHANOR.md §3.
 
 ## Members
 | Kind | Signature | Line | Note |

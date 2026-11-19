@@ -14,7 +14,7 @@ aliases: []
 `public sealed class WindowView` : `MonoBehaviour`
 - Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Cutscene/WindowView.cs:11-196`
 
-> The workshop window shows what the current depth "sees" and plays one tiny looping effect (docs/devlogs/phase-5-lore.md): 1 dust motes up a shaft, 2 drips down the glass, 3 a breathing amber glow, 4 roots creeping a row at a time, 5 a faint gold point that flickers. Effects are a fixed set of sprites moved from Time.time, so they stop with the pause and allocate nothing per frame.
+> The workshop window shows what the current depth "sees" and plays one tiny looping effect (docs/ATHANOR.md §8): 1 dust motes up a shaft, 2 drips down the glass, 3 a breathing amber glow, 4 roots creeping a row at a time, 5 a faint gold point that flickers. Effects are a fixed set of sprites moved from Time.time, so they stop with the pause and allocate nothing per frame.
 
 ## Members
 | Kind | Signature | Line | Note |

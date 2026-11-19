@@ -14,7 +14,7 @@ aliases: []
 `public sealed class Sparks` : `MonoBehaviour`
 - Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Fx/Sparks.cs:13-166`
 
-> Glowing pixel particles: bursts, trails and rising embers. Particles are plain structs integrated here; each sorting order is one lane drawn by one SparkMesh (one renderer, at most two draws), so a burst of 90 costs one object instead of 90. Allocates only when a lane grows past its most particles so far. Building with ATHANOR_SPARK_PARTICLES draws through ParticleSystems instead (kept to measure the engine module's size; see docs/devlogs/phase-4-assets.md).
+> Glowing pixel particles: bursts, trails and rising embers. Particles are plain structs integrated here; each sorting order is one lane drawn by one SparkMesh (one renderer, at most two draws), so a burst of 90 costs one object instead of 90. Allocates only when a lane grows past its most particles so far. Building with ATHANOR_SPARK_PARTICLES draws through ParticleSystems instead (kept to measure the engine module's size; see docs/ATHANOR.md §2).
 
 ## Members
 | Kind | Signature | Line | Note |

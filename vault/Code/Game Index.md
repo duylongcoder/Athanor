@@ -52,7 +52,7 @@ tags: [moc/code]
 - [[TutorialController]] _class_ — Plays the scripted tutorial over the bench: a dark screen with lit holes and a pulsing gold rim, an arrow, a t
 
 ## `Game/Cutscene/WindowView.cs`
-- [[WindowView]] _class_ — The workshop window shows what the current depth "sees" and plays one tiny looping effect (docs/devlogs/phase-
+- [[WindowView]] _class_ — The workshop window shows what the current depth "sees" and plays one tiny looping effect (docs/ATHANOR.md §8)
 
 ## `Game/Depth/CameraSway.cs`
 - [[CameraSway]] _class_ — The idle sway and the world-only shake of the HD-2D bench. The sway moves the world camera (x = A sin(2 pi t /
@@ -112,7 +112,7 @@ tags: [moc/code]
 - [[SparkMesh]] _class_ — Many 1 px dots and 5x5 sparkles drawn as one mesh at one sorting order: one renderer and at most two draws (on
 
 ## `Game/Fx/SparkParticles.cs`
-- [[SparkParticles]] _class_ — Sparks drawn by ParticleSystems (the 3.3 design in docs/devlogs/phase-4-assets.md), only compiled with ATHANOR
+- [[SparkParticles]] _class_ — Sparks drawn by ParticleSystems (docs/ATHANOR.md §2), only compiled with ATHANOR_SPARK_PARTICLES. Not shipped:
 
 ## `Game/Fx/Sparks.cs`
 - [[Sparks]] _class_ — Glowing pixel particles: bursts, trails and rising embers. Particles are plain structs integrated here; each s

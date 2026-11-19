@@ -14,7 +14,7 @@ tags: [moc/code]
 - [[AtlasBuilder]] _class_ — Two art steps that run after tools/art/export.mjs, both idempotent: 1. Sprite sheets: the numbered frames of e
 
 ## `FlipbookImporter.cs`
-- [[FlipbookImporter]] _class_ — Turns each pixelfx sheet in Assets/Art/Fx/Sheets (name.png + name.json, written by tools/fx/export.sh) into sl
+- [[FlipbookImporter]] _class_ — Turns each pixelfx sheet in Assets/Art/Fx/Sheets (name.png + name.json, exported from pixelfx) into sliced spr
 
 ## `FontBuilder.cs`
 - [[FontBuilder]] _class_ — Bakes the pixel fonts into TextMeshPro bitmap font assets at their native size (crisp, point-filtered).

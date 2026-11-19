@@ -19,8 +19,6 @@ Scripts outside Unity (art, fx, web tests, rule tests, this vault).
 - `tools/art/ui.mjs` — HUD and menu pieces, each drawn at the exact size it is shown (no stretching).
 - `tools/ci/check_repo.py` — 
 - `tools/ci/run.sh` — The one rule set for CI. The workflow and a developer both call this, so "green locally" means "green in CI".
-- `tools/fx/export.sh` — Exports the pixelfx effects the game plays as sprite sheets (PNG + JSON) into the Unity project.
-- `tools/fx/shrink.mjs` — Shrinks exported pixelfx sheets in place (called by export.sh after the copy):
 - `tools/lint/tests/test_unity_lint.py` — 
 - `tools/lint/unity_lint.py` — 
 - `tools/setup/protect-branch.sh` — Bật branch protection: bắt buộc PR + status check "ci-gate" xanh (gom lint, repo-guard, core-tests) + nhánh phải cập nhật,

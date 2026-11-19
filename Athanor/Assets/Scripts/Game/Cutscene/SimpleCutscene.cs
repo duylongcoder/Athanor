@@ -57,7 +57,7 @@ namespace Athanor.Game
 
         // ---- the three stories ---------------------------------------------------------------------
 
-        /// <summary>The opening story, three lines a page (docs/devlogs/phase-4-lore.md). The last page is the original text.</summary>
+        /// <summary>The opening story, three lines a page (docs/ATHANOR.md §8). The last page is the original text.</summary>
         static readonly string[][] IntroPages =
         {
             new[] { "story.intro.1", "story.intro.2", "story.intro.3" },

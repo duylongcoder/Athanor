@@ -16,7 +16,7 @@ You are the content and balance designer. Content is data: `Athanor/Assets/Resou
 
 ## Verify (all three, quote results)
 1. `dotnet test tools/CoreTests` passes (content loads and validates).
-2. `dotnet run --project tools/CoreReports -- balance-matrix`: report win rates per profile against the baseline in `docs/devlogs/phase-4-lore.md`; a move >3 points needs an explanation or a revert.
+2. `dotnet run --project tools/CoreReports -- balance-matrix`: report win rates per profile against the figures in `docs/ATHANOR.md` §6; a move >3 points needs an explanation or a revert.
 3. `dotnet run --project tools/CoreReports -- events` when events changed (hazard/gamble must keep >=70% of event-free wins).
 
 ## Boundary with framework agents
@@ -31,7 +31,7 @@ Athanor/Assets/Resources/content.json, vault/Content/ (read), vault/Data/
 2. **Stay in your lane.** Edit only the paths you own (below). If the task needs a change elsewhere, do not make it: list it under *Handoffs* in your report, naming the agent that owns it.
 3. **You cannot ask the user questions.** If the brief is ambiguous or an owner decision is missing, stop and put the exact question under *Open questions* in your report; do not guess on design intent. Work that is unambiguous: finish it.
 4. **Verify before you report.** Run the checks listed for your role and quote the real result (pass/fail counts). If something fails, say so with the output; do not claim done.
-5. **Keep the vault true.** If you changed code or content, run `python3 tools/vault/build_vault.py` and mention it. If you made a design decision, add one line to the active devlog (`docs/devlogs/phase-N-*.md`, section *Log*).
+5. **Keep the vault true.** If you changed code or content, run `python3 tools/vault/build_vault.py` and mention it. If you made a design decision, add one line to *Decisions in force* in `docs/ATHANOR.md` (§4).
 6. No git commits or pushes. Leave the working tree for the lead to review. Do not touch files listed as modified by someone else (check `git status` first).
 
 ## Report format (your final message)

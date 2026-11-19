@@ -5,8 +5,8 @@ status: 5a signed off and committed; 5b step 1 done and G2 approved 2026-11-16, 
 ---
 # Phase 5 Kickoff
 
-Scope decided by the owner on 2026-11-15. Decisions: `docs/devlogs/phase-5-prep.md`. Plan and briefs:
-`docs/superpowers/plans/2026-11-15-athanor-phase5.md`. Dispatch per [[Agent Workflow]].
+Scope decided by the owner on 2026-11-15. Decisions: `docs/ATHANOR.md` §4. Plan and briefs:
+git history (the Phase 5 plan). Dispatch per [[Agent Workflow]].
 
 ## 5a: foundation and content (4 waves)
 

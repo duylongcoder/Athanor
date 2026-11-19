@@ -24,7 +24,7 @@ namespace Athanor.Tests
         /// <summary>
         /// Characters the Vietnamese font draws (SVN-Coder's Crux only; Determination Sans was removed at Gate G1), measured
         /// from its cmap table (re-measured 2026-11-15, same set): printable ASCII, the 134 precomposed Vietnamese letters, and the punctuation below.
-        /// Crux has no en dash (U+2013), so it is left out. See docs/devlogs/phase-4-settings-localization.md.
+        /// Crux has no en dash (U+2013), so it is left out. See docs/ATHANOR.md §3.
         /// </summary>
         const string VietLower = "àáâãèéêìíòóôõùúýăđĩũơưạảấầẩẫậắằẳẵặẹẻẽếềểễệỉịọỏốồổỗộớờởỡợụủứừửữựỳỵỷỹ";
         const string VietUpper = "ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝĂĐĨŨƠƯẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼẾỀỂỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪỬỮỰỲỴỶỸ";

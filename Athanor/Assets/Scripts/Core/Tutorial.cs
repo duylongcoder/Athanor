@@ -26,7 +26,7 @@ namespace Athanor.Core
     }
 
     /// <summary>
-    /// The tutorial (docs/devlogs/phase-4-tutorial-script.md, v2) as data. Every number the script shows is pinned by
+    /// The tutorial (docs/ATHANOR.md §8, v2) as data. Every number the script shows is pinned by
     /// TutorialTests; change both together.
     /// </summary>
     public static class TutorialScript

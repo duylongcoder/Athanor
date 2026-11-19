@@ -1,6 +1,6 @@
 # Glossary (EN to VI)
 
-Owner: `localizer-vi`. Full rationale and length checks: `docs/devlogs/phase-4-settings-localization.md` section 8.4. Item names stay English.
+Owner: `localizer-vi`. Full rationale and length checks: `docs/ATHANOR.md` §3 and §4. Item names stay English.
 Voice: plain modern Vietnamese, "bạn" for the player, short clauses. Font: SVN-Coder's Crux only (no U+2013; NFC).
 
 | EN | VI | Note |

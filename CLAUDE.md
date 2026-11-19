@@ -21,7 +21,7 @@ Athanor is a run-based alchemy puzzle for the browser. This repo runs on the
 | `Athanor/Assets/Resources/` | `content.json`, `lang/en.json`, `lang/vi.json`, `layout.json` |
 | `tools/` | `art` (sprite generator), `fx`, `web` (headless checks), `CoreTests`, `CoreReports` (balance reports: `dotnet run --project tools/CoreReports -- balance-matrix|events|roles|newcomer|balance|trace`), `vault` (Obsidian generator + query) |
 | `vault/` | **Obsidian vault** — read this before grepping code (see below) |
-| `docs/devlogs`, `docs/superpowers/{specs,plans}`, `docs/mockup` | decisions, designs, plans, approved mockups |
+| `docs/ATHANOR.md` | **the project document**: game, architecture, data, decisions in force, CI rules, build, carry-overs, lore |
 | `.claude/` | agents, skills, hooks, rules (framework) |
 | `design/`, `production/` | framework outputs (GDDs, sprints, QA, session state — `production/session-state/` is gitignored) |
 
@@ -77,8 +77,8 @@ See `docs/COLLABORATIVE-DESIGN-PRINCIPLE.md`.
 - A new material, catalyst or aspect needs an icon with the same id in `tools/art/icons.mjs`.
 - Content changes require `dotnet test tools/CoreTests` plus the balance report (`tools/CoreReports`); quote the numbers.
 - `tools/CoreTests/bin`, `tools/CoreReports/bin`, `obj` and `Athanor/Build` are build output: never hand-edit or stage by accident.
-- **CI is the merge gate.** `ci-gate` red means no merge, for everyone. Run `tools/ci/run.sh all` before pushing. Never weaken a check to get green. Rules and the case-to-check map: `docs/CI.md`.
-- Devlog per phase in `docs/devlogs/phase-N-*.md`; a decision is written there before it is relied on.
+- **CI is the merge gate.** `ci-gate` red means no merge, for everyone. Run `tools/ci/run.sh all` before pushing. Never weaken a check to get green. Rules and the case-to-check map: `docs/ATHANOR.md` § CI and rules.
+- A decision is written in *Decisions in force* of `docs/ATHANOR.md` before it is relied on.
 
 ## Coordination, standards, context
 
