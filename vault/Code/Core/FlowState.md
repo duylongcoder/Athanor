@@ -6,7 +6,7 @@ kind: enum
 namespace: Athanor.Core
 file: Athanor/Assets/Scripts/Core/ScreenFlow.cs
 tags: [code/core, kind/enum]
-aliases: [FlowState]
+aliases: []
 ---
 
 # FlowState
@@ -19,3 +19,9 @@ aliases: [FlowState]
 
 ## Uses
 [[Bench]], [[Journal]]
+
+## Used by
+[[GameFlow]], [[ScreenFlow]], [[TutorialController]]
+
+## Tested by
+[[ScreenFlowTests]]

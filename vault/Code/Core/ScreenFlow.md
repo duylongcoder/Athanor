@@ -37,7 +37,10 @@ aliases: []
 | method | `public void EndSandbox()` | 99 | Turns the sandbox off. |
 
 ## Uses
-[[Bench]], [[Journal]]
+[[Bench]], [[FlowState]], [[Journal]]
+
+## Used by
+[[GameFlow]]
 
 ## Tested by
 [[ScreenFlowTests]]

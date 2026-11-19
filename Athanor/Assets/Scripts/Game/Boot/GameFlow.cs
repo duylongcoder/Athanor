@@ -9,8 +9,6 @@ using UnityEngine.Rendering.Universal;
 
 namespace Athanor.Game
 {
-    public enum FlowState { Boot, Title, Intro, Bench, Resolving, Journal, Descent, CatalystChoice, Ending, RunOver, AspectChoice, Event, Goals }
-
     /// <summary>Owns the run and moves the game between its screens.</summary>
     public sealed class GameFlow : MonoBehaviour
     {
@@ -30,7 +28,11 @@ namespace Athanor.Game
         public RunState Run { get; private set; }
         /// <summary>The bench (Prefabs/Views/Bench.prefab in Main.unity): tiles, hand, rack and the Hud.</summary>
         public BenchView Bench => bench;
-        public FlowState State { get; private set; }
+        /// <summary>The screen now up (read-only; <see cref="Flow"/> moves it).</summary>
+        public FlowState State => flow.State;
+        /// <summary>The screen state machine GameFlow drives.</summary>
+        public ScreenFlow Flow => flow;
+        readonly ScreenFlow flow = new ScreenFlow();
         /// <summary>The run summary (a prefab in Main.unity).</summary>
         [SerializeField] RunOverView runOver;
         public RunOverView RunOver => runOver;
@@ -111,10 +113,8 @@ namespace Athanor.Game
         readonly List<GoalReward> goalsThisRun = new List<GoalReward>();
         Unlocks unlocks;
         Settings settings;
-        FlowState goalsFrom;
         Light2D ambient, moon;
         AutoPlayer autoPlayer;
-        FlowState journalFrom;
         /// <summary>The journal screen, for the tutorial to point at parts of a page.</summary>
         public JournalView JournalView => journalView;
         long shownPotency;
@@ -123,13 +123,13 @@ namespace Athanor.Game
         [SerializeField] BenchView bench;
         Coroutine tutRoutine;
         int escGuardFrame = -1;
-        bool hurry, inCutscene, runEnded, autoReady, abandoned;
+        bool hurry, runEnded, autoReady, abandoned;
         float autoClock;
         int runs;
         TutorialController tut;
         Journal realJournal; Profile realProfile;
         /// <summary>A replay of the tutorial: a throwaway journal and profile, nothing written to storage.</summary>
-        bool sandbox;
+        bool sandbox => flow.Sandbox;
         enum TitleChoice { Begin, HowToPlay, Intro }
         TitleChoice titleChoice;
         readonly List<GoalReward> heldGoals = new List<GoalReward>();
@@ -256,16 +256,16 @@ namespace Athanor.Game
                 yield return ShowTitle();
                 if (titleChoice == TitleChoice.Intro)
                 {
-                    State = FlowState.Intro;
-                    inCutscene = true; yield return story.Intro(); inCutscene = false;
+                    flow.Enter(FlowState.Intro);
+                    flow.InCutscene = true; yield return story.Intro(); flow.InCutscene = false;
                     story.Close(); fx.Sparks.Clear();
                     continue;
                 }
                 if (titleChoice == TitleChoice.HowToPlay) { yield return PlayTutorialReplay(); continue; }
                 if (!Save.IntroSeen)
                 {
-                    State = FlowState.Intro;
-                    inCutscene = true; yield return story.Intro(); inCutscene = false;
+                    flow.Enter(FlowState.Intro);
+                    flow.InCutscene = true; yield return story.Intro(); flow.InCutscene = false;
                     Save.SetIntroSeen(true);
                 }
                 // the first run is the tutorial when the save has never finished it and the journal is empty
@@ -277,10 +277,10 @@ namespace Athanor.Game
         /// <summary>How to play, and "Play it" of the skip question: the tutorial on a throwaway journal and profile, then the title.</summary>
         IEnumerator PlayTutorialReplay()
         {
-            realJournal = Journal; realProfile = Profile; sandbox = true;
+            realJournal = Journal; realProfile = Profile; flow.BeginSandbox();
             Journal = new Journal(); Profile = new Profile(1);
             yield return PlayRun(true);
-            Journal = realJournal; Profile = realProfile; sandbox = false;
+            Journal = realJournal; Profile = realProfile; flow.EndSandbox();
             unlocks = Unlocks.For(Db, Profile);
             heldGoals.Clear();
         }
@@ -289,7 +289,7 @@ namespace Athanor.Game
 
         IEnumerator ShowTitle()
         {
-            State = FlowState.Title;
+            flow.Enter(FlowState.Title);
             Bench.gameObject.SetActive(false);
             Mood(1, false);
             title.Open(Journal.KnownPairs.Count, Db.Recipes.Count, Profile.Completed.Count, Db.Goals.Count);
@@ -342,13 +342,13 @@ namespace Athanor.Game
             Bench.Bind(Run, Journal);
             Bench.Refresh(true);
             Bench.InputEnabled = false;
-            State = FlowState.Descent;
+            flow.Enter(FlowState.Descent);
             Haptics.Pulse(Haptics.DepthCleared);
             yield return fx.Screen.FadeIn(0.5f);
             if (DepthLook.ShowsRunIntro(Run.Depth, tut != null, sandbox))
             {
                 Dev.Hook("[intro] " + Run.Depth);
-                inCutscene = true; yield return story.DepthIntro(DepthLook.IntroKey(Run.Depth)); inCutscene = false;
+                flow.InCutscene = true; yield return story.DepthIntro(DepthLook.IntroKey(Run.Depth)); flow.InCutscene = false;
             }
             yield return StartOfDepth();
             if (tut != null) tutRoutine = StartCoroutine(RunTutorial());
@@ -382,7 +382,7 @@ namespace Athanor.Game
                 if (Auto) { autoPlayer.Decide(Run); Bench.Refresh(); continue; }       // the scripted player needs no screen
                 if (Run.Phase == RunPhase.AspectOffer)
                 {
-                    State = FlowState.AspectChoice;
+                    flow.Enter(FlowState.AspectChoice);
                     string picked = null;
                     Dev.Hook("[start] aspects");       // development builds only: tools/web/webtest.mjs waits for [start] aspects / ready
                     yield return choice.Choose(Run.AspectOffer, id => picked = id);
@@ -390,7 +390,7 @@ namespace Athanor.Game
                 }
                 else
                 {
-                    State = FlowState.Event;
+                    flow.Enter(FlowState.Event);
                     Profile.EventShown(Run.CurrentEvent);
                     StoreProfile();
                     yield return eventView.Show(Run, () => { StoreJournal(); Bench.Refresh(); });
@@ -398,7 +398,7 @@ namespace Athanor.Game
                 Bench.Refresh();
             }
             Bench.Refresh(true);
-            State = FlowState.Bench;
+            flow.Enter(FlowState.Bench);
             Bench.InputEnabled = true;
             Dev.Hook("[start] ready");
         }
@@ -419,32 +419,28 @@ namespace Athanor.Game
 
         void OpenJournal()
         {
-            if (State != FlowState.Bench && State != FlowState.Title) return;
-            if (State == FlowState.Title && title.Asking) return;
-            journalFrom = State; State = FlowState.Journal;
-            if (journalFrom == FlowState.Bench) Bench.InputEnabled = false;
+            if (!flow.OpenJournal(title.Asking)) return;
+            if (flow.JournalFrom == FlowState.Bench) Bench.InputEnabled = false;
             // on the title what counts is what the profile has now; in a run, what the run was started with
-            journalView.Open(Journal, journalFrom == FlowState.Title ? Unlocks.For(Db, Profile).IsOpen : (System.Func<string, bool>)unlocks.IsOpen);
+            journalView.Open(Journal, flow.JournalFrom == FlowState.Title ? Unlocks.For(Db, Profile).IsOpen : (System.Func<string, bool>)unlocks.IsOpen);
         }
 
         void OpenGoals()
         {
-            if (State != FlowState.Title && State != FlowState.RunOver) return;
-            if (State == FlowState.Title && title.Asking) return;
-            goalsFrom = State; State = FlowState.Goals;
+            if (!flow.OpenGoals(title.Asking)) return;
             goalsView.Open(Profile, Journal);
         }
 
         void CloseGoals()
         {
             escGuardFrame = Time.frameCount;
-            if (State == FlowState.Goals) State = goalsFrom;
+            flow.CloseGoals();
         }
 
         /// <summary>Erases goals, unlocks and stats (the title's Reset progress, once confirmed). The journal is kept.</summary>
         void ResetProgress()
         {
-            if (State != FlowState.Title) return;
+            if (!flow.CanResetProgress) return;
             Save.ResetProfile();
             Profile = Save.LoadProfile(Db);
             unlocks = Unlocks.For(Db, Profile);
@@ -454,8 +450,8 @@ namespace Athanor.Game
         }
 
         /// <summary>A pause may open only while the bench is the player's: not in a cutscene, an offer, the descent or the same frame Esc closed a screen.</summary>
-        bool CanPause() => PauseMenu.Allowed(State, Bench != null && Bench.InputEnabled, inCutscene)
-            && Run != null && Run.Phase == RunPhase.Playing && Time.frameCount != escGuardFrame;
+        bool CanPause() => flow.CanPause(Bench != null && Bench.InputEnabled, Run != null && Run.Phase == RunPhase.Playing)
+            && Time.frameCount != escGuardFrame;
 
         /// <summary>The journal after a quit: what is stored, as if the page had been closed (a How-to-play sandbox keeps its throwaway).</summary>
         public static Journal JournalAfterQuit(bool sandbox, Journal current) => sandbox ? current : Save.LoadJournal();
@@ -465,7 +461,7 @@ namespace Athanor.Game
         /// <summary>Quit to title, confirmed: the run is thrown away uncounted (like closing the page) and Main goes back to the title.</summary>
         void AbandonRun()
         {
-            if (State != FlowState.Bench || runEnded) return;
+            if (!flow.CanAbandon(runEnded)) return;
             Time.timeScale = 1f;
             abandoned = true;
             Bench.InputEnabled = false;
@@ -481,8 +477,7 @@ namespace Athanor.Game
         void CloseJournal()
         {
             escGuardFrame = Time.frameCount;
-            if (State != FlowState.Journal) return;
-            State = journalFrom;
+            if (!flow.CloseJournal()) return;
             if (State == FlowState.Bench) Bench.InputEnabled = true;
         }
 
@@ -503,8 +498,7 @@ namespace Athanor.Game
         /// <summary>Spends a trial and plays out what happened. Ignored unless the bench is waiting for the player.</summary>
         public void Ignite()
         {
-            if (State != FlowState.Bench || Run == null || !Run.CanIgnite) return;
-            State = FlowState.Resolving;
+            if (!flow.StartIgnite(Run != null && Run.CanIgnite)) return;
             StartCoroutine(Resolve());
         }
 
@@ -584,7 +578,7 @@ namespace Athanor.Game
                 case RunPhase.DepthCleared: yield return Descend(); break;
                 case RunPhase.Lost: yield return EndRun(false, earned); break;
                 case RunPhase.Won: yield return EndRun(true, earned); break;
-                default: State = FlowState.Bench; Bench.InputEnabled = true; break;
+                default: flow.Enter(FlowState.Bench); Bench.InputEnabled = true; break;
             }
         }
 
@@ -629,9 +623,9 @@ namespace Athanor.Game
             fx.Sparks.Burst(mid, 26, new Color(2.2f, 2.1f, 1.8f), 95, 0.5f, 150);
             yield return Anim.Wait(0.4f);
             reaction.Setup(e, Db, hurry);
-            inCutscene = true;
+            flow.InCutscene = true;
             yield return reaction.Play();
-            inCutscene = false;
+            flow.InCutscene = false;
         }
 
         /// <summary>
@@ -726,14 +720,14 @@ namespace Athanor.Game
 
         IEnumerator Descend()
         {
-            State = FlowState.Descent;
+            flow.Enter(FlowState.Descent);
             yield return Anim.Wait(0.6f);                    // let the potency counter finish
             int next = Run.Depth + 1;
-            inCutscene = true;
+            flow.InCutscene = true;
             Dev.Hook("[descent] " + next);       // development builds only: tools/web/descents.mjs waits for it
             yield return story.Descent(next, Loc.DepthName(Db, next), Px.Hex(Accent[Mathf.Clamp(next, 1, Accent.Length) - 1]), () => Mood(next));
-            inCutscene = false;
-            State = FlowState.CatalystChoice;
+            flow.InCutscene = false;
+            flow.Enter(FlowState.CatalystChoice);
             Dev.Hook("[choice] " + Run.Depth);      // development builds only: tools/web evidence scripts wait for it
             string picked = null;
             if (tut != null) yield return tut.OnOffer();
@@ -756,11 +750,11 @@ namespace Athanor.Game
         {
             if (won)
             {
-                State = FlowState.Ending;
+                flow.Enter(FlowState.Ending);
                 yield return Anim.Wait(0.6f);
-                inCutscene = true;
+                flow.InCutscene = true;
                 yield return story.Ending(Db.Material(Db.Ultimate));
-                inCutscene = false;
+                flow.InCutscene = false;
             }
             else
             {
@@ -769,7 +763,7 @@ namespace Athanor.Game
             }
             Haptics.Pulse(Haptics.RunEnded);
             ToastGoals(earned);
-            State = FlowState.RunOver;
+            flow.Enter(FlowState.RunOver);
             Dev.Hook("[runover] " + (won ? "won" : "lost"));
             yield return RunOver.Show(won, Run, Journal, Db, goalsThisRun);
             runEnded = true;
@@ -787,7 +781,7 @@ namespace Athanor.Game
             var kb = Keyboard.current;
             if (kb != null) DevKeys(kb);
             if (kb != null && kb.f9Key.wasPressedThisFrame && (Application.isEditor || Debug.isDebugBuild)) ToggleAuto();
-            if (State == FlowState.Resolving && !inCutscene && PointerInput.Down) hurry = true;
+            if (State == FlowState.Resolving && !flow.InCutscene && PointerInput.Down) hurry = true;
             if (Bench != null && Bench.Hud != null) Bench.Hud.SetPauseShown(!pause.IsOpen && CanPause());
             if (!Auto) return;
             autoClock -= Time.deltaTime;

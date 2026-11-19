@@ -34,7 +34,7 @@ aliases: []
 | property | `public sealed class IgniteOutcomeView` | 379 | The stage the AfterIgnite hook needs from the game: what the Ignite made. |
 
 ## Uses
-[[Align]], [[Bench]], [[Clickable]], [[Dev]], [[FontKind]], [[GameFlow]], [[HudView]], [[Journal]], [[JournalView]], [[Label]], [[Loc]], [[Px]], [[ReactionEvent]], [[RunPhase]], [[ScoreParts]], [[Spawn]], [[TutorialHole]], [[TutorialRules]], [[TutorialScript]], [[TutorialStyle]], [[TutorialTargets]], [[TutorialTrial]]
+[[Align]], [[Bench]], [[Clickable]], [[Dev]], [[FlowState]], [[FontKind]], [[GameFlow]], [[HudView]], [[Journal]], [[JournalView]], [[Label]], [[Loc]], [[Px]], [[ReactionEvent]], [[RunPhase]], [[ScoreParts]], [[Spawn]], [[TutorialHole]], [[TutorialRules]], [[TutorialScript]], [[TutorialStyle]], [[TutorialTargets]], [[TutorialTrial]]
 
 ## Used by
 [[GameFlow]]

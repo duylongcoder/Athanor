@@ -32,10 +32,6 @@ namespace Athanor.Game
         Settings settings;
         bool wired;
 
-        /// <summary>The state of a pause: may it open, given the flow state and what is playing.</summary>
-        public static bool Allowed(FlowState state, bool benchInput, bool inCutscene) =>
-            state == FlowState.Bench && benchInput && !inCutscene;
-
         /// <summary>Takes the player's settings (Vibration writes to them) and hooks the clicks. GameFlow calls it once at start.</summary>
         public void Bind(Settings playerSettings)
         {

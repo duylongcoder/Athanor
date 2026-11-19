@@ -3,14 +3,14 @@ generated: true
 type: test
 file: Athanor/Assets/Tests/EditModeGame/PauseTests.cs
 tags: [test]
-count: 10
+count: 9
 ---
 
 # PauseTests
-`Athanor/Assets/Tests/EditModeGame/PauseTests.cs` — 10 tests
+`Athanor/Assets/Tests/EditModeGame/PauseTests.cs` — 9 tests
 
 ## Covers
-[[Bench]], [[Clickable]], [[ContentData]], [[ContentDb]], [[GameFlow]], [[Haptics]], [[Journal]], [[PauseMenu]], [[Profile]], [[RunState]], [[Save]], [[Settings]], [[TutorialController]], [[TutorialScript]], [[Unlocks]]
+[[Clickable]], [[ContentData]], [[ContentDb]], [[GameFlow]], [[Haptics]], [[Journal]], [[PauseMenu]], [[Profile]], [[RunState]], [[Save]], [[Settings]], [[TutorialController]], [[TutorialScript]], [[Unlocks]]
 
 ## Tests
 - `Open_StopsTime_AndEveryExitRestoresIt`
@@ -18,7 +18,6 @@ count: 10
 - `Esc_Toggles_AndBacksOutOfTheQuitQuestion`
 - `Abort_TutorialRun_DoesNotMarkItDone`
 - `Open_NotAllowed_IsRefused`
-- `Allowed_OnlyOnTheBenchWithInput_NotInCutscene_TutorialIsPausable`
 - `VibrationButton_NoHaptics_IsHidden`
 - `AfterQuit_ProfileAndJournalAreWhatIsStored_AndStorageIsNotWritten`
 - `Quit_AfterADiscovery_JournalInStorageHasIt`

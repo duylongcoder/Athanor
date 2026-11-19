@@ -83,6 +83,11 @@ namespace Athanor.Tests
         [Test] public void CanPause_InputOff_IsFalse() => Assert.IsFalse(At(FlowState.Bench).CanPause(false, true));
         [Test] public void CanPause_RunNotPlaying_IsFalse() => Assert.IsFalse(At(FlowState.Bench).CanPause(true, false));
         [Test] public void CanPause_NotOnBench_IsFalse() => Assert.IsFalse(At(FlowState.Title).CanPause(true, true));
+        [Test] public void CanPause_AnyScreenButBench_IsFalse()
+        {
+            foreach (FlowState s in System.Enum.GetValues(typeof(FlowState)))
+                if (s != FlowState.Bench) Assert.IsFalse(At(s).CanPause(true, true), s.ToString());
+        }
         [Test] public void CanAbandon_RunEnded_IsFalse() => Assert.IsFalse(At(FlowState.Bench).CanAbandon(true));
         [Test] public void CanResetProgress_OnTitle_IsTrue()
         {

@@ -95,16 +95,6 @@ namespace Athanor.Tests
         }
 
         [Test]
-        public void Allowed_OnlyOnTheBenchWithInput_NotInCutscene_TutorialIsPausable()
-        {
-            Assert.IsTrue(PauseMenu.Allowed(FlowState.Bench, true, false), "a tutorial run is on the Bench state: pausable (SPEC 20)");
-            Assert.IsFalse(PauseMenu.Allowed(FlowState.Bench, true, true), "cutscene");
-            Assert.IsFalse(PauseMenu.Allowed(FlowState.Bench, false, false), "offer or resolving: no bench input");
-            foreach (var s in new[] { FlowState.Title, FlowState.Intro, FlowState.Resolving, FlowState.Journal, FlowState.Descent, FlowState.CatalystChoice, FlowState.Ending, FlowState.RunOver, FlowState.AspectChoice, FlowState.Event, FlowState.Goals })
-                Assert.IsFalse(PauseMenu.Allowed(s, true, false), s.ToString());
-        }
-
-        [Test]
         public void VibrationButton_NoHaptics_IsHidden()
         {
             var b = go.transform.Find("Pause menu").Find("Button ui.pause.vibration").gameObject;

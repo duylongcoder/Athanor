@@ -72,7 +72,7 @@ tags: [moc/code]
 
 ## `Core/ScreenFlow.cs`
 - [[ScreenFlow]] _class_ — The screen state machine: which screen is up and which moves are allowed. No Unity types.
-- [[FlowState (Core)]] _enum_ — 
+- [[FlowState]] _enum_ — 
 
 ## `Core/Settings.cs`
 - [[Settings]] _class_ — Player settings: volumes, haptics and language. Unity-free; Game stores the JSON (PlayerPrefs, key athanor.set
