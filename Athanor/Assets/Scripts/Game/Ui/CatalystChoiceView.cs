@@ -22,6 +22,9 @@ namespace Athanor.Game
     /// </summary>
     public sealed class CatalystChoiceView : MonoBehaviour
     {
+        /// <summary>Stops what this component started so nothing runs on into the next Play (domain reload off).</summary>
+        void OnDestroy() { StopAllCoroutines(); Motion.StopOn(this); }
+
         /// <summary>
         /// The development-build log line once the dealt cards take a click (tools/web/webtest.mjs and descents.mjs click a card after it).
         /// Not "[choice] ...": descents.mjs counts that one from GameFlow.Descend.

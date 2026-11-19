@@ -16,7 +16,7 @@ namespace Athanor.Game
 
         readonly Dictionary<(int, float, float, bool), ParticleSystem> lanes = new Dictionary<(int, float, float, bool), ParticleSystem>();
         readonly List<ParticleSystem> all = new List<ParticleSystem>();
-        static readonly List<ParticleSystemVertexStream> Streams = new List<ParticleSystemVertexStream>
+        static readonly ParticleSystemVertexStream[] Streams =
         {
             ParticleSystemVertexStream.Position, ParticleSystemVertexStream.Color, ParticleSystemVertexStream.UV, ParticleSystemVertexStream.Center,
         };
@@ -70,7 +70,7 @@ namespace Athanor.Game
             var m = new Material(SparkMesh.MaterialFor(sprite.texture));
             m.SetFloat("_Intensity", K); m.EnableKeyword("CENTER_SNAP");
             r.sharedMaterial = m;
-            r.SetActiveVertexStreams(Streams);
+            r.SetActiveVertexStreams(new List<ParticleSystemVertexStream>(Streams));
             ps.Play();
             return ps;
         }

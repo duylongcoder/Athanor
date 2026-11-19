@@ -20,6 +20,9 @@ namespace Athanor.Game
         public static void SetHidden(bool v) { hidden = v; Apply(); }
         public static void SetPaused(bool v) { appPaused = v; Apply(); }
         public static void SetFocus(bool v) { focused = v; Apply(); }
+        /// <summary>Unmuted, no sink, before the first scene (domain reload off).</summary>
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        public static void ResetStatics() { Reset(); Sink = null; }
         public static void Reset() { hidden = appPaused = false; focused = true; Muted = false; }
 
         static void Apply()

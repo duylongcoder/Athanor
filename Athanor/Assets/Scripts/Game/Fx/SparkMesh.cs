@@ -36,6 +36,15 @@ namespace Athanor.Game
         }
         static readonly Dictionary<Texture, Material> materials = new Dictionary<Texture, Material>();
 
+        /// <summary>Destroys the cached spark materials and forgets the base before the first scene (domain reload off).</summary>
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        public static void ResetStatics()
+        {
+            foreach (var m in materials.Values) if (m != null) Object.DestroyImmediate(m);
+            materials.Clear();
+            baseMaterial = null;
+        }
+
         Mesh mesh;
         MeshRenderer meshRenderer;
         Vector2 dotMin, dotMax, sparkMin, sparkMax;         // quad corners around the centre, in pixels

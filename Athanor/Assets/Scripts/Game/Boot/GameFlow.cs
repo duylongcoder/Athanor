@@ -186,7 +186,7 @@ namespace Athanor.Game
 
             fx = new FxRefs(screenFx, sparks);
             screenFx.Bind(mainCamera, depthStage != null ? depthStage.sway : null);
-            PointerInput.Rig = depthStage != null ? depthStage.rig : null;
+            PointerInput.Use(depthStage != null ? depthStage.rig : null);
             if (bench == null) throw new System.InvalidOperationException("GameFlow.bench is not set: put Prefabs/Views/Bench.prefab in Main.unity and assign it");
             bench.Bind(Db, fx);
             if (depthStage != null) depthStage.PlaceTiles(Bench, Bench.TileCount);
@@ -235,7 +235,8 @@ namespace Athanor.Game
 
         void OnDestroy()
         {
-            PointerInput.Rig = null;
+            StopAllCoroutines(); Motion.StopOn(this);
+            PointerInput.Use(null);
             if (runOver != null) runOver.GoalsClicked -= OpenGoals;
             if (goalsView != null) goalsView.Closed -= CloseGoals;
             if (journalView != null) journalView.Closed -= CloseJournal;
@@ -265,7 +266,7 @@ namespace Athanor.Game
                 {
                     State = FlowState.Intro;
                     inCutscene = true; yield return story.Intro(); inCutscene = false;
-                    Save.IntroSeen = true;
+                    Save.SetIntroSeen(true);
                 }
                 // the first run is the tutorial when the save has never finished it and the journal is empty
                 bool first = !Auto && TutorialScript.Plan(Save.TutorialDone, Journal.KnownPairs.Count) == TutorialPlan.Run;

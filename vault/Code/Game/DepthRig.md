@@ -47,4 +47,4 @@ aliases: []
 [[CameraSway]], [[DepthStage]], [[DepthTestControls]], [[PointerInput]], [[ScreenFx]], [[ViewCapture]]
 
 ## Tested by
-[[DepthClickTests]], [[MainDepthTests]]
+[[DepthClickTests]], [[MainDepthTests]], [[StaticResetTests]]

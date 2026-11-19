@@ -23,7 +23,7 @@ namespace Athanor.Tests
         [TearDown] public void Restore()
         {
             foreach (var k in keys) { if (kept[k] == null) PlayerPrefs.DeleteKey(k); else PlayerPrefs.SetString(k, kept[k]); }
-            Save.TutorialDone = false;
+            Save.SetTutorialDone(false);
             if (doneKept < 0) PlayerPrefs.DeleteKey("athanor.tutorial.v1"); else PlayerPrefs.SetInt("athanor.tutorial.v1", doneKept);
         }
 
@@ -60,7 +60,7 @@ namespace Athanor.Tests
         [Test]
         public void MarkDone_AfterSkip_SetsTutorialDone()
         {
-            Save.TutorialDone = false;
+            Save.SetTutorialDone(false);
             TutorialRules.MarkDone();
             Assert.IsTrue(Save.TutorialDone);
             Assert.AreEqual(TutorialPlan.None, TutorialScript.Plan(Save.TutorialDone, 0));
@@ -69,7 +69,7 @@ namespace Athanor.Tests
         [Test]
         public void AnswerSkipQuestion_Skip_MarksDoneAndStartsTheRunWithoutAReplay()
         {
-            Save.TutorialDone = false;
+            Save.SetTutorialDone(false);
             Assert.AreEqual(TutorialPlan.AskSkip, TutorialScript.Plan(Save.TutorialDone, 12));
             Assert.IsFalse(TutorialRules.AnswerSkipQuestion(false), "Skip: no sandbox replay, Main goes straight to the run");
             Assert.IsTrue(Save.TutorialDone);
@@ -79,7 +79,7 @@ namespace Athanor.Tests
         [Test]
         public void AnswerSkipQuestion_PlayIt_ReplaysInTheSandboxAndLeavesTheSaveAlone()
         {
-            Save.TutorialDone = false;
+            Save.SetTutorialDone(false);
             Assert.IsTrue(TutorialRules.AnswerSkipQuestion(true));
             Assert.IsFalse(Save.TutorialDone, "the real save is unchanged (owner Q4)");
         }

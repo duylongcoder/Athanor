@@ -28,4 +28,4 @@ aliases: []
 [[GoldenShots]]
 
 ## Tested by
-[[LocTests]], [[NoteTextTests]]
+[[LocTests]], [[NoteTextTests]], [[StaticResetTests]]

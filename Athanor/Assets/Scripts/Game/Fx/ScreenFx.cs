@@ -6,6 +6,9 @@ namespace Athanor.Game
     /// <summary>Whole-screen effects: a white flash, camera shake, and fading to and from black.</summary>
     public sealed class ScreenFx : MonoBehaviour
     {
+        /// <summary>Stops what this component started so nothing runs on into the next Play (domain reload off).</summary>
+        void OnDestroy() { StopAllCoroutines(); Motion.StopOn(this); }
+
         [SerializeField] SpriteRenderer flash, black;
         Transform cam;
         Vector3 camHome;

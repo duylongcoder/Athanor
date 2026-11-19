@@ -12,7 +12,7 @@ aliases: []
 # Save
 
 `public static class Save`
-- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Boot/Save.cs:8-88`
+- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Boot/Save.cs:8-82`
 
 > Keeps the journal and the profile between sessions in PlayerPrefs (browser storage in a web build).
 
@@ -28,7 +28,9 @@ aliases: []
 | method | `public static Settings LoadSettings()` | 59 | The saved settings; defaults when nothing is saved or what is saved cannot be read (Settings.FromJson never throws). |
 | method | `public static void StoreSettings(Settings settings)` | 64 |  |
 | property | `public static bool IntroSeen` | 76 |  |
-| property | `public static bool TutorialDone` | 83 | The tutorial was played to its end (or skipped). See TutorialScript.ShouldRun. |
+| method | `public static void SetIntroSeen(bool v)` | 77 |  |
+| property | `public static bool TutorialDone` | 80 | The tutorial was played to its end (or skipped). See TutorialScript.ShouldRun. |
+| method | `public static void SetTutorialDone(bool v)` | 81 |  |
 
 ## Uses
 [[ContentDb]], [[Journal]], [[Profile]], [[ProfileData]], [[Settings]]

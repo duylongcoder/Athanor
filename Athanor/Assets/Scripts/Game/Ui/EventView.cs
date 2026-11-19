@@ -61,6 +61,7 @@ namespace Athanor.Game
 
         void OnDestroy()
         {
+            StopAllCoroutines(); Motion.StopOn(this);
             if (wired) proceed.Clicked -= Proceed;
         }
 

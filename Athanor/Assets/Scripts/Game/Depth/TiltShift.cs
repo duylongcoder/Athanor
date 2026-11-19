@@ -23,6 +23,10 @@ namespace Athanor.Game
         /// <summary>Blur sigma at full strength, in art px.</summary>
         public float maxSigma = 1.5f;
 
+        /// <summary>Forgets every camera before the first scene (domain reload off).</summary>
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        public static void ResetStatics() => cameras.Clear();
+
         /// <summary>True when the tilt-shift is on for this camera.</summary>
         public static bool IsOn(Camera camera) => camera != null && cameras.Contains(camera);
 

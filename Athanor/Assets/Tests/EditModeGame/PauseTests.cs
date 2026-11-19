@@ -77,7 +77,7 @@ namespace Athanor.Tests
         [Test]
         public void Abort_TutorialRun_DoesNotMarkItDone()
         {
-            Save.TutorialDone = false;
+            Save.SetTutorialDone(false);
             using (var main = new MainSceneFixture())
             {
                 var t = main.FlowField<TutorialController>("tutorial");

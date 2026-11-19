@@ -45,6 +45,17 @@ namespace Athanor.Game
 
         static Sprite source, hanging;
 
+        /// <summary>True while the cached corner-pivot star sprite exists.</summary>
+        public static bool GlyphCached => hanging != null;
+
+        /// <summary>Destroys the cached star sprite before the first scene (domain reload off).</summary>
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        public static void ResetStatics()
+        {
+            if (hanging != null) UnityEngine.Object.DestroyImmediate(hanging);
+            hanging = null; source = null;
+        }
+
         /// <summary>
         /// The star sprite with its pivot at the top-left corner. An odd-sized sprite pivoted at its centre sits on half pixels,
         /// which the pixel-perfect camera rounds unevenly (a lost row, a doubled row); from a corner it always lands whole.

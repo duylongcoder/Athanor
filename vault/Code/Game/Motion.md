@@ -12,7 +12,7 @@ aliases: []
 # Motion
 
 `public static class Motion`
-- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Support/Motion.cs:16-64`
+- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Support/Motion.cs:16-77`
 
 > One-shot tweens on PrimeTween, kept in one place so every move is snapped to whole pixels (Px.Snap). Each call takes its start value explicitly and returns the Tween: group several with Sequence.Create().Group(..), and wait for them in a coroutine with Motion.Wait or .ToYieldInstruction() (never yield the struct itself, it gets boxed). Scaled time, as Anim.Over. The ease defaults to Linear here, not to PrimeTween's own default (OutQuad). Only for animations that run to a fixed end; spring follows, hover lifts, idle loops and particles stay hand-written.
 
@@ -26,8 +26,9 @@ aliases: []
 | method | `public static Tween Scale(Transform t, float from, float to, float seconds, Ease ease = Ease.Linear)` | 42 | Uniform x and y scale (z stays 1). |
 | method | `public static Tween Fade(SpriteRenderer r, float from, float to, float seconds, Ease ease = Ease.Linear)` | 46 | Alpha of a sprite; its colour is kept. |
 | method | `public static Tween Fade(Label l, float from, float to, float seconds, Ease ease = Ease.Linear)` | 50 | Alpha of a label and its shadow. |
-| method | `public static IEnumerator Wait(Tween tween, Func<bool> hurry = null)` | 54 | Waits for a tween. When hurry returns true it jumps to its end values at once. |
-| method | `public static IEnumerator Wait(Sequence sequence, Func<bool> hurry = null)` | 60 | Waits for a sequence. When hurry returns true it jumps to its end values at once. |
+| method | `public static void StopOn(Component owner)` | 57 | Stops every tween that targets the component or anything under its object: the transforms, sprites and labels the helpers above animate. A view calls it from OnDestroy, after StopAllCoroutines, so nothing outlives it into the next Play. |
+| method | `public static IEnumerator Wait(Tween tween, Func<bool> hurry = null)` | 67 | Waits for a tween. When hurry returns true it jumps to its end values at once. |
+| method | `public static IEnumerator Wait(Sequence sequence, Func<bool> hurry = null)` | 73 | Waits for a sequence. When hurry returns true it jumps to its end values at once. |
 
 ## Uses
 [[Anim]], [[Label]], [[Px]]

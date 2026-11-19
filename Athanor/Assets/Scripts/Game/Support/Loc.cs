@@ -15,6 +15,13 @@ namespace Athanor.Game
         static Lang en, current;
         static string code = English;
 
+        /// <summary>Back to the declared defaults before the first scene (domain reload off keeps statics across Play).</summary>
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        public static void ResetStatics()
+        {
+            en = current = null; code = English; enFile = viFile = null; Changed = null;
+        }
+
         /// <summary>Raised after the language changed, so labels can rewrite themselves and swap fonts.</summary>
         public static event Action Changed;
 

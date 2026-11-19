@@ -12,7 +12,7 @@ namespace Athanor.Game
     public static class TutorialRules
     {
         /// <summary>Skipping (or finishing) the tutorial: never asked again.</summary>
-        public static void MarkDone() => Save.TutorialDone = true;
+        public static void MarkDone() => Save.SetTutorialDone(true);
 
         /// <summary>
         /// The answer to the skip question. Skip marks the tutorial done and the run starts at once (owner Q3, no second Begin);

@@ -50,6 +50,19 @@ namespace Athanor.Game
         public static Tween Fade(Label l, float from, float to, float seconds, Ease ease = Ease.Linear)
             => Tween.Custom(l, from, to, seconds, (lb, a) => lb.Alpha = a, ease);
 
+        /// <summary>
+        /// Stops every tween that targets the component or anything under its object: the transforms, sprites and labels the
+        /// helpers above animate. A view calls it from OnDestroy, after StopAllCoroutines, so nothing outlives it into the next Play.
+        /// </summary>
+        public static void StopOn(Component owner)
+        {
+            if (owner == null) return;
+            Tween.StopAll(onTarget: owner);
+            foreach (var t in owner.GetComponentsInChildren<Transform>(true)) Tween.StopAll(onTarget: t);
+            foreach (var r in owner.GetComponentsInChildren<SpriteRenderer>(true)) Tween.StopAll(onTarget: r);
+            foreach (var l in owner.GetComponentsInChildren<Label>(true)) Tween.StopAll(onTarget: l);
+        }
+
         /// <summary>Waits for a tween. When hurry returns true it jumps to its end values at once.</summary>
         public static IEnumerator Wait(Tween tween, Func<bool> hurry = null)
         {

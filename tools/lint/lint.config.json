@@ -19,10 +19,11 @@
     "UL009": "warning",
     "UL010": "warning",
     "UL011": "error",
-    "UL012": "warning"
+    "UL012": "error"
   },
   "commit_regex": "^(?:feat|fix|refactor|test|docs|chore|perf|build|ci|style|revert)(?:\\([a-z0-9._/-]+\\))?!?: \\S.{0,80}$",
   "_commit_regex": "Scope is optional: CLAUDE.md uses `feat:` style Conventional Commits.",
+  "static_allowlist": ["Loc", "PointerInput", "Art", "Haptics", "AudioMute", "SparkMesh", "TiltShift", "RarityStars"],
   "platform_define_allowlist": [
     "Assets/Scripts/Game/Support/Haptics.cs",
     "Assets/Scripts/Game/Support/AudioMute.cs",

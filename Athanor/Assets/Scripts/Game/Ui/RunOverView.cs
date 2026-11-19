@@ -34,6 +34,7 @@ namespace Athanor.Game
 
         void OnDestroy()
         {
+            StopAllCoroutines(); Motion.StopOn(this);
             if (!wired) return;
             again.Clicked -= PickAgain;
             toTitle.Clicked -= PickTitle;

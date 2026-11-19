@@ -96,7 +96,7 @@ namespace Athanor.Tests
         {
             var sways = new[] { Vector2.zero, new Vector2(4, 2), new Vector2(-4, 2), new Vector2(4, -2), new Vector2(-4, -2) };
             var old = PointerInput.Rig;
-            PointerInput.Rig = rig;
+            PointerInput.Use(rig);
             try
             {
                 foreach (var sway in sways)
@@ -114,7 +114,7 @@ namespace Athanor.Tests
                         }
                     }
             }
-            finally { PointerInput.Rig = old; rig.SetView(Vector2.zero, Vector2.zero); }
+            finally { PointerInput.Use(old); rig.SetView(Vector2.zero, Vector2.zero); }
         }
 
         [Test]

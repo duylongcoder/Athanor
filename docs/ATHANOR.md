@@ -158,6 +158,13 @@ saved choice, else the device language (Vietnamese if the system says so, Englis
 exists; the Game tests do it once in `GameTestSetup`. Key prefixes: `ui.*`, `story.*`, `tutorial.*`, `cutscene.*`, `effect.*`,
 `note.*`, `kind.*`, `depth.<n>.intro`. Number format: "1,500" in English, "1.500" in Vietnamese (`Wording.Number`).
 
+**Allowed statics.** Presentation code keeps no writable static, except in eight classes: `Loc`, `PointerInput`, `Art`, `Haptics`,
+`AudioMute`, `SparkMesh`, `TiltShift`, `RarityStars` (`static_allowlist` in `tools/lint/lint.config.json`; UL012 is an error). Domain
+reload is off in the Editor, so statics survive Stop and Play. Each of the eight has a
+`[RuntimeInitializeOnLoadMethod(SubsystemRegistration)] ResetStatics()` that restores every static to its declared default, drops event
+handlers and destroys what the class created (`StaticResetTests`). A ninth class needs a line here, a reset and a test. A component that
+starts coroutines or tweens stops them in `OnDestroy` (`StopAllCoroutines()` and `Motion.StopOn(this)`).
+
 **Dev hooks and keys** (editor and development builds only; `Dev.Hook` log lines are what `tools/web/*.mjs` read):
 
 | Key | Does |

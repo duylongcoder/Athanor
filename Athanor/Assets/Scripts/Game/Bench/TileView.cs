@@ -9,6 +9,9 @@ namespace Athanor.Game
     /// <summary>One of the nine bench tiles: its hover highlight and, when occupied, the material standing on it.</summary>
     public sealed class TileView : MonoBehaviour
     {
+        /// <summary>Stops what this component started so nothing runs on into the next Play (domain reload off).</summary>
+        void OnDestroy() { StopAllCoroutines(); Motion.StopOn(this); }
+
         FxRefs fx;
         public int index;
 

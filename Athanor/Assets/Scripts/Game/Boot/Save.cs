@@ -73,17 +73,11 @@ namespace Athanor.Game
             return seed == 0 ? 1 : seed;
         }
 
-        public static bool IntroSeen
-        {
-            get => PlayerPrefs.GetInt(IntroKey, 0) == 1;
-            set { PlayerPrefs.SetInt(IntroKey, value ? 1 : 0); PlayerPrefs.Save(); }
-        }
+        public static bool IntroSeen => PlayerPrefs.GetInt(IntroKey, 0) == 1;
+        public static void SetIntroSeen(bool v) { PlayerPrefs.SetInt(IntroKey, v ? 1 : 0); PlayerPrefs.Save(); }
 
         /// <summary>The tutorial was played to its end (or skipped). See TutorialScript.ShouldRun.</summary>
-        public static bool TutorialDone
-        {
-            get => PlayerPrefs.GetInt(TutorialKey, 0) == 1;
-            set { PlayerPrefs.SetInt(TutorialKey, value ? 1 : 0); PlayerPrefs.Save(); }
-        }
+        public static bool TutorialDone => PlayerPrefs.GetInt(TutorialKey, 0) == 1;
+        public static void SetTutorialDone(bool v) { PlayerPrefs.SetInt(TutorialKey, v ? 1 : 0); PlayerPrefs.Save(); }
     }
 }

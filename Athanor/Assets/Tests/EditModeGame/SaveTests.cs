@@ -170,7 +170,7 @@ namespace Athanor.Tests
             {
                 PlayerPrefs.DeleteKey(Save.TutorialKey);
                 Assert.IsFalse(Save.TutorialDone);
-                Save.TutorialDone = true;
+                Save.SetTutorialDone(true);
                 Assert.IsTrue(Save.TutorialDone);
             }
             finally

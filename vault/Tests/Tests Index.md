@@ -5,7 +5,7 @@ tags: [moc/tests]
 ---
 
 # Tests
-502 test methods in 41 files. Run: `dotnet test tools/CoreTests` (rules) or `unity test Athanor --mode EditMode`.
+510 test methods in 42 files. Run: `dotnet test tools/CoreTests` (rules) or `unity test Athanor --mode EditMode`.
 
 - [[ChainTests]] — 26 tests · covers [[Bench]], [[ChainPlan]], [[ChainPlanner]], [[ContentDb]]
 - [[ContentTests]] — 41 tests · covers [[Bench]], [[ChainPlanner]], [[ContentData]], [[ContentDb]], [[Ops]]
@@ -41,4 +41,5 @@ tags: [moc/tests]
 - [[SceneBakeTests]] — 6 tests · covers [[Bench]], [[Clickable]], [[ContentDb]], [[GameFlow]], [[Label]], [[ReactionCutscene]], [[ScreenFx]], [[SimpleCutscene]]
 - [[SettingsHapticsTests]] — 7 tests · covers [[AudioMute]], [[Haptics]], [[Save]], [[Settings]]
 - [[SparksTests]] — 7 tests · covers [[Art]], [[Particle]], [[SparkMesh]], [[Sparks]]
+- [[StaticResetTests]] — 8 tests · covers [[Art]], [[AudioMute]], [[DepthRig]], [[EditorGlobals]], [[Haptics]], [[Loc]], [[PointerInput]], [[RarityStars]]
 - [[TutorialFlowTests]] — 10 tests · covers [[AutoPlayer]], [[Bench]], [[ContentData]], [[ContentDb]], [[Journal]], [[Profile]], [[Px]], [[RunOptions]]

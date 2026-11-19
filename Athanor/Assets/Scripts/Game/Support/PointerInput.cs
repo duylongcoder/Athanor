@@ -9,7 +9,7 @@ namespace Athanor.Game
     {
         public static Vector2 World { get; private set; }
         /// <summary>The depth rig, when the bench is drawn by the perspective world camera (null: the flat game).</summary>
-        public static DepthRig Rig;
+        public static DepthRig Rig { get; private set; }
         /// <summary>The pointer on the bench table, in flat coordinates (what a tile tests): found by the world ray, so a tile is
         /// hit where it is drawn, under sway and shake. Equals <see cref="World"/> without a rig or in a flat cutscene.</summary>
         public static Vector2 Bench { get; private set; }
@@ -22,6 +22,17 @@ namespace Athanor.Game
 
         static readonly List<Clickable> all = new List<Clickable>();
         static Clickable pressedOn;
+
+        /// <summary>Sets the depth rig that <see cref="Bench"/> is found through (null: the flat game).</summary>
+        public static void Use(DepthRig rig) => Rig = rig;
+
+        /// <summary>Back to the declared defaults before the first scene (domain reload off keeps statics across Play).</summary>
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        public static void ResetStatics()
+        {
+            World = Bench = default; Rig = null; Down = Up = Held = false; Hover = null; AnyPress = null;
+            all.Clear(); pressedOn = null;
+        }
 
         public static void Register(Clickable c) { if (!all.Contains(c)) all.Add(c); }
         public static void Unregister(Clickable c) { all.Remove(c); if (Hover == c) Hover = null; if (pressedOn == c) pressedOn = null; }

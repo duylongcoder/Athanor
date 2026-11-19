@@ -13,6 +13,9 @@ namespace Athanor.Game
     /// </summary>
     public sealed class SimpleCutscene : Cutscene
     {
+        /// <summary>Stops what this component started so nothing runs on into the next Play (domain reload off).</summary>
+        void OnDestroy() { StopAllCoroutines(); Motion.StopOn(this); }
+
         const int O = 420;
         const float CX = 320, Scroll = 400;
 

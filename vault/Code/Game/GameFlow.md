@@ -12,7 +12,7 @@ aliases: []
 # GameFlow
 
 `public sealed class GameFlow` : `MonoBehaviour`
-- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Boot/GameFlow.cs:15-802`
+- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Boot/GameFlow.cs:15-803`
 
 > Owns the run and moves the game between its screens.
 
@@ -37,10 +37,10 @@ aliases: []
 | method | `public static string MoodLine(int mood)` | 54 |  |
 | method | `public static string EffectsLine(bool on)` | 55 |  |
 | property | `public JournalView JournalView` | 119 | The journal screen, for the tutorial to point at parts of a page. |
-| method | `public static Journal JournalAfterQuit(bool sandbox, Journal current)` | 460 | The journal after a quit: what is stored, as if the page had been closed (a How-to-play sandbox keeps its throwaway). |
-| method | `public static Profile ProfileAfterQuit(bool sandbox, Profile current, ContentDb db)` | 462 | The profile after a quit: what is stored. A run counts only at the Ignite that ends it, so nothing is added. |
-| method | `public void Ignite()` | 503 | Spends a trial and plays out what happened. Ignored unless the bench is waiting for the player. |
-| method | `public static IgniteOutcome SettleIgnite(RunState run, Journal journal, bool sandbox)` | 511 | Ignites and stores the journal at once, so a discovery is in storage before anything else can happen (Quit, closed page). A sandbox stores nothing. |
+| method | `public static Journal JournalAfterQuit(bool sandbox, Journal current)` | 461 | The journal after a quit: what is stored, as if the page had been closed (a How-to-play sandbox keeps its throwaway). |
+| method | `public static Profile ProfileAfterQuit(bool sandbox, Profile current, ContentDb db)` | 463 | The profile after a quit: what is stored. A run counts only at the Ignite that ends it, so nothing is added. |
+| method | `public void Ignite()` | 504 | Spends a trial and plays out what happened. Ignored unless the bench is waiting for the player. |
+| method | `public static IgniteOutcome SettleIgnite(RunState run, Journal journal, bool sandbox)` | 512 | Ignites and stores the journal at once, so a discovery is in storage before anything else can happen (Quit, closed page). A sandbox stores nothing. |
 
 ## Uses
 [[Anim]], [[Art]], [[ArtLibrary]], [[AudioMuteHook]], [[AutoMove]], [[AutoPlayer]], [[Bench]], [[BenchView]], [[CatalystChoiceView]], [[ContentData]], [[ContentDb]], [[DepthLook]], [[DepthMath]], [[DepthStage]], [[Dev]], [[EventView]], [[FlowState]], [[Fx]], [[FxRefs]], [[GoalReward]], [[GoalToast]], [[GoalsView]], [[Haptics]], [[HudView]], [[IgniteOutcome]], [[Journal]], [[JournalView]], [[Loc]], [[Motion]], [[PauseMenu]], [[PointerInput]], [[Profile]], [[Px]], [[ReactionCutscene]], [[ReactionEvent]], [[RunOptions]], [[RunOverView]], [[RunPhase]], [[RunState]], [[Save]], [[ScreenFx]], [[Settings]], [[SimpleCutscene]], [[Sparks]], [[Spawn]], [[TitleView]], [[TutorialController]], [[TutorialPlan]], [[TutorialRules]], [[TutorialScript]], [[Unlocks]], [[WindowView]]

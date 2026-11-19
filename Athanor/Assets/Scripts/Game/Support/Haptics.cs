@@ -24,6 +24,10 @@ namespace Athanor.Game
         [DllImport("__Internal")] static extern void AthanorVibrate(int ms);
 #endif
 
+        /// <summary>Back to the declared defaults before the first scene (domain reload off).</summary>
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        public static void ResetStatics() { Enabled = true; ForceSupported = null; Sink = null; }
+
         public static bool Supported
         {
             get

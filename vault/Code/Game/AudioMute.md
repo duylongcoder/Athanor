@@ -12,7 +12,7 @@ aliases: []
 # AudioMute
 
 `public static class AudioMute`
-- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Support/AudioMute.cs:11-30`
+- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Support/AudioMute.cs:11-33`
 
 > Silences audio while the browser tab is hidden, the app is paused or the window has lost focus. No sound ships in Phase 5, so this is a hook: it sets AudioListener.pause and is audible once sound lands.
 
@@ -25,10 +25,11 @@ aliases: []
 | method | `public static void SetHidden(bool v)` | 20 |  |
 | method | `public static void SetPaused(bool v)` | 21 |  |
 | method | `public static void SetFocus(bool v)` | 22 |  |
-| method | `public static void Reset()` | 23 |  |
+| method | `public static void ResetStatics()` | 25 | Unmuted, no sink, before the first scene (domain reload off). |
+| method | `public static void Reset()` | 26 |  |
 
 ## Used by
 [[AudioMuteHook]]
 
 ## Tested by
-[[SettingsHapticsTests]]
+[[SettingsHapticsTests]], [[StaticResetTests]]

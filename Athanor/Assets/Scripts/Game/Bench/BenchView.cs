@@ -13,6 +13,9 @@ namespace Athanor.Game
     /// </summary>
     public sealed class BenchView : MonoBehaviour
     {
+        /// <summary>Stops what this component started so nothing runs on into the next Play (domain reload off).</summary>
+        void OnDestroy() { StopAllCoroutines(); Motion.StopOn(this); }
+
         public event Action IgniteRequested, RedrawRequested, JournalRequested;
         public bool InputEnabled { get => inputEnabled; set { inputEnabled = value; if (run != null) Hud.Show(run, db, journal, value); if (!value) DropEverything(); } }
         public HudView Hud => hud;
