@@ -1,0 +1,1 @@
+{"excludes": ["/Library/", "/Build/", "/Logs/", "/UserSettings/", "/Data/", "/Temp/", "obj/", "*.csproj", "*.slnx", "/Packages/", "/ProjectSettings/", "/.vscode/"], "gitignore": true}
