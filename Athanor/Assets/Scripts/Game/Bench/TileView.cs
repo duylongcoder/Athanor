@@ -11,14 +11,13 @@ namespace Athanor.Game
     {
         public int index;
         public Vector3 centre;            // world position of the middle of the top face
-        Vector2 faceCentre, faceSize;
-        SpriteRenderer face, ring, shadow, icon, halo, lid, cross, mark;
-        Color markColor;
-        Light2D glowLight;
-        Color glow;
+        // serialized: the tile lives in Prefabs/Views/Bench.prefab, so what it needs is kept in the prefab
+        [SerializeField, HideInInspector] Vector2 faceCentre, faceSize;
+        [SerializeField, HideInInspector] SpriteRenderer face, ring, shadow, icon, halo, lid, cross, mark;
+        [SerializeField, HideInInspector] Color markColor, glow, flashColor;
+        [SerializeField, HideInInspector] Light2D glowLight;
         bool glows;
         float flash, appear = 1;
-        Color flashColor;
 
         public string Material { get; private set; }
         public bool Hovered { get; set; }
@@ -29,30 +28,9 @@ namespace Athanor.Game
         public bool Marked => mark.enabled;
         public SpriteRenderer Icon => icon;
 
-        public void Build(int i, TileData data, Transform parent)
-        {
-            index = i;
-            transform.SetParent(parent, false);
-            centre = Px.At(data.x, data.y);
-            var f = data.face;
-            faceCentre = Px.Mid(f.x, f.y, f.w, f.h); faceSize = new Vector2(f.w, f.h);
-            int row = i / 3;
-            face = Make.SpriteAt(transform, "tile_face_" + i, f.x, f.y, 10, Make.Lib.glow);
-            ring = Make.Sprite(transform, "tile_ring_" + row, centre, 11, Make.Lib.glow);
-            shadow = Make.Glow(transform, centre + new Vector3(0, -3, 0), 9, new Color(0, 0, 0, 0.6f), 12);
-            shadow.sharedMaterial = Make.Lib.unlit; shadow.transform.localScale = new Vector3(18 / 64f, 7 / 64f, 1);
-            halo = Make.Glow(transform, centre + new Vector3(0, 8, 0), 24, Color.clear, 12);
-            icon = Make.Sprite(transform, "dot", centre, 14 + row * 2, Make.Lib.lit);
-            glowLight = Make.Light(transform, centre + new Vector3(0, 6, 0), 46, Color.white, 0, 0.77f);
-            face.color = Color.clear;
-            // a shut tile: a dark lid over the face and a cross; a tile an aspect or an event acts on: a small gem at its front corner
-            lid = Make.SpriteAt(transform, "tile_face_" + i, f.x, f.y, 9);
-            cross = Make.Sprite(transform, "cross", Px.Snap(faceCentre), 11);
-            cross.color = Px.Hex("#7a5a6a");
-            mark = Make.Sprite(transform, "mark", Px.At(f.x + 11, f.y + f.h - 6), 13);
-            SetState(null, false);
-            Clear();
-        }
+        /// <summary>The face the tile is hit-tested on: centre and size in flat world units.</summary>
+        public Vector2 FaceCentre => faceCentre;
+        public Vector2 FaceSize => faceSize;
 
         public bool Contains(Vector2 world) =>
             Mathf.Abs(world.x - faceCentre.x) <= faceSize.x / 2 && Mathf.Abs(world.y - faceCentre.y) <= faceSize.y / 2;
@@ -74,7 +52,7 @@ namespace Athanor.Game
             Material = m.id;
             glows = !string.IsNullOrEmpty(m.glow);
             glow = Px.Hex(glows ? m.glow : "#f0dcc0");
-            icon.sprite = Make.Lib.Sprite(m.id);
+            icon.sprite = Art.Lib.Sprite(m.id);
             icon.enabled = shadow.enabled = ring.enabled = halo.enabled = true;
             icon.color = Color.white;
             glowLight.color = glow;
@@ -116,7 +94,7 @@ namespace Athanor.Game
             appear = Mathf.Min(1, appear + Time.deltaTime * 5);
             float pop = Anim.OutBack(appear);
             int bob = Mathf.RoundToInt(Mathf.Sin(t * 2 + index * 1.7f) * 1.5f);
-            icon.transform.position = centre + new Vector3(0, 10 + bob + (1 - pop) * 8, 0);
+            icon.transform.localPosition = centre + new Vector3(0, 10 + bob + (1 - pop) * 8, 0);   // local: below a depth group the flat coordinates stay valid
             ring.color = glow.Times(1.6f).Alpha((0.55f + 0.25f * Mathf.Sin(t * 3 + index)) * appear);
             halo.color = glow.Alpha(glows ? 0.3f : 0.07f);
             glowLight.intensity = (glows ? 0.95f : 0.3f) * appear + flash * 0.8f;

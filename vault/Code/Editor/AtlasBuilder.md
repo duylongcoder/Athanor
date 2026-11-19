@@ -12,7 +12,7 @@ aliases: []
 # AtlasBuilder
 
 `public static class AtlasBuilder`
-- Layer: **Editor** · Source: `Athanor/Assets/Editor/AtlasBuilder.cs:27-346`
+- Layer: **Editor** · Source: `Athanor/Assets/Editor/AtlasBuilder.cs:27-354`
 
 > Two art steps that run after tools/art/export.mjs, both idempotent: 1. Sprite sheets: the numbered frames of each animation (Background/flame_small_0..7.png ...) are merged into one Multiple-mode sheet beside them (Background/flame_small.png). Sprite names stay flame_small_0..7, so the art library and Flame keep finding them by name. Scene and asset references to the old frames are moved to the sheet's sprites, and the frame files are deleted only after the sheet is checked pixel for pixel. 2. Sprite atlases: one Assets/Art/Atlases/NAME.spriteatlasv2 per group in Groups, uncompressed, point filtered, no mips, 2 px padding, no rotation, no tight packing, included in the build. Menu: Athanor > Build Sprite Sheets and Atlases. Command line: -executeMethod AtlasBuilder.BuildBatch
 
@@ -21,20 +21,22 @@ aliases: []
 |---|---|---|---|
 | field | `public const string ArtDir = "Assets/Art", AtlasDir = "Assets/Art/Atlases", LibraryPath =` | 29 |  |
 | field | `public const int Padding = 2, MaxSize = 2048, SheetGap = 2` | 30 |  |
-| property | `public static readonly string[] Animations =` | 34 | Numbered frame sets that are animations (merged into one sheet each). tile_face_N and tile_ring_N are numbered too, but they are one picture per tile and row, not frames, so they stay separate sprites. |
-| method | `public static bool IsSpriteSheet(string assetPath)` | 37 | True for a merged animation sheet: SpriteImportRules leaves it in Multiple mode. |
-| property | `public static readonly Dictionary<string, string> Standalone = new Dictionary<string, string>` | 40 | Textures that stay out of every atlas. |
-| method | `public static readonly (string name, string rule, Func<string, string, bool> match)[] Groups =` | 49 | Atlas groups by what the game uses the art for. Each texture under Assets/Art goes to the first group whose rule matches (folder relative to Assets/Art, texture name). |
-| method | `public static string BuildAll()` | 66 |  |
-| method | `public static void BuildBatch()` | 78 | From the command line (Unity closed): -executeMethod AtlasBuilder.BuildBatch. Exits 1 on any error. |
-| method | `public static string PackAndReport()` | 86 | Packs every atlas for the active build target and reports each atlas's page sizes and fill. |
-| method | `public static void PackBatch()` | 107 |  |
-| method | `public static string BuildSpriteSheets()` | 124 | Merges each animation's frame PNGs into one sheet. Nothing to do when no loose frames are left. |
-| method | `public static Dictionary<string, List<string>> Assign()` | 283 | The atlas group of each texture under Assets/Art (null when standalone). Throws on art no rule takes. |
-| method | `public static string BuildAtlases()` | 301 |  |
+| field | `public const string DepthDir =` | 34 | The HD-2D depth layers (Phase 5b). They stay out of every atlas: they are placed as plain sprites in the HD-2D bench of Main.unity. |
+| method | `public static bool IsDepthArt(string assetPath)` | 37 | True for an asset under DepthDir. |
+| property | `public static readonly string[] Animations =` | 41 | Numbered frame sets that are animations (merged into one sheet each). tile_face_N and tile_ring_N are numbered too, but they are one picture per tile and row, not frames, so they stay separate sprites. |
+| method | `public static bool IsSpriteSheet(string assetPath)` | 44 | True for a merged animation sheet: SpriteImportRules leaves it in Multiple mode. |
+| property | `public static readonly Dictionary<string, string> Standalone = new Dictionary<string, string>` | 47 | Textures that stay out of every atlas. |
+| method | `public static readonly (string name, string rule, Func<string, string, bool> match)[] Groups =` | 56 | Atlas groups by what the game uses the art for. Each texture under Assets/Art goes to the first group whose rule matches (folder relative to Assets/Art, texture name). |
+| method | `public static string BuildAll()` | 73 |  |
+| method | `public static void BuildBatch()` | 85 | From the command line (Unity closed): -executeMethod AtlasBuilder.BuildBatch. Exits 1 on any error. |
+| method | `public static string PackAndReport()` | 93 | Packs every atlas for the active build target and reports each atlas's page sizes and fill. |
+| method | `public static void PackBatch()` | 114 |  |
+| method | `public static string BuildSpriteSheets()` | 131 | Merges each animation's frame PNGs into one sheet. Nothing to do when no loose frames are left. |
+| method | `public static Dictionary<string, List<string>> Assign()` | 290 | The atlas group of each texture under Assets/Art (null when standalone). Throws on art no rule takes. |
+| method | `public static string BuildAtlases()` | 309 |  |
 
 ## Uses
-[[Save]], [[SceneBuilder]]
+[[ArtLibraryBuilder]], [[Save]]
 
 ## Used by
 [[SpriteImportRules]]

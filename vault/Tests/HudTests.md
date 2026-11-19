@@ -13,6 +13,6 @@ count: 3
 [[ContentData]], [[ContentDb]], [[HudView]], [[Journal]], [[RunOptions]], [[RunPhase]], [[RunState]], [[Unlocks]]
 
 ## Tests
-- `CanRedraw_UntilTheLastRedrawIsUsed`
+- `CanRedraw_WhileRedrawsRemain_IsTrueUntilTheLastRedrawIsUsed`
 - `CanRedraw_IsFalse_OffTheBench_EvenWithRedrawsLeft`
 - `CanRedraw_IsFalse_WithNoRun`

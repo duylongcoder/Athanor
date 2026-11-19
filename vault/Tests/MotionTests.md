@@ -15,4 +15,4 @@ count: 3
 ## Tests
 - `Arc_IsAlive_AndCanJoinASequence`
 - `Arc_EndsOnItsTarget_OnWholePixels`
-- `EveryHelper_IsAlive`
+- `EveryHelper_WhenStarted_IsAlive`

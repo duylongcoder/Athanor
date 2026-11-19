@@ -4,10 +4,14 @@
     "references": [
         "Athanor.Core",
         "Athanor.Game",
+        "Athanor.EditorShared",
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
         "PrimeTween.Runtime",
-        "Unity.TextMeshPro"
+        "Unity.TextMeshPro",
+        "Unity.RenderPipelines.Core.Runtime",
+        "Unity.RenderPipelines.Universal.Runtime",
+        "Unity.RenderPipelines.Universal.2D.Runtime"
     ],
     "includePlatforms": [
         "Editor"

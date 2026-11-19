@@ -25,10 +25,24 @@ namespace Athanor.Game
         /// <summary>The language's own name for the Settings panel ("English", "Tiếng Việt").</summary>
         public static string NativeName => Current.Name;
 
+        static TextAsset enFile, viFile;
+
+        /// <summary>
+        /// Gives Loc its language files. GameFlow calls it first thing; the Game tests and editor tools call it through EditorGlobals.
+        /// Call it before any Label exists: it does not raise <see cref="Changed"/>, so existing labels keep their old text.
+        /// </summary>
+        public static void Use(TextAsset english, TextAsset vietnamese)
+        {
+            if (english == null) throw new ArgumentNullException(nameof(english));
+            if (vietnamese == null) throw new ArgumentNullException(nameof(vietnamese));
+            enFile = english; viFile = vietnamese;
+            en = null; current = null;            // the next Ensure() parses the new files
+        }
+
         static Lang Load(string c, Lang fallback)
         {
-            var asset = Resources.Load<TextAsset>("lang/" + c);
-            if (asset == null) { Debug.LogError("Loc: no language file " + c); return new Lang(new LangFile { language = c, name = c, entries = new LangEntry[0] }, fallback); }
+            var asset = c == Vietnamese ? viFile : enFile;
+            if (asset == null) throw new InvalidOperationException("Loc.Use was not called before the first text lookup");
             return Lang.FromJson(asset.text, fallback);
         }
 

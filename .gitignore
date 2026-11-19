@@ -141,6 +141,8 @@ production/session-state/
 # Build output of the rules test project (CLAUDE.md: never stage)
 /tools/CoreTests/bin/
 /tools/CoreTests/obj/
+/tools/CoreReports/bin/
+/tools/CoreReports/obj/
 test-results*.xml
 
 # Reference videos and screenshots (not committed)
@@ -149,3 +151,7 @@ refs/
 # Session transcripts (not project docs)
 /20??-??-??-*.txt
 production/session-logs/
+
+# 5b-06 shimmer GIFs (~16 MB), kept out of git by owner decision (phase-5-prep.md)
+production/qa/evidence/phase5/5b-06/shimmer/*.gif
+production/qa/evidence/phase6/task05/hd2d-2/console.txt

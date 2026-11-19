@@ -9,7 +9,7 @@ namespace Athanor.Tests
     /// <summary>The pause menu: time stops and comes back on every exit, Esc toggles, nothing opens in the tutorial, Quit leaves the stored run data alone.</summary>
     public class PauseTests
     {
-        ArtLibrary libBefore;
+        PrefabFixture fixture;
         GameObject go;
         PauseMenu menu;
         readonly string[] keys = { Save.Key, Save.ProfileKey };
@@ -18,20 +18,18 @@ namespace Athanor.Tests
         [SetUp] public void Build()
         {
             foreach (var k in keys) kept[k] = PlayerPrefs.GetString(k, null);
-            libBefore = Make.Lib;
-            Make.Lib = AssetDatabase.LoadAssetAtPath<ArtLibrary>("Assets/Art/ArtLibrary.asset");
             Haptics.ForceSupported = null;
-            go = new GameObject("pause test");
-            menu = go.AddComponent<PauseMenu>();
-            menu.Build(new Settings());
+            fixture = new PrefabFixture("Assets/Prefabs/Views/Pause.prefab");
+            go = fixture.Root;
+            menu = fixture.Get<PauseMenu>();
+            menu.Bind(new Settings());
             Time.timeScale = 1f;
         }
 
         [TearDown] public void Restore()
         {
             Time.timeScale = 1f;
-            Object.DestroyImmediate(go);
-            Make.Lib = libBefore;
+            fixture.Destroy();
             Haptics.ForceSupported = null;
             foreach (var k in keys) { if (kept[k] == null) PlayerPrefs.DeleteKey(k); else PlayerPrefs.SetString(k, kept[k]); }
         }
@@ -80,9 +78,12 @@ namespace Athanor.Tests
         public void Abort_TutorialRun_DoesNotMarkItDone()
         {
             Save.TutorialDone = false;
-            var t = go.AddComponent<TutorialController>(); t.Build();
-            t.Abort();
-            Assert.IsFalse(Save.TutorialDone);
+            using (var main = new MainSceneFixture())
+            {
+                var t = main.FlowField<TutorialController>("tutorial");
+                t.Abort();
+                Assert.IsFalse(Save.TutorialDone);
+            }
         }
 
         [Test]

@@ -11,30 +11,30 @@ namespace Athanor.Game
     public sealed class GoalToast : MonoBehaviour
     {
         const int O = 490, W = 300, H = 36, X = 170, Y = 4;
-        const float Stay = 2.5f, Slide = 0.25f;
+        /// <summary>Seconds a toast stays fully shown.</summary>
+        public const float Stay = 2.5f;
+        /// <summary>Seconds a toast takes to slide in, and again to slide out.</summary>
+        public const float Slide = 0.25f;
 
         struct Item { public string goal, reward, sprite; }
 
         readonly Queue<Item> queue = new Queue<Item>();
-        Transform panel;
-        SpriteRenderer icon;
-        Label title, line;
+        [SerializeField] Transform panel;
+        [SerializeField] SpriteRenderer icon;
+        [SerializeField] Label title, line;
+        [SerializeField] Clickable click;
         float age = -1;
 
-        public void Build()
-        {
-            panel = Make.Root("Panel", transform);
-            panel.position = Px.Mid(X, Y, W, H);
-            Make.Sprite(panel, "toast", panel.position, O);
-            icon = Make.Sprite(panel, "dot", Vector3.zero, O + 2);
-            icon.transform.localPosition = new Vector3(-W / 2 + 19, 0, 0);
-            title = Make.Text(panel, "", 0, 0, FontKind.Tiny, 8, Px.Hex("#f8d250"), O + 2);
-            title.transform.localPosition = new Vector3(-W / 2 + 38, H / 2 - 6, 0);
-            line = Make.Text(panel, "", 0, 0, FontKind.Title, 16, Px.Hex("#f0dcc0"), O + 2, Align.Left, Px.Hex("#0c0706"));
-            line.transform.localPosition = new Vector3(-W / 2 + 38, H / 2 - 15, 0);
-            Make.Click(panel.gameObject, new Vector2(W, H), O, () => { if (age >= 0) age = Mathf.Max(age, Stay + Slide); });
-            panel.gameObject.SetActive(false);
-        }
+        /// <summary>The goal line of the toast showing (or last shown).</summary>
+        public Label Title => title;
+        /// <summary>The reward line of the toast showing (or last shown).</summary>
+        public Label Line => line;
+
+        /// <summary>Hooks the click. GameFlow calls it once at start; a test calls it after instantiating the prefab.</summary>
+        public void Bind() => click.onClick = SkipToEnd;
+
+        // a click on a showing toast sends it away now
+        void SkipToEnd() { if (age >= 0) age = Mathf.Max(age, Stay + Slide); }
 
         /// <summary>Queues one toast for each goal just completed.</summary>
         public void Add(IEnumerable<GoalReward> rewards, ContentDb db)
@@ -59,7 +59,7 @@ namespace Athanor.Game
                 var next = queue.Dequeue();
                 title.Text = next.goal; line.Text = next.reward;
                 icon.enabled = next.sprite != null;
-                if (next.sprite != null) icon.sprite = Make.Lib.Sprite(next.sprite);
+                if (next.sprite != null) icon.sprite = Art.Lib.Sprite(next.sprite);
                 age = 0;
                 panel.gameObject.SetActive(true);
                 if (Sparks.I != null) Sparks.I.Burst(Px.Mid(X, Y, W, H), 18, new Color(2.2f, 1.7f, 0.6f), 90, 0.6f, O + 3, 20);

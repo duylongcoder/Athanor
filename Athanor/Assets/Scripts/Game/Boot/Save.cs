@@ -18,7 +18,7 @@ namespace Athanor.Game
                 var text = PlayerPrefs.GetString(Key, "");
                 return string.IsNullOrEmpty(text) ? new Journal() : Journal.FromData(JsonUtility.FromJson<JournalData>(text));
             }
-            catch (Exception) { return new Journal(); }
+            catch (Exception e) { Debug.LogWarning("[save] journal unreadable, starting empty: " + e.Message); return new Journal(); }
         }
 
         public static void StoreJournal(Journal journal)
@@ -39,7 +39,7 @@ namespace Athanor.Game
                 var text = PlayerPrefs.GetString(ProfileKey, "");
                 return string.IsNullOrEmpty(text) ? new Profile(seed) : Profile.FromData(JsonUtility.FromJson<ProfileData>(text), db, seed);
             }
-            catch (Exception) { return new Profile(seed); }
+            catch (Exception e) { Debug.LogWarning("[save] profile unreadable, starting fresh: " + e.Message); return new Profile(seed); }
         }
 
         public static void StoreProfile(Profile profile)

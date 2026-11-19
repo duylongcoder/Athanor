@@ -35,6 +35,7 @@
     {"key": "ui.settings.sound", "text": "Âm thanh", "en": "Sound"},
     {"key": "ui.settings.ambience", "text": "Âm nền", "en": "Ambience"},
     {"key": "ui.settings.vibration", "text": "Rung", "en": "Vibration"},
+    {"key": "ui.settings.sway", "text": "Lắc camera", "en": "Camera sway"},
     {"key": "ui.settings.language", "text": "Ngôn ngữ", "en": "Language"},
     {"key": "ui.settings.on", "text": "Bật", "en": "On"},
     {"key": "ui.settings.off", "text": "Tắt", "en": "Off"},

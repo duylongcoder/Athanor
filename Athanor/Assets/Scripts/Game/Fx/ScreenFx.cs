@@ -7,19 +7,21 @@ namespace Athanor.Game
     public sealed class ScreenFx : MonoBehaviour
     {
         public static ScreenFx I { get; private set; }
-        SpriteRenderer flash, black;
+        [SerializeField] SpriteRenderer flash, black;
         Transform cam;
         Vector3 camHome;
+        CameraSway world;
+        DepthRig rig;
         float flashLeft, flashTime, flashPeak, shakeLeft, shakeTime, shakeSize;
 
-        public void Build(Camera camera)
+        /// <summary>camera is the camera the shake moves, unless a depth rig is given: then the shake moves the world only
+        /// (owner gate G2 #6), except in a cutscene, which is flat and shakes with its camera. Makes this the scene's ScreenFx.I.</summary>
+        public void Bind(Camera camera, CameraSway worldSway = null)
         {
             I = this;
+            world = worldSway;
+            rig = worldSway != null ? worldSway.GetComponent<DepthRig>() : null;
             cam = camera.transform; camHome = cam.position;
-            flash = Make.Rect(transform, 0, 0, Px.W, Px.H, Color.clear, 480);
-            flash.name = "Flash"; flash.sharedMaterial = Make.Lib.glow;
-            black = Make.Rect(transform, -8, -8, Px.W + 16, Px.H + 16, Color.clear, 500);
-            black.name = "Fade";
         }
 
         public void Flash(float peak, float seconds) { flashPeak = peak; flashLeft = flashTime = seconds; }
@@ -31,6 +33,7 @@ namespace Athanor.Game
 
         void LateUpdate()
         {
+            if (cam == null) return;                      // not bound yet (a scene opened in the editor)
             if (flashLeft > 0)
             {
                 flashLeft -= Time.deltaTime;
@@ -38,13 +41,16 @@ namespace Athanor.Game
                 flash.color = new Color(1, 1, 1, flashPeak * k * k);
             }
             else flash.color = Color.clear;
+            Vector3 offset = Vector3.zero;
             if (shakeLeft > 0)
             {
                 shakeLeft -= Time.deltaTime;
                 float k = Mathf.Clamp01(shakeLeft / shakeTime), t = Time.time;
-                cam.position = camHome + new Vector3(Mathf.Round(Mathf.Sin(t * 97) * shakeSize * k), Mathf.Round(Mathf.Cos(t * 71) * shakeSize * 0.8f * k), 0);
+                offset = new Vector3(Mathf.Round(Mathf.Sin(t * 97) * shakeSize * k), Mathf.Round(Mathf.Cos(t * 71) * shakeSize * 0.8f * k), 0);
             }
-            else cam.position = camHome;
+            bool onWorld = world != null && !rig.Flat;
+            if (world != null) world.external = onWorld ? (Vector2)offset : Vector2.zero;
+            cam.position = camHome + (onWorld ? Vector3.zero : offset);
         }
     }
 }

@@ -47,7 +47,7 @@ namespace Athanor.Tests
         // ---- the draw -------------------------------------------------------------------------------
 
         [Test]
-        public void TheLastLoreEvent_IsNotDrawn()
+        public void TheLastLoreEvent_WhenRemembered_IsNotDrawn()
         {
             for (int seed = 1; seed <= 50; seed++)
             {
@@ -60,7 +60,7 @@ namespace Athanor.Tests
         }
 
         [Test]
-        public void WithoutALastLore_EveryLoreEventCanCome()
+        public void WithoutALastLore_OverManySeeds_EveryLoreEventCanCome()
         {
             var seen = new HashSet<string>();
             for (int seed = 1; seed <= 50; seed++)
@@ -152,7 +152,7 @@ namespace Athanor.Tests
         /// only where the remembered event would have come again (then no event comes).
         /// </summary>
         [Test]
-        public void SkippingALoreEvent_IsBalanceNeutral()
+        public void SkippingALoreEvent_WhenPlayedWithAndWithoutIt_IsBalanceNeutral()
         {
             var db = new ContentDb(TestContent.Load());
             int skipped = 0;
@@ -180,7 +180,7 @@ namespace Athanor.Tests
         // ---- the profile ----------------------------------------------------------------------------
 
         [Test]
-        public void Profile_RemembersOnlyLoreEvents()
+        public void Profile_WhenShownLoreBoonAndNullEvents_RemembersOnlyLoreEvents()
         {
             var p = new Profile();
             Assert.IsNull(p.LastLore);

@@ -31,60 +31,45 @@ namespace Athanor.Game
         const int O = 440, CardW = 150, CardH = 180, Gap = 18, Top = 112;
         const float Dim = 0.8f;
 
+        [Serializable]
         sealed class Card
         {
-            public Transform root; public SpriteRenderer lit, icon, strip; public RarityStars cornerStars, stripStars; public Label name, text, kicker, tier; public Vector3 home; public string id; public float lift;
-            public readonly SpriteRenderer[] bench = new SpriteRenderer[Bench.TileCount];
+            public Transform root; public SpriteRenderer lit, icon, strip; public RarityStars cornerStars, stripStars; public Label name, text, kicker, tier;
+            public Clickable click;
+            public SpriteRenderer[] bench = new SpriteRenderer[Bench.TileCount];
+            [NonSerialized] public Vector3 home; [NonSerialized] public string id; [NonSerialized] public float lift;
         }
 
-        readonly Card[] cards = new Card[RunState.OfferSize];
-        SpriteRenderer shade;
-        Label heading, sub;
+        [SerializeField] Card[] cards = new Card[RunState.OfferSize];
+        [SerializeField] SpriteRenderer shade;
+        [SerializeField] Label heading, sub;
         int hovered = -1, count;
         string picked;
-        bool open;
+        bool open, wired;
 
-        static readonly Color Ink = Px.Hex("#3a2212"), Off = Px.Hex("#b89860"), On = Px.Hex("#c8501e"), Joined = Px.Hex("#7a5430");
+        static readonly Color Off = Px.Hex("#b89860"), On = Px.Hex("#c8501e"), Joined = Px.Hex("#7a5430");
 
-        public void Build()
+        /// <summary>The name label of card i.</summary>
+        public Label CardName(int i) => cards[i].name;
+        /// <summary>The star row in the top-left corner of card i.</summary>
+        public RarityStars CornerStars(int i) => cards[i].cornerStars;
+
+        /// <summary>Hooks the clicks. GameFlow calls it once at start; a test calls it after instantiating the prefab.</summary>
+        public void Bind()
         {
-            var t = transform;
-            shade = Make.Rect(t, 0, 0, Px.W, Px.H, Color.clear, O - 1);
-            Make.Click(shade.gameObject, new Vector2(Px.W, Px.H), O - 1);
-            heading = Make.Text(t, "", 320, 36, FontKind.Title, 32, Px.Hex("#f8d250"), O + 6, Align.Centre, Px.Hex("#3a1a08"));
-            sub = Make.Text(t, "", 320, 74, FontKind.Body, 16, Px.Hex("#f0dcc0"), O + 6, Align.Centre, Px.Hex("#0c0706"));
+            if (wired) return;
+            wired = true;
             for (int i = 0; i < cards.Length; i++)
             {
                 int index = i;
-                var c = cards[i] = new Card { root = Make.Root("Choice " + i, t) };
-                c.lit = Make.Sprite(c.root, "choice_lit", Vector3.zero, O); c.lit.transform.localPosition = new Vector3(1, -1, 0);
-                Make.Sprite(c.root, "choice", Vector3.zero, O + 1).transform.localPosition = new Vector3(1, -2, 0);
-                c.icon = Make.Sprite(c.root, "dot", Vector3.zero, O + 2); c.icon.transform.localPosition = new Vector3(0, 61, 0);
-                c.cornerStars = new RarityStars(c.root, O + 3); c.cornerStars.Root.localPosition = new Vector3(-CardW / 2 + 6, CardH / 2 - 6, 0);
-                // the tier strip, 144x20 at (x+4, y+158), with its stars at its left and the tier word at its right
-                c.strip = Make.Rect(c.root, 0, 0, 144, 20, Color.clear, O + 2); c.strip.transform.localPosition = new Vector3(-CardW / 2 + 4 + 72, CardH / 2 - 158 - 10, 0);
-                c.stripStars = new RarityStars(c.root, O + 3); c.stripStars.Root.localPosition = new Vector3(-CardW / 2 + 8, CardH / 2 - 164, 0);
-                c.tier = Make.Text(c.root, "", 0, 0, FontKind.Name, 16, Px.Hex("#fff6e0"), O + 4, Align.Right, Px.Hex("#1a0e08"));
-                c.tier.transform.localPosition = new Vector3(-CardW / 2 + 146, CardH / 2 - 160, 0);   // top edge at y+160 (SPEC 22)
-                c.name = Make.Text(c.root, "", 0, 0, FontKind.Title, 16, Ink, O + 3, Align.Centre);
-                c.name.transform.localPosition = new Vector3(0, 40, 0);
-                c.text = Make.Text(c.root, "", 0, 0, FontKind.Body, 16, Ink, O + 3, Align.Left, null, 124);
-                c.text.transform.localPosition = new Vector3(-61, 8, 0);
-                c.text.main.lineSpacing = -30;
-                // the little bench: three rows of three, the back row narrower, as the real one is drawn
-                for (int k = 0; k < Bench.TileCount; k++)
-                {
-                    c.bench[k] = Make.Sprite(c.root, "mini_tile", Vector3.zero, O + 3);
-                    c.bench[k].transform.localPosition = new Vector3((k % 3 - 1) * 8, -46 - (k / 3) * 7, 0);
-                }
-                c.kicker = Make.Text(c.root, "", 0, 0, FontKind.Tiny, 8, Px.Hex("#a8854e"), O + 3, Align.Centre);
-                c.kicker.transform.localPosition = new Vector3(0, -72, 0);
-                var click = Make.Click(c.root.gameObject, new Vector2(CardW, CardH), O, () => { if (open) picked = cards[index].id; });
+                var click = cards[i].click;
+                click.onClick = () => PickCard(index);
                 click.onEnter = () => hovered = index;
                 click.onExit = () => { if (hovered == index) hovered = -1; };
             }
-            gameObject.SetActive(false);
         }
+
+        void PickCard(int index) { if (open) picked = cards[index].id; }
 
         /// <summary>The catalysts offered after a depth.</summary>
         public IEnumerator Choose(IReadOnlyList<CatalystData> offer, Action<string> done, float autoAfter = -1)
@@ -127,7 +112,7 @@ namespace Athanor.Game
                 if (i >= count) continue;
                 var o = offer[i];
                 c.id = o.id; c.lift = 0; c.lit.enabled = false;
-                c.icon.sprite = Make.Lib.Sprite(o.sprite);
+                c.icon.sprite = Art.Lib.Sprite(o.sprite);
                 c.name.Text = o.name;
                 c.text.Text = string.IsNullOrEmpty(o.cost) ? o.text : o.text + "\n<color=#9a3414>" + o.cost + "</color>";
                 c.kicker.Color = Px.Hex(string.IsNullOrEmpty(o.cost) ? "#a8854e" : "#9a3414");

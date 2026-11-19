@@ -14,19 +14,26 @@ namespace Athanor.Game
     /// <summary>Owns the run and moves the game between its screens.</summary>
     public sealed class GameFlow : MonoBehaviour
     {
+        /// <summary>The art library (sprites and effect sheets); GameFlow publishes it as <see cref="Art.Lib"/>.</summary>
         public ArtLibrary library;
+        /// <summary>content.json and the two language files, set in the scene. Awake throws when one is empty.</summary>
+        [SerializeField] TextAsset contentJson, langEn, langVi;
         public GameObject workshop, cutsceneRoom;
         public Camera mainCamera;
+        /// <summary>The HD-2D bench rig (null in a scene without it: the flat game).</summary>
+        public DepthStage depthStage;
 
-        public static GameFlow I { get; private set; }
         public ContentDb Db { get; private set; }
         public Journal Journal { get; private set; }
         /// <summary>What the player keeps between runs besides the journal: stats, goals done, items won.</summary>
         public Profile Profile { get; private set; }
         public RunState Run { get; private set; }
-        public BenchView Bench { get; private set; }
+        /// <summary>The bench (Prefabs/Views/Bench.prefab in Main.unity): tiles, hand, rack and the Hud.</summary>
+        public BenchView Bench => bench;
         public FlowState State { get; private set; }
-        public RunOverView RunOver { get; private set; }
+        /// <summary>The run summary (a prefab in Main.unity).</summary>
+        [SerializeField] RunOverView runOver;
+        public RunOverView RunOver => runOver;
         /// <summary>Debug: the scripted player plays and cutscenes skip themselves. F9 toggles it in the editor and in development builds.</summary>
         public bool Auto;
 
@@ -40,6 +47,35 @@ namespace Athanor.Game
             Dev.Hook(AutoHook + (Auto ? "on" : "off"));
         }
 
+        // ---- development keys (tools/web/mainhd2d.mjs): F6 mood, F7 shake, F8 effects, F10 tile faces; editor and development builds only
+
+        /// <summary>The depth mood after <paramref name="mood"/> in the F6 cycle 1..5.</summary>
+        public static int NextMood(int mood) => mood % 5 + 1;
+        public static string MoodLine(int mood) => "[dev] mood " + mood;
+        public static string EffectsLine(bool on) => "[dev] effects " + (on ? "on" : "off");
+        int devMood;
+
+        void DevKeys(Keyboard kb)
+        {
+            if (!(Application.isEditor || Debug.isDebugBuild) || depthStage == null) return;
+            if (kb.f6Key.wasPressedThisFrame) { devMood = NextMood(devMood); Mood(devMood); Dev.Hook(MoodLine(devMood)); }
+            if (kb.f7Key.wasPressedThisFrame) depthStage.sway.Shake(3, 4f);
+            if (kb.f8Key.wasPressedThisFrame && depthStage.effects != null)
+            {
+                bool on = !depthStage.effects.effectsOn;
+                depthStage.effects.Set(on);
+                if (window != null) window.Soft = on;
+                Dev.Hook(EffectsLine(on));
+            }
+            if (kb.f10Key.wasPressedThisFrame && Bench != null)
+                for (int i = 0; i < Athanor.Core.Bench.TileCount; i++)
+                {
+                    var t = Bench.Tile(i);
+                    var pts = DepthMath.DrawnFace(t.FaceCentre, t.FaceSize, Px.H / 2f - t.centre.y, depthStage.rig.CamOffset, depthStage.rig.ImageShift, 3f);
+                    Dev.Hook("[dev] tile " + i + " " + string.Join(" ", System.Array.ConvertAll(pts, p => p.x.ToString("0.0", System.Globalization.CultureInfo.InvariantCulture) + "," + p.y.ToString("0.0", System.Globalization.CultureInfo.InvariantCulture))));
+                }
+        }
+
         // the room's ambient colour, the moonbeam's strength and the accent colour, one per depth
         static readonly Color[] Ambient =
         {
@@ -48,8 +84,28 @@ namespace Athanor.Game
         static readonly float[] Moon = { 0.62f, 0.5f, 0.4f, 0.3f, 0.5f };
         static readonly string[] Accent = { "#7cc0f8", "#6ee6c8", "#c486f4", "#ee6a3c", "#fff6b8" };
 
-        ReactionCutscene reaction; SimpleCutscene story; WindowView window; TitleView title; JournalView journalView; CatalystChoiceView choice;
-        EventView eventView; GoalsView goalsView; GoalToast toast;
+        /// <summary>The discovery sequence (the Reaction Cutscene object of Main.unity).</summary>
+        [SerializeField] ReactionCutscene reaction;
+        /// <summary>The intro, descent and ending (the Story Cutscene object of Main.unity).</summary>
+        [SerializeField] SimpleCutscene story;
+        /// <summary>The camera shake and the flash and fade of the whole screen (the Screen Fx object of Main.unity).</summary>
+        [SerializeField] ScreenFx screenFx;
+        /// <summary>The workshop window's effects (the Window object of Main.unity).</summary>
+        [SerializeField] WindowView window;
+        /// <summary>The tutorial overlay (the Tutorial object of Main.unity).</summary>
+        [SerializeField] TutorialController tutorial;
+        /// <summary>The title screen (a prefab in Main.unity).</summary>
+        [SerializeField] TitleView title;
+        /// <summary>The journal (a prefab in Main.unity; its cells come from the JournalCell part).</summary>
+        [SerializeField] JournalView journalView;
+        /// <summary>The Goals page (a prefab in Main.unity; its rows come from the GoalRow part).</summary>
+        [SerializeField] GoalsView goalsView;
+        /// <summary>The three-card chooser for catalysts and aspects (a prefab in Main.unity).</summary>
+        [SerializeField] CatalystChoiceView choice;
+        /// <summary>The event dialog at the start of a depth (a prefab in Main.unity).</summary>
+        [SerializeField] EventView eventView;
+        /// <summary>The goal-complete toasts (a prefab in Main.unity).</summary>
+        [SerializeField] GoalToast toast;
         readonly List<GoalReward> goalsThisRun = new List<GoalReward>();
         Unlocks unlocks;
         Settings settings;
@@ -60,13 +116,15 @@ namespace Athanor.Game
         /// <summary>The journal screen, for the tutorial to point at parts of a page.</summary>
         public JournalView JournalView => journalView;
         long shownPotency;
-        PauseMenu pause;
+        /// <summary>The in-run pause menu (a prefab in Main.unity).</summary>
+        [SerializeField] PauseMenu pause;
+        [SerializeField] BenchView bench;
         Coroutine tutRoutine;
         int escGuardFrame = -1;
         bool hurry, inCutscene, runEnded, autoReady, abandoned;
         float autoClock;
         int runs;
-        TutorialController tut, tutorial;
+        TutorialController tut;
         Journal realJournal; Profile realProfile;
         /// <summary>A replay of the tutorial: a throwaway journal and profile, nothing written to storage.</summary>
         bool sandbox;
@@ -85,8 +143,25 @@ namespace Athanor.Game
 
         void Awake()
         {
-            I = this;
-            Make.Lib = library;
+            if (contentJson == null) throw new System.InvalidOperationException("GameFlow: contentJson is not set in the scene");
+            if (langEn == null) throw new System.InvalidOperationException("GameFlow: langEn is not set in the scene");
+            if (langVi == null) throw new System.InvalidOperationException("GameFlow: langVi is not set in the scene");
+            if (library == null) throw new System.InvalidOperationException("GameFlow: library is not set in the scene");
+            if (runOver == null) throw new System.InvalidOperationException("GameFlow: runOver is not set in the scene");
+            if (toast == null) throw new System.InvalidOperationException("GameFlow: toast is not set in the scene");
+            if (eventView == null) throw new System.InvalidOperationException("GameFlow: eventView is not set in the scene");
+            if (choice == null) throw new System.InvalidOperationException("GameFlow: choice is not set in the scene");
+            if (pause == null) throw new System.InvalidOperationException("GameFlow: pause is not set in the scene");
+            if (screenFx == null) throw new System.InvalidOperationException("GameFlow: screenFx is not set in the scene");
+            if (reaction == null) throw new System.InvalidOperationException("GameFlow: reaction is not set in the scene");
+            if (story == null) throw new System.InvalidOperationException("GameFlow: story is not set in the scene");
+            if (window == null) throw new System.InvalidOperationException("GameFlow: window is not set in the scene");
+            if (tutorial == null) throw new System.InvalidOperationException("GameFlow: tutorial is not set in the scene");
+            if (title == null) throw new System.InvalidOperationException("GameFlow: title is not set in the scene");
+            if (goalsView == null) throw new System.InvalidOperationException("GameFlow: goalsView is not set in the scene");
+            if (journalView == null) throw new System.InvalidOperationException("GameFlow: journalView is not set in the scene");
+            Art.Lib = library;
+            Loc.Use(langEn, langVi);
             settings = Save.LoadSettings();
             Loc.InitFromPlayer(settings.language);
             Haptics.Enabled = settings.haptics;
@@ -98,8 +173,7 @@ namespace Athanor.Game
             Application.targetFrameRate = 60;
 #endif
             PrimeTweenConfig.SetTweensCapacity(200);   // a long chain runs many FloatTexts, Consumes and rack flights at once
-            Db = new ContentDb(JsonUtility.FromJson<ContentData>(Resources.Load<TextAsset>("content").text));
-            var layout = JsonUtility.FromJson<LayoutData>(Resources.Load<TextAsset>("layout").text);
+            Db = new ContentDb(JsonUtility.FromJson<ContentData>(contentJson.text));
             Journal = Save.LoadJournal();
             Profile = Save.LoadProfile(Db);
             unlocks = Unlocks.For(Db, Profile);
@@ -107,33 +181,35 @@ namespace Athanor.Game
             var light = GameObject.Find("Ambient Light"); if (light != null) ambient = light.GetComponent<Light2D>();
             var beam = workshop.transform.Find("Moonbeam"); if (beam != null) moon = beam.GetComponent<Light2D>();
 
-            gameObject.AddComponent<ScreenFx>().Build(mainCamera);
-            Bench = Make.Root("Bench").gameObject.AddComponent<BenchView>();
-            Bench.Build(layout, Db, null);
+            screenFx.Bind(mainCamera, depthStage != null ? depthStage.sway : null);
+            PointerInput.Rig = depthStage != null ? depthStage.rig : null;
+            if (bench == null) throw new System.InvalidOperationException("GameFlow.bench is not set: put Prefabs/Views/Bench.prefab in Main.unity and assign it");
+            bench.Bind(Db);
+            if (depthStage != null) depthStage.PlaceTiles(Bench, Bench.TileCount);
             Bench.IgniteRequested += Ignite;
-            Bench.RedrawRequested += () => { if (State == FlowState.Bench && Run.Redraw()) Bench.Refresh(true); };
+            Bench.RedrawRequested += OnRedraw;
             Bench.JournalRequested += OpenJournal;
 
-            reaction = gameObject.AddComponent<ReactionCutscene>(); reaction.Build(cutsceneRoom, workshop, Bench.gameObject);
-            story = gameObject.AddComponent<SimpleCutscene>(); story.Build(cutsceneRoom, workshop, Bench.gameObject);
-            window = gameObject.AddComponent<WindowView>(); window.Build(workshop.transform);
-            title = Make.Root("Title").gameObject.AddComponent<TitleView>(); title.Build(settings);
+            reaction.Bind(new[] { workshop, Bench.gameObject });
+            window.Bind();
+            if (depthStage != null) { depthStage.window = window; if (depthStage.effects != null) depthStage.effects.window = window; window.Soft = depthStage.effects == null || depthStage.effects.effectsOn; }
+            title.Bind(settings);
             title.SettingsClosed += SaveSettings;
             title.JournalClicked += OpenJournal;
             title.GoalsClicked += OpenGoals;
             title.ResetConfirmed += ResetProgress;
             tut = null;
-            tutorial = gameObject.AddComponent<TutorialController>(); tutorial.Build();
-            journalView = Make.Root("Journal").gameObject.AddComponent<JournalView>(); journalView.Build(Db);
+            tutorial.Bind(this);
+            journalView.Bind(Db);
             journalView.Closed += CloseJournal;
-            choice = Make.Root("Catalyst Choice").gameObject.AddComponent<CatalystChoiceView>(); choice.Build();
-            RunOver = Make.Root("Run Over").gameObject.AddComponent<RunOverView>(); RunOver.Build();
-            RunOver.GoalsClicked += OpenGoals;
-            eventView = Make.Root("Event").gameObject.AddComponent<EventView>(); eventView.Build();
-            goalsView = Make.Root("Goals").gameObject.AddComponent<GoalsView>(); goalsView.Build(Db);
+            choice.Bind();
+            runOver.Bind();
+            runOver.GoalsClicked += OpenGoals;
+            eventView.Bind();
+            goalsView.Bind(Db);
             goalsView.Closed += CloseGoals;
-            toast = Make.Root("Goal Toast").gameObject.AddComponent<GoalToast>(); toast.Build();
-            pause = Make.Root("Pause").gameObject.AddComponent<PauseMenu>(); pause.Build(settings);
+            toast.Bind();
+            pause.Bind(settings);
             pause.CanOpen = CanPause;
             pause.Opened += OnPauseOpened;
             pause.Closed += OnPauseClosed;
@@ -146,15 +222,22 @@ namespace Athanor.Game
 
         void SaveSettings() => Save.StoreSettings(settings);
 
+        void OnRedraw() { if (State == FlowState.Bench && Run.Redraw()) Bench.Refresh(true); }
+
         void OnPauseOpened() => Bench.InputEnabled = false;
         void OnPauseClosed() { if (State == FlowState.Bench) Bench.InputEnabled = true; }
         void OpenPause() => pause.Open();
 
         void OnDestroy()
         {
-            if (title != null) title.SettingsClosed -= SaveSettings;
+            PointerInput.Rig = null;
+            if (runOver != null) runOver.GoalsClicked -= OpenGoals;
+            if (goalsView != null) goalsView.Closed -= CloseGoals;
+            if (journalView != null) journalView.Closed -= CloseJournal;
+            if (title != null) { title.SettingsClosed -= SaveSettings; title.JournalClicked -= OpenJournal; title.GoalsClicked -= OpenGoals; title.ResetConfirmed -= ResetProgress; }
             if (pause != null) { pause.Opened -= OnPauseOpened; pause.Closed -= OnPauseClosed; pause.QuitConfirmed -= AbandonRun; pause.VibrationChanged -= SaveSettings; }
             if (Bench != null && Bench.Hud != null) Bench.Hud.PauseClicked -= OpenPause;
+            if (Bench != null) { Bench.IgniteRequested -= Ignite; Bench.RedrawRequested -= OnRedraw; Bench.JournalRequested -= OpenJournal; }
             Time.timeScale = 1f;
         }
 
@@ -273,7 +356,7 @@ namespace Athanor.Game
         /// <summary>The tutorial's lessons; a replay ends at 5.5 and goes back to the title, the first run goes on as a normal run.</summary>
         IEnumerator RunTutorial()
         {
-            yield return tut.Drive(this);
+            yield return tut.Drive();
             var pending = heldGoals.ToArray(); heldGoals.Clear();
             bool replay = sandbox;
             tut = null;
@@ -404,6 +487,7 @@ namespace Athanor.Game
             if (ambient != null) ambient.color = Ambient[i];
             if (moon != null) moon.intensity = Moon[i];
             if (window == null) return;
+            if (depthStage != null) depthStage.ShowMood(depth, DepthLook.ThemedWindow(inRun, tut != null, sandbox));
             // the view through the window changes with the depth, inside a normal run only; the title and the tutorials keep the night sky
             if (DepthLook.ThemedWindow(inRun, tut != null, sandbox)) window.Show(depth); else window.ShowNight();
         }
@@ -606,8 +690,8 @@ namespace Athanor.Game
         /// <summary>The new material pops out between the two tiles, then arcs down into its well on the rack.</summary>
         IEnumerator ToRack(MaterialData m, Color colour, Vector3 from, int slot, float pace)
         {
-            var halo = Make.Glow(Bench.transform, from, 26, colour.Alpha(0.6f), 164);
-            var icon = Make.Sprite(Bench.transform, m.id, from, 165);
+            var halo = Spawn.Glow(Bench.transform, from, 26, colour.Alpha(0.6f), 164);
+            var icon = Spawn.Sprite(Bench.transform, m.id, from, 165);
             float pop = 0.3f * pace, fly = 0.4f * pace;
             var up = from + new Vector3(0, 8, 0);
             yield return Sequence.Create()
@@ -689,7 +773,13 @@ namespace Athanor.Game
 
         void Update()
         {
+            if (depthStage != null)
+            {
+                depthStage.SwayOn = settings.sway;
+                if (depthStage.rig.Flat != cutsceneRoom.activeSelf) depthStage.SetFlat(cutsceneRoom.activeSelf);
+            }
             var kb = Keyboard.current;
+            if (kb != null) DevKeys(kb);
             if (kb != null && kb.f9Key.wasPressedThisFrame && (Application.isEditor || Debug.isDebugBuild)) ToggleAuto();
             if (State == FlowState.Resolving && !inCutscene && PointerInput.Down) hurry = true;
             if (Bench != null && Bench.Hud != null) Bench.Hud.SetPauseShown(!pause.IsOpen && CanPause());
@@ -697,7 +787,7 @@ namespace Athanor.Game
             autoClock -= Time.deltaTime;
             if (autoClock > 0) return;
             autoClock = 0.45f;
-            reaction.Skip(); story.Skip();
+            reaction.RequestSkip(); story.RequestSkip();
             if (State != FlowState.Bench || Run == null || Run.Phase != RunPhase.Playing || !Bench.InputEnabled) return;
             if (autoReady && Run.CanIgnite) { autoReady = false; Ignite(); return; }
             var move = autoPlayer.Decide(Run);

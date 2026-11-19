@@ -36,4 +36,4 @@ aliases: []
 [[GameFlow]], [[RunState]], [[TutorialScript]]
 
 ## Tested by
-[[HudTests]], [[LoreTests]], [[Phase3Tests]], [[RarityReportTests]], [[RarityTests]], [[RoleSimTests]], [[TutorialFlowTests]], [[TutorialTests]]
+[[HudTests]], [[LoreTests]], [[Phase3Tests]], [[PrefabBakeTests]], [[RarityReportTests]], [[RarityTests]], [[TutorialFlowTests]], [[TutorialTests]]

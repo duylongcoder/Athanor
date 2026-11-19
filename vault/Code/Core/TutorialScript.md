@@ -14,7 +14,7 @@ aliases: []
 `public static class TutorialScript`
 - Layer: **Core** · Source: `Athanor/Assets/Scripts/Core/Tutorial.cs:32-123`
 
-> The tutorial (docs/devlogs/phase-4-tutorial-script.md, v2) as data. Every number the script shows is pinned by TutorialTests; change both together.
+> The tutorial (docs/ATHANOR.md §8, v2) as data. Every number the script shows is pinned by TutorialTests; change both together.
 
 ## Members
 | Kind | Signature | Line | Note |

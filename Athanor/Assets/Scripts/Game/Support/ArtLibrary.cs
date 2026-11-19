@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Athanor.Game
 {
-    /// <summary>Every sprite, effect sheet, font and material the game looks up by name. Built by Athanor > Build Scene.</summary>
+    /// <summary>Every sprite, effect sheet, font and material the game looks up by name. Built by Athanor > Refresh Art Library.</summary>
     public sealed class ArtLibrary : ScriptableObject
     {
         public Sprite[] sprites;

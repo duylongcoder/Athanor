@@ -35,6 +35,7 @@
     {"key": "ui.settings.sound", "text": "Sound"},
     {"key": "ui.settings.ambience", "text": "Ambience"},
     {"key": "ui.settings.vibration", "text": "Vibration"},
+    {"key": "ui.settings.sway", "text": "Camera sway"},
     {"key": "ui.settings.language", "text": "Language"},
     {"key": "ui.settings.on", "text": "On"},
     {"key": "ui.settings.off", "text": "Off"},

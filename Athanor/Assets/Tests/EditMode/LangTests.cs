@@ -24,7 +24,7 @@ namespace Athanor.Tests
         /// <summary>
         /// Characters the Vietnamese font draws (SVN-Coder's Crux only; Determination Sans was removed at Gate G1), measured
         /// from its cmap table (re-measured 2026-11-15, same set): printable ASCII, the 134 precomposed Vietnamese letters, and the punctuation below.
-        /// Crux has no en dash (U+2013), so it is left out. See docs/devlogs/phase-4-settings-localization.md.
+        /// Crux has no en dash (U+2013), so it is left out. See docs/ATHANOR.md §3.
         /// </summary>
         const string VietLower = "àáâãèéêìíòóôõùúýăđĩũơưạảấầẩẫậắằẳẵặẹẻẽếềểễệỉịọỏốồổỗộớờởỡợụủứừửữựỳỵỷỹ";
         const string VietUpper = "ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝĂĐĨŨƠƯẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼẾỀỂỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪỬỮỰỲỴỶỸ";
@@ -61,7 +61,7 @@ namespace Athanor.Tests
 
         // ---- the real files ----
 
-        [Test] public void BothFilesParse_WithTheirLanguageAndName()
+        [Test] public void LangFiles_WhenParsed_HoldTheirLanguageAndName()
         {
             Assert.AreEqual("en", enFile.language); Assert.AreEqual("English", enFile.name);
             Assert.AreEqual("vi", viFile.language); Assert.AreEqual("Tiếng Việt", viFile.name);
@@ -70,7 +70,7 @@ namespace Athanor.Tests
         }
 
 #if !UNITY_5_3_OR_NEWER
-        [Test] public void SystemTextJson_ReadsTheSameEntries()
+        [Test] public void SystemTextJson_WhenReadingBothFiles_ReadsTheSameEntries()
         {
             var opts = new System.Text.Json.JsonSerializerOptions { IncludeFields = true };
             foreach (var (code, mine) in new[] { ("en", enFile), ("vi", viFile) })
@@ -88,7 +88,7 @@ namespace Athanor.Tests
         }
 #endif
 
-        [Test] public void NoDuplicateKeys()
+        [Test] public void LangFiles_WhenGroupedByKey_HaveNoDuplicateKeys()
         {
             foreach (var f in new[] { enFile, viFile })
             {
@@ -97,23 +97,23 @@ namespace Athanor.Tests
             }
         }
 
-        [Test] public void NoEmptyText()
+        [Test] public void LangFiles_WhenCheckingEntries_HaveNoEmptyText()
         {
             foreach (var f in new[] { enFile, viFile })
                 CollectionAssert.IsEmpty(f.entries.Where(e => string.IsNullOrWhiteSpace(e.text)).Select(e => e.key).ToList(), f.language);
         }
 
-        [Test] public void EnglishFile_HoldsNoContentKeys()
+        [Test] public void EnglishFile_ComparedWithContentKeys_HoldsNoContentKeys()
         {
             CollectionAssert.IsEmpty(en.Keys.Where(contentEn.ContainsKey).ToList(), "content English stays in content.json");
         }
 
-        [Test] public void EveryVietnameseKey_IsAnEnglishKeyOrAContentKey()
+        [Test] public void VietnameseKeys_WhenLookedUpInEnglish_AreAnEnglishKeyOrAContentKey()
         {
             CollectionAssert.IsEmpty(vi.Keys.Where(k => English(k) == null).ToList());
         }
 
-        [Test] public void Vietnamese_HasEveryUiKey()
+        [Test] public void Vietnamese_ComparedWithEnglishKeys_HasEveryUiKey()
         {
             CollectionAssert.IsEmpty(vi.Missing(en.Keys));
         }
@@ -126,13 +126,13 @@ namespace Athanor.Tests
             CollectionAssert.IsEmpty(vi.Keys.Where(Name).ToList(), "item names fall back to content.json");
         }
 
-        [Test] public void Vietnamese_IsNotStale()
+        [Test] public void Vietnamese_ComparedWithCurrentEnglish_IsNotStale()
         {
             CollectionAssert.IsEmpty(vi.Stale(AllEnglish()), "the en field no longer matches the English: re-translate");
             CollectionAssert.IsEmpty(viFile.entries.Where(e => string.IsNullOrEmpty(e.en)).Select(e => e.key).ToList(), "every entry records its English");
         }
 
-        [Test] public void Placeholders_MatchTheEnglish()
+        [Test] public void Placeholders_InEveryVietnameseEntry_MatchTheEnglish()
         {
             var bad = new List<string>();
             foreach (var e in viFile.entries)
@@ -144,7 +144,7 @@ namespace Athanor.Tests
             CollectionAssert.IsEmpty(bad);
         }
 
-        [Test] public void EveryVietnameseCharacter_IsInBothFonts()
+        [Test] public void VietnameseText_WhenCheckedAgainstTheFontSet_UsesOnlyCharactersInBothFonts()
         {
             var set = FontSet();
             var text = viFile.name + string.Concat(viFile.entries.Select(e => e.text));
@@ -152,14 +152,14 @@ namespace Athanor.Tests
             CollectionAssert.IsEmpty(missing);
         }
 
-        [Test] public void Vietnamese_IsPrecomposed()
+        [Test] public void Vietnamese_WhenNormalizedToFormC_IsUnchangedAndPrecomposed()
         {
             var bad = viFile.entries.Where(e => e.text != e.text.Normalize(System.Text.NormalizationForm.FormC)).Select(e => e.key).ToList();
             CollectionAssert.IsEmpty(bad, "type NFC (dựng sẵn), not letter + combining mark");
         }
 
-        // The English limits from ContentTests.EventTexts_FitTheEventWindow: the best bound until the Vietnamese layout is decided.
-        [Test] public void VietnameseEventTexts_FitTheEventWindow()
+        // The English limits from ContentTests.EventTexts_OfEveryEvent_FitTheEventWindow: the best bound until the Vietnamese layout is decided.
+        [Test] public void VietnameseEventTexts_AgainstEnglishLimits_FitTheEventWindow()
         {
             int Limit(string k) => k.EndsWith(".name") ? 22 : k.EndsWith(".text") ? 56 : k.Contains(".out.") ? 52 : int.MaxValue;
             var bad = viFile.entries.Where(e => e.key.StartsWith("event.") && e.text.Length > Limit(e.key))
@@ -167,14 +167,14 @@ namespace Athanor.Tests
             CollectionAssert.IsEmpty(bad);
         }
 
-        [Test] public void FontSet_HasThe134VietnameseLetters()
+        [Test] public void FontSet_WhenCounted_HasThe134VietnameseLetters()
         {
             Assert.AreEqual(67, VietLower.Length); Assert.AreEqual(67, VietUpper.Length);
             Assert.AreEqual(134, new HashSet<char>(VietLower + VietUpper).Count);
             Assert.AreEqual(VietUpper, VietLower.ToUpperInvariant());
         }
 
-        [Test] public void RealLookups()
+        [Test] public void RealLookups_InVietnameseAndEnglish_ReturnTheShippedText()
         {
             Assert.AreEqual("Bắt đầu", vi.Get("ui.title.begin"));
             Assert.AreEqual("+1 lượt", vi.Plural("note.trials", 1));
@@ -200,7 +200,7 @@ namespace Athanor.Tests
             Assert.AreEqual("no braces", Lang.Fill("no braces", ("n", 3)));
         }
 
-        [Test] public void Fallback_LanguageThenEnglishThenSuppliedThenKey()
+        [Test] public void Fallback_WhenTextIsMissing_GoesLanguageThenEnglishThenSuppliedThenKey()
         {
             var english = Make("en", null, ("a", "A en"), ("b", "B en"));
             var other = Make("xx", english, ("a", "A xx"), ("empty", ""));
@@ -225,13 +225,13 @@ namespace Athanor.Tests
             Assert.AreEqual("missing.other", single.Plural("missing", 2));
         }
 
-        [Test] public void Missing_CountsOtherAsCoveringOne()
+        [Test] public void Missing_WithOtherFormPresent_CountsOtherAsCoveringOne()
         {
             var single = Make("vi", null, ("t.other", "x"), ("a", "y"));
             CollectionAssert.AreEqual(new[] { "b", "c.one" }, single.Missing(new[] { "a", "b", "t.one", "t.other", "c.one" }));
         }
 
-        [Test] public void Stale_FlagsChangedEnglish()
+        [Test] public void Stale_WhenTheEnglishChanged_FlagsTheEntry()
         {
             var file = new LangFile { language = "vi", entries = new[]
             {
@@ -243,7 +243,7 @@ namespace Athanor.Tests
             Assert.AreEqual("one", l.SourceOf("a"));
         }
 
-        [Test] public void Parse_EscapesUnknownFieldsAndBom()
+        [Test] public void Parse_WithEscapesUnknownFieldsAndBom_ReadsTheEntries()
         {
             var f = Lang.Parse("\uFEFF{ \"language\": \"xx\", \"extra\": [1, 2.5, true, null, {}],\n \"entries\": [ {\"key\": \"k\", \"text\": \"a\\nb \\\"q\\\" \\u1EC7\"} ] }");
             Assert.AreEqual("xx", f.language);
@@ -253,7 +253,7 @@ namespace Athanor.Tests
             Assert.Throws<FormatException>(() => Lang.Parse("{ \"entries\": [ {\"key\": \"k\" ] }"));
         }
 
-        [Test] public void ContentEnglish_KeysFollowTheScheme()
+        [Test] public void ContentEnglish_ForShippedContent_KeysFollowTheScheme()
         {
             Assert.AreEqual("A Keepers' Altar", contentEn["event.cracked_altar.name"]);
             Assert.AreEqual("Walk on", contentEn["event.cracked_altar.opt.1.label"]);

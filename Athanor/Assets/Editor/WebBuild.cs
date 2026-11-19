@@ -25,7 +25,7 @@ public static class WebBuild
     [MenuItem("Athanor/Build for Web (quick, with autoplay)")]
     public static void BuildDev() => Run(false, BuildOptions.Development, DevOutput);
 
-    static void Run(bool release, BuildOptions options = BuildOptions.None, string output = Output)
+    static void Run(bool release, BuildOptions options = BuildOptions.None, string output = Output, string scene = "Assets/Scenes/Main.unity")
     {
         var target = NamedBuildTarget.WebGL;
         PlayerSettings.SetIl2CppCodeGeneration(target, Il2CppCodeGeneration.OptimizeSize);
@@ -47,7 +47,7 @@ public static class WebBuild
 
         var report = BuildPipeline.BuildPlayer(new BuildPlayerOptions
         {
-            scenes = new[] { "Assets/Scenes/Main.unity" }, locationPathName = output, target = BuildTarget.WebGL, options = options,
+            scenes = new[] { scene }, locationPathName = output, target = BuildTarget.WebGL, options = options,
         });
         var s = report.summary;
         string line = "Web build " + s.result + ": " + (s.totalSize / 1024 / 1024) + " MB in " + (int)s.totalTime.TotalSeconds + " s, " + s.totalErrors + " errors -> " + output;

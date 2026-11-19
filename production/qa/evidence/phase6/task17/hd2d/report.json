@@ -1,0 +1,282 @@
+{
+ "url": "http://localhost:8080/",
+ "viewport": "640x360",
+ "scale": 1,
+ "canvas": "640x360 css 640x360",
+ "load_seconds": 0.5,
+ "hudShot": "hud-bench-640x360.png",
+ "tiles_sway": "27/27",
+ "tiles_shake": "16/27",
+ "checks": [
+  {
+   "name": "sway tile 0 point 0",
+   "ok": true,
+   "detail": "art 217.8,166.1"
+  },
+  {
+   "name": "sway tile 0 point 3",
+   "ok": true,
+   "detail": "art 280.9,146.9"
+  },
+  {
+   "name": "sway tile 0 point 4",
+   "ok": true,
+   "detail": "art 249.7,156.6"
+  },
+  {
+   "name": "sway tile 1 point 0",
+   "ok": true,
+   "detail": "art 290.1,165.9"
+  },
+  {
+   "name": "sway tile 1 point 3",
+   "ok": true,
+   "detail": "art 349.8,147.1"
+  },
+  {
+   "name": "sway tile 1 point 4",
+   "ok": true,
+   "detail": "art 319.9,156.4"
+  },
+  {
+   "name": "sway tile 2 point 0",
+   "ok": true,
+   "detail": "art 359.1,166.0"
+  },
+  {
+   "name": "sway tile 2 point 3",
+   "ok": true,
+   "detail": "art 422.1,146.9"
+  },
+  {
+   "name": "sway tile 2 point 4",
+   "ok": true,
+   "detail": "art 390.3,156.6"
+  },
+  {
+   "name": "sway tile 3 point 0",
+   "ok": true,
+   "detail": "art 207.0,197.0"
+  },
+  {
+   "name": "sway tile 3 point 3",
+   "ok": true,
+   "detail": "art 277.0,179.0"
+  },
+  {
+   "name": "sway tile 3 point 4",
+   "ok": true,
+   "detail": "art 242.0,188.0"
+  },
+  {
+   "name": "sway tile 4 point 0",
+   "ok": true,
+   "detail": "art 287.0,197.0"
+  },
+  {
+   "name": "sway tile 4 point 3",
+   "ok": true,
+   "detail": "art 353.0,179.0"
+  },
+  {
+   "name": "sway tile 4 point 4",
+   "ok": true,
+   "detail": "art 320.0,188.0"
+  },
+  {
+   "name": "sway tile 5 point 0",
+   "ok": true,
+   "detail": "art 363.0,197.0"
+  },
+  {
+   "name": "sway tile 5 point 3",
+   "ok": true,
+   "detail": "art 433.0,179.0"
+  },
+  {
+   "name": "sway tile 5 point 4",
+   "ok": true,
+   "detail": "art 398.0,188.0"
+  },
+  {
+   "name": "sway tile 6 point 0",
+   "ok": true,
+   "detail": "art 195.8,228.9"
+  },
+  {
+   "name": "sway tile 6 point 3",
+   "ok": true,
+   "detail": "art 272.9,210.1"
+  },
+  {
+   "name": "sway tile 6 point 4",
+   "ok": true,
+   "detail": "art 234.7,219.4"
+  },
+  {
+   "name": "sway tile 7 point 0",
+   "ok": true,
+   "detail": "art 283.1,229.1"
+  },
+  {
+   "name": "sway tile 7 point 3",
+   "ok": true,
+   "detail": "art 356.8,209.9"
+  },
+  {
+   "name": "sway tile 7 point 4",
+   "ok": true,
+   "detail": "art 319.9,219.6"
+  },
+  {
+   "name": "sway tile 8 point 0",
+   "ok": true,
+   "detail": "art 367.2,228.9"
+  },
+  {
+   "name": "sway tile 8 point 3",
+   "ok": true,
+   "detail": "art 444.0,210.1"
+  },
+  {
+   "name": "sway tile 8 point 4",
+   "ok": true,
+   "detail": "art 405.3,219.4"
+  },
+  {
+   "name": "shake tile 0 point 0",
+   "ok": true,
+   "detail": "art 216.2,164.0"
+  },
+  {
+   "name": "shake tile 0 point 3",
+   "ok": false,
+   "detail": "art 284.0,145.9 pre-inside=false post-inside=false drift=3.4px"
+  },
+  {
+   "name": "shake tile 0 point 4",
+   "ok": true,
+   "detail": "art 252.7,156.6"
+  },
+  {
+   "name": "shake tile 1 point 0",
+   "ok": false,
+   "detail": "art 289.2,168.0 pre-inside=false post-inside=false drift=1.1px"
+  },
+  {
+   "name": "shake tile 1 point 3",
+   "ok": true,
+   "detail": "art 348.0,148.0"
+  },
+  {
+   "name": "shake tile 1 point 4",
+   "ok": true,
+   "detail": "art 316.8,155.5"
+  },
+  {
+   "name": "shake tile 2 point 0",
+   "ok": true,
+   "detail": "art 360.8,167.9"
+  },
+  {
+   "name": "shake tile 2 point 3",
+   "ok": false,
+   "detail": "art 425.0,147.1 pre-inside=false post-inside=false drift=5.6px"
+  },
+  {
+   "name": "shake tile 2 point 4",
+   "ok": true,
+   "detail": "art 390.7,154.4"
+  },
+  {
+   "name": "shake tile 3 point 0",
+   "ok": false,
+   "detail": "art 206.0,198.0 pre-inside=false post-inside=false drift=4.1px"
+  },
+  {
+   "name": "shake tile 3 point 3",
+   "ok": true,
+   "detail": "art 279.0,180.0"
+  },
+  {
+   "name": "shake tile 3 point 4",
+   "ok": false,
+   "detail": "art 239.0,186.0 pre-inside=false post-inside=false drift=5.0px"
+  },
+  {
+   "name": "shake tile 4 point 0",
+   "ok": true,
+   "detail": "art 290.0,195.0"
+  },
+  {
+   "name": "shake tile 4 point 3",
+   "ok": false,
+   "detail": "art 354.0,181.0 pre-inside=false post-inside=false drift=4.0px"
+  },
+  {
+   "name": "shake tile 4 point 4",
+   "ok": true,
+   "detail": "art 318.0,189.0"
+  },
+  {
+   "name": "shake tile 5 point 0",
+   "ok": false,
+   "detail": "art 362.0,195.0 pre-inside=false post-inside=false drift=4.1px"
+  },
+  {
+   "name": "shake tile 5 point 3",
+   "ok": true,
+   "detail": "art 435.0,179.0"
+  },
+  {
+   "name": "shake tile 5 point 4",
+   "ok": false,
+   "detail": "art 395.0,187.0 pre-inside=false post-inside=false drift=5.1px"
+  },
+  {
+   "name": "shake tile 6 point 0",
+   "ok": true,
+   "detail": "art 197.9,227.1"
+  },
+  {
+   "name": "shake tile 6 point 3",
+   "ok": false,
+   "detail": "art 275.8,207.9 pre-inside=false post-inside=false drift=5.0px"
+  },
+  {
+   "name": "shake tile 6 point 4",
+   "ok": true,
+   "detail": "art 235.6,221.6"
+  },
+  {
+   "name": "shake tile 7 point 0",
+   "ok": false,
+   "detail": "art 280.1,231.0 pre-inside=false post-inside=false drift=4.8px"
+  },
+  {
+   "name": "shake tile 7 point 3",
+   "ok": true,
+   "detail": "art 354.2,211.0"
+  },
+  {
+   "name": "shake tile 7 point 4",
+   "ok": true,
+   "detail": "art 316.9,220.5"
+  },
+  {
+   "name": "shake tile 8 point 0",
+   "ok": false,
+   "detail": "art 366.0,227.9 pre-inside=false post-inside=false drift=4.7px"
+  },
+  {
+   "name": "shake tile 8 point 3",
+   "ok": true,
+   "detail": "art 446.8,209.1"
+  },
+  {
+   "name": "shake tile 8 point 4",
+   "ok": true,
+   "detail": "art 406.5,218.4"
+  }
+ ]
+}

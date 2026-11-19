@@ -26,4 +26,4 @@ aliases: []
 [[BenchView]], [[CatalystChoiceView]], [[ContentDb]], [[GoalsView]], [[JournalView]], [[Loc]], [[RarityStars]], [[RunState]], [[Unlocks]], [[Wording]]
 
 ## Tested by
-[[Phase3Tests]], [[RarityReportTests]], [[RarityTests]]
+[[Phase3Tests]], [[PrefabBakeTests]], [[RarityReportTests]], [[RarityTests]]

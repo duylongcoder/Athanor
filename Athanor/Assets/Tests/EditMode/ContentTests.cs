@@ -11,13 +11,13 @@ namespace Athanor.Tests
         ContentData data; ContentDb db;
         [SetUp] public void Load() { data = TestContent.Load(); db = new ContentDb(data); }
 
-        [Test] public void Has13Starters_8OfThemOpen()
+        [Test] public void Starters_InTheLoadedContent_Number13With8OfThemOpen()
         {
             Assert.AreEqual(13, db.Starters.Count);
             Assert.AreEqual(8, db.Starters.Count(m => !m.locked));
         }
 
-        [Test] public void Has7Kinds_EachUsed()
+        [Test] public void Kinds_AcrossAllMaterials_Number7AndEachIsUsed()
         {
             var used = data.materials.Select(m => db.KindOf(m.id)).Distinct().Count();
             Assert.AreEqual(7, used);
@@ -32,14 +32,14 @@ namespace Athanor.Tests
         [Test] public void EveryMaterialFitsTheJournalGrid() =>
             Assert.That(data.materials.Length, Is.LessThanOrEqualTo(120));   // JournalView: two pages of 10 columns x 6 rows
 
-        [Test] public void ComboRecipeCounts()
+        [Test] public void ComboRecipes_ByItemCount_FallInTheExpectedRanges()
         {
             Assert.That(db.Recipes.Count(r => r.items.Length == 3), Is.InRange(15, 19), "three-item");
             Assert.That(db.Recipes.Count(r => r.items.Length == 4), Is.InRange(5, 8), "four-item");
             Assert.That(db.Recipes.Count(r => r.items.Length == 5), Is.InRange(2, 4), "five-item");
         }
 
-        [Test] public void UltimateReachable_ViaAtLeastOneCombo()
+        [Test] public void Ultimate_TracedBackThroughRecipes_IsReachableViaAtLeastOneCombo()
         {
             var seen = new HashSet<string> { db.Ultimate };
             var queue = new Queue<string>(seen);
@@ -56,7 +56,7 @@ namespace Athanor.Tests
             Assert.IsTrue(viaCombo);
         }
 
-        [Test] public void EveryDiscovery_IsUsedOrIsTheUltimate()
+        [Test] public void EveryDiscovery_ExceptKnownDeadEnds_IsUsedOrIsTheUltimate()
         {
             // the only dead ends are the four tier-4 results of the Phase 3 side branch
             var deadEnds = new[] { "thunder_heart", "ossuary_crown", "storm_philter", "copper_sun" };
@@ -64,7 +64,7 @@ namespace Athanor.Tests
                 Assert.AreEqual(deadEnds.Contains(m.id), db.RecipesContaining(m.id).Count == 0, m.id);
         }
 
-        [Test] public void Has26Catalysts_9OfThemOpen()
+        [Test] public void Catalysts_InTheLoadedContent_Number26With9OfThemOpen()
         {
             Assert.AreEqual(26, db.Catalysts.Count);
             Assert.AreEqual(9, db.Catalysts.Count(c => !c.locked));
@@ -77,7 +77,7 @@ namespace Athanor.Tests
             Assert.AreEqual(0, db.TargetFor(5));
         }
 
-        [Test] public void EveryRecipe_UsesItemsForm()
+        [Test] public void EveryRecipe_InTheLoadedContent_UsesItemsForm()
         {
             foreach (var r in TestContent.Load().recipes)
             {
@@ -137,7 +137,7 @@ namespace Athanor.Tests
                     "tier " + tier + " has no recipe that needs company");
         }
 
-        [Test] public void Company_IsWhatARecipeLacksOnItsOwn()
+        [Test] public void Company_ForARecipeAskingMoreThanItsOwnHeat_IsWhatItLacksOnItsOwn()
         {
             var c = new ContentDb(TestContent.Combo(19));
             Assert.IsTrue(c.TryCombo(new[] { "p", "q", "r" }, out var z));
@@ -156,14 +156,14 @@ namespace Athanor.Tests
             Assert.Throws<ArgumentException>(() => new ContentDb(With(TestContent.Rec(new[] { "s", "p", "q", "t" }, 37, "quad"))));
         }
 
-        [Test] public void BasePotency_ByTier()
+        [Test] public void BasePotency_ForTiersOneToFive_MatchesTheTable()
         {
             Assert.AreEqual(20, ContentDb.BasePotency(1)); Assert.AreEqual(60, ContentDb.BasePotency(2));
             Assert.AreEqual(180, ContentDb.BasePotency(3)); Assert.AreEqual(500, ContentDb.BasePotency(4));
             Assert.AreEqual(1500, ContentDb.BasePotency(5));
         }
 
-        [Test] public void TryReact_IsUnordered()
+        [Test] public void TryReact_WithThePairInEitherOrder_GivesTheSameResult()
         {
             Assert.IsTrue(db.TryReact("ember_coal", "deep_tear", out var r1));
             Assert.IsTrue(db.TryReact("deep_tear", "ember_coal", out var r2));
@@ -176,7 +176,7 @@ namespace Athanor.Tests
             Assert.IsNull(r);
         }
 
-        [Test] public void EveryRecipeResultTier_IsMaxInputTierPlus1()
+        [Test] public void EveryRecipe_ResultTier_IsMaxInputTierPlus1()
         {
             foreach (var r in db.Recipes)
             {
@@ -185,14 +185,14 @@ namespace Athanor.Tests
             }
         }
 
-        [Test] public void UltimateIsTier5_FromTwoTier4()
+        [Test] public void Ultimate_AndItsRecipes_IsTier5FromTier4Inputs()
         {
             Assert.AreEqual(5, db.Material(db.Ultimate).tier);
             foreach (var r in db.Recipes.Where(r => r.result == db.Ultimate))
                 foreach (var i in r.items) Assert.AreEqual(4, db.Material(i).tier);
         }
 
-        [Test] public void EveryMaterialReachableFromStarters()
+        [Test] public void EveryMaterial_FollowingRecipesFromStarters_IsReachable()
         {
             var have = new HashSet<string>(db.Starters.Select(m => m.id));
             bool grew = true;
@@ -206,7 +206,7 @@ namespace Athanor.Tests
             Assert.IsEmpty(missing);
         }
 
-        [Test] public void EveryStarterHasAtLeast3Partners()
+        [Test] public void EveryStarter_CountingPartners_HasAtLeast3()
         {
             foreach (var s in db.Starters) Assert.That(db.PartnersOf(s.id).Count(), Is.GreaterThanOrEqualTo(3), s.id);
         }
@@ -239,14 +239,14 @@ namespace Athanor.Tests
             Assert.IsTrue(c.TryReact("b", "a", out var r)); Assert.AreEqual("x", r);
         }
 
-        [Test] public void RecipesContaining_LargestFirst()
+        [Test] public void RecipesContaining_AnItemInSeveralRecipes_ListsLargestFirst()
         {
             var c = new ContentDb(TestContent.Combo());
             var results = c.RecipesContaining("p").Select(r => r.result).ToList();
             CollectionAssert.AreEqual(new[] { "big", "quad", "z", "x" }, results);
         }
 
-        [Test] public void Reactivity_AndTotals()
+        [Test] public void Reactivity_OfAnItemAndAThreeItemCombo_GivesItemAndTotalValues()
         {
             var c = new ContentDb(TestContent.Combo());
             Assert.AreEqual(8, c.Reactivity("p"));
@@ -255,7 +255,7 @@ namespace Athanor.Tests
             Assert.AreEqual("p+q+r", c.KeyOf(z));
         }
 
-        [Test] public void PartnersOf_CoversComboMembers()
+        [Test] public void PartnersOf_AnItemInCombos_CoversComboMembers()
         {
             var c = new ContentDb(TestContent.Combo());
             CollectionAssert.AreEquivalent(new[] { "p", "q", "s", "t" }, c.PartnersOf("r").ToList());
@@ -290,7 +290,7 @@ namespace Athanor.Tests
         [Test] public void Constructor_Throws_OnNegativeMinReactivity() =>
             Assert.Throws<ArgumentException>(() => new ContentDb(With(TestContent.Rec(new[] { "p", "q" }, -1, "x"))));
 
-        [Test] public void Reactivity_SpreadAcrossTiers()
+        [Test] public void Reactivity_OfMaterialsInEachTier_HasBothLowAndHighValues()
         {
             for (int tier = 0; tier <= 4; tier++)
             {
@@ -300,7 +300,7 @@ namespace Athanor.Tests
             }
         }
 
-        [Test] public void Reactivity_NotMonotonicInTier()
+        [Test] public void Reactivity_OfBestStarterAndWorstTier4_IsNotMonotonicInTier()
         {
             int bestStarter = data.materials.Where(m => m.tier == 0).Max(m => m.reactivity);
             int worstTier4 = data.materials.Where(m => m.tier == 4).Min(m => m.reactivity);
@@ -313,7 +313,7 @@ namespace Athanor.Tests
         [Test] public void PairKey_IsOrderIndependent() => Assert.AreEqual(ContentDb.PairKey("b", "a"), ContentDb.PairKey("a", "b"));
 
         [Test]
-        public void EventTexts_FitTheEventWindow()
+        public void EventTexts_OfEveryEvent_FitTheEventWindow()
         {
             foreach (var e in data.events)
             {

@@ -15,60 +15,48 @@ namespace Athanor.Game
     {
         public event Action IgniteRequested, RedrawRequested, JournalRequested;
         public bool InputEnabled { get => inputEnabled; set { inputEnabled = value; if (run != null) Hud.Show(run, db, journal, value); if (!value) DropEverything(); } }
-        public HudView Hud { get; private set; }
+        public HudView Hud => hud;
+        /// <summary>How many tiles the bench holds (nine).</summary>
+        public int TileCount => tiles.Length;
 
         const int RackX = 130, RackY = 256, RackFirst = 6, RackPitch = 31, RackSlots = 12, CardY = 290, HandX = 128, HandW = 386;
 
         enum From { None, Hand, Tile }
         struct Pick { public From from; public int handIndex, tile; public string id; public bool Is => from != From.None; }
-        sealed class Slot { public SpriteRenderer icon, lit; public int handIndex = -1; public string id; public Vector3 pos; }
+        [Serializable] sealed class Slot { public SpriteRenderer icon, lit; public Vector3 pos; [NonSerialized] public int handIndex = -1; [NonSerialized] public string id; }
 
         RunState run; ContentDb db; Journal journal;
         bool inputEnabled;
-        readonly TileView[] tiles = new TileView[Bench.TileCount];
+        // the parts of the Bench prefab: nine tiles, the rack wells, the two link layers, the nested Hud and Tooltip, the hand's root
+        [SerializeField] TileView[] tiles = new TileView[Bench.TileCount];
+        [SerializeField] Slot[] slots = new Slot[RackSlots];
+        [SerializeField] LinkView links, joins;
+        [SerializeField] HudView hud;
+        [SerializeField] Tooltip tip;
+        [SerializeField] CardView cardPrefab;
+        [SerializeField] Transform handRoot;
+        [SerializeField] SpriteRenderer ghost;
+        [SerializeField] Label rackFull;
         readonly List<CardView> cards = new List<CardView>();
-        readonly Slot[] slots = new Slot[RackSlots];
-        LinkView links, joins; Tooltip tip; Transform handRoot; SpriteRenderer ghost; Label rackFull;
+        bool bound;
         readonly string[] tileNote = new string[Bench.TileCount], tileNoteTitle = new string[Bench.TileCount];
         Pick press, selected; Vector2 pressAt; bool dragging;
         float hoverTime; string hoverKey;
 
-        public void Build(LayoutData layout, ContentDb content, Transform parent)
+        /// <summary>
+        /// Once, after the Bench prefab is in the scene: hands over the content, finishes the nested Hud and Tooltip and hooks the
+        /// Hud's buttons. Run state comes later, with Bind(run, journal).
+        /// </summary>
+        public void Bind(ContentDb content)
         {
+            if (bound) return;
+            bound = true;
             db = content;
-            transform.SetParent(parent, false);
-            var tileRoot = Make.Root("Tiles", transform);
-            for (int i = 0; i < tiles.Length; i++)
-            {
-                tiles[i] = new GameObject("Tile " + i).AddComponent<TileView>();
-                tiles[i].Build(i, layout.tiles[i], tileRoot);
-            }
-            links = Make.Root("Links", transform).gameObject.AddComponent<LinkView>();
-            // tiles an aspect has joined (a bridge, an open bench): a slow, steady line of their own colour
-            joins = Make.Root("Joins", transform).gameObject.AddComponent<LinkView>();
-            joins.color = new Color(1.6f, 1.25f, 0.45f); joins.speed = 0.08f; joins.arc = 3; joins.alpha = 0.7f;
-            Hud = Make.Root("Hud", transform).gameObject.AddComponent<HudView>();
-            Hud.Build(transform);
-            Hud.IgniteClicked += () => { if (inputEnabled) IgniteRequested?.Invoke(); };
-            Hud.JournalClicked += () => { if (inputEnabled) JournalRequested?.Invoke(); };
-            Hud.RedrawClicked += () => { if (inputEnabled) RedrawRequested?.Invoke(); };
-
-            var rackRoot = Make.Root("Rack", transform);
-            Make.SpriteAt(rackRoot, "rack", RackX, RackY, 100);
-            for (int i = 0; i < RackSlots; i++)
-            {
-                int x = RackX + RackFirst + i * RackPitch, y = RackY + 2;
-                var s = slots[i] = new Slot { pos = Px.Mid(x, y, 26, 26) };
-                s.lit = Make.SpriteAt(rackRoot, "rack_slot_lit", x, y, 101);
-                s.icon = Make.Sprite(rackRoot, "dot", s.pos, 103);
-                s.lit.enabled = s.icon.enabled = false;
-            }
-            rackFull = Make.Text(rackRoot, "", 320, 246, FontKind.Tiny, 8, Px.Hex("#ee6a3c"), 104, Align.Centre, Px.Hex("#0c0706"));
-            handRoot = Make.Root("Hand", transform);
-            ghost = Make.Sprite(transform, "dot", Vector3.zero, 160);
-            ghost.enabled = false;
-            tip = Make.Root("Tooltip", transform).gameObject.AddComponent<Tooltip>();
-            tip.Build(transform);
+            tip.Bind();
+            hud.Bind();
+            hud.IgniteClicked += () => { if (inputEnabled) IgniteRequested?.Invoke(); };
+            hud.JournalClicked += () => { if (inputEnabled) JournalRequested?.Invoke(); };
+            hud.RedrawClicked += () => { if (inputEnabled) RedrawRequested?.Invoke(); };
         }
 
         public void Bind(RunState state, Journal book)
@@ -86,7 +74,7 @@ namespace Athanor.Game
         public void PreviewOnRack(int i, string id)
         {
             var s = slots[Mathf.Clamp(i, 0, RackSlots - 1)];
-            s.icon.sprite = Make.Lib.Sprite(id); s.icon.color = Color.white; s.icon.enabled = true;
+            s.icon.sprite = Art.Lib.Sprite(id); s.icon.color = Color.white; s.icon.enabled = true;
         }
         public TileView Tile(int i) => tiles[i];
 
@@ -111,7 +99,7 @@ namespace Athanor.Game
                 else if (rack < RackSlots)
                 {
                     var s = slots[rack++];
-                    s.handIndex = h; s.id = m.id; s.icon.sprite = Make.Lib.Sprite(m.id); s.icon.enabled = true; s.icon.color = Color.white;
+                    s.handIndex = h; s.id = m.id; s.icon.sprite = Art.Lib.Sprite(m.id); s.icon.enabled = true; s.icon.color = Color.white;
                 }
             }
             int n = starters.Count;
@@ -120,8 +108,9 @@ namespace Athanor.Game
             for (int k = 0; k < n; k++)
             {
                 var m = db.Material(run.Hand[starters[k]]);
-                var card = new GameObject("Card " + m.id).AddComponent<CardView>();
-                card.Build(m, handRoot, 110 + k * 4);
+                var card = Instantiate(cardPrefab, handRoot, false);
+                card.name = "Card " + m.id;
+                card.Show(m, 110 + k * 4);
                 card.Fan(k < n - 1 ? pitch : CardView.W, 110 + n * 4);     // every card but the last has the next one over its right
                 card.handIndex = starters[k];
                 card.home = Px.Snap(Px.Mid(startX + k * pitch, CardY, CardView.W, CardView.H));
@@ -175,7 +164,7 @@ namespace Athanor.Game
         /// <summary>A number that rises from a point and fades.</summary>
         public IEnumerator FloatText(string text, Vector3 from, Color color, float seconds = 0.8f, bool small = false)
         {
-            var label = Make.Text(transform, text, 0, 0, small ? FontKind.Tiny : FontKind.Title, small ? 8 : 16, color, 170, Align.Centre, Px.Hex("#0c0706"));
+            var label = Spawn.Text(transform, text, 0, 0, small ? FontKind.Tiny : FontKind.Title, small ? 8 : 16, color, 170, Align.Centre, Px.Hex("#0c0706"));
             // it rises the whole time and fades over the last 30 %
             yield return Sequence.Create()
                 .Group(Motion.Move(label.transform, from + new Vector3(0, 6, 0), from + new Vector3(0, 28, 0), seconds, Ease.OutCubic))
@@ -197,6 +186,7 @@ namespace Athanor.Game
 
         Pick ItemAt(Vector2 w)
         {
+            Vector2 tw = PointerInput.Bench;      // tiles are hit through the world ray
             for (int i = cards.Count - 1; i >= 0; i--)
                 if (cards[i].Contains(w)) return new Pick { from = From.Hand, handIndex = cards[i].handIndex, id = cards[i].id, tile = -1 };
             foreach (var s in slots)
@@ -207,7 +197,7 @@ namespace Athanor.Game
             {
                 if (tiles[i].Material == null) continue;
                 var c = tiles[i].centre;
-                if ((Mathf.Abs(w.x - c.x) <= 13 && w.y >= c.y - 3 && w.y <= c.y + 24) || tiles[i].Contains(w))
+                if ((Mathf.Abs(tw.x - c.x) <= 13 && tw.y >= c.y - 3 && tw.y <= c.y + 24) || tiles[i].Contains(tw))
                     return new Pick { from = From.Tile, tile = i, id = tiles[i].Material, handIndex = -1 };
             }
             return default;
@@ -216,16 +206,34 @@ namespace Athanor.Game
         int FreeTileAt(Vector2 w)
         {
             for (int i = tiles.Length - 1; i >= 0; i--)
-                if (tiles[i].Contains(w) && run.Bench.Tiles[i] == null && !run.Rules.Blocked[i]) return i;
+                if (tiles[i].Contains(PointerInput.Bench) && run.Bench.Tiles[i] == null && !run.Rules.Blocked[i]) return i;
             return -1;
+        }
+
+        /// <summary>Development-build log lines of a card put on / taken off a tile (tools/web/mainhd2d.mjs waits for them).</summary>
+        public static string PlaceLine(int tile) => "[bench] place " + tile;
+        public static string UnplaceLine(int tile) => "[bench] unplace " + tile;
+
+        bool PlaceCard(int hand, int tile)
+        {
+            if (!run.Place(hand, tile)) return false;
+            Dev.Hook(PlaceLine(tile));
+            return true;
+        }
+
+        bool UnplaceCard(int tile)
+        {
+            if (!run.Unplace(tile)) return false;
+            Dev.Hook(UnplaceLine(tile));
+            return true;
         }
 
         bool Put(Pick p, int tile)
         {
             if (tile < 0 || !p.Is) return false;
-            if (p.from == From.Hand) return run.Place(p.handIndex, tile);
-            if (!run.Unplace(p.tile)) return false;       // goes to the end of the hand, then on to its new tile
-            return run.Place(run.Hand.Count - 1, tile);
+            if (p.from == From.Hand) return PlaceCard(p.handIndex, tile);
+            if (!UnplaceCard(p.tile)) return false;       // goes to the end of the hand, then on to its new tile
+            return PlaceCard(run.Hand.Count - 1, tile);
         }
 
         void Update()
@@ -245,7 +253,7 @@ namespace Athanor.Game
             if (press.Is && PointerInput.Held && !dragging && Vector2.Distance(w, pressAt) > 4)
             {
                 dragging = true; selected = default;
-                ghost.sprite = Make.Lib.Sprite(press.id); ghost.enabled = true;
+                ghost.sprite = Art.Lib.Sprite(press.id); ghost.enabled = true;
                 if (press.from == From.Tile) tiles[press.tile].Icon.color = Color.white.Alpha(0.3f);
             }
             if (dragging) ghost.transform.position = Px.Snap(new Vector3(w.x, w.y + 6, 0));
@@ -254,10 +262,10 @@ namespace Athanor.Game
                 if (dragging)
                 {
                     if (freeTile >= 0) changed = Put(press, freeTile);
-                    else if (press.from == From.Tile && !tiles[press.tile].Contains(w)) changed = run.Unplace(press.tile);
+                    else if (press.from == From.Tile && !tiles[press.tile].Contains(PointerInput.Bench)) changed = UnplaceCard(press.tile);
                     if (!changed && press.from == From.Tile) tiles[press.tile].Icon.color = Color.white;
                 }
-                else if (press.from == From.Tile) changed = run.Unplace(press.tile);
+                else if (press.from == From.Tile) changed = UnplaceCard(press.tile);
                 else selected = selected.Is && selected.handIndex == press.handIndex ? default : press;
                 press = default; dragging = false; ghost.enabled = false;
             }
@@ -339,7 +347,7 @@ namespace Athanor.Game
                 // an empty tile that an aspect or this depth's event acts on says what it does
                 for (int i = tiles.Length - 1; i >= 0; i--)
                 {
-                    if (tileNote[i] == null || !tiles[i].Contains(w)) continue;
+                    if (tileNote[i] == null || !tiles[i].Contains(PointerInput.Bench)) continue;
                     key = "tile" + i; title = tileNoteTitle[i]; body = tileNote[i]; anchor = tiles[i].centre; clear = 16;
                     break;
                 }

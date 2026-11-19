@@ -75,5 +75,5 @@ tags: [moc/code]
 ## `Core/Tutorial.cs`
 - [[TutorialLay]] _struct_ — One material laid on one tile. This material goes on this tile, not just any lit tile: another arrangement of 
 - [[TutorialTrial]] _class_ — One scripted trial: the hand dealt, where each material goes, and what the Ignite makes, in chain order.
-- [[TutorialScript]] _class_ — The tutorial (docs/devlogs/phase-4-tutorial-script.md, v2) as data. Every number the script shows is pinned by
+- [[TutorialScript]] _class_ — The tutorial (docs/ATHANOR.md §8, v2) as data. Every number the script shows is pinned by TutorialTests; chang
 - [[TutorialPlan]] _enum_ — 

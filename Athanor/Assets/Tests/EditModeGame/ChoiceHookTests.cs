@@ -13,17 +13,17 @@ namespace Athanor.Tests
     /// </summary>
     public class ChoiceHookTests
     {
-        ArtLibrary libBefore;
-        GameObject go;
+        PrefabFixture fixture;
+        CatalystChoiceView view;
         readonly List<string> heard = new List<string>();
 
         void Hear(string line, string stack, LogType type) => heard.Add(line);
 
         [SetUp] public void Build()
         {
-            libBefore = Make.Lib;
-            Make.Lib = AssetDatabase.LoadAssetAtPath<ArtLibrary>("Assets/Art/ArtLibrary.asset");
-            go = new GameObject("choice test");
+            fixture = new PrefabFixture("Assets/Prefabs/Views/CatalystChoice.prefab");
+            view = fixture.Get<CatalystChoiceView>();
+            view.Bind();
             heard.Clear();
             Application.logMessageReceived += Hear;
         }
@@ -32,15 +32,12 @@ namespace Athanor.Tests
         {
             Application.logMessageReceived -= Hear;
             Tween.StopAll();
-            Object.DestroyImmediate(go);
-            Make.Lib = libBefore;
+            fixture.Destroy();
         }
 
         [Test]
         public void Choose_LogsOpenHook_OnlyAfterTheDeal()
         {
-            var view = go.AddComponent<CatalystChoiceView>();
-            view.Build();
             var offer = new List<ChoiceCard>();
             foreach (var id in new[] { "a", "b", "c" }) offer.Add(new ChoiceCard { id = id, sprite = "dot", name = id, text = id });
 

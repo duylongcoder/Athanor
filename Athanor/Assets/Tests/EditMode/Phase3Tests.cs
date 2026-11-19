@@ -168,7 +168,7 @@ namespace Athanor.Tests
         }
 
         /// <summary>Invariant 1: with nothing unlocked, the recipes within reach are exactly those of Phase 2.</summary>
-        [Test] public void FreshProfile_ReachesOnlyThePhase2Recipes()
+        [Test] public void FreshProfile_WithNothingUnlocked_ReachesOnlyThePhase2Recipes()
         {
             var db = new ContentDb(TestContent.Load());
             var have = new HashSet<string>(db.Starters.Where(m => !m.locked).Select(m => m.id));
@@ -181,7 +181,7 @@ namespace Athanor.Tests
             CollectionAssert.AreEqual(Phase2Recipes.OrderBy(x => x).ToList(), within);
         }
 
-        [Test] public void Phase2Content_LoadsWithNoPhase3Fields()
+        [Test] public void Phase2Content_WithNoPhase3Fields_LoadsWithEmptyGoalsAspectsAndEvents()
         {
             var db = new ContentDb(TestContent.Tiny());
             Assert.AreEqual(0, db.Goals.Count); Assert.AreEqual(0, db.Aspects.Count); Assert.AreEqual(0, db.Events.Count);
@@ -307,7 +307,7 @@ namespace Athanor.Tests
 
         // ---- profile ----------------------------------------------------------------------------------
 
-        [Test] public void Profile_CountsWhatAnIgniteDid()
+        [Test] public void Profile_AfterAnIgniteWithAChainOfTwo_CountsWhatAnIgniteDid()
         {
             var r = Start(Mini(999999), null);
             // a on 0 takes b on 1 and becomes x; the a on 3 then takes that x: a chain of two
@@ -484,7 +484,7 @@ namespace Athanor.Tests
             Assert.That(half.Count, Is.GreaterThan(fresh.Count).And.LessThan(all.Count));
         }
 
-        [Test] public void CatalystOffer_HoldsOnlyOpenCatalysts()
+        [Test] public void CatalystOffer_ForAFreshProfile_HoldsOnlyOpenCatalysts()
         {
             var db = new ContentDb(TestContent.Load());
             var fresh = Unlocks.Fresh(db); int offers = 0;
@@ -506,7 +506,7 @@ namespace Athanor.Tests
             Assert.That(offers, Is.GreaterThan(12));
         }
 
-        [Test] public void AFreshRun_Draws5CardsFrom16()
+        [Test] public void AFreshRun_WithFreshUnlocks_Draws5CardsFrom16()
         {
             var db = new ContentDb(TestContent.Load());
             var run = new RunState(db, new Journal(), 1, 1, new RunOptions { Unlocks = Unlocks.Fresh(db) });
@@ -562,7 +562,7 @@ namespace Athanor.Tests
             Assert.AreEqual(30, Score(db, PQ, At0, c)); Assert.AreEqual(120, Score(db, PQR, At0Three, c));
         }
 
-        [Test] public void FlatPerReaction_IsAddedAfterTheMultipliers()
+        [Test] public void FlatPerReaction_WithAChainAndAllScale_IsAddedAfterTheMultipliers()
         {
             var db = new ContentDb(TestContent.Combo());
             Assert.AreEqual(50, Score(db, PQ, At0, Cat(Effects.FlatPerReaction, 30)));
@@ -572,31 +572,31 @@ namespace Athanor.Tests
             Assert.AreEqual(150, both);
         }
 
-        [Test] public void TierDouble_DoublesFromItsTierUp()
+        [Test] public void TierDouble_ForPairsAndTierTwoCombos_DoublesFromItsTierUp()
         {
             var db = new ContentDb(TestContent.Combo()); var c = Cat(Effects.TierDouble, 2);
             Assert.AreEqual(240, Score(db, PQR, At0Three, c)); Assert.AreEqual(20, Score(db, PQ, At0, c));
         }
 
-        [Test] public void StarterDouble_NeedsThatManyStartingMaterials()
+        [Test] public void StarterDouble_WithTwoRequired_NeedsThatManyStartingMaterials()
         {
             var db = new ContentDb(TestContent.Combo()); var c = Cat(Effects.StarterDouble, 2);
             Assert.AreEqual(40, Score(db, PQ, At0, c)); Assert.AreEqual(60, Score(db, XV, At0, c), "x + v holds one starting material");
         }
 
-        [Test] public void ChainFrom_DoublesFromThatLinkOn()
+        [Test] public void ChainFrom_AtChainTwoThreeAndFour_DoublesFromThatLinkOn()
         {
             var db = new ContentDb(TestContent.Combo()); var c = Cat(Effects.ChainFrom, 3);
             Assert.AreEqual(40, Score(db, PQ, At0, c, 2)); Assert.AreEqual(120, Score(db, PQ, At0, c, 3)); Assert.AreEqual(160, Score(db, PQ, At0, c, 4));
         }
 
-        [Test] public void DepthScale_GrowsWithEachDepthBelowTheFirst()
+        [Test] public void DepthScale_AtDepthsOneThreeAndFive_GrowsWithEachDepthBelowTheFirst()
         {
             var db = new ContentDb(TestContent.Combo()); var c = Cat(Effects.DepthScale, 0.25f);
             Assert.AreEqual(20, Score(db, PQ, At0, c, 1, 1)); Assert.AreEqual(30, Score(db, PQ, At0, c, 1, 3)); Assert.AreEqual(40, Score(db, PQ, At0, c, 1, 5));
         }
 
-        [Test] public void AllScale_ScalesEverything()
+        [Test] public void AllScale_ForAPairAndACombo_ScalesEverything()
         {
             var db = new ContentDb(TestContent.Combo());
             Assert.AreEqual(40, Score(db, PQ, At0, Cat(Effects.AllScale, 2))); Assert.AreEqual(240, Score(db, PQR, At0Three, Cat(Effects.AllScale, 2)));
@@ -604,7 +604,7 @@ namespace Athanor.Tests
 
         // ---- the new catalysts: the run -------------------------------------------------------------------
 
-        [Test] public void ExtraRedraw_AddsARedrawAtEveryDepth()
+        [Test] public void ExtraRedraw_WhenHeld_AddsARedrawAtEveryDepth()
         {
             var r = Holding(Cat(Effects.ExtraRedraw, 1));
             Assert.AreEqual(RunState.BaseRedraws + 1, r.RedrawsLeft);
@@ -712,7 +712,7 @@ namespace Athanor.Tests
             Assert.AreEqual(BenchRules.MaxRi, new BenchRules { RiShift = 20 }.Ri(db, 0, "a"));
         }
 
-        [Test] public void PlainRules_PlanExactlyAsPhase2Did()
+        [Test] public void PlainRules_OnRandomBenches_PlanExactlyAsPhase2Did()
         {
             var db = new ContentDb(TestContent.Load());
             var ids = db.Materials.Select(m => m.id).ToList(); var rng = new Rng(11);
@@ -750,7 +750,7 @@ namespace Athanor.Tests
             Assert.AreEqual(1, plan.Steps[0].Hub); Assert.AreEqual("x", plan.Final[1]); Assert.IsNull(plan.Final[0]);
         }
 
-        [Test] public void HeatedTile_MakesItsMaterialTheHub()
+        [Test] public void HeatedTile_WithABonusOnOneOfTwoItems_MakesItsMaterialTheHub()
         {
             var db = new ContentDb(Mini());
             var tiles = new string[Bench.TileCount]; tiles[0] = "a"; tiles[1] = "b";
@@ -759,7 +759,7 @@ namespace Athanor.Tests
             Assert.AreEqual(13, ChainPlanner.Heat(tiles, 0, db, r));
         }
 
-        [Test] public void Pairs_FollowLinksAndSkipBlockedTiles()
+        [Test] public void Pairs_WithLinksAndBlockedTiles_FollowLinksAndSkipBlockedTiles()
         {
             var bench = new Bench(); bench.Tiles[0] = "a"; bench.Tiles[8] = "b";
             Assert.AreEqual(0, IgniteResolver.Pairs(bench, BenchRules.None).Count);
@@ -770,7 +770,7 @@ namespace Athanor.Tests
             Assert.IsFalse(IgniteResolver.HasAnyPair(b, shut));
         }
 
-        [Test] public void Score_ReadsTheHubsTile()
+        [Test] public void Score_WithTileRulesOnTheHub_ReadsTheHubsTile()
         {
             var db = new ContentDb(TestContent.Combo());
             var doubled = new BenchRules(); doubled.HubMult[0] = 2;
@@ -803,7 +803,7 @@ namespace Athanor.Tests
 
         // ---- aspects ----------------------------------------------------------------------------------
 
-        [Test] public void LegacyRun_NeverStopsForAnAspectOrAnEvent()
+        [Test] public void LegacyRun_WithoutAspectsOrEvents_NeverStopsForAnAspectOrAnEvent()
         {
             var r = Start(MiniWithRealStart(), null);
             for (int depth = 1; depth < RunState.FinalDepth; depth++)
@@ -835,7 +835,7 @@ namespace Athanor.Tests
             return seen;
         }
 
-        [Test] public void StartOfDepth_IsAspectThenEventThenBench()
+        [Test] public void StartOfDepth_AtEveryDepth_IsAspectThenEventThenBench()
         {
             var d = MiniWithRealStart();
             int events = 0, quiet = 0;
@@ -893,7 +893,7 @@ namespace Athanor.Tests
             }
         }
 
-        [Test] public void TheSameSeed_GivesTheSameAspectsAndEvents()
+        [Test] public void TheSameSeed_RunTwice_GivesTheSameAspectsAndEvents()
         {
             var d = MiniWithRealStart();
             var seen = new HashSet<string>();
@@ -916,7 +916,7 @@ namespace Athanor.Tests
             Assert.That(seen.Count, Is.GreaterThan(5), "different seeds should give different runs");
         }
 
-        [Test] public void ChooseAspect_RefusesWhatIsNotOnOffer()
+        [Test] public void ChooseAspect_WithAnIdNotOnOffer_RefusesWhatIsNotOnOffer()
         {
             var r = Start(MiniWithRealStart(), AspectsOnly);
             Assert.AreEqual(RunPhase.AspectOffer, r.Phase);
@@ -956,7 +956,7 @@ namespace Athanor.Tests
             Assert.AreEqual(RunState.BaseRedraws - 1, r.RedrawsLeft);
         }
 
-        [Test] public void DoubledAndVolatile_ScoreOnTheirTile()
+        [Test] public void DoubledAndVolatile_WhenTheHubIsOnOrAwayFromTheirTile_ScoreOnTheirTile()
         {
             foreach (var (effect, mult) in new[] { (AspectEffects.Doubled, 2), (AspectEffects.Volatile, 3) })
             {
@@ -995,7 +995,7 @@ namespace Athanor.Tests
             Assert.AreEqual(80, seed.Ignite().Gained, "40 for the reaction and 40 from the empty seed tile beside its hub");
         }
 
-        [Test] public void HeavyTile_CountsOneChainStepMore()
+        [Test] public void HeavyTile_WhenTheHubIsOnIt_CountsOneChainStepMore()
         {
             var r = WithOnly(AspectEffects.Heavy);
             Assert.AreEqual(80, FireAB(r, TileOf(r)).Gained);
@@ -1014,14 +1014,14 @@ namespace Athanor.Tests
             }
         }
 
-        [Test] public void EchoTile_KeepsACopyOfWhatItsHubMakes()
+        [Test] public void EchoTile_WhenItsHubReacts_KeepsACopyOfWhatItsHubMakes()
         {
             var r = WithOnly(AspectEffects.Echo);
             FireAB(r, TileOf(r));
             Assert.AreEqual(2, r.Hand.Count(h => h == "x"));
         }
 
-        [Test] public void AnchorTile_GivesBackTheDiscoveryLaidOnIt()
+        [Test] public void AnchorTile_WithADiscoveryLaidOnIt_GivesBackTheDiscovery()
         {
             var r = WithOnly(AspectEffects.Anchor);
             FireAB(r);
@@ -1048,7 +1048,7 @@ namespace Athanor.Tests
             Assert.AreEqual(RunState.BaseHand, r.Hand.Count(c => r.IsOpen(c)), "used, it gives nothing");
         }
 
-        [Test] public void Bridge_JoinsItsTwoTiles()
+        [Test] public void Bridge_BetweenTwoTiles_JoinsItsTwoTiles()
         {
             var r = WithOnly(AspectEffects.Bridge, null, "Link");
             int a = r.Aspects[0].Tiles[0], b = r.Aspects[0].Tiles[1];
@@ -1058,7 +1058,7 @@ namespace Athanor.Tests
             Assert.AreEqual("x", r.Ignite().Events[0].Result);
         }
 
-        [Test] public void OpenBench_JoinsACornerToTheCentre()
+        [Test] public void OpenBench_OnALinkScope_JoinsACornerToTheCentre()
         {
             var r = WithOnly(AspectEffects.OpenBench, null, "Link");
             int corner = TileOf(r);
@@ -1067,7 +1067,7 @@ namespace Athanor.Tests
             Assert.AreEqual(5, r.Rules.Around(Bench.Centre).Length);
         }
 
-        [Test] public void KilnCrossroadsPivot_ReachTheBenchRules()
+        [Test] public void KilnCrossroadsPivot_WhenChosen_ReachTheBenchRules()
         {
             var kiln = WithOnly(AspectEffects.Kiln); Assert.IsTrue(kiln.Rules.Kiln[TileOf(kiln)]);
             var cross = WithOnly(AspectEffects.Crossroads); Assert.IsTrue(cross.Rules.Crossroads[TileOf(cross)]);
@@ -1114,7 +1114,7 @@ namespace Athanor.Tests
             Assert.AreEqual(1, r.TrialsLeft); Assert.AreEqual(0, r.RedrawsLeft);
         }
 
-        [Test] public void Event_EffectsLastOneDepth()
+        [Test] public void Event_WithTemporaryEffects_EffectsLastOneDepth()
         {
             var d = WithEvent(Mini(), 1, 1, Option("go", null, null, Fx(Ops.RiShift, -1), Fx(Ops.BlockTile), Fx(Ops.HeatTile, 3), Fx(Ops.Hand, -1), Fx(Ops.FirstTriple)));
             var r = AtEvent(d);

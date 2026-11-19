@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Athanor.Game
 {
     /// <summary>
-    /// Sparks drawn by ParticleSystems (the 3.3 design in docs/devlogs/phase-4-assets.md), only compiled with
+    /// Sparks drawn by ParticleSystems (docs/ATHANOR.md §2), only compiled with
     /// ATHANOR_SPARK_PARTICLES. Not shipped: it pulls the ParticleSystem engine module into the wasm, which was the
     /// thing measured. One system per (order, gravity, drag, sparkle). Colours are divided by K and multiplied back
     /// by the material, because particle colours are 8 bit.
@@ -66,7 +66,7 @@ namespace Athanor.Game
             var r = go.GetComponent<ParticleSystemRenderer>();
             r.renderMode = ParticleSystemRenderMode.Billboard; r.alignment = ParticleSystemRenderSpace.View;
             r.sortingOrder = k.order;
-            var sprite = Athanor.Game.Make.Lib.Sprite(k.sparkle ? "sparkle" : "dot");
+            var sprite = Athanor.Game.Art.Lib.Sprite(k.sparkle ? "sparkle" : "dot");
             var m = new Material(SparkMesh.MaterialFor(sprite.texture));
             m.SetFloat("_Intensity", K); m.EnableKeyword("CENTER_SNAP");
             r.sharedMaterial = m;

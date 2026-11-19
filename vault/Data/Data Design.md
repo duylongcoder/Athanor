@@ -33,8 +33,8 @@ Balance rules the tests enforce: a path to the ultimate exists; tiers add up; Re
 
 A damaged journal/profile must load as empty/fresh (`SaveTests`). Changing a shape → bump the key version and keep a reader for the old one.
 
-## layout.json  (`Resources/layout.json`)
-Canvas `w:640,h:360`; `tiles[]` with `x,y,w` and `face{x,y,w,h}`; read through [[LayoutData]]. Edit through the mockup pipeline in `docs/mockup`, not by hand.
+## layout.json  (`Editor/layout.json`)
+Canvas `w:640,h:360`; `tiles[]` with `x,y,w` and `face{x,y,w,h}`; read through [[LayoutData]]. It is read by editor tooling only (the game build ships no layout file); change it with the layout tooling, not by hand.
 
 ## Where a change goes
 | Change | Edit | Then |

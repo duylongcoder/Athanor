@@ -19,13 +19,20 @@ aliases: []
 ## Members
 | Kind | Signature | Line | Note |
 |---|---|---|---|
-| property | `struct Item` | 16 |  |
-| method | `public void Build()` | 24 |  |
+| field | `public const float Stay = 2.5f` | 15 | Seconds a toast stays fully shown. |
+| field | `public const float Slide = 0.25f` | 17 | Seconds a toast takes to slide in, and again to slide out. |
+| property | `struct Item` | 19 |  |
+| property | `public Label Title` | 29 | The goal line of the toast showing (or last shown). |
+| property | `public Label Line` | 31 | The reward line of the toast showing (or last shown). |
+| method | `public void Bind()` | 34 | Hooks the click. GameFlow calls it once at start; a test calls it after instantiating the prefab. |
 | method | `public void Add(IEnumerable<GoalReward> rewards, ContentDb db)` | 40 | Queues one toast for each goal just completed. |
 | method | `public void Clear()` | 52 | Drops whatever is showing or waiting (the profile was reset). |
 
 ## Uses
-[[Align]], [[Anim]], [[ContentDb]], [[FontKind]], [[GoalReward]], [[Label]], [[Loc]], [[Make]], [[Px]], [[Sparks]], [[Wording]]
+[[Anim]], [[Art]], [[Clickable]], [[ContentDb]], [[GoalReward]], [[Label]], [[Loc]], [[Px]], [[Sparks]], [[Wording]]
 
 ## Used by
 [[GameFlow]]
+
+## Tested by
+[[PrefabBakeTests]]

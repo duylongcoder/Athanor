@@ -10,16 +10,16 @@ count: 18
 `Athanor/Assets/Tests/EditMode/TutorialTests.cs` — 18 tests
 
 ## Covers
-[[Bench]], [[ContentData]], [[ContentDb]], [[Effects]], [[IgniteOutcome]], [[Journal]], [[ReactionEvent]], [[RunOptions]], [[RunPhase]], [[RunState]], [[Satchel]], [[ScoreParts]], [[TutorialPlan]], [[TutorialScript]], [[TutorialTrial]], [[Unlocks]]
+[[Bench]], [[ContentData]], [[ContentDb]], [[Effects]], [[IgniteOutcome]], [[Journal]], [[ReactionEvent]], [[Row]], [[RunOptions]], [[RunPhase]], [[RunState]], [[Satchel]], [[ScoreParts]], [[TutorialPlan]], [[TutorialScript]], [[TutorialTrial]], [[Unlocks]]
 
 ## Tests
 - `Satchel_Take_PullsANamedCard_FromDrawOrDiscard`
 - `Deal_ReplacesTheStartingHand_AndKeepsTheSatchelWhole`
-- `Deal_KeepsTheRack`
+- `Deal_AfterMakingADiscovery_KeepsTheRack`
 - `Deal_Refuses_TooManyCopies_NonStarters_LockedStarters_AndABusyBench`
 - `QuietBefore_HoldsAspectsAndEventsBack_UntilThatDepth`
 - `FirstOffer_IsFixed_ForTheFirstOfferOnly`
-- `FirstOffer_LeavesOutLockedCatalysts`
+- `FirstOffer_WithALockedCatalystNamed_LeavesOutLockedCatalysts`
 - `Preview_ScoresALayout_AndChangesNothing`
 - `ScoreParts_SplitsAScore_IntoItsFactors`
 - `Trial1_EmberCoalAndDeepTear_MakeSteamWisp_For40`

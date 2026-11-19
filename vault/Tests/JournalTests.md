@@ -15,11 +15,11 @@ count: 10
 ## Tests
 - `Learn_IsUnordered_AndIdempotent`
 - `HeatHint_NoDuplicates_AndSurvivesSaving`
-- `AddHint_NoDuplicates`
-- `RoundTripsThroughData`
+- `AddHint_WhenRepeated_AddsNoDuplicates`
+- `Journal_WithAPairAndAHint_RoundTripsThroughData`
 - `Learn_ComboKey_RoundTripsThroughData`
 - `Phase1_PairKeys_StillLoad`
-- `IsComplete_OnlyWhenAllRecipesWithMaterialKnown`
-- `OpenHints_HiddenOnceComplete`
+- `IsComplete_WithSomeRecipesKnown_IsTrueOnlyWhenAllRecipesWithMaterialKnown`
+- `OpenHints_WhenAMaterialIsComplete_AreHiddenOnceComplete`
 - `FromData_Null_GivesEmpty`
 - `FromData_NullArraysOrEntries_GivesEmpty`

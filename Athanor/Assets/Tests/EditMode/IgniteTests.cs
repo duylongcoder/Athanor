@@ -38,12 +38,12 @@ namespace Athanor.Tests
             Assert.AreEqual(20, IgniteResolver.Pairs(b, true).Count);
         }
 
-        [Test] public void Pairs_DoNotWrapAcrossRows()
+        [Test] public void Pairs_WithTilesEndingOneRowAndStartingTheNext_DoNotWrapAcrossRows()
         {
             Assert.IsFalse(IgniteResolver.HasAnyPair(On(2, "a", 3, "b"), false));
         }
 
-        [Test] public void NoPairs_ReturnsEmpty()
+        [Test] public void NoPairs_WithOnlyDistantTiles_ReturnsEmpty()
         {
             Assert.AreEqual(0, Go(On(0, "a", 8, "b")).Count);
             Assert.IsFalse(IgniteResolver.HasAnyPair(On(0, "a"), false));
@@ -57,7 +57,7 @@ namespace Athanor.Tests
             Assert.IsTrue(journal.IsKnown("b", "a"));
         }
 
-        [Test] public void SecondReactionInIgnite_IsMultipliedBy2()
+        [Test] public void SecondReactionInIgnite_AfterAFirstReaction_IsMultipliedBy2()
         {
             var ev = Go(On(0, "a", 1, "b", 7, "x", 8, "c"));
             Assert.AreEqual(2, ev.Count);
@@ -65,7 +65,7 @@ namespace Athanor.Tests
             Assert.AreEqual(240, ev[1].Potency); // 60 x 2 (first this run) x 2 (second in chain)
         }
 
-        [Test] public void SameRecipeTwiceInOneIgnite_OnlyFirstIsDiscovery()
+        [Test] public void SameRecipeTwiceInOneIgnite_WithTwoMatchingPairs_OnlyFirstIsDiscovery()
         {
             var ev = Go(On(0, "a", 1, "b", 7, "a", 8, "b"));
             Assert.IsTrue(ev[0].Discovery);
@@ -116,13 +116,13 @@ namespace Athanor.Tests
             Assert.IsNull(IgniteResolver.Resolve(On(0, "p", 1, "q"), NeedsCompany(), journal, fired, None).Events.Single().Hint);
         }
 
-        [Test] public void WithCompany_TheSameBenchReacts()
+        [Test] public void NeedsCompanyRecipe_WithCompanyBesideTheHub_TheSameBenchReacts()
         {
             var events = IgniteResolver.Resolve(On(0, "p", 1, "q", 3, "t"), NeedsCompany(), journal, fired, None).Events;
             Assert.AreEqual("x", events[0].Result);
         }
 
-        [Test] public void Fizzle_DoesNotHintAtAlreadyKnownRecipes()
+        [Test] public void Fizzle_WhenTheJournalKnowsARecipe_DoesNotHintAtAlreadyKnownRecipes()
         {
             journal.Learn("a", "b");
             var e = Go(On(0, "a", 1, "c")).Single();
@@ -144,7 +144,7 @@ namespace Athanor.Tests
         [Test] public void KindDouble_OtherKind_NoChange() =>
             Assert.AreEqual(40, Go(On(0, "a", 1, "b"), TestContent.Cat(Effects.KindDouble, "Beast")).Single().Potency);
 
-        [Test] public void FirstTriple_OnlyFirst()
+        [Test] public void FirstTriple_WithTwoReactions_TriplesOnlyTheFirst()
         {
             var ev = Go(On(0, "a", 1, "b", 7, "x", 8, "c"), TestContent.Cat(Effects.FirstTriple));
             Assert.AreEqual(120, ev[0].Potency); Assert.AreEqual(240, ev[1].Potency);
@@ -168,7 +168,7 @@ namespace Athanor.Tests
         [Test] public void DiscoveryTriple_Triples() =>
             Assert.AreEqual(120, Go(On(0, "a", 1, "b"), TestContent.Cat(Effects.DiscoveryTriple)).Single().Potency);
 
-        [Test] public void Diagonals_LetCornersReactWithCentre()
+        [Test] public void Diagonals_WithCornerAndCentre_LetCornersReactWithCentre()
         {
             Assert.AreEqual(0, Go(On(0, "a", 4, "b")).Count);
             Assert.AreEqual("x", Go(On(0, "a", 4, "b"), TestContent.Cat(Effects.Diagonals)).Single().Result);
@@ -185,14 +185,14 @@ namespace Athanor.Tests
             Assert.AreEqual(40, e.Potency);   // 20 x (2 - 1) x 2 first this run
         }
 
-        [Test] public void ThreeItem_Scores240()
+        [Test] public void ThreeItem_WithPQAndR_Scores240()
         {
             var e = Combo(On(4, "p", 3, "q", 5, "r")).Single();
             Assert.AreEqual("z", e.Result);
             Assert.AreEqual(240, e.Potency);  // 60 x (3 - 1) x 2
         }
 
-        [Test] public void FiveItem_ScoresFourTimesBase()
+        [Test] public void FiveItem_WithCentreAndFourNeighbours_ScoresFourTimesBase()
         {
             var e = Combo(On(4, "s", 1, "p", 3, "q", 5, "r", 7, "t")).Single();
             Assert.AreEqual("big", e.Result);
@@ -217,7 +217,7 @@ namespace Athanor.Tests
         [Test] public void KindDouble_ChecksEveryConsumedItem() =>
             Assert.AreEqual(480, Combo(On(4, "p", 3, "q", 5, "r"), 15, TestContent.Cat(Effects.KindDouble, "Plant")).Single().Potency);
 
-        [Test] public void Journal_LearnsComboKey()
+        [Test] public void Journal_AfterAThreeItemCombo_LearnsComboKey()
         {
             var e = Combo(On(4, "p", 3, "q", 5, "r")).Single();
             Assert.IsTrue(e.Discovery);

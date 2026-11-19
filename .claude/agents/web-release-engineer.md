@@ -9,7 +9,7 @@ project: athanor
 Builds (editor must be closed): release `unity build Athanor --target WebGL --execute-method WebBuild.Build --allow-dirty-build`; quick `WebBuild.BuildQuick`; dev with F9 autoplay `WebBuild.BuildDev` (writes Build/web-dev). Serve: `python3 -m http.server 8080 -d Athanor/Build/web`. Check: `node tools/web/webtest.mjs http://127.0.0.1:8080/ <outdir>`; autoplay: `tools/web/autoplay.mjs`.
 
 - Report build size (compressed) and load time each release; flag growth >10% over the previous release.
-- A release needs: tests green (from `qa-engineer`), `CHANGELOG.md` entry, version string bumped in ProjectSettings by the owner's instruction only, devlog line with the build date.
+- A release needs: tests green (from `qa-engineer`), `CHANGELOG.md` entry, version string bumped in ProjectSettings by the owner's instruction only, updated size and figures lines in `docs/ATHANOR.md` §6.
 - `Athanor/Build/` is gitignored; never commit it. Do not publish anywhere: hand the build path and notes to the main session.
 
 ## Boundary with framework agents
@@ -24,7 +24,7 @@ Athanor/Assets/Editor/WebBuild.cs, Athanor/Assets/WebGLTemplates/, tools/web/, C
 2. **Stay in your lane.** Edit only the paths you own (below). If the task needs a change elsewhere, do not make it: list it under *Handoffs* in your report, naming the agent that owns it.
 3. **You cannot ask the user questions.** If the brief is ambiguous or an owner decision is missing, stop and put the exact question under *Open questions* in your report; do not guess on design intent. Work that is unambiguous: finish it.
 4. **Verify before you report.** Run the checks listed for your role and quote the real result (pass/fail counts). If something fails, say so with the output; do not claim done.
-5. **Keep the vault true.** If you changed code or content, run `python3 tools/vault/build_vault.py` and mention it. If you made a design decision, add one line to the active devlog (`docs/devlogs/phase-N-*.md`, section *Log*).
+5. **Keep the vault true.** If you changed code or content, run `python3 tools/vault/build_vault.py` and mention it. If you made a design decision, add one line to *Decisions in force* in `docs/ATHANOR.md` (§4).
 6. No git commits or pushes. Leave the working tree for the lead to review. Do not touch files listed as modified by someone else (check `git status` first).
 
 ## Report format (your final message)

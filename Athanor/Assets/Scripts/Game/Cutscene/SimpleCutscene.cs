@@ -16,47 +16,19 @@ namespace Athanor.Game
         const int O = 420;
         const float CX = 320, Scroll = 400;
 
-        GameObject room, workshop, bench;
-        Transform root;
-        SpriteRenderer shade, glow, ring, rune, icon, iconGlow;
-        readonly SpriteRenderer[] bars = new SpriteRenderer[4];
-        readonly Transform[] rays = new Transform[12];
-        readonly Label[] lines = new Label[3];
-        Label small, big, banner, prompt, intro;
-        Light2D iconLight;
+        // the parts below are the Story Cutscene object of Main.unity (authored in the scene); the three loops are made at run time
+        [SerializeField] GameObject room, workshop, bench;
+        [SerializeField] Transform root;
+        [SerializeField] SpriteRenderer shade, glow, ring, rune, icon, iconGlow;
+        [SerializeField] SpriteRenderer[] bars = new SpriteRenderer[4];
+        [SerializeField] Transform[] rays = new Transform[12];
+        /// <summary>The sprite under each ray, found once, in the scene, so that Update does not look for it every frame.</summary>
+        [SerializeField] SpriteRenderer[] rayFaces = new SpriteRenderer[12];
+        [SerializeField] Label[] lines = new Label[3];
+        [SerializeField] Label small, big, banner, prompt, intro;
+        [SerializeField] Light2D iconLight;
         Color tint = Color.white;
         float raysOn, runeOn, embers, streaks;      // strengths of the looping effects, driven by the scripts below
-
-        public void Build(GameObject cutsceneRoom, GameObject workshopRoot, GameObject benchRoot)
-        {
-            room = cutsceneRoom; workshop = workshopRoot; bench = benchRoot;
-            root = Make.Root("Story");
-            var dark = Px.Hex("#0c0706");
-            shade = Make.Rect(root, 0, 0, Px.W, Px.H, Color.clear, O);
-            bars[0] = Make.Rect(root, 0, 0, Px.W, 30, Color.black, O + 9); bars[1] = Make.Rect(root, 0, Px.H - 30, Px.W, 30, Color.black, O + 9);
-            bars[2] = Make.Rect(root, 0, 30, Px.W, 1, Px.Hex("#8c5a14"), O + 10); bars[3] = Make.Rect(root, 0, Px.H - 31, Px.W, 1, Px.Hex("#8c5a14"), O + 10);
-            glow = Make.Glow(root, Px.At(CX, 170), 150, Color.clear, O + 1);
-            rune = Make.Sprite(root, "rune_circle", Px.At(CX, 262), O + 2, Make.Lib.glow);
-            ring = Make.Sprite(root, "floor_ring", Px.At(CX, 262), O + 2, Make.Lib.glow);
-            for (int k = 0; k < rays.Length; k++)
-            {
-                rays[k] = Make.Root("ray", root);
-                Make.Sprite(rays[k], "ray", Vector3.zero, O + 3, Make.Lib.glow).transform.localPosition = new Vector3(26 + 75, 0, 0);
-            }
-            iconGlow = Make.Glow(root, Vector3.zero, 80, Color.clear, O + 4);
-            icon = Make.Sprite(root, "dot", Vector3.zero, O + 5);
-            iconLight = Make.Light(root, Vector3.zero, 250, Color.white, 0);
-            icon.transform.localScale = new Vector3(3, 3, 1);
-            for (int i = 0; i < lines.Length; i++)
-                lines[i] = Make.Text(root, "", CX, 38 + i * 16, FontKind.Body, 16, Px.Hex("#f0dcc0"), O + 12, Align.Centre, dark);
-            small = Make.Text(root, "", CX, 104, FontKind.Tiny, 8, Px.Hex("#f8d250"), O + 12, Align.Centre, dark);
-            big = Make.Text(root, "", CX, 128, FontKind.Title, 48, Px.Hex("#f0dcc0"), O + 12, Align.Centre, dark);
-            big.LineBox = true;      // SPEC (f): the name sits in the mock's 48 px line box; Crux's short ascent would put VI ~11 px high
-            intro = Make.Text(root, "", CX, 186, FontKind.Body, 16, Px.Hex("#f0dcc0"), O + 12, Align.Centre, dark, 540);
-            banner = Make.Text(root, "", CX, 88, FontKind.Title, 32, Px.Hex("#f8d250"), O + 12, Align.Centre, Px.Hex("#3a1a08"));
-            prompt = Make.Text(root, "", CX, Px.H - 19, FontKind.Tiny, 8, Px.Hex("#7a5a3a"), O + 12, Align.Centre);
-            root.gameObject.SetActive(false);
-        }
 
         public override IEnumerator Play() => Intro();
 
@@ -85,7 +57,7 @@ namespace Athanor.Game
 
         // ---- the three stories ---------------------------------------------------------------------
 
-        /// <summary>The opening story, three lines a page (docs/devlogs/phase-4-lore.md). The last page is the original text.</summary>
+        /// <summary>The opening story, three lines a page (docs/ATHANOR.md §8). The last page is the original text.</summary>
         static readonly string[][] IntroPages =
         {
             new[] { "story.intro.1", "story.intro.2", "story.intro.3" },
@@ -156,7 +128,7 @@ namespace Athanor.Game
             midway?.Invoke();
             // 3. the name of the place
             small.Text = Loc.T("cutscene.depth", ("n", depth)); big.Text = depthName;
-            string introKey = DepthLook.IntroKey(depth);       // docs/mockup/phase5-ui SPEC (f): the line under the name; none past depth 5
+            string introKey = DepthLook.IntroKey(depth);       // Phase 5 UI mockup SPEC (f): the line under the name; none past depth 5
             intro.Text = introKey != null ? Loc.T(introKey) : "";
             intro.Alpha = 0;
             big.SetSize(depthName.Length > 20 ? 32 : 48);
@@ -211,7 +183,7 @@ namespace Athanor.Game
             yield return ScreenFx.I.FadeOut(0.5f);
             Stage(true, true);
             tint = Px.Hex(string.IsNullOrEmpty(ultimate.glow) ? "#fff6b8" : ultimate.glow);
-            icon.sprite = Make.Lib.Sprite(ultimate.id); icon.enabled = true;
+            icon.sprite = Art.Lib.Sprite(ultimate.id); icon.enabled = true;
             raysOn = 1; embers = 1;
             yield return ScreenFx.I.FadeIn(1.1f);
             ClearSkip();
@@ -276,7 +248,7 @@ namespace Athanor.Game
                 rays[k].position = at;
                 rays[k].rotation = Quaternion.Euler(0, 0, k * 30f + t * 14);
                 rays[k].localScale = new Vector3((k % 2 == 0 ? 0.75f : 1) * raysOn, 1, 1);
-                rays[k].GetChild(0).GetComponent<SpriteRenderer>().color = new Color(1, 0.95f, 0.75f, 0.3f * raysOn);
+                rayFaces[k].color = new Color(1, 0.95f, 0.75f, 0.3f * raysOn);
             }
             // the rune circle and its widening ring under a depth's name
             rune.color = tint.Times(1.5f).Alpha(runeOn * (0.7f + 0.3f * Mathf.Sin(t * 4)));
@@ -321,7 +293,7 @@ namespace Athanor.Game
                 for (int i = 0; i < n; i++) cycle[i] = int.MinValue;
                 this.life = life; this.x0 = x0; this.x1 = x1; this.y0 = y0; this.y1 = y1;
                 this.vx0 = vx0; this.vx1 = vx1; this.vy0 = vy0; this.vy1 = vy1; this.gravity = gravity; this.sparkle = sparkle;
-                mesh = SparkMesh.Create(parent, name, order, Make.Lib.Sprite("dot"), Make.Lib.Sprite("sparkle"));
+                mesh = SparkMesh.Create(parent, name, order, Art.Lib.Sprite("dot"), Art.Lib.Sprite("sparkle"));
             }
 
             public void Draw(float t, float strength, Color color)

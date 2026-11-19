@@ -15,7 +15,7 @@ line on the title screen.
 ## Effects
 
 The cutscenes and bench feedback are drawn by the game's own code. Optional extra effect sheets come from
-[pixelfx](https://github.com/patch-gg/pixelfx) (MIT), exported with `tools/fx/export.sh`. If you ship a build
+[pixelfx](https://github.com/patch-gg/pixelfx) (MIT), exported with its render tool. If you ship a build
 that includes them, include pixelfx's `LICENSE` and `NOTICE.md` as well.
 
 ## Libraries

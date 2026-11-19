@@ -1,6 +1,6 @@
 # Glossary (EN to VI)
 
-Owner: `localizer-vi`. Full rationale and length checks: `docs/devlogs/phase-4-settings-localization.md` section 8.4. Item names stay English.
+Owner: `localizer-vi`. Full rationale and length checks: `docs/ATHANOR.md` §3 and §4. Item names stay English.
 Voice: plain modern Vietnamese, "bạn" for the player, short clauses. Font: SVN-Coder's Crux only (no U+2013; NFC).
 
 | EN | VI | Note |
@@ -22,6 +22,7 @@ Voice: plain modern Vietnamese, "bạn" for the player, short clauses. Font: SVN
 | Tutorial | hướng dẫn | "Bỏ qua hướng dẫn" |
 | Pause / Paused / Resume | Tạm dừng / Tạm dừng / Tiếp tục | |
 | Vibration | Rung | |
+| Camera sway | Lắc camera | Settings toggle; "Rung" stays Vibration (haptics), so no "rung lắc" |
 | Quit | Thoát | |
 | Watch intro | Xem mở đầu | |
 | Play it (tutorial) | Chơi hướng dẫn | |

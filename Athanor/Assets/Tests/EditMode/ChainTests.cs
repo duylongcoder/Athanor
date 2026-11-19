@@ -18,7 +18,7 @@ namespace Athanor.Tests
 
         static ChainPlan Plan(string[] tiles, int zMin = 15, bool diagonals = false) => ChainPlanner.Plan(tiles, Db(zMin), diagonals);
 
-        [Test] public void Neighbours_OrthogonalAndDiagonal()
+        [Test] public void Neighbours_WithAndWithoutDiagonals_ReturnOrthogonalAndDiagonalTiles()
         {
             CollectionAssert.AreEquivalent(new[] { 1, 3, 5, 7 }, ChainPlanner.Neighbours(4, false).ToList());
             CollectionAssert.AreEquivalent(new[] { 1, 3 }, ChainPlanner.Neighbours(0, false).ToList());
@@ -26,7 +26,7 @@ namespace Athanor.Tests
             Assert.AreEqual(8, ChainPlanner.Neighbours(4, true).Count());
         }
 
-        [Test] public void Hub_IsHighestReactivity()
+        [Test] public void Hub_WithTwoReactiveItems_IsTheHighestReactivity()
         {
             var plan = Plan(On(0, "q", 1, "p"));
             Assert.AreEqual(1, plan.Steps.Count);
@@ -50,7 +50,7 @@ namespace Athanor.Tests
             Assert.AreEqual("s", plan.Final[8]);
         }
 
-        [Test] public void LargestComboFirst()
+        [Test] public void Plan_WithThreeItemComboAndPairs_FiresLargestComboFirst()
         {
             var plan = Plan(On(4, "p", 3, "q", 5, "r"));
             Assert.AreEqual(1, plan.Steps.Count);
@@ -71,7 +71,7 @@ namespace Athanor.Tests
         // ---- company: the hub's other neighbours count toward a recipe's required total ----
         // p(8) on the centre with q(5) and r(2) is 15 of heat; t(4) touching the hub makes it 19.
 
-        [Test] public void Heat_IsTheHubPlusEverythingTouchingIt()
+        [Test] public void Heat_WithBystandersOnTheBench_IsTheHubPlusEverythingTouchingIt()
         {
             var db = Db();
             Assert.AreEqual(19, ChainPlanner.Heat(On(4, "p", 3, "q", 5, "r", 1, "t"), 4, db, false));
@@ -81,7 +81,7 @@ namespace Athanor.Tests
             Assert.AreEqual(0, ChainPlanner.Heat(On(4, "p"), 0, db, false));
         }
 
-        [Test] public void Company_LiftsARecipeOverItsRequiredTotal()
+        [Test] public void Company_TouchingTheHub_LiftsARecipeOverItsRequiredTotal()
         {
             var plan = Plan(On(4, "p", 3, "q", 5, "r", 1, "t"), zMin: 19);
             Assert.AreEqual(1, plan.Steps.Count);
@@ -90,13 +90,13 @@ namespace Athanor.Tests
             Assert.AreEqual("t", plan.Final[1]); Assert.IsFalse(plan.Made[1]);
         }
 
-        [Test] public void DullCompany_LeavesTheRecipeShort()
+        [Test] public void DullCompany_BelowTheRequiredTotal_LeavesTheRecipeShort()
         {
             var plan = Plan(On(4, "p", 3, "q", 5, "r", 1, "t"), zMin: 20);
             Assert.AreEqual("x", plan.Steps[0].Recipe.result);
         }
 
-        [Test] public void Company_MustTouchTheHub()
+        [Test] public void Company_NotTouchingTheHub_DoesNotLiftTheRecipe()
         {
             var plan = Plan(On(4, "p", 3, "q", 5, "r", 0, "t"), zMin: 19);
             Assert.AreEqual("x", plan.Steps[0].Recipe.result);
@@ -117,7 +117,7 @@ namespace Athanor.Tests
             Assert.IsFalse(plan.Steps.Any(s => !s.Sputter && s.Recipe.result == "z"));
         }
 
-        [Test] public void ShortAt_NamesTheRecipeThatOnlyLacksHeat()
+        [Test] public void ShortAt_WhenOnlyHeatIsLacking_NamesTheRecipe()
         {
             var db = Db(19);
             var tiles = On(4, "p", 3, "q", 5, "r");
@@ -128,7 +128,7 @@ namespace Athanor.Tests
             Assert.IsNull(ChainPlanner.ShortAt(tiles, 0, db, false), "an empty tile");
         }
 
-        [Test] public void Chain_ResultReactsAgain()
+        [Test] public void Chain_WhenResultMatchesAnotherRecipe_ReactsAgain()
         {
             var plan = Plan(On(3, "p", 4, "q", 0, "v"));
             CollectionAssert.AreEqual(new[] { "x", "u" }, plan.Steps.Select(s => s.Recipe.result).ToList());
@@ -144,21 +144,21 @@ namespace Athanor.Tests
             Assert.IsFalse(plan.Made[8]); Assert.IsTrue(plan.Made[3]);
         }
 
-        [Test] public void Corner_CannotHostFourItems()
+        [Test] public void Corner_WithTwoOrthogonalNeighbours_CannotHostFourItems()
         {
             var plan = Plan(On(0, "s", 1, "p", 3, "q", 4, "t"));
             Assert.IsFalse(plan.Steps.Any(s => s.Recipe.result == "quad"));
             Assert.AreEqual("m", plan.Steps[0].Recipe.result);   // the corner hub falls back to its pair
         }
 
-        [Test] public void EdgeMiddle_HostsFourItems()
+        [Test] public void EdgeMiddle_WithThreeNeighbours_HostsFourItems()
         {
             var plan = Plan(On(1, "s", 0, "p", 2, "q", 4, "t"));
             Assert.AreEqual("quad", plan.Steps[0].Recipe.result);
             Assert.AreEqual(4, plan.Steps[0].Tiles.Length);
         }
 
-        [Test] public void Centre_HostsFiveItems()
+        [Test] public void Centre_WithFourNeighbours_HostsFiveItems()
         {
             var plan = Plan(On(4, "s", 1, "p", 3, "q", 5, "r", 7, "t"));
             Assert.AreEqual(1, plan.Steps.Count);
@@ -169,14 +169,14 @@ namespace Athanor.Tests
             Assert.AreEqual(1, plan.Final.Count(t => t != null));
         }
 
-        [Test] public void Diagonals_CountAsNeighbours()
+        [Test] public void Diagonals_WhenEnabled_CountAsNeighbours()
         {
             var tiles = On(4, "s", 0, "p", 2, "q", 6, "r", 8, "t");
             Assert.AreEqual(0, Plan(tiles).Steps.Count);
             Assert.AreEqual("big", Plan(tiles, diagonals: true).Steps[0].Recipe.result);
         }
 
-        [Test] public void TwoCopies_NeedTwoDistinctTiles()
+        [Test] public void TwoCopies_OfOneItemInARecipe_NeedTwoDistinctTiles()
         {
             var d = TestContent.Combo(); d.recipes = new[] { TestContent.Rec(new[] { "p", "p", "q" }, 0, "x") };
             var db = new ContentDb(d);
@@ -209,21 +209,21 @@ namespace Athanor.Tests
             Assert.AreEqual(0, Plan(tiles, diagonals: true).Steps.Count);
         }
 
-        [Test] public void EmptyAndSingleBench_NoSteps()
+        [Test] public void EmptyAndSingleBench_WhenPlanned_HaveNoSteps()
         {
             Assert.AreEqual(0, Plan(On()).Steps.Count);
             var plan = Plan(On(4, "p"));
             Assert.AreEqual(0, plan.Steps.Count); Assert.AreEqual("p", plan.Final[4]);
         }
 
-        [Test] public void Plan_DoesNotMutateInput()
+        [Test] public void Plan_WithPopulatedBench_DoesNotMutateInput()
         {
             var tiles = On(0, "q", 1, "p");
             Plan(tiles);
             Assert.AreEqual("q", tiles[0]); Assert.AreEqual("p", tiles[1]);
         }
 
-        [Test] public void MatchAt_NullWhenNothingFits()
+        [Test] public void MatchAt_WhenNothingFits_ReturnsNull()
         {
             Assert.IsNull(ChainPlanner.MatchAt(On(0, "p", 1, "r"), 0, Db(), false));
             Assert.IsNull(ChainPlanner.MatchAt(On(0, "p"), 3, Db(), false));

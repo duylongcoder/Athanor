@@ -1,7 +1,9 @@
 using Athanor.Core;
 using Athanor.Game;
+using System.Text.RegularExpressions;
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.TestTools;
 
 namespace Athanor.Tests
 {
@@ -46,7 +48,7 @@ namespace Athanor.Tests
         }
 
         [Test]
-        public void StoreThenLoadProfile_KeepsStatsGoalsAndUnlocks()
+        public void StoreThenLoadProfile_WithStatsAndCompletedGoals_KeepsStatsGoalsAndUnlocks()
         {
             var db = Db();
             var p = new Profile(321) { RunsStarted = 12, RunsWon = 1, DepthReached = 4, Ignites = 130, ChainLongest = 3, ComboLargest = 4, BestIgnite = 5000000000L };
@@ -63,7 +65,7 @@ namespace Athanor.Tests
         }
 
         [Test]
-        public void LoadProfile_DropsWhatTheContentNoLongerHas()
+        public void LoadProfile_WithIdsTheContentNoLongerHas_DropsThem()
         {
             PlayerPrefs.SetString(Save.ProfileKey, JsonUtility.ToJson(new ProfileData
             {
@@ -98,6 +100,24 @@ namespace Athanor.Tests
         }
 
         [Test]
+        public void LoadJournal_CorruptData_ReturnsEmptyJournalAndWarns()
+        {
+            PlayerPrefs.SetString(Save.Key, "{{ not json at all");
+            LogAssert.Expect(LogType.Warning, new Regex("journal unreadable"));
+            var journal = Save.LoadJournal();
+            Assert.AreEqual(0, journal.KnownPairs.Count);
+        }
+
+        [Test]
+        public void LoadProfile_CorruptData_ReturnsFreshProfileAndWarns()
+        {
+            PlayerPrefs.SetString(Save.ProfileKey, "{{ not json at all");
+            LogAssert.Expect(LogType.Warning, new Regex("profile unreadable"));
+            var profile = Save.LoadProfile(Db());
+            Assert.AreEqual(0, profile.RunsStarted);
+        }
+
+        [Test]
         public void LoadJournal_WithOlderShape_ReturnsEmpty()
         {
             PlayerPrefs.SetString(Save.Key, "{\"known\":7,\"hints\":\"none\",\"version\":0}");
@@ -114,7 +134,7 @@ namespace Athanor.Tests
         }
 
         [Test]
-        public void StoreThenLoad_KeepsRecipesAndHints()
+        public void StoreThenLoadJournal_WithAPairAndAHint_KeepsRecipesAndHints()
         {
             var journal = new Journal();
             journal.Learn("ember_coal", "deep_tear");
@@ -126,7 +146,7 @@ namespace Athanor.Tests
         }
 
         [Test]
-        public void StoreThenLoad_KeepsComboRecipes()
+        public void StoreThenLoadJournal_WithAThreeItemCombo_KeepsComboRecipes()
         {
             var journal = new Journal();
             journal.Learn(new[] { "sulfur", "ember_coal", "iron_ore" });

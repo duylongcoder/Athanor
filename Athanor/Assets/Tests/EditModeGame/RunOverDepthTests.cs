@@ -14,24 +14,20 @@ namespace Athanor.Tests
     /// </summary>
     public class RunOverDepthTests
     {
-        ArtLibrary libBefore;
-        GameObject root;
+        PrefabFixture fixture;
         RunOverView view;
 
         [SetUp] public void Build()
         {
-            libBefore = Make.Lib;
-            Make.Lib = AssetDatabase.LoadAssetAtPath<ArtLibrary>("Assets/Art/ArtLibrary.asset");
             Loc.Set(Loc.English);
-            root = new GameObject("run over test");
-            view = root.AddComponent<RunOverView>();
-            view.Build();
+            fixture = new PrefabFixture("Assets/Prefabs/Views/RunOver.prefab");
+            view = fixture.Get<RunOverView>();
+            view.Bind();
         }
 
         [TearDown] public void Restore()
         {
-            Object.DestroyImmediate(root);
-            Make.Lib = libBefore;
+            fixture.Destroy();
             Loc.Set(Loc.English);
         }
 

@@ -12,7 +12,7 @@ aliases: []
 # ScreenFx
 
 `public sealed class ScreenFx` : `MonoBehaviour`
-- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Fx/ScreenFx.cs:7-49`
+- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Fx/ScreenFx.cs:7-55`
 
 > Whole-screen effects: a white flash, camera shake, and fading to and from black.
 
@@ -20,15 +20,18 @@ aliases: []
 | Kind | Signature | Line | Note |
 |---|---|---|---|
 | property | `public static ScreenFx I` | 9 |  |
-| method | `public void Build(Camera camera)` | 15 |  |
-| method | `public void Flash(float peak, float seconds)` | 25 |  |
-| method | `public void Shake(float pixels, float seconds)` | 26 |  |
-| method | `public IEnumerator FadeOut(float seconds)` | 28 |  |
-| method | `public IEnumerator FadeIn(float seconds)` | 29 |  |
-| method | `public void SetBlack(float a)` | 30 |  |
+| method | `public void Bind(Camera camera, CameraSway worldSway = null)` | 19 | camera is the camera the shake moves, unless a depth rig is given: then the shake moves the world only (owner gate G2 #6), except in a cutscene, which is flat and shakes with its camera. Makes this the scene's ScreenFx.I. |
+| method | `public void Flash(float peak, float seconds)` | 27 |  |
+| method | `public void Shake(float pixels, float seconds)` | 28 |  |
+| method | `public IEnumerator FadeOut(float seconds)` | 30 |  |
+| method | `public IEnumerator FadeIn(float seconds)` | 31 |  |
+| method | `public void SetBlack(float a)` | 32 |  |
 
 ## Uses
-[[Make]], [[Motion]], [[Px]]
+[[CameraSway]], [[DepthRig]], [[Motion]]
 
 ## Used by
 [[CatalystChoiceView]], [[EventView]], [[GameFlow]], [[ReactionCutscene]], [[SimpleCutscene]]
+
+## Tested by
+[[SceneBakeTests]]

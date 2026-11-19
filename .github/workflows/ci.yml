@@ -1,6 +1,6 @@
 # Athanor CI. Every job runs a script from tools/ci, so a developer reproduces any failure with the same command.
 # Merge rule: the single required check is `ci-gate`. It passes only when every job below succeeded; a failed,
-# cancelled or skipped job fails it (see tools/setup/protect-branch.sh, docs/CI.md).
+# cancelled or skipped job fails it (see tools/setup/protect-branch.sh, docs/ATHANOR.md § CI and rules).
 name: CI
 
 on:
@@ -55,7 +55,7 @@ jobs:
         run: tools/ci/run.sh rotate
       - name: Art and web scripts parse
         run: |
-          for f in tools/web/*.mjs tools/art/*.mjs tools/fx/*.mjs; do [ -f "$f" ] && node --check "$f"; done
+          for f in tools/web/*.mjs tools/art/*.mjs; do [ -f "$f" ] && node --check "$f"; done
           echo "scripts parse"
       - name: Vault is regenerated (CLAUDE.md "keep it true")
         run: |

@@ -31,8 +31,8 @@ tags: [moc/agents]
 | ★ [[agent.lore-writer|lore-writer]] | inherit | Athanor story-text author: Keepers lore, opening/descent/ending lines, event and Lore-event text, flavour lines, tutorial voice, all in English and co |
 | [[agent.narrative-director|narrative-director]] | inherit | Story architecture, world-building, character design, dialogue strategy. Narrative structure and direction rather than writing individual lines. |
 | [[agent.performance-analyst|performance-analyst]] | inherit | Performance analyst — profiling, bottlenecks, memory analysis, frame time investigation, recommends optimizations, tracks metrics over time. |
-| ★ [[agent.phase-lead|phase-lead]] | opus | Athanor phase planner: reads the vault and devlogs, summarises project state, and returns a dispatch plan of briefs per Athanor role. Plans only, neve |
-| ★ [[agent.pixel-artist|pixel-artist]] | sonnet | Athanor sprite and effect producer: runs and edits the code that generates art (tools/art, tools/fx), adds icons with matching ids, exports effect she |
+| ★ [[agent.phase-lead|phase-lead]] | opus | Athanor phase planner: reads the vault and `docs/ATHANOR.md`, summarises project state, and returns a dispatch plan of briefs per Athanor role. Plans  |
+| ★ [[agent.pixel-artist|pixel-artist]] | sonnet | Athanor sprite and effect producer: runs and edits the code that generates art (tools/art), adds icons with matching ids, exports effect sheets, holds |
 | [[agent.producer|producer]] | opus | Production concerns — sprint planning, milestone tracking, risk, scope, cross-department coordination when multiple departments must synchronize. |
 | [[agent.prototyper|prototyper]] | sonnet | Throwaway builds — concept prototypes after brainstorm to test an idea is fun before GDDs; vertical slices pre-production. Speed over standards. |
 | ★ [[agent.qa-engineer|qa-engineer]] | inherit | Athanor sign-off runner: executes dotnet and Unity tests, BalanceMatrix/RoleReport/EventReport, headless Chrome web checks; reproduces bugs with a see |
@@ -47,7 +47,7 @@ tags: [moc/agents]
 | [[agent.technical-director|technical-director]] | opus | High-level technical decisions — engine architecture, technology choices, performance strategy, technical risk, cross-system conflicts. |
 | [[agent.tools-programmer|tools-programmer]] | inherit | Internal dev tools — editor extensions, content authoring tools, debug utilities, pipeline automation, editor workflow. |
 | [[agent.ui-programmer|ui-programmer]] | inherit | Implements user interface systems — menus, HUDs, inventory screens, dialogue boxes, UI framework code, screen flow. |
-| ★ [[agent.ui-ux-designer|ui-ux-designer]] | inherit | Athanor screen designer: pixel-box layout specs, mockups under docs/mockup, layout.json changes, readability at 1x, tutorial pacing, Vietnamese overfl |
+| ★ [[agent.ui-ux-designer|ui-ux-designer]] | inherit | Athanor screen designer: pixel-box layout specs, screen layout specs (prefab and `Editor/layout.json` changes), readability at 1x, tutorial pacing, Vi |
 | ★ [[agent.unity-gameplay-engineer|unity-gameplay-engineer]] | inherit | Athanor Game-layer coder: edits Scripts/Game and Editor tools (GameFlow states, bench/tile/card/HUD views, UI screens, cutscene code, save plumbing, e |
 | [[agent.unity-shader-specialist|unity-shader-specialist]] | sonnet | Unity rendering — Shader Graph, custom HLSL, VFX Graph, render pipeline customization (URP/HDRP), post-processing within performance budgets. |
 | [[agent.unity-specialist|unity-specialist]] | inherit | Authority on Unity-specific patterns and APIs — guides MonoBehaviour vs DOTS/ECS, Unity subsystems including Addressables and Input System. |

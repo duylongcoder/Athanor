@@ -18,7 +18,7 @@ namespace Athanor.Game
             links.Clear(); links.AddRange(pairs);
             while (motes.Count < links.Count * PerLink)
             {
-                var m = Make.Sprite(transform, "dot", Vector3.zero, 20, Make.Lib.glow);
+                var m = Spawn.Sprite(transform, "dot", Vector3.zero, 20, Art.Lib.glow);
                 m.transform.localScale = new Vector3(0.5f, 0.5f, 1);
                 motes.Add(m);
             }

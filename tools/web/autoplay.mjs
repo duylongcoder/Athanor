@@ -6,7 +6,7 @@
 // is six cards) and plays some of it. Look at the pictures: goal toasts, tile gems, big hands, the summary and the
 // finished goals are all in them.
 // Effect evidence (poof, collect burst, ...) needs the scripted player off during the resolve: in a development build it
-// calls reaction.Skip() every 0.45 s (GameFlow.cs, the scripted player's loop), so the effects are cut before a picture finds them.
+// calls reaction.RequestSkip() every 0.45 s (GameFlow.cs, the scripted player's loop), so the effects are cut before a picture finds them.
 import { spawn } from 'node:child_process';
 import { mkdirSync, writeFileSync, mkdtempSync } from 'node:fs';
 import { tmpdir } from 'node:os';

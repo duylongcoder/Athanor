@@ -9,26 +9,23 @@ namespace Athanor.Game
     public sealed class Tooltip : MonoBehaviour
     {
         const int W = 176, BaseH = 58, RowH = 12, Order = 400;
-        Label title, body, tier;
-        SpriteRenderer panel;
-        RarityStars stars;
+        [SerializeField] Label title, body, tier;
+        [SerializeField] SpriteRenderer panel;
+        [SerializeField] RarityStars stars;
         int h = BaseH;
 
-        public void Build(Transform parent)
+        /// <summary>
+        /// The panel's 9-slice sprite (the panel stretches only in its middle, so the taller tip keeps the same border). It is made by
+        /// Sprite.Create, which no prefab can keep, so a tooltip loaded from a prefab makes it here; the owner calls this once after instantiating it.
+        /// Does nothing when the panel already has it.
+        /// </summary>
+        public void Bind()
         {
-            transform.SetParent(parent, false);
-            panel = Make.Sprite(transform, "tooltip", Vector3.zero, Order);
-            panel.transform.localPosition = Vector3.zero;
-            // the panel stretches only in its middle, so the taller tip keeps the same border
-            var art = panel.sprite;
+            if (panel.sprite != null && panel.sprite.border != Vector4.zero) return;
+            var art = Art.Lib.Sprite("tooltip");
             panel.sprite = Sprite.Create(art.texture, art.textureRect, new Vector2(0.5f, 0.5f), art.pixelsPerUnit, 0, SpriteMeshType.FullRect, new Vector4(4, 4, 4, 4));
             panel.drawMode = SpriteDrawMode.Sliced;
             panel.size = new Vector2(W, BaseH);
-            title = Make.Text(transform, "", 0, 0, FontKind.Title, 16, Px.Hex("#f0dcc0"), Order + 2);
-            body = Make.Text(transform, "", 0, 0, FontKind.Body, 16, Px.Hex("#c8ac84"), Order + 2, Align.Left, null, W - 14);
-            tier = Make.Text(transform, "", 0, 0, FontKind.Name, 16, Color.white, Order + 2);
-            stars = new RarityStars(transform, Order + 2);
-            gameObject.SetActive(false);
         }
 
         /// <summary>Shows the tip above the anchor (below it when there is no room), kept on screen. A rarity adds the tier row.</summary>

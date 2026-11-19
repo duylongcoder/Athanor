@@ -18,79 +18,91 @@ namespace Athanor.Game
         /// <summary>The Settings panel or the "erase progress?" question is up: the buttons under it do nothing.</summary>
         public bool Asking => (confirm != null && confirm.gameObject.activeSelf) || (skip != null && skip.gameObject.activeSelf) || (panel != null && panel.gameObject.activeSelf);
 
-        Label logo, sub, progress, credit;
-        Transform confirm, panel, skip;
+        [SerializeField] Label logo, sub, progress, credit;
+        [SerializeField] Transform confirm, panel, skip;
         Action<bool> skipAnswer;
         Settings settings;
+        bool wired;
+        // the six buttons under the logo (tools/web/webtest.mjs clicks them by position), then the two dialogs' buttons
+        [SerializeField] UiButton begin, journal, goals, howTo, settingsButton, watchIntro;
+        [SerializeField] UiButton eraseNo, eraseYes, skipTutorial, skipPlay, back;
         // Settings panel parts
-        Label langValue, vibValue; SpriteRenderer vibFill, vibBox;
-        readonly SpriteRenderer[] cellEdge = new SpriteRenderer[2], cellFill = new SpriteRenderer[2];
-        readonly bool[] cellOver = new bool[2];
-        readonly Label[] outline = new Label[4];
+        [SerializeField] Label langValue, vibValue, swayLabel, swayValue, resetLabel, vibLabel, langLabel;
+        [SerializeField] SpriteRenderer divider2, swayBox, swayFill, vibFill, vibBox;
+        [SerializeField] SpriteRenderer[] cellEdge = new SpriteRenderer[3], cellFill = new SpriteRenderer[3];
+        [SerializeField] Transform[] cell = new Transform[3];
+        [SerializeField] Clickable[] cellHit = new Clickable[3];       // 0 Vibration, 1 Language, 2 Sway
+        [SerializeField] Clickable settingsOutside, resetLink;
+        readonly bool[] cellOver = new bool[3];
+        [SerializeField] Label[] outline = new Label[4];
         static readonly Vector3[] Edge = { new Vector3(-2, 0, 0), new Vector3(2, 0, 0), new Vector3(0, 2, 0), new Vector3(0, -2, 0) };
-        SpriteRenderer glow, shade;
+        [SerializeField] SpriteRenderer glow, shade;
         float age;
 
-        /// <summary>settings: the player's settings (the title edits them and raises SettingsClosed when the panel closes).</summary>
-        public void Build(Settings playerSettings)
+        /// <summary>Takes the player's settings (the title edits them and raises SettingsClosed when the panel closes) and hooks every
+        /// click. GameFlow calls it once at start.</summary>
+        public void Bind(Settings playerSettings)
         {
             settings = playerSettings;
-            var t = transform;
-            shade = Make.Rect(t, 0, 0, Px.W, Px.H, new Color(0, 0, 0, 0.56f), O);
-            glow = Make.Glow(t, Px.At(320, 146), 150, Color.clear, O + 1);
-            glow.transform.localScale = new Vector3(330 / 32f, 70 / 32f, 1);
-            // the logo: a dark outline (four offset copies), then the face with a candle-flame gradient
-            var edge = Px.Hex("#2a0c14");
-            for (int k = 0; k < outline.Length; k++)
+            if (wired) return;
+            wired = true;
+            // their Awake runs only when a hidden dialog first opens
+            begin.Bind(); journal.Bind(); goals.Bind(); howTo.Bind(); settingsButton.Bind(); watchIntro.Bind();
+            eraseNo.Bind(); eraseYes.Bind(); skipTutorial.Bind(); skipPlay.Bind(); back.Bind();
+            begin.Clicked += PressBegin;
+            journal.Clicked += PressJournal;
+            goals.Clicked += PressGoals;
+            howTo.Clicked += PressHowTo;
+            settingsButton.Clicked += OpenSettings;
+            watchIntro.Clicked += PressIntro;
+            eraseNo.Clicked += CancelErase;
+            eraseYes.Clicked += ConfirmErase;
+            skipTutorial.Clicked += SkipTutorial;
+            skipPlay.Clicked += PlayTutorial;
+            back.Clicked += CloseSettings;
+            settingsOutside.onClick = CloseSettings;                        // a click outside closes
+            cellHit[0].onClick = ToggleVibration;
+            cellHit[1].onClick = ToggleLanguage;
+            cellHit[2].onClick = ToggleSway;
+            for (int i = 0; i < cellHit.Length; i++)
             {
-                outline[k] = Make.TextKey(t, "ui.title.logo", 320, 96, FontKind.Logo, 48, edge, O + 3, Align.Centre);
-                outline[k].transform.localScale = new Vector3(2, 2, 1);
+                int k = i;
+                cellHit[k].onEnter = () => { cellOver[k] = true; PaintCell(k); };
+                cellHit[k].onExit = () => { cellOver[k] = false; PaintCell(k); };
             }
-            logo = Make.TextKey(t, "ui.title.logo", 320, 96, FontKind.Logo, 48, Color.white, O + 5, Align.Centre, Px.Hex("#12060a"));
-            logo.transform.localScale = new Vector3(2, 2, 1);
-            logo.shadow.transform.localPosition = new Vector3(1.5f, -2, 0);
-            logo.main.enableVertexGradient = true;
-            logo.main.colorGradient = new TMPro.VertexGradient(Px.Hex("#fffbe0"), Px.Hex("#fffbe0"), Px.Hex("#f08a2c"), Px.Hex("#f08a2c"));
-            sub = Make.TextKey(t, "ui.title.subtitle", 320, 196, FontKind.Title, 16, Px.Hex("#f8d250"), O + 4, Align.Centre, Px.Hex("#0c0706"));
-            // (tools/web/webtest.mjs clicks these buttons by position)
-            UiButton.Create(t, "ui.title.begin", 260, 214, O + 4, () => { if (!Asking) BeginPressed = true; });
-            UiButton.Create(t, "ui.title.journal", 260, 244, O + 4, () => JournalClicked?.Invoke());
-            UiButton.Create(t, "ui.title.goals", 260, 274, O + 4, () => GoalsClicked?.Invoke());
-            UiButton.Create(t, "ui.title.how_to_play", 130, 304, O + 4, () => { if (!Asking) HowToPressed = true; });
-            UiButton.Create(t, "ui.title.settings", 260, 304, O + 4, OpenSettings);
-            UiButton.Create(t, "ui.title.watch_intro", 390, 304, O + 4, () => { if (!Asking) IntroPressed = true; });
-            progress = Make.Text(t, "", 320, ProgressY, FontKind.Tiny, 8, Px.Hex("#c8ac84"), O + 4, Align.Centre, Px.Hex("#0c0706"));
-
-            // "erase progress?": a dialog over everything else on the title
-            const int C = O + 60, X = 160, Y = 75;
-            confirm = Make.Root("Confirm", t);
-            var block = Make.Rect(confirm, 0, 0, Px.W, Px.H, new Color(0, 0, 0, 0.7f), C - 1);
-            Make.Click(block.gameObject, new Vector2(Px.W, Px.H), C - 1);
-            Make.SpriteAt(confirm, "dialog", X, Y, C);
-            Make.TextKey(confirm, "ui.title.erase_title", 320, Y + 20, FontKind.Title, 32, Px.Hex("#ee6a3c"), C + 2, Align.Centre, Px.Hex("#3a1a08"));
-            Make.TextKey(confirm, "ui.title.erase_body", 320, Y + 70, FontKind.Body, 16, Px.Hex("#f0dcc0"), C + 2, Align.Centre);
-            Make.TextKey(confirm, "ui.title.erase_keep", 320, Y + 86, FontKind.Body, 16, Px.Hex("#a88a6a"), C + 2, Align.Centre);
-            UiButton.Create(confirm, "ui.common.cancel", X + 28, Y + 150, C + 2, () => confirm.gameObject.SetActive(false));
-            UiButton.Create(confirm, "ui.title.erase", X + 172, Y + 150, C + 2, () => { confirm.gameObject.SetActive(false); ResetConfirmed?.Invoke(); });
-            confirm.gameObject.SetActive(false);
-            // "Skip the tutorial?": asked once, on Begin, when the journal has entries and the tutorial was never finished
-            skip = Make.Root("Skip", t);
-            var sblock = Make.Rect(skip, 0, 0, Px.W, Px.H, new Color(0, 0, 0, 0.7f), C - 1);
-            Make.Click(sblock.gameObject, new Vector2(Px.W, Px.H), C - 1);
-            Make.SpriteAt(skip, "dialog", X, Y, C);
-            Make.TextKey(skip, "ui.title.skip_prompt_title", 320, Y + 20, FontKind.Title, 32, Px.Hex("#f8d250"), C + 2, Align.Centre, Px.Hex("#3a1a08"));
-            Make.TextKey(skip, "ui.title.skip_prompt_body1", 320, Y + 70, FontKind.Body, 16, Px.Hex("#f0dcc0"), C + 2, Align.Centre);
-            Make.TextKey(skip, "ui.title.skip_prompt_body2", 320, Y + 86, FontKind.Body, 16, Px.Hex("#a88a6a"), C + 2, Align.Centre);
-            UiButton.Create(skip, "ui.title.skip_tutorial", X + 28, Y + 150, C + 2, () => AnswerSkip(false));
-            UiButton.Create(skip, "ui.title.skip_prompt_play", X + 172, Y + 150, C + 2, () => AnswerSkip(true));
-            skip.gameObject.SetActive(false);
-            credit = Make.TextKey(t, "ui.title.fonts", 320, CreditY, FontKind.Tiny, 8, Px.Hex("#7a5a3a"), O + 4, Align.Centre, Px.Hex("#0c0706"));
-            BuildSettings(t);
+            resetLink.onClick = AskErase;
+            resetLink.onEnter = () => resetLabel.Color = Px.Hex("#ee6a3c");
+            resetLink.onExit = () => resetLabel.Color = Px.Hex("#7a5a3a");
             Loc.Changed += Relayout;
-            gameObject.SetActive(false);
         }
 
-        void OnDestroy() => Loc.Changed -= Relayout;
+        void OnDestroy()
+        {
+            Loc.Changed -= Relayout;
+            if (!wired) return;
+            begin.Clicked -= PressBegin;
+            journal.Clicked -= PressJournal;
+            goals.Clicked -= PressGoals;
+            howTo.Clicked -= PressHowTo;
+            settingsButton.Clicked -= OpenSettings;
+            watchIntro.Clicked -= PressIntro;
+            eraseNo.Clicked -= CancelErase;
+            eraseYes.Clicked -= ConfirmErase;
+            skipTutorial.Clicked -= SkipTutorial;
+            skipPlay.Clicked -= PlayTutorial;
+            back.Clicked -= CloseSettings;
+        }
+
+        void PressBegin() { if (!Asking) BeginPressed = true; }
+        void PressJournal() => JournalClicked?.Invoke();
+        void PressGoals() => GoalsClicked?.Invoke();
+        void PressHowTo() { if (!Asking) HowToPressed = true; }
+        void PressIntro() { if (!Asking) IntroPressed = true; }
+        void AskErase() => confirm.gameObject.SetActive(true);
+        void CancelErase() => confirm.gameObject.SetActive(false);
+        void ConfirmErase() { confirm.gameObject.SetActive(false); ResetConfirmed?.Invoke(); }
+        void SkipTutorial() => AnswerSkip(false);
+        void PlayTutorial() => AnswerSkip(true);
 
         /// <summary>Asks "Skip the tutorial?"; answer(true) = play it, answer(false) = skip.</summary>
         public void AskSkip(Action<bool> answer) { skipAnswer = answer; skip.gameObject.SetActive(true); }
@@ -113,54 +125,6 @@ namespace Athanor.Game
 
         const int P = O + 20, PX = 160, PY = 75, CellX = 300, CellW = 150, CellH = 26;
 
-        void BuildSettings(Transform t)
-        {
-            panel = Make.Root("Settings", t);
-            var block = Make.Rect(panel, 0, 0, Px.W, Px.H, new Color(0, 0, 0, 0.7f), P - 1);
-            Make.Click(block.gameObject, new Vector2(Px.W, Px.H), P - 1, CloseSettings);    // a click outside closes
-            Make.SpriteAt(panel, "dialog", PX, PY, P);
-            var body = Make.Root("dialog hit", panel); body.position = Px.Mid(PX, PY, 320, 210);
-            Make.Click(body.gameObject, new Vector2(320, 210), P);                          // a click inside does not
-            Make.TextKey(panel, "ui.settings.title", 320, PY + 12, FontKind.Title, 32, Px.Hex("#f8d250"), P + 2, Align.Centre, Px.Hex("#3a1a08"));
-            Make.Rect(panel, PX + 24, PY + 50, 272, 1, Px.Hex("#8a5a1e"), P + 2);
-            Make.Rect(panel, PX + 24, PY + 126, 272, 1, Px.Hex("#8a5a1e"), P + 2);
-
-            // rows: Vibration (only where the device can), Language. Their y is set in RefreshSettings.
-            vibLabel = Make.TextKey(panel, "ui.settings.vibration", 188, 0, FontKind.Body, 16, Px.Hex("#f0dcc0"), P + 2);
-            langLabel = Make.TextKey(panel, "ui.settings.language", 188, 0, FontKind.Body, 16, Px.Hex("#f0dcc0"), P + 2);
-            MakeCell(0, "vibration", ToggleVibration);
-            MakeCell(1, "language", ToggleLanguage);
-            vibBox = Make.Rect(panel, 0, 0, 10, 10, Px.Hex("#8a5a1e"), P + 5);
-            vibFill = Make.Rect(panel, 0, 0, 8, 8, Px.Hex("#f8d250"), P + 6);
-            vibValue = Make.TextKey(panel, "ui.settings.on", 0, 0, FontKind.Title, 16, Px.Hex("#fff6b8"), P + 6, Align.Left, Px.Hex("#3b0d1e"));
-            langValue = Make.Text(panel, "", 0, 0, FontKind.Title, 16, Px.Hex("#fff6b8"), P + 6, Align.Centre, Px.Hex("#3b0d1e"));
-
-            var reset = Make.TextKey(panel, "ui.title.reset", 320, PY + 134, FontKind.Tiny, 8, Px.Hex("#7a5a3a"), P + 2, Align.Centre, Px.Hex("#0c0706"));
-            var rc = Make.Click(reset.gameObject, new Vector2(120, 22), P + 3, () => confirm.gameObject.SetActive(true));
-            rc.offset = new Vector2(0, -4);
-            rc.onEnter = () => reset.Color = Px.Hex("#ee6a3c"); rc.onExit = () => reset.Color = Px.Hex("#7a5a3a");
-            UiButton.Create(panel, "ui.common.back", 260, 231, P + 3, CloseSettings);
-            panel.gameObject.SetActive(false);
-        }
-
-        Label vibLabel, langLabel;
-        readonly Transform[] cell = new Transform[2];
-
-        /// <summary>A 150x26 value button: fill #2a1810 in a #8a5a1e border, gold border and lighter fill under the pointer.</summary>
-        void MakeCell(int i, string name, Action onClick)
-        {
-            var go = Make.Root("cell " + name, panel); cell[i] = go;
-            cellEdge[i] = Make.Rect(go, 0, 0, CellW, CellH, Px.Hex("#8a5a1e"), P + 3);
-            cellFill[i] = Make.Rect(go, 1, 1, CellW - 2, CellH - 2, Px.Hex("#2a1810"), P + 4);
-            go.position = Vector3.zero;
-            var hit = Make.Root("hit", go);
-            var c = Make.Click(hit.gameObject, new Vector2(CellW, CellH), P + 5, onClick);
-            c.onEnter = () => { cellOver[i] = true; PaintCell(i); };
-            c.onExit = () => { cellOver[i] = false; PaintCell(i); };
-            cellHit[i] = hit;
-        }
-        readonly Transform[] cellHit = new Transform[2];
-
         void PaintCell(int i)
         {
             cellEdge[i].color = cellOver[i] ? Px.Hex("#f8d250") : Px.Hex("#8a5a1e");
@@ -171,33 +135,47 @@ namespace Athanor.Game
         {
             cellEdge[i].transform.position = Px.Mid(CellX, rowY, CellW, CellH);
             cellFill[i].transform.position = Px.Mid(CellX + 1, rowY + 1, CellW - 2, CellH - 2);
-            cellHit[i].position = Px.Mid(CellX, rowY, CellW, CellH);
+            cellHit[i].transform.position = Px.Mid(CellX, rowY, CellW, CellH);
         }
 
-        /// <summary>Lays out the rows and writes the values. Without Haptics.Supported the vibration row is absent and Language moves up.</summary>
+        /// <summary>Lays out the rows (Camera sway, Vibration where the device can, Language) and writes the values.</summary>
         void RefreshSettings()
         {
             if (panel == null) return;
             bool vib = Haptics.Supported;
-            float row = PY + 58;
+            float pitch = vib ? 28 : 32, row = PY + (vib ? 54 : 58);
+            // the third row pushes the lower divider and the erase link down
+            divider2.transform.position = Px.Mid(PX + 24, PY + (vib ? 140 : 126), 272, 1);
+            resetLabel.transform.position = Px.At(320, PY + (vib ? 144 : 134));
+            PlaceRow(2, row, swayLabel, swayBox, swayFill, swayValue, settings.sway);
+            row += pitch;
             cell[0].gameObject.SetActive(vib); vibLabel.gameObject.SetActive(vib); vibBox.gameObject.SetActive(vib);
             vibFill.gameObject.SetActive(vib && settings.haptics); vibValue.gameObject.SetActive(vib);
             if (vib)
             {
-                vibLabel.transform.position = Px.At(188, row + 4);
-                PlaceCell(0, row);
-                vibBox.transform.position = Px.Mid(CellX + 8, row + 8, 10, 10);
-                vibFill.transform.position = Px.Mid(CellX + 9, row + 9, 8, 8);
-                vibValue.transform.position = Px.At(CellX + 26, row + 3);
-                vibValue.SetKey(settings.haptics ? "ui.settings.on" : "ui.settings.off");
-                row += 32;
+                PlaceRow(0, row, vibLabel, vibBox, vibFill, vibValue, settings.haptics);
+                row += pitch;
             }
             langLabel.transform.position = Px.At(188, row + 4);
             PlaceCell(1, row);
             langValue.transform.position = Px.At(CellX + CellW / 2f, row + 3);
             langValue.Text = Loc.NativeName;
-            for (int i = 0; i < 2; i++) PaintCell(i);
+            for (int i = 0; i < 3; i++) PaintCell(i);
         }
+
+        /// <summary>One on/off row: label, cell, check box and its On or Off word.</summary>
+        void PlaceRow(int i, float row, Label label, SpriteRenderer box, SpriteRenderer fill, Label value, bool on)
+        {
+            label.transform.position = Px.At(188, row + 4);
+            PlaceCell(i, row);
+            box.transform.position = Px.Mid(CellX + 8, row + 8, 10, 10);
+            fill.transform.position = Px.Mid(CellX + 9, row + 9, 8, 8);
+            fill.gameObject.SetActive(on);
+            value.transform.position = Px.At(CellX + 26, row + 3);
+            value.SetKey(on ? "ui.settings.on" : "ui.settings.off");
+        }
+
+        void ToggleSway() { settings.sway = !settings.sway; RefreshSettings(); }
 
         void OpenSettings() { RefreshSettings(); panel.gameObject.SetActive(true); }
 

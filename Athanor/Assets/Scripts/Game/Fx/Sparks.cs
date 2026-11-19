@@ -8,7 +8,7 @@ namespace Athanor.Game
     /// sorting order is one lane drawn by one SparkMesh (one renderer, at most two draws), so a burst of 90 costs one
     /// object instead of 90. Allocates only when a lane grows past its most particles so far.
     /// Building with ATHANOR_SPARK_PARTICLES draws through ParticleSystems instead (kept to measure the engine
-    /// module's size; see docs/devlogs/phase-4-assets.md).
+    /// module's size; see docs/ATHANOR.md §2).
     /// </summary>
     public sealed class Sparks : MonoBehaviour
     {
@@ -30,7 +30,13 @@ namespace Athanor.Game
         readonly Dictionary<int, Lane> laneByOrder = new Dictionary<int, Lane>();
         readonly List<Lane> lanes = new List<Lane>();
 
-        void Awake() => I = this;
+        [SerializeField] Material particleGlow;
+
+        void Awake()
+        {
+            if (particleGlow == null) throw new System.InvalidOperationException("Sparks: particleGlow is not set in the scene");
+            I = this; SparkMesh.BaseMaterial = particleGlow;
+        }
 
         /// <summary>Particles alive now, over all lanes.</summary>
         public int LiveCount
@@ -120,7 +126,7 @@ namespace Athanor.Game
         Lane LaneFor(int order)
         {
             if (laneByOrder.TryGetValue(order, out var l)) return l;
-            l = new Lane { order = order, mesh = SparkMesh.Create(transform, "sparks " + order, order, Make.Lib.Sprite("dot"), Make.Lib.Sprite("sparkle")) };
+            l = new Lane { order = order, mesh = SparkMesh.Create(transform, "sparks " + order, order, Art.Lib.Sprite("dot"), Art.Lib.Sprite("sparkle")) };
             laneByOrder[order] = l;
             lanes.Add(l);
             return l;

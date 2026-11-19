@@ -1,0 +1,13 @@
+{
+    "name": "Athanor.EditorShared",
+    "rootNamespace": "Athanor.EditorShared",
+    "references": [
+        "Athanor.Core",
+        "Athanor.Game"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "autoReferenced": true
+}

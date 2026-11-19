@@ -24,7 +24,7 @@ aliases: []
 | method | `public void Set(List<(Vector3 a, Vector3 b)> pairs)` | 16 |  |
 
 ## Uses
-[[Make]], [[Px]]
+[[Art]], [[Px]], [[Spawn]]
 
 ## Used by
 [[BenchView]]

@@ -22,7 +22,7 @@ CORE = ROOT / "Athanor/Assets/Scripts/Core"
 
 # Build output that must never be tracked (CLAUDE.md: bin, obj and Athanor/Build are output).
 FORBIDDEN_TRACKED = [
-    r"^tools/CoreTests/(bin|obj)/",
+    r"^tools/Core(Tests|Reports)/(bin|obj)/",
     r"^Athanor/(Build|Builds|Library|Temp|Obj|Logs|UserSettings)/",
     r"(^|/)test-results.*\.xml$",
 ]

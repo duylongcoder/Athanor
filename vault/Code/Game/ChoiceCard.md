@@ -28,4 +28,4 @@ aliases: []
 [[CatalystChoiceView]]
 
 ## Tested by
-[[ChoiceHookTests]]
+[[ChoiceHookTests]], [[PrefabBakeTests]]
