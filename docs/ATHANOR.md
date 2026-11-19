@@ -386,7 +386,7 @@ Undecided or not done. None is decided by being listed.
    although the prototype they measured is gone; the Phase 6 spec called for deleting them.
 9. **studio-tests were removed** in Phase 6. The framework skills `skill-test` and `skill-improve` are left in place, but their
    fixtures are gone.
-10. **Remaining Phase 6 work:** the `vault/` generator still reads devlogs until Task 28; graphify of `Athanor/` is Task 30;
+10. **Remaining Phase 6 work:** graphify of `Athanor/` is Task 30;
     EditMode must end at 0 failed and 0 skipped.
 11. Notes, not tasks: endless mode after depth 5 (the owner redesigns it), a currency (no purpose yet), sound (other plan).
 

@@ -2,7 +2,7 @@
 """Regenerate the generated half of the Obsidian vault (vault/) from the repo.
 
 Reads : Athanor/Assets/Scripts, Editor, Tests (C#), Resources/content.json, .claude/agents + skills,
-        docs/devlogs, docs/superpowers, tools/*.
+        docs/ATHANOR.md (sections 4 and 7), tools/*.
 Writes (all Markdown): vault/Code, vault/Content, vault/Tests, vault/Agents, vault/Tools, vault/Phases, vault/_index.
         Hand-written notes (vault/Home.md, Design, Data, Workflow, Templates) are never touched.
 
@@ -442,15 +442,35 @@ def gen_tools():
     w("Tools/Tools Index.md", "\n".join(L) + "\n")
 
 
+def atha_section(text, num):
+    """Body of `## <num>. ...` in docs/ATHANOR.md, up to the next `## `."""
+    m = re.search(rf"^## {num}\. .*?$(.*?)(?=^## \d+\. |\Z)", text, re.S | re.M)
+    return m[1] if m else ""
+
+
+def atha_items(body):
+    """Top-level list items (`- ` or `1. `) with their wrapped lines joined; `**Heading**` lines become `### Heading`."""
+    out, cur = [], None
+    for line in body.split("\n"):
+        if re.match(r"^(- |\d+\. )", line):
+            cur = [re.sub(r"^\d+\. ", "- ", line)]; out.append(cur)
+        elif cur is not None and line.startswith("  ") and line.strip():
+            cur.append(line.strip())
+        else:
+            cur = None
+            h = re.match(r"^\*\*(.+?)\*\*\s*$", line)
+            if h: out.append([f"### {h[1]}"])
+    return [" ".join(x) if not x[0].startswith("###") else x[0] for x in out]
+
+
 def gen_phases():
-    L = [fm(type="moc", tags=["moc/phases"]), "# Phases", "Devlogs record decisions and results; specs/plans hold the designs. All of these live in `docs/` and are part of the vault.", ""]
-    readme = REPO / "docs" / "devlogs" / "README.md"
-    if readme.exists():
-        for line in readme.read_text(encoding="utf-8").split("\n"):
-            m = re.match(r"^\|\s*(\d+)\s*\|\s*\[([^\]]+)\]\(([^)]+)\)\s*\|\s*(.*?)\s*\|?$", line)
-            if m: L.append(f"- Phase {m[1]}: [[docs/devlogs/{m[3].replace('.md', '')}|{m[2]}]] — {m[4]}")
-    for sub, title in (("specs", "Specs"), ("plans", "Plans")):
-        L += ["", f"## {title}"] + [f"- [[docs/superpowers/{sub}/{p.stem}|{p.stem}]]" for p in sorted((REPO / "docs" / "superpowers" / sub).glob("*.md"))]
+    """One note from docs/ATHANOR.md: section 4 (Decisions in force) and section 7 (Carry-overs)."""
+    src = REPO / "docs" / "ATHANOR.md"
+    text = src.read_text(encoding="utf-8") if src.exists() else ""
+    L = [fm(type="moc", tags=["moc/phases"]), "# Phases",
+         "Decisions in force and carry-overs, copied from `docs/ATHANOR.md` sections 4 and 7 (edit them there, then rerun the generator).", ""]
+    for num, title in ((4, "Decisions in force"), (7, "Carry-overs")):
+        L += [f"## {title}", ""] + atha_items(atha_section(text, num))
     w("Phases/Phases.md", "\n".join(L) + "\n")
 
 
