@@ -3,7 +3,9 @@
     "rootNamespace": "Athanor.EditorShared",
     "references": [
         "Athanor.Core",
-        "Athanor.Game"
+        "Athanor.Game",
+        "Unity.TextMeshPro",
+        "PrimeTween.Runtime"
     ],
     "includePlatforms": [
         "Editor"

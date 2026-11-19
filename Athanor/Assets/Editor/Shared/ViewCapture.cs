@@ -1,4 +1,5 @@
 using System.IO;
+using System.Linq;
 using Athanor.Game;
 using TMPro;
 using UnityEngine;
@@ -17,12 +18,20 @@ public static class ViewCapture
         foreach (var t in root.GetComponentsInChildren<Transform>(true))
             if (!t.gameObject.activeSelf && (keepHidden == null || System.Array.IndexOf(keepHidden, t.name) < 0)) hidden.Add(t.gameObject);
         foreach (var g in hidden) g.SetActive(true);
+        var ranked = new System.Collections.Generic.List<(Renderer r, int order)>();
         GameObject camGo = null;
         RenderTexture rt = null;
         var previous = RenderTexture.active;
         try
         {
             foreach (var t in root.GetComponentsInChildren<TMP_Text>(true)) t.ForceMeshUpdate();
+            // Renderers of one sorting order tie (a label and the line it overlaps, a label and its shadow); the engine breaks a tie by
+            // instance id, which changes from run to run. For the shot, rank the renderers by (layer, order, hierarchy position) and give each
+            // its rank as order: the same picture every time, and the same stacking wherever the orders differ. Restored below.
+            int rank = 0;
+            foreach (var r in root.GetComponentsInChildren<Renderer>(false)
+                         .Select((r, i) => (r, i)).OrderBy(x => SortingLayer.GetLayerValueFromID(x.r.sortingLayerID)).ThenBy(x => x.r.sortingOrder).ThenBy(x => x.i))
+            { ranked.Add((r.r, r.r.sortingOrder)); r.r.sortingOrder = rank++; }
             camGo = new GameObject("phase6 capture camera");
             var cam = camGo.AddComponent<Camera>();
             cam.orthographic = true; cam.orthographicSize = Px.H / 2f;
@@ -43,8 +52,21 @@ public static class ViewCapture
             RenderTexture.active = previous;
             if (rt != null) RenderTexture.ReleaseTemporary(rt);
             if (camGo != null) Object.DestroyImmediate(camGo);
+            foreach (var (r, order) in ranked) if (r != null) r.sortingOrder = order;
             for (int i = hidden.Count - 1; i >= 0; i--) hidden[i].SetActive(false);
         }
+    }
+
+    /// <summary>
+    /// Renders root exactly as it stands: it is made active, and every object under it that is inactive now stays inactive (the
+    /// view's own Show / Open decided what is visible). Golden shots use this; Render forces hidden parts on.
+    /// </summary>
+    public static Texture2D RenderAsShown(GameObject root)
+    {
+        root.SetActive(true);
+        var keep = new System.Collections.Generic.List<string>();
+        foreach (var t in root.GetComponentsInChildren<Transform>(true)) if (!t.gameObject.activeSelf) keep.Add(t.name);
+        return Render(root, keep.ToArray());
     }
 
     /// <summary>Writes tex as a PNG at path, creating the folder.</summary>
@@ -54,9 +76,10 @@ public static class ViewCapture
         File.WriteAllBytes(path, tex.EncodeToPNG());
     }
 
-    /// <summary>Reads a PNG written by Save back into a texture.</summary>
+    /// <summary>Reads a PNG written by Save back into a texture; null when there is no such file.</summary>
     public static Texture2D Load(string path)
     {
+        if (!File.Exists(path)) return null;
         var tex = new Texture2D(2, 2, TextureFormat.RGBA32, false);
         tex.LoadImage(File.ReadAllBytes(path));
         return tex;

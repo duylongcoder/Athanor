@@ -1,0 +1,23 @@
+TRACE seed 1: Won at depth 4, catalysts first_spark,wide_crucible,heart_tile
+   bench deep_tear moondust ember_coal bone_ash . iron_ore . . . => 2:sky_iron 40, 2:frost_salt 80
+d1 t4 +120 deck 16 hand frost_salt,sky_iron,sunbloom,deep_tear,ember_coal,moondust,wyrm_fang
+   bench sunbloom moondust ember_coal wyrm_fang . deep_tear . . . => 2:steam_wisp 40, 2:pixie_wing 80
+d1 t3 +120 deck 16 hand frost_salt,sky_iron,pixie_wing,steam_wisp,glowmoss,wyrm_fang,deep_tear,ember_coal,iron_ore
+   bench steam_wisp frost_salt wyrm_fang ember_coal iron_ore deep_tear glowmoss . . => 2:sky_iron 20, 2:storm_glass 240, 2:dragon_blood 120
+d1 t1 +-1 deck 16 hand sky_iron,pixie_wing,storm_glass,dragon_blood,sky_iron,wyrm_fang,deep_tear,sunbloom,ember_coal,bone_ash
+   bench ember_coal bone_ash . sky_iron deep_tear wyrm_fang . sunbloom . => 2:sulfur 120, 2:gold_ingot 240, 2:dragon_blood 60
+d2 t5 +420 deck 16 hand pixie_wing,storm_glass,dragon_blood,sky_iron,gold_ingot,dragon_blood,moondust,glowmoss,sunbloom,iron_ore,moondust
+   bench gold_ingot dragon_blood iron_ore sunbloom storm_glass glowmoss moondust pixie_wing moondust => 2:phoenix_feather 1080, 2:pixie_wing 40, 2:moonpetal 120, 2:unicorn_horn 480, 2:aurora_dust 1800
+d2 t3 +-1 deck 16 hand sky_iron,dragon_blood,phoenix_feather,aurora_dust,pixie_wing,bone_ash,sunbloom,iron_ore,deep_tear,wyrm_fang
+   bench glowmoss moondust wyrm_fang moondust sky_iron glowmoss . . . => 2:dusk_cap 120, 2:starmetal_ore 240, 2:moonpetal 60
+d3 t7 +420 deck 16 hand dragon_blood,phoenix_feather,aurora_dust,pixie_wing,starmetal_ore,dusk_cap,moonpetal,bone_ash,wyrm_fang,deep_tear,deep_tear,moondust
+   bench deep_tear moondust wyrm_fang . . deep_tear . . . => 2:dragon_blood 60, 2:frost_salt 40
+d3 t6 +100 deck 16 hand dragon_blood,phoenix_feather,aurora_dust,pixie_wing,starmetal_ore,dusk_cap,moonpetal,bone_ash,frost_salt,dragon_blood,bone_ash,sunbloom,moondust,ember_coal
+   bench sunbloom bone_ash . frost_salt aurora_dust moonpetal . moondust . => 4:heaven_s_ash 13500
+d3 t4 +-1 deck 16 hand dragon_blood,phoenix_feather,pixie_wing,starmetal_ore,dusk_cap,dragon_blood,bone_ash,ember_coal,heaven_s_ash,ember_coal,wyrm_fang,iron_ore
+   bench wyrm_fang ember_coal . iron_ore bone_ash . . . . => 2:sulfur 120, 2:dragon_scale 80
+d4 t8 +200 deck 16 hand dragon_blood,phoenix_feather,pixie_wing,starmetal_ore,dusk_cap,dragon_blood,heaven_s_ash,ember_coal,dragon_scale,sulfur,glowmoss,sunbloom,glowmoss,iron_ore
+   bench ember_coal phoenix_feather sulfur glowmoss dragon_blood glowmoss sunbloom iron_ore . => 4:everflame 27000
+d4 t7 +27000 deck 16 hand pixie_wing,starmetal_ore,dusk_cap,dragon_blood,heaven_s_ash,dragon_scale,everflame,wyrm_fang,sunbloom,ember_coal,moondust,bone_ash
+   bench sunbloom heaven_s_ash bone_ash ember_coal everflame wyrm_fang . moondust . => 2:worldseed 18000
+d4 t6 +18000 deck 16 hand pixie_wing,starmetal_ore,dusk_cap,dragon_blood,dragon_scale,worldseed
