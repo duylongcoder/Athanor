@@ -13,6 +13,10 @@ namespace Athanor.Game
         /// <summary>The line about goals was clicked: show the Goals page over this one.</summary>
         public event System.Action GoalsClicked;
 
+        /// <summary>How the dialog comes in: fade and slide duration, the shade's alpha, where the body slides from.</summary>
+        [System.Serializable]
+        public struct Timing { public float fadeIn, slide, shadeAlpha, slideFrom; }
+        [SerializeField] Timing timing;
         [SerializeField] Label heading, sub, goalsLine;
         [SerializeField] Label[] names = new Label[4], values = new Label[4];
         [SerializeField] SpriteRenderer shade;
@@ -93,8 +97,8 @@ namespace Athanor.Game
             done = false;
             gameObject.SetActive(true);
             yield return Sequence.Create()
-                .Group(Motion.Fade(shade, 0, 0.62f, 0.35f))
-                .Group(Motion.MoveLocal(body, new Vector3(0, -40, 0), Vector3.zero, 0.35f, Ease.OutBack))
+                .Group(Motion.Fade(shade, 0, timing.shadeAlpha, timing.fadeIn))
+                .Group(Motion.MoveLocal(body, new Vector3(0, timing.slideFrom, 0), Vector3.zero, timing.slide, Ease.OutBack))
                 .ToYieldInstruction();
             while (!done) yield return null;
             gameObject.SetActive(false);

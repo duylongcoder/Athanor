@@ -94,6 +94,13 @@ MonoBehaviour:
   quitNo: {fileID: 758335284951235057}
   howToHint: {fileID: 6780370160049633558}
   outside: {fileID: 6215612563920766493}
+  layout:
+    buttonX: 260
+    howToDy: 110
+    quitDy: 152
+    hintX: 320
+    hintDy: 137
+    noVibrationUp: 30
 --- !u!1 &1368774245027789649
 GameObject:
   m_ObjectHideFlags: 0
@@ -325,6 +332,12 @@ MonoBehaviour:
   body: {fileID: 2490326018459688250}
   label: {fileID: 3301955919229110819}
   disabled: 0
+  look:
+    disabledTint: {r: 0.45, g: 0.42, b: 0.42, a: 1}
+    overTint: {r: 1.25, g: 1.15, b: 1.05, a: 1}
+    disabledText: {r: 0.54117647, g: 0.47843137, b: 0.41568627, a: 1}
+    labelUp: 10
+    labelDown: 8
 --- !u!114 &7453230767692502819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1680,6 +1693,12 @@ MonoBehaviour:
   body: {fileID: 5727046281910681451}
   label: {fileID: 1513409150913131104}
   disabled: 0
+  look:
+    disabledTint: {r: 0.45, g: 0.42, b: 0.42, a: 1}
+    overTint: {r: 1.25, g: 1.15, b: 1.05, a: 1}
+    disabledText: {r: 0.54117647, g: 0.47843137, b: 0.41568627, a: 1}
+    labelUp: 10
+    labelDown: 8
 --- !u!114 &2533641319046277893
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1745,6 +1764,12 @@ MonoBehaviour:
   body: {fileID: 8143762926103973463}
   label: {fileID: 150005394673522933}
   disabled: 1
+  look:
+    disabledTint: {r: 0.45, g: 0.42, b: 0.42, a: 1}
+    overTint: {r: 1.25, g: 1.15, b: 1.05, a: 1}
+    disabledText: {r: 0.54117647, g: 0.47843137, b: 0.41568627, a: 1}
+    labelUp: 10
+    labelDown: 8
 --- !u!114 &4177398202347045813
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2497,6 +2522,12 @@ MonoBehaviour:
   body: {fileID: 5500375293953404381}
   label: {fileID: 3308725510675415084}
   disabled: 0
+  look:
+    disabledTint: {r: 0.45, g: 0.42, b: 0.42, a: 1}
+    overTint: {r: 1.25, g: 1.15, b: 1.05, a: 1}
+    disabledText: {r: 0.54117647, g: 0.47843137, b: 0.41568627, a: 1}
+    labelUp: 10
+    labelDown: 8
 --- !u!114 &139494711313561897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4642,6 +4673,12 @@ MonoBehaviour:
   body: {fileID: 7811073935198124600}
   label: {fileID: 9169240751469508151}
   disabled: 0
+  look:
+    disabledTint: {r: 0.45, g: 0.42, b: 0.42, a: 1}
+    overTint: {r: 1.25, g: 1.15, b: 1.05, a: 1}
+    disabledText: {r: 0.54117647, g: 0.47843137, b: 0.41568627, a: 1}
+    labelUp: 10
+    labelDown: 8
 --- !u!114 &6987358477261218641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5709,6 +5746,12 @@ MonoBehaviour:
   body: {fileID: 3681214403161881512}
   label: {fileID: 6474676066404603113}
   disabled: 0
+  look:
+    disabledTint: {r: 0.45, g: 0.42, b: 0.42, a: 1}
+    overTint: {r: 1.25, g: 1.15, b: 1.05, a: 1}
+    disabledText: {r: 0.54117647, g: 0.47843137, b: 0.41568627, a: 1}
+    labelUp: 10
+    labelDown: 8
 --- !u!114 &2117948490521810654
 MonoBehaviour:
   m_ObjectHideFlags: 0

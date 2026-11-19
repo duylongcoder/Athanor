@@ -38,5 +38,7 @@ namespace Athanor.Game
         public Color pipOn, pipOff;
         /// <summary>Label of an enabled button.</summary>
         public Color buttonText;
+        /// <summary>The dark outline around the rarity stars.</summary>
+        public Color starOutline;
     }
 }

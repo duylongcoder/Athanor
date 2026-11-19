@@ -12815,6 +12815,18 @@ MonoBehaviour:
     - {fileID: 5164842770076094661}
     - {fileID: 1351188847325460505}
     root: {fileID: 2321144858104348210}
+  layout:
+    pad: 8
+    titleDy: 4
+    bodyDy: 21
+    starsDy: 22
+    tierDy: 19
+    tierGap: 4
+    edgeMargin: 2
+    border: 4
+    pivot: {x: 0.5, y: 0.5}
+    longText: 62
+    tightSpacing: -30
 --- !u!1 &8134411044833892650
 GameObject:
   m_ObjectHideFlags: 0

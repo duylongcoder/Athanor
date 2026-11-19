@@ -5033,6 +5033,31 @@ MonoBehaviour:
   shade: {fileID: 5121872703785673299}
   heading: {fileID: 4371372129527831073}
   sub: {fileID: 3311327501335574789}
+  timing:
+    dealBase: 0.5
+    dealPerCard: 0.1
+    dealFly: 0.5
+    shadeDiv: 2.5
+    stagger: 0.1
+    away: 0.55
+    hopShare: 0.45
+    pickFlash: {x: 0.22, y: 0.35}
+  layout:
+    dim: 0.8
+    startDrop: -300
+    fallDrop: -330
+    hop: 10
+    hoverLift: 8
+    liftSpeed: 80
+    kicker: {r: 0.65882353, g: 0.52156863, b: 0.30588235, a: 1}
+    kickerCost: {r: 0.60392157, g: 0.20392157, b: 0.07843137, a: 1}
+    pickBurst:
+      count: 40
+      color: {r: 2.2, g: 1.7, b: 0.6, a: 1}
+      speed: 150
+      life: 0.8
+      order: 448
+      gravity: 60
 --- !u!1 &2656529088778450259
 GameObject:
   m_ObjectHideFlags: 0

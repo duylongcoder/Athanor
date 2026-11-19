@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Athanor.Game
@@ -12,6 +13,20 @@ namespace Athanor.Game
         [SerializeField] Label title, body, tier;
         [SerializeField] SpriteRenderer panel;
         [SerializeField] RarityStars stars;
+        /// <summary>The tooltip's inner offsets (px), stored in the Bench prefab.</summary>
+        [Serializable]
+        public struct Layout
+        {
+            /// <summary>Left padding, and the drops of the title, body, stars and tier word from the panel's top.</summary>
+            public float pad, titleDy, bodyDy, starsDy, tierDy;
+            /// <summary>The gap between the stars and the tier word; the margin kept to the screen edge.</summary>
+            public float tierGap, edgeMargin;
+            /// <summary>The 9-slice border, and the panel sprite's pivot.</summary>
+            public float border; public Vector2 pivot;
+            /// <summary>A body longer than this many characters sits tighter, at this line spacing.</summary>
+            public int longText; public float tightSpacing;
+        }
+        [SerializeField] Layout layout;
         int h = BaseH;
 
         /// <summary>
@@ -23,7 +38,7 @@ namespace Athanor.Game
         {
             if (panel.sprite != null && panel.sprite.border != Vector4.zero) return;
             var art = Art.Lib.Sprite("tooltip");
-            panel.sprite = Sprite.Create(art.texture, art.textureRect, new Vector2(0.5f, 0.5f), art.pixelsPerUnit, 0, SpriteMeshType.FullRect, new Vector4(4, 4, 4, 4));
+            panel.sprite = Sprite.Create(art.texture, art.textureRect, layout.pivot, art.pixelsPerUnit, 0, SpriteMeshType.FullRect, new Vector4(layout.border, layout.border, layout.border, layout.border));
             panel.drawMode = SpriteDrawMode.Sliced;
             panel.size = new Vector2(W, BaseH);
         }
@@ -35,22 +50,22 @@ namespace Athanor.Game
             h = BaseH + (row ? RowH : 0);
             panel.size = new Vector2(W, h);
             title.Text = heading; body.Text = text;
-            body.main.lineSpacing = text != null && text.Length > 62 ? -30 : 0;      // a third line fits when the lines sit closer
-            title.transform.localPosition = new Vector3(-W / 2 + 8, h / 2f - 4, 0);
-            body.transform.localPosition = new Vector3(-W / 2 + 8, h / 2f - 21 - (row ? RowH : 0), 0);
+            body.main.lineSpacing = text != null && text.Length > layout.longText ? layout.tightSpacing : 0;      // a third line fits when the lines sit closer
+            title.transform.localPosition = new Vector3(-W / 2 + layout.pad, h / 2f - layout.titleDy, 0);
+            body.transform.localPosition = new Vector3(-W / 2 + layout.pad, h / 2f - layout.bodyDy - (row ? RowH : 0), 0);
             stars.SetActive(row); tier.gameObject.SetActive(row);
             if (row)
             {
                 int n = RarityStars.Count(rarity);
-                stars.Root.localPosition = new Vector3(-W / 2 + 8, h / 2f - 22, 0);
+                stars.Root.localPosition = new Vector3(-W / 2 + layout.pad, h / 2f - layout.starsDy, 0);
                 stars.Show(rarity);
                 tier.Text = Wording.RarityWord(rarity); // owner decision 4a: the brighter rarity colour here, not SPEC 23's dark tone (about 2.4:1 on the dark panel)
                 tier.Color = Wording.RarityColor(rarity);
-                tier.transform.localPosition = new Vector3(-W / 2 + 8 + RarityStars.WidthOf(n) + 4, h / 2f - 19, 0);
+                tier.transform.localPosition = new Vector3(-W / 2 + layout.pad + RarityStars.WidthOf(n) + layout.tierGap, h / 2f - layout.tierDy, 0);
             }
             float y = anchor.y + clearance + h / 2f;
-            if (y + h / 2f > Px.H / 2f - 2) y = anchor.y - clearance - h / 2f;
-            float x = Mathf.Clamp(anchor.x, -Px.W / 2f + W / 2f + 2, Px.W / 2f - W / 2f - 2);
+            if (y + h / 2f > Px.H / 2f - layout.edgeMargin) y = anchor.y - clearance - h / 2f;
+            float x = Mathf.Clamp(anchor.x, -Px.W / 2f + W / 2f + layout.edgeMargin, Px.W / 2f - W / 2f - layout.edgeMargin);
             transform.position = new Vector3(Mathf.Round(x), Mathf.Round(y), 0);
             gameObject.SetActive(true);
         }

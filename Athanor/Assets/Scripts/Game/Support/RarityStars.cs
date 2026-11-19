@@ -13,7 +13,6 @@ namespace Athanor.Game
     public sealed class RarityStars
     {
         public const int Size = 7, Pitch = 8, Max = 4;
-        static readonly Color OutlineColor = Px.Hex("#1a0e08");
         static readonly Vector2[] Offsets = { new Vector2(-1, 0), new Vector2(1, 0), new Vector2(0, -1), new Vector2(0, 1) };
 
         [SerializeField] SpriteRenderer[] fill = new SpriteRenderer[Max], edge = new SpriteRenderer[Max * 4];
@@ -115,7 +114,7 @@ namespace Athanor.Game
                 for (int k = 0; k < 4; k++)
                 {
                     var e = edge[i * 4 + k];
-                    e.enabled = on; e.color = OutlineColor.Alpha(alpha);
+                    e.enabled = on; e.color = Art.Palette.starOutline.Alpha(alpha);
                     if (on) e.sprite = glyph;
                 }
             }

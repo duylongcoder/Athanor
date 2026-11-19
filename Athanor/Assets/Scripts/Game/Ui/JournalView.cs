@@ -13,8 +13,21 @@ namespace Athanor.Game
     {
         // the numbers match JOURNAL in tools/art/ui.mjs
         const int O = 440, X = 20, Y = 15, Cols = 10, Rows = 6, Cell = 27, Well = 25, GridX = 33, GridY = 60,
-            PageX = 324, PageY = 30, PageW = 260, HintsY = 240, LineCount = 15, HintCount = 5,
+            PageX = 324, PageY = 30, PageW = 260, LineCount = 15, HintCount = 5,
             PipCount = ContentDb.MaxReactivity, WrapAt = 38;
+
+        /// <summary>The numbers of the book that are not its grid (art px, y down), stored in Journal.prefab.</summary>
+        [Serializable]
+        public struct Layout
+        {
+            /// <summary>What the tutorial lights: the page's reactivity line and pips, its recipe lines, the hints under the grid.</summary>
+            public Rect indexRect, recipesRect, hintsRect;
+            /// <summary>The title's top on the page for a short and a long name, the length that counts as long, and its two sizes.</summary>
+            public float titleTop, titleTopLong; public int titleLongChars, titleSize, titleSizeLong;
+            /// <summary>Hint ink, and the tint of a silhouette (a material not found yet).</summary>
+            public Color hint, unknown;
+        }
+        [SerializeField] Layout layout;
 
         public event Action Closed;
         public bool IsOpen => gameObject.activeSelf;
@@ -41,7 +54,6 @@ namespace Athanor.Game
         static Color Ink => Art.Palette.ink;
         static Color Faded => Art.Palette.faded;
         static Color Teal => Art.Palette.teal;
-        static readonly Color Purple = Px.Hex("#4a1f7a");
 
         /// <summary>The selected material's name on the right-hand page.</summary>
         public Label Title => title;
@@ -119,7 +131,7 @@ namespace Athanor.Game
             foreach (var m in db.Starters) if (isOpen == null || isOpen(m.id)) discovered.Add(m.id);
             foreach (var r in db.Recipes) if (journal.IsKnown(r.items)) discovered.Add(r.result);
             for (int i = 0; i < cells.Count; i++)
-                cells[i].icon.color = discovered.Contains(db.Materials[i].id) ? Color.white : new Color(0.16f, 0.1f, 0.05f, 0.4f);
+                cells[i].icon.color = discovered.Contains(db.Materials[i].id) ? Color.white : layout.unknown;
             found.Text = Loc.T("ui.journal.found", ("known", journal.KnownPairs.Count), ("total", db.Recipes.Count));
             materialsCount.Text = discovered.Count + " / " + db.Materials.Count;
             var open = new List<HintData>();
@@ -128,7 +140,7 @@ namespace Athanor.Game
             for (int i = 0; i < HintCount; i++)
             {
                 hints[i].Text = i < open.Count ? HudView.HintLine(open[i], db) : i == 0 ? Loc.T("ui.journal.hint_empty") : "";
-                hints[i].Color = i < open.Count ? Purple : Faded;
+                hints[i].Color = i < open.Count ? layout.hint : Faded;
             }
             gameObject.SetActive(true);
             selected = Mathf.Clamp(selected, 0, cells.Count - 1);
@@ -181,11 +193,11 @@ namespace Athanor.Game
             return new Rect(X + GridX + (i % PerPage % Cols) * Cell - 1, Y + GridY + (i % PerPage / Cols) * Cell - 1, Well + 2, Well + 2);
         }
         /// <summary>The page's line "heat/ reactivity" and its pips.</summary>
-        public static Rect IndexRect => new Rect(X + PageX + 12, Y + PageY + 91, PageW - 24, 22);
+        public Rect IndexRect => layout.indexRect;
         /// <summary>The recipe lines of the page.</summary>
-        public static Rect RecipesRect => new Rect(X + PageX + 12, Y + PageY + 111, PageW - 24, 60);
+        public Rect RecipesRect => layout.recipesRect;
         /// <summary>The latest hints under the grid.</summary>
-        public static Rect HintsRect => new Rect(X + GridX - 2, Y + HintsY - 2, Cols * Cell + 2, 14 + 2 * 11);
+        public Rect HintsRect => layout.hintsRect;
 
         void Select(int i)
         {
@@ -194,11 +206,11 @@ namespace Athanor.Game
             var m = db.Materials[i];
             bool known = discovered.Contains(m.id);
             bigIcon.sprite = Art.Lib.Sprite(m.id);
-            bigIcon.color = known ? Color.white : new Color(0.16f, 0.1f, 0.05f, 0.4f);
+            bigIcon.color = known ? Color.white : layout.unknown;
             bool locked = m.tier == 0 && !known;
             title.Text = known ? m.name : locked ? Loc.T("ui.journal.locked") : Loc.T("ui.journal.unknown");
-            title.SetSize(title.Text.Length > 13 ? 16 : 32);
-            title.transform.position = Px.At(X + PageX + PageW / 2, Y + PageY + (title.Text.Length > 13 ? 72 : 62));
+            title.SetSize(title.Text.Length > layout.titleLongChars ? layout.titleSizeLong : layout.titleSize);
+            title.transform.position = Px.At(X + PageX + PageW / 2, Y + PageY + (title.Text.Length > layout.titleLongChars ? layout.titleTopLong : layout.titleTop));
             sub.Text = known ? (m.tier == 0 ? Loc.T("ui.journal.sub_starter", ("kind", Loc.Upper(Loc.Kind(m.kind))), ("r", m.reactivity)) : Loc.T("ui.journal.sub_tier", ("kind", Loc.Upper(Loc.Kind(m.kind))), ("tier", m.tier), ("r", m.reactivity))) : "";
             // the rarity is only defined for starting materials; a made one, or one not found yet, shows none
             bool rated = known && m.tier == 0;
@@ -234,7 +246,7 @@ namespace Athanor.Game
                 text.Add((total == 0 ? Loc.T("ui.journal.no_more") : Loc.T("ui.journal.reactions_found", ("got", got), ("total", total)), Faded));
                 text.AddRange(reactions);
                 // hints stay on the material's page until everything it does has been found
-                foreach (var h in journal.OpenHints(m.id, db)) text.Add((HudView.HintLine(h, db, false), Purple));
+                foreach (var h in journal.OpenHints(m.id, db)) text.Add((HudView.HintLine(h, db, false), layout.hint));
             }
             for (int k = 0; k < LineCount; k++)
             {

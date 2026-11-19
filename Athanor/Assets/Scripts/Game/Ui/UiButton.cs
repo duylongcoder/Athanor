@@ -10,13 +10,23 @@ namespace Athanor.Game
         [SerializeField] SpriteRenderer body;
         [SerializeField] Label label;
         [SerializeField] bool disabled;
+        /// <summary>The button's colours and label offsets, stored in each prefab that holds one.</summary>
+        [Serializable]
+        public struct Look
+        {
+            /// <summary>Body tint when disabled and when pointed at; label colour when disabled.</summary>
+            public Color disabledTint, overTint, disabledText;
+            /// <summary>The label's local y at rest and while pressed.</summary>
+            public float labelUp, labelDown;
+        }
+        [SerializeField] Look look;
         bool over, down;
         /// <summary>Raised on a click while the button is enabled.</summary>
         public event Action Clicked;
         /// <summary>The button's label, for text that carries an argument.</summary>
         public Label Text => label;
         /// <summary>A greyed button: no hover, no press, and a click does nothing.</summary>
-        public bool Disabled { get => disabled; set { disabled = value; if (value) over = down = false; if (label != null) label.Color = value ? Px.Hex("#8a7a6a") : Art.Palette.buttonText; } }
+        public bool Disabled { get => disabled; set { disabled = value; if (value) over = down = false; if (label != null) label.Color = value ? look.disabledText : Art.Palette.buttonText; } }
 
         void Awake() { if (GetComponent<Clickable>() != null) Bind(); }
 
@@ -36,8 +46,8 @@ namespace Athanor.Game
         void Update()
         {
             body.sprite = Art.Lib.Sprite(down ? "button_down" : "button_up");
-            body.color = disabled ? new Color(0.45f, 0.42f, 0.42f, 1) : over && !down ? new Color(1.25f, 1.15f, 1.05f, 1) : Color.white;
-            label.transform.localPosition = new Vector3(0, down ? 8 : 10, 0);
+            body.color = disabled ? look.disabledTint : over && !down ? look.overTint : Color.white;
+            label.transform.localPosition = new Vector3(0, down ? look.labelDown : look.labelUp, 0);
         }
     }
 }

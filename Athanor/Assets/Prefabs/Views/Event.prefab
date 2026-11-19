@@ -1753,6 +1753,17 @@ MonoBehaviour:
   outcome: {fileID: 1325536772571438423}
   proceed: {fileID: 2073381628599702834}
   body: {fileID: 174319710234001525}
+  timing:
+    fadeIn: 0.35
+    fadeOut: 0.2
+    slide: 0.35
+    shadeAlpha: 0.62
+    slideFrom: -40
+    noteFlash: {x: 0.12, y: 0.25}
+  layout:
+    overTint: {r: 1.25, g: 1.15, b: 1.05, a: 1}
+    labelUp: 9
+    labelDown: 7
 --- !u!1 &2876157703789458242
 GameObject:
   m_ObjectHideFlags: 0
@@ -6114,6 +6125,12 @@ MonoBehaviour:
   body: {fileID: 5463360528064066934}
   label: {fileID: 916832121840283326}
   disabled: 0
+  look:
+    disabledTint: {r: 0.45, g: 0.42, b: 0.42, a: 1}
+    overTint: {r: 1.25, g: 1.15, b: 1.05, a: 1}
+    disabledText: {r: 0.54117647, g: 0.47843137, b: 0.41568627, a: 1}
+    labelUp: 10
+    labelDown: 8
 --- !u!114 &8844355390650698003
 MonoBehaviour:
   m_ObjectHideFlags: 0

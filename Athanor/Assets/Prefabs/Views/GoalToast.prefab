@@ -282,6 +282,15 @@ MonoBehaviour:
   title: {fileID: 8734573322935173232}
   line: {fileID: 718157771946627113}
   click: {fileID: 9121813135171131765}
+  layout:
+    burst:
+      count: 18
+      color: {r: 2.2, g: 1.7, b: 0.6, a: 1}
+      speed: 90
+      life: 0.6
+      order: 493
+      gravity: 20
+    hideGap: 2
 --- !u!1 &1244722631204310123
 GameObject:
   m_ObjectHideFlags: 0

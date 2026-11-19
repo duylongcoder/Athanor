@@ -1278,6 +1278,9 @@ MonoBehaviour:
   found: {fileID: 8887135099762449389}
   outside: {fileID: 599863407791520328}
   closeClick: {fileID: 3056155905596197834}
+  layout:
+    barHeight: 3
+    barDy: -14.5
 --- !u!1 &6338703934319716461
 GameObject:
   m_ObjectHideFlags: 0

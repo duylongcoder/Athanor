@@ -35,7 +35,33 @@ namespace Athanor.Game
         [SerializeField] Clickable settingsOutside, resetLink;
         readonly bool[] cellOver = new bool[3];
         [SerializeField] Label[] outline = new Label[4];
-        static readonly Vector3[] Edge = { new Vector3(-2, 0, 0), new Vector3(2, 0, 0), new Vector3(0, 2, 0), new Vector3(0, -2, 0) };
+        /// <summary>The title's positions and colours (art px, y down), stored in Title.prefab.</summary>
+        [Serializable]
+        public struct Layout
+        {
+            /// <summary>The screen's centre line, the logo's rest height and how far it rises from, and how far the four outline copies sit from it.</summary>
+            public float centerX, logoY, logoRise, outlineSpread;
+            /// <summary>The line under the buttons and the credit line, English and Vietnamese (the 12 px rows leave 2 px at the 360 px edge).</summary>
+            public float progressY, progressYVi, creditY, creditYVi;
+            /// <summary>The erase link's colour at rest and pointed at; the settings cells' fill at rest and pointed at, and how far the fill is inset.</summary>
+            public Color resetRest, resetOver, cellRest, cellOver; public float cellInset;
+            /// <summary>The settings rows: pitch and first row's drop with and without the Vibration row, the lower divider's left, width and height and its drop, the erase link's drop.</summary>
+            public float pitch, pitchNoVib, firstRow, firstRowNoVib, dividerX, dividerW, dividerH, dividerY, dividerYNoVib, resetY, resetYNoVib;
+            /// <summary>Inside a row: label left, label and value drops, value left, check box inset and size, its fill's inset and size.</summary>
+            public float labelX, labelDy, valueDy, valueDx, boxInset, boxSize, fillInset, fillSize;
+        }
+        /// <summary>The title's motion: logo fade-in, the sub-title's delay and fade, the glow's colour, base, swing and speed.</summary>
+        [Serializable]
+        public struct Timing
+        {
+            public float fadeIn, subDelay, subFade, glowBase, glowSwing, glowSpeed;
+            public Color glow;
+            /// <summary>Embers: sparks a second, x range, start height, speed ranges, colour, size and the share that fall.</summary>
+            public float emberRate, emberY, emberSize, emberFall; public Vector2 emberX, emberVx, emberVy; public Color ember;
+        }
+        [SerializeField] Layout layout;
+        [SerializeField] Timing timing;
+        Vector3 Edge(int i) => i == 0 ? new Vector3(-layout.outlineSpread, 0, 0) : i == 1 ? new Vector3(layout.outlineSpread, 0, 0) : i == 2 ? new Vector3(0, layout.outlineSpread, 0) : new Vector3(0, -layout.outlineSpread, 0);
         [SerializeField] SpriteRenderer glow, shade;
         float age;
 
@@ -75,8 +101,8 @@ namespace Athanor.Game
                 cellHit[k].onExit = () => { cellOver[k] = false; PaintCell(k); };
             }
             resetLink.onClick = AskErase;
-            resetLink.onEnter = () => resetLabel.Color = Px.Hex("#ee6a3c");
-            resetLink.onExit = () => resetLabel.Color = Px.Hex("#7a5a3a");
+            resetLink.onEnter = () => resetLabel.Color = layout.resetOver;
+            resetLink.onExit = () => resetLabel.Color = layout.resetRest;
             Loc.Changed += Relayout;
         }
 
@@ -114,14 +140,14 @@ namespace Athanor.Game
         void AnswerSkip(bool play) { skip.gameObject.SetActive(false); var a = skipAnswer; skipAnswer = null; a?.Invoke(play); }
 
         // Vietnamese rows are 12 px, so the lines under the buttons sit 2 px higher (the 360 px edge leaves 2 px).
-        static int ProgressY => Loc.Vi ? 332 : 334;
-        static int CreditY => Loc.Vi ? 346 : 348;
+        float ProgressY => Loc.Vi ? layout.progressYVi : layout.progressY;
+        float CreditY => Loc.Vi ? layout.creditYVi : layout.creditY;
 
         /// <summary>The language changed: move what depends on it and rewrite the Settings values.</summary>
         void Relayout()
         {
-            progress.transform.position = Px.At(320, ProgressY);
-            credit.transform.position = Px.At(320, CreditY);
+            progress.transform.position = Px.At(layout.centerX, ProgressY);
+            credit.transform.position = Px.At(layout.centerX, CreditY);
             RefreshSettings();
         }
 
@@ -132,13 +158,13 @@ namespace Athanor.Game
         void PaintCell(int i)
         {
             cellEdge[i].color = cellOver[i] ? Art.Palette.gold : Art.Palette.edge;
-            cellFill[i].color = cellOver[i] ? Px.Hex("#4a2c14") : Px.Hex("#2a1810");
+            cellFill[i].color = cellOver[i] ? layout.cellOver : layout.cellRest;
         }
 
         void PlaceCell(int i, float rowY)
         {
             cellEdge[i].transform.position = Px.Mid(CellX, rowY, CellW, CellH);
-            cellFill[i].transform.position = Px.Mid(CellX + 1, rowY + 1, CellW - 2, CellH - 2);
+            cellFill[i].transform.position = Px.Mid(CellX + layout.cellInset, rowY + layout.cellInset, CellW - 2 * layout.cellInset, CellH - 2 * layout.cellInset);
             cellHit[i].transform.position = Px.Mid(CellX, rowY, CellW, CellH);
         }
 
@@ -147,10 +173,10 @@ namespace Athanor.Game
         {
             if (panel == null) return;
             bool vib = Haptics.Supported;
-            float pitch = vib ? 28 : 32, row = PY + (vib ? 54 : 58);
+            float pitch = vib ? layout.pitch : layout.pitchNoVib, row = PY + (vib ? layout.firstRow : layout.firstRowNoVib);
             // the third row pushes the lower divider and the erase link down
-            divider2.transform.position = Px.Mid(PX + 24, PY + (vib ? 140 : 126), 272, 1);
-            resetLabel.transform.position = Px.At(320, PY + (vib ? 144 : 134));
+            divider2.transform.position = Px.Mid(PX + layout.dividerX, PY + (vib ? layout.dividerY : layout.dividerYNoVib), layout.dividerW, layout.dividerH);
+            resetLabel.transform.position = Px.At(layout.centerX, PY + (vib ? layout.resetY : layout.resetYNoVib));
             PlaceRow(2, row, swayLabel, swayBox, swayFill, swayValue, settings.sway);
             row += pitch;
             cell[0].gameObject.SetActive(vib); vibLabel.gameObject.SetActive(vib); vibBox.gameObject.SetActive(vib);
@@ -160,9 +186,9 @@ namespace Athanor.Game
                 PlaceRow(0, row, vibLabel, vibBox, vibFill, vibValue, settings.haptics);
                 row += pitch;
             }
-            langLabel.transform.position = Px.At(188, row + 4);
+            langLabel.transform.position = Px.At(layout.labelX, row + layout.labelDy);
             PlaceCell(1, row);
-            langValue.transform.position = Px.At(CellX + CellW / 2f, row + 3);
+            langValue.transform.position = Px.At(CellX + CellW / 2f, row + layout.valueDy);
             langValue.Text = Loc.NativeName;
             for (int i = 0; i < 3; i++) PaintCell(i);
         }
@@ -170,12 +196,12 @@ namespace Athanor.Game
         /// <summary>One on/off row: label, cell, check box and its On or Off word.</summary>
         void PlaceRow(int i, float row, Label label, SpriteRenderer box, SpriteRenderer fill, Label value, bool on)
         {
-            label.transform.position = Px.At(188, row + 4);
+            label.transform.position = Px.At(layout.labelX, row + layout.labelDy);
             PlaceCell(i, row);
-            box.transform.position = Px.Mid(CellX + 8, row + 8, 10, 10);
-            fill.transform.position = Px.Mid(CellX + 9, row + 9, 8, 8);
+            box.transform.position = Px.Mid(CellX + layout.boxInset, row + layout.boxInset, layout.boxSize, layout.boxSize);
+            fill.transform.position = Px.Mid(CellX + layout.fillInset, row + layout.fillInset, layout.fillSize, layout.fillSize);
             fill.gameObject.SetActive(on);
-            value.transform.position = Px.At(CellX + 26, row + 3);
+            value.transform.position = Px.At(CellX + layout.valueDx, row + layout.valueDy);
             value.SetKey(on ? "ui.settings.on" : "ui.settings.off");
         }
 
@@ -230,16 +256,16 @@ namespace Athanor.Game
         void Update()
         {
             age += Time.deltaTime;
-            float k = Mathf.Clamp01(age / 1.2f), pulse = 0.5f + 0.5f * Mathf.Sin(Time.time * 1.7f);
-            logo.Alpha = k; sub.Alpha = Mathf.Clamp01((age - 0.6f) / 0.8f);
-            var at = Px.At(320, 96 + Mathf.Round((1 - Anim.OutCubic(k)) * 10));
+            float k = Mathf.Clamp01(age / timing.fadeIn), pulse = 0.5f + 0.5f * Mathf.Sin(Time.time * timing.glowSpeed);
+            logo.Alpha = k; sub.Alpha = Mathf.Clamp01((age - timing.subDelay) / timing.subFade);
+            var at = Px.At(layout.centerX, layout.logoY + Mathf.Round((1 - Anim.OutCubic(k)) * layout.logoRise));
             logo.transform.position = at;
-            for (int i = 0; i < outline.Length; i++) { outline[i].transform.position = at + Edge[i]; outline[i].Alpha = k; }
-            glow.color = new Color(1f, 0.55f, 0.2f, k * (0.28f + 0.12f * pulse));
+            for (int i = 0; i < outline.Length; i++) { outline[i].transform.position = at + Edge(i); outline[i].Alpha = k; }
+            glow.color = new Color(timing.glow.r, timing.glow.g, timing.glow.b, k * (timing.glowBase + timing.glowSwing * pulse));
             // embers drifting up past the title
-            if (fx != null && UnityEngine.Random.value < 9 * Time.deltaTime)
-                fx.Sparks.Emit(Px.At(UnityEngine.Random.Range(120f, 520f), 300), new Vector2(UnityEngine.Random.Range(-6f, 6f), UnityEngine.Random.Range(18f, 42f)),
-                    new Color(2.2f, 1.2f, 0.4f, 0.9f), 4f, O + 2, -2, UnityEngine.Random.value < 0.3f);
+            if (fx != null && UnityEngine.Random.value < timing.emberRate * Time.deltaTime)
+                fx.Sparks.Emit(Px.At(UnityEngine.Random.Range(timing.emberX.x, timing.emberX.y), timing.emberY), new Vector2(UnityEngine.Random.Range(timing.emberVx.x, timing.emberVx.y), UnityEngine.Random.Range(timing.emberVy.x, timing.emberVy.y)),
+                    timing.ember, timing.emberSize, O + 2, -2, UnityEngine.Random.value < timing.emberFall);
         }
     }
 }

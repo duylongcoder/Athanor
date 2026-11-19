@@ -32,7 +32,14 @@ namespace Athanor.Game
         public const string OpenHook = "[cards] open";
 
         const int O = 440, CardW = 150, CardH = 180, Gap = 18, Top = 112;
-        const float Dim = 0.8f;
+        /// <summary>The chooser's motion: the deal (base and per card, flight, stagger, the shade's fade divisor), the exit (length, the chosen card's hop as a share of it) and the flash on a pick.</summary>
+        [Serializable]
+        public struct Timing { public float dealBase, dealPerCard, dealFly, shadeDiv, stagger, away, hopShare; public Vector2 pickFlash; }
+        /// <summary>The chooser's distances (px) and looks: the shade's alpha, how far below home cards start and fall to, the chosen card's hop, the hover lift and its speed, kicker colours, the pick burst.</summary>
+        [Serializable]
+        public struct Layout { public float dim, startDrop, fallDrop, hop, hoverLift, liftSpeed; public Color kicker, kickerCost; public BurstSpec pickBurst; }
+        [SerializeField] Timing timing;
+        [SerializeField] Layout layout;
 
         [Serializable]
         sealed class Card
@@ -126,7 +133,7 @@ namespace Athanor.Game
                 c.icon.sprite = Art.Lib.Sprite(o.sprite);
                 c.name.Text = o.name;
                 c.text.Text = string.IsNullOrEmpty(o.cost) ? o.text : o.text + "\n<color=#9a3414>" + o.cost + "</color>";
-                c.kicker.Color = Px.Hex(string.IsNullOrEmpty(o.cost) ? "#a8854e" : "#9a3414");
+                c.kicker.Color = string.IsNullOrEmpty(o.cost) ? layout.kicker : layout.kickerCost;
                 bool catalyst = o.rarity != null;
                 c.kicker.Text = o.kicker ?? "";
                 c.strip.enabled = catalyst; c.tier.Text = catalyst ? Wording.RarityWord(o.rarity) : "";
@@ -139,20 +146,20 @@ namespace Athanor.Game
                     c.bench[k].color = bench && Array.IndexOf(o.tiles, k) >= 0 ? On : o.dimTiles != null && Array.IndexOf(o.dimTiles, k) >= 0 ? Joined : Off;
                 }
                 c.home = Px.Snap(Px.Mid(start + i * (CardW + Gap), Top, CardW, CardH));
-                c.root.position = c.home + new Vector3(0, -300, 0);
+                c.root.position = c.home + new Vector3(0, layout.startDrop, 0);
             }
             heading.Alpha = sub.Alpha = 0;
             gameObject.SetActive(true);
 
-            float dealTime = 0.5f + 0.1f * count;
+            float dealTime = timing.dealBase + timing.dealPerCard * count;
             // the shade and the heading come up first; the cards fly in one after another, 0.1 s apart
             var deal = Sequence.Create()
                 .Group(Tween.Delay(dealTime))
-                .Group(Motion.Fade(shade, 0, Dim, dealTime / 2.5f))
+                .Group(Motion.Fade(shade, 0, layout.dim, dealTime / timing.shadeDiv))
                 .Group(Motion.Fade(heading, 0, 1, dealTime / 2))
                 .Group(Motion.Fade(sub, 0, 1, dealTime / 2));
             for (int i = 0; i < count; i++)
-                deal.Insert(i * 0.1f, Motion.Move(cards[i].root, cards[i].home + new Vector3(0, -300, 0), cards[i].home, 0.5f, Ease.OutBack));
+                deal.Insert(i * timing.stagger, Motion.Move(cards[i].root, cards[i].home + new Vector3(0, layout.startDrop, 0), cards[i].home, timing.dealFly, Ease.OutBack));
             yield return deal.ToYieldInstruction();
             open = true;
             Dev.Hook(OpenHook);                // development builds only: from here a click on a card is taken
@@ -166,20 +173,20 @@ namespace Athanor.Game
             int chosen = 0;
             for (int i = 0; i < count; i++) if (cards[i].id == picked) chosen = i;
             cards[chosen].lit.enabled = true;
-            fx.Screen.Flash(0.22f, 0.35f);
-            fx.Sparks.Burst(cards[chosen].root.position, 40, new Color(2.2f, 1.7f, 0.6f), 150, 0.8f, O + 8, 60);
+            fx.Screen.Flash(timing.pickFlash.x, timing.pickFlash.y);
+            layout.pickBurst.Play(fx.Sparks, cards[chosen].root.position);
             // the others fall at once; the chosen card hops 10 px first, then falls after them
-            const float Away = 0.55f, Hop = 0.45f * Away;
+            float Away = timing.away, Hop = timing.hopShare * Away;
             var away = Sequence.Create()
-                .Group(Motion.Fade(shade, Dim, 0, Away, Ease.InCubic))
+                .Group(Motion.Fade(shade, layout.dim, 0, Away, Ease.InCubic))
                 .Group(Motion.Fade(heading, 1, 0, Away))
                 .Group(Motion.Fade(sub, 1, 0, Away));
             for (int i = 0; i < count; i++)
             {
                 var c = cards[i];
-                Vector3 at = c.home + new Vector3(0, c.lift, 0), gone = at + new Vector3(0, -330, 0);
+                Vector3 at = c.home + new Vector3(0, c.lift, 0), gone = at + new Vector3(0, layout.fallDrop, 0);
                 if (i != chosen) away.Insert(0, Motion.Move(c.root, at, gone, Away, Ease.InCubic));
-                else away.Insert(0, Motion.Arc(c.root, at, at, 10, Hop)).Insert(Hop, Motion.Move(c.root, at, gone, Away - Hop, Ease.InCubic));
+                else away.Insert(0, Motion.Arc(c.root, at, at, layout.hop, Hop)).Insert(Hop, Motion.Move(c.root, at, gone, Away - Hop, Ease.InCubic));
             }
             yield return away.ToYieldInstruction();
             gameObject.SetActive(false);
@@ -192,7 +199,7 @@ namespace Athanor.Game
             for (int i = 0; i < count; i++)
             {
                 var c = cards[i];
-                c.lift = Mathf.MoveTowards(c.lift, hovered == i ? 8 : 0, Time.deltaTime * 80);
+                c.lift = Mathf.MoveTowards(c.lift, hovered == i ? layout.hoverLift : 0, Time.deltaTime * layout.liftSpeed);
                 c.root.position = Px.Snap(c.home + new Vector3(0, c.lift, 0));
                 c.lit.enabled = hovered == i;
             }

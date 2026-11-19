@@ -347,11 +347,11 @@ namespace Athanor.Game
             var jv = f.JournalView;
             var cell = jv.ShowMaterial("ember_coal");
             boxDy = style.journalBoxDrop;
-            yield return Say("tutorial.2_5", cell, JournalView.RecipesRect);
-            yield return Say("tutorial.2_6", JournalView.IndexRect);
+            yield return Say("tutorial.2_5", cell, jv.RecipesRect);
+            yield return Say("tutorial.2_6", jv.IndexRect);
             boxDy = 0;
             cell = jv.ShowMaterial("glowmoss");
-            Show(Loc.T("tutorial.2_7"), new[] { cell, JournalView.HintsRect }, false, false, null, true);
+            Show(Loc.T("tutorial.2_7"), new[] { cell, jv.HintsRect }, false, false, null, true);
             while (f.State == FlowState.Journal) yield return null;
             Hide();
             // trial 3: chains

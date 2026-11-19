@@ -1167,6 +1167,12 @@ MonoBehaviour:
   body: {fileID: 6570272012723952349}
   label: {fileID: 8318508909075132025}
   disabled: 0
+  look:
+    disabledTint: {r: 0.45, g: 0.42, b: 0.42, a: 1}
+    overTint: {r: 1.25, g: 1.15, b: 1.05, a: 1}
+    disabledText: {r: 0.54117647, g: 0.47843137, b: 0.41568627, a: 1}
+    labelUp: 10
+    labelDown: 8
 --- !u!114 &5913710490250556683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2580,6 +2586,11 @@ MonoBehaviour:
   goalsClick: {fileID: 6887273964816007417}
   again: {fileID: 6564416673737209466}
   toTitle: {fileID: 157921426951328401}
+  timing:
+    fadeIn: 0.35
+    slide: 0.35
+    shadeAlpha: 0.62
+    slideFrom: -40
 --- !u!1 &5263368793070098300
 GameObject:
   m_ObjectHideFlags: 0
@@ -4485,6 +4496,12 @@ MonoBehaviour:
   body: {fileID: 4285732883192856190}
   label: {fileID: 386460459285076948}
   disabled: 0
+  look:
+    disabledTint: {r: 0.45, g: 0.42, b: 0.42, a: 1}
+    overTint: {r: 1.25, g: 1.15, b: 1.05, a: 1}
+    disabledText: {r: 0.54117647, g: 0.47843137, b: 0.41568627, a: 1}
+    labelUp: 10
+    labelDown: 8
 --- !u!114 &4109333158020981729
 MonoBehaviour:
   m_ObjectHideFlags: 0

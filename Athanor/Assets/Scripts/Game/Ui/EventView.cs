@@ -22,6 +22,14 @@ namespace Athanor.Game
             [NonSerialized] public bool over, down;
         }
 
+        /// <summary>How the dialog comes in and goes: fade and slide durations, the shade's alpha, where the body slides from, and the flash after a result with notes.</summary>
+        [Serializable]
+        public struct Timing { public float fadeIn, fadeOut, slide, shadeAlpha, slideFrom; public Vector2 noteFlash; }
+        /// <summary>The option rows' look: tint under the pointer, label height at rest and pressed.</summary>
+        [Serializable]
+        public struct Layout { public Color overTint; public float labelUp, labelDown; }
+        [SerializeField] Timing timing;
+        [SerializeField] Layout layout;
         [SerializeField] Row[] rows = new Row[MaxOptions];
         [SerializeField] Label[] notes = new Label[NoteCount];
         [SerializeField] SpriteRenderer shade, icon;
@@ -88,8 +96,8 @@ namespace Athanor.Game
             picked = -1; closing = false; choosing = false;
             gameObject.SetActive(true);
             yield return Sequence.Create()
-                .Group(Motion.Fade(shade, 0, 0.62f, 0.35f))
-                .Group(Motion.MoveLocal(body, new Vector3(0, -40, 0), Vector3.zero, 0.35f, Ease.OutBack))
+                .Group(Motion.Fade(shade, 0, timing.shadeAlpha, timing.fadeIn))
+                .Group(Motion.MoveLocal(body, new Vector3(0, timing.slideFrom, 0), Vector3.zero, timing.slide, Ease.OutBack))
                 .ToYieldInstruction();
             choosing = true;
             Dev.Hook("[event] options");      // development builds only: tools/web/webtest.mjs waits for these three lines
@@ -102,11 +110,11 @@ namespace Athanor.Game
             for (int i = 0; i < MaxOptions; i++) rows[i].root.gameObject.SetActive(false);
             outcome.Text = Wording.OutcomeText(e, option, result.Text);
             for (int i = 0; i < NoteCount; i++) notes[i].Text = i < result.Notes.Count ? Wording.NoteText(result.Notes[i]) : "";
-            if (result.Notes.Count > 0) fx.Screen.Flash(0.12f, 0.25f);
+            if (result.Notes.Count > 0) fx.Screen.Flash(timing.noteFlash.x, timing.noteFlash.y);
             proceed.gameObject.SetActive(true);
             Dev.Hook("[event] result");
             while (!closing) yield return null;
-            yield return Motion.Fade(shade, 0.62f, 0, 0.2f).ToYieldInstruction();
+            yield return Motion.Fade(shade, timing.shadeAlpha, 0, timing.fadeOut).ToYieldInstruction();
             gameObject.SetActive(false);
             Dev.Hook("[event] closed");
         }
@@ -117,8 +125,8 @@ namespace Athanor.Game
             {
                 var r = rows[i];
                 r.body.sprite = Art.Lib.Sprite(r.down ? "option_down" : "option_up");
-                r.body.color = r.over && !r.down ? new Color(1.25f, 1.15f, 1.05f, 1) : Color.white;
-                r.label.transform.localPosition = new Vector3(0, r.down ? 7 : 9, 0);
+                r.body.color = r.over && !r.down ? layout.overTint : Color.white;
+                r.label.transform.localPosition = new Vector3(0, r.down ? layout.labelDown : layout.labelUp, 0);
             }
         }
     }

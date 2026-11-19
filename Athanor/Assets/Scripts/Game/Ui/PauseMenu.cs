@@ -12,7 +12,7 @@ namespace Athanor.Game
     /// </summary>
     public sealed class PauseMenu : MonoBehaviour
     {
-        const int Y = 75;      // the dialog's top edge in Pause.prefab; Layout moves the lower buttons from it
+        const int Y = 75;      // the dialog's top edge in Pause.prefab; PlaceButtons moves the lower buttons from it
         /// <summary>The player confirmed "Quit this run?". The owner discards the run; the menu has already restored time.</summary>
         public event Action QuitConfirmed;
         /// <summary>Raised when the Vibration button changes the setting, so the owner can save it.</summary>
@@ -25,6 +25,10 @@ namespace Athanor.Game
         public bool IsOpen => menu != null && (menu.gameObject.activeSelf || confirm.gameObject.activeSelf);
         public bool Confirming => confirm != null && confirm.gameObject.activeSelf;
 
+        /// <summary>Where the lower buttons sit (art px, y down): the buttons' left edge and tops below the dialog's top, the hint's centre and top, and how far they move up without Vibration.</summary>
+        [Serializable]
+        public struct Layout { public float buttonX, howToDy, quitDy, hintX, hintDy, noVibrationUp; }
+        [SerializeField] Layout layout;
         [SerializeField] Transform menu, confirm;
         [SerializeField] UiButton resume, vibration, howTo, quit, quitYes, quitNo;
         [SerializeField] Label howToHint;
@@ -48,22 +52,22 @@ namespace Athanor.Game
         }
 
         /// <summary>Lays the buttons out: without Vibration the rest move up 30 px.</summary>
-        void Layout()
+        void PlaceButtons()
         {
             bool vib = Haptics.Supported;
             vibration.gameObject.SetActive(vib);
             if (vib) vibration.Text.SetKey("ui.pause.vibration", ("state", Loc.T(settings.haptics ? "ui.settings.on" : "ui.settings.off")));
-            int up = vib ? 0 : 30;
-            howTo.transform.position = Px.Mid(260, Y + 110 - up, UiButton.W, UiButton.H);
-            howToHint.transform.position = Px.At(320, Y + 137 - up);
-            quit.transform.position = Px.Mid(260, Y + 152 - up, UiButton.W, UiButton.H);
+            float up = vib ? 0 : layout.noVibrationUp;
+            howTo.transform.position = Px.Mid(layout.buttonX, Y + layout.howToDy - up, UiButton.W, UiButton.H);
+            howToHint.transform.position = Px.At(layout.hintX, Y + layout.hintDy - up);
+            quit.transform.position = Px.Mid(layout.buttonX, Y + layout.quitDy - up, UiButton.W, UiButton.H);
         }
 
         /// <summary>Opens the menu and stops time. False when a pause is not allowed now or one is already open.</summary>
         public bool Open()
         {
             if (IsOpen || (CanOpen != null && !CanOpen())) return false;
-            Layout();
+            PlaceButtons();
             menu.gameObject.SetActive(true);
             Time.timeScale = 0f;
             Opened?.Invoke();
@@ -90,14 +94,14 @@ namespace Athanor.Game
 
         void AskQuit() { menu.gameObject.SetActive(false); confirm.gameObject.SetActive(true); }
 
-        void BackToMenu() { confirm.gameObject.SetActive(false); Layout(); menu.gameObject.SetActive(true); }
+        void BackToMenu() { confirm.gameObject.SetActive(false); PlaceButtons(); menu.gameObject.SetActive(true); }
 
         void ToggleVibration()
         {
             settings.haptics = !settings.haptics;
             Haptics.Enabled = settings.haptics;
             if (settings.haptics) Haptics.Pulse(Haptics.Discovery);
-            Layout();
+            PlaceButtons();
             VibrationChanged?.Invoke();
         }
 

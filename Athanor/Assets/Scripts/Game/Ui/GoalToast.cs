@@ -16,6 +16,11 @@ namespace Athanor.Game
         /// <summary>Seconds a toast takes to slide in, and again to slide out.</summary>
         public const float Slide = 0.25f;
 
+        /// <summary>The toast's burst when it appears and how far past the top edge it hides, stored in GoalToast.prefab.</summary>
+        [System.Serializable]
+        public struct Layout { public BurstSpec burst; public float hideGap; }
+        [SerializeField] Layout layout;
+
         struct Item { public string goal, reward, sprite; }
 
         readonly Queue<Item> queue = new Queue<Item>();
@@ -69,12 +74,12 @@ namespace Athanor.Game
                 if (next.sprite != null) icon.sprite = Art.Lib.Sprite(next.sprite);
                 age = 0;
                 panel.gameObject.SetActive(true);
-                if (fx != null) fx.Sparks.Burst(Px.Mid(X, Y, W, H), 18, new Color(2.2f, 1.7f, 0.6f), 90, 0.6f, O + 3, 20);
+                if (fx != null) layout.burst.Play(fx.Sparks, Px.Mid(X, Y, W, H));
             }
             age += Time.deltaTime;
             // slides down from above the screen, waits, slides back up
             float shown = age < Slide ? Anim.OutCubic(age / Slide) : age < Slide + Stay ? 1 : 1 - Anim.InCubic(Mathf.Clamp01((age - Slide - Stay) / Slide));
-            panel.position = Px.Snap(Px.Mid(X, Y - (1 - shown) * (H + Y + 2), W, H));
+            panel.position = Px.Snap(Px.Mid(X, Y - (1 - shown) * (H + Y + layout.hideGap), W, H));
             if (age >= Stay + 2 * Slide) { age = -1; panel.gameObject.SetActive(false); }
         }
     }
