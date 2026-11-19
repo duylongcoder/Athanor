@@ -82,7 +82,7 @@ static class Program
         if (!string.IsNullOrEmpty(only)) return;
         foreach (bool full in new[] { false, true })
         {
-            int wins = 0; var endedAt = new int[RunState.FinalDepth + 1];
+            int wins = 0; var endedAt = new int[db.FinalDepth + 1];
             for (int seed = 1; seed <= seeds; seed++)
             {
                 var run = Sim.RandomPlay(db, seed, RunOptions.Full(full ? Unlocks.All(db) : Unlocks.Fresh(db)));
@@ -100,17 +100,17 @@ static class Program
         int players = int.TryParse(Environment.GetEnvironmentVariable("ATHANOR_PLAYERS"), out int p) ? p : 40;
         int adminRuns = 60, newRuns = int.TryParse(Environment.GetEnvironmentVariable("ATHANOR_RUNS"), out int r) ? r : 200;
         var admins = Enumerable.Range(1, players).Select(i => Sim.Play(db, true, i, adminRuns)).ToList();
-        Sim.Describe("ADMIN", admins, adminRuns, w);
+        Sim.Describe("ADMIN", admins, adminRuns, w, db.FinalDepth);
         var newcomers = Enumerable.Range(1, players).Select(i => Sim.Play(db, false, i, newRuns)).ToList();
-        Sim.Describe("NEWCOMER", newcomers, newRuns, w);
+        Sim.Describe("NEWCOMER", newcomers, newRuns, w, db.FinalDepth);
         if (int.TryParse(Environment.GetEnvironmentVariable("ATHANOR_TAUGHT"), out int taught))
         {
             var told = Enumerable.Range(1, players).Select(i => Sim.Play(db, false, i, newRuns, true, true, null, 0, taught)).ToList();
-            Sim.Describe("NEWCOMER TOLD TIER<=" + taught, told, newRuns, w);
+            Sim.Describe("NEWCOMER TOLD TIER<=" + taught, told, newRuns, w, db.FinalDepth);
         }
         // the same two players with no aspects and no events, to see what Phase 3's run modifiers do
         var plainAdmins = Enumerable.Range(1, players).Select(i => Sim.Play(db, true, i, adminRuns, false, false)).ToList();
-        Sim.Describe("ADMIN (no aspects, no events)", plainAdmins, adminRuns, w);
+        Sim.Describe("ADMIN (no aspects, no events)", plainAdmins, adminRuns, w, db.FinalDepth);
     }
 
     static void NewcomerTrace()
@@ -128,8 +128,8 @@ static class Program
         const int Seeds = 200;
         int wins = 0, spare = 0, byCombo = 0, firstTrial = 0, ignites = 0, sputters = 0, runsWith5 = 0; var lost = new List<string>();
         var combos = new SortedDictionary<string, int>(); var comboRuns = new SortedDictionary<string, int>();
-        var clearedTrials = new int[RunState.FinalDepth + 1]; var cleared = new int[RunState.FinalDepth + 1];
-        var bySize = new int[ContentDb.MaxItems + 1]; var lostAt = new int[RunState.FinalDepth + 1]; var chains = new List<int>();
+        var clearedTrials = new int[db.FinalDepth + 1]; var cleared = new int[db.FinalDepth + 1];
+        var bySize = new int[ContentDb.MaxItems + 1]; var lostAt = new int[db.FinalDepth + 1]; var chains = new List<int>();
         for (int seed = 1; seed <= Seeds; seed++)
         {
             var st = new Sim.RunStats();
@@ -146,7 +146,7 @@ static class Program
             foreach (var c in st.ClearedIn) { int d = c[0] - '0'; cleared[d]++; clearedTrials[d] += int.Parse(c.Substring(2)); }
             firstTrial += st.FirstTrialClears; ignites += st.Ignites; sputters += st.Sputters; chains.Add(st.LongestChain);
         }
-        int randomWins = 0; var randomDepth = new int[RunState.FinalDepth + 1];
+        int randomWins = 0; var randomDepth = new int[db.FinalDepth + 1];
         for (int seed = 1; seed <= Seeds; seed++)
         {
             var run = Sim.RandomPlay(db, seed);
@@ -157,7 +157,7 @@ static class Program
         // (goals go too: the content will not load with a goal that has no locked catalyst left to pay out)
         var bare = TestContent.Load(); bare.catalysts = new CatalystData[0]; bare.goals = new GoalData[0];
         var bareDb = new ContentDb(bare);
-        int bareWins = 0; var bareLostAt = new int[RunState.FinalDepth + 1];
+        int bareWins = 0; var bareLostAt = new int[bareDb.FinalDepth + 1];
         for (int seed = 1; seed <= Seeds; seed++)
         {
             var run = Sim.Autoplay(bareDb, seed);

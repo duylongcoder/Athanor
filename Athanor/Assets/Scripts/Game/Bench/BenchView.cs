@@ -118,7 +118,7 @@ namespace Athanor.Game
                 cards.Add(card);
             }
             int held = 0; foreach (var id in run.Hand) if (db.Material(id).tier > 0) held++;
-            rackFull.Text = held >= RunState.RackSize ? Loc.T("ui.bench.rack_full") : "";
+            rackFull.Text = held >= db.Rules.rackSize ? Loc.T("ui.bench.rack_full") : "";
 
             // links show what the bench will do, hub to neighbours, for as far as the player already knows the recipes
             var pairs = new List<(Vector3, Vector3)>();

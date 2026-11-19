@@ -3,14 +3,14 @@ generated: true
 type: test
 file: Athanor/Assets/Tests/EditMode/RulesTests.cs
 tags: [test]
-count: 7
+count: 11
 ---
 
 # RulesTests
-`Athanor/Assets/Tests/EditMode/RulesTests.cs` — 7 tests
+`Athanor/Assets/Tests/EditMode/RulesTests.cs` — 11 tests
 
 ## Covers
-[[ContentData]], [[ContentDb]]
+[[ContentData]], [[ContentDb]], [[Journal]], [[RulesData]], [[RunOptions]], [[RunPhase]], [[RunState]], [[Unlocks]]
 
 ## Tests
 - `Rules_ShippedContent_HasTodaysValues`
@@ -20,3 +20,7 @@ count: 7
 - `Constructor_AspectDepthOutsideTheRun_Throws`
 - `Constructor_HandBaseBelowHandMin_Throws`
 - `Constructor_DepthTargetsNotOneFewerThanDepths_Throws`
+- `HandSize_HandBaseSeven_IsSeven`
+- `TrialsLeft_TrialsSix_StartsDepthOneWithSix`
+- `BasePotency_TableDoubled_IsDoubled`
+- `Phase_AspectDepthsTwo_OffersAspectsAtDepthTwoOnly`

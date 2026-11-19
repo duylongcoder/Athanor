@@ -83,6 +83,11 @@ namespace Athanor.Core
 
         bool TileTaken(int t) => aspects.Any(a => a.Tiles.Contains(t)) || depthBlocked.Contains(t);
 
+        /// <summary>Shape: never shut more tiles than this, so the bench stays playable.</summary>
+        const int MaxBlocked = 2;
+        /// <summary>Shape: an option that costs a trial needs one to spend and one left to play.</summary>
+        const int MinTrialsToSpend = 2;
+
         void BuildAspectOffer()
         {
             aspectOffer = new List<AspectInstance>();
@@ -92,7 +97,7 @@ namespace Athanor.Core
             {
                 var placed = PlaceAspect(data);
                 if (placed != null) aspectOffer.Add(placed);
-                if (aspectOffer.Count == OfferSize) break;
+                if (aspectOffer.Count == db.Rules.offerSize) break;
             }
         }
 
@@ -114,7 +119,7 @@ namespace Athanor.Core
                 return inst;
             }
             if (data.effect == AspectEffects.OpenBench) free = free.Where(t => t == 0 || t == 2 || t == 6 || t == 8).ToList();
-            if (data.effect == AspectEffects.Cold && CountBlocked() >= 2) return null;   // never shut the bench down
+            if (data.effect == AspectEffects.Cold && CountBlocked() >= MaxBlocked) return null;   // never shut the bench down
             if (free.Count == 0) return null;
             inst.Tiles = new[] { free[aspectRng.Range(free.Count)] };
             if (data.effect == AspectEffects.Attuned)
@@ -162,7 +167,7 @@ namespace Athanor.Core
             {
                 case Ops.NeedRack: return hand.Any(h => !IsStarter(h));
                 case Ops.NeedCatalyst: return Upgrades().Count > 0;
-                case Ops.NeedTrial: return TrialsLeft >= 2;
+                case Ops.NeedTrial: return TrialsLeft >= MinTrialsToSpend;
                 case Ops.NeedRedraw: return RedrawsLeft >= 1;
                 default: return true;
             }
@@ -348,7 +353,7 @@ namespace Athanor.Core
                 }
                 case Ops.BlockTile:
                 {
-                    if (CountBlocked() >= 2) break;
+                    if (CountBlocked() >= MaxBlocked) break;
                     // Never the centre: it is the one tile with four neighbours, and the deep recipes cannot be laid without it.
                     // A corner is twice as likely as an edge: an edge shut takes a neighbour from the centre, and at depth 4
                     // that alone cost the informed player a third of its wins (EventReport).

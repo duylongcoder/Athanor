@@ -40,7 +40,9 @@ namespace Athanor.Game
             [NonSerialized] public Vector3 home; [NonSerialized] public string id; [NonSerialized] public float lift;
         }
 
-        [SerializeField] Card[] cards = new Card[RunState.OfferSize];
+        /// <summary>Card slots the prefab lays out. Layout, not a rule: rules.offerSize must not exceed it.</summary>
+        const int Slots = 3;
+        [SerializeField] Card[] cards = new Card[Slots];
         [SerializeField] SpriteRenderer shade;
         [SerializeField] Label heading, sub;
         int hovered = -1, count;

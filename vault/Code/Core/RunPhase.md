@@ -21,4 +21,4 @@ aliases: []
 [[AutoPlayer]], [[GameFlow]], [[GoldenShots]], [[HudView]], [[IgniteOutcome]], [[Profile]], [[RunState]], [[TutorialController]]
 
 ## Tested by
-[[HudTests]], [[LoreTests]], [[Phase3Tests]], [[PrefabBakeTests]], [[RarityReportTests]], [[RarityTests]], [[RunStateTests]], [[TutorialFlowTests]], [[TutorialTests]]
+[[HudTests]], [[LoreTests]], [[Phase3Tests]], [[PrefabBakeTests]], [[RarityReportTests]], [[RarityTests]], [[RulesTests]], [[RunStateTests]], [[TutorialFlowTests]], [[TutorialTests]]

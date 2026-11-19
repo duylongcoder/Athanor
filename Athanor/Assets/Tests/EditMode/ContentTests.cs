@@ -114,7 +114,7 @@ namespace Athanor.Tests
             if (Fills(r, tiles, around, slot + 1, starters)) return true;
             foreach (var s in starters)
             {
-                if (tiles.Count(t => t == s) >= RunState.StarterCopies) continue;
+                if (tiles.Count(t => t == s) >= db.Rules.starterCopies) continue;
                 tiles[around[slot]] = s;
                 bool ok = Fills(r, tiles, around, slot + 1, starters);
                 tiles[around[slot]] = null;
@@ -158,9 +158,9 @@ namespace Athanor.Tests
 
         [Test] public void BasePotency_ForTiersOneToFive_MatchesTheTable()
         {
-            Assert.AreEqual(20, ContentDb.BasePotency(1)); Assert.AreEqual(60, ContentDb.BasePotency(2));
-            Assert.AreEqual(180, ContentDb.BasePotency(3)); Assert.AreEqual(500, ContentDb.BasePotency(4));
-            Assert.AreEqual(1500, ContentDb.BasePotency(5));
+            Assert.AreEqual(20, db.BasePotency(1)); Assert.AreEqual(60, db.BasePotency(2));
+            Assert.AreEqual(180, db.BasePotency(3)); Assert.AreEqual(500, db.BasePotency(4));
+            Assert.AreEqual(1500, db.BasePotency(5));
         }
 
         [Test] public void TryReact_WithThePairInEitherOrder_GivesTheSameResult()

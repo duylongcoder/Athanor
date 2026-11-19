@@ -12,15 +12,15 @@ aliases: []
 # Rarities
 
 `public static class Rarities`
-- Layer: **Core** · Source: `Athanor/Assets/Scripts/Core/ContentData.cs:86-92`
+- Layer: **Core** · Source: `Athanor/Assets/Scripts/Core/ContentData.cs:88-94`
 
 ## Members
 | Kind | Signature | Line | Note |
 |---|---|---|---|
-| field | `public const string Common = "Common", Uncommon = "Uncommon", Rare = "Rare", Legendary =` | 88 |  |
-| property | `public static readonly string[] All =` | 89 |  |
-| method | `public static int Rank(string rarity)` | 90 |  |
-| method | `public static string Of(string rarity)` | 91 |  |
+| field | `public const string Common = "Common", Uncommon = "Uncommon", Rare = "Rare", Legendary =` | 90 |  |
+| property | `public static readonly string[] All =` | 91 |  |
+| method | `public static int Rank(string rarity)` | 92 |  |
+| method | `public static string Of(string rarity)` | 93 |  |
 
 ## Used by
 [[BenchView]], [[CatalystChoiceView]], [[ContentDb]], [[GoalsView]], [[GoldenShots]], [[JournalView]], [[Loc]], [[RarityStars]], [[RunState]], [[Unlocks]], [[Wording]]

@@ -163,6 +163,7 @@ namespace Athanor.Core
             if (r.redraws < 0) throw new ArgumentException("rules.redraws must be 0 or more");
             if (r.starterCopies < 1 || r.offerSize < 1 || r.rackSize < 1) throw new ArgumentException("rules.starterCopies, offerSize and rackSize must be 1 or more");
             if (r.pouchCards < 0) throw new ArgumentException("rules.pouchCards must be 0 or more");
+            if (r.maxRi < 1) throw new ArgumentException("rules.maxRi must be 1 or more");
             if (r.firstReactionMult < 1) throw new ArgumentException("rules.firstReactionMult must be 1 or more");
             if (r.aspectDepths == null) throw new ArgumentException("rules.aspectDepths must be listed");
             var final = data.depthNames.Length;
@@ -256,8 +257,8 @@ namespace Athanor.Core
             return n != null && depth >= 1 && depth <= n.Length ? n[depth - 1] : "Depth " + depth;
         }
 
-        static readonly long[] Base = { 0, 20, 60, 180, 500, 1500 };
-        public static long BasePotency(int tier) => Base[Math.Max(0, Math.Min(tier, Base.Length - 1))];
+        /// <summary>Base potency of a material tier, from rules.potencyByTier; a tier past the table uses its last entry.</summary>
+        public long BasePotency(int tier) { var t = data.rules.potencyByTier; return t[Math.Max(0, Math.Min(tier, t.Length - 1))]; }
 
         public static string PairKey(string a, string b) => string.CompareOrdinal(a, b) <= 0 ? a + "+" + b : b + "+" + a;
 

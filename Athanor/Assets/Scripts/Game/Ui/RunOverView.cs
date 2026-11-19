@@ -55,12 +55,12 @@ namespace Athanor.Game
         /// Sets the depth row: "Depth reached n of 5" on a lost run, one line "Planted at depth n" on a won run (owner, phase-5-prep
         /// 2026-11-16: a win can come before depth 5). The view is reused between runs, so both paths set the name's key again.
         /// </summary>
-        public void ShowDepth(bool won, int depth)
+        public void ShowDepth(bool won, int depth, int finalDepth)
         {
             // SetKey binds the key with its argument, so a language change rewrites whichever line is showing
             if (won) names[0].SetKey("ui.runover.planted_at", ("n", depth));
             else names[0].SetKey("ui.runover.depth_reached");
-            values[0].Text = won ? "" : Loc.T("ui.common.of", ("a", depth), ("b", RunState.FinalDepth));
+            values[0].Text = won ? "" : Loc.T("ui.common.of", ("a", depth), ("b", finalDepth));
         }
 
         public IEnumerator Show(bool won, RunState run, Journal journal, ContentDb db, System.Collections.Generic.IReadOnlyList<GoalReward> goals)
@@ -68,7 +68,7 @@ namespace Athanor.Game
             heading.Text = Loc.T(won ? "ui.runover.won" : "ui.runover.lost");
             heading.Color = Px.Hex(won ? "#f8d250" : "#ee6a3c");
             sub.Text = won ? Loc.T("ui.runover.won_sub", ("item", db.Material(db.Ultimate).name)) : Loc.T("ui.runover.lost_sub", ("depth", Loc.DepthName(db, run.Depth)));
-            ShowDepth(won, run.Depth);
+            ShowDepth(won, run.Depth, db.FinalDepth);
             values[1].Text = run.DiscoveriesThisRun.ToString();
             values[2].Text = Loc.T("ui.common.of", ("a", journal.KnownPairs.Count), ("b", db.Recipes.Count));
             values[3].Text = goals.Count.ToString();

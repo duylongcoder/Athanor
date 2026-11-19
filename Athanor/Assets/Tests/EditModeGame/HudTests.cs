@@ -13,9 +13,10 @@ namespace Athanor.Tests
         [Test]
         public void CanRedraw_WhileRedrawsRemain_IsTrueUntilTheLastRedrawIsUsed()
         {
-            var r = new RunState(Db(), new Journal(), 5);
+            var db = Db();
+            var r = new RunState(db, new Journal(), 5);
             Assert.AreEqual(RunPhase.Playing, r.Phase);
-            for (int i = RunState.BaseRedraws; i > 0; i--)
+            for (int i = db.Rules.redraws; i > 0; i--)
             {
                 Assert.IsTrue(HudView.CanRedraw(r));
                 Assert.IsTrue(r.Redraw());

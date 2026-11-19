@@ -32,7 +32,7 @@ namespace Athanor.Tests
 
         public static string Line(ContentDb db, string label, Func<int, RunOptions> options, int seeds)
         {
-            int wins = 0; var lostAt = new int[RunState.FinalDepth + 1]; double depth = 0;
+            int wins = 0; var lostAt = new int[db.FinalDepth + 1]; double depth = 0;
             for (int seed = 1; seed <= seeds; seed++)
             {
                 var run = Autoplay(db, seed, options(seed));
@@ -209,7 +209,7 @@ namespace Athanor.Tests
             /// </summary>
             bool Experiment(RunState run)
             {
-                if (run.TrialsLeft <= 1 && run.Depth < RunState.FinalDepth && run.Potency < run.Target) return false;
+                if (run.TrialsLeft <= 1 && run.Depth < truth.FinalDepth && run.Potency < run.Target) return false;
                 foreach (var (a, b) in targets)
                 {
                     var hand = run.Hand.ToList();
@@ -449,7 +449,7 @@ namespace Athanor.Tests
 
         public static string Pct(double x) => (100 * x).ToString("0") + "%";
 
-        public static void Describe(string role, List<Career> careers, int runs, Action<string> w)
+        public static void Describe(string role, List<Career> careers, int runs, Action<string> w, int finalDepth)
         {
             var first = careers.Where(c => c.FirstWin > 0).Select(c => c.FirstWin).OrderBy(x => x).ToList();
             int never = careers.Count - first.Count;
@@ -469,7 +469,7 @@ namespace Athanor.Tests
                 parts.Add("runs " + lo + "-" + hi + ": win " + Pct(slice.Count(x => x) / (double)slice.Count) + ", depth " + depth.Average().ToString("0.0"));
             }
             w(role + ": " + string.Join(" | ", parts));
-            var lostAt = new int[RunState.FinalDepth + 1]; int lost = 0;
+            var lostAt = new int[finalDepth + 1]; int lost = 0;
             foreach (var c in careers) for (int k = 0; k < c.Won.Count; k++) if (!c.Won[k]) { lostAt[c.Depth[k]]++; lost++; }
             w(role + ": all runs: win " + Pct(careers.Sum(c => c.Won.Count(x => x)) / (double)(careers.Count * runs))
                 + ", average depth reached " + careers.SelectMany(c => c.Depth).Average().ToString("0.00")

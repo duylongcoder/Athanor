@@ -32,6 +32,7 @@ All shapes are plain `[Serializable]` classes in `ContentData.cs` ([[ContentData
 | `offerSize` | catalyst cards offered after a depth | 3 |
 | `rackSize` | bench rack slots | 12 |
 | `pouchCards` | cards the pouch adds to the hand | 1 |
+| `maxRi` | cap on a tile's Reaction Index | 13 |
 | `firstReactionMult` | multiplier on the first reaction of a trial | 2 |
 | `aspectDepths[]` | depths (1-based) at which the run offers an aspect | 1, 3, 5 |
 | `potencyByTier[]` | base potency by material tier (index = tier) | 0, 20, 60, 180, 500, 1500 |

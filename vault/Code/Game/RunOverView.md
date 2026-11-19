@@ -25,7 +25,7 @@ aliases: []
 | method | `public void Pick(bool again)` | 47 | Closes the summary with the given choice (also used by scripted play). |
 | property | `public Label DepthName` | 50 | The depth row's name label (the first row). |
 | property | `public Label DepthValue` | 52 | The depth row's value label (right-aligned, empty on a won run). |
-| method | `public void ShowDepth(bool won, int depth)` | 58 | Sets the depth row: "Depth reached n of 5" on a lost run, one line "Planted at depth n" on a won run (owner, phase-5-prep 2026-11-16: a win can come before depth 5). The view is reused between runs, so both paths set the name's key again. |
+| method | `public void ShowDepth(bool won, int depth, int finalDepth)` | 58 | Sets the depth row: "Depth reached n of 5" on a lost run, one line "Planted at depth n" on a won run (owner, phase-5-prep 2026-11-16: a win can come before depth 5). The view is reused between runs, so both paths set the name's key again. |
 | method | `public IEnumerator Show(bool won, RunState run, Journal journal, ContentDb db, System.Collections.Generic.IReadOnlyList<GoalReward> goals)` | 66 |  |
 
 ## Uses

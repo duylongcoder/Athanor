@@ -100,7 +100,7 @@ namespace Athanor.Tests
             {
                 var view = f.Get<RunOverView>();
                 view.Bind();
-                view.ShowDepth(true, 4);
+                view.ShowDepth(true, 4, 5);
                 Assert.AreEqual("Planted at depth 4", view.DepthName.Text);
             }
             finally { f.Destroy(); }

@@ -124,8 +124,8 @@ namespace Athanor.Core
             int hub = tiles[0], tier = db.Material(recipe.result).tier, items = recipe.items.Length;
             int baseTier = tier;
             if (rules.AttunedKind[hub] != null && recipe.items.Any(i => db.KindOf(i).ToString() == rules.AttunedKind[hub])) baseTier++;
-            double p = ContentDb.BasePotency(baseTier) * (items - 1);
-            if (firstThisRun) p *= 2;
+            double p = db.BasePotency(baseTier) * (items - 1);
+            if (firstThisRun) p *= db.Rules.firstReactionMult;
             int step = chain + (rules.Heavy[hub] ? 1 : 0);
             p *= Has(catalysts, Effects.ChainPlus) ? step + 1 : step;
             long bonus = 0;

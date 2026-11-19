@@ -19,10 +19,6 @@ namespace Athanor.Core
     /// <summary>One run: descending through depths, spending trials, collecting catalysts.</summary>
     public sealed partial class RunState
     {
-        public const int MinHand = 3, BaseHand = 5, BaseTrials = 4, BaseRedraws = 2, FinalDepth = 5, FinalTrials = 6, StarterCopies = 2, OfferSize = 3;
-        /// <summary>How many discoveries the hand can keep; a new one pushes the weakest old one out.</summary>
-        public const int RackSize = 12;
-
         readonly ContentDb db;
         readonly Unlocks unlocks;
         readonly Journal journal;
@@ -44,11 +40,11 @@ namespace Athanor.Core
             aspectRng = new Rng(seed ^ 0x2545F491);
             eventRng = new Rng(seed ^ 0x7F4A7C15);
             // Starters won from goals do not thin the satchel: they wait in a pouch of their own, and each hand
-            // takes PouchCards of them on top of the usual draw. (Mode 0 and 1 put them in the satchel; kept for the balance report.)
+            // takes rules.pouchCards of them on top of the usual draw. (Mode 0 and 1 put them in the satchel; kept for the balance report.)
             var own = db.Starters.Where(m => IsOpen(m.id) && (PouchMode < 2 || !m.locked));
-            satchel = new Satchel(own.SelectMany(m => Enumerable.Repeat(m.id, m.locked && PouchMode == 1 ? 1 : StarterCopies)), seed);
-            pouch = new Satchel(db.Starters.Where(m => IsOpen(m.id) && m.locked && PouchMode == 2).SelectMany(m => Enumerable.Repeat(m.id, StarterCopies)), seed ^ 0x3C6EF372);
-            Depth = Math.Max(1, Math.Min(FinalDepth, startDepth));
+            satchel = new Satchel(own.SelectMany(m => Enumerable.Repeat(m.id, m.locked && PouchMode == 1 ? 1 : db.Rules.starterCopies)), seed);
+            pouch = new Satchel(db.Starters.Where(m => IsOpen(m.id) && m.locked && PouchMode == 2).SelectMany(m => Enumerable.Repeat(m.id, db.Rules.starterCopies)), seed ^ 0x3C6EF372);
+            Depth = Math.Max(1, Math.Min(db.FinalDepth, startDepth));
             BeginDepth();
         }
 
@@ -63,7 +59,7 @@ namespace Athanor.Core
         public IReadOnlyList<string> Hand => hand;
         public IReadOnlyList<CatalystData> Catalysts => catalysts;
         public IReadOnlyList<CatalystData> CatalystOffer => offer;
-        public int HandSize => Math.Max(MinHand, BaseHand + Sum(Effects.ExtraHand) + (HasAspect(AspectEffects.Greedy) ? 1 : 0) + handDelta);
+        public int HandSize => Math.Max(db.Rules.handMin, db.Rules.handBase + Sum(Effects.ExtraHand) + (HasAspect(AspectEffects.Greedy) ? 1 : 0) + handDelta);
         public bool Diagonals => Has(Effects.Diagonals);
         public bool CanIgnite => Phase == RunPhase.Playing && IgniteResolver.HasAnyPair(Bench, Rules);
         /// <summary>How many times the hand was redrawn this run.</summary>
@@ -81,7 +77,6 @@ namespace Athanor.Core
         Satchel DeckOf(string id) => IsPouch(id) ? pouch : satchel;
         /// <summary>How unlocked starters reach the hand. 2 (the game): from their own pouch, PouchCards a hand. 0: two copies in the satchel. 1: one copy in the satchel.</summary>
         public static int PouchMode = 2;
-        public const int PouchCards = 1;
         public bool HasFired(string a, string b) => fired.Contains(ContentDb.PairKey(a, b));
         public bool HasFired(RecipeData recipe) => fired.Contains(db.KeyOf(recipe));
         public int SatchelSize => satchel.Total + pouch.Total;
@@ -101,12 +96,12 @@ namespace Athanor.Core
             Potency = 0;
             handDelta = 0; riShift = 0; tripleFirst = false; freeDiscoveryUsed = false;
             depthBlocked.Clear(); depthHeated.Clear();
-            TrialsLeft = (Depth == FinalDepth ? FinalTrials : BaseTrials) + Sum(Effects.ExtraTrial) + carried + aspects.Count(a => a.Data.effect == AspectEffects.Cold);
+            TrialsLeft = (Depth == db.FinalDepth ? db.Rules.trialsFinalDepth : db.Rules.trials) + Sum(Effects.ExtraTrial) + carried + aspects.Count(a => a.Data.effect == AspectEffects.Cold);
             carried = 0;
-            RedrawsLeft = Math.Max(0, BaseRedraws + Sum(Effects.ExtraRedraw) - (HasAspect(AspectEffects.Greedy) ? 1 : 0));
+            RedrawsLeft = Math.Max(0, db.Rules.redraws + Sum(Effects.ExtraRedraw) - (HasAspect(AspectEffects.Greedy) ? 1 : 0));
             RebuildRules();
             bool quiet = Depth < options.QuietBefore;
-            aspectPending = options.Aspects && !quiet && (Depth == 1 || Depth == 3 || Depth == 5);
+            aspectPending = options.Aspects && !quiet && Array.IndexOf(db.Rules.aspectDepths, Depth) >= 0;
             eventPending = options.Events && !quiet;
             Advance();
         }
@@ -137,7 +132,7 @@ namespace Athanor.Core
             int want = HandSize + fallowPending - hand.Count(IsMain) - Bench.Tiles.Count(t => t != null && IsMain(t));
             fallowPending = 0;
             if (want > 0) hand.AddRange(satchel.Draw(want));
-            int more = (pouch.Total > 0 ? PouchCards : 0) - hand.Count(IsPouch) - Bench.Tiles.Count(t => t != null && IsPouch(t));
+            int more = (pouch.Total > 0 ? db.Rules.pouchCards : 0) - hand.Count(IsPouch) - Bench.Tiles.Count(t => t != null && IsPouch(t));
             if (more > 0) hand.AddRange(pouch.Draw(more));
         }
 
@@ -247,7 +242,7 @@ namespace Athanor.Core
             else TrialsLeft--;
 
             if (madeUltimate) Phase = RunPhase.Won;
-            else if (Depth < FinalDepth && Potency >= Target) { Phase = RunPhase.DepthCleared; BuildOffer(); }
+            else if (Depth < db.FinalDepth && Potency >= Target) { Phase = RunPhase.DepthCleared; BuildOffer(); }
             else if (TrialsLeft <= 0)
             {
                 if (Has(Effects.SecondChance) && !secondChanceUsed) { secondChanceUsed = true; TrialsLeft = Sum(Effects.SecondChance); FillHand(); }
@@ -260,7 +255,7 @@ namespace Athanor.Core
         /// <summary>Puts a discovery on the rack; when the rack is full the weakest one already there makes room.</summary>
         void AddToRack(string id, List<string> dropped)
         {
-            if (hand.Count(h => !IsStarter(h)) >= RackSize && id != db.Ultimate)
+            if (hand.Count(h => !IsStarter(h)) >= db.Rules.rackSize && id != db.Ultimate)
             {
                 // the weakest discovery already held makes room (oldest first among equals)
                 var weakest = hand.Where(h => !IsStarter(h)).OrderBy(h => db.Material(h).tier).First();
@@ -279,7 +274,7 @@ namespace Athanor.Core
                 if (offer.Count > 0) return;
             }
             var pool = db.Catalysts.Where(c => IsOpen(c.id) && catalysts.All(o => o.id != c.id)).ToList();
-            offer = db.DrawCatalysts(pool, OfferSize, rng);
+            offer = db.DrawCatalysts(pool, db.Rules.offerSize, rng);
         }
 
         /// <summary>Takes one of the offered catalysts (or null when none were left to offer) and descends.</summary>

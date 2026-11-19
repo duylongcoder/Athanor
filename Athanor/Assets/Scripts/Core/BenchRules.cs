@@ -10,7 +10,6 @@ namespace Athanor.Core
     /// </summary>
     public sealed class BenchRules
     {
-        public const int MaxRi = 13;
 
         public bool Diagonals;                                   // Crooked Mirror
         public int RiShift, HeatPlus;                            // events; Warm Bench
@@ -72,7 +71,7 @@ namespace Athanor.Core
         public int Ri(ContentDb db, int tile, string id)
         {
             int ri = db.Reactivity(id) + RiBonus[tile] + RiShift;
-            return ri < 1 ? 1 : ri > MaxRi ? MaxRi : ri;
+            return ri < 1 ? 1 : ri > db.Rules.maxRi ? db.Rules.maxRi : ri;
         }
 
         /// <summary>Either tile reaches the other (Crossroads makes this one-sided for a hub; a pair needs only one side).</summary>

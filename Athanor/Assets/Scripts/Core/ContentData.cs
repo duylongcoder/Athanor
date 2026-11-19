@@ -42,6 +42,8 @@ namespace Athanor.Core
         public int rackSize;
         /// <summary>Cards the pouch adds to the hand.</summary>
         public int pouchCards;
+        /// <summary>Ceiling of a material's Reaction Index on a tile.</summary>
+        public int maxRi;
         /// <summary>Multiplier on the first reaction of a trial.</summary>
         public int firstReactionMult;
         /// <summary>Depths (1-based) at which the run offers an aspect.</summary>

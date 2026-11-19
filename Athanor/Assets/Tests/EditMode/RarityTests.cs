@@ -55,7 +55,7 @@ namespace Athanor.Tests
             {
                 var one = Offer(Pool(w), seed);
                 CollectionAssert.AreEqual(one, Offer(Pool(w), seed));
-                Assert.AreEqual(RunState.OfferSize, one.Distinct().Count());
+                Assert.AreEqual(TestContent.Today.offerSize, one.Distinct().Count());
             }
         }
 
@@ -79,7 +79,7 @@ namespace Athanor.Tests
             {
                 var offer = Offer(Pool(new[] { 0, 1, 1, 0 }), seed);
                 CollectionAssert.Contains(offer, Effects.ExtraTrial); CollectionAssert.Contains(offer, Effects.FirstTriple);
-                Assert.AreEqual(RunState.OfferSize, offer.Distinct().Count());   // the third slot still fills
+                Assert.AreEqual(TestContent.Today.offerSize, offer.Distinct().Count());   // the third slot still fills
             }
         }
 

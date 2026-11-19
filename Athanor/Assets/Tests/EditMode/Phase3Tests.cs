@@ -608,13 +608,13 @@ namespace Athanor.Tests
         [Test] public void ExtraRedraw_WhenHeld_AddsARedrawAtEveryDepth()
         {
             var r = Holding(Cat(Effects.ExtraRedraw, 1));
-            Assert.AreEqual(RunState.BaseRedraws + 1, r.RedrawsLeft);
+            Assert.AreEqual(TestContent.Today.redraws + 1, r.RedrawsLeft);
         }
 
         [Test] public void ExtraHand_CountsItsAmount_AndOneWhenItNamesNone()
         {
-            Assert.AreEqual(RunState.BaseHand + 2, Holding(Cat(Effects.ExtraHand, 2)).HandSize);
-            Assert.AreEqual(RunState.BaseHand + 1, Holding(Cat(Effects.ExtraHand)).HandSize);
+            Assert.AreEqual(TestContent.Today.handBase + 2, Holding(Cat(Effects.ExtraHand, 2)).HandSize);
+            Assert.AreEqual(TestContent.Today.handBase + 1, Holding(Cat(Effects.ExtraHand)).HandSize);
         }
 
         [Test] public void HeatPlus_ReachesTheBenchRules_AndLiftsARecipeOver()
@@ -710,7 +710,7 @@ namespace Athanor.Tests
             var r = new BenchRules { RiShift = -1 }; r.RiBonus[2] = 3;
             Assert.AreEqual(5, r.Ri(db, 0, "a")); Assert.AreEqual(8, r.Ri(db, 2, "a"));
             Assert.AreEqual(1, new BenchRules { RiShift = -20 }.Ri(db, 0, "a"));
-            Assert.AreEqual(BenchRules.MaxRi, new BenchRules { RiShift = 20 }.Ri(db, 0, "a"));
+            Assert.AreEqual(db.Rules.maxRi, new BenchRules { RiShift = 20 }.Ri(db, 0, "a"));
         }
 
         [Test] public void PlainRules_OnRandomBenches_PlanExactlyAsPhase2Did()
@@ -807,7 +807,7 @@ namespace Athanor.Tests
         [Test] public void LegacyRun_WithoutAspectsOrEvents_NeverStopsForAnAspectOrAnEvent()
         {
             var r = Start(MiniWithRealStart(), null);
-            for (int depth = 1; depth < RunState.FinalDepth; depth++)
+            for (int depth = 1; depth < TestContent.FinalDepth; depth++)
             {
                 Assert.AreEqual(RunPhase.Playing, r.Phase); Assert.AreEqual(0, r.Aspects.Count); Assert.IsNull(r.CurrentEvent);
                 Descend(r);
@@ -843,7 +843,7 @@ namespace Athanor.Tests
             for (int seed = 1; seed <= 60; seed++)
             {
                 var r = Start(d, RunOptions.Full(null), seed);
-                for (int depth = 1; depth <= RunState.FinalDepth; depth++)
+                for (int depth = 1; depth <= TestContent.FinalDepth; depth++)
                 {
                     Assert.AreEqual(depth, r.Depth);
                     string seen = OpenAndRecord(r);
@@ -851,8 +851,8 @@ namespace Athanor.Tests
                     bool aspectDepth = depth == 1 || depth == 3 || depth == 5;
                     Assert.That(seen, Is.EqualTo(aspectDepth ? "A" : "").Or.EqualTo(aspectDepth ? "AE" : "E"), "seed " + seed + " depth " + depth);
                     if (seen.EndsWith("E")) events++; else quiet++;
-                    Assert.That(r.Hand.Count(h => h == "a" || h == "b"), Is.GreaterThanOrEqualTo(RunState.MinHand), "the hand was not dealt");
-                    if (depth < RunState.FinalDepth) Descend(r);
+                    Assert.That(r.Hand.Count(h => h == "a" || h == "b"), Is.GreaterThanOrEqualTo(TestContent.Today.handMin), "the hand was not dealt");
+                    if (depth < TestContent.FinalDepth) Descend(r);
                 }
                 Assert.AreEqual(3, r.Aspects.Count);
             }
@@ -865,7 +865,7 @@ namespace Athanor.Tests
             for (int seed = 1; seed <= 150; seed++)
             {
                 var r = Start(d, AspectsOnly, seed);
-                for (int depth = 1; depth <= RunState.FinalDepth; depth++)
+                for (int depth = 1; depth <= TestContent.FinalDepth; depth++)
                 {
                     if (r.Phase == RunPhase.AspectOffer)
                     {
@@ -886,7 +886,7 @@ namespace Athanor.Tests
                         r.ChooseAspect(offer[(seed + depth) % 3].Data.id);
                     }
                     Assert.AreEqual(RunPhase.Playing, r.Phase);
-                    if (depth < RunState.FinalDepth) Descend(r);
+                    if (depth < TestContent.FinalDepth) Descend(r);
                 }
                 var tiles = r.Aspects.SelectMany(a => a.Tiles).ToList();
                 Assert.AreEqual(tiles.Count, tiles.Distinct().Count(), "two aspects share a tile, seed " + seed);
@@ -905,10 +905,10 @@ namespace Athanor.Tests
                 {
                     logs[k] = new List<string>();
                     var r = Start(d, RunOptions.Full(null), seed);
-                    for (int depth = 1; depth <= RunState.FinalDepth; depth++)
+                    for (int depth = 1; depth <= TestContent.FinalDepth; depth++)
                     {
                         OpenAndRecord(r, logs[k]);
-                        if (depth < RunState.FinalDepth) Descend(r);
+                        if (depth < TestContent.FinalDepth) Descend(r);
                     }
                 }
                 CollectionAssert.AreEqual(logs[0], logs[1], "seed " + seed);
@@ -941,10 +941,10 @@ namespace Athanor.Tests
         {
             var r = WithOnly(AspectEffects.Cold, Mini());
             int t = TileOf(r);
-            Assert.AreEqual(RunState.BaseTrials + 1, r.TrialsLeft);
+            Assert.AreEqual(TestContent.Today.trials + 1, r.TrialsLeft);
             Assert.IsTrue(r.Rules.Blocked[t]); Assert.IsFalse(r.Place(0, t)); Assert.IsNull(r.Bench.Tiles[t]);
             Descend(r);
-            Assert.AreEqual(RunState.BaseTrials + RunState.BaseTrials + 1, r.TrialsLeft, "four carried over, four new and the cold tile's one");
+            Assert.AreEqual(TestContent.Today.trials + TestContent.Today.trials + 1, r.TrialsLeft, "four carried over, four new and the cold tile's one");
             Assert.IsTrue(r.Rules.Blocked[t]);
         }
 
@@ -953,8 +953,8 @@ namespace Athanor.Tests
             var d = TestContent.Tiny(); d.ultimate = ""; d.depthTargets = new[] { 1, 1, 1, 1 };
             var r = WithOnly(AspectEffects.Greedy, d, "Bench");
             Assert.AreEqual(0, r.Aspects[0].Tiles.Length);
-            Assert.AreEqual(RunState.BaseHand + 1, r.HandSize); Assert.AreEqual(RunState.BaseHand + 1, r.Hand.Count);
-            Assert.AreEqual(RunState.BaseRedraws - 1, r.RedrawsLeft);
+            Assert.AreEqual(TestContent.Today.handBase + 1, r.HandSize); Assert.AreEqual(TestContent.Today.handBase + 1, r.Hand.Count);
+            Assert.AreEqual(TestContent.Today.redraws - 1, r.RedrawsLeft);
         }
 
         [Test] public void DoubledAndVolatile_WhenTheHubIsOnOrAwayFromTheirTile_ScoreOnTheirTile()
@@ -982,7 +982,7 @@ namespace Athanor.Tests
             Assert.AreEqual(7, r.SatchelSize, "the card on the volatile tile is gone for the run");
             r.Place(0, t); r.Place(0, beside); r.Ignite();
             Assert.AreEqual(7, r.SatchelSize, "seven cards is a hand and two: no more are burnt");
-            Assert.AreEqual(RunState.BaseHand, r.Hand.Count);
+            Assert.AreEqual(TestContent.Today.handBase, r.Hand.Count);
         }
 
         [Test] public void HeatedTile_Adds3_AndSeedTile_Carries40()
@@ -1043,10 +1043,10 @@ namespace Athanor.Tests
             o = r.Rules.Around(h).First(n => n != t);
             r.Place(0, h); r.Place(0, o);
             r.Ignite();
-            Assert.AreEqual(RunState.BaseHand + 1, r.Hand.Count(c => r.IsOpen(c)), "one more starting material after leaving the fallow tile empty");
+            Assert.AreEqual(TestContent.Today.handBase + 1, r.Hand.Count(c => r.IsOpen(c)), "one more starting material after leaving the fallow tile empty");
             r.Place(0, t); r.Place(0, r.Rules.Around(t)[0]);
             r.Ignite();
-            Assert.AreEqual(RunState.BaseHand, r.Hand.Count(c => r.IsOpen(c)), "used, it gives nothing");
+            Assert.AreEqual(TestContent.Today.handBase, r.Hand.Count(c => r.IsOpen(c)), "used, it gives nothing");
         }
 
         [Test] public void Bridge_BetweenTwoTiles_JoinsItsTwoTiles()
@@ -1092,8 +1092,8 @@ namespace Athanor.Tests
             var result = r.ChooseEventOption(0);
             Assert.AreEqual(RunPhase.Playing, r.Phase); Assert.IsNull(r.CurrentEvent);
             Assert.AreEqual("go", result.Text); Assert.AreEqual(3, result.Notes.Count);
-            Assert.AreEqual(RunState.BaseTrials + 1, r.TrialsLeft); Assert.AreEqual(RunState.BaseRedraws + 1, r.RedrawsLeft);
-            Assert.AreEqual(RunState.BaseHand + 2, r.HandSize); Assert.AreEqual(RunState.BaseHand + 2, r.Hand.Count);
+            Assert.AreEqual(TestContent.Today.trials + 1, r.TrialsLeft); Assert.AreEqual(TestContent.Today.redraws + 1, r.RedrawsLeft);
+            Assert.AreEqual(TestContent.Today.handBase + 2, r.HandSize); Assert.AreEqual(TestContent.Today.handBase + 2, r.Hand.Count);
         }
 
         [Test] public void Event_ASmallerHand_AppliesToTheFirstHandToo()
@@ -1101,8 +1101,8 @@ namespace Athanor.Tests
             var tiny = TestContent.Tiny(); tiny.ultimate = "";
             var r = AtEvent(WithGain(tiny, Fx(Ops.Hand, -1)));
             r.ChooseEventOption(0);
-            Assert.AreEqual(RunState.BaseHand - 1, r.HandSize);
-            Assert.AreEqual(RunState.BaseHand - 1, r.Hand.Count, "the hand dealt before the event should have been trimmed");
+            Assert.AreEqual(TestContent.Today.handBase - 1, r.HandSize);
+            Assert.AreEqual(TestContent.Today.handBase - 1, r.Hand.Count, "the hand dealt before the event should have been trimmed");
             Assert.AreEqual(8, r.SatchelSize, "the trimmed card goes back to the satchel");
         }
 
@@ -1111,7 +1111,7 @@ namespace Athanor.Tests
             var tiny = TestContent.Tiny(); tiny.ultimate = "";
             var r = AtEvent(WithGain(tiny, Fx(Ops.Hand, -9), Fx(Ops.Trials, -9), Fx(Ops.Redraws, -9)));
             r.ChooseEventOption(0);
-            Assert.AreEqual(RunState.MinHand, r.HandSize); Assert.AreEqual(RunState.MinHand, r.Hand.Count);
+            Assert.AreEqual(TestContent.Today.handMin, r.HandSize); Assert.AreEqual(TestContent.Today.handMin, r.Hand.Count);
             Assert.AreEqual(1, r.TrialsLeft); Assert.AreEqual(0, r.RedrawsLeft);
         }
 
@@ -1121,7 +1121,7 @@ namespace Athanor.Tests
             var r = AtEvent(d);
             r.ChooseEventOption(0);
             Assert.AreEqual(-1, r.RiShift); Assert.AreEqual(-1, r.Rules.RiShift); Assert.IsTrue(r.TripleFirst);
-            Assert.AreEqual(1, r.DepthBlocked.Count); Assert.AreEqual(1, r.DepthHeated.Count()); Assert.AreEqual(RunState.BaseHand - 1, r.HandSize);
+            Assert.AreEqual(1, r.DepthBlocked.Count); Assert.AreEqual(1, r.DepthHeated.Count()); Assert.AreEqual(TestContent.Today.handBase - 1, r.HandSize);
             int shut = r.DepthBlocked[0], warm = r.DepthHeated.First();
             Assert.AreNotEqual(shut, warm);
             Assert.IsTrue(r.Rules.Blocked[shut]); Assert.AreEqual(3, r.Rules.RiBonus[warm]);
@@ -1134,7 +1134,7 @@ namespace Athanor.Tests
             Descend(r);
             Assert.AreEqual(2, r.Depth); Assert.AreEqual(RunPhase.Playing, r.Phase, "the event is for depth 1 only");
             Assert.AreEqual(0, r.RiShift); Assert.AreEqual(0, r.Rules.RiShift); Assert.IsFalse(r.TripleFirst);
-            Assert.AreEqual(0, r.DepthBlocked.Count); Assert.AreEqual(0, r.DepthHeated.Count()); Assert.AreEqual(RunState.BaseHand, r.HandSize);
+            Assert.AreEqual(0, r.DepthBlocked.Count); Assert.AreEqual(0, r.DepthHeated.Count()); Assert.AreEqual(TestContent.Today.handBase, r.HandSize);
             Assert.IsFalse(r.Rules.Blocked.Any(b => b)); Assert.IsTrue(r.Rules.RiBonus.All(b => b == 0));
         }
 
@@ -1181,7 +1181,7 @@ namespace Athanor.Tests
             Assert.Throws<ArgumentException>(() => r.ChooseEventOption(5));
             int hints = 0;
             r.ChooseEventOption(0);
-            Assert.AreEqual(RunState.BaseRedraws - 1, r.RedrawsLeft);
+            Assert.AreEqual(TestContent.Today.redraws - 1, r.RedrawsLeft);
             Assert.That(hints, Is.EqualTo(0));
         }
 
@@ -1199,7 +1199,7 @@ namespace Athanor.Tests
             var tiny = TestContent.Tiny(); tiny.ultimate = "";
             var r = AtEvent(WithGain(tiny, Fx(Ops.LoseCard, 1)));
             r.ChooseEventOption(0);
-            Assert.AreEqual(7, r.SatchelSize); Assert.AreEqual(RunState.BaseHand, r.Hand.Count);
+            Assert.AreEqual(7, r.SatchelSize); Assert.AreEqual(TestContent.Today.handBase, r.Hand.Count);
             var small = AtEvent(WithGain(Mini(), Fx(Ops.LoseCard, 1)));
             small.ChooseEventOption(0);
             Assert.AreEqual(4, small.SatchelSize, "four cards is already less than a hand");
@@ -1272,7 +1272,7 @@ namespace Athanor.Tests
             for (int seed = 1; seed <= 300; seed++)
             {
                 var r = Start(d, EventsOnly, seed);
-                for (int depth = 1; depth <= RunState.FinalDepth; depth++)
+                for (int depth = 1; depth <= TestContent.FinalDepth; depth++)
                 {
                     if (r.Phase == RunPhase.EventOffer)
                     {
@@ -1289,11 +1289,11 @@ namespace Athanor.Tests
                         int trials = r.TrialsLeft;
                         r.ChooseEventOption((seed + depth) % r.EventOptions.Count);
                         Assert.That(r.TrialsLeft, Is.GreaterThanOrEqualTo(1), e.id);
-                        Assert.That(r.HandSize, Is.GreaterThanOrEqualTo(RunState.MinHand), e.id);
+                        Assert.That(r.HandSize, Is.GreaterThanOrEqualTo(TestContent.Today.handMin), e.id);
                         Assert.That(r.Rules.Blocked.Count(b => b), Is.LessThanOrEqualTo(2), e.id);
                     }
                     Assert.AreEqual(RunPhase.Playing, r.Phase);
-                    if (depth < RunState.FinalDepth) Descend(r);
+                    if (depth < TestContent.FinalDepth) Descend(r);
                 }
             }
             // every event that needs neither a catalyst nor anything this small content lacks turns up
@@ -1317,7 +1317,7 @@ namespace Athanor.Tests
             var damp = db.Events.First(e => e.id == "damp_air");
             Assert.That(damp.minDepth, Is.GreaterThan(1), "the test needs an event that stays away from depth 1");
             for (int seed = 1; seed <= 20; seed++)
-                for (int depth = 1; depth <= RunState.FinalDepth; depth++)
+                for (int depth = 1; depth <= TestContent.FinalDepth; depth++)
                 {
                     var r = new RunState(db, new Journal(), seed, depth, new RunOptions { Events = true, ForceEvent = damp.id });
                     if (depth < damp.minDepth || depth > damp.maxDepth) Assert.AreEqual(RunPhase.Playing, r.Phase, "seed " + seed + " depth " + depth);

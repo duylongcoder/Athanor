@@ -12,18 +12,18 @@ aliases: []
 # ScoreContext
 
 `public sealed class ScoreContext`
-- Layer: **Core** · Source: `Athanor/Assets/Scripts/Core/BenchRules.cs:83-90`
+- Layer: **Core** · Source: `Athanor/Assets/Scripts/Core/BenchRules.cs:82-89`
 
 > What one reaction's score depends on beyond the recipe and the catalysts.
 
 ## Members
 | Kind | Signature | Line | Note |
 |---|---|---|---|
-| field | `public int Depth = 1, EmptyTiles` | 85 |  |
-| field | `public BenchRules Rules = BenchRules.None` | 86 |  |
-| field | `public bool[] EmptyAtIgnite` | 87 |  |
-| field | `public bool TripleFirst` | 88 |  |
-| field | `public Func<string, bool> IsStarter` | 89 |  |
+| field | `public int Depth = 1, EmptyTiles` | 84 |  |
+| field | `public BenchRules Rules = BenchRules.None` | 85 |  |
+| field | `public bool[] EmptyAtIgnite` | 86 |  |
+| field | `public bool TripleFirst` | 87 |  |
+| field | `public Func<string, bool> IsStarter` | 88 |  |
 
 ## Uses
 [[BenchRules]]

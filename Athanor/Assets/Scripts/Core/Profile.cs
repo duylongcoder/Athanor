@@ -19,6 +19,8 @@ namespace Athanor.Core
     {
         public int RunsStarted, RunsWon, WonNoRedraw, DepthReached, Ignites, ChainLongest, ComboLargest;
         public long BestIgnite;
+        /// <summary>Shape: a prime that spreads each goal's reward draw over its own seed.</summary>
+        const int RewardStride = 7919;
         public int RewardSeed;
         /// <summary>The id of the last Lore event the player was shown (kept across runs), or null. A run leaves it out of its next draw.</summary>
         public string LastLore;
@@ -105,7 +107,7 @@ namespace Athanor.Core
                 string item = null;
                 if (pool.Count > 0)
                 {
-                    item = pool[new Rng(RewardSeed + completed.Count * 7919).Range(pool.Count)];
+                    item = pool[new Rng(RewardSeed + completed.Count * RewardStride).Range(pool.Count)];
                     (goal.rewardKind == RewardKinds.Starter ? starters : catalysts).Add(item);
                 }
                 completed.Add(goal.id);

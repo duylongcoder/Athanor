@@ -8,6 +8,7 @@
   "starterCopies": 2,
   "offerSize": 3,
   "rackSize": 12,
+  "maxRi": 13,
   "pouchCards": 1,
   "firstReactionMult": 2,
   "aspectDepths": [

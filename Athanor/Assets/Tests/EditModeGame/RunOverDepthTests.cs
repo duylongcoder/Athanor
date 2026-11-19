@@ -34,12 +34,14 @@ namespace Athanor.Tests
         // labels under a hidden view do not hear Loc.Changed in edit mode; run the same rewrite the label runs on a language change
         static void Relabel(Label l) => typeof(Label).GetMethod("Relabel", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(l, null);
 
-        static string Of(int n) => Loc.T("ui.common.of", ("a", n), ("b", RunState.FinalDepth));
+        static readonly int Final = new ContentDb(JsonUtility.FromJson<ContentData>(Resources.Load<TextAsset>("content").text)).FinalDepth;
+
+        static string Of(int n) => Loc.T("ui.common.of", ("a", n), ("b", Final));
 
         [Test]
         public void Won_ShowsPlantedAtDepth_OnOneLine_WithNoValue()
         {
-            view.ShowDepth(true, 4);
+            view.ShowDepth(true, 4, Final);
             Assert.AreEqual("Planted at depth 4", view.DepthName.Text);
             Assert.AreEqual("", view.DepthValue.Text);
         }
@@ -47,7 +49,7 @@ namespace Athanor.Tests
         [Test]
         public void Lost_ShowsDepthReached_AndNOfFive()
         {
-            view.ShowDepth(false, 3);
+            view.ShowDepth(false, 3, Final);
             Assert.AreEqual("Depth reached", view.DepthName.Text);
             Assert.AreEqual(Of(3), view.DepthValue.Text);
         }
@@ -55,11 +57,11 @@ namespace Athanor.Tests
         [Test]
         public void WonThenLost_OnTheSameView_RestoresTheLostRow()
         {
-            view.ShowDepth(true, 4);
-            view.ShowDepth(false, 2);
+            view.ShowDepth(true, 4, Final);
+            view.ShowDepth(false, 2, Final);
             Assert.AreEqual("Depth reached", view.DepthName.Text);
             Assert.AreEqual(Of(2), view.DepthValue.Text);
-            view.ShowDepth(true, 5);
+            view.ShowDepth(true, 5, Final);
             Assert.AreEqual("Planted at depth 5", view.DepthName.Text);
             Assert.AreEqual("", view.DepthValue.Text);
         }
@@ -67,13 +69,13 @@ namespace Athanor.Tests
         [Test]
         public void Relabel_AfterLanguageChange_KeepsEachPathsText()
         {
-            view.ShowDepth(true, 4);
+            view.ShowDepth(true, 4, Final);
             Loc.Set(Loc.Vietnamese);
             Relabel(view.DepthName);
             Assert.AreEqual(Loc.T("ui.runover.planted_at", ("n", 4)), view.DepthName.Text);
             Assert.AreNotEqual(Loc.T("ui.runover.depth_reached"), view.DepthName.Text);
 
-            view.ShowDepth(false, 3);
+            view.ShowDepth(false, 3, Final);
             Loc.Set(Loc.English);
             Relabel(view.DepthName);
             Assert.AreEqual("Depth reached", view.DepthName.Text);

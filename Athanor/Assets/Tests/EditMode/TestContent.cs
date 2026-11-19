@@ -65,11 +65,16 @@ namespace Athanor.Tests
             };
         }
 
-        /// <summary>Today's shipped rules, for hand-built fixtures.</summary>
+        /// <summary>Today's shipped rules, shared by the hand-built fixtures; tests compare against these instead of constants.</summary>
+        public static readonly RulesData Today = Rules();
+        /// <summary>Depths in the fixtures (Tiny names five).</summary>
+        public const int FinalDepth = 5;
+
+        /// <summary>A fresh copy of today's shipped rules, for hand-built fixtures.</summary>
         public static RulesData Rules() => new RulesData
         {
             handMin = 3, handBase = 5, trials = 4, trialsFinalDepth = 6, redraws = 2, starterCopies = 2, offerSize = 3,
-            rackSize = 12, pouchCards = 1, firstReactionMult = 2,
+            rackSize = 12, maxRi = 13, pouchCards = 1, firstReactionMult = 2,
             aspectDepths = new[] { 1, 3, 5 }, potencyByTier = new long[] { 0, 20, 60, 180, 500, 1500 },
         };
 

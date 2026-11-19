@@ -251,7 +251,7 @@ public static class GoldenShots
         var go = Instance(Views + "RunOver.prefab");
         var view = go.GetComponent<RunOverView>();
         view.Bind();
-        view.ShowDepth(won, 4);
+        view.ShowDepth(won, 4, Db().FinalDepth);
         return go;
     }
 

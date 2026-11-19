@@ -71,7 +71,7 @@ namespace Athanor.Game
             headerRight.Text = all.Length <= 46 ? all : Loc.T("cutscene.more", ("a", names[0]), ("b", names[1]), ("n", matCount - 2));
             title.Text = r.name;
             title.SetSize(r.name.Length > 14 ? 32 : 48);
-            basePotency = ContentDb.BasePotency(r.tier);
+            basePotency = db.BasePotency(r.tier);
             multiplier = basePotency > 0 && e.Potency % basePotency == 0 ? (int)(e.Potency / basePotency) : 1;
             plus.Text = "+" + HudView.Number(multiplier > 1 ? basePotency : e.Potency);
             times.Text = multiplier > 1 ? "x" + multiplier : "";

@@ -16,9 +16,9 @@ namespace Athanor.Core
             if (e == null || e.Recipe == null || e.Result == null) return null;
             var p = new ScoreParts
             {
-                Base = ContentDb.BasePotency(db.Material(e.Result).tier),
+                Base = db.BasePotency(db.Material(e.Result).tier),
                 Used = e.Recipe.items.Length - 1,
-                First = e.FirstThisRun ? 2 : 1,
+                First = e.FirstThisRun ? db.Rules.firstReactionMult : 1,
                 Step = e.Chain,
                 Total = e.Potency,
             };

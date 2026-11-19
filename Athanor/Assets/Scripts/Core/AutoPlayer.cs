@@ -183,7 +183,7 @@ namespace Athanor.Core
             discoveriesHeld = r.Hand.Count(c => tier[c] > 0);
             ComputeNeeds();
             trialsLeft = r.TrialsLeft;
-            remaining = r.Depth < RunState.FinalDepth ? System.Math.Max(0, r.Target - r.Potency) : 0;
+            remaining = r.Depth < db.FinalDepth ? System.Math.Max(0, r.Target - r.Potency) : 0;
             for (int t = 0; t < tiles.Length; t++) tiles[t] = null;
             best = null; bestScore = double.NegativeInfinity; bestUseful = 0;
         }
@@ -404,7 +404,7 @@ namespace Athanor.Core
             lastUseful = useful;
             if (won) score += 1e9;
             // a full rack pushes the weakest out
-            int over = discoveriesHeld - spent + kept - RunState.RackSize;
+            int over = discoveriesHeld - spent + kept - db.Rules.rackSize;
             if (over > 0) score -= 3000.0 * over;
             // potency toward the depth target
             if (remaining > 0)

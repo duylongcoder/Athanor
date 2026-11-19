@@ -25,18 +25,18 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | AutoPlayer | AutoPlayer | Core | class | Athanor/Assets/Scripts/Core/AutoPlayer.cs | 13 |  |
 | AutoMove | AutoMove | Core | enum | Athanor/Assets/Scripts/Core/AutoPlayer.cs | 11 |  |
 | BenchRules | BenchRules | Core | class | Athanor/Assets/Scripts/Core/BenchRules.cs | 11 | What catalysts, aspects and events change about the bench itself: which tiles touch, how lively a tile counts, which tiles are shut. The planner, the resolver and the scripted player all read this, so |
-| ScoreContext | ScoreContext | Core | class | Athanor/Assets/Scripts/Core/BenchRules.cs | 83 | What one reaction's score depends on beyond the recipe and the catalysts. |
+| ScoreContext | ScoreContext | Core | class | Athanor/Assets/Scripts/Core/BenchRules.cs | 82 | What one reaction's score depends on beyond the recipe and the catalysts. |
 | ChainStep | ChainStep | Core | class | Athanor/Assets/Scripts/Core/Chain.cs | 11 | One thing the bench does during an Ignite. A reaction: the hub and the neighbours it consumed (Tiles[0] is the hub, the rest ascending). A sputter: a combo of three or more whose layout was standing r |
 | ChainPlan | ChainPlan | Core | class | Athanor/Assets/Scripts/Core/Chain.cs | 20 |  |
 | ChainPlanner | ChainPlanner | Core | class | Athanor/Assets/Scripts/Core/Chain.cs | 32 | Works out what a bench does, with no side effects. Each round the liveliest tile (highest Reaction Index, earlier tile on a tie) that has a recipe around it becomes the hub; the largest recipe it can  |
 | RulesData | RulesData | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 29 | The run's tuning numbers, read from the "rules" block of content.json. Required: ContentDb throws without it. |
-| ContentData | ContentData | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 54 |  |
-| ProfileData | ProfileData | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 76 |  |
-| Rarities | Rarities | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 86 |  |
-| Effects | Effects | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 95 | The catalyst effect names used in content.json. |
-| AspectEffects | AspectEffects | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 114 | The aspect effect names used in content.json. |
-| Ops | Ops | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 126 | The event effect names (EffectData.op) and option requirements used in content.json. |
-| StatIds | StatIds | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 142 | The stats a goal can watch. |
+| ContentData | ContentData | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 56 |  |
+| ProfileData | ProfileData | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 78 |  |
+| Rarities | Rarities | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 88 |  |
+| Effects | Effects | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 97 | The catalyst effect names used in content.json. |
+| AspectEffects | AspectEffects | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 116 | The aspect effect names used in content.json. |
+| Ops | Ops | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 128 | The event effect names (EffectData.op) and option requirements used in content.json. |
+| StatIds | StatIds | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 144 | The stats a goal can watch. |
 | Kind | Kind | Core | enum | Athanor/Assets/Scripts/Core/ContentData.cs | 5 |  |
 | ContentDb | ContentDb | Core | class | Athanor/Assets/Scripts/Core/ContentDb.cs | 10 | Validated, indexed view of the game's content. |
 | Bench | Bench | Core | class | Athanor/Assets/Scripts/Core/Ignite.cs | 7 | The 3x3 bench: tile index = row * 3 + column, null where empty. |
@@ -48,8 +48,8 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | Json | Json | Core | class | Athanor/Assets/Scripts/Core/Lang.cs | 212 |  |
 | GoalReward | GoalReward | Core | class | Athanor/Assets/Scripts/Core/Profile.cs | 8 | A goal that has just been completed, and the locked item it gave (null when its pool was empty). |
 | Profile | Profile | Core | class | Athanor/Assets/Scripts/Core/Profile.cs | 18 | What the player keeps between runs besides the journal: counters, completed goals and the locked starters and catalysts won from them. |
-| Unlocks | Unlocks | Core | class | Athanor/Assets/Scripts/Core/Profile.cs | 152 | Which starting materials and catalysts a run may use. |
-| RunOptions | RunOptions | Core | class | Athanor/Assets/Scripts/Core/Profile.cs | 204 | Switches for a run. The default is a Phase 2 run: no aspects, no events, and (with no Unlocks) only what the content leaves open. |
+| Unlocks | Unlocks | Core | class | Athanor/Assets/Scripts/Core/Profile.cs | 154 | Which starting materials and catalysts a run may use. |
+| RunOptions | RunOptions | Core | class | Athanor/Assets/Scripts/Core/Profile.cs | 206 | Switches for a run. The default is a Phase 2 run: no aspects, no events, and (with no Unlocks) only what the content leaves open. |
 | AspectInstance | AspectInstance | Core | class | Athanor/Assets/Scripts/Core/RunStart.cs | 8 | An aspect as held by a run (or as offered): where it sits and, for an attuned tile, which kind it favours. |
 | EventResult | EventResult | Core | class | Athanor/Assets/Scripts/Core/RunStart.cs | 16 | What taking an event option did, for the screen. |
 | RunState | RunState | Core | class | Athanor/Assets/Scripts/Core/RunStart.cs | 23 | One run: descending through depths, spending trials, collecting catalysts. |
@@ -223,28 +223,27 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | AutoMove | value | ReadyToIgnite | 11 | ReadyToIgnite |
 | AutoMove | value | ChoseAspect | 11 | ChoseAspect |
 | AutoMove | value | ChoseEvent | 11 | ChoseEvent |
-| BenchRules | field | MaxRi | 13 | public const int MaxRi = 13 |
-| BenchRules | field | Diagonals | 15 | public bool Diagonals |
-| BenchRules | field | HeatPlus | 16 | public int RiShift, HeatPlus |
-| BenchRules | field | Pivot | 17 | public int Pivot = -1 |
-| BenchRules | field | Blocked | 18 | public readonly bool[] Blocked = new bool[Bench.TileCount] |
-| BenchRules | field | RiBonus | 19 | public readonly int[] RiBonus = new int[Bench.TileCount] |
-| BenchRules | field | Kiln | 20 | public readonly bool[] Kiln = new bool[Bench.TileCount], Crossroads = new bool[Bench.TileCount] |
-| BenchRules | method | List | 21 | public readonly List<(int a, int b)> Links = new List<(int, int)>() |
-| BenchRules | property | HubMult | 23 | public readonly int[] HubMult = |
-| BenchRules | field | Heavy | 24 | public readonly bool[] Heavy = new bool[Bench.TileCount] |
-| BenchRules | field | AttunedKind | 25 | public readonly string[] AttunedKind = new string[Bench.TileCount] |
-| BenchRules | field | SeedBonus | 26 | public readonly int[] SeedBonus = new int[Bench.TileCount] |
-| BenchRules | property | None | 29 | public static readonly BenchRules None = new BenchRules(), Diagonal = new BenchRules |
-| BenchRules | method | Plain | 30 | public static BenchRules Plain(bool diagonals) |
-| BenchRules | method | Around | 35 | public int[] Around(int tile) |
-| BenchRules | method | Ri | 72 | public int Ri(ContentDb db, int tile, string id) |
-| BenchRules | method | Touch | 79 | public bool Touch(int a, int b) |
-| ScoreContext | field | Depth | 85 | public int Depth = 1, EmptyTiles |
-| ScoreContext | field | Rules | 86 | public BenchRules Rules = BenchRules.None |
-| ScoreContext | field | EmptyAtIgnite | 87 | public bool[] EmptyAtIgnite |
-| ScoreContext | field | TripleFirst | 88 | public bool TripleFirst |
-| ScoreContext | field | IsStarter | 89 | public Func<string, bool> IsStarter |
+| BenchRules | field | Diagonals | 14 | public bool Diagonals |
+| BenchRules | field | HeatPlus | 15 | public int RiShift, HeatPlus |
+| BenchRules | field | Pivot | 16 | public int Pivot = -1 |
+| BenchRules | field | Blocked | 17 | public readonly bool[] Blocked = new bool[Bench.TileCount] |
+| BenchRules | field | RiBonus | 18 | public readonly int[] RiBonus = new int[Bench.TileCount] |
+| BenchRules | field | Kiln | 19 | public readonly bool[] Kiln = new bool[Bench.TileCount], Crossroads = new bool[Bench.TileCount] |
+| BenchRules | method | List | 20 | public readonly List<(int a, int b)> Links = new List<(int, int)>() |
+| BenchRules | property | HubMult | 22 | public readonly int[] HubMult = |
+| BenchRules | field | Heavy | 23 | public readonly bool[] Heavy = new bool[Bench.TileCount] |
+| BenchRules | field | AttunedKind | 24 | public readonly string[] AttunedKind = new string[Bench.TileCount] |
+| BenchRules | field | SeedBonus | 25 | public readonly int[] SeedBonus = new int[Bench.TileCount] |
+| BenchRules | property | None | 28 | public static readonly BenchRules None = new BenchRules(), Diagonal = new BenchRules |
+| BenchRules | method | Plain | 29 | public static BenchRules Plain(bool diagonals) |
+| BenchRules | method | Around | 34 | public int[] Around(int tile) |
+| BenchRules | method | Ri | 71 | public int Ri(ContentDb db, int tile, string id) |
+| BenchRules | method | Touch | 78 | public bool Touch(int a, int b) |
+| ScoreContext | field | Depth | 84 | public int Depth = 1, EmptyTiles |
+| ScoreContext | field | Rules | 85 | public BenchRules Rules = BenchRules.None |
+| ScoreContext | field | EmptyAtIgnite | 86 | public bool[] EmptyAtIgnite |
+| ScoreContext | field | TripleFirst | 87 | public bool TripleFirst |
+| ScoreContext | field | IsStarter | 88 | public Func<string, bool> IsStarter |
 | ChainStep | field | Hub | 13 | public int Hub |
 | ChainStep | field | Tiles | 14 | public int[] Tiles |
 | ChainStep | field | Items | 15 | public string[] Items |
@@ -271,42 +270,43 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | RulesData | field | offerSize | 40 | public int offerSize |
 | RulesData | field | rackSize | 42 | public int rackSize |
 | RulesData | field | pouchCards | 44 | public int pouchCards |
-| RulesData | field | firstReactionMult | 46 | public int firstReactionMult |
-| RulesData | field | aspectDepths | 48 | public int[] aspectDepths |
-| RulesData | field | potencyByTier | 50 | public long[] potencyByTier |
-| ContentData | field | rules | 56 | public RulesData rules |
-| ContentData | field | materials | 57 | public MaterialData[] materials |
-| ContentData | field | recipes | 58 | public RecipeData[] recipes |
-| ContentData | field | catalysts | 59 | public CatalystData[] catalysts |
-| ContentData | field | depthTargets | 60 | public int[] depthTargets |
-| ContentData | field | depthNames | 61 | public string[] depthNames |
-| ContentData | field | ultimate | 62 | public string ultimate |
-| ContentData | field | goals | 63 | public GoalData[] goals |
-| ContentData | field | aspects | 64 | public AspectData[] aspects |
-| ContentData | field | events | 65 | public EventData[] events |
-| ContentData | field | noEventWeight | 66 | public int noEventWeight |
-| ContentData | field | rarityWeights | 68 | public int[] rarityWeights |
-| ProfileData | field | version | 78 | public int version = 1, rewardSeed |
-| ProfileData | field | comboLargest | 79 | public int runsStarted, runsWon, wonNoRedraw, depthReached, ignites, chainLongest, comboLargest |
-| ProfileData | field | bestIgnite | 80 | public long bestIgnite |
-| ProfileData | field | unlockedCatalysts | 81 | public string[] completed, unlockedStarters, unlockedCatalysts |
-| ProfileData | field | rewards | 82 | public RewardLogData[] rewards |
-| ProfileData | field | lastLore | 83 | public string lastLore |
-| Rarities | field | Common | 88 | public const string Common = "Common", Uncommon = "Uncommon", Rare = "Rare", Legendary = |
-| Rarities | property | All | 89 | public static readonly string[] All = |
-| Rarities | method | Rank | 90 | public static int Rank(string rarity) |
-| Rarities | method | Of | 91 | public static string Of(string rarity) |
-| Effects | field | KindDouble | 97 | public const string KindDouble = "KindDouble", CentreTwice = "CentreTwice", FirstTriple = "FirstTriple", Diagonals = "Diagonals", ExtraTrial = "ExtraTrial", ExtraHand = "ExtraHand", DiscoveryTriple =  |
-| Effects | property | All | 105 | public static readonly string[] All = |
-| AspectEffects | field | Doubled | 116 | public const string Doubled = "Doubled", Anchor = "Anchor", Heated = "Heated", Echo = "Echo", Attuned = "Attuned", Seed = "Seed", Fallow = "Fallow", Heavy = "Heavy", Cold = "Cold", Volatile = "Volatil |
-| AspectEffects | property | All | 119 | public static readonly string[] All = |
-| Ops | field | Trials | 128 | public const string Trials = "Trials", Hand = "Hand", Redraws = "Redraws", RiShift = "RiShift", GiveDiscovery = "GiveDiscovery", LoseRack = "LoseRack", LoseCard = "LoseCard", FirstTriple = "FirstTripl |
-| Ops | property | All | 131 | public static readonly string[] All = |
-| Ops | field | NeedRack | 136 | public const string NeedRack = "Rack", NeedCatalyst = "Catalyst", NeedTrial = "Trial", NeedRedraw = |
-| Ops | property | Needs | 137 | public static readonly string[] Needs = |
-| Ops | property | Types | 138 | public static readonly string[] Types = |
-| StatIds | field | RunsStarted | 144 | public const string RunsStarted = "runsStarted", RunsWon = "runsWon", WonNoRedraw = "wonNoRedraw", DepthReached = "depthReached", Ignites = "ignites", ChainLongest = "chainLongest", ComboLargest = "co |
-| StatIds | property | All | 147 | public static readonly string[] All = |
+| RulesData | field | maxRi | 46 | public int maxRi |
+| RulesData | field | firstReactionMult | 48 | public int firstReactionMult |
+| RulesData | field | aspectDepths | 50 | public int[] aspectDepths |
+| RulesData | field | potencyByTier | 52 | public long[] potencyByTier |
+| ContentData | field | rules | 58 | public RulesData rules |
+| ContentData | field | materials | 59 | public MaterialData[] materials |
+| ContentData | field | recipes | 60 | public RecipeData[] recipes |
+| ContentData | field | catalysts | 61 | public CatalystData[] catalysts |
+| ContentData | field | depthTargets | 62 | public int[] depthTargets |
+| ContentData | field | depthNames | 63 | public string[] depthNames |
+| ContentData | field | ultimate | 64 | public string ultimate |
+| ContentData | field | goals | 65 | public GoalData[] goals |
+| ContentData | field | aspects | 66 | public AspectData[] aspects |
+| ContentData | field | events | 67 | public EventData[] events |
+| ContentData | field | noEventWeight | 68 | public int noEventWeight |
+| ContentData | field | rarityWeights | 70 | public int[] rarityWeights |
+| ProfileData | field | version | 80 | public int version = 1, rewardSeed |
+| ProfileData | field | comboLargest | 81 | public int runsStarted, runsWon, wonNoRedraw, depthReached, ignites, chainLongest, comboLargest |
+| ProfileData | field | bestIgnite | 82 | public long bestIgnite |
+| ProfileData | field | unlockedCatalysts | 83 | public string[] completed, unlockedStarters, unlockedCatalysts |
+| ProfileData | field | rewards | 84 | public RewardLogData[] rewards |
+| ProfileData | field | lastLore | 85 | public string lastLore |
+| Rarities | field | Common | 90 | public const string Common = "Common", Uncommon = "Uncommon", Rare = "Rare", Legendary = |
+| Rarities | property | All | 91 | public static readonly string[] All = |
+| Rarities | method | Rank | 92 | public static int Rank(string rarity) |
+| Rarities | method | Of | 93 | public static string Of(string rarity) |
+| Effects | field | KindDouble | 99 | public const string KindDouble = "KindDouble", CentreTwice = "CentreTwice", FirstTriple = "FirstTriple", Diagonals = "Diagonals", ExtraTrial = "ExtraTrial", ExtraHand = "ExtraHand", DiscoveryTriple =  |
+| Effects | property | All | 107 | public static readonly string[] All = |
+| AspectEffects | field | Doubled | 118 | public const string Doubled = "Doubled", Anchor = "Anchor", Heated = "Heated", Echo = "Echo", Attuned = "Attuned", Seed = "Seed", Fallow = "Fallow", Heavy = "Heavy", Cold = "Cold", Volatile = "Volatil |
+| AspectEffects | property | All | 121 | public static readonly string[] All = |
+| Ops | field | Trials | 130 | public const string Trials = "Trials", Hand = "Hand", Redraws = "Redraws", RiShift = "RiShift", GiveDiscovery = "GiveDiscovery", LoseRack = "LoseRack", LoseCard = "LoseCard", FirstTriple = "FirstTripl |
+| Ops | property | All | 133 | public static readonly string[] All = |
+| Ops | field | NeedRack | 138 | public const string NeedRack = "Rack", NeedCatalyst = "Catalyst", NeedTrial = "Trial", NeedRedraw = |
+| Ops | property | Needs | 139 | public static readonly string[] Needs = |
+| Ops | property | Types | 140 | public static readonly string[] Types = |
+| StatIds | field | RunsStarted | 146 | public const string RunsStarted = "runsStarted", RunsWon = "runsWon", WonNoRedraw = "wonNoRedraw", DepthReached = "depthReached", Ignites = "ignites", ChainLongest = "chainLongest", ComboLargest = "co |
+| StatIds | property | All | 149 | public static readonly string[] All = |
 | Kind | value | Ore | 5 | Ore |
 | Kind | value | Metal | 5 | Metal |
 | Kind | value | Crystal | 5 | Crystal |
@@ -318,37 +318,37 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | ContentDb | ctor | ContentDb | 23 | public ContentDb(ContentData data) |
 | ContentDb | property | Rules | 148 | public RulesData Rules |
 | ContentDb | property | FinalDepth | 151 | public int FinalDepth |
-| ContentDb | method | LockedIn | 176 | public List<string> LockedIn(string rewardKind, string rarity) |
-| ContentDb | property | Starters | 184 | public IReadOnlyList<MaterialData> Starters |
-| ContentDb | property | Materials | 185 | public IReadOnlyList<MaterialData> Materials |
-| ContentDb | property | Recipes | 186 | public IReadOnlyList<RecipeData> Recipes |
-| ContentDb | property | Catalysts | 187 | public IReadOnlyList<CatalystData> Catalysts |
-| ContentDb | property | Goals | 188 | public IReadOnlyList<GoalData> Goals |
-| ContentDb | property | Aspects | 189 | public IReadOnlyList<AspectData> Aspects |
-| ContentDb | property | Events | 190 | public IReadOnlyList<EventData> Events |
-| ContentDb | property | NoEventWeight | 191 | public int NoEventWeight |
-| ContentDb | method | RarityWeight | 194 | public int RarityWeight(string rarity) |
-| ContentDb | property | UniformRarity | 197 | public bool UniformRarity |
-| ContentDb | method | DrawCatalysts | 200 | public List<CatalystData> DrawCatalysts(List<CatalystData> pool, int n, Rng rng) |
-| ContentDb | method | PickCatalyst | 209 | public CatalystData PickCatalyst(IList<CatalystData> pool, Rng rng) |
-| ContentDb | method | Catalyst | 218 | public CatalystData Catalyst(string id) |
-| ContentDb | property | Ultimate | 219 | public string Ultimate |
-| ContentDb | method | Material | 221 | public MaterialData Material(string id) |
-| ContentDb | method | Has | 222 | public bool Has(string id) |
-| ContentDb | method | KindOf | 223 | public Kind KindOf(string id) |
-| ContentDb | method | PartnersOf | 224 | public IEnumerable<string> PartnersOf(string id) |
-| ContentDb | method | Reactivity | 226 | public int Reactivity(string id) |
-| ContentDb | method | TotalReactivity | 227 | public int TotalReactivity(RecipeData r) |
-| ContentDb | method | KeyOf | 228 | public string KeyOf(RecipeData r) |
-| ContentDb | method | Company | 231 | public int Company(RecipeData r) |
-| ContentDb | method | RecipesContaining | 234 | public IReadOnlyList<RecipeData> RecipesContaining(string id) |
-| ContentDb | method | TryCombo | 237 | public bool TryCombo(IEnumerable<string> items, out RecipeData recipe) |
-| ContentDb | method | TryReact | 239 | public bool TryReact(string a, string b, out string result) |
-| ContentDb | method | TargetFor | 247 | public int TargetFor(int depth) |
-| ContentDb | method | DepthName | 253 | public string DepthName(int depth) |
-| ContentDb | method | BasePotency | 260 | public static long BasePotency(int tier) |
-| ContentDb | method | PairKey | 262 | public static string PairKey(string a, string b) |
-| ContentDb | method | ComboKey | 265 | public static string ComboKey(IEnumerable<string> items) |
+| ContentDb | method | LockedIn | 177 | public List<string> LockedIn(string rewardKind, string rarity) |
+| ContentDb | property | Starters | 185 | public IReadOnlyList<MaterialData> Starters |
+| ContentDb | property | Materials | 186 | public IReadOnlyList<MaterialData> Materials |
+| ContentDb | property | Recipes | 187 | public IReadOnlyList<RecipeData> Recipes |
+| ContentDb | property | Catalysts | 188 | public IReadOnlyList<CatalystData> Catalysts |
+| ContentDb | property | Goals | 189 | public IReadOnlyList<GoalData> Goals |
+| ContentDb | property | Aspects | 190 | public IReadOnlyList<AspectData> Aspects |
+| ContentDb | property | Events | 191 | public IReadOnlyList<EventData> Events |
+| ContentDb | property | NoEventWeight | 192 | public int NoEventWeight |
+| ContentDb | method | RarityWeight | 195 | public int RarityWeight(string rarity) |
+| ContentDb | property | UniformRarity | 198 | public bool UniformRarity |
+| ContentDb | method | DrawCatalysts | 201 | public List<CatalystData> DrawCatalysts(List<CatalystData> pool, int n, Rng rng) |
+| ContentDb | method | PickCatalyst | 210 | public CatalystData PickCatalyst(IList<CatalystData> pool, Rng rng) |
+| ContentDb | method | Catalyst | 219 | public CatalystData Catalyst(string id) |
+| ContentDb | property | Ultimate | 220 | public string Ultimate |
+| ContentDb | method | Material | 222 | public MaterialData Material(string id) |
+| ContentDb | method | Has | 223 | public bool Has(string id) |
+| ContentDb | method | KindOf | 224 | public Kind KindOf(string id) |
+| ContentDb | method | PartnersOf | 225 | public IEnumerable<string> PartnersOf(string id) |
+| ContentDb | method | Reactivity | 227 | public int Reactivity(string id) |
+| ContentDb | method | TotalReactivity | 228 | public int TotalReactivity(RecipeData r) |
+| ContentDb | method | KeyOf | 229 | public string KeyOf(RecipeData r) |
+| ContentDb | method | Company | 232 | public int Company(RecipeData r) |
+| ContentDb | method | RecipesContaining | 235 | public IReadOnlyList<RecipeData> RecipesContaining(string id) |
+| ContentDb | method | TryCombo | 238 | public bool TryCombo(IEnumerable<string> items, out RecipeData recipe) |
+| ContentDb | method | TryReact | 240 | public bool TryReact(string a, string b, out string result) |
+| ContentDb | method | TargetFor | 248 | public int TargetFor(int depth) |
+| ContentDb | method | DepthName | 254 | public string DepthName(int depth) |
+| ContentDb | method | BasePotency | 261 | public long BasePotency(int tier) |
+| ContentDb | method | PairKey | 263 | public static string PairKey(string a, string b) |
+| ContentDb | method | ComboKey | 266 | public static string ComboKey(IEnumerable<string> items) |
 | Bench | field | Size | 9 | public const int Size = 3, TileCount = 9, Centre = 4 |
 | Bench | field | Tiles | 10 | public readonly string[] Tiles = new string[TileCount] |
 | Bench | property | Count | 11 | public int Count |
@@ -416,41 +416,41 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | GoalReward | field | Item | 11 | public string Item |
 | Profile | field | ComboLargest | 20 | public int RunsStarted, RunsWon, WonNoRedraw, DepthReached, Ignites, ChainLongest, ComboLargest |
 | Profile | field | BestIgnite | 21 | public long BestIgnite |
-| Profile | field | RewardSeed | 22 | public int RewardSeed |
-| Profile | field | LastLore | 24 | public string LastLore |
-| Profile | ctor | Profile | 29 | public Profile(int rewardSeed = 1) |
-| Profile | property | Completed | 31 | public IReadOnlyCollection<string> Completed |
-| Profile | property | UnlockedStarters | 32 | public IReadOnlyCollection<string> UnlockedStarters |
-| Profile | property | UnlockedCatalysts | 33 | public IReadOnlyCollection<string> UnlockedCatalysts |
-| Profile | property | Rewards | 34 | public IReadOnlyList<RewardLogData> Rewards |
-| Profile | method | IsComplete | 35 | public bool IsComplete(string goalId) |
-| Profile | method | HasUnlocked | 36 | public bool HasUnlocked(string id) |
-| Profile | method | RewardOf | 38 | public string RewardOf(string goalId) |
-| Profile | method | RunStarted | 42 | public void RunStarted() |
-| Profile | method | EventShown | 45 | public void EventShown(EventData e) |
-| Profile | method | DepthBegan | 47 | public void DepthBegan(int depth) |
-| Profile | method | IgniteResolved | 49 | public void IgniteResolved(IgniteOutcome outcome) |
-| Profile | method | RunEnded | 62 | public void RunEnded(RunState run) |
-| Profile | method | Stat | 72 | public long Stat(string id, ContentDb db, Journal journal) |
-| Profile | method | Progress | 91 | public long Progress(GoalData goal, ContentDb db, Journal journal) |
-| Profile | method | Evaluate | 98 | public List<GoalReward> Evaluate(ContentDb db, Journal journal) |
-| Profile | method | ToData | 120 | public ProfileData ToData() |
-| Profile | method | FromData | 129 | public static Profile FromData(ProfileData d, ContentDb db = null, int freshSeed = 1) |
-| Unlocks | method | IsOpen | 157 | public bool IsOpen(string id) |
-| Unlocks | property | Count | 158 | public int Count |
-| Unlocks | method | Fresh | 161 | public static Unlocks Fresh(ContentDb db) |
-| Unlocks | method | All | 169 | public static Unlocks All(ContentDb db) |
-| Unlocks | method | For | 178 | public static Unlocks For(ContentDb db, Profile profile) |
-| Unlocks | method | Half | 188 | public static Unlocks Half(ContentDb db, int seed) |
-| RunOptions | field | Unlocks | 206 | public Unlocks Unlocks |
-| RunOptions | field | Events | 207 | public bool Aspects, Events |
-| RunOptions | field | ForceEvent | 209 | public string ForceEvent |
-| RunOptions | field | ForceEventAt | 211 | public int ForceEventAt |
-| RunOptions | field | QuietBefore | 213 | public int QuietBefore |
-| RunOptions | field | FirstOffer | 215 | public string[] FirstOffer |
-| RunOptions | field | LastLore | 217 | public string LastLore |
-| RunOptions | field | Legacy | 218 | public static readonly RunOptions Legacy = new RunOptions() |
-| RunOptions | method | Full | 219 | public static RunOptions Full(Unlocks unlocks) |
+| Profile | field | RewardSeed | 24 | public int RewardSeed |
+| Profile | field | LastLore | 26 | public string LastLore |
+| Profile | ctor | Profile | 31 | public Profile(int rewardSeed = 1) |
+| Profile | property | Completed | 33 | public IReadOnlyCollection<string> Completed |
+| Profile | property | UnlockedStarters | 34 | public IReadOnlyCollection<string> UnlockedStarters |
+| Profile | property | UnlockedCatalysts | 35 | public IReadOnlyCollection<string> UnlockedCatalysts |
+| Profile | property | Rewards | 36 | public IReadOnlyList<RewardLogData> Rewards |
+| Profile | method | IsComplete | 37 | public bool IsComplete(string goalId) |
+| Profile | method | HasUnlocked | 38 | public bool HasUnlocked(string id) |
+| Profile | method | RewardOf | 40 | public string RewardOf(string goalId) |
+| Profile | method | RunStarted | 44 | public void RunStarted() |
+| Profile | method | EventShown | 47 | public void EventShown(EventData e) |
+| Profile | method | DepthBegan | 49 | public void DepthBegan(int depth) |
+| Profile | method | IgniteResolved | 51 | public void IgniteResolved(IgniteOutcome outcome) |
+| Profile | method | RunEnded | 64 | public void RunEnded(RunState run) |
+| Profile | method | Stat | 74 | public long Stat(string id, ContentDb db, Journal journal) |
+| Profile | method | Progress | 93 | public long Progress(GoalData goal, ContentDb db, Journal journal) |
+| Profile | method | Evaluate | 100 | public List<GoalReward> Evaluate(ContentDb db, Journal journal) |
+| Profile | method | ToData | 122 | public ProfileData ToData() |
+| Profile | method | FromData | 131 | public static Profile FromData(ProfileData d, ContentDb db = null, int freshSeed = 1) |
+| Unlocks | method | IsOpen | 159 | public bool IsOpen(string id) |
+| Unlocks | property | Count | 160 | public int Count |
+| Unlocks | method | Fresh | 163 | public static Unlocks Fresh(ContentDb db) |
+| Unlocks | method | All | 171 | public static Unlocks All(ContentDb db) |
+| Unlocks | method | For | 180 | public static Unlocks For(ContentDb db, Profile profile) |
+| Unlocks | method | Half | 190 | public static Unlocks Half(ContentDb db, int seed) |
+| RunOptions | field | Unlocks | 208 | public Unlocks Unlocks |
+| RunOptions | field | Events | 209 | public bool Aspects, Events |
+| RunOptions | field | ForceEvent | 211 | public string ForceEvent |
+| RunOptions | field | ForceEventAt | 213 | public int ForceEventAt |
+| RunOptions | field | QuietBefore | 215 | public int QuietBefore |
+| RunOptions | field | FirstOffer | 217 | public string[] FirstOffer |
+| RunOptions | field | LastLore | 219 | public string LastLore |
+| RunOptions | field | Legacy | 220 | public static readonly RunOptions Legacy = new RunOptions() |
+| RunOptions | method | Full | 221 | public static RunOptions Full(Unlocks unlocks) |
 | AspectInstance | field | Data | 10 | public AspectData Data |
 | AspectInstance | field | Tiles | 11 | public int[] Tiles = new int[0] |
 | AspectInstance | field | Kind | 12 | public string Kind |
@@ -465,44 +465,41 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | RunState | property | RiShift | 47 | public int RiShift |
 | RunState | property | TripleFirst | 48 | public bool TripleFirst |
 | RunState | property | HandDelta | 50 | public int HandDelta |
-| RunState | method | ChooseAspect | 131 | public void ChooseAspect(string id) |
-| RunState | method | ChooseEventOption | 213 | public EventResult ChooseEventOption(int index) |
-| RunState | property | DepthBlocked | 395 | public IReadOnlyList<int> DepthBlocked |
-| RunState | property | DepthHeated | 396 | public IEnumerable<int> DepthHeated |
-| RunState | field | MinHand | 22 | public const int MinHand = 3, BaseHand = 5, BaseTrials = 4, BaseRedraws = 2, FinalDepth = 5, FinalTrials = 6, StarterCopies = 2, OfferSize = 3 |
-| RunState | field | RackSize | 24 | public const int RackSize = 12 |
-| RunState | ctor | RunState | 38 | public RunState(ContentDb db, Journal journal, int seed, int startDepth = 1, RunOptions options = null) |
-| RunState | property | Depth | 55 | public int Depth |
-| RunState | property | Potency | 56 | public long Potency |
-| RunState | property | Target | 57 | public int Target |
-| RunState | property | TrialsLeft | 58 | public int TrialsLeft |
-| RunState | property | RedrawsLeft | 59 | public int RedrawsLeft |
-| RunState | property | DiscoveriesThisRun | 60 | public int DiscoveriesThisRun |
-| RunState | property | Phase | 61 | public RunPhase Phase |
-| RunState | property | Bench | 62 | public Bench Bench |
-| RunState | property | Hand | 63 | public IReadOnlyList<string> Hand |
-| RunState | property | Catalysts | 64 | public IReadOnlyList<CatalystData> Catalysts |
-| RunState | property | CatalystOffer | 65 | public IReadOnlyList<CatalystData> CatalystOffer |
-| RunState | property | HandSize | 66 | public int HandSize |
-| RunState | property | Diagonals | 67 | public bool Diagonals |
-| RunState | property | CanIgnite | 68 | public bool CanIgnite |
-| RunState | property | RedrawsUsed | 70 | public int RedrawsUsed |
-| RunState | property | Options | 71 | public RunOptions Options |
-| RunState | method | IsOpen | 72 | public bool IsOpen(string id) |
-| RunState | method | Owned | 76 | public int Owned(string id) |
-| RunState | field | PouchMode | 83 | public static int PouchMode = 2 |
-| RunState | field | PouchCards | 84 | public const int PouchCards = 1 |
-| RunState | method | HasFired | 85 | public bool HasFired(string a, string b) |
-| RunState | method | HasFired | 86 | public bool HasFired(RecipeData recipe) |
-| RunState | property | SatchelSize | 87 | public int SatchelSize |
-| RunState | method | Place | 144 | public bool Place(int handIndex, int tile) |
-| RunState | method | Unplace | 153 | public bool Unplace(int tile) |
-| RunState | method | Redraw | 162 | public bool Redraw() |
-| RunState | method | Deal | 178 | public bool Deal(IReadOnlyList<string> ids) |
-| RunState | method | NewContext | 191 | public ScoreContext NewContext() |
-| RunState | method | Preview | 197 | public List<ReactionEvent> Preview(string[] tiles) |
-| RunState | method | Ignite | 205 | public IgniteOutcome Ignite() |
-| RunState | method | ChooseCatalyst | 286 | public void ChooseCatalyst(string id) |
+| RunState | method | ChooseAspect | 136 | public void ChooseAspect(string id) |
+| RunState | method | ChooseEventOption | 218 | public EventResult ChooseEventOption(int index) |
+| RunState | property | DepthBlocked | 400 | public IReadOnlyList<int> DepthBlocked |
+| RunState | property | DepthHeated | 401 | public IEnumerable<int> DepthHeated |
+| RunState | ctor | RunState | 34 | public RunState(ContentDb db, Journal journal, int seed, int startDepth = 1, RunOptions options = null) |
+| RunState | property | Depth | 51 | public int Depth |
+| RunState | property | Potency | 52 | public long Potency |
+| RunState | property | Target | 53 | public int Target |
+| RunState | property | TrialsLeft | 54 | public int TrialsLeft |
+| RunState | property | RedrawsLeft | 55 | public int RedrawsLeft |
+| RunState | property | DiscoveriesThisRun | 56 | public int DiscoveriesThisRun |
+| RunState | property | Phase | 57 | public RunPhase Phase |
+| RunState | property | Bench | 58 | public Bench Bench |
+| RunState | property | Hand | 59 | public IReadOnlyList<string> Hand |
+| RunState | property | Catalysts | 60 | public IReadOnlyList<CatalystData> Catalysts |
+| RunState | property | CatalystOffer | 61 | public IReadOnlyList<CatalystData> CatalystOffer |
+| RunState | property | HandSize | 62 | public int HandSize |
+| RunState | property | Diagonals | 63 | public bool Diagonals |
+| RunState | property | CanIgnite | 64 | public bool CanIgnite |
+| RunState | property | RedrawsUsed | 66 | public int RedrawsUsed |
+| RunState | property | Options | 67 | public RunOptions Options |
+| RunState | method | IsOpen | 68 | public bool IsOpen(string id) |
+| RunState | method | Owned | 72 | public int Owned(string id) |
+| RunState | field | PouchMode | 79 | public static int PouchMode = 2 |
+| RunState | method | HasFired | 80 | public bool HasFired(string a, string b) |
+| RunState | method | HasFired | 81 | public bool HasFired(RecipeData recipe) |
+| RunState | property | SatchelSize | 82 | public int SatchelSize |
+| RunState | method | Place | 139 | public bool Place(int handIndex, int tile) |
+| RunState | method | Unplace | 148 | public bool Unplace(int tile) |
+| RunState | method | Redraw | 157 | public bool Redraw() |
+| RunState | method | Deal | 173 | public bool Deal(IReadOnlyList<string> ids) |
+| RunState | method | NewContext | 186 | public ScoreContext NewContext() |
+| RunState | method | Preview | 192 | public List<ReactionEvent> Preview(string[] tiles) |
+| RunState | method | Ignite | 200 | public IgniteOutcome Ignite() |
+| RunState | method | ChooseCatalyst | 281 | public void ChooseCatalyst(string id) |
 | IgniteOutcome | field | Events | 11 | public List<ReactionEvent> Events |
 | IgniteOutcome | field | Gained | 12 | public long Gained |
 | IgniteOutcome | field | Dropped | 13 | public List<string> Dropped = new List<string>() |
@@ -1093,12 +1090,12 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | ChoiceCard | field | tiles | 15 | public int[] tiles |
 | ChoiceCard | field | dimTiles | 16 | public int[] dimTiles |
 | CatalystChoiceView | field | OpenHook | 29 | public const string OpenHook = |
-| CatalystChoiceView | method | CardName | 53 | public Label CardName(int i) |
-| CatalystChoiceView | method | CornerStars | 55 | public RarityStars CornerStars(int i) |
-| CatalystChoiceView | method | Bind | 58 | public void Bind() |
-| CatalystChoiceView | method | Choose | 75 | public IEnumerator Choose(IReadOnlyList<CatalystData> offer, Action<string> done, float autoAfter = -1) |
-| CatalystChoiceView | method | Choose | 87 | public IEnumerator Choose(IReadOnlyList<AspectInstance> offer, Action<string> done, float autoAfter = -1) |
-| CatalystChoiceView | method | Choose | 101 | public IEnumerator Choose(string title, string line, IReadOnlyList<ChoiceCard> offer, Action<string> done, float autoAfter = -1) |
+| CatalystChoiceView | method | CardName | 55 | public Label CardName(int i) |
+| CatalystChoiceView | method | CornerStars | 57 | public RarityStars CornerStars(int i) |
+| CatalystChoiceView | method | Bind | 60 | public void Bind() |
+| CatalystChoiceView | method | Choose | 77 | public IEnumerator Choose(IReadOnlyList<CatalystData> offer, Action<string> done, float autoAfter = -1) |
+| CatalystChoiceView | method | Choose | 89 | public IEnumerator Choose(IReadOnlyList<AspectInstance> offer, Action<string> done, float autoAfter = -1) |
+| CatalystChoiceView | method | Choose | 103 | public IEnumerator Choose(string title, string line, IReadOnlyList<ChoiceCard> offer, Action<string> done, float autoAfter = -1) |
 | Card | field | root | 37 | public Transform root |
 | Card | field | click | 38 | public Clickable click |
 | Card | field | bench | 39 | public SpriteRenderer[] bench = new SpriteRenderer[Bench.TileCount] |
@@ -1155,7 +1152,7 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | RunOverView | method | Pick | 47 | public void Pick(bool again) |
 | RunOverView | property | DepthName | 50 | public Label DepthName |
 | RunOverView | property | DepthValue | 52 | public Label DepthValue |
-| RunOverView | method | ShowDepth | 58 | public void ShowDepth(bool won, int depth) |
+| RunOverView | method | ShowDepth | 58 | public void ShowDepth(bool won, int depth, int finalDepth) |
 | RunOverView | method | Show | 66 | public IEnumerator Show(bool won, RunState run, Journal journal, ContentDb db, System.Collections.Generic.IReadOnlyList<GoalReward> goals) |
 | TitleView | property | BeginPressed | 11 | public bool BeginPressed |
 | TitleView | property | HowToPressed | 13 | public bool HowToPressed |
@@ -1235,7 +1232,8 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | LoreTests | method | Profile_WhenShownLoreBoonAndNullEvents_RemembersOnlyLoreEvents | 184 | public void Profile_WhenShownLoreBoonAndNullEvents_RemembersOnlyLoreEvents() |
 | LoreTests | method | Profile_LastLore_IsSaved_AndDroppedWhenNoLongerALoreEvent | 196 | public void Profile_LastLore_IsSaved_AndDroppedWhenNoLongerALoreEvent() |
 | RulesTests | method | Rules_ShippedContent_HasTodaysValues | 10 | public void Rules_ShippedContent_HasTodaysValues() |
-| RulesTests | method | FinalDepth_ShippedContent_IsFive | 28 | public void FinalDepth_ShippedContent_IsFive() |
+| RulesTests | method | FinalDepth_ShippedContent_IsFive | 29 | public void FinalDepth_ShippedContent_IsFive() |
+| RulesTests | method | Phase_AspectDepthsTwo_OffersAspectsAtDepthTwoOnly | 57 | public void Phase_AspectDepthsTwo_OffersAspectsAtDepthTwoOnly() |
 | SettingsTests | method | New_NoArguments_HasDefaultValues | 9 | public void New_NoArguments_HasDefaultValues() |
 | SettingsTests | method | New_NoArguments_SwayIsOn | 20 | public void New_NoArguments_SwayIsOn() |
 | SettingsTests | method | ToJson_ThenFromJson_RoundTripsSwayOff | 26 | public void ToJson_ThenFromJson_RoundTripsSwayOff() |
@@ -1253,7 +1251,7 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | Sim | method | RandomPlay | 47 | public static RunState RandomPlay(ContentDb db, int seed, RunOptions options) |
 | Sim | method | Play | 397 | public static Career Play(ContentDb db, bool admin, int player, int runs, bool aspects = true, bool events = true, List<string> log = null, int logFrom = 0, int taughtTier = 0) |
 | Sim | method | Pct | 450 | public static string Pct(double x) |
-| Sim | method | Describe | 452 | public static void Describe(string role, List<Career> careers, int runs, Action<string> w) |
+| Sim | method | Describe | 452 | public static void Describe(string role, List<Career> careers, int runs, Action<string> w, int finalDepth) |
 | Sim | method | Autoplay | 496 | public static RunState Autoplay(ContentDb db, int seed, List<string> log = null, RunStats stats = null) |
 | Sim | method | RandomPlay | 543 | public static RunState RandomPlay(ContentDb db, int seed) |
 | Sim | method | FullJournal | 565 | public static Journal FullJournal(ContentDb db) |
@@ -1279,11 +1277,13 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | TestContent | method | Load | 8 | public static ContentData Load() |
 | TestContent | method | Tiny | 21 | public static ContentData Tiny() |
 | TestContent | method | Combo | 43 | public static ContentData Combo(int zMin = 15) |
-| TestContent | method | Rules | 69 | public static RulesData Rules() |
-| TestContent | method | Mat | 76 | public static MaterialData Mat(string id, string kind, int tier, int reactivity = 5) |
-| TestContent | method | Rec | 78 | public static RecipeData Rec(string a, string b, string r) |
-| TestContent | method | Rec | 79 | public static RecipeData Rec(string[] items, int min, string r) |
-| TestContent | method | Cat | 80 | public static CatalystData Cat(string effect, string kind = "", float amount = 0) |
+| TestContent | field | Today | 69 | public static readonly RulesData Today = Rules() |
+| TestContent | field | FinalDepth | 71 | public const int FinalDepth = 5 |
+| TestContent | method | Rules | 74 | public static RulesData Rules() |
+| TestContent | method | Mat | 81 | public static MaterialData Mat(string id, string kind, int tier, int reactivity = 5) |
+| TestContent | method | Rec | 83 | public static RecipeData Rec(string a, string b, string r) |
+| TestContent | method | Rec | 84 | public static RecipeData Rec(string[] items, int min, string r) |
+| TestContent | method | Cat | 85 | public static CatalystData Cat(string effect, string kind = "", float amount = 0) |
 | TutorialTests | method | Satchel_Take_PullsANamedCard_FromDrawOrDiscard | 17 | public void Satchel_Take_PullsANamedCard_FromDrawOrDiscard() |
 | TutorialTests | method | Deal_ReplacesTheStartingHand_AndKeepsTheSatchelWhole | 45 | public void Deal_ReplacesTheStartingHand_AndKeepsTheSatchelWhole() |
 | TutorialTests | method | Deal_AfterMakingADiscovery_KeepsTheRack | 55 | public void Deal_AfterMakingADiscovery_KeepsTheRack() |
@@ -1336,8 +1336,8 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | GameTestSetup | method | Inject | 10 | public void Inject() |
 | GoldenShotTests | method | Render_Shot_MatchesTheGoldenImage | 10 | public void Render_Shot_MatchesTheGoldenImage(string name) |
 | HudTests | method | CanRedraw_WhileRedrawsRemain_IsTrueUntilTheLastRedrawIsUsed | 14 | public void CanRedraw_WhileRedrawsRemain_IsTrueUntilTheLastRedrawIsUsed() |
-| HudTests | method | CanRedraw_IsFalse_OffTheBench_EvenWithRedrawsLeft | 28 | public void CanRedraw_IsFalse_OffTheBench_EvenWithRedrawsLeft() |
-| HudTests | method | CanRedraw_IsFalse_WithNoRun | 39 | public void CanRedraw_IsFalse_WithNoRun() |
+| HudTests | method | CanRedraw_IsFalse_OffTheBench_EvenWithRedrawsLeft | 29 | public void CanRedraw_IsFalse_OffTheBench_EvenWithRedrawsLeft() |
+| HudTests | method | CanRedraw_IsFalse_WithNoRun | 40 | public void CanRedraw_IsFalse_WithNoRun() |
 | LabelLineBoxTests | method | HalfLeading_Crux48_IsElevenPixels | 43 | public void HalfLeading_Crux48_IsElevenPixels() |
 | LabelLineBoxTests | method | LineBoxTitle_InVietnamese_MovesFaceAndShadowDownByCruxHalfLeading | 52 | public void LineBoxTitle_InVietnamese_MovesFaceAndShadowDownByCruxHalfLeading() |
 | LabelLineBoxTests | method | LineBoxTitle_SizeSwitchTo32_FollowsTheNewSize | 62 | public void LineBoxTitle_SizeSwitchTo32_FollowsTheNewSize() |
@@ -1428,10 +1428,10 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | PrefabFixture | ctor | PrefabFixture | 15 | public PrefabFixture(string prefabPath) |
 | PrefabFixture | method | Get | 23 | public T Get<T>() where T : Component |
 | PrefabFixture | method | Destroy | 29 | public void Destroy() |
-| RunOverDepthTests | method | Won_ShowsPlantedAtDepth_OnOneLine_WithNoValue | 40 | public void Won_ShowsPlantedAtDepth_OnOneLine_WithNoValue() |
-| RunOverDepthTests | method | Lost_ShowsDepthReached_AndNOfFive | 48 | public void Lost_ShowsDepthReached_AndNOfFive() |
-| RunOverDepthTests | method | WonThenLost_OnTheSameView_RestoresTheLostRow | 56 | public void WonThenLost_OnTheSameView_RestoresTheLostRow() |
-| RunOverDepthTests | method | Relabel_AfterLanguageChange_KeepsEachPathsText | 68 | public void Relabel_AfterLanguageChange_KeepsEachPathsText() |
+| RunOverDepthTests | method | Won_ShowsPlantedAtDepth_OnOneLine_WithNoValue | 42 | public void Won_ShowsPlantedAtDepth_OnOneLine_WithNoValue() |
+| RunOverDepthTests | method | Lost_ShowsDepthReached_AndNOfFive | 50 | public void Lost_ShowsDepthReached_AndNOfFive() |
+| RunOverDepthTests | method | WonThenLost_OnTheSameView_RestoresTheLostRow | 58 | public void WonThenLost_OnTheSameView_RestoresTheLostRow() |
+| RunOverDepthTests | method | Relabel_AfterLanguageChange_KeepsEachPathsText | 70 | public void Relabel_AfterLanguageChange_KeepsEachPathsText() |
 | SaveTests | method | Restore | 22 | public void Restore() |
 | SaveTests | method | LoadProfile_WithNothingSaved_IsFresh_WithASeedOfItsOwn | 31 | public void LoadProfile_WithNothingSaved_IsFresh_WithASeedOfItsOwn() |
 | SaveTests | method | LoadProfile_WithGarbage_IsFresh | 40 | public void LoadProfile_WithGarbage_IsFresh() |

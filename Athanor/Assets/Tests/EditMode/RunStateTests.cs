@@ -259,22 +259,22 @@ namespace Athanor.Tests
             var r = new RunState(new ContentDb(d), new Journal(), 1);   // hand is always a,a,b,b
             IgniteOutcome o = null;
             int guard = 0;
-            while (r.Owned("x") < RunState.RackSize && guard++ < 20)
+            while (r.Owned("x") < TestContent.Today.rackSize && guard++ < 20)
             {
                 if (r.Phase == RunPhase.DepthCleared) r.ChooseCatalyst(null);
                 PlaceId(r, "a", 0); PlaceId(r, "b", 1); PlaceId(r, "b", 7); PlaceId(r, "a", 8);   // two x, on tiles 0 and 7
                 o = r.Ignite();
                 Assert.AreEqual(0, o.Dropped.Count);
             }
-            Assert.AreEqual(RunState.RackSize, r.Owned("x"));
+            Assert.AreEqual(TestContent.Today.rackSize, r.Owned("x"));
             Assert.AreEqual(RunPhase.Playing, r.Phase);
             PlaceId(r, "x", 3); PlaceId(r, "x", 4);                                               // x+x => y
             PlaceId(r, "a", 2); PlaceId(r, "b", 5); PlaceId(r, "b", 6); PlaceId(r, "a", 7);       // two more x
             o = r.Ignite();
             Assert.AreEqual(1, r.Owned("y"));
-            Assert.AreEqual(RunState.RackSize - 1, r.Owned("x"));
+            Assert.AreEqual(TestContent.Today.rackSize - 1, r.Owned("x"));
             CollectionAssert.AreEqual(new[] { "x" }, o.Dropped);
-            Assert.AreEqual(RunState.RackSize, r.Hand.Count(h => h == "x" || h == "y"));
+            Assert.AreEqual(TestContent.Today.rackSize, r.Hand.Count(h => h == "x" || h == "y"));
         }
 
         [Test] public void MakingTheUltimate_AtDepthOne_WinsAtAnyDepth()
