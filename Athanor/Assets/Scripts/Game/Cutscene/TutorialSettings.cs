@@ -4,36 +4,6 @@ using Hint = UnityEngine.TooltipAttribute;   // not "Tooltip": the game has a To
 
 namespace Athanor.Game
 {
-    /// <summary>
-    /// Where the tutorial points. Art space: 640x360, x to the right, y down from the top-left corner.
-    /// Every rectangle a step lights comes from here (or from the view it talks about: the Journal's pages, the Redraw button).
-    /// </summary>
-    [Serializable]
-    public sealed class TutorialTargets
-    {
-        [Header("Rectangles (x, y, width, height)")]
-        [Hint("The hand of cards under the bench. Cut at the bottom of the screen.")]
-        public Rect hand;
-        [Hint("The Ignite button.")]
-        public Rect ignite;
-        [Hint("The Journal button.")]
-        public Rect journal;
-        [Hint("The satchel rack above the hand.")]
-        public Rect rack;
-        [Hint("The catalyst offer (step 5.3, a window with no dark).")]
-        public Rect offer;
-
-        [Header("A bench tile")]
-        [Hint("The lit window round one tile.")]
-        public Vector2 tileSize;
-        [Hint("From the tile's centre to the window's top-left corner.")]
-        public Vector2 tileShift;
-
-        [Header("Redraw button")]
-        [Hint("Pixels added round the Redraw button's own rectangle (HudView).")]
-        public float redrawMargin;
-    }
-
     /// <summary>How the tutorial overlay looks and feels: the text box, the popup lines, the rim and arrow, and their timings.</summary>
     [Serializable]
     public sealed class TutorialStyle
@@ -63,8 +33,6 @@ namespace Athanor.Game
         public int linePitch, maxLines;
         [Hint("Vietnamese line pitch and most lines (the glyphs are taller).")]
         public int linePitchVi, maxLinesVi;
-        [Hint("How far the box drops while the Journal is open (steps 2.5, 2.6), so it does not cover the page header.")]
-        public int journalBoxDrop;
 
         [Header("Popup lines (the score parts held under the box)")]
         [Hint("Centre x and top y of the first line.")]
@@ -83,6 +51,12 @@ namespace Athanor.Game
         [Header("Lit windows")]
         [Hint("Hole edges are rounded out to a multiple of this many art pixels. 2 keeps a pixel-perfect camera from putting the edge on a half pixel; 1 turns it off.")]
         [Min(1)] public int holeSnap;
+
+        [Header("A bench tile (a ScriptTile or EventHub area)")]
+        [Hint("The lit window round one tile.")]
+        public Vector2 tileSize;
+        [Hint("From the tile's centre to the window's top-left corner.")]
+        public Vector2 tileShift;
 
         [Header("Click lock")]
         [Hint("Seconds after a step shows before a click can advance it (so the click that ended the last step does not skip this one).")]

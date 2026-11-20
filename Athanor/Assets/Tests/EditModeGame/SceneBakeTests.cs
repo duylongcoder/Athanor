@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Reflection;
+using Athanor.Core;
 using Athanor.Game;
 using NUnit.Framework;
 using UnityEngine;
@@ -18,29 +19,21 @@ namespace Athanor.Tests
         static T F<T>(object o, string n) => MainSceneFixture.Field<T>(o, n);
 
         [Test]
-        public void TutorialTargets_RedrawAndJournalSteps_MatchTheViews()
+        public void TutorialSteps_RedrawAndJournalSteps_MatchTheViews()
         {
-            // the Redraw step lights the button's rectangle (556,88,76,20) plus the TutorialTargets margin (2)
+            // the Redraw step lights the button's rectangle (556,88,76,20) plus the area's margin (2)
             var tutorial = main.FlowField<TutorialController>("tutorial");
-            var fField = typeof(TutorialController).GetField("f", BindingFlags.Instance | BindingFlags.NonPublic);
-            Assert.IsNotNull(fField, "TutorialController.f");
-            fField.SetValue(tutorial, main.Flow);
-            var redraw = typeof(TutorialController).GetProperty("RedrawRect", BindingFlags.Instance | BindingFlags.NonPublic);
-            Assert.IsNotNull(redraw, "TutorialController.RedrawRect");
-            Assert.AreEqual(new Rect(554, 86, 80, 24), (Rect)redraw.GetValue(tutorial));
+            tutorial.Bind(main.Flow);
+            main.Flow.JournalView.Bind(new ContentDb(JsonUtility.FromJson<ContentData>(Resources.Load<TextAsset>("content").text)));
+            Assert.AreEqual(new Rect(554, 86, 80, 24), tutorial.Holes(tutorial.Step("3.0"))[0]);
 
-            // the Journal steps light the page's recipe lines, the index line and the hints, whether those are statics or the view's own
+            // the Journal steps light the page's recipe lines, the index line and the hints
             var jv = main.Flow.JournalView;
-            Rect Of(string name)
-            {
-                const BindingFlags all = BindingFlags.Static | BindingFlags.Instance | BindingFlags.Public;
-                var prop = typeof(JournalView).GetProperty(name, all);
-                Assert.IsNotNull(prop, "JournalView." + name);
-                return (Rect)prop.GetValue(prop.GetMethod.IsStatic ? null : jv);
-            }
-            Assert.AreEqual(new Rect(356, 156, 236, 60), Of("RecipesRect"));
-            Assert.AreEqual(new Rect(356, 136, 236, 22), Of("IndexRect"));
-            Assert.AreEqual(new Rect(51, 253, 272, 36), Of("HintsRect"));
+            Assert.AreEqual(new Rect(356, 156, 236, 60), jv.RecipesRect);
+            Assert.AreEqual(new Rect(356, 136, 236, 22), jv.IndexRect);
+            Assert.AreEqual(new Rect(51, 253, 272, 36), jv.HintsRect);
+            var five = tutorial.Holes(tutorial.Step("2.5"));
+            Assert.AreEqual(jv.RecipesRect, five[1]);
         }
 
         [Test]

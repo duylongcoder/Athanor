@@ -5,6 +5,8 @@ namespace Athanor.Game
     /// <summary>Pure rectangle math for tutorial areas (art pixels, top-left origin). No scene needed, so it is tested alone.</summary>
     public static class TutorialRect
     {
+        const float Half = 0.5f;
+
         /// <summary>Grows r by margin = (left, top, right, bottom) pixels.</summary>
         public static Rect Grow(Rect r, Vector4 m) =>
             new Rect(r.x - m.x, r.y - m.y, r.width + m.x + m.z, r.height + m.y + m.w);
@@ -12,8 +14,10 @@ namespace Athanor.Game
         /// <summary>The art-pixel rect (top-left, size) of an area whose world centre is given and whose size is in pixels.</summary>
         public static Rect ArtRect(Vector2 worldCentre, Vector2 size)
         {
-            float cx = worldCentre.x + Px.W / 2f, cy = Px.H / 2f - worldCentre.y;
-            return new Rect(cx - size.x / 2f, cy - size.y / 2f, size.x, size.y);
+            float cx = worldCentre.x + Px.W * Half, cy = Px.H * Half - worldCentre.y;
+            // to 1/100 px: a transform at 125.99999 must not floor to 124 in the hole snap
+            float R(float v) => Mathf.Round(v * 100f) / 100f;
+            return new Rect(R(cx - size.x * Half), R(cy - size.y * Half), size.x, size.y);
         }
     }
 
@@ -21,7 +25,7 @@ namespace Athanor.Game
     public enum AreaKind { Fixed, ScriptTile, View }
 
     /// <summary>A named game view an area can follow (the rect comes from the view at run time).</summary>
-    public enum ViewRef { Bench, Hand, Ignite, Rack, Redraw, Journal, JournalCell, JournalRecipes, JournalIndex, JournalHints, Offer, EventHub }
+    public enum ViewRef { Bench, Redraw, JournalCell, JournalRecipes, JournalIndex, JournalHints, EventHub }
 
     /// <summary>Which scripted hand's tiles a ScriptTile area follows.</summary>
     public enum ScriptTrial { Reaction, Miss, Chain, Catalyst }
@@ -33,7 +37,7 @@ namespace Athanor.Game
     public sealed class TutorialArea : MonoBehaviour
     {
         public AreaKind kind = AreaKind.Fixed;
-        [Tooltip("Fixed: size in pixels (= world units).")] public Vector2 size = new Vector2(16, 16);
+        [Tooltip("Fixed: size in pixels (= world units).")] public Vector2 size;
         [Tooltip("ScriptTile: the scripted hand.")] public ScriptTrial trial = ScriptTrial.Reaction;
         [Tooltip("ScriptTile: index in the hand's Lay. -1 = the union of all of the hand's tiles.")] public int slot;
         [Tooltip("View: the view to follow.")] public ViewRef view = ViewRef.Bench;

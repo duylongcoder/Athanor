@@ -452,18 +452,15 @@ namespace Athanor.Tests
         }
 
         [Test]
-        public void Tutorial_MainScene_KeepsTodaysTargetsAndStyle()
+        public void Tutorial_MainScene_KeepsTodaysStyle()
         {
             using (var main = new MainSceneFixture())
             {
                 var tutorial = main.FlowField<TutorialController>("tutorial");
                 var so = new SerializedObject(tutorial);
-                AssertRect(so, "targets.hand", 126, 284, 392, 80); AssertRect(so, "targets.ignite", 515, 304, 122, 42);
-                AssertRect(so, "targets.journal", 516, 284, 122, 24); AssertRect(so, "targets.rack", 126, 252, 392, 32); AssertRect(so, "targets.offer", 0, 60, 640, 240);
-                AssertVec2(so, "targets.tileSize", 72, 44); AssertVec2(so, "targets.tileShift", 36, 24);
-                Pin(so, "targets", "redrawMargin", 2);
+                AssertVec2(so, "style.tileSize", 72, 44); AssertVec2(so, "style.tileShift", 36, 24);
                 Pin(so, "style", "baseOrder", 600, "popupOrderOffset", 12, "brokenOrderOffset", 6, "boxWidth", 304, "boxBorder", 1, "textWrapWidth", 288, "boxPadding", 12, "readExtra", 12,
-                    "boxMaxHeight", 86, "linePitch", 12, "maxLines", 4, "linePitchVi", 16, "maxLinesVi", 3, "journalBoxDrop", 248, "popupPitch", 20, "popupFontSize", 16,
+                    "boxMaxHeight", 86, "linePitch", 12, "maxLines", 4, "linePitchVi", 16, "maxLinesVi", 3, "popupPitch", 20, "popupFontSize", 16,
                     "holeSnap", 2, "clickGuard", 0.25f, "rimBase", 0.55f, "rimAmplitude", 0.3f, "rimSpeed", 5, "bumpDecay", 3,
                     "arrowAbove", 10, "arrowBelow", 8, "arrowFlipY", 80, "arrowBobSpeed", 6, "arrowBobAmplitude", 2);
                 AssertVec2(so, "style.boxPos", 168, 14); AssertVec2(so, "style.textInset", 8, 7); AssertVec2(so, "style.popupPos", 320, 70);
