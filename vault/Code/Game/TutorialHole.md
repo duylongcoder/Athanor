@@ -30,4 +30,4 @@ aliases: []
 [[TutorialController]]
 
 ## Tested by
-[[SceneBakeTests]]
+[[LayoutPinTests]], [[SceneBakeTests]]

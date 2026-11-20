@@ -354,5 +354,111 @@ namespace Athanor.Tests
                 Assert.AreEqual(0.3f, so.FindProperty("alphaBase").floatValue, 1e-4f); Assert.AreEqual(0.4f, so.FindProperty("alphaSwing").floatValue, 1e-4f);
             }
         }
+
+        /// <summary>Pins name/value pairs (a number each) under a serialized struct.</summary>
+        static void Pin(SerializedObject so, string root, params object[] pairs)
+        {
+            var want = new Dictionary<string, float>();
+            for (int i = 0; i < pairs.Length; i += 2) want[(string)pairs[i]] = System.Convert.ToSingle(pairs[i + 1]);
+            AssertFloats(so, root, want);
+        }
+
+        [Test]
+        public void SimpleCutscene_MainScene_KeepsTodaysBeats()
+        {
+            using (var main = new MainSceneFixture())
+            {
+                var so = new SerializedObject(main.FlowField<SimpleCutscene>("story"));
+                Pin(so, "introPage", "fadeIn", 0.9f, "lineFade", 0.35f, "fadeOut", 0.4f, "hold", 0.8f, "lastHold", 0.3f, "finalHold", 1.6f, "promptHold", 8);
+                Pin(so, "descentBanner", "flash", 0.3f, "flashSeconds", 0.5f, "shake", 2, "shakeSeconds", 0.3f, "rise", 0.3f, "fromY", 102, "toY", 88, "hold", 0.9f, "burstY", 170, "burstSquash", 0.6f);
+                AssertBurst(so, "descentBanner.burst", 70, 210, 1.1f, 431, 50, 2.2f, 1.7f, 0.6f, 1);
+                Pin(so, "descentLeave", "fade", 0.3f, "seconds", 0.9f, "scroll", 400);
+                Pin(so, "descentName", "fade", 0.45f, "rise", 0.45f, "fromY", 136, "toY", 128, "introFade", 0.3f, "hold", 2.4f);
+                Pin(so, "descentArrive", "streaks", 0.4f, "fade", 0.36f, "runeFade", 0.45f, "seconds", 0.9f);
+                Pin(so, "depthLine", "fade", 0.3f, "hold", 1.6f);
+                AssertRgba(so, "depthLine.shade", new Color(0, 0, 0, 0.35f));
+                Pin(so, "ending", "fadeOut", 0.5f, "fadeIn", 1.1f, "hold", 0.9f, "flash", 0.5f, "flashSeconds", 0.8f, "promptHold", 10, "burstY", 150, "bannerY", 44);
+                AssertBurst(so, "ending.burst", 90, 220, 1.4f, 426, 30, 2.4f, 2.4f, 2.4f, 1);
+                Pin(so, "look", "prizeY", 122, "bobSpeed", 2.2f, "bobAmplitude", 3, "glowAlpha", 0.45f, "lightIntensity", 1.2f, "rayStep", 30, "raySpin", 14, "shortRay", 0.75f,
+                    "runeBright", 1.5f, "pulseBase", 0.7f, "pulseAmplitude", 0.3f, "pulseSpeed", 4, "runeGlow", 0.16f,
+                    "ringSpeed", 0.5f, "ringWidth", 60, "ringGrowW", 320, "ringHeight", 14, "ringGrowH", 76, "ringAlpha", 0.8f,
+                    "streakBright", 1.6f, "streakAlpha", 0.75f, "moteBright", 2);
+                AssertRgba(so, "look.rayColor", new Color(1, 0.95f, 0.75f, 0.3f)); AssertRgba(so, "look.emberColor", new Color(2.4f, 1.2f, 0.4f, 1));
+                Pin(so, "emberSpec", "order", 310, "rate", 22, "life", 1.5f, "x0", 264, "x1", 376, "y0", 286, "y1", 286, "vx0", -10, "vx1", 10, "vy0", 22, "vy1", 60, "gravity", -6, "sparkle", 0.25f);
+                Pin(so, "streakSpec", "order", 421, "rate", 70, "life", 1.1f, "x0", 0, "x1", 640, "y0", 364, "y1", 364, "vx0", 0, "vx1", 0, "vy0", 380, "vy1", 620, "gravity", 0, "sparkle", 0);
+                Pin(so, "moteSpec", "order", 423, "rate", 26, "life", 1.3f, "x0", 180, "x1", 460, "y0", 248, "y1", 276, "vx0", 0, "vx1", 0, "vy0", 20, "vy1", 60, "gravity", -4, "sparkle", 0.3f);
+                Assert.AreEqual(42f, so.FindProperty("typeRate").floatValue, 1e-4f);
+            }
+        }
+
+        [Test]
+        public void ReactionCutscene_MainScene_KeepsTodaysBeats()
+        {
+            using (var main = new MainSceneFixture())
+            {
+                var so = new SerializedObject(main.FlowField<ReactionCutscene>("reaction"));
+                Pin(so, "opening", "fadeOut", 0.12f, "fadeIn", 0.15f);
+                Pin(so, "gathering", "end", 2.05f, "ramp", 2);
+                Pin(so, "bursting", "flash", 1, "flashSeconds", 0.9f, "shake", 5, "shakeSeconds", 0.9f, "implosionOrder", 312);
+                AssertBurst(so, "bursting.burst", 60, 190, 1.1f, 312, 40, 2.5f, 2.5f, 2.5f, 1);
+                Pin(so, "revealing", "riseAt", 2.3f, "rise", 1.2f, "resultFade", 1.6f, "wordsAt", 2.9f, "wordsFade", 0.25f);
+                Pin(so, "tallying", "at", 3.4f, "seconds", 0.9f);
+                Pin(so, "closing", "settled", 4.5f, "autoEnd", 7.5f, "fadeOut", 0.15f, "fadeIn", 0.18f);
+                Pin(so, "brew", "runeBright", 1.5f, "runePulseBase", 0.75f, "runePulseAmplitude", 0.25f, "runePulseSpeed", 4, "runeLight", 0.6f, "frameRate", 6, "brewBright", 1.4f,
+                    "alphaBase", 0.35f, "alphaAfter", 0.5f, "alphaGather", 0.25f, "glowBase", 0.2f, "glowAfter", 0.55f, "glowGain", 0.25f,
+                    "lightGain", 0.5f, "lightBase", 0.2f, "lightAfter", 1.3f, "matLight", 1.1f, "matGlow", 0.75f);
+                AssertRgba(so, "brew.runeStart", new Color(0.75f, 0.5f, 1, 1)); AssertRgba(so, "brew.brewStart", new Color(0.35f, 0.15f, 0.6f, 1)); AssertRgba(so, "brew.brewGain", new Color(0.4f, 0.25f, 0, 0));
+                Pin(so, "prize", "glowAlpha", 0.4f, "lightStrength", 1.25f, "pillarBright", 1.2f, "pillarAlpha", 0.6f, "pillarPulseBase", 0.85f, "pillarPulseAmplitude", 0.15f, "pillarPulseSpeed", 9,
+                    "bobSpeed", 2.2f, "bobAmplitude", 3, "raySpin", 20, "shortRay", 0.7f, "ringSpeed", 0.55f, "ringWidth", 60, "ringGrowW", 300, "ringHeight", 14, "ringGrowH", 70, "ringBright", 1.5f, "ringAlpha", 0.8f);
+                AssertRgba(so, "prize.rayColor", new Color(1, 0.95f, 0.75f, 0.28f));
+                Pin(so, "layout", "rimY", 161, "resultLift", 20, "resultRise", 62, "spiralRadius", 150, "spiralPower", 1.4f, "spiralMin", 4, "spiralSpin", 9, "spiralFlat", 0.3f,
+                    "spiralY", 70, "spiralDrop", 84, "bannerY", 38, "titleY", 180, "wordSlide", 6, "plusY", 230, "plusShift", 84);
+                Pin(so, "sparkle", "trailJitter", 5, "trailSpeed", 10, "trailLife", 0.45f, "trailBright", 2, "trailTwinkle", 0.25f, "rate", 45, "spread", 60, "speedX", 45,
+                    "speedYMin", 50, "speedYMax", 120, "life", 1.6f, "gravity", -8, "bright", 2);
+                AssertRgba(so, "sparkle.white", new Color(2, 1.8f, 1.2f, 1));
+            }
+        }
+
+        [Test]
+        public void WindowView_MainScene_KeepsTodaysEffects()
+        {
+            using (var main = new MainSceneFixture())
+            {
+                var so = new SerializedObject(main.FlowField<WindowView>("window"));
+                Pin(so, "timing", "dustPeriod", 9, "dripPeriod", 3.2f, "dripFall", 0.3f, "breathePeriod", 5, "flickerPeriod", 7, "flickerDip", 0.28f, "flickerRate", 22, "rootStep", 0.45f);
+                AssertVec2(so, "layout.moteX", 4, 14); AssertVec2(so, "layout.moteY", -22, 40); AssertVec2(so, "layout.dripX", -16, 16);
+                AssertVec2(so, "layout.glowAt", 22, -12); AssertVec2(so, "layout.pointAt", 12, -30);
+                Pin(so, "layout", "dripTop", 34, "dripDrop", 66);
+                AssertRgba(so, "look.mote", new Color(0.85f, 0.85f, 0.8f, 0.55f)); AssertRgba(so, "look.glow", new Color(1, 0.68f, 0.28f, 0.08f));
+                AssertRgba(so, "look.point", new Color(1, 0.82f, 0.4f, 0.5f));
+                Pin(so, "look", "glowSwing", 0.2f, "dipBase", 0.1f, "dipSwing", 0.5f);
+                Color32 bg = so.FindProperty("look.rootBackground").colorValue;
+                Assert.AreEqual(new Color32(23, 19, 28, 255), bg, "the roots' background");
+            }
+        }
+
+        [Test]
+        public void Tutorial_MainScene_KeepsTodaysTargetsAndStyle()
+        {
+            using (var main = new MainSceneFixture())
+            {
+                var tutorial = main.FlowField<TutorialController>("tutorial");
+                var so = new SerializedObject(tutorial);
+                AssertRect(so, "targets.hand", 126, 284, 392, 80); AssertRect(so, "targets.ignite", 515, 304, 122, 42);
+                AssertRect(so, "targets.journal", 516, 284, 122, 24); AssertRect(so, "targets.rack", 126, 252, 392, 32); AssertRect(so, "targets.offer", 0, 60, 640, 240);
+                AssertVec2(so, "targets.tileSize", 72, 44); AssertVec2(so, "targets.tileShift", 36, 24);
+                Pin(so, "targets", "redrawMargin", 2);
+                Pin(so, "style", "baseOrder", 600, "popupOrderOffset", 12, "brokenOrderOffset", 6, "boxWidth", 304, "boxBorder", 1, "textWrapWidth", 288, "boxPadding", 12, "readExtra", 12,
+                    "boxMaxHeight", 86, "linePitch", 12, "maxLines", 4, "linePitchVi", 16, "maxLinesVi", 3, "journalBoxDrop", 248, "popupPitch", 20, "popupFontSize", 16,
+                    "holeSnap", 2, "clickGuard", 0.25f, "rimBase", 0.55f, "rimAmplitude", 0.3f, "rimSpeed", 5, "bumpDecay", 3,
+                    "arrowAbove", 10, "arrowBelow", 8, "arrowFlipY", 80, "arrowBobSpeed", 6, "arrowBobAmplitude", 2);
+                AssertVec2(so, "style.boxPos", 168, 14); AssertVec2(so, "style.textInset", 8, 7); AssertVec2(so, "style.popupPos", 320, 70);
+                AssertHex(so, "style.popupColor", "#f0dcc0"); AssertHex(so, "style.popupTotalColor", "#fff6b8"); AssertHex(so, "style.popupShadow", "#0c0706");
+                AssertRgba(so, "style.brokenGhost", new Color(0.45f, 0.45f, 0.45f, 0.35f));
+                var holes = MainSceneFixture.Field<List<TutorialHole>>(tutorial, "holes");
+                Assert.IsNotEmpty(holes);
+                foreach (var h in holes) Assert.AreEqual(2f, new SerializedObject(h).FindProperty("rimThickness").floatValue, "rim thickness of " + h.name);
+            }
+        }
     }
 }

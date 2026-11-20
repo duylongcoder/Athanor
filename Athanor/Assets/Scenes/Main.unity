@@ -6899,6 +6899,112 @@ MonoBehaviour:
   times: {fileID: 659669498}
   total: {fileID: 1181780662}
   ui: {fileID: 507047}
+  opening:
+    fadeOut: 0.12
+    fadeIn: 0.15
+  gathering:
+    end: 2.05
+    ramp: 2
+  bursting:
+    flash: 1
+    flashSeconds: 0.9
+    shake: 5
+    shakeSeconds: 0.9
+    burst:
+      count: 60
+      color: {r: 2.5, g: 2.5, b: 2.5, a: 1}
+      speed: 190
+      life: 1.1
+      order: 312
+      gravity: 40
+    implosionOrder: 312
+  revealing:
+    riseAt: 2.3
+    rise: 1.2
+    resultFade: 1.6
+    wordsAt: 2.9
+    wordsFade: 0.25
+  tallying:
+    at: 3.4
+    seconds: 0.9
+  closing:
+    settled: 4.5
+    autoEnd: 7.5
+    fadeOut: 0.15
+    fadeIn: 0.18
+  brew:
+    runeStart: {r: 0.75, g: 0.5, b: 1, a: 1}
+    brewStart: {r: 0.35, g: 0.15, b: 0.6, a: 1}
+    brewGain: {r: 0.4, g: 0.25, b: 0, a: 0}
+    runeBright: 1.5
+    runePulseBase: 0.75
+    runePulseAmplitude: 0.25
+    runePulseSpeed: 4
+    runeLight: 0.6
+    frameRate: 6
+    brewBright: 1.4
+    alphaBase: 0.35
+    alphaAfter: 0.5
+    alphaGather: 0.25
+    glowBase: 0.2
+    glowAfter: 0.55
+    glowGain: 0.25
+    lightGain: 0.5
+    lightBase: 0.2
+    lightAfter: 1.3
+    matLight: 1.1
+    matGlow: 0.75
+  prize:
+    glowAlpha: 0.4
+    lightStrength: 1.25
+    pillarBright: 1.2
+    pillarAlpha: 0.6
+    pillarPulseBase: 0.85
+    pillarPulseAmplitude: 0.15
+    pillarPulseSpeed: 9
+    bobSpeed: 2.2
+    bobAmplitude: 3
+    raySpin: 20
+    shortRay: 0.7
+    rayColor: {r: 1, g: 0.95, b: 0.75, a: 0.28}
+    ringSpeed: 0.55
+    ringWidth: 60
+    ringGrowW: 300
+    ringHeight: 14
+    ringGrowH: 70
+    ringBright: 1.5
+    ringAlpha: 0.8
+  layout:
+    rimY: 161
+    resultLift: 20
+    resultRise: 62
+    spiralRadius: 150
+    spiralPower: 1.4
+    spiralMin: 4
+    spiralSpin: 9
+    spiralFlat: 0.3
+    spiralY: 70
+    spiralDrop: 84
+    bannerY: 38
+    titleY: 180
+    wordSlide: 6
+    plusY: 230
+    plusShift: 84
+  sparkle:
+    trailJitter: 5
+    trailSpeed: 10
+    trailLife: 0.45
+    trailBright: 2
+    trailTwinkle: 0.25
+    rate: 45
+    spread: 60
+    speedX: 45
+    speedYMin: 50
+    speedYMax: 120
+    life: 1.6
+    gravity: -8
+    bright: 2
+    white: {r: 2, g: 1.8, b: 1.2, a: 1}
 --- !u!4 &528720038
 Transform:
   m_ObjectHideFlags: 0
@@ -18452,6 +18558,31 @@ MonoBehaviour:
   drips:
   - {fileID: 749841514}
   - {fileID: 2111451177}
+  timing:
+    dustPeriod: 9
+    dripPeriod: 3.2
+    dripFall: 0.3
+    breathePeriod: 5
+    flickerPeriod: 7
+    flickerDip: 0.28
+    flickerRate: 22
+    rootStep: 0.45
+  layout:
+    moteX: {x: 4, y: 14}
+    moteY: {x: -22, y: 40}
+    dripX: {x: -16, y: 16}
+    dripTop: 34
+    dripDrop: 66
+    glowAt: {x: 22, y: -12}
+    pointAt: {x: 12, y: -30}
+  look:
+    mote: {r: 0.85, g: 0.85, b: 0.8, a: 0.55}
+    glow: {r: 1, g: 0.68, b: 0.28, a: 0.08}
+    point: {r: 1, g: 0.82, b: 0.4, a: 0.5}
+    glowSwing: 0.2
+    dipBase: 0.1
+    dipSwing: 0.5
+    rootBackground: {r: 0.09019608, g: 0.07450981, b: 0.10980392, a: 1}
 --- !u!4 &1437795078
 Transform:
   m_ObjectHideFlags: 0
@@ -24435,6 +24566,136 @@ MonoBehaviour:
   prompt: {fileID: 1745772002}
   intro: {fileID: 50817868}
   iconLight: {fileID: 1081781006}
+  introPage:
+    fadeIn: 0.9
+    lineFade: 0.35
+    fadeOut: 0.4
+    hold: 0.8
+    lastHold: 0.3
+    finalHold: 1.6
+    promptHold: 8
+  descentBanner:
+    flash: 0.3
+    flashSeconds: 0.5
+    shake: 2
+    shakeSeconds: 0.3
+    rise: 0.3
+    fromY: 102
+    toY: 88
+    hold: 0.9
+    burst:
+      count: 70
+      color: {r: 2.2, g: 1.7, b: 0.6, a: 1}
+      speed: 210
+      life: 1.1
+      order: 431
+      gravity: 50
+    burstY: 170
+    burstSquash: 0.6
+  descentLeave:
+    fade: 0.3
+    seconds: 0.9
+    scroll: 400
+  descentName:
+    fade: 0.45
+    rise: 0.45
+    fromY: 136
+    toY: 128
+    introFade: 0.3
+    hold: 2.4
+  descentArrive:
+    streaks: 0.4
+    fade: 0.36
+    runeFade: 0.45
+    seconds: 0.9
+  depthLine:
+    fade: 0.3
+    hold: 1.6
+    shade: {r: 0, g: 0, b: 0, a: 0.35}
+  ending:
+    fadeOut: 0.5
+    fadeIn: 1.1
+    hold: 0.9
+    flash: 0.5
+    flashSeconds: 0.8
+    promptHold: 10
+    burst:
+      count: 90
+      color: {r: 2.4, g: 2.4, b: 2.4, a: 1}
+      speed: 220
+      life: 1.4
+      order: 426
+      gravity: 30
+    burstY: 150
+    bannerY: 44
+  look:
+    prizeY: 122
+    bobSpeed: 2.2
+    bobAmplitude: 3
+    glowAlpha: 0.45
+    lightIntensity: 1.2
+    rayStep: 30
+    raySpin: 14
+    shortRay: 0.75
+    rayColor: {r: 1, g: 0.95, b: 0.75, a: 0.3}
+    runeBright: 1.5
+    pulseBase: 0.7
+    pulseAmplitude: 0.3
+    pulseSpeed: 4
+    runeGlow: 0.16
+    ringSpeed: 0.5
+    ringWidth: 60
+    ringGrowW: 320
+    ringHeight: 14
+    ringGrowH: 76
+    ringAlpha: 0.8
+    emberColor: {r: 2.4, g: 1.2, b: 0.4, a: 1}
+    streakBright: 1.6
+    streakAlpha: 0.75
+    moteBright: 2
+  emberSpec:
+    order: 310
+    rate: 22
+    life: 1.5
+    x0: 264
+    x1: 376
+    y0: 286
+    y1: 286
+    vx0: -10
+    vx1: 10
+    vy0: 22
+    vy1: 60
+    gravity: -6
+    sparkle: 0.25
+  streakSpec:
+    order: 421
+    rate: 70
+    life: 1.1
+    x0: 0
+    x1: 640
+    y0: 364
+    y1: 364
+    vx0: 0
+    vx1: 0
+    vy0: 380
+    vy1: 620
+    gravity: 0
+    sparkle: 0
+  moteSpec:
+    order: 423
+    rate: 26
+    life: 1.3
+    x0: 180
+    x1: 460
+    y0: 248
+    y1: 276
+    vx0: 0
+    vx1: 0
+    vy0: 20
+    vy1: 60
+    gravity: -4
+    sparkle: 0.3
+  typeRate: 42
 --- !u!4 &1969933995
 Transform:
   m_ObjectHideFlags: 0

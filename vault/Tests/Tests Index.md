@@ -5,7 +5,7 @@ tags: [moc/tests]
 ---
 
 # Tests
-550 test methods in 44 files. Run: `dotnet test tools/CoreTests` (rules) or `unity test Athanor --mode EditMode`.
+554 test methods in 44 files. Run: `dotnet test tools/CoreTests` (rules) or `unity test Athanor --mode EditMode`.
 
 - [[ChainTests]] — 26 tests · covers [[Bench]], [[ChainPlan]], [[ChainPlanner]], [[ContentDb]]
 - [[ContentTests]] — 41 tests · covers [[Bench]], [[ChainPlanner]], [[ContentData]], [[ContentDb]], [[Ops]]
@@ -30,7 +30,7 @@ tags: [moc/tests]
 - [[DepthLookTests]] — 8 tests · covers [[DepthLook]]
 - [[HudTests]] — 3 tests · covers [[ContentData]], [[ContentDb]], [[HudView]], [[Journal]], [[RunOptions]], [[RunPhase]], [[RunState]], [[Unlocks]]
 - [[LabelLineBoxTests]] — 5 tests · covers [[Fonts]], [[Label]], [[Loc]], [[UiButton]]
-- [[LayoutPinTests]] — 18 tests · covers [[BenchView]], [[CardView]], [[CatalystChoiceView]], [[Dust]], [[EventView]], [[GoalToast]], [[GoalsView]], [[HudView]]
+- [[LayoutPinTests]] — 22 tests · covers [[BenchView]], [[CardView]], [[CatalystChoiceView]], [[Dust]], [[EventView]], [[GoalToast]], [[GoalsView]], [[HudView]]
 - [[LocTests]] — 10 tests · covers [[EditorGlobals]], [[Lang]], [[Loc]]
 - [[MainDepthTests]] — 7 tests · covers [[Bench]], [[BenchView]], [[CameraSway]], [[DepthLayer]], [[DepthMath]], [[DepthMood]], [[DepthRig]], [[GameFlow]]
 - [[MainDevHookTests]] — 4 tests · covers [[BenchView]], [[DepthMath]], [[GameFlow]]

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Athanor.Game
@@ -11,11 +12,51 @@ namespace Athanor.Game
     public sealed class WindowView : MonoBehaviour
     {
         const int Order = 2, Motes = 6, Drips = 2, RootRows = 89, RootsFrom = 20;
-        const float RootStep = 0.45f;
+
+        /// <summary>The periods of the effects, in seconds; Main.unity holds the values (see LayoutPinTests).</summary>
+        [Serializable]
+        public struct Timing
+        {
+            /// <summary>One mote rises in dustPeriod; a drip's whole cycle is dripPeriod and it falls for the first dripFall of it (a fraction).</summary>
+            public float dustPeriod, dripPeriod, dripFall;
+            /// <summary>The glow swells and fades once in breathePeriod.</summary>
+            public float breathePeriod;
+            /// <summary>The point dips every flickerPeriod, for the first flickerDip of it, at flickerRate.</summary>
+            public float flickerPeriod, flickerDip, flickerRate;
+            /// <summary>The roots give back one more row every rootStep.</summary>
+            public float rootStep;
+        }
+
+        /// <summary>Where the effects sit, as offsets from the pane's centre (art pixels, y up), and the paths they follow.</summary>
+        [Serializable]
+        public struct Layout
+        {
+            /// <summary>Motes: x range, y range (bottom to top). Drips: x range, y at the top and how far one falls.</summary>
+            public Vector2 moteX, moteY, dripX;
+            public float dripTop, dripDrop;
+            /// <summary>The amber glow and the point of light.</summary>
+            public Vector2 glowAt, pointAt;
+        }
+
+        /// <summary>Colours and strengths of the effects.</summary>
+        [Serializable]
+        public struct Look
+        {
+            /// <summary>Mote colour (alpha is the most it shows), glow colour (alpha is the least; it swells by glowSwing), point colour (alpha is its steady strength).</summary>
+            public Color mote, glow, point;
+            public float glowSwing;
+            /// <summary>The point's dip: its least alpha and the swing added to it.</summary>
+            public float dipBase, dipSwing;
+            /// <summary>What the roots view's roots are painted over before they creep back (its background).</summary>
+            public Color rootBackground;
+        }
 
         // the pane is the workshop's window sprite; the rest are the effect sprites under the WindowFx object (all in Main.unity)
         [SerializeField] SpriteRenderer pane, glow, point;
         [SerializeField] SpriteRenderer[] motes = new SpriteRenderer[Motes], drips = new SpriteRenderer[Drips];
+        [SerializeField] Timing timing;
+        [SerializeField] Layout layout;
+        [SerializeField] Look look;
         int view, shownDepth;
         bool soft;
         Vector3 centre;       // the pane's centre in the flat game: the effects are placed in flat coordinates, below a group at the pane's depth
@@ -99,11 +140,12 @@ namespace Athanor.Game
         {
             for (int i = 0; i < Motes; i++)
             {
-                float clock = t / 9f + i / (float)Motes;
+                float clock = t / timing.dustPeriod + i / (float)Motes;
                 int n = Mathf.FloorToInt(clock); float p = clock - n;
                 motes[i].enabled = true;
-                motes[i].color = new Color(0.85f, 0.85f, 0.8f, Mathf.Sin(p * Mathf.PI) * 0.55f);
-                motes[i].transform.localPosition = Px.Snap(c + new Vector3(Mathf.Lerp(4, 14, Hash(i, n)), Mathf.Lerp(-22, 40, p), 0));
+                motes[i].color = look.mote.Alpha(Mathf.Sin(p * Mathf.PI) * look.mote.a);
+                float dx = Mathf.Lerp(layout.moteX.x, layout.moteX.y, Hash(i, n)), dy = Mathf.Lerp(layout.moteY.x, layout.moteY.y, p);
+                motes[i].transform.localPosition = Px.Snap(c + new Vector3(dx, dy, 0));
             }
         }
 
@@ -112,11 +154,12 @@ namespace Athanor.Game
         {
             for (int i = 0; i < Drips; i++)
             {
-                float clock = t / 3.2f + i * 0.5f;
-                int n = Mathf.FloorToInt(clock); float p = (clock - n) / 0.3f;      // falls for the first 0.3 of the cycle
+                float clock = t / timing.dripPeriod + i * 0.5f;
+                int n = Mathf.FloorToInt(clock); float p = (clock - n) / timing.dripFall;      // falls for the first part of the cycle
                 drips[i].enabled = p < 1;
                 if (p >= 1) continue;
-                drips[i].transform.localPosition = Px.Snap(c + new Vector3(Mathf.Lerp(-16, 16, Hash(i + 7, n)), 34 - p * p * 66, 0));
+                float dx = Mathf.Lerp(layout.dripX.x, layout.dripX.y, Hash(i + 7, n)), dy = layout.dripTop - p * p * layout.dripDrop;
+                drips[i].transform.localPosition = Px.Snap(c + new Vector3(dx, dy, 0));
             }
         }
 
@@ -124,18 +167,18 @@ namespace Athanor.Game
         void Breathe(float t, Vector3 c)
         {
             glow.enabled = true;
-            glow.transform.localPosition = Px.Snap(c + new Vector3(22, -12, 0));
-            glow.color = new Color(1f, 0.68f, 0.28f, 0.08f + 0.2f * (0.5f + 0.5f * Mathf.Sin(t * Mathf.PI * 2 / 5f)));
+            glow.transform.localPosition = Px.Snap(c + (Vector3)layout.glowAt);
+            glow.color = look.glow.Alpha(look.glow.a + look.glowSwing * (0.5f + 0.5f * Mathf.Sin(t * Mathf.PI * 2 / timing.breathePeriod)));
         }
 
         /// <summary>The point of light low in the glass, steady but for a quick dip every 7 s.</summary>
         void Flicker(float t, Vector3 c)
         {
             point.enabled = true;
-            point.transform.localPosition = Px.Snap(c + new Vector3(12, -30, 0));
-            float k = t % 7f;
-            float a = k < 0.28f ? 0.1f + 0.5f * Mathf.Abs(Mathf.Sin(k * 22f)) * 0.5f : 0.5f;
-            point.color = new Color(1f, 0.82f, 0.4f, a);
+            point.transform.localPosition = Px.Snap(c + (Vector3)layout.pointAt);
+            float k = t % timing.flickerPeriod;
+            float a = k < timing.flickerDip ? look.dipBase + look.dipSwing * Mathf.Abs(Mathf.Sin(k * timing.flickerRate)) * 0.5f : look.point.a;
+            point.color = look.point.Alpha(a);
         }
 
         // ---- roots ----------------------------------------------------------------------------------
@@ -146,10 +189,10 @@ namespace Athanor.Game
             if (src == null || !src.isReadable) return;                // not readable: the static roots stay as drawn
             rootSrc = src.GetPixels32();
             rootNow = new Color32[rootSrc.Length];
-            var bg = new Color32(23, 19, 28, 255);
+            Color32 bg = look.rootBackground;
             for (int i = 0; i < rootSrc.Length; i++) rootNow[i] = rootSrc[i].r >= 150 && rootSrc[i].a > 0 ? bg : rootSrc[i];
             rootTex = new Texture2D(src.width, src.height, TextureFormat.RGBA32, false) { filterMode = FilterMode.Point, wrapMode = TextureWrapMode.Clamp };
-            rootSprite = Sprite.Create(rootTex, new Rect(0, 0, src.width, src.height), new Vector2(0.5f, 0.5f), art.pixelsPerUnit);
+            rootSprite = Sprite.Create(rootTex, new Rect(0, 0, src.width, src.height), Vector2.one * 0.5f, art.pixelsPerUnit);
             rootRevealed = 0; rootClock = 0;
             RevealTo(RootsFrom);
             pane.sprite = rootSprite;
@@ -159,8 +202,8 @@ namespace Athanor.Game
         {
             if (rootTex == null || rootRevealed >= RootRows) return;
             rootClock += Time.deltaTime;
-            if (rootClock < RootStep) return;
-            rootClock -= RootStep;
+            if (rootClock < timing.rootStep) return;
+            rootClock -= timing.rootStep;
             RevealTo(rootRevealed + 1);
         }
 

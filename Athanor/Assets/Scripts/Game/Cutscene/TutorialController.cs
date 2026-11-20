@@ -106,7 +106,8 @@ namespace Athanor.Game
             for (int i = 0; i < holeRects.Length; i++)
             {
                 holes[i].Open(holeRects[i], rimOn);
-                lockPad.holes.Add(new Rect(holeRects[i].x - Px.W / 2f, Px.H / 2f - holeRects[i].yMax, holeRects[i].width, holeRects[i].height));   // world space
+                var corner = Px.At(holeRects[i].x, holeRects[i].yMax);      // the hole's bottom-left corner in world space
+                lockPad.holes.Add(new Rect(corner.x, corner.y, holeRects[i].width, holeRects[i].height));
             }
             readPad.gameObject.SetActive(advanceOnClick);    // a read step: a click in the lit holes advances too, and never reaches the bench
             Dev.Hook("[tut] " + text + (lines != null ? " | " + string.Join(" / ", lines) : "") + " (holes " + holeRects.Length + ")");
@@ -220,7 +221,8 @@ namespace Athanor.Game
         Rect TileRect(int i)
         {
             var c = f.Bench.TileCentre(i);
-            return new Rect(Mathf.Round(c.x + Px.W / 2f - targets.tileShift.x), Mathf.Round(Px.H / 2f - c.y - targets.tileShift.y), targets.tileSize.x, targets.tileSize.y);
+            float left = c.x + Px.W / 2f - targets.tileShift.x, top = Px.H / 2f - c.y - targets.tileShift.y;
+            return new Rect(Mathf.Round(left), Mathf.Round(top), targets.tileSize.x, targets.tileSize.y);
         }
         /// <summary>The middle material of the scripted chain, the one the others touch (steps 3.2 and 3.5).</summary>
         Rect ChainHub => TileRect(TutorialScript.Chain.Lay[1].Tile);
@@ -228,7 +230,7 @@ namespace Athanor.Game
         Rect IgniteRect => targets.ignite;
         Rect JournalRect => targets.journal;
         Rect RackRect => targets.rack;
-        Rect RedrawRect { get { float m = targets.redrawMargin; var r = f.Bench.Hud.RedrawRect; return new Rect(r.x - m, r.y - m, r.width + 2 * m, r.height + 2 * m); } }
+        Rect RedrawRect { get { float m = targets.redrawMargin; var r = f.Bench.Hud.RedrawRect; float grow = m + m; return new Rect(r.x - m, r.y - m, r.width + grow, r.height + grow); } }
 
         // ---- hooks called by GameFlow during the Ignite -------------------------------------------
 

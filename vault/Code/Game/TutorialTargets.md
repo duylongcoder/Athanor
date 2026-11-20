@@ -19,14 +19,14 @@ aliases: []
 ## Members
 | Kind | Signature | Line | Note |
 |---|---|---|---|
-| field | `public Rect hand = new Rect(126, 284, 392, 80)` | 16 |  |
-| field | `public Rect ignite = new Rect(515, 304, 122, 42)` | 18 |  |
-| field | `public Rect journal = new Rect(516, 284, 122, 24)` | 20 |  |
-| field | `public Rect rack = new Rect(126, 252, 392, 32)` | 22 |  |
-| field | `public Rect offer = new Rect(0, 60, 640, 240)` | 24 |  |
-| field | `public Vector2 tileSize = new Vector2(72, 44)` | 28 |  |
-| field | `public Vector2 tileShift = new Vector2(36, 24)` | 30 |  |
-| field | `public float redrawMargin = 2` | 34 |  |
+| field | `public Rect hand` | 16 |  |
+| field | `public Rect ignite` | 18 |  |
+| field | `public Rect journal` | 20 |  |
+| field | `public Rect rack` | 22 |  |
+| field | `public Rect offer` | 24 |  |
+| field | `public Vector2 tileSize` | 28 |  |
+| field | `public Vector2 tileShift` | 30 |  |
+| field | `public float redrawMargin` | 34 |  |
 
 ## Used by
 [[TutorialController]]

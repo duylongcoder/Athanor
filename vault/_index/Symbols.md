@@ -87,15 +87,27 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | Save | Save | Game | class | Athanor/Assets/Scripts/Game/Boot/Save.cs | 8 | Keeps the journal and the profile between sessions in PlayerPrefs (browser storage in a web build). |
 | Cutscene | Cutscene | Game | class | Athanor/Assets/Scripts/Game/Cutscene/Cutscene.cs | 7 | A sequence that plays to its end unless the player clicks to skip ahead. |
 | DepthLook | DepthLook | Game | class | Athanor/Assets/Scripts/Game/Cutscene/DepthLook.cs | 9 | What a depth looks like from the bench: the intro line under its name and the view through the window. Pure choices, no scene; the pictures and effects are drawn by WindowView. |
-| ReactionCutscene | ReactionCutscene | Game | class | Athanor/Assets/Scripts/Game/Cutscene/ReactionCutscene.cs | 13 | The full discovery sequence: two materials spiral into the cauldron, the rune circle lights, a flash, and the new material rises on a column of light with its name and potency. Everything is a functio |
+| ReactionCutscene | ReactionCutscene | Game | class | Athanor/Assets/Scripts/Game/Cutscene/ReactionCutscene.cs | 15 | The full discovery sequence: two materials spiral into the cauldron, the rune circle lights, a flash, and the new material rises on a column of light with its name and potency. Everything is a functio |
+| Brew | Brew | Game | struct | Athanor/Assets/Scripts/Game/Cutscene/ReactionCutscene.cs | 49 | The rune circle, the brew and the materials: colours, brightness and how they pulse. |
+| Prize | Prize | Game | struct | Athanor/Assets/Scripts/Game/Cutscene/ReactionCutscene.cs | 63 | The result, its pillar, rays and rings once the burst has gone off. |
+| ReactionCutscene.Layout | ReactionCutscene.Layout | Game | struct | Athanor/Assets/Scripts/Game/Cutscene/ReactionCutscene.cs | 78 | Where things are (art space, y down) and how the motion between them is shaped. |
+| Sparkle | Sparkle | Game | struct | Athanor/Assets/Scripts/Game/Cutscene/ReactionCutscene.cs | 94 | The trail behind a flying material and the sparks off the brew. |
 | SimpleCutscene | SimpleCutscene | Game | class | Athanor/Assets/Scripts/Game/Cutscene/SimpleCutscene.cs | 14 | The short story beats built from text and a few effects: the intro, the descent between depths, and the ending. A click finishes the line being written, then moves on. |
-| Loop | Loop | Game | class | Athanor/Assets/Scripts/Game/Cutscene/SimpleCutscene.cs | 292 | A stream of glowing particles played as a loop instead of emitted: rate x life fixed slots, each reborn every life seconds at a hashed place and speed, so its position is a function of the clock. A sl |
+| IntroPage | IntroPage | Game | struct | Athanor/Assets/Scripts/Game/Cutscene/SimpleCutscene.cs | 25 | The opening story: the fades round it and the holds between its lines, in seconds. |
+| DescentBanner | DescentBanner | Game | struct | Athanor/Assets/Scripts/Game/Cutscene/SimpleCutscene.cs | 37 | Descent beat 1, the win over the bench: "depth cleared" rises into place, with a flash, a shake and a burst. |
+| EndingBeat | EndingBeat | Game | struct | Athanor/Assets/Scripts/Game/Cutscene/SimpleCutscene.cs | 65 | The ending: the fades round the story, the hold after a line, the final flash and burst, the banner's place. |
+| SimpleCutscene.Look | SimpleCutscene.Look | Game | struct | Athanor/Assets/Scripts/Game/Cutscene/SimpleCutscene.cs | 75 | What Update draws each frame: the floating prize and its rays, the rune circle and its ring, the colours of the streams. |
+| LoopSpec | LoopSpec | Game | struct | Athanor/Assets/Scripts/Game/Cutscene/SimpleCutscene.cs | 93 | One looping stream: sort order, particles a second, life, where they are born (art x, y), their speed, gravity and chance to sparkle. |
+| Loop | Loop | Game | class | Athanor/Assets/Scripts/Game/Cutscene/SimpleCutscene.cs | 388 | A stream of glowing particles played as a loop instead of emitted: rate x life fixed slots, each reborn every life seconds at a hashed place and speed, so its position is a function of the clock. A sl |
 | TutorialRules | TutorialRules | Game | class | Athanor/Assets/Scripts/Game/Cutscene/TutorialController.cs | 12 | The decisions around the tutorial that need no scene, so they can be tested. What Begin does is the Core rule TutorialScript.Plan. |
 | TutorialController | TutorialController | Game | class | Athanor/Assets/Scripts/Game/Cutscene/TutorialController.cs | 33 | Plays the scripted tutorial over the bench: a dark screen with lit holes and a pulsing gold rim, an arrow, a text box at the top, click locks, and popups held until read. It reads the game's state; it |
 | TutorialHole | TutorialHole | Game | class | Athanor/Assets/Scripts/Game/Cutscene/TutorialHole.cs | 10 | One lit window of the tutorial overlay: a SpriteMask that cuts a hole in the dim (the dim draws "visible outside mask"), and the four gold rim pieces round it. TutorialController keeps a few of these  |
 | TutorialTargets | TutorialTargets | Game | class | Athanor/Assets/Scripts/Game/Cutscene/TutorialSettings.cs | 12 | Where the tutorial points. Art space: 640x360, x to the right, y down from the top-left corner. Every rectangle a step lights comes from here (or from the view it talks about: the Journal's pages, the |
 | TutorialStyle | TutorialStyle | Game | class | Athanor/Assets/Scripts/Game/Cutscene/TutorialSettings.cs | 39 | How the tutorial overlay looks and feels: the text box, the popup lines, the rim and arrow, and their timings. |
-| WindowView | WindowView | Game | class | Athanor/Assets/Scripts/Game/Cutscene/WindowView.cs | 11 | The workshop window shows what the current depth "sees" and plays one tiny looping effect (docs/ATHANOR.md §8): 1 dust motes up a shaft, 2 drips down the glass, 3 a breathing amber glow, 4 roots creep |
+| WindowView | WindowView | Game | class | Athanor/Assets/Scripts/Game/Cutscene/WindowView.cs | 12 | The workshop window shows what the current depth "sees" and plays one tiny looping effect (docs/ATHANOR.md §8): 1 dust motes up a shaft, 2 drips down the glass, 3 a breathing amber glow, 4 roots creep |
+| WindowView.Timing | WindowView.Timing | Game | struct | Athanor/Assets/Scripts/Game/Cutscene/WindowView.cs | 18 | The periods of the effects, in seconds; Main.unity holds the values (see LayoutPinTests). |
+| WindowView.Layout | WindowView.Layout | Game | struct | Athanor/Assets/Scripts/Game/Cutscene/WindowView.cs | 32 | Where the effects sit, as offsets from the pane's centre (art pixels, y up), and the paths they follow. |
+| WindowView.Look | WindowView.Look | Game | struct | Athanor/Assets/Scripts/Game/Cutscene/WindowView.cs | 43 | Colours and strengths of the effects. |
 | CameraSway | CameraSway | Game | class | Athanor/Assets/Scripts/Game/Depth/CameraSway.cs | 11 | The idle sway and the world-only shake of the HD-2D bench. The sway moves the world camera (x = A sin(2 pi t / 6), y = A / 2 sin(2 pi t / 9), A = 4 art px) and re-aims it so the middle tile row (art y |
 | DepthLayer | DepthLayer | Game | class | Athanor/Assets/Scripts/Game/Depth/DepthLayer.cs | 10 | One flat thing of the bench placed in depth: it is moved to its depth and enlarged by (D - z) / D, so that from the camera at rest it covers exactly the art pixels it covers in the flat game. Sorting  |
 | DepthMath | DepthMath | Game | class | Athanor/Assets/Scripts/Game/Depth/DepthMath.cs | 10 | The projection maths of the HD-2D bench (HD-2D mockup SPEC, "Layer stack and projection"; removed in P6-22, see git history). Pure functions, no scene. Depth z follows the SPEC: 0 is the plane where o |
@@ -820,18 +832,64 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | DepthLook | method | ShowsRunIntro | 24 | public static bool ShowsRunIntro(int depth, bool tutorial, bool sandbox) |
 | DepthLook | method | ThemedWindow | 27 | public static bool ThemedWindow(bool inRun, bool tutorial, bool sandbox) |
 | DepthLook | method | WindowSprite | 30 | public static string WindowSprite(int depth) |
-| ReactionCutscene | method | Bind | 43 | public void Bind(GameObject[] others, FxRefs fx) |
-| ReactionCutscene | method | Setup | 58 | public void Setup(ReactionEvent e, ContentDb content, float hurry = 1) |
-| ReactionCutscene | method | Play | 84 | public override IEnumerator Play() |
-| SimpleCutscene | method | Bind | 37 | public void Bind(FxRefs effects) |
-| SimpleCutscene | method | Play | 44 | public override IEnumerator Play() |
-| SimpleCutscene | method | Close | 61 | public void Close() |
-| SimpleCutscene | method | Intro | 80 | public IEnumerator Intro() |
-| SimpleCutscene | method | Descent | 116 | public IEnumerator Descent(int depth, string depthName, Color colour, Action midway) |
-| SimpleCutscene | method | DepthIntro | 175 | public IEnumerator DepthIntro(string key) |
-| SimpleCutscene | method | Ending | 191 | public IEnumerator Ending(MaterialData ultimate) |
-| Loop | ctor | Loop | 299 | public Loop(Transform parent, string name, int order, float rate, float life, float x0, float x1, float y0, float y1, float vx0, float vx1, float vy0, float vy1, float gravity, float sparkle) |
-| Loop | method | Draw | 310 | public void Draw(float t, float strength, Color color) |
+| ReactionCutscene | property | Opening | 25 | public struct Opening |
+| ReactionCutscene | property | Gathering | 29 | public struct Gathering |
+| ReactionCutscene | property | Bursting | 33 | public struct Bursting |
+| ReactionCutscene | property | Revealing | 37 | public struct Revealing |
+| ReactionCutscene | property | Tallying | 41 | public struct Tallying |
+| ReactionCutscene | property | Closing | 45 | public struct Closing |
+| ReactionCutscene | method | Bind | 139 | public void Bind(GameObject[] others, FxRefs fx) |
+| ReactionCutscene | method | Setup | 154 | public void Setup(ReactionEvent e, ContentDb content, float hurry = 1) |
+| ReactionCutscene | method | Play | 180 | public override IEnumerator Play() |
+| Brew | field | brewGain | 52 | public Color runeStart, brewStart, brewGain |
+| Brew | field | runeLight | 54 | public float runeBright, runePulseBase, runePulseAmplitude, runePulseSpeed, runeLight |
+| Brew | field | lightAfter | 56 | public float frameRate, brewBright, alphaBase, alphaAfter, alphaGather, glowBase, glowAfter, glowGain, lightGain, lightBase, lightAfter |
+| Brew | field | matGlow | 58 | public float matLight, matGlow |
+| Prize | field | pillarPulseSpeed | 66 | public float glowAlpha, lightStrength, pillarBright, pillarAlpha, pillarPulseBase, pillarPulseAmplitude, pillarPulseSpeed |
+| Prize | field | bobAmplitude | 68 | public float bobSpeed, bobAmplitude |
+| Prize | field | shortRay | 70 | public float raySpin, shortRay |
+| Prize | field | rayColor | 71 | public Color rayColor |
+| Prize | field | ringAlpha | 73 | public float ringSpeed, ringWidth, ringGrowW, ringHeight, ringGrowH, ringBright, ringAlpha |
+| ReactionCutscene.Layout | field | rimY | 81 | public float rimY |
+| ReactionCutscene.Layout | field | resultRise | 83 | public float resultLift, resultRise |
+| ReactionCutscene.Layout | field | spiralDrop | 85 | public float spiralRadius, spiralPower, spiralMin, spiralSpin, spiralFlat, spiralY, spiralDrop |
+| ReactionCutscene.Layout | field | wordSlide | 87 | public float bannerY, titleY, wordSlide |
+| ReactionCutscene.Layout | field | plusShift | 89 | public float plusY, plusShift |
+| Sparkle | field | trailTwinkle | 97 | public float trailJitter, trailSpeed, trailLife, trailBright, trailTwinkle |
+| Sparkle | field | bright | 99 | public float rate, spread, speedX, speedYMin, speedYMax, life, gravity, bright |
+| Sparkle | field | white | 100 | public Color white |
+| SimpleCutscene | property | DescentLeave | 49 | public struct DescentLeave |
+| SimpleCutscene | property | DescentName | 53 | public struct DescentName |
+| SimpleCutscene | property | DescentArrive | 57 | public struct DescentArrive |
+| SimpleCutscene | property | DepthLine | 61 | public struct DepthLine |
+| SimpleCutscene | method | Bind | 126 | public void Bind(FxRefs effects) |
+| SimpleCutscene | method | Play | 133 | public override IEnumerator Play() |
+| SimpleCutscene | method | Close | 150 | public void Close() |
+| SimpleCutscene | method | Intro | 169 | public IEnumerator Intro() |
+| SimpleCutscene | method | Descent | 205 | public IEnumerator Descent(int depth, string depthName, Color colour, Action midway) |
+| SimpleCutscene | method | DepthIntro | 265 | public IEnumerator DepthIntro(string key) |
+| SimpleCutscene | method | Ending | 281 | public IEnumerator Ending(MaterialData ultimate) |
+| IntroPage | field | fadeOut | 28 | public float fadeIn, lineFade, fadeOut |
+| IntroPage | field | finalHold | 30 | public float hold, lastHold, finalHold |
+| IntroPage | field | promptHold | 32 | public float promptHold |
+| DescentBanner | field | shakeSeconds | 39 | public float flash, flashSeconds, shake, shakeSeconds |
+| DescentBanner | field | hold | 41 | public float rise, fromY, toY, hold |
+| DescentBanner | field | burst | 43 | public BurstSpec burst |
+| DescentBanner | field | burstSquash | 44 | public float burstY, burstSquash |
+| EndingBeat | field | promptHold | 67 | public float fadeOut, fadeIn, hold, flash, flashSeconds, promptHold |
+| EndingBeat | field | burst | 69 | public BurstSpec burst |
+| EndingBeat | field | bannerY | 70 | public float burstY, bannerY |
+| SimpleCutscene.Look | field | lightIntensity | 78 | public float prizeY, bobSpeed, bobAmplitude, glowAlpha, lightIntensity |
+| SimpleCutscene.Look | field | shortRay | 80 | public float rayStep, raySpin, shortRay |
+| SimpleCutscene.Look | field | rayColor | 81 | public Color rayColor |
+| SimpleCutscene.Look | field | runeGlow | 83 | public float runeBright, pulseBase, pulseAmplitude, pulseSpeed, runeGlow |
+| SimpleCutscene.Look | field | ringAlpha | 85 | public float ringSpeed, ringWidth, ringGrowW, ringHeight, ringGrowH, ringAlpha |
+| SimpleCutscene.Look | field | emberColor | 87 | public Color emberColor |
+| SimpleCutscene.Look | field | moteBright | 88 | public float streakBright, streakAlpha, moteBright |
+| LoopSpec | field | order | 95 | public int order |
+| LoopSpec | field | sparkle | 96 | public float rate, life, x0, x1, y0, y1, vx0, vx1, vy0, vy1, gravity, sparkle |
+| Loop | ctor | Loop | 395 | public Loop(Transform parent, string name, LoopSpec s) |
+| Loop | method | Draw | 405 | public void Draw(float t, float strength, Color color) |
 | TutorialRules | method | MarkDone | 15 | public static void MarkDone() |
 | TutorialRules | method | AnswerSkipQuestion | 21 | public static bool AnswerSkipQuestion(bool playIt) |
 | TutorialController | property | Trial | 55 | public int Trial |
@@ -839,56 +897,67 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | TutorialController | field | Shown | 59 | public readonly List<long> Shown = new List<long>() |
 | TutorialController | method | Bind | 62 | public void Bind(GameFlow flow) |
 | TutorialController | method | Union | 74 | public static Rect Union(Rect[] r) |
-| TutorialController | method | Abort | 146 | public void Abort() |
-| TutorialController | method | AfterEvent | 236 | public IEnumerator AfterEvent(ReactionEvent e, int index) |
-| TutorialController | method | AfterIgnite | 276 | public IEnumerator AfterIgnite(IgniteOutcomeView o) |
-| TutorialController | method | AfterChoose | 301 | public void AfterChoose(string catalystId, string name) |
-| TutorialController | method | OnOffer | 311 | public IEnumerator OnOffer() |
-| TutorialController | method | OfferTaken | 318 | public void OfferTaken() |
-| TutorialController | method | Drive | 329 | public IEnumerator Drive() |
-| TutorialController | property | IgniteOutcomeView | 379 | public sealed class IgniteOutcomeView |
+| TutorialController | method | Abort | 147 | public void Abort() |
+| TutorialController | method | AfterEvent | 238 | public IEnumerator AfterEvent(ReactionEvent e, int index) |
+| TutorialController | method | AfterIgnite | 278 | public IEnumerator AfterIgnite(IgniteOutcomeView o) |
+| TutorialController | method | AfterChoose | 303 | public void AfterChoose(string catalystId, string name) |
+| TutorialController | method | OnOffer | 313 | public IEnumerator OnOffer() |
+| TutorialController | method | OfferTaken | 320 | public void OfferTaken() |
+| TutorialController | method | Drive | 331 | public IEnumerator Drive() |
+| TutorialController | property | IgniteOutcomeView | 381 | public sealed class IgniteOutcomeView |
 | TutorialHole | method | Open | 18 | public void Open(Rect r, bool showRim) |
 | TutorialHole | method | Close | 30 | public void Close() |
 | TutorialHole | method | SetRimAlpha | 33 | public void SetRimAlpha(float a) |
-| TutorialTargets | field | hand | 16 | public Rect hand = new Rect(126, 284, 392, 80) |
-| TutorialTargets | field | ignite | 18 | public Rect ignite = new Rect(515, 304, 122, 42) |
-| TutorialTargets | field | journal | 20 | public Rect journal = new Rect(516, 284, 122, 24) |
-| TutorialTargets | field | rack | 22 | public Rect rack = new Rect(126, 252, 392, 32) |
-| TutorialTargets | field | offer | 24 | public Rect offer = new Rect(0, 60, 640, 240) |
-| TutorialTargets | field | tileSize | 28 | public Vector2 tileSize = new Vector2(72, 44) |
-| TutorialTargets | field | tileShift | 30 | public Vector2 tileShift = new Vector2(36, 24) |
-| TutorialTargets | field | redrawMargin | 34 | public float redrawMargin = 2 |
-| TutorialStyle | field | baseOrder | 43 | public int baseOrder = 600 |
-| TutorialStyle | field | popupOrderOffset | 44 | public int popupOrderOffset = 12 |
-| TutorialStyle | field | brokenOrderOffset | 45 | public int brokenOrderOffset = 6 |
-| TutorialStyle | field | boxPos | 49 | public Vector2 boxPos = new Vector2(168, 14) |
-| TutorialStyle | field | boxWidth | 50 | public float boxWidth = 304 |
-| TutorialStyle | field | boxBorder | 52 | public float boxBorder = 1 |
-| TutorialStyle | field | textInset | 54 | public Vector2 textInset = new Vector2(8, 7) |
-| TutorialStyle | field | textWrapWidth | 56 | public float textWrapWidth = 288 |
-| TutorialStyle | field | boxPadding | 58 | public float boxPadding = 12 |
-| TutorialStyle | field | readExtra | 59 | public float readExtra = 12 |
-| TutorialStyle | field | boxMaxHeight | 61 | public float boxMaxHeight = 86 |
-| TutorialStyle | field | linePitch | 63 | public int linePitch = 12, maxLines = 4 |
-| TutorialStyle | field | linePitchVi | 65 | public int linePitchVi = 16, maxLinesVi = 3 |
-| TutorialStyle | field | journalBoxDrop | 67 | public int journalBoxDrop = 248 |
-| TutorialStyle | field | popupPos | 71 | public Vector2 popupPos = new Vector2(320, 70) |
-| TutorialStyle | field | popupPitch | 72 | public float popupPitch = 20 |
-| TutorialStyle | field | popupFontSize | 73 | public int popupFontSize = 16 |
-| TutorialStyle | field | popupColor | 74 | public Color popupColor = new Color32(0xf0, 0xdc, 0xc0, 255) |
-| TutorialStyle | field | popupTotalColor | 76 | public Color popupTotalColor = new Color32(0xff, 0xf6, 0xb8, 255) |
-| TutorialStyle | field | popupShadow | 77 | public Color popupShadow = new Color32(0x0c, 0x07, 0x06, 255) |
-| TutorialStyle | field | brokenGhost | 81 | public Color brokenGhost = new Color(0.45f, 0.45f, 0.45f, 0.35f) |
-| TutorialStyle | field | clickGuard | 89 | public float clickGuard = 0.25f |
-| TutorialStyle | field | rimSpeed | 94 | public float rimSpeed = 5 |
-| TutorialStyle | field | bumpDecay | 96 | public float bumpDecay = 3 |
-| TutorialStyle | field | arrowAbove | 100 | public float arrowAbove = 10, arrowBelow = 8 |
-| TutorialStyle | field | arrowFlipY | 102 | public float arrowFlipY = 80 |
-| TutorialStyle | field | arrowBobSpeed | 103 | public float arrowBobSpeed = 6, arrowBobAmplitude = 2 |
-| WindowView | method | Bind | 28 | public void Bind() |
-| WindowView | property | Soft | 37 | public bool Soft |
-| WindowView | method | Show | 50 | public void Show(int depth) |
-| WindowView | method | ShowNight | 64 | public void ShowNight() |
+| TutorialTargets | field | hand | 16 | public Rect hand |
+| TutorialTargets | field | ignite | 18 | public Rect ignite |
+| TutorialTargets | field | journal | 20 | public Rect journal |
+| TutorialTargets | field | rack | 22 | public Rect rack |
+| TutorialTargets | field | offer | 24 | public Rect offer |
+| TutorialTargets | field | tileSize | 28 | public Vector2 tileSize |
+| TutorialTargets | field | tileShift | 30 | public Vector2 tileShift |
+| TutorialTargets | field | redrawMargin | 34 | public float redrawMargin |
+| TutorialStyle | field | baseOrder | 43 | public int baseOrder |
+| TutorialStyle | field | popupOrderOffset | 44 | public int popupOrderOffset |
+| TutorialStyle | field | brokenOrderOffset | 45 | public int brokenOrderOffset |
+| TutorialStyle | field | boxPos | 49 | public Vector2 boxPos |
+| TutorialStyle | field | boxWidth | 50 | public float boxWidth |
+| TutorialStyle | field | boxBorder | 52 | public float boxBorder |
+| TutorialStyle | field | textInset | 54 | public Vector2 textInset |
+| TutorialStyle | field | textWrapWidth | 56 | public float textWrapWidth |
+| TutorialStyle | field | boxPadding | 58 | public float boxPadding |
+| TutorialStyle | field | readExtra | 59 | public float readExtra |
+| TutorialStyle | field | boxMaxHeight | 61 | public float boxMaxHeight |
+| TutorialStyle | field | maxLines | 63 | public int linePitch, maxLines |
+| TutorialStyle | field | maxLinesVi | 65 | public int linePitchVi, maxLinesVi |
+| TutorialStyle | field | journalBoxDrop | 67 | public int journalBoxDrop |
+| TutorialStyle | field | popupPos | 71 | public Vector2 popupPos |
+| TutorialStyle | field | popupPitch | 72 | public float popupPitch |
+| TutorialStyle | field | popupFontSize | 73 | public int popupFontSize |
+| TutorialStyle | field | popupColor | 74 | public Color popupColor |
+| TutorialStyle | field | popupTotalColor | 76 | public Color popupTotalColor |
+| TutorialStyle | field | popupShadow | 77 | public Color popupShadow |
+| TutorialStyle | field | brokenGhost | 81 | public Color brokenGhost |
+| TutorialStyle | field | clickGuard | 89 | public float clickGuard |
+| TutorialStyle | field | rimSpeed | 94 | public float rimSpeed |
+| TutorialStyle | field | bumpDecay | 96 | public float bumpDecay |
+| TutorialStyle | field | arrowBelow | 100 | public float arrowAbove, arrowBelow |
+| TutorialStyle | field | arrowFlipY | 102 | public float arrowFlipY |
+| TutorialStyle | field | arrowBobAmplitude | 103 | public float arrowBobSpeed, arrowBobAmplitude |
+| WindowView | method | Bind | 69 | public void Bind() |
+| WindowView | property | Soft | 78 | public bool Soft |
+| WindowView | method | Show | 91 | public void Show(int depth) |
+| WindowView | method | ShowNight | 105 | public void ShowNight() |
+| WindowView.Timing | field | dripFall | 21 | public float dustPeriod, dripPeriod, dripFall |
+| WindowView.Timing | field | breathePeriod | 23 | public float breathePeriod |
+| WindowView.Timing | field | flickerRate | 25 | public float flickerPeriod, flickerDip, flickerRate |
+| WindowView.Timing | field | rootStep | 27 | public float rootStep |
+| WindowView.Layout | field | dripX | 35 | public Vector2 moteX, moteY, dripX |
+| WindowView.Layout | field | dripDrop | 36 | public float dripTop, dripDrop |
+| WindowView.Layout | field | pointAt | 38 | public Vector2 glowAt, pointAt |
+| WindowView.Look | field | point | 46 | public Color mote, glow, point |
+| WindowView.Look | field | glowSwing | 47 | public float glowSwing |
+| WindowView.Look | field | dipSwing | 49 | public float dipBase, dipSwing |
+| WindowView.Look | field | rootBackground | 51 | public Color rootBackground |
 | CameraSway | field | swayOn | 14 | public bool swayOn = true |
 | CameraSway | field | amplitude | 16 | public float amplitude = DepthMath.SwayAmplitude |
 | CameraSway | field | external | 20 | public Vector2 external |
@@ -1538,6 +1607,10 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | LayoutPinTests | method | UiButton_EveryPrefabInstance_KeepsTodaysLook | 315 | public void UiButton_EveryPrefabInstance_KeepsTodaysLook() |
 | LayoutPinTests | method | Palette_Asset_KeepsTheStarOutline | 339 | public void Palette_Asset_KeepsTheStarOutline() |
 | LayoutPinTests | method | Dust_MainScene_KeepsTodaysLook | 347 | public void Dust_MainScene_KeepsTodaysLook() |
+| LayoutPinTests | method | SimpleCutscene_MainScene_KeepsTodaysBeats | 367 | public void SimpleCutscene_MainScene_KeepsTodaysBeats() |
+| LayoutPinTests | method | ReactionCutscene_MainScene_KeepsTodaysBeats | 395 | public void ReactionCutscene_MainScene_KeepsTodaysBeats() |
+| LayoutPinTests | method | WindowView_MainScene_KeepsTodaysEffects | 423 | public void WindowView_MainScene_KeepsTodaysEffects() |
+| LayoutPinTests | method | Tutorial_MainScene_KeepsTodaysTargetsAndStyle | 441 | public void Tutorial_MainScene_KeepsTodaysTargetsAndStyle() |
 | LocTests | method | Use_WithInjectedFiles_ServesTheirText | 19 | public void Use_WithInjectedFiles_ServesTheirText() |
 | LocTests | method | Use_NullFile_Throws | 32 | public void Use_NullFile_Throws() |
 | LocTests | method | ViJsonCharacters_AllInCruxAtlas_NoneMissing | 40 | public void ViJsonCharacters_AllInCruxAtlas_NoneMissing() |

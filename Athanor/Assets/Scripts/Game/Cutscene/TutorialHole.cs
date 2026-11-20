@@ -12,7 +12,7 @@ namespace Athanor.Game
         [SerializeField] SpriteMask mask;
         [SerializeField] SpriteRenderer top, bottom, left, right;
         [Hint("Rim thickness in art pixels.")]
-        [SerializeField, Min(0)] float rimThickness = 2;
+        [SerializeField, Min(0)] float rimThickness;
 
         /// <summary>Lights this rectangle (art space, top-left corner and size) and shows the rim round it when asked.</summary>
         public void Open(Rect r, bool showRim)
