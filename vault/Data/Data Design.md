@@ -37,7 +37,7 @@ All shapes are plain `[Serializable]` classes in `ContentData.cs` ([[ContentData
 | `aspectDepths[]` | depths (1-based) at which the run offers an aspect | 1, 3, 5 |
 | `potencyByTier[]` | base potency by material tier (index = tier) | 0, 20, 60, 180, 500, 1500 |
 
-Nothing reads these yet (P7-3 adds the block and validation; later tasks switch the rules over).
+`ContentDb.ValidateRules` throws when the block is missing or out of range; the rules read it (`ContentDb.Rules`) and there is no code fallback.
 
 Balance rules the tests enforce: a path to the ultimate exists; tiers add up; Reaction Index spread across tiers; an informed player usually wins; 5-item combos stay rare; a hazard/gamble met once leaves ≥70% of event-free wins. Reports: README "Changing the game" (`BalanceReport`, `BalanceMatrix`, `RoleReport`, `EventReport`).
 

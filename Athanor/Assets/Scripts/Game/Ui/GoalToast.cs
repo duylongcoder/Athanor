@@ -10,16 +10,17 @@ namespace Athanor.Game
     /// </summary>
     public sealed class GoalToast : MonoBehaviour
     {
-        const int O = 490, W = 300, H = 36, X = 170, Y = 4;
-        /// <summary>Seconds a toast stays fully shown.</summary>
-        public const float Stay = 2.5f;
-        /// <summary>Seconds a toast takes to slide in, and again to slide out.</summary>
-        public const float Slide = 0.25f;
-
-        /// <summary>The toast's burst when it appears and how far past the top edge it hides, stored in GoalToast.prefab.</summary>
+        /// <summary>The toast's burst when it appears, how far past the top edge it hides, and its resting box (art px, y down), stored in GoalToast.prefab.</summary>
         [System.Serializable]
-        public struct Layout { public BurstSpec burst; public float hideGap; }
+        public struct Layout { public BurstSpec burst; public float hideGap, x, y, width, height; }
         [SerializeField] Layout layout;
+        /// <summary>Seconds a toast stays fully shown, and takes to slide in and again to slide out.</summary>
+        [System.Serializable]
+        public struct Timing { public float stay, slide; }
+        [SerializeField] Timing timing;
+
+        /// <summary>The age (seconds) at which a toast starts to slide out.</summary>
+        public float SlideOutAt => timing.stay + timing.slide;
 
         struct Item { public string goal, reward, sprite; }
 
@@ -46,7 +47,7 @@ namespace Athanor.Game
         FxRefs fx;
 
         // a click on a showing toast sends it away now
-        void SkipToEnd() { if (age >= 0) age = Mathf.Max(age, Stay + Slide); }
+        void SkipToEnd() { if (age >= 0) age = Mathf.Max(age, SlideOutAt); }
 
         /// <summary>Queues one toast for each goal just completed.</summary>
         public void Add(IEnumerable<GoalReward> rewards, ContentDb db)
@@ -74,13 +75,14 @@ namespace Athanor.Game
                 if (next.sprite != null) icon.sprite = Art.Lib.Sprite(next.sprite);
                 age = 0;
                 panel.gameObject.SetActive(true);
-                if (fx != null) layout.burst.Play(fx.Sparks, Px.Mid(X, Y, W, H));
+                if (fx != null) layout.burst.Play(fx.Sparks, Px.Mid(layout.x, layout.y, layout.width, layout.height));
             }
             age += Time.deltaTime;
             // slides down from above the screen, waits, slides back up
-            float shown = age < Slide ? Anim.OutCubic(age / Slide) : age < Slide + Stay ? 1 : 1 - Anim.InCubic(Mathf.Clamp01((age - Slide - Stay) / Slide));
-            panel.position = Px.Snap(Px.Mid(X, Y - (1 - shown) * (H + Y + layout.hideGap), W, H));
-            if (age >= Stay + 2 * Slide) { age = -1; panel.gameObject.SetActive(false); }
+            float slide = timing.slide, stay = timing.stay;
+            float shown = age < slide ? Anim.OutCubic(age / slide) : age < slide + stay ? 1 : 1 - Anim.InCubic(Mathf.Clamp01((age - slide - stay) / slide));
+            panel.position = Px.Snap(Px.Mid(layout.x, layout.y - (1 - shown) * (layout.height + layout.y + layout.hideGap), layout.width, layout.height));
+            if (age >= stay + 2 * slide) { age = -1; panel.gameObject.SetActive(false); }
         }
     }
 }

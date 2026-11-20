@@ -14,6 +14,9 @@ namespace Athanor.Game
     /// </summary>
     public sealed class IgniteSequence : MonoBehaviour
     {
+        /// <summary>Stops what this component started so nothing runs on into the next Play (domain reload off).</summary>
+        void OnDestroy() { StopAllCoroutines(); Motion.StopOn(this); }
+
         /// <summary>Paces, waits and durations, in seconds unless the name says otherwise.</summary>
         [System.Serializable]
         public struct Timing

@@ -41,6 +41,11 @@ namespace Athanor.Game
             public float iconLift;
             /// <summary>A material popping in starts this far below its place.</summary>
             public float popRise;
+            /// <summary>The puff of Consume: count, speed, life, order, gravity (its colour is the tile's glow times consumeTint, so the spec's own colour is unused).</summary>
+            public BurstSpec consumeBurst;
+            public float consumeTint;
+            /// <summary>The icon fades out and grows to consumeGrow times its size over consumeSeconds.</summary>
+            public float consumeSeconds, consumeGrow;
         }
         [SerializeField] Layout layout;
         bool glows, faceSet;
@@ -102,11 +107,12 @@ namespace Athanor.Game
         public IEnumerator Consume()
         {
             if (Material == null) yield break;
-            fx.Sparks.Burst(centre + layout.consumeLift, 14, glow.Times(2), 40, 0.5f, 30, -20);
+            var puff = layout.consumeBurst;
+            fx.Sparks.Burst(centre + layout.consumeLift, puff.count, glow.Times(layout.consumeTint), puff.speed, puff.life, puff.order, puff.gravity);
             icon.color = Color.white;
             yield return Sequence.Create()
-                .Group(Motion.Fade(icon, 1, 0, 0.18f))
-                .Group(Motion.Scale(icon.transform, 1, 1.4f, 0.18f))
+                .Group(Motion.Fade(icon, 1, 0, layout.consumeSeconds))
+                .Group(Motion.Scale(icon.transform, 1, layout.consumeGrow, layout.consumeSeconds))
                 .ToYieldInstruction();
             icon.transform.localScale = Vector3.one;
             Clear();

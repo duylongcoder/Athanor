@@ -88,6 +88,10 @@ namespace Athanor.Game
             public float descendWait, endingWait;
             /// <summary>A lost run: shake strength, shake length, wait.</summary>
             public float lossShake, lossShakeSeconds, lossWait;
+            /// <summary>The title fades in and out; a run fades in and out (black to the first depth, the summary to black).</summary>
+            public float titleFadeIn, titleFadeOut, runFadeIn, runFadeOut;
+            /// <summary>Autoplay: how long it waits on a catalyst choice, and the pause between its moves.</summary>
+            public float autoChoiceWait, autoPace;
         }
         [SerializeField] RunTiming runTiming;
 
@@ -302,7 +306,7 @@ namespace Athanor.Game
             title.Open(Journal.KnownPairs.Count, Db.Recipes.Count, Profile.Completed.Count, Db.Goals.Count);
             // a journal kept from before there were goals pays out the journal goals at once
             CheckGoals(false);
-            yield return fx.Screen.FadeIn(0.7f);
+            yield return fx.Screen.FadeIn(runTiming.titleFadeIn);
             titleChoice = TitleChoice.Begin;
             while (true)
             {
@@ -325,7 +329,7 @@ namespace Athanor.Game
                 }
                 yield return null;
             }
-            yield return fx.Screen.FadeOut(0.35f);
+            yield return fx.Screen.FadeOut(runTiming.titleFadeOut);
             title.Close();
             fx.Sparks.Clear();
         }
@@ -351,7 +355,7 @@ namespace Athanor.Game
             Bench.InputEnabled = false;
             flow.Enter(FlowState.Descent);
             Haptics.Pulse(Haptics.DepthCleared);
-            yield return fx.Screen.FadeIn(0.5f);
+            yield return fx.Screen.FadeIn(runTiming.runFadeIn);
             if (DepthLook.ShowsRunIntro(Run.Depth, tut != null, sandbox))
             {
                 Dev.Hook("[intro] " + Run.Depth);
@@ -360,7 +364,7 @@ namespace Athanor.Game
             yield return StartOfDepth();
             if (tut != null) tutRoutine = StartCoroutine(RunTutorial());
             while (!runEnded) yield return null;
-            yield return fx.Screen.FadeOut(0.35f);
+            yield return fx.Screen.FadeOut(runTiming.runFadeOut);
             story.Close();
             fx.Sparks.Clear();
             Bench.InputEnabled = false;
@@ -562,7 +566,7 @@ namespace Athanor.Game
             string picked = null;
             if (tut != null) yield return tut.OnOffer();
             var offer = (IReadOnlyList<CatalystData>)Run.CatalystOffer;
-            yield return choice.Choose(offer, id => picked = id, Auto ? 0.8f : -1);
+            yield return choice.Choose(offer, id => picked = id, Auto ? runTiming.autoChoiceWait : -1);
             string pickedName = offer.First(c => c.id == picked).name;
             Run.ChooseCatalyst(picked);
             if (tut != null) { tut.OfferTaken(); tut.AfterChoose(picked, pickedName); }
@@ -615,7 +619,7 @@ namespace Athanor.Game
             if (!Auto) return;
             autoClock -= Time.deltaTime;
             if (autoClock > 0) return;
-            autoClock = 0.45f;
+            autoClock = runTiming.autoPace;
             reaction.RequestSkip(); story.RequestSkip();
             if (State != FlowState.Bench || Run == null || Run.Phase != RunPhase.Playing || !Bench.InputEnabled) return;
             if (autoReady && Run.CanIgnite) { autoReady = false; Ignite(); return; }

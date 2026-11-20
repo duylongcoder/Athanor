@@ -72,7 +72,8 @@ namespace Athanor.Tests
                     { "lostText", 1.6f }, { "rackTrailChance", 0.6f },
                 });
                 var run = new SerializedObject(main.Flow);
-                AssertFloats(run, "runTiming", new Dictionary<string, float> { { "descendWait", 0.6f }, { "endingWait", 0.6f }, { "lossShake", 3 }, { "lossShakeSeconds", 0.5f }, { "lossWait", 0.9f } });
+                AssertFloats(run, "runTiming", new Dictionary<string, float> { { "descendWait", 0.6f }, { "endingWait", 0.6f }, { "lossShake", 3 }, { "lossShakeSeconds", 0.5f }, { "lossWait", 0.9f },
+                    { "titleFadeIn", 0.7f }, { "titleFadeOut", 0.35f }, { "runFadeIn", 0.5f }, { "runFadeOut", 0.35f }, { "autoChoiceWait", 0.8f }, { "autoPace", 0.45f } });
             }
         }
 
@@ -155,7 +156,12 @@ namespace Athanor.Tests
             Assert.AreEqual(new Vector3(0, 28, 0), bench.FindProperty("layout.floatLiftTo").vector3Value);
             Assert.AreEqual(new Vector3(0, 12, 0), bench.FindProperty("layout.tileTipLift").vector3Value);
             Assert.AreEqual(new Vector3(0, CardView.H / 2f, 0), bench.FindProperty("layout.cardTipLift").vector3Value);
-            AssertFloats(bench, "layout", new Dictionary<string, float> { { "ghostLift", 6 } });
+            AssertFloats(bench, "layout", new Dictionary<string, float>
+            {
+                { "ghostLift", 6 }, { "handX", 128 }, { "handW", 386 }, { "cardY", 290 }, { "handMaxPitch", 76 },
+                { "slotHit", 14 }, { "tileHitHalfWidth", 13 }, { "tileHitBelow", 3 }, { "tileHitAbove", 24 },
+            });
+            AssertFloats(bench, "timing", new Dictionary<string, float> { { "dealStagger", 0.05f }, { "tipDelay", 0.3f } });
             AssertColour(bench, "layout.floatShadow", 0x0c0706);
 
             var tile = new SerializedObject(Part<TileView>("Assets/Prefabs/Views/Bench.prefab"));
@@ -163,7 +169,13 @@ namespace Athanor.Tests
             Assert.AreEqual(new Color(0.03f, 0.02f, 0.05f, 0.78f), lid);
             Assert.AreEqual(new Color(1, 0.85f, 0.45f, 1), tile.FindProperty("layout.hoverFace").colorValue);
             Assert.AreEqual(new Vector3(0, 8, 0), tile.FindProperty("layout.consumeLift").vector3Value);
-            AssertFloats(tile, "layout", new Dictionary<string, float> { { "iconLift", 10 }, { "popRise", 8 } });
+            AssertFloats(tile, "layout", new Dictionary<string, float> { { "iconLift", 10 }, { "popRise", 8 }, { "consumeTint", 2 }, { "consumeSeconds", 0.18f }, { "consumeGrow", 1.4f } });
+            var puff = tile.FindProperty("layout.consumeBurst");
+            Assert.AreEqual(14, puff.FindPropertyRelative("count").intValue);
+            Assert.AreEqual(40, puff.FindPropertyRelative("speed").floatValue, 1e-4f);
+            Assert.AreEqual(0.5f, puff.FindPropertyRelative("life").floatValue, 1e-4f);
+            Assert.AreEqual(30, puff.FindPropertyRelative("order").intValue);
+            Assert.AreEqual(-20, puff.FindPropertyRelative("gravity").floatValue, 1e-4f);
 
             var card = new SerializedObject(Part<CardView>("Assets/Prefabs/Parts/Card.prefab"));
             AssertFloats(card, "layout", new Dictionary<string, float>
@@ -262,7 +274,7 @@ namespace Athanor.Tests
             var so = View<PauseMenu>("Pause");
             AssertFloats(so, "layout", new Dictionary<string, float>
             {
-                { "buttonX", 260 }, { "howToDy", 110 }, { "quitDy", 152 }, { "hintX", 320 }, { "hintDy", 137 }, { "noVibrationUp", 30 },
+                { "dialogTop", 75 }, { "buttonX", 260 }, { "howToDy", 110 }, { "quitDy", 152 }, { "hintX", 320 }, { "hintDy", 137 }, { "noVibrationUp", 30 },
             });
         }
 
@@ -297,7 +309,8 @@ namespace Athanor.Tests
         {
             var so = View<GoalToast>("GoalToast");
             AssertBurst(so, "layout.burst", 18, 90, 0.6f, 490 + 3, 20, 2.2f, 1.7f, 0.6f, 1);
-            AssertFloats(so, "layout", new Dictionary<string, float> { { "hideGap", 2 } });
+            AssertFloats(so, "layout", new Dictionary<string, float> { { "hideGap", 2 }, { "x", 170 }, { "y", 4 }, { "width", 300 }, { "height", 36 } });
+            AssertFloats(so, "timing", new Dictionary<string, float> { { "stay", 2.5f }, { "slide", 0.25f } });
         }
 
         [Test]

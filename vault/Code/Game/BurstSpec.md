@@ -31,4 +31,4 @@ aliases: []
 [[Sparks]]
 
 ## Used by
-[[CatalystChoiceView]], [[DescentBanner]], [[EndingBeat]], [[GoalToast]], [[IgniteSequence]], [[IgniteSequence.Look]], [[ReactionCutscene]], [[SimpleCutscene]]
+[[CatalystChoiceView]], [[DescentBanner]], [[EndingBeat]], [[GoalToast]], [[IgniteSequence]], [[IgniteSequence.Look]], [[ReactionCutscene]], [[SimpleCutscene]], [[TileView]], [[TileView.Layout]]

@@ -109,8 +109,34 @@ Athanor/Assets/
 
 **Core / Game split.** `Athanor.Core` holds the rules and is deterministic (seeded `Rng`): `ContentDb`, `RunState` (+ `RunStart`,
 the second half: aspects, events, start of a depth), `Satchel`, `Bench`/`BenchRules`, `IgniteResolver`/`ChainPlanner`, `Journal`,
-`Profile` (+ `Unlocks`, `RunOptions`), `Settings`, `Lang`, `TutorialScript`, `AutoPlayer`, `ScoreParts`. `Athanor.Game` draws and
-listens; it never decides a rule. A new rule means Core plus a test first.
+`Profile` (+ `Unlocks`, `RunOptions`), `Settings`, `Lang`, `TutorialScript`, `AutoPlayer`, `ScoreParts`, `ScreenFlow` (below).
+`Athanor.Game` draws and listens; it never decides a rule. A new rule means Core plus a test first. Core keeps no mutable `static`
+(UL011); what an event option did is reported as `EventNote` (a `note.*` key plus `n`, `item`, `other`, `kind`, `plural`), and the
+Game layer words it through `Loc`, so Core carries no English sentence and no `Regex`.
+
+**Where a number goes (Phase 7).** One owner means a serialized field on that owner; two or more owners means a ScriptableObject; the
+game's rules mean `content.json`. There are no code defaults: a field starts with today's value only long enough to be saved into the
+prefab or asset, then the initializer is removed and a `LayoutPinTests` case pins the serialized value.
+
+| Kind | Example | Goes to |
+|---|---|---|
+| Rule tuning | hand size, trials, redraws, potency table | `content.json` `rules`, read as `ContentDb.Rules` (missing block: `ContentDb` throws) |
+| Shape of the board or data | `Bench.Size = 3`, nine tiles, 2 to 5 combo items | a named `const` in Core |
+| Meaning of an effect | `KindDouble` is x2 | code (the name is the number) |
+| Fixed position of a part | the Ignite label | the part's Transform in the prefab; no code line |
+| Layout parameter used in a formula | catalyst pitch, bar origin, row pitch | the nested `[Serializable] struct Layout` on that view, values held by the prefab |
+| Timing of one sequence | story fade, hold, `IgniteSequence.Timing`, `GameFlow.RunTiming` | the nested `Timing` struct (or `SwayTiming`, `ShakeTiming`) on the owner |
+| Colour used by one view | Redraw up / over / pressed | a field on that view |
+| Colour used by several files | rarity colours, gold, ink | `Assets/Data/Palette.asset` (`Palette`), published as `Art.Palette` |
+| Depth look | ambient, moonbeam, bloom, fog | `DepthMood.presets` in `Main.unity` (5 entries); nothing in code |
+| Dev hooks the web tools read | `"[auto] "`, `"[dev] mood "` | stays a `const` |
+| Plain arithmetic | `/ 2f`, 0, 1, array sizes | stays |
+
+UL009 (colours) and UL010 (positions and sizes) are errors in `Scripts/Game`. The lint cannot see a named `const` or a bare duration
+argument, so "lint is clean" does not mean every number moved; the files the Phase 7 final review named were read by hand, the rest were
+not. What stays in code is listed in section 7 item 11(e). No `Pacing` asset exists: the timings of the sequences that were split
+out (`IgniteSequence`, `GameFlow.RunTiming`, the cutscenes, `GoalToast`, `BenchView`) have one owner each. Add a `Pacing` asset only
+when a timing gets a second owner.
 
 **Main.unity and prefabs.** `Main.unity` plus the prefabs are the source of truth; there is no scene generator and no code that
 builds a view at run time. Edit a screen in the Inspector, not in C#.
@@ -118,9 +144,24 @@ builds a view at run time. Edit a screen in the Inspector, not in C#.
 - Views as prefabs (`Prefabs/Views`): Bench (nests the HUD prefab), CatalystChoice, Event, Goals, GoalToast, Journal, Pause, RunOver,
   Title. Parts (`Prefabs/Parts`): Card, GoalRow, Hud, JournalCell. Goal rows and Journal cells are data-driven repeats of a part.
 - Scene objects (no prefab): Screen Fx, Window, Tutorial, Reaction Cutscene, Story Cutscene, the depth stage and rig.
-- `GameFlow` (Boot) owns the run and the screen state machine (`FlowState`: Boot, Title, Intro, Bench, Resolving, Journal, Descent,
-  CatalystChoice, Ending, RunOver, AspectChoice, Event, Goals). Every view is a `[SerializeField]` on it; `GameFlow.Awake` throws if one
-  is missing. It publishes the art library as `Art.Lib`, calls `Loc.Use(en, vi)` first thing, then `Bind(...)` once on each view.
+- `GameFlow` (Boot) is the composition root and the bridge; it owns the run, the saves and the main coroutine loop. The screen state
+  machine is Core `ScreenFlow` (`FlowState`: Boot, Title, Intro, Bench, Resolving, Journal, Descent, CatalystChoice, Ending, RunOver,
+  AspectChoice, Event, Goals): current state, where Journal and Goals return to, when pause and abandon are allowed (`CanPause`,
+  `CanAbandon`), the Ignite gate (`StartIgnite`), the sandbox replay, and a `Changed` event. `GameFlow` turns view events into
+  `ScreenFlow` calls (`OpenJournal`, `CloseGoals`, ...) and `ScreenFlow` answers with a yes or no; `ScreenFlowTests` cover every
+  guarded move, the illegal ones included (`Enter` is unconditional and GameFlow drives most plain moves through it; the title choices and the tutorial gate stay in GameFlow; `Changed` has no production subscriber yet). Every view is a `[SerializeField]` on `GameFlow`; `GameFlow.Awake` throws if one is missing.
+  It publishes the art library as `Art.Lib` and the shared colours as `Art.Palette`, calls `Loc.Use(en, vi)` first thing, then
+  `Bind(...)` once on each view.
+- **`IgniteSequence`** (Boot, on the GameFlow object) is the choreography of one Ignite: the chain of reactions (flash, draw-in, burst,
+  points), the discovery beat and cutscene, the flight to the rack, the spent tiles and the final potency. The Ignite is settled before
+  it plays (`GameFlow.SettleIgnite`); nothing in it decides a rule. Its paces and waits are the serialized `Timing` and `Look` structs
+  in `Main.unity`; `GameFlow` keeps its own in `RunTiming`. `Descend` and `EndRun` stay in `GameFlow`.
+- **`FxRefs`** (Fx) holds the scene's two effect players, `ScreenFx` and `Sparks`; `GameFlow` builds it from its `screenFx` and
+  `sparks` fields and passes it through `Bind` to every view that flashes, shakes or throws sparks. There is no `ScreenFx.I` or
+  `Sparks.I`.
+- **`Palette`** (Support, `Assets/Data/Palette.asset`) is the ScriptableObject of colours that two or more files share, by role
+  (rarity text and tone, aspect colours, gold, ink / faded / teal, pips, button text, star outline). A colour one view uses stays a
+  field on that view.
 - **The `Bind` contract.** A view's references are serialized. `Bind(...)` does the one-time wiring that cannot be serialized: it
   hooks clicks (lambdas), takes the `ContentDb` or settings, and makes run-time-only objects (sprites from `Sprite.Create`, render
   textures). A view has no `Build`. Run-time spawns that remain (the tutorial's popup lines, the Journal's corner stars, float text, motes)
@@ -165,6 +206,25 @@ reload is off in the Editor, so statics survive Stop and Play. Each of the eight
 handlers and destroys what the class created (`StaticResetTests`). A ninth class needs a line here, a reset and a test. A component that
 starts coroutines or tweens stops them in `OnDestroy` (`StopAllCoroutines()` and `Motion.StopOn(this)`).
 
+**Hot-path rule.** An `Update` (or a `Tick` it calls) returns early when nothing changed: no string building, no sprite lookup, no
+`GetComponent`, no closure and no LINQ per frame. Text, sprites and layout are written when their input changes (compare, then
+write), and a cached result is dropped by the one place that changes its input. UL002 does not catch a method call that builds a
+string, so this is a review rule; `HotPathTests` hold the idle views at 0 B and the positive tests beside them
+(`Tick_PotencyChanged_RewritesText`, `Tick_TooltipUp_RebuildsAfterRedrawsChange`, ...) hold that a change is still drawn. A new cache
+needs both kinds of test.
+
+**Flat path.** Without a `DepthStage` (no scene builds one without it today) the descent banner accent is white and ambient light and
+moonbeam are not set; `Main.unity` always has a stage.
+
+**Platform and threading rules** (enforced by lint, UL013 and UL014).
+
+- WebGL only, one thread. No `Task.Run`, `new Thread`, `System.Threading.Timer`, `.Result` or `.Wait()` anywhere in `Scripts/`. Time
+  is coroutines and PrimeTween; Unity's `Awaitable` only with `destroyCancellationToken`.
+- A platform `#if` (`UNITY_WEBGL`, `UNITY_STANDALONE*`, `UNITY_ANDROID`, `UNITY_IOS`) and any jslib call live only in the bridge files
+  of `platform_define_allowlist` in `tools/lint/lint.config.json`: `Save`, `Haptics`, `AudioMute`, `GameFlow` (frame pacing), `Dev`.
+- No NuGet packages. A new package needs a WebGL / IL2CPP check and a line in section 4. Resolution stays 640x360; PC and Steam
+  later means platform code only in bridge files (section 4, 2026-11-19).
+
 **Dev hooks and keys** (editor and development builds only; `Dev.Hook` log lines are what `tools/web/*.mjs` read):
 
 | Key | Does |
@@ -192,7 +252,7 @@ change go" table: `vault/Data/Data Design.md`. Summary:
 | `aspects[]` | `{id, name, text, effect, scope, group, amount, tradeOff}` |
 | `events[]` | `{id, name, text, type, minDepth, maxDepth, weight, options[{label, requires, cost[], outcomes[{weight, text, gain[]}]}]}` |
 | `goals[]` | `{id, text, stat, target, rewardKind, rewardRarity}` |
-| `rules` | flat object: `handMin, handBase, trials, trialsFinalDepth, redraws, starterCopies, offerSize, rackSize, pouchCards, firstReactionMult, maxRi, aspectDepths[], potencyByTier[]`; required; table in `vault/Data/Data Design.md` |
+| `rules` | flat object (`RulesData`): `handMin, handBase, trials, trialsFinalDepth, redraws, starterCopies, offerSize, rackSize, pouchCards, firstReactionMult, maxRi, aspectDepths[], potencyByTier[]`; required (`ContentDb` throws without it and validates ranges and array lengths; no hidden defaults in code); read as `db.Rules` by Core, the Game views, the tests and `tools/CoreReports`; table in `vault/Data/Data Design.md`. `amount` must be above 0 on the Heated and Seed aspects and on a HeatTile event effect (no code fallback). The pouch mode is `RunOptions.PouchMode` (default 2, `ATHANOR_POUCH` in the reports) |
 | `depthTargets[]`, `depthNames[]`, `ultimate`, `noEventWeight` | 4 targets for 5 depths; `ultimate` = `worldseed` |
 
 Text limits for events: name 22 characters, text 56, outcome 52. Item names (materials, catalysts, aspects) stay English in Vietnamese;
@@ -286,6 +346,9 @@ One line each. A decision is written here before it is relied on. Superseded and
 - 2026-11-19: the tutorial's dark screen is one `Dim` sprite drawn "visible outside mask"; each lit window is a `SpriteMask` in a pooled `TutorialHole` (with its gold rim), and the click lock is one `Clickable` with the holes cut out of it. Nothing is built or destroyed per step except popup lines. Replaces the per-step grid of dim rectangles. The tutorial's numbers (rectangles each step lights, text box, popup lines, rim and arrow, timings) are Inspector fields of the Tutorial object (`TutorialTargets`, `TutorialStyle`); the scripted hands and lays stay in Core `TutorialScript`, pinned by tests.
 - 2026-11-19: Phase 7 (Unity conversion, spec 2026-11-19): rule numbers live in content.json "rules"; presentation numbers in the prefab or scene that owns them, shared colours in the Palette asset; GameFlow splits into Core ScreenFlow, the GameFlow bridge and IgniteSequence; Game statics only from the lint allowlist, each reset at SubsystemRegistration; Core reports note keys, not sentences. Nothing visible or scored changes (golden shots, byte-identical reports).
 - 2026-11-19: resolution stays 640x360 (a 1920x1080 canvas needs every sprite redrawn; dropped); PC / Steam later, platform code only in bridge files.
+- 2026-11-20: Phase 7 close. No `Pacing` asset (after the split every timing has one owner; add one only when a timing gets a second owner). `PointerInput.Rig` stays a static of the allowlisted `PointerInput`, set by `PointerInput.Use(rig)` and cleared by its reset. UL009 to UL014 are all errors and the lint baseline is empty. The number-placement rule, the allowed statics and the platform and threading rules are in section 2. The Phase 7 spec and plan are not kept: their lasting content is in sections 2 to 7 (their deletion follows the final-review fix wave). Not every presentation number moved: the list that stays in code on purpose is in section 7 item 11(e); the claim "every timing has one owner" holds for the split-out sequences only.
+- 2026-11-20: Phase 7 non-goals, so the question "why not X" has an answer: no dependency-injection framework (`Bind`/`FxRefs` pass what a view needs); no uGUI or UI Toolkit (the UI is hand-built sprites on the 640x360 canvas); no Addressables; coroutines are not converted to `async`/`Awaitable`; Unity Timeline is not used for the cutscenes (wasm size, and the look must stay identical).
+- 2026-11-20: the one visible text change of Phase 7 (owner ruling 2026-11-19): the English lost-item note reads "Lost Iron Ore for this run", not "Lost a Iron Ore for this run" (key `note.lost`, no article, so no "a"/"an" error). Vietnamese is unchanged; `NoteTextTests` pin it.
 
 ---
 
@@ -303,8 +366,8 @@ One line each. A decision is written here before it is relied on. Superseded and
 | Hard-coded position or size in `Scripts/Game` (`Px.At`, `Px.Mid`, `new Rect`, `new Vector2/3` with a number other than 0 or 1) | UL010 (error) | lint |
 | Mutable `static` (field, event, property with a setter) in `Scripts/Core` | UL011 (error) | lint |
 | Mutable or collection `static` in `Scripts/Game` outside `static_allowlist`, or an allowlisted class without a `SubsystemRegistration` reset | UL012 (error) | lint |
-| `Task.Run`, `new Thread`, `.Result`, `.Wait()`, `System.Threading.Timer` in `Scripts/` (WebGL is single-threaded) | UL013 | lint |
-| `#if UNITY_WEBGL/STANDALONE*/ANDROID/IOS` outside `platform_define_allowlist` | UL014 | lint |
+| `Task.Run`, `new Thread`, `.Result`, `.Wait()`, `System.Threading.Timer` in `Scripts/` (WebGL is single-threaded) | UL013 (error) | lint |
+| `#if UNITY_WEBGL/STANDALONE*/ANDROID/IOS` outside `platform_define_allowlist` | UL014 (error) | lint |
 | Bad tests: no assertion, `[Ignore]`/`[Explicit]`/`[Retry]`, `Thread.Sleep`, unseeded random or clock, name not `Method_Condition_Result` | UL100-UL105 | lint |
 | Missing or duplicate `.meta`, wrong `ProjectSettings` | UL200-UL203 | lint |
 | Build output staged (`bin`, `obj`, `Athanor/Build`, `test-results.xml`) | `check_repo` BUILD-OUTPUT, UL204 | repo-guard |
@@ -317,6 +380,9 @@ One line each. A decision is written here before it is relied on. Superseded and
 | `vault/` stale after a code or content change | `build_vault.py` then no diff | repo-guard |
 | Rotate-device text in the WebGL template drifts from `ui.rotate.title` / `ui.rotate.body` | `tools/web/rotate_sync.mjs` (`run.sh rotate`) | repo-guard |
 | Art/web scripts do not parse | `node --check` | repo-guard |
+| A presentation number drifts from the value pinned when it moved into a prefab or the scene | `LayoutPinTests` (EditMode) | release-gate (tags, manual), local |
+| A view or scene object looks different (golden shots, 0 % difference, English and Vietnamese) | `GoldenShotTests` (EditMode; `Athanor > Write Golden Shots` re-records) | release-gate (tags, manual), local |
+| An allowlisted static is not back at its default after `ResetStatics`, or an idle frame allocates | `StaticResetTests`, `HotPathTests` (EditMode) | release-gate (tags, manual), local |
 | A job fails, is cancelled or is skipped | `ci-gate` needs every job `success` | ci-gate |
 | Release build broken, over its size budget (Build/ + index.html > 11,824,672 B), console error while loading | EditMode, `WebBuild.Build`, byte budget, `loadsmoke.mjs` | release-gate (tags, manual) |
 | Game flow broken in the browser, console error in play | `WebBuild.BuildDev` then `webtest.mjs` | release-gate (tags, manual) |
@@ -361,18 +427,22 @@ recorded, not gated: the harness has click latency (proven by `DepthClickTests` 
 same code (20/27, 18/27, 27/27 and 16/27 across four Phase 6 runs). If `unity` says the project is not a Unity project, give it the
 path (`./Athanor`).
 
-**Size.** Ceiling **11,824,672 B** for Build/ + `index.html` of the release web build. Measured 2026-11-19 at Phase 6 Task 16:
-**10,961,269 B** (headroom 863,403 B); the Phase 5 close figure was 10,917,289 B. The build is Gzip-compressed with Unity's built-in
-fallback, so any static host works; the page keeps the 640x360 picture at a whole-number scale, centred on black.
+**Size.** Ceiling **11,824,672 B** for Build/ + `index.html` of the release web build. Measured 2026-11-20 at the end of Phase 7
+(Task 18): **10,919,503 B** (headroom 905,169 B), 41,766 B under the Phase 6 Task 16 figure of 10,961,269 B (Phase 5 close:
+10,917,289 B). `Regex` left `Scripts/` in Phase 7, but the built wasm still carries the `RegularExpressions` strings, so the drop is
+not credited to it (no isolated build was made). The build is Gzip-compressed with Unity's built-in fallback, so any static host
+works; the page keeps the 640x360 picture at a whole-number scale, centred on black.
 
-**Figures at this writing (2026-11-19).** `tools/ci/run.sh all` exit 0 (lint clean with an empty baseline, repo check 0 problems,
-rotate OK). Core 331 passed, 0 failed, 0 skipped. BalanceMatrix (informed bot, 200 seeds): fresh 132 (66%); fresh + all
+**Figures at this writing (2026-11-20, end of Phase 7).** Core 367 passed, 0 failed, 0 skipped. EditMode 641 total, 641 passed, 0
+failed, 0 skipped (18 `GoldenShotTests` cases at 0 % difference). The six `tools/CoreReports` outputs are byte-identical to the
+Phase 7 baseline (`production/qa/evidence/phase7/baseline/`). BalanceMatrix (informed bot, 200 seeds): fresh 132 (66%); fresh + all
 catalysts 164 (82%); fresh + all starters 134 (67%); half 164 (82%); full 166 (83%); with aspects and events: fresh 129 (64%),
-fresh + all starters 140 (70%), half 163 (81%), full 169 (84%); aspects alone 144 (72%), events alone 129 (64%).
-EditMode, last recorded run (Phase 6 Task 17, before the six `[Explicit]` reports moved to `tools/CoreReports`): 505 total, 499
-passed, 0 failed, 6 skipped. Re-run it and update this line; the target is 0 failed and 0 skipped.
+fresh + all starters 140 (70%), half 163 (81%), full 169 (84%); aspects alone 144 (72%), events alone 129 (64%). Web checks on the
+final builds, all exit 0 with 0 console errors (evidence `production/qa/evidence/phase7/task18/`): `loadsmoke` (release),
+`webtest` (129 screenshots), `autoplay` 120 s, `descents` 240 s, `mainhd2d` 640x360 `hud,tiles` (54 of 54 checks, sway 27/27,
+shake 27/27). `tools/ci/run.sh all` exit 0 (lint clean with an empty baseline, repo check 0 problems, rotate OK, Core 367 passed).
 
-**Idle bench views (Phase 7 Task 17).** Idle bench GC allocation: **0 B** over 600 frames (10 s at 60 fps). Measured in EditMode, not in the
+**Idle bench views (Phase 7 Task 17).** GC allocation of the idle bench views (bench, HUD, tiles, cards, links, dust, sparks, flame): **0 B** over 600 frames (10 s at 60 fps). This is not the whole idle game. Measured in EditMode, not in the
 Editor Profiler: `HotPathTests.IdleBench_TenSecondsOfEveryUpdate_AllocatesZeroBytes` ticks the Bench prefab's BenchView, HudView, nine
 TileViews, the CardViews and the LinkViews 600 times inside one `Is.Not.AllocatingGCMemory()` (Unity's GC.Alloc counter, the one the
 Profiler's GC Alloc column reads); `Continuous_DustSparksAndFlame_...` does the same for Dust, Sparks (40 live particles) and Flame.
@@ -410,9 +480,26 @@ Undecided or not done. None is decided by being listed.
    although the prototype they measured is gone; the Phase 6 spec called for deleting them.
 9. **studio-tests were removed** in Phase 6. The framework skills `skill-test` and `skill-improve` are left in place, but their
    fixtures are gone.
-10. **Remaining Phase 6 work:** graphify of `Athanor/` is Task 30;
-    EditMode must end at 0 failed and 0 skipped.
-11. Notes, not tasks: endless mode after depth 5 (the owner redesigns it), a currency (no purpose yet), sound (other plan).
+10. ~~**Remaining Phase 6 work:** graphify of `Athanor/` (Task 30); EditMode ends at 0 failed and 0 skipped~~ closed in Phase 7: the graphify map is committed and EditMode ends at 0 failed, 0 skipped (section 6).
+11. **Phase 7 open items.** (a) Owner: confirm idle-bench GC allocation in the Editor Profiler (Play, reach the bench, idle 10 s, script
+    updates 0 B); only the bench views, Dust, Sparks and Flame were measured, in EditMode (section 6). (b) Owner: watch the intro,
+    descent, discovery and ending cutscenes in the Editor once; the web checks and golden shots cover the descents and the title, no
+    check plays the reaction cutscene or an ending. (c) `tools/web/webtest.mjs` flake: `waitCards` takes `offerFrom` at step 5_2, but
+    the cards can open before that, so the run sometimes stops at `vi_5_3` with "the cards never took a click" (seen in the Task 1 baseline run
+    and in a Task 17 run, never with a console error; the rerun passed). Fix: take `offerFrom` at step 5_1. Still open; the fix belongs to the QA
+    tooling, not to the game. (d) The Phase 7 spec and plan files are deleted after the final-review fix wave (their lasting content is in
+    sections 2 to 7). (e) Presentation numbers that stay in code, on purpose or not yet moved: `Flame` flicker and `Flipbook` 1/30 s,
+    font sizes and sort orders, the `Dev` hook strings, `Tooltip` `W`/`BaseH`/`RowH` (layout used in a formula),
+    `CX = 320` / `O = 300` in `ReactionCutscene` and `SimpleCutscene` (half-canvas), the sizes in `WindowView` and `RunOverView`
+    (`Fits = 25`), and similar sizes of baked art in views the final review did not read line by line, the float-text fade split in `BenchView.FloatText` (0.7 / 0.3 of its own
+    length, arithmetic), and the page-grid constants of `GoalsView`, `JournalView`, the `TitleView` settings panel and
+    `CatalystChoiceView` (`X`, `Y`, `Top`, `ColW`, `Cell`, `GridX`, `P`, `PX`, `CellX`, `CardW`, `Gap`, ...): they mirror
+    `tools/art/ui.mjs` and sit inside many formulas, so moving them is a per-view refactor with golden-shot risk; not done in Phase 7.
+    Moved in the final-review wave: `GameFlow.RunTiming` fades and autoplay pace, `TileView` consume burst, `BenchView` hand strip,
+    hit boxes, deal stagger and tooltip delay, `GoalToast` box and `Timing`, `PauseMenu.dialogTop`.
+    (f) Owner: the real second session. In the Editor press Play, then Stop, then Play again, and go Title, Bench, Journal, Title:
+    no console error and no doubled handler (a click acts once). `StaticResetTests` check each reset alone, not a second session.
+12. Notes, not tasks: endless mode after depth 5 (the owner redesigns it), a currency (no purpose yet), sound (other plan).
 
 ---
 

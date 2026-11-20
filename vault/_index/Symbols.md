@@ -68,10 +68,10 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | TutorialScript | TutorialScript | Core | class | Athanor/Assets/Scripts/Core/Tutorial.cs | 32 | The tutorial (docs/ATHANOR.md §8, v2) as data. Every number the script shows is pinned by TutorialTests; change both together. |
 | TutorialPlan | TutorialPlan | Core | enum | Athanor/Assets/Scripts/Core/Tutorial.cs | 6 |  |
 | BenchView | BenchView | Game | class | Athanor/Assets/Scripts/Game/Bench/BenchView.cs | 14 | The main screen: nine tiles, the hand of cards, the rack of discoveries and the HUD. Materials are placed by dragging them onto a tile, or by clicking one and then a tile; clicking a placed one takes  |
-| BenchView.Layout | BenchView.Layout | Game | struct | Athanor/Assets/Scripts/Game/Bench/BenchView.cs | 29 | Offsets and a colour of the bench, stored in Bench.prefab. |
-| TipKey | TipKey | Game | struct | Athanor/Assets/Scripts/Game/Bench/BenchView.cs | 67 |  |
-| From | From | Game | enum | Athanor/Assets/Scripts/Game/Bench/BenchView.cs | 43 |  |
-| TipKind | TipKind | Game | enum | Athanor/Assets/Scripts/Game/Bench/BenchView.cs | 66 |  |
+| BenchView.Layout | BenchView.Layout | Game | struct | Athanor/Assets/Scripts/Game/Bench/BenchView.cs | 30 | Offsets and a colour of the bench, stored in Bench.prefab. |
+| TipKey | TipKey | Game | struct | Athanor/Assets/Scripts/Game/Bench/BenchView.cs | 76 |  |
+| From | From | Game | enum | Athanor/Assets/Scripts/Game/Bench/BenchView.cs | 52 |  |
+| TipKind | TipKind | Game | enum | Athanor/Assets/Scripts/Game/Bench/BenchView.cs | 75 |  |
 | CardView | CardView | Game | class | Athanor/Assets/Scripts/Game/Bench/CardView.cs | 7 | A starting material in the hand, drawn as a parchment card. |
 | CardView.Layout | CardView.Layout | Game | struct | Athanor/Assets/Scripts/Game/Bench/CardView.cs | 22 | Offsets and speeds of the card, stored in Card.prefab. |
 | Dust | Dust | Game | class | Athanor/Assets/Scripts/Game/Bench/Dust.cs | 9 | Dust drifting down through the moonbeam: a loop, each mote's position a pure function of time, all of them drawn as one SparkMesh (one renderer) at order 8. |
@@ -82,10 +82,10 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | TileView.Layout | TileView.Layout | Game | struct | Athanor/Assets/Scripts/Game/Bench/TileView.cs | 33 | Colours and offsets of the tile, stored in Bench.prefab. |
 | GameFlow | GameFlow | Game | class | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 13 | Owns the run and moves the game between its screens. |
 | RunTiming | RunTiming | Game | struct | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 85 | Waits and shake of the descent and the end of a run, in seconds. |
-| TitleChoice | TitleChoice | Game | enum | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 138 |  |
+| TitleChoice | TitleChoice | Game | enum | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 142 |  |
 | IgniteSequence | IgniteSequence | Game | class | Athanor/Assets/Scripts/Game/Boot/IgniteSequence.cs | 15 | The choreography of one Ignite: the chain of reactions (flash, draw-in, burst, points), the discovery beat and cutscene, the flight of what was made to the rack, the spent tiles and the final potency. |
-| IgniteSequence.Timing | IgniteSequence.Timing | Game | struct | Athanor/Assets/Scripts/Game/Boot/IgniteSequence.cs | 19 | Paces, waits and durations, in seconds unless the name says otherwise. |
-| IgniteSequence.Look | IgniteSequence.Look | Game | struct | Athanor/Assets/Scripts/Game/Boot/IgniteSequence.cs | 52 | Bursts, offsets, sizes and colours. |
+| IgniteSequence.Timing | IgniteSequence.Timing | Game | struct | Athanor/Assets/Scripts/Game/Boot/IgniteSequence.cs | 22 | Paces, waits and durations, in seconds unless the name says otherwise. |
+| IgniteSequence.Look | IgniteSequence.Look | Game | struct | Athanor/Assets/Scripts/Game/Boot/IgniteSequence.cs | 55 | Bursts, offsets, sizes and colours. |
 | Save | Save | Game | class | Athanor/Assets/Scripts/Game/Boot/Save.cs | 8 | Keeps the journal and the profile between sessions in PlayerPrefs (browser storage in a web build). |
 | Cutscene | Cutscene | Game | class | Athanor/Assets/Scripts/Game/Cutscene/Cutscene.cs | 7 | A sequence that plays to its end unless the player clicks to skip ahead. |
 | DepthLook | DepthLook | Game | class | Athanor/Assets/Scripts/Game/Cutscene/DepthLook.cs | 9 | What a depth looks like from the bench: the intro line under its name and the view through the window. Pure choices, no scene; the pictures and effects are drawn by WindowView. |
@@ -640,36 +640,39 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | BenchView | property | InputEnabled | 20 | public bool InputEnabled |
 | BenchView | property | Hud | 21 | public HudView Hud |
 | BenchView | property | TileCount | 23 | public int TileCount |
-| BenchView | property | Pick | 44 | struct Pick |
-| BenchView | method | Bind | 80 | public void Bind(ContentDb content, FxRefs fx) |
-| BenchView | method | Bind | 94 | public void Bind(RunState state, Journal book) |
-| BenchView | method | TileCentre | 102 | public Vector3 TileCentre(int i) |
-| BenchView | method | RackSlot | 104 | public Vector3 RackSlot(int i) |
-| BenchView | method | PreviewOnRack | 106 | public void PreviewOnRack(int i, string id) |
-| BenchView | method | Tile | 111 | public TileView Tile(int i) |
-| BenchView | method | Refresh | 114 | public void Refresh(bool deal = false) |
-| BenchView | method | ClearLinks | 195 | public void ClearLinks() |
-| BenchView | method | FloatText | 198 | public IEnumerator FloatText(string text, Vector3 from, Color color, float seconds = 0.8f, bool small = false) |
-| BenchView | method | PlaceLine | 248 | public static string PlaceLine(int tile) |
-| BenchView | method | UnplaceLine | 249 | public static string UnplaceLine(int tile) |
-| BenchView | method | Tick | 280 | public void Tick(float deltaTime) |
-| BenchView.Layout | field | joinLift | 32 | public Vector3 joinLift |
-| BenchView.Layout | field | floatLiftTo | 34 | public Vector3 floatLiftFrom, floatLiftTo |
-| BenchView.Layout | field | floatShadow | 36 | public Color floatShadow |
-| BenchView.Layout | field | ghostLift | 38 | public float ghostLift |
-| BenchView.Layout | field | cardTipLift | 40 | public Vector3 tileTipLift, cardTipLift |
-| TipKey | field | kind | 69 | public TipKind kind |
-| TipKey | method | Equals | 70 | public bool Equals(TipKey o) |
-| From | value | None | 43 | None |
-| From | value | Hand | 43 | Hand |
-| From | value | Tile | 43 | Tile |
-| TipKind | value | None | 66 | None |
-| TipKind | value | Catalyst | 66 | Catalyst |
-| TipKind | value | Aspect | 66 | Aspect |
-| TipKind | value | Pause | 66 | Pause |
-| TipKind | value | Redraw | 66 | Redraw |
-| TipKind | value | Material | 66 | Material |
-| TipKind | value | TileNote | 66 | TileNote |
+| BenchView | property | Timing | 49 | public struct Timing |
+| BenchView | property | Pick | 53 | struct Pick |
+| BenchView | method | Bind | 89 | public void Bind(ContentDb content, FxRefs fx) |
+| BenchView | method | Bind | 103 | public void Bind(RunState state, Journal book) |
+| BenchView | method | TileCentre | 111 | public Vector3 TileCentre(int i) |
+| BenchView | method | RackSlot | 113 | public Vector3 RackSlot(int i) |
+| BenchView | method | PreviewOnRack | 115 | public void PreviewOnRack(int i, string id) |
+| BenchView | method | Tile | 120 | public TileView Tile(int i) |
+| BenchView | method | Refresh | 123 | public void Refresh(bool deal = false) |
+| BenchView | method | ClearLinks | 204 | public void ClearLinks() |
+| BenchView | method | FloatText | 207 | public IEnumerator FloatText(string text, Vector3 from, Color color, float seconds, bool small = false) |
+| BenchView | method | PlaceLine | 257 | public static string PlaceLine(int tile) |
+| BenchView | method | UnplaceLine | 258 | public static string UnplaceLine(int tile) |
+| BenchView | method | Tick | 289 | public void Tick(float deltaTime) |
+| BenchView.Layout | field | joinLift | 33 | public Vector3 joinLift |
+| BenchView.Layout | field | floatLiftTo | 35 | public Vector3 floatLiftFrom, floatLiftTo |
+| BenchView.Layout | field | floatShadow | 37 | public Color floatShadow |
+| BenchView.Layout | field | ghostLift | 39 | public float ghostLift |
+| BenchView.Layout | field | cardTipLift | 41 | public Vector3 tileTipLift, cardTipLift |
+| BenchView.Layout | field | handMaxPitch | 43 | public float handX, handW, cardY, handMaxPitch |
+| BenchView.Layout | field | tileHitAbove | 45 | public float slotHit, tileHitHalfWidth, tileHitBelow, tileHitAbove |
+| TipKey | field | kind | 78 | public TipKind kind |
+| TipKey | method | Equals | 79 | public bool Equals(TipKey o) |
+| From | value | None | 52 | None |
+| From | value | Hand | 52 | Hand |
+| From | value | Tile | 52 | Tile |
+| TipKind | value | None | 75 | None |
+| TipKind | value | Catalyst | 75 | Catalyst |
+| TipKind | value | Aspect | 75 | Aspect |
+| TipKind | value | Pause | 75 | Pause |
+| TipKind | value | Redraw | 75 | Redraw |
+| TipKind | value | Material | 75 | Material |
+| TipKind | value | TileNote | 75 | TileNote |
 | CardView | field | W | 9 | public const int W = 74, H = 70 |
 | CardView | field | handIndex | 10 | public int handIndex |
 | CardView | field | id | 11 | public string id |
@@ -743,26 +746,29 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | TileView | field | index | 16 | public int index |
 | TileView | method | Bind | 19 | public void Bind(FxRefs effects) |
 | TileView | field | centre | 25 | public Vector3 centre |
-| TileView | property | Material | 50 | public string Material |
-| TileView | property | Hovered | 51 | public bool Hovered |
-| TileView | property | Pinged | 53 | public bool Pinged |
-| TileView | property | Shut | 55 | public bool Shut |
-| TileView | property | Marked | 56 | public bool Marked |
-| TileView | property | Icon | 57 | public SpriteRenderer Icon |
-| TileView | property | FaceCentre | 60 | public Vector2 FaceCentre |
-| TileView | property | FaceSize | 61 | public Vector2 FaceSize |
-| TileView | method | Contains | 63 | public bool Contains(Vector2 world) |
-| TileView | method | SetState | 67 | public void SetState(Color? marker, bool shut) |
-| TileView | method | Show | 77 | public void Show(MaterialData m, bool pop) |
-| TileView | method | Clear | 91 | public void Clear() |
-| TileView | method | Flash | 99 | public void Flash(Color c) |
-| TileView | method | Consume | 102 | public IEnumerator Consume() |
-| TileView | method | Tick | 118 | public void Tick(float deltaTime) |
+| TileView | property | Material | 55 | public string Material |
+| TileView | property | Hovered | 56 | public bool Hovered |
+| TileView | property | Pinged | 58 | public bool Pinged |
+| TileView | property | Shut | 60 | public bool Shut |
+| TileView | property | Marked | 61 | public bool Marked |
+| TileView | property | Icon | 62 | public SpriteRenderer Icon |
+| TileView | property | FaceCentre | 65 | public Vector2 FaceCentre |
+| TileView | property | FaceSize | 66 | public Vector2 FaceSize |
+| TileView | method | Contains | 68 | public bool Contains(Vector2 world) |
+| TileView | method | SetState | 72 | public void SetState(Color? marker, bool shut) |
+| TileView | method | Show | 82 | public void Show(MaterialData m, bool pop) |
+| TileView | method | Clear | 96 | public void Clear() |
+| TileView | method | Flash | 104 | public void Flash(Color c) |
+| TileView | method | Consume | 107 | public IEnumerator Consume() |
+| TileView | method | Tick | 124 | public void Tick(float deltaTime) |
 | TileView.Layout | field | shutLid | 36 | public Color shutLid |
 | TileView.Layout | field | hoverFace | 38 | public Color hoverFace |
 | TileView.Layout | field | consumeLift | 40 | public Vector3 consumeLift |
 | TileView.Layout | field | iconLift | 41 | public float iconLift |
 | TileView.Layout | field | popRise | 43 | public float popRise |
+| TileView.Layout | field | consumeBurst | 45 | public BurstSpec consumeBurst |
+| TileView.Layout | field | consumeTint | 46 | public float consumeTint |
+| TileView.Layout | field | consumeGrow | 48 | public float consumeSeconds, consumeGrow |
 | GameFlow | field | library | 16 | public ArtLibrary library |
 | GameFlow | field | cutsceneRoom | 21 | public GameObject workshop, cutsceneRoom |
 | GameFlow | field | mainCamera | 22 | public Camera mainCamera |
@@ -781,49 +787,51 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | GameFlow | method | NextMood | 57 | public static int NextMood(int mood) |
 | GameFlow | method | MoodLine | 58 | public static string MoodLine(int mood) |
 | GameFlow | method | EffectsLine | 59 | public static string EffectsLine(bool on) |
-| GameFlow | property | JournalView | 125 | public JournalView JournalView |
-| GameFlow | method | JournalAfterQuit | 464 | public static Journal JournalAfterQuit(bool sandbox, Journal current) |
-| GameFlow | method | ProfileAfterQuit | 466 | public static Profile ProfileAfterQuit(bool sandbox, Profile current, ContentDb db) |
-| GameFlow | method | Ignite | 503 | public void Ignite() |
-| GameFlow | method | SettleIgnite | 510 | public static IgniteOutcome SettleIgnite(RunState run, Journal journal, bool sandbox) |
+| GameFlow | property | JournalView | 129 | public JournalView JournalView |
+| GameFlow | method | JournalAfterQuit | 468 | public static Journal JournalAfterQuit(bool sandbox, Journal current) |
+| GameFlow | method | ProfileAfterQuit | 470 | public static Profile ProfileAfterQuit(bool sandbox, Profile current, ContentDb db) |
+| GameFlow | method | Ignite | 507 | public void Ignite() |
+| GameFlow | method | SettleIgnite | 514 | public static IgniteOutcome SettleIgnite(RunState run, Journal journal, bool sandbox) |
 | RunTiming | field | endingWait | 88 | public float descendWait, endingWait |
 | RunTiming | field | lossWait | 90 | public float lossShake, lossShakeSeconds, lossWait |
-| TitleChoice | value | Begin | 138 | Begin |
-| TitleChoice | value | HowToPlay | 138 | HowToPlay |
-| TitleChoice | value | Intro | 138 | Intro |
-| IgniteSequence | property | Hurry | 96 | public bool Hurry |
-| IgniteSequence | method | Bind | 99 | public void Bind(BenchView bench, ReactionCutscene reaction, FxRefs fx, ScreenFlow flow) |
-| IgniteSequence | method | Play | 108 | public IEnumerator Play(IgniteOutcome outcome, RunState run, ContentDb db, long potencyBefore, TutorialController tutorial, bool auto) |
-| IgniteSequence.Timing | field | paceDecay | 22 | public float paceHurry, paceFloor, paceDecay |
-| IgniteSequence.Timing | field | endPace | 24 | public float endPaceHurry, endPace |
-| IgniteSequence.Timing | field | discoverHurryStep | 26 | public float discoverHurryBase, discoverHurryStep |
-| IgniteSequence.Timing | field | discoverHurryCap | 27 | public int discoverHurryCap |
-| IgniteSequence.Timing | field | discoverBeat | 29 | public float discoverBeat |
-| IgniteSequence.Timing | field | fizzleHintText | 31 | public float fizzleHintWait, fizzleWait, fizzleHintText |
-| IgniteSequence.Timing | field | sputterText | 33 | public float sputterWait, sputterText |
-| IgniteSequence.Timing | field | reactFlash | 35 | public float drawSeconds, drawWait, reactWait, pointsSeconds, reactShake, reactFlash |
-| IgniteSequence.Timing | field | comboText | 37 | public float pointsText, pointsTextPace, comboText |
-| IgniteSequence.Timing | field | discoverShake | 39 | public float discoverShake |
-| IgniteSequence.Timing | field | rackStagger | 41 | public float rackPop, rackFly, rackHold, rackStagger |
-| IgniteSequence.Timing | field | rackWaitNone | 43 | public float rackWaitKept, rackWaitNone |
-| IgniteSequence.Timing | field | lostText | 45 | public float lostText |
-| IgniteSequence.Timing | field | rackTrailChance | 47 | public float rackTrailChance |
-| IgniteSequence.Look | field | rackLand | 54 | public BurstSpec fizzleBurst, sputterBurst, discoverBurst, reactBurst, pointsLand, rackLand |
-| IgniteSequence.Look | field | sputterFlash | 56 | public Color fizzleFlash, sputterFlash |
-| IgniteSequence.Look | field | pointsTrailTint | 58 | public Color drawTint, rackTrailTint, pointsTint, pointsTrailTint |
-| IgniteSequence.Look | field | defaultGlow | 60 | public Color defaultGlow |
-| IgniteSequence.Look | field | lostText | 62 | public Color pointsText, comboText, chainText, hintText, spoiledText, lostText |
-| IgniteSequence.Look | field | rackUp | 64 | public Vector3 hubLift, hintTextLift, spoilTileLift, spoilTextLift, drawLift, pointsTextLift, comboTextLift, rackLift, rackUp |
-| IgniteSequence.Look | field | lostAt | 66 | public Vector2 lostAt |
-| IgniteSequence.Look | field | burstPerExtra | 68 | public int burstPerChain, burstChainCap, burstPerExtra |
-| IgniteSequence.Look | field | speedPerChain | 69 | public float speedPerChain |
-| IgniteSequence.Look | field | discoverShake | 71 | public float shakeBase, shakePerChain, shakePerExtra, shakeMax, discoverShake |
-| IgniteSequence.Look | field | flashSize | 73 | public int flashChain, flashSize |
-| IgniteSequence.Look | field | flashMax | 74 | public float flashPerStep, flashMax |
-| IgniteSequence.Look | field | rackLife | 76 | public float drawJitter, drawLife, pointsJitter, pointsJitter2, pointsLife, pointsLife2, pointsHump, rackJitter, rackLife |
-| IgniteSequence.Look | field | rackTrailOrder | 77 | public int drawOrder, pointsOrder, pointsOrder2, rackTrailOrder |
-| IgniteSequence.Look | field | arcHeight | 79 | public float haloSize, haloAlpha, popScale, arcHeight |
-| IgniteSequence.Look | field | iconOrder | 80 | public int haloOrder, iconOrder |
+| RunTiming | field | runFadeOut | 92 | public float titleFadeIn, titleFadeOut, runFadeIn, runFadeOut |
+| RunTiming | field | autoPace | 94 | public float autoChoiceWait, autoPace |
+| TitleChoice | value | Begin | 142 | Begin |
+| TitleChoice | value | HowToPlay | 142 | HowToPlay |
+| TitleChoice | value | Intro | 142 | Intro |
+| IgniteSequence | property | Hurry | 99 | public bool Hurry |
+| IgniteSequence | method | Bind | 102 | public void Bind(BenchView bench, ReactionCutscene reaction, FxRefs fx, ScreenFlow flow) |
+| IgniteSequence | method | Play | 111 | public IEnumerator Play(IgniteOutcome outcome, RunState run, ContentDb db, long potencyBefore, TutorialController tutorial, bool auto) |
+| IgniteSequence.Timing | field | paceDecay | 25 | public float paceHurry, paceFloor, paceDecay |
+| IgniteSequence.Timing | field | endPace | 27 | public float endPaceHurry, endPace |
+| IgniteSequence.Timing | field | discoverHurryStep | 29 | public float discoverHurryBase, discoverHurryStep |
+| IgniteSequence.Timing | field | discoverHurryCap | 30 | public int discoverHurryCap |
+| IgniteSequence.Timing | field | discoverBeat | 32 | public float discoverBeat |
+| IgniteSequence.Timing | field | fizzleHintText | 34 | public float fizzleHintWait, fizzleWait, fizzleHintText |
+| IgniteSequence.Timing | field | sputterText | 36 | public float sputterWait, sputterText |
+| IgniteSequence.Timing | field | reactFlash | 38 | public float drawSeconds, drawWait, reactWait, pointsSeconds, reactShake, reactFlash |
+| IgniteSequence.Timing | field | comboText | 40 | public float pointsText, pointsTextPace, comboText |
+| IgniteSequence.Timing | field | discoverShake | 42 | public float discoverShake |
+| IgniteSequence.Timing | field | rackStagger | 44 | public float rackPop, rackFly, rackHold, rackStagger |
+| IgniteSequence.Timing | field | rackWaitNone | 46 | public float rackWaitKept, rackWaitNone |
+| IgniteSequence.Timing | field | lostText | 48 | public float lostText |
+| IgniteSequence.Timing | field | rackTrailChance | 50 | public float rackTrailChance |
+| IgniteSequence.Look | field | rackLand | 57 | public BurstSpec fizzleBurst, sputterBurst, discoverBurst, reactBurst, pointsLand, rackLand |
+| IgniteSequence.Look | field | sputterFlash | 59 | public Color fizzleFlash, sputterFlash |
+| IgniteSequence.Look | field | pointsTrailTint | 61 | public Color drawTint, rackTrailTint, pointsTint, pointsTrailTint |
+| IgniteSequence.Look | field | defaultGlow | 63 | public Color defaultGlow |
+| IgniteSequence.Look | field | lostText | 65 | public Color pointsText, comboText, chainText, hintText, spoiledText, lostText |
+| IgniteSequence.Look | field | rackUp | 67 | public Vector3 hubLift, hintTextLift, spoilTileLift, spoilTextLift, drawLift, pointsTextLift, comboTextLift, rackLift, rackUp |
+| IgniteSequence.Look | field | lostAt | 69 | public Vector2 lostAt |
+| IgniteSequence.Look | field | burstPerExtra | 71 | public int burstPerChain, burstChainCap, burstPerExtra |
+| IgniteSequence.Look | field | speedPerChain | 72 | public float speedPerChain |
+| IgniteSequence.Look | field | discoverShake | 74 | public float shakeBase, shakePerChain, shakePerExtra, shakeMax, discoverShake |
+| IgniteSequence.Look | field | flashSize | 76 | public int flashChain, flashSize |
+| IgniteSequence.Look | field | flashMax | 77 | public float flashPerStep, flashMax |
+| IgniteSequence.Look | field | rackLife | 79 | public float drawJitter, drawLife, pointsJitter, pointsJitter2, pointsLife, pointsLife2, pointsHump, rackJitter, rackLife |
+| IgniteSequence.Look | field | rackTrailOrder | 80 | public int drawOrder, pointsOrder, pointsOrder2, rackTrailOrder |
+| IgniteSequence.Look | field | arcHeight | 82 | public float haloSize, haloAlpha, popScale, arcHeight |
+| IgniteSequence.Look | field | iconOrder | 83 | public int haloOrder, iconOrder |
 | Save | field | Key | 10 | public const string Key = "athanor.journal.v1", IntroKey = "athanor.intro.v1", ProfileKey = "athanor.profile.v1", TutorialKey = "athanor.tutorial.v1", SettingsKey = |
 | Save | method | LoadJournal | 14 | public static Journal LoadJournal() |
 | Save | method | StoreJournal | 24 | public static void StoreJournal(Journal journal) |
@@ -1352,15 +1360,15 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | Row | field | root | 21 | public Transform root |
 | GoalRow | field | reward | 8 | public Label text, count, reward |
 | GoalRow | field | icon | 9 | public SpriteRenderer track, fill, icon |
-| GoalToast | field | Stay | 15 | public const float Stay = 2.5f |
-| GoalToast | field | Slide | 17 | public const float Slide = 0.25f |
-| GoalToast | property | Layout | 21 | public struct Layout |
-| GoalToast | property | Item | 24 | struct Item |
-| GoalToast | property | Title | 34 | public Label Title |
-| GoalToast | property | Line | 36 | public Label Line |
-| GoalToast | method | Bind | 39 | public void Bind(FxRefs effects) |
-| GoalToast | method | Add | 52 | public void Add(IEnumerable<GoalReward> rewards, ContentDb db) |
-| GoalToast | method | Clear | 64 | public void Clear() |
+| GoalToast | property | Layout | 15 | public struct Layout |
+| GoalToast | property | Timing | 19 | public struct Timing |
+| GoalToast | property | SlideOutAt | 23 | public float SlideOutAt |
+| GoalToast | property | Item | 25 | struct Item |
+| GoalToast | property | Title | 35 | public Label Title |
+| GoalToast | property | Line | 37 | public Label Line |
+| GoalToast | method | Bind | 40 | public void Bind(FxRefs effects) |
+| GoalToast | method | Add | 53 | public void Add(IEnumerable<GoalReward> rewards, ContentDb db) |
+| GoalToast | method | Clear | 65 | public void Clear() |
 | GoalsView | field | Closed | 17 | public event Action Closed |
 | GoalsView | property | IsOpen | 18 | public bool IsOpen |
 | GoalsView | property | Layout | 22 | public struct Layout |
@@ -1386,17 +1394,17 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | JournalView.Layout | field | hintsRect | 25 | public Rect indexRect, recipesRect, hintsRect |
 | JournalView.Layout | field | titleTopLong | 27 | public float titleTop, titleTopLong |
 | JournalView.Layout | field | unknown | 29 | public Color hint, unknown |
-| PauseMenu | field | QuitConfirmed | 17 | public event Action QuitConfirmed |
-| PauseMenu | field | VibrationChanged | 19 | public event Action VibrationChanged |
-| PauseMenu | field | Closed | 21 | public event Action Opened, Closed |
-| PauseMenu | field | CanOpen | 23 | public Func<bool> CanOpen |
-| PauseMenu | property | IsOpen | 25 | public bool IsOpen |
-| PauseMenu | property | Confirming | 26 | public bool Confirming |
-| PauseMenu | property | Layout | 30 | public struct Layout |
-| PauseMenu | method | Bind | 40 | public void Bind(Settings playerSettings) |
-| PauseMenu | method | Open | 67 | public bool Open() |
-| PauseMenu | method | Close | 78 | public void Close() |
-| PauseMenu | method | Toggle | 88 | public void Toggle() |
+| PauseMenu | field | QuitConfirmed | 16 | public event Action QuitConfirmed |
+| PauseMenu | field | VibrationChanged | 18 | public event Action VibrationChanged |
+| PauseMenu | field | Closed | 20 | public event Action Opened, Closed |
+| PauseMenu | field | CanOpen | 22 | public Func<bool> CanOpen |
+| PauseMenu | property | IsOpen | 24 | public bool IsOpen |
+| PauseMenu | property | Confirming | 25 | public bool Confirming |
+| PauseMenu | property | Layout | 29 | public struct Layout |
+| PauseMenu | method | Bind | 39 | public void Bind(Settings playerSettings) |
+| PauseMenu | method | Open | 66 | public bool Open() |
+| PauseMenu | method | Close | 77 | public void Close() |
+| PauseMenu | method | Toggle | 87 | public void Toggle() |
 | RunOverView | property | Again | 12 | public bool Again |
 | RunOverView | field | GoalsClicked | 14 | public event System.Action GoalsClicked |
 | RunOverView | property | Timing | 18 | public struct Timing |
@@ -1608,16 +1616,22 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | HotPathTests | method | DestroyMade | 19 | public void DestroyMade() |
 | HotPathTests | method | Tick_IdleHud_AllocatesNothing | 43 | public void Tick_IdleHud_AllocatesNothing() |
 | HotPathTests | method | Tick_PotencyUnchanged_KeepsTheSameText | 56 | public void Tick_PotencyUnchanged_KeepsTheSameText() |
-| HotPathTests | method | Tick_IdleBench_AllocatesNothing | 95 | public void Tick_IdleBench_AllocatesNothing() |
-| HotPathTests | method | Tick_BenchWithTooltipUp_AllocatesNothing | 108 | public void Tick_BenchWithTooltipUp_AllocatesNothing() |
-| HotPathTests | method | Tick_TileAndTileWithMaterial_AllocateNothing | 123 | public void Tick_TileAndTileWithMaterial_AllocateNothing() |
-| HotPathTests | method | Tick_IdleCard_AllocatesNothing | 140 | public void Tick_IdleCard_AllocatesNothing() |
-| HotPathTests | method | Tick_IdleEventView_AllocatesNothing | 157 | public void Tick_IdleEventView_AllocatesNothing() |
-| HotPathTests | method | Tick_IdleUiButton_AllocatesNothing | 171 | public void Tick_IdleUiButton_AllocatesNothing() |
-| HotPathTests | method | Tick_FogSheet_AllocatesNothingWithinATexelAndWhenOneIsCrossed | 184 | public void Tick_FogSheet_AllocatesNothingWithinATexelAndWhenOneIsCrossed() |
-| HotPathTests | method | Tick_IdleScreenFx_AllocatesNothing | 199 | public void Tick_IdleScreenFx_AllocatesNothing() |
-| HotPathTests | method | IdleBench_TenSecondsOfEveryUpdate_AllocatesZeroBytes | 220 | public void IdleBench_TenSecondsOfEveryUpdate_AllocatesZeroBytes() |
-| HotPathTests | method | Continuous_DustSparksAndFlame_AllocateNothingWhileRunning | 258 | public void Continuous_DustSparksAndFlame_AllocateNothingWhileRunning() |
+| HotPathTests | method | Tick_PotencyChanged_RewritesText | 72 | public void Tick_PotencyChanged_RewritesText() |
+| HotPathTests | method | Tick_PotencyRunsIntoTarget_SwapsTheWordAwayAndBack | 92 | public void Tick_PotencyRunsIntoTarget_SwapsTheWordAwayAndBack() |
+| HotPathTests | method | Tick_IdleBench_AllocatesNothing | 135 | public void Tick_IdleBench_AllocatesNothing() |
+| HotPathTests | method | Tick_BenchWithTooltipUp_AllocatesNothing | 148 | public void Tick_BenchWithTooltipUp_AllocatesNothing() |
+| HotPathTests | method | Tick_TooltipUp_RebuildsAfterRedrawsChange | 166 | public void Tick_TooltipUp_RebuildsAfterRedrawsChange() |
+| HotPathTests | method | Tick_TileHoverStartsAndStops_DrawsAndClearsTheFace | 194 | public void Tick_TileHoverStartsAndStops_DrawsAndClearsTheFace() |
+| HotPathTests | method | Tick_TileAndTileWithMaterial_AllocateNothing | 215 | public void Tick_TileAndTileWithMaterial_AllocateNothing() |
+| HotPathTests | method | Tick_IdleCard_AllocatesNothing | 232 | public void Tick_IdleCard_AllocatesNothing() |
+| HotPathTests | method | Tick_IdleEventView_AllocatesNothing | 249 | public void Tick_IdleEventView_AllocatesNothing() |
+| HotPathTests | method | Tick_IdleUiButton_AllocatesNothing | 263 | public void Tick_IdleUiButton_AllocatesNothing() |
+| HotPathTests | method | Tick_FogSheet_AllocatesNothingWithinATexelAndWhenOneIsCrossed | 276 | public void Tick_FogSheet_AllocatesNothingWithinATexelAndWhenOneIsCrossed() |
+| HotPathTests | method | Tick_FogSheet_WritesTheNewTexelOffsetAndOnlyThen | 291 | public void Tick_FogSheet_WritesTheNewTexelOffsetAndOnlyThen() |
+| HotPathTests | method | Tick_ScreenFxFlashEnds_ClearsTheFlashSprite | 312 | public void Tick_ScreenFxFlashEnds_ClearsTheFlashSprite() |
+| HotPathTests | method | Tick_IdleScreenFx_AllocatesNothing | 333 | public void Tick_IdleScreenFx_AllocatesNothing() |
+| HotPathTests | method | IdleBench_TenSecondsOfEveryUpdate_AllocatesZeroBytes | 354 | public void IdleBench_TenSecondsOfEveryUpdate_AllocatesZeroBytes() |
+| HotPathTests | method | Continuous_DustSparksAndFlame_AllocateNothingWhileRunning | 392 | public void Continuous_DustSparksAndFlame_AllocateNothingWhileRunning() |
 | HudTests | method | CanRedraw_WhileRedrawsRemain_IsTrueUntilTheLastRedrawIsUsed | 14 | public void CanRedraw_WhileRedrawsRemain_IsTrueUntilTheLastRedrawIsUsed() |
 | HudTests | method | CanRedraw_IsFalse_OffTheBench_EvenWithRedrawsLeft | 29 | public void CanRedraw_IsFalse_OffTheBench_EvenWithRedrawsLeft() |
 | HudTests | method | CanRedraw_IsFalse_WithNoRun | 40 | public void CanRedraw_IsFalse_WithNoRun() |
@@ -1628,28 +1642,28 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | LabelLineBoxTests | method | PlainTitle_InVietnamese_DoesNotMove | 81 | public void PlainTitle_InVietnamese_DoesNotMove() |
 | LayoutPinTests | method | Palette_Asset_HasTodaysColours | 39 | public void Palette_Asset_HasTodaysColours() |
 | LayoutPinTests | method | IgniteSequence_MainScene_KeepsTodaysTiming | 59 | public void IgniteSequence_MainScene_KeepsTodaysTiming() |
-| LayoutPinTests | method | IgniteSequence_MainScene_KeepsTodaysLook | 80 | public void IgniteSequence_MainScene_KeepsTodaysLook() |
-| LayoutPinTests | method | HudView_Prefab_KeepsTodaysLayout | 121 | public void HudView_Prefab_KeepsTodaysLayout() |
-| LayoutPinTests | method | HudView_IgniteLabel_SitsWhereTheCodePutIt | 142 | public void HudView_IgniteLabel_SitsWhereTheCodePutIt() |
-| LayoutPinTests | method | BenchParts_Prefabs_KeepTodaysLayout | 150 | public void BenchParts_Prefabs_KeepTodaysLayout() |
-| LayoutPinTests | method | JournalView_Prefab_KeepsTodaysLayout | 203 | public void JournalView_Prefab_KeepsTodaysLayout() |
-| LayoutPinTests | method | GoalsView_Prefab_KeepsTodaysLayout | 219 | public void GoalsView_Prefab_KeepsTodaysLayout() |
-| LayoutPinTests | method | CatalystChoiceView_Prefab_KeepsTodaysLayout | 226 | public void CatalystChoiceView_Prefab_KeepsTodaysLayout() |
-| LayoutPinTests | method | EventView_Prefab_KeepsTodaysLayout | 243 | public void EventView_Prefab_KeepsTodaysLayout() |
-| LayoutPinTests | method | RunOverView_Prefab_KeepsTodaysTiming | 253 | public void RunOverView_Prefab_KeepsTodaysTiming() |
-| LayoutPinTests | method | PauseMenu_Prefab_KeepsTodaysLayout | 260 | public void PauseMenu_Prefab_KeepsTodaysLayout() |
-| LayoutPinTests | method | TitleView_Prefab_KeepsTodaysLayout | 270 | public void TitleView_Prefab_KeepsTodaysLayout() |
-| LayoutPinTests | method | GoalToast_Prefab_KeepsTodaysLayout | 296 | public void GoalToast_Prefab_KeepsTodaysLayout() |
-| LayoutPinTests | method | Tooltip_BenchPrefab_KeepsTodaysLayout | 304 | public void Tooltip_BenchPrefab_KeepsTodaysLayout() |
-| LayoutPinTests | method | UiButton_EveryPrefabInstance_KeepsTodaysLook | 316 | public void UiButton_EveryPrefabInstance_KeepsTodaysLook() |
-| LayoutPinTests | method | Palette_Asset_KeepsTheStarOutline | 340 | public void Palette_Asset_KeepsTheStarOutline() |
-| LayoutPinTests | method | Dust_MainScene_KeepsTodaysLook | 348 | public void Dust_MainScene_KeepsTodaysLook() |
-| LayoutPinTests | method | SimpleCutscene_MainScene_KeepsTodaysBeats | 368 | public void SimpleCutscene_MainScene_KeepsTodaysBeats() |
-| LayoutPinTests | method | ReactionCutscene_MainScene_KeepsTodaysBeats | 396 | public void ReactionCutscene_MainScene_KeepsTodaysBeats() |
-| LayoutPinTests | method | WindowView_MainScene_KeepsTodaysEffects | 424 | public void WindowView_MainScene_KeepsTodaysEffects() |
-| LayoutPinTests | method | Tutorial_MainScene_KeepsTodaysTargetsAndStyle | 442 | public void Tutorial_MainScene_KeepsTodaysTargetsAndStyle() |
-| LayoutPinTests | method | Depth_MainScene_KeepsTodaysRigSwayAndTable | 466 | public void Depth_MainScene_KeepsTodaysRigSwayAndTable() |
-| LayoutPinTests | method | Effects_MainScene_KeepsTodaysTiltShiftFogAndShake | 486 | public void Effects_MainScene_KeepsTodaysTiltShiftFogAndShake() |
+| LayoutPinTests | method | IgniteSequence_MainScene_KeepsTodaysLook | 81 | public void IgniteSequence_MainScene_KeepsTodaysLook() |
+| LayoutPinTests | method | HudView_Prefab_KeepsTodaysLayout | 122 | public void HudView_Prefab_KeepsTodaysLayout() |
+| LayoutPinTests | method | HudView_IgniteLabel_SitsWhereTheCodePutIt | 143 | public void HudView_IgniteLabel_SitsWhereTheCodePutIt() |
+| LayoutPinTests | method | BenchParts_Prefabs_KeepTodaysLayout | 151 | public void BenchParts_Prefabs_KeepTodaysLayout() |
+| LayoutPinTests | method | JournalView_Prefab_KeepsTodaysLayout | 215 | public void JournalView_Prefab_KeepsTodaysLayout() |
+| LayoutPinTests | method | GoalsView_Prefab_KeepsTodaysLayout | 231 | public void GoalsView_Prefab_KeepsTodaysLayout() |
+| LayoutPinTests | method | CatalystChoiceView_Prefab_KeepsTodaysLayout | 238 | public void CatalystChoiceView_Prefab_KeepsTodaysLayout() |
+| LayoutPinTests | method | EventView_Prefab_KeepsTodaysLayout | 255 | public void EventView_Prefab_KeepsTodaysLayout() |
+| LayoutPinTests | method | RunOverView_Prefab_KeepsTodaysTiming | 265 | public void RunOverView_Prefab_KeepsTodaysTiming() |
+| LayoutPinTests | method | PauseMenu_Prefab_KeepsTodaysLayout | 272 | public void PauseMenu_Prefab_KeepsTodaysLayout() |
+| LayoutPinTests | method | TitleView_Prefab_KeepsTodaysLayout | 282 | public void TitleView_Prefab_KeepsTodaysLayout() |
+| LayoutPinTests | method | GoalToast_Prefab_KeepsTodaysLayout | 308 | public void GoalToast_Prefab_KeepsTodaysLayout() |
+| LayoutPinTests | method | Tooltip_BenchPrefab_KeepsTodaysLayout | 317 | public void Tooltip_BenchPrefab_KeepsTodaysLayout() |
+| LayoutPinTests | method | UiButton_EveryPrefabInstance_KeepsTodaysLook | 329 | public void UiButton_EveryPrefabInstance_KeepsTodaysLook() |
+| LayoutPinTests | method | Palette_Asset_KeepsTheStarOutline | 353 | public void Palette_Asset_KeepsTheStarOutline() |
+| LayoutPinTests | method | Dust_MainScene_KeepsTodaysLook | 361 | public void Dust_MainScene_KeepsTodaysLook() |
+| LayoutPinTests | method | SimpleCutscene_MainScene_KeepsTodaysBeats | 381 | public void SimpleCutscene_MainScene_KeepsTodaysBeats() |
+| LayoutPinTests | method | ReactionCutscene_MainScene_KeepsTodaysBeats | 409 | public void ReactionCutscene_MainScene_KeepsTodaysBeats() |
+| LayoutPinTests | method | WindowView_MainScene_KeepsTodaysEffects | 437 | public void WindowView_MainScene_KeepsTodaysEffects() |
+| LayoutPinTests | method | Tutorial_MainScene_KeepsTodaysTargetsAndStyle | 455 | public void Tutorial_MainScene_KeepsTodaysTargetsAndStyle() |
+| LayoutPinTests | method | Depth_MainScene_KeepsTodaysRigSwayAndTable | 479 | public void Depth_MainScene_KeepsTodaysRigSwayAndTable() |
+| LayoutPinTests | method | Effects_MainScene_KeepsTodaysTiltShiftFogAndShake | 499 | public void Effects_MainScene_KeepsTodaysTiltShiftFogAndShake() |
 | LocTests | method | Use_WithInjectedFiles_ServesTheirText | 19 | public void Use_WithInjectedFiles_ServesTheirText() |
 | LocTests | method | Use_NullFile_Throws | 32 | public void Use_NullFile_Throws() |
 | LocTests | method | ViJsonCharacters_AllInCruxAtlas_NoneMissing | 40 | public void ViJsonCharacters_AllInCruxAtlas_NoneMissing() |

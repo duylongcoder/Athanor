@@ -12,7 +12,6 @@ namespace Athanor.Game
     /// </summary>
     public sealed class PauseMenu : MonoBehaviour
     {
-        const int Y = 75;      // the dialog's top edge in Pause.prefab; PlaceButtons moves the lower buttons from it
         /// <summary>The player confirmed "Quit this run?". The owner discards the run; the menu has already restored time.</summary>
         public event Action QuitConfirmed;
         /// <summary>Raised when the Vibration button changes the setting, so the owner can save it.</summary>
@@ -25,9 +24,9 @@ namespace Athanor.Game
         public bool IsOpen => menu != null && (menu.gameObject.activeSelf || confirm.gameObject.activeSelf);
         public bool Confirming => confirm != null && confirm.gameObject.activeSelf;
 
-        /// <summary>Where the lower buttons sit (art px, y down): the buttons' left edge and tops below the dialog's top, the hint's centre and top, and how far they move up without Vibration.</summary>
+        /// <summary>Where the lower buttons sit (art px, y down): the dialog's top edge, the buttons' left edge and tops below the dialog's top, the hint's centre and top, and how far they move up without Vibration.</summary>
         [Serializable]
-        public struct Layout { public float buttonX, howToDy, quitDy, hintX, hintDy, noVibrationUp; }
+        public struct Layout { public float dialogTop, buttonX, howToDy, quitDy, hintX, hintDy, noVibrationUp; }
         [SerializeField] Layout layout;
         [SerializeField] Transform menu, confirm;
         [SerializeField] UiButton resume, vibration, howTo, quit, quitYes, quitNo;
@@ -58,9 +57,9 @@ namespace Athanor.Game
             vibration.gameObject.SetActive(vib);
             if (vib) vibration.Text.SetKey("ui.pause.vibration", ("state", Loc.T(settings.haptics ? "ui.settings.on" : "ui.settings.off")));
             float up = vib ? 0 : layout.noVibrationUp;
-            howTo.transform.position = Px.Mid(layout.buttonX, Y + layout.howToDy - up, UiButton.W, UiButton.H);
-            howToHint.transform.position = Px.At(layout.hintX, Y + layout.hintDy - up);
-            quit.transform.position = Px.Mid(layout.buttonX, Y + layout.quitDy - up, UiButton.W, UiButton.H);
+            howTo.transform.position = Px.Mid(layout.buttonX, layout.dialogTop + layout.howToDy - up, UiButton.W, UiButton.H);
+            howToHint.transform.position = Px.At(layout.hintX, layout.dialogTop + layout.hintDy - up);
+            quit.transform.position = Px.Mid(layout.buttonX, layout.dialogTop + layout.quitDy - up, UiButton.W, UiButton.H);
         }
 
         /// <summary>Opens the menu and stops time. False when a pause is not allowed now or one is already open.</summary>

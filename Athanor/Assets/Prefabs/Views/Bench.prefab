@@ -2498,6 +2498,16 @@ MonoBehaviour:
     consumeLift: {x: 0, y: 8, z: 0}
     iconLift: 10
     popRise: 8
+    consumeBurst:
+      count: 14
+      color: {r: 0, g: 0, b: 0, a: 0}
+      speed: 40
+      life: 0.5
+      order: 30
+      gravity: -20
+    consumeTint: 2
+    consumeSeconds: 0.18
+    consumeGrow: 1.4
 --- !u!1 &1762642760262819340
 GameObject:
   m_ObjectHideFlags: 0
@@ -6536,6 +6546,16 @@ MonoBehaviour:
     consumeLift: {x: 0, y: 8, z: 0}
     iconLift: 10
     popRise: 8
+    consumeBurst:
+      count: 14
+      color: {r: 0, g: 0, b: 0, a: 0}
+      speed: 40
+      life: 0.5
+      order: 30
+      gravity: -20
+    consumeTint: 2
+    consumeSeconds: 0.18
+    consumeGrow: 1.4
 --- !u!1 &3903295096772373739
 GameObject:
   m_ObjectHideFlags: 0
@@ -7635,6 +7655,16 @@ MonoBehaviour:
     consumeLift: {x: 0, y: 8, z: 0}
     iconLift: 10
     popRise: 8
+    consumeBurst:
+      count: 14
+      color: {r: 0, g: 0, b: 0, a: 0}
+      speed: 40
+      life: 0.5
+      order: 30
+      gravity: -20
+    consumeTint: 2
+    consumeSeconds: 0.18
+    consumeGrow: 1.4
 --- !u!1 &4477896618857055683
 GameObject:
   m_ObjectHideFlags: 0
@@ -9825,6 +9855,16 @@ MonoBehaviour:
     consumeLift: {x: 0, y: 8, z: 0}
     iconLift: 10
     popRise: 8
+    consumeBurst:
+      count: 14
+      color: {r: 0, g: 0, b: 0, a: 0}
+      speed: 40
+      life: 0.5
+      order: 30
+      gravity: -20
+    consumeTint: 2
+    consumeSeconds: 0.18
+    consumeGrow: 1.4
 --- !u!1 &5874600378235454989
 GameObject:
   m_ObjectHideFlags: 0
@@ -10268,6 +10308,16 @@ MonoBehaviour:
     consumeLift: {x: 0, y: 8, z: 0}
     iconLift: 10
     popRise: 8
+    consumeBurst:
+      count: 14
+      color: {r: 0, g: 0, b: 0, a: 0}
+      speed: 40
+      life: 0.5
+      order: 30
+      gravity: -20
+    consumeTint: 2
+    consumeSeconds: 0.18
+    consumeGrow: 1.4
 --- !u!1 &6143387194806115065
 GameObject:
   m_ObjectHideFlags: 0
@@ -10964,6 +11014,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 002d0984e3a31bdabae0b8e68c9d2dac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Athanor.Game::Athanor.Game.BenchView
+  timing:
+    dealStagger: 0.05
+    tipDelay: 0.3
   tiles:
   - {fileID: 2583858815859548863}
   - {fileID: 876992598966009372}
@@ -11027,6 +11080,14 @@ MonoBehaviour:
     ghostLift: 6
     tileTipLift: {x: 0, y: 12, z: 0}
     cardTipLift: {x: 0, y: 35, z: 0}
+    handX: 128
+    handW: 386
+    cardY: 290
+    handMaxPitch: 76
+    slotHit: 14
+    tileHitHalfWidth: 13
+    tileHitBelow: 3
+    tileHitAbove: 24
 --- !u!1 &6587872970794987436
 GameObject:
   m_ObjectHideFlags: 0
@@ -11102,6 +11163,16 @@ MonoBehaviour:
     consumeLift: {x: 0, y: 8, z: 0}
     iconLift: 10
     popRise: 8
+    consumeBurst:
+      count: 14
+      color: {r: 0, g: 0, b: 0, a: 0}
+      speed: 40
+      life: 0.5
+      order: 30
+      gravity: -20
+    consumeTint: 2
+    consumeSeconds: 0.18
+    consumeGrow: 1.4
 --- !u!1 &6684936391947216083
 GameObject:
   m_ObjectHideFlags: 0
@@ -13086,6 +13157,16 @@ MonoBehaviour:
     consumeLift: {x: 0, y: 8, z: 0}
     iconLift: 10
     popRise: 8
+    consumeBurst:
+      count: 14
+      color: {r: 0, g: 0, b: 0, a: 0}
+      speed: 40
+      life: 0.5
+      order: 30
+      gravity: -20
+    consumeTint: 2
+    consumeSeconds: 0.18
+    consumeGrow: 1.4
 --- !u!1 &8222741842677739701
 GameObject:
   m_ObjectHideFlags: 0
@@ -13161,6 +13242,16 @@ MonoBehaviour:
     consumeLift: {x: 0, y: 8, z: 0}
     iconLift: 10
     popRise: 8
+    consumeBurst:
+      count: 14
+      color: {r: 0, g: 0, b: 0, a: 0}
+      speed: 40
+      life: 0.5
+      order: 30
+      gravity: -20
+    consumeTint: 2
+    consumeSeconds: 0.18
+    consumeGrow: 1.4
 --- !u!1 &8266681368029124818
 GameObject:
   m_ObjectHideFlags: 0
@@ -13604,6 +13695,16 @@ MonoBehaviour:
     consumeLift: {x: 0, y: 8, z: 0}
     iconLift: 10
     popRise: 8
+    consumeBurst:
+      count: 14
+      color: {r: 0, g: 0, b: 0, a: 0}
+      speed: 40
+      life: 0.5
+      order: 30
+      gravity: -20
+    consumeTint: 2
+    consumeSeconds: 0.18
+    consumeGrow: 1.4
 --- !u!1 &8601296434041742105
 GameObject:
   m_ObjectHideFlags: 0

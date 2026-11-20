@@ -1,0 +1,22 @@
+EVENT no event           wins 144/200
+EVENT cracked_altar      Choice  at every depth 1 to 4: 157/200 (109%)
+EVENT tilted_workbench   Choice  at every depth 1 to 5: 153/200 (106%)
+EVENT old_ledger         Choice  at every depth 2 to 5: 144/200 (100%)
+EVENT hungry_furnace     Choice  at every depth 2 to 5: 120/200 (83%)
+EVENT dripping_well      Gamble  at every depth 1 to 5: 119/200 (82%); once, at d1 137/200 (95%), d2 148/200 (102%), d3 149/200 (103%), d4 141/200 (97%), d5 144/200 (100%)
+EVENT shifting_bench     Gamble  at every depth 2 to 5: 144/200 (100%); once, at d2 144/200 (100%), d3 144/200 (100%), d4 144/200 (100%), d5 144/200 (100%)
+EVENT smugglers_crate    Gamble  at every depth 3 to 5: 147/200 (102%); once, at d3 158/200 (109%), d4 142/200 (98%), d5 143/200 (99%)
+EVENT forgotten_satchel  Find    at every depth 1 to 3: 151/200 (104%)
+EVENT glinting_seam      Find    at every depth 3 to 5: 145/200 (100%)
+EVENT sealed_shrine      Shrine  at every depth 2 to 5: 139/200 (96%)
+EVENT quiet_shrine       Shrine  at every depth 3 to 5: 144/200 (100%)
+EVENT damp_air           Hazard  at every depth 2 to 5: 120/200 (83%); once, at d2 153/200 (106%), d3 144/200 (100%), d4 130/200 (90%), d5 143/200 (99%)
+EVENT falling_grit       Hazard  at every depth 2 to 5: 114/200 (79%); once, at d2 150/200 (104%), d3 152/200 (105%), d4 120/200 (83%), d5 139/200 (96%)
+EVENT cold_draft         Hazard  at every depth 3 to 5: 80/200 (55%); once, at d3 117/200 (81%), d4 113/200 (78%), d5 142/200 (98%)
+EVENT warm_stone         Boon    at every depth 1 to 5: 141/200 (97%)
+EVENT quiet_room         Lore    at every depth 1 to 5: 144/200 (100%)
+EVENT names_in_wall      Lore    at every depth 1 to 2: 144/200 (100%)
+EVENT warm_roots         Lore    at every depth 3 to 4: 144/200 (100%)
+EVENT pinned_note        Lore    at every depth 5 to 5: 144/200 (100%)
+RANDOM fresh  wins 0/200, ended at depth 1..5: 184 16 0 0 0
+RANDOM full   wins 0/200, ended at depth 1..5: 185 15 0 0 0

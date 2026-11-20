@@ -12,13 +12,13 @@ aliases: []
 # TipKey
 
 `struct TipKey`
-- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Bench/BenchView.cs:67-71` · Nested in [[BenchView]]
+- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Bench/BenchView.cs:76-80` · Nested in [[BenchView]]
 
 ## Members
 | Kind | Signature | Line | Note |
 |---|---|---|---|
-| field | `public TipKind kind` | 69 |  |
-| method | `public bool Equals(TipKey o)` | 70 |  |
+| field | `public TipKind kind` | 78 |  |
+| method | `public bool Equals(TipKey o)` | 79 |  |
 
 ## Uses
 [[TipKind]]

@@ -6518,6 +6518,12 @@ MonoBehaviour:
     lossShake: 3
     lossShakeSeconds: 0.5
     lossWait: 0.9
+    titleFadeIn: 0.7
+    titleFadeOut: 0.35
+    runFadeIn: 0.5
+    runFadeOut: 0.35
+    autoChoiceWait: 0.8
+    autoPace: 0.45
   reaction: {fileID: 528720037}
   story: {fileID: 1969933994}
   screenFx: {fileID: 1655642882}

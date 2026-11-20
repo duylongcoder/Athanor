@@ -84,6 +84,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1de3693b67aa542ccbf5feddd5f8b9ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Athanor.Game::Athanor.Game.PauseMenu
+  layout:
+    dialogTop: 75
+    buttonX: 260
+    howToDy: 110
+    quitDy: 152
+    hintX: 320
+    hintDy: 137
+    noVibrationUp: 30
   menu: {fileID: 876303337283615109}
   confirm: {fileID: 8198798368464333702}
   resume: {fileID: 2571199920104616598}
@@ -94,13 +102,6 @@ MonoBehaviour:
   quitNo: {fileID: 758335284951235057}
   howToHint: {fileID: 6780370160049633558}
   outside: {fileID: 6215612563920766493}
-  layout:
-    buttonX: 260
-    howToDy: 110
-    quitDy: 152
-    hintX: 320
-    hintDy: 137
-    noVibrationUp: 30
 --- !u!1 &1368774245027789649
 GameObject:
   m_ObjectHideFlags: 0
@@ -335,7 +336,7 @@ MonoBehaviour:
   look:
     disabledTint: {r: 0.45, g: 0.42, b: 0.42, a: 1}
     overTint: {r: 1.25, g: 1.15, b: 1.05, a: 1}
-    disabledText: {r: 0.54117647, g: 0.47843137, b: 0.41568627, a: 1}
+    disabledText: {r: 0.5411765, g: 0.47843137, b: 0.41568628, a: 1}
     labelUp: 10
     labelDown: 8
 --- !u!114 &7453230767692502819
@@ -1696,7 +1697,7 @@ MonoBehaviour:
   look:
     disabledTint: {r: 0.45, g: 0.42, b: 0.42, a: 1}
     overTint: {r: 1.25, g: 1.15, b: 1.05, a: 1}
-    disabledText: {r: 0.54117647, g: 0.47843137, b: 0.41568627, a: 1}
+    disabledText: {r: 0.5411765, g: 0.47843137, b: 0.41568628, a: 1}
     labelUp: 10
     labelDown: 8
 --- !u!114 &2533641319046277893
@@ -1767,7 +1768,7 @@ MonoBehaviour:
   look:
     disabledTint: {r: 0.45, g: 0.42, b: 0.42, a: 1}
     overTint: {r: 1.25, g: 1.15, b: 1.05, a: 1}
-    disabledText: {r: 0.54117647, g: 0.47843137, b: 0.41568627, a: 1}
+    disabledText: {r: 0.5411765, g: 0.47843137, b: 0.41568628, a: 1}
     labelUp: 10
     labelDown: 8
 --- !u!114 &4177398202347045813
@@ -2525,7 +2526,7 @@ MonoBehaviour:
   look:
     disabledTint: {r: 0.45, g: 0.42, b: 0.42, a: 1}
     overTint: {r: 1.25, g: 1.15, b: 1.05, a: 1}
-    disabledText: {r: 0.54117647, g: 0.47843137, b: 0.41568627, a: 1}
+    disabledText: {r: 0.5411765, g: 0.47843137, b: 0.41568628, a: 1}
     labelUp: 10
     labelDown: 8
 --- !u!114 &139494711313561897
@@ -4676,7 +4677,7 @@ MonoBehaviour:
   look:
     disabledTint: {r: 0.45, g: 0.42, b: 0.42, a: 1}
     overTint: {r: 1.25, g: 1.15, b: 1.05, a: 1}
-    disabledText: {r: 0.54117647, g: 0.47843137, b: 0.41568627, a: 1}
+    disabledText: {r: 0.5411765, g: 0.47843137, b: 0.41568628, a: 1}
     labelUp: 10
     labelDown: 8
 --- !u!114 &6987358477261218641
@@ -5749,7 +5750,7 @@ MonoBehaviour:
   look:
     disabledTint: {r: 0.45, g: 0.42, b: 0.42, a: 1}
     overTint: {r: 1.25, g: 1.15, b: 1.05, a: 1}
-    disabledText: {r: 0.54117647, g: 0.47843137, b: 0.41568627, a: 1}
+    disabledText: {r: 0.5411765, g: 0.47843137, b: 0.41568628, a: 1}
     labelUp: 10
     labelDown: 8
 --- !u!114 &2117948490521810654

@@ -22,7 +22,8 @@ namespace Athanor.Game
         /// <summary>How many tiles the bench holds (nine).</summary>
         public int TileCount => tiles.Length;
 
-        const int RackX = 130, RackY = 256, RackFirst = 6, RackPitch = 31, RackSlots = 12, CardY = 290, HandX = 128, HandW = 386;
+        /// <summary>How many wells the rack has (the array size of the prefab's slots).</summary>
+        const int RackSlots = 12;
 
         /// <summary>Offsets and a colour of the bench, stored in Bench.prefab.</summary>
         [Serializable]
@@ -38,7 +39,15 @@ namespace Athanor.Game
             public float ghostLift;
             /// <summary>Where a tooltip points: above a tile's centre, above a card's top (half its height).</summary>
             public Vector3 tileTipLift, cardTipLift;
+            /// <summary>The hand's strip: left edge, width, the cards' top, and the widest gap between two cards (art px).</summary>
+            public float handX, handW, cardY, handMaxPitch;
+            /// <summary>A rack well takes a click within slotHit of its centre; a placed material within tileHitHalfWidth sideways and from tileHitBelow under to tileHitAbove over its tile centre.</summary>
+            public float slotHit, tileHitHalfWidth, tileHitBelow, tileHitAbove;
         }
+        /// <summary>The deal's gap between two cards, and how long the pointer rests before a tooltip shows (seconds).</summary>
+        [Serializable]
+        public struct Timing { public float dealStagger, tipDelay; }
+        [SerializeField] Timing timing;
 
         enum From { None, Hand, Tile }
         struct Pick { public From from; public int handIndex, tile; public string id; public bool Is => from != From.None; }
@@ -136,8 +145,8 @@ namespace Athanor.Game
                 }
             }
             int n = starters.Count;
-            float pitch = n <= 1 ? 0 : Mathf.Min(76, (HandW - CardView.W) / (float)(n - 1));
-            float startX = HandX + (HandW - (CardView.W + pitch * (n - 1))) / 2f;
+            float pitch = n <= 1 ? 0 : Mathf.Min(layout.handMaxPitch, (layout.handW - CardView.W) / (float)(n - 1));
+            float startX = layout.handX + (layout.handW - (CardView.W + pitch * (n - 1))) / 2f;
             for (int k = 0; k < n; k++)
             {
                 var m = db.Material(run.Hand[starters[k]]);
@@ -146,8 +155,8 @@ namespace Athanor.Game
                 card.Show(m, 110 + k * 4);
                 card.Fan(k < n - 1 ? pitch : CardView.W, 110 + n * 4);     // every card but the last has the next one over its right
                 card.handIndex = starters[k];
-                card.home = Px.Snap(Px.Mid(startX + k * pitch, CardY, CardView.W, CardView.H));
-                if (deal) card.DealIn(k * 0.05f); else card.transform.position = card.home;
+                card.home = Px.Snap(Px.Mid(startX + k * pitch, layout.cardY, CardView.W, CardView.H));
+                if (deal) card.DealIn(k * timing.dealStagger); else card.transform.position = card.home;
                 cards.Add(card);
             }
             int held = 0; foreach (var id in run.Hand) if (db.Material(id).tier > 0) held++;
@@ -195,7 +204,7 @@ namespace Athanor.Game
         public void ClearLinks() => links.Set(new List<(Vector3, Vector3)>());
 
         /// <summary>A number that rises from a point and fades.</summary>
-        public IEnumerator FloatText(string text, Vector3 from, Color color, float seconds = 0.8f, bool small = false)
+        public IEnumerator FloatText(string text, Vector3 from, Color color, float seconds, bool small = false)
         {
             var label = Spawn.Text(transform, text, 0, 0, small ? FontKind.Tiny : FontKind.Title, small ? 8 : 16, color, 170, Align.Centre, layout.floatShadow);
             // it rises the whole time and fades over the last 30 %
@@ -224,14 +233,14 @@ namespace Athanor.Game
             for (int i = cards.Count - 1; i >= 0; i--)
                 if (cards[i].Contains(w)) return new Pick { from = From.Hand, handIndex = cards[i].handIndex, id = cards[i].id, tile = -1 };
             foreach (var s in slots)
-                if (s.handIndex >= 0 && Mathf.Abs(w.x - s.pos.x) <= 14 && Mathf.Abs(w.y - s.pos.y) <= 14)
+                if (s.handIndex >= 0 && Mathf.Abs(w.x - s.pos.x) <= layout.slotHit && Mathf.Abs(w.y - s.pos.y) <= layout.slotHit)
                     return new Pick { from = From.Hand, handIndex = s.handIndex, id = s.id, tile = -1 };
             // front rows first: a material stands tall enough to overlap the tile behind it
             for (int i = tiles.Length - 1; i >= 0; i--)
             {
                 if (tiles[i].Material == null) continue;
                 var c = tiles[i].centre;
-                if ((Mathf.Abs(tw.x - c.x) <= 13 && tw.y >= c.y - 3 && tw.y <= c.y + 24) || tiles[i].Contains(tw))
+                if ((Mathf.Abs(tw.x - c.x) <= layout.tileHitHalfWidth && tw.y >= c.y - layout.tileHitBelow && tw.y <= c.y + layout.tileHitAbove) || tiles[i].Contains(tw))
                     return new Pick { from = From.Tile, tile = i, id = tiles[i].Material, handIndex = -1 };
             }
             return default;
@@ -369,7 +378,7 @@ namespace Athanor.Game
             if (!key.Equals(hoverKey)) { hoverKey = key; hoverTime = 0; tip.Hide(); tipUp = false; }
             if (key.kind == TipKind.None) return;
             hoverTime += deltaTime;
-            if (hoverTime <= 0.3f) return;
+            if (hoverTime <= timing.tipDelay) return;
             // the tip stays as built until what it was built from changes
             int known = journal.KnownPairs.Count;
             if (tipUp && tipRefresh == refreshes && tipKnown == known && tipRedraws == run.RedrawsLeft && tipVi == Loc.Vi) return;

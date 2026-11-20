@@ -1,0 +1,84 @@
+informed, one catalyst removed: wins of 200: bellows 141, bestiary 141, heart_tile 142, first_spark 139, crooked_mirror 132, hourglass 132, deep_satchel 132, eureka_lens 132, resonant_slab 132, quiet_bench 132, herbarium 140, alembic 140, wide_crucible 136, quick_hands 137, grain_of_gold 132, tier_seeker 132, hearth_habit 132, second_wind 132, warm_bench 132, salvage 132, cascade 132, descent 132, tinkers_eye 132, bottomless_satchel 132, philosophers_fire 132, last_breath 132
+informed: wins 132/200, trials to spare 3, won through a combo-made ingredient 132
+informed: lost at depth 1..5: 7 4 23 33 1; depth 1 cleared on the first trial 6/200
+informed: reactions per run by size 2/3/4/5: 25.80 / 0.48 / 1.76 / 0.02; runs with a 5-item combo 3/200; ignites per run 13.1; longest chain avg 3.7 max 5; sputters per run 1.53
+informed: trials used to clear depth 1..4 (avg): 2.8 3.0 3.7 3.5
+informed: combos, fired total (runs): 3 chimera_hide 31 (29); 3 hearth_glass 23 (23); 3 thunder_ingot 3 (3); 3 wyrm_ichor 39 (35); 4 everflame 167 (167); 4 forge_slag 4 (4); 4 heaven_s_ash 153 (153); 4 titan_alloy 1 (1); 4 witch_salve 26 (25); 5 dream_spore 1 (1); 5 primal_bloom 2 (2)
+informed, no catalysts: wins 83/200, lost at depth 1..5: 7 12 94 4 0
+uninformed: wins 0/200, ended at depth 1..5: 190 10 0 0 0
+lost at 3:6540 4:3360 3:6740 3:7230 4:6840 3:3620 4:24630 4:32220 3:6020 4:10660 4:14850 4:7770 4:2190 1:240 4:3160 4:2520 4:30160 3:6930 3:2200 4:10290 1:220 3:3540 3:6920 3:4600 3:3140 1:280 4:5880 4:23850 4:8220 3:7440 4:19240 3:5610 2:1040 1:220 4:21120 3:880 1:280 3:3600 3:3450 3:5400 4:3280 4:14890 4:12420 4:6420 4:4350 4:25560 3:4530 4:7860 1:200 2:980 3:5340 4:32420 3:5720 4:2440 3:660 4:14220 4:24060 4:2860 4:22760 1:160 3:2660 4:2190 4:4700 4:3780 3:4830 5:18840 2:810 2:920
+TRACE no catalysts, seed 4: Lost at depth 3
+   bench ember_coal bone_ash glowmoss glowmoss . bone_ash . . . => 2:sulfur 40, 2:dusk_cap 80
+d1 t4 +120 deck 16 hand sulfur,dusk_cap,deep_tear,sunbloom,wyrm_fang,deep_tear,sunbloom
+   bench wyrm_fang deep_tear sunbloom . sunbloom deep_tear . . . => 2:dragon_blood 40, 2:verdant_tonic 80
+d1 t3 +120 deck 16 hand sulfur,dusk_cap,dragon_blood,verdant_tonic,moondust,iron_ore,ember_coal,wyrm_fang,bone_ash
+   bench ember_coal deep_tear glowmoss sunbloom . moondust . . . => 2:steam_wisp 40, 2:moonpetal 80
+d1 t1 +-1 deck 16 hand sulfur,dusk_cap,dragon_blood,verdant_tonic,steam_wisp,moonpetal,sunbloom,deep_tear,bone_ash,iron_ore,glowmoss
+   bench ember_coal iron_ore wyrm_fang sulfur sunbloom ember_coal dragon_blood . . => 2:sky_iron 40, 2:gold_ingot 240, 2:phoenix_feather 1080
+d2 t5 +1360 deck 16 hand dusk_cap,verdant_tonic,steam_wisp,moonpetal,phoenix_feather,bone_ash,moondust,deep_tear,deep_tear,sunbloom
+   bench sunbloom moondust moonpetal bone_ash . . . . . => 2:pixie_wing 40, 2:unicorn_horn 240
+d2 t3 +-1 deck 16 hand dusk_cap,verdant_tonic,steam_wisp,phoenix_feather,deep_tear,deep_tear,unicorn_horn,glowmoss,iron_ore,moondust
+   bench glowmoss moondust . iron_ore . . . . . => 2:moonpetal 20
+d3 t7 +20 deck 16 hand dusk_cap,verdant_tonic,steam_wisp,phoenix_feather,deep_tear,deep_tear,unicorn_horn,moonpetal,bone_ash,glowmoss,wyrm_fang
+   bench wyrm_fang deep_tear deep_tear . . glowmoss . . . => 2:dragon_blood 20, 2:verdant_tonic 80
+d3 t6 +100 deck 16 hand dusk_cap,verdant_tonic,steam_wisp,phoenix_feather,unicorn_horn,moonpetal,bone_ash,dragon_blood,verdant_tonic,iron_ore,sunbloom,sunbloom,glowmoss
+   bench deep_tear moondust steam_wisp glowmoss bone_ash iron_ore . . . => 2:frost_salt 40, 2:storm_glass 240, 2:dusk_cap 60
+d3 t5 +340 deck 16 hand dusk_cap,verdant_tonic,phoenix_feather,unicorn_horn,moonpetal,dragon_blood,verdant_tonic,storm_glass,dusk_cap,ember_coal,deep_tear,ember_coal,moondust,wyrm_fang
+   bench unicorn_horn storm_glass . wyrm_fang . deep_tear . . moondust => 2:frost_salt 20, 2:aurora_dust 720
+d3 t4 +740 deck 16 hand dusk_cap,verdant_tonic,phoenix_feather,moonpetal,dragon_blood,verdant_tonic,dusk_cap,ember_coal,ember_coal,aurora_dust,frost_salt,wyrm_fang,moondust,sunbloom
+   bench sunbloom bone_ash deep_tear frost_salt aurora_dust moonpetal iron_ore wyrm_fang . => 4:heaven_s_ash 3000, 2:dragon_scale 80
+d3 t3 +3080 deck 16 hand dusk_cap,verdant_tonic,phoenix_feather,dragon_blood,verdant_tonic,dusk_cap,heaven_s_ash,dragon_scale,bone_ash,iron_ore,moondust,deep_tear,glowmoss
+   bench iron_ore moondust bone_ash deep_tear glowmoss . . . . => 2:quicksilver 40, 2:verdant_tonic 40
+d3 t2 +80 deck 16 hand dusk_cap,verdant_tonic,phoenix_feather,dragon_blood,verdant_tonic,dusk_cap,heaven_s_ash,dragon_scale,quicksilver,verdant_tonic,glowmoss,iron_ore,deep_tear,ember_coal,iron_ore
+   bench deep_tear glowmoss ember_coal dusk_cap quicksilver iron_ore iron_ore . . => 2:sky_iron 20, 2:verdant_tonic 40, 2:nightshade_ink 360
+d3 t1 +420 deck 16 hand verdant_tonic,phoenix_feather,dragon_blood,verdant_tonic,dusk_cap,heaven_s_ash,dragon_scale,verdant_tonic,verdant_tonic,sky_iron,nightshade_ink
+TRACE no catalysts, seed 7: Lost at depth 3
+   bench ember_coal deep_tear glowmoss . . . . . . => 2:steam_wisp 40
+d1 t4 +40 deck 16 hand sunbloom,sunbloom,steam_wisp,wyrm_fang,bone_ash,glowmoss
+   bench deep_tear moondust steam_wisp bone_ash . . . . . => 2:frost_salt 40, 2:storm_glass 240
+d1 t2 +-1 deck 16 hand iron_ore,iron_ore,storm_glass,ember_coal,moondust,wyrm_fang
+   bench ember_coal iron_ore deep_tear iron_ore . glowmoss . . . => 2:sky_iron 40, 2:verdant_tonic 80
+d2 t6 +120 deck 16 hand storm_glass,sky_iron,verdant_tonic,moondust,wyrm_fang,sunbloom,bone_ash,ember_coal
+   bench ember_coal bone_ash sunbloom sky_iron wyrm_fang moondust . . . => 2:sulfur 40, 2:gold_ingot 240, 2:pixie_wing 120
+d2 t5 +400 deck 16 hand storm_glass,verdant_tonic,gold_ingot,pixie_wing,wyrm_fang,moondust,deep_tear,sunbloom,glowmoss
+   bench deep_tear wyrm_fang glowmoss sunbloom gold_ingot moondust . . pixie_wing => 2:dragon_blood 40, 2:phoenix_feather 720, 2:moonpetal 120, 2:unicorn_horn 480
+d2 t3 +-1 deck 16 hand storm_glass,verdant_tonic,phoenix_feather,unicorn_horn,bone_ash,moondust,glowmoss,deep_tear,bone_ash
+   bench unicorn_horn storm_glass . deep_tear . glowmoss . . moondust => 2:moonpetal 20, 2:aurora_dust 720
+d3 t7 +740 deck 16 hand verdant_tonic,phoenix_feather,bone_ash,bone_ash,aurora_dust,moonpetal,deep_tear,ember_coal,iron_ore
+   bench ember_coal bone_ash deep_tear iron_ore . . . . . => 2:sulfur 20
+d3 t6 +20 deck 16 hand verdant_tonic,phoenix_feather,bone_ash,aurora_dust,moonpetal,sulfur,wyrm_fang,moondust,sunbloom,iron_ore
+   bench deep_tear moondust glowmoss sunbloom . moondust . . . => 2:frost_salt 20, 2:moonpetal 40
+d3 t5 +60 deck 16 hand verdant_tonic,phoenix_feather,aurora_dust,moonpetal,sulfur,frost_salt,moonpetal,iron_ore,wyrm_fang,bone_ash,bone_ash,deep_tear
+   bench . bone_ash . frost_salt aurora_dust moonpetal . iron_ore . => 4:heaven_s_ash 3000
+d3 t4 +3000 deck 16 hand verdant_tonic,phoenix_feather,sulfur,moonpetal,wyrm_fang,bone_ash,deep_tear,heaven_s_ash,iron_ore,ember_coal
+   bench wyrm_fang deep_tear bone_ash ember_coal iron_ore . . . . => 2:sky_iron 20, 2:dragon_blood 40
+d3 t3 +60 deck 16 hand verdant_tonic,phoenix_feather,sulfur,moonpetal,heaven_s_ash,dragon_blood,sky_iron,glowmoss,iron_ore,wyrm_fang,moondust,ember_coal
+   bench ember_coal phoenix_feather sulfur sky_iron dragon_blood wyrm_fang moondust . glowmoss => 4:everflame 3000, 2:dusk_cap 80, 2:starmetal_ore 360
+d3 t2 +3440 deck 16 hand verdant_tonic,moonpetal,heaven_s_ash,iron_ore,everflame,dusk_cap,starmetal_ore,sunbloom,deep_tear,moondust,glowmoss
+   bench sunbloom deep_tear iron_ore glowmoss . moondust . . . => 2:quicksilver 40, 2:verdant_tonic 80
+d3 t1 +120 deck 16 hand verdant_tonic,moonpetal,heaven_s_ash,everflame,dusk_cap,starmetal_ore,verdant_tonic,quicksilver
+TRACE no catalysts, seed 12: Lost at depth 3
+   bench glowmoss moondust . sunbloom moondust iron_ore . . . => 2:moonpetal 40, 2:pixie_wing 80, 2:unicorn_horn 360
+d1 t3 +-1 deck 16 hand unicorn_horn,bone_ash,deep_tear,wyrm_fang,iron_ore,wyrm_fang
+   bench ember_coal deep_tear ember_coal glowmoss . bone_ash . . . => 2:steam_wisp 40, 2:sulfur 80
+d2 t7 +120 deck 16 hand unicorn_horn,steam_wisp,sulfur,sunbloom,ember_coal,ember_coal,deep_tear,bone_ash
+   bench ember_coal bone_ash sunbloom . . deep_tear . . . => 2:sulfur 20, 2:verdant_tonic 80
+d2 t6 +100 deck 16 hand unicorn_horn,steam_wisp,sulfur,ember_coal,sulfur,verdant_tonic,iron_ore,wyrm_fang,wyrm_fang,moondust
+   bench ember_coal iron_ore moondust sulfur . . . . . => 2:sky_iron 40, 2:gold_ingot 240
+d2 t5 +280 deck 16 hand unicorn_horn,steam_wisp,sulfur,verdant_tonic,wyrm_fang,wyrm_fang,gold_ingot,glowmoss,iron_ore,glowmoss
+   bench . glowmoss steam_wisp sunbloom deep_tear moondust . bone_ash . => 2:frost_salt 40, 2:storm_glass 240
+d2 t4 +280 deck 16 hand unicorn_horn,sulfur,verdant_tonic,gold_ingot,storm_glass,wyrm_fang,moondust,iron_ore,sunbloom,deep_tear
+   bench unicorn_horn storm_glass . sunbloom . deep_tear wyrm_fang iron_ore moondust => 2:dragon_scale 40, 2:frost_salt 40, 2:aurora_dust 1080
+d2 t2 +-1 deck 16 hand sulfur,verdant_tonic,gold_ingot,aurora_dust,dragon_scale,frost_salt,iron_ore,glowmoss,ember_coal,wyrm_fang,ember_coal
+   bench deep_tear moondust sunbloom sunbloom bone_ash . verdant_tonic . . => 2:pixie_wing 20, 2:mandrake 80, 2:lifewater 360
+d3 t6 +460 deck 16 hand sulfur,gold_ingot,aurora_dust,dragon_scale,frost_salt,pixie_wing,lifewater,iron_ore,moondust,ember_coal,wyrm_fang,wyrm_fang
+   bench iron_ore moondust wyrm_fang dragon_scale pixie_wing . wyrm_fang . . => 2:quicksilver 40, 3:chimera_hide 480
+d3 t5 +520 deck 16 hand sulfur,gold_ingot,aurora_dust,frost_salt,lifewater,ember_coal,quicksilver,chimera_hide,glowmoss,iron_ore,sunbloom,deep_tear
+   bench gold_ingot chimera_hide deep_tear ember_coal iron_ore glowmoss sunbloom . . => 2:sky_iron 20, 2:verdant_tonic 80, 2:phoenix_feather 1080
+d3 t4 +1180 deck 16 hand sulfur,aurora_dust,frost_salt,lifewater,quicksilver,phoenix_feather,verdant_tonic,sky_iron,sunbloom,wyrm_fang,iron_ore,moondust,glowmoss
+   bench glowmoss moondust wyrm_fang sunbloom . iron_ore . . . => 2:dragon_scale 20, 2:moonpetal 40
+d3 t3 +60 deck 16 hand sulfur,aurora_dust,frost_salt,lifewater,quicksilver,phoenix_feather,verdant_tonic,sky_iron,moonpetal,dragon_scale,bone_ash,ember_coal,bone_ash,moondust,deep_tear
+   bench bone_ash bone_ash . frost_salt aurora_dust moonpetal deep_tear moondust . => 4:heaven_s_ash 3000, 2:frost_salt 40
+d3 t2 +3040 deck 16 hand sulfur,lifewater,quicksilver,phoenix_feather,verdant_tonic,sky_iron,dragon_scale,ember_coal,heaven_s_ash,frost_salt,wyrm_fang,wyrm_fang,sunbloom,bone_ash
+   bench sunbloom bone_ash . . . . . . . => 2:mandrake 20
+d3 t1 +20 deck 16 hand sulfur,lifewater,quicksilver,phoenix_feather,verdant_tonic,sky_iron,dragon_scale,ember_coal,heaven_s_ash,frost_salt,wyrm_fang,wyrm_fang,mandrake

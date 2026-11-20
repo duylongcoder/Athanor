@@ -235,7 +235,7 @@ namespace Athanor.Tests
                 toast.Title.GetComponentInParent<Clickable>(true).onClick();
 
                 float age = (float)typeof(GoalToast).GetField("age", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(toast);
-                Assert.GreaterOrEqual(age, GoalToast.Stay + GoalToast.Slide);
+                Assert.GreaterOrEqual(age, toast.SlideOutAt);
             }
             finally { f.Destroy(); }
         }
