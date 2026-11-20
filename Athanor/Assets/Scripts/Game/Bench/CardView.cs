@@ -33,6 +33,10 @@ namespace Athanor.Game
         [SerializeField] Layout layout;
         float lift, delay, shift, slid;
         int baseOrder, frontOrder, shownOrder;
+        // what Tick last wrote, so a card at rest writes nothing (NaN / -1 / false: not written yet)
+        float shownAlpha = float.NaN;
+        int shownFrame = -1;
+        bool slidPlaced;
 
         /// <summary>The per-material part of a card: its icon and glow, name (one or two lines), kind, rarity stars and sorting order.</summary>
         public void Show(MaterialData m, int order)
@@ -49,6 +53,7 @@ namespace Athanor.Game
             kind.Text = Loc.Upper(Loc.Kind(m.kind)); kind.Color = Px.Hex(KindColors.Of(m.kind));
             stars.Show(m.rarity);
             shownOrder = -1; SetOrder(order);       // -1: apply the order whatever the card showed before
+            shownAlpha = float.NaN;                 // the label colours were just reset: Tick writes the alpha again
         }
 
         /// <summary>
@@ -89,21 +94,31 @@ namespace Athanor.Game
             return Mathf.Abs(world.x - c.x) <= W / 2f && world.y <= c.y + H / 2f && world.y >= -Px.H / 2f;
         }
 
-        void Update()
+        void Update() => Tick(Time.deltaTime);
+
+        /// <summary>One frame of the card. A card at rest writes nothing: the position, slide, frame sprite and alpha are written only when they change.</summary>
+        public void Tick(float deltaTime)
         {
-            if (delay > 0) { delay -= Time.deltaTime; return; }
-            lift = Mathf.MoveTowards(lift, Selected ? layout.selectedLift : Lifted ? layout.liftedLift : 0, Time.deltaTime * layout.liftSpeed);
+            if (delay > 0) { delay -= deltaTime; return; }
+            lift = Mathf.MoveTowards(lift, Selected ? layout.selectedLift : Lifted ? layout.liftedLift : 0, deltaTime * layout.liftSpeed);
             var target = home + new Vector3(0, lift + (Selected ? Mathf.Round(Mathf.Sin(Time.time * layout.bobSpeed) * layout.bobAmp) : 0), 0);
-            transform.position = Px.Snap(Vector3.Lerp(transform.position, target, 1 - Mathf.Exp(-Time.deltaTime * 18)));
+            var now = transform.position;
+            var next = Px.Snap(Vector3.Lerp(now, target, 1 - Mathf.Exp(-deltaTime * 18)));
+            if (next.x != now.x || next.y != now.y || next.z != now.z) transform.position = next;
             bool front = Selected || Lifted;
-            slid = Mathf.MoveTowards(slid, front ? 0 : shift, Time.deltaTime * 160);
-            Slide();
+            float moved = Mathf.MoveTowards(slid, front ? 0 : shift, deltaTime * 160);
+            if (moved != slid || !slidPlaced) { slid = moved; slidPlaced = true; Slide(); }
             SetOrder(front && frontOrder > 0 ? frontOrder : baseOrder);
-            frame.sprite = Art.Lib.Sprite(Selected ? "card_sel" : "card");
+            int look = Selected ? 1 : 0;
+            if (look != shownFrame) { shownFrame = look; frame.sprite = Art.Lib.Sprite(look == 1 ? "card_sel" : "card"); }
             float a = Dimmed ? 0.35f : 1;
-            frame.color = icon.color = Color.white.Alpha(a);
-            stars.SetAlpha(a);
-            line1.Alpha = a; line2.Alpha = a; kind.Alpha = a;
+            if (a != shownAlpha)
+            {
+                shownAlpha = a;
+                frame.color = icon.color = Color.white.Alpha(a);
+                stars.SetAlpha(a);
+                line1.Alpha = a; line2.Alpha = a; kind.Alpha = a;
+            }
         }
     }
 }

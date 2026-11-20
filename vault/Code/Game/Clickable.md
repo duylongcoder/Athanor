@@ -32,4 +32,4 @@ aliases: []
 [[Card]], [[CatalystChoiceView]], [[EventView]], [[GoalToast]], [[GoalsView]], [[GoldenShots]], [[HudView]], [[JournalCell]], [[JournalView]], [[PauseMenu]], [[PointerInput]], [[Row]], [[RunOverView]], [[Spawn]], [[TitleView]], [[TutorialController]], [[UiButton]]
 
 ## Tested by
-[[PauseTests]], [[PrefabBakeTests]], [[SceneBakeTests]]
+[[HotPathTests]], [[PauseTests]], [[PrefabBakeTests]], [[SceneBakeTests]]

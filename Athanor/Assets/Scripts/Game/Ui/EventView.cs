@@ -20,6 +20,8 @@ namespace Athanor.Game
         {
             public Transform root; public SpriteRenderer body; public Label label, summary; public Clickable click;
             [NonSerialized] public bool over, down;
+            /// <summary>What Update last wrote for this row (-1: nothing yet).</summary>
+            [NonSerialized] public int look = -1;
         }
 
         /// <summary>How the dialog comes in and goes: fade and slide durations, the shade's alpha, where the body slides from, and the flash after a result with notes.</summary>
@@ -87,7 +89,7 @@ namespace Athanor.Game
             {
                 rows[i].root.gameObject.SetActive(i < count);
                 if (i >= count) continue;
-                rows[i].over = rows[i].down = false;
+                rows[i].over = rows[i].down = false; rows[i].look = -1;
                 rows[i].label.Text = Wording.OptionLabel(e, run.EventOptions[i]);
                 rows[i].summary.Text = Loc.Upper(Wording.OptionSummary(run.EventOptions[i]));
             }
@@ -119,11 +121,17 @@ namespace Athanor.Game
             Dev.Hook("[event] closed");
         }
 
-        void Update()
+        void Update() => Tick(Time.deltaTime);
+
+        /// <summary>One frame of the option rows: a row's sprite, tint and label height are written only when its look (pressed, pointed at) changes.</summary>
+        public void Tick(float deltaTime)
         {
             for (int i = 0; i < count && i < MaxOptions; i++)
             {
                 var r = rows[i];
+                int now = (r.down ? 2 : 0) + (r.over && !r.down ? 1 : 0);
+                if (now == r.look) continue;
+                r.look = now;
                 r.body.sprite = Art.Lib.Sprite(r.down ? "option_down" : "option_up");
                 r.body.color = r.over && !r.down ? layout.overTint : Color.white;
                 r.label.transform.localPosition = new Vector3(0, r.down ? layout.labelDown : layout.labelUp, 0);

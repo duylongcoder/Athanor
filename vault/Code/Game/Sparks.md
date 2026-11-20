@@ -40,4 +40,4 @@ aliases: []
 [[BurstSpec]], [[CatalystChoiceView]], [[FxRefs]], [[GameFlow]], [[GoalToast]], [[GoldenShots]], [[IgniteSequence]], [[ReactionCutscene]], [[SimpleCutscene]], [[SparkParticles]], [[TileView]], [[TitleView]]
 
 ## Tested by
-[[SceneBakeTests]], [[SparksTests]]
+[[HotPathTests]], [[SceneBakeTests]], [[SparksTests]]

@@ -17,6 +17,8 @@ namespace Athanor.Game
         public int width;
 
         MaterialPropertyBlock block;
+        SpriteRenderer sheet;
+        int shownOffset = -1;
 
         /// <summary>
         /// The drift at time t, in whole texels, 0 .. width - 1. Truncated toward zero so both directions step the same way
@@ -27,16 +29,24 @@ namespace Athanor.Game
         /// <summary>Shows the sheet as it is at time t.</summary>
         public void Set(float t)
         {
-            var r = GetComponent<SpriteRenderer>();
+            if (sheet == null) sheet = GetComponent<SpriteRenderer>();
             if (block == null) block = new MaterialPropertyBlock();
-            r.GetPropertyBlock(block);
-            block.SetFloat(Scroll, Offset(t, speed, width));
-            r.SetPropertyBlock(block);
+            sheet.GetPropertyBlock(block);
+            int offset = Offset(t, speed, width);
+            block.SetFloat(Scroll, offset);
+            sheet.SetPropertyBlock(block);
+            shownOffset = offset;
         }
 
         void Update()
         {
-            if (Application.isPlaying) Set(Time.time);
+            if (Application.isPlaying) Tick(Time.time);
+        }
+
+        /// <summary>One frame at time <paramref name="time"/>: the sheet moves in whole texels, so most frames change nothing and write nothing.</summary>
+        public void Tick(float time)
+        {
+            if (Offset(time, speed, width) != shownOffset) Set(time);
         }
     }
 }

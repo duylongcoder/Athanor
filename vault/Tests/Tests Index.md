@@ -5,7 +5,7 @@ tags: [moc/tests]
 ---
 
 # Tests
-556 test methods in 45 files. Run: `dotnet test tools/CoreTests` (rules) or `unity test Athanor --mode EditMode`.
+568 test methods in 46 files. Run: `dotnet test tools/CoreTests` (rules) or `unity test Athanor --mode EditMode`.
 
 - [[ChainTests]] — 26 tests · covers [[Bench]], [[ChainPlan]], [[ChainPlanner]], [[ContentDb]]
 - [[ContentTests]] — 41 tests · covers [[Bench]], [[ChainPlanner]], [[ContentData]], [[ContentDb]], [[Ops]]
@@ -28,6 +28,7 @@ tags: [moc/tests]
 - [[DepthClickTests]] — 9 tests · covers [[BenchView]], [[DepthMath]], [[DepthRig]], [[FogSheet]], [[Px]], [[TileView]], [[TiltShift]]
 - [[DepthLayerTests]] — 9 tests · covers [[ArtLibrary]], [[DepthLayer]], [[DepthMath]], [[Px]]
 - [[DepthLookTests]] — 8 tests · covers [[DepthLook]]
+- [[HotPathTests]] — 12 tests · covers [[Art]], [[BenchView]], [[CardView]], [[Clickable]], [[ContentData]], [[ContentDb]], [[Dust]], [[EventView]]
 - [[HudTests]] — 3 tests · covers [[ContentData]], [[ContentDb]], [[HudView]], [[Journal]], [[RunOptions]], [[RunPhase]], [[RunState]], [[Unlocks]]
 - [[LabelLineBoxTests]] — 5 tests · covers [[Fonts]], [[Label]], [[Loc]], [[UiButton]]
 - [[LayoutPinTests]] — 24 tests · covers [[BenchView]], [[CameraSway]], [[CardView]], [[CatalystChoiceView]], [[DepthRig]], [[DepthTable]], [[Dust]], [[EventView]]

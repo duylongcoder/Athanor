@@ -26,3 +26,6 @@ aliases: []
 
 ## Used by
 [[DepthSwitch]], [[FlameSwap]]
+
+## Tested by
+[[HotPathTests]]

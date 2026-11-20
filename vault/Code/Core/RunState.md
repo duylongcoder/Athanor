@@ -70,4 +70,4 @@ aliases: []
 [[AutoPlayer]], [[BenchView]], [[EventView]], [[GameFlow]], [[GoldenShots]], [[HudView]], [[IgniteSequence]], [[Profile]], [[RunOverView]]
 
 ## Tested by
-[[HudTests]], [[LoreTests]], [[PauseTests]], [[Phase3Tests]], [[PrefabBakeTests]], [[RarityReportTests]], [[RarityTests]], [[RulesTests]], [[RunStateTests]], [[TutorialFlowTests]], [[TutorialTests]]
+[[HotPathTests]], [[HudTests]], [[LoreTests]], [[PauseTests]], [[Phase3Tests]], [[PrefabBakeTests]], [[RarityReportTests]], [[RarityTests]], [[RulesTests]], [[RunStateTests]], [[TutorialFlowTests]], [[TutorialTests]]

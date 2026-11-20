@@ -40,4 +40,4 @@ aliases: []
 [[BenchView]], [[FlowState]], [[GameFlow]], [[GoalsView]], [[GoldenShots]], [[HudView]], [[IgniteResolver]], [[JournalView]], [[Profile]], [[RunOverView]], [[RunState]], [[Save]], [[ScreenFlow]], [[TutorialController]]
 
 ## Tested by
-[[HudTests]], [[IgniteTests]], [[JournalTests]], [[LoreTests]], [[PauseTests]], [[Phase3Tests]], [[PrefabBakeTests]], [[RarityReportTests]], [[RarityTests]], [[RoleSimTests]], [[RulesTests]], [[RunStateTests]], [[SaveTests]], [[ScreenFlowTests]], [[TutorialFlowTests]], [[TutorialTests]]
+[[HotPathTests]], [[HudTests]], [[IgniteTests]], [[JournalTests]], [[LoreTests]], [[PauseTests]], [[Phase3Tests]], [[PrefabBakeTests]], [[RarityReportTests]], [[RarityTests]], [[RoleSimTests]], [[RulesTests]], [[RunStateTests]], [[SaveTests]], [[ScreenFlowTests]], [[TutorialFlowTests]], [[TutorialTests]]

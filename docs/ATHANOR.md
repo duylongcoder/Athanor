@@ -372,6 +372,13 @@ fresh + all starters 140 (70%), half 163 (81%), full 169 (84%); aspects alone 14
 EditMode, last recorded run (Phase 6 Task 17, before the six `[Explicit]` reports moved to `tools/CoreReports`): 505 total, 499
 passed, 0 failed, 6 skipped. Re-run it and update this line; the target is 0 failed and 0 skipped.
 
+**Idle bench views (Phase 7 Task 17).** Idle bench GC allocation: **0 B** over 600 frames (10 s at 60 fps). Measured in EditMode, not in the
+Editor Profiler: `HotPathTests.IdleBench_TenSecondsOfEveryUpdate_AllocatesZeroBytes` ticks the Bench prefab's BenchView, HudView, nine
+TileViews, the CardViews and the LinkViews 600 times inside one `Is.Not.AllocatingGCMemory()` (Unity's GC.Alloc counter, the one the
+Profiler's GC Alloc column reads); `Continuous_DustSparksAndFlame_...` does the same for Dust, Sparks (40 live particles) and Flame.
+PointerInput, GameFlow, TitleView, DepthRig and the cutscene views were read, not measured (no input device or run in a batch test).
+Owner to confirm in the Editor Profiler (Play, reach the bench, idle 10 s: script updates 0 B GC Alloc).
+
 **Release steps.** Version is `project.yaml` `project.version` (0.4.0); the owner sets it. Player-facing notes go in `CHANGELOG.md`
 (the Phase 5a entry is still a DRAFT). Tag, then `release-gate` builds, measures and web-tests.
 

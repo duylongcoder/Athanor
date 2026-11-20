@@ -61,7 +61,17 @@ namespace Athanor.Game
         bool bound;
         readonly string[] tileNote = new string[Bench.TileCount], tileNoteTitle = new string[Bench.TileCount];
         Pick press, selected; Vector2 pressAt; bool dragging;
-        float hoverTime; string hoverKey;
+        float hoverTime;
+        // the tooltip: what the pointer rests on (a value, so an idle frame builds no key string), and what the shown tip was built from
+        enum TipKind { None, Catalyst, Aspect, Pause, Redraw, Material, TileNote }
+        struct TipKey
+        {
+            public TipKind kind; public string id; public int a, b;
+            public bool Equals(TipKey o) => kind == o.kind && a == o.a && b == o.b && id == o.id;
+        }
+        TipKey hoverKey;
+        bool tipUp, tipVi; int tipRefresh = -1, tipKnown, tipRedraws, refreshes;
+        int selFrom = -1, selHand, pressFrom, pressHand; bool selDragging;      // what ShowSelection last drew
 
         /// <summary>
         /// Once, after the Bench prefab is in the scene: hands over the content, finishes the nested Hud and Tooltip and hooks the
@@ -84,7 +94,7 @@ namespace Athanor.Game
         public void Bind(RunState state, Journal book)
         {
             run = state; journal = book;
-            selected = press = default; dragging = false;
+            selected = press = default; dragging = false; tipUp = false;
             Hud.ClearNote(); Hud.Hint(null, db);
             Hud.SetPotency(run.Potency, true);
         }
@@ -103,6 +113,7 @@ namespace Athanor.Game
         /// <summary>Redraws tiles, hand, rack, links and HUD from the run. deal slides the cards in from below.</summary>
         public void Refresh(bool deal = false)
         {
+            refreshes++;
             for (int i = 0; i < tiles.Length; i++)
             {
                 var id = run.Bench.Tiles[i];
@@ -202,6 +213,7 @@ namespace Athanor.Game
             press = default; dragging = false; selected = default;
             if (ghost != null) ghost.enabled = false;
             if (tip != null) tip.Hide();
+            tipUp = false;
             foreach (var t in tiles) if (t != null) t.Hovered = t.Pinged = false;
             ShowSelection();
         }
@@ -258,7 +270,14 @@ namespace Athanor.Game
             return PlaceCard(run.Hand.Count - 1, tile);
         }
 
-        void Update()
+        void Update() => Tick(Time.deltaTime);
+
+        /// <summary>
+        /// One frame of the bench: the pointer's picks, the hover marks and the tooltip. A frame where nothing changed builds no
+        /// string: the tooltip is made when the pointer settles on something (or the run, the language or the journal changes),
+        /// and the selection is redrawn only when it changes.
+        /// </summary>
+        public void Tick(float deltaTime)
         {
             if (run == null || !inputEnabled) return;
             Vector2 w = PointerInput.World;
@@ -307,12 +326,14 @@ namespace Athanor.Game
                 c.Lifted = !dragging && over.from == From.Hand && over.handIndex == c.handIndex;
                 c.Dimmed = dragging && press.from == From.Hand && press.handIndex == c.handIndex;
             }
-            ShowSelection();
-            ShowTooltip(over, w);
+            if ((int)selected.from != selFrom || selected.handIndex != selHand || dragging != selDragging || (int)press.from != pressFrom || press.handIndex != pressHand)
+                ShowSelection();
+            ShowTooltip(over, w, deltaTime);
         }
 
         void ShowSelection()
         {
+            selFrom = (int)selected.from; selHand = selected.handIndex; selDragging = dragging; pressFrom = (int)press.from; pressHand = press.handIndex;
             foreach (var c in cards) c.Selected = selected.from == From.Hand && selected.handIndex == c.handIndex;
             foreach (var s in slots)
             {
@@ -322,62 +343,90 @@ namespace Athanor.Game
             }
         }
 
-        void ShowTooltip(Pick over, Vector2 w)
+        void ShowTooltip(Pick over, Vector2 w, float deltaTime)
         {
-            string key = null, title = null, body = null, rarity = null; Vector2 anchor = w; float clear = 18;
+            // what the pointer rests on: a cheap value, the same order of precedence as the text below
+            var key = default(TipKey);
             if (!dragging && Hud.HoveredCatalyst >= 0 && Hud.HoveredCatalyst < run.Catalysts.Count)
-            {
-                var c = run.Catalysts[Hud.HoveredCatalyst];
-                key = "cat" + c.id; title = Loc.T("ui.bench.catalyst_title", ("name", c.name), ("rarity", Loc.Rarity(c.rarity))); body = Loc.C("catalyst." + c.id + ".text", c.text); anchor = Hud.CatalystAnchor(Hud.HoveredCatalyst);
-            }
+                key = new TipKey { kind = TipKind.Catalyst, a = Hud.HoveredCatalyst, id = run.Catalysts[Hud.HoveredCatalyst].id };
             else if (!dragging && Hud.HoveredAspect >= 0 && Hud.HoveredAspect < run.Aspects.Count)
-            {
-                var a = run.Aspects[Hud.HoveredAspect];
-                key = "asp" + a.Data.id; title = a.Data.name; body = Wording.AspectRule(a); anchor = Hud.AspectAnchor(Hud.HoveredAspect); clear = 16;
-            }
-            else if (!dragging && Hud.PauseHovered && !Application.isMobilePlatform)
-            {
-                key = "pause"; title = Loc.T("ui.pause.button"); anchor = Hud.PauseAnchor; body = "";
-            }
-            else if (!dragging && Hud.RedrawHovered)
-            {
-                key = "redraw"; title = Loc.T("ui.bench.redraw"); anchor = Hud.RedrawAnchor;
-                body = Loc.T(run.RedrawsLeft > 0 ? "ui.bench.redraw_text" : "ui.bench.redraw_none");
-            }
+                key = new TipKey { kind = TipKind.Aspect, a = Hud.HoveredAspect, id = run.Aspects[Hud.HoveredAspect].Data.id };
+            else if (!dragging && Hud.PauseHovered && !Application.isMobilePlatform) key = new TipKey { kind = TipKind.Pause };
+            else if (!dragging && Hud.RedrawHovered) key = new TipKey { kind = TipKind.Redraw };
             // a hand card of a starting material tells its rarity (SPEC 23), so it has a tip too; a made material in the rack always had one
             else if (!dragging && over.Is && (over.from == From.Tile || over.from == From.Hand || db.Material(over.id).tier > 0))
-            {
-                var m = db.Material(over.id);
-                int known = 0; foreach (var r in db.RecipesContaining(m.id)) if (journal.IsKnown(r.items)) known++;
-                key = over.from + over.id + over.tile + over.handIndex; title = m.name;
-                // on the bench: the heat a recipe with this tile as its hub would have (itself and all it touches)
-                string heat = over.from == From.Tile ? Loc.T("ui.bench.heat_here", ("n", ChainPlanner.Heat(run.Bench.Tiles, over.tile, db, run.Rules))) : "";
-                // two lines: the panel has no room for a third
-                int ri = over.from == From.Tile ? run.Rules.Ri(db, over.tile, m.id) : m.reactivity;
-                body = Loc.T("ui.bench.material", ("kind", Loc.Kind(m.kind)), ("tier", m.tier), ("known", known), ("ri", ri)) + heat;
-                if (over.from == From.Tile) { anchor = tiles[over.tile].centre + layout.tileTipLift; clear = 22; }
-                else
-                {
-                    foreach (var s in slots) if (s.handIndex == over.handIndex) anchor = s.pos;
-                    foreach (var c in cards) if (c.handIndex == over.handIndex) anchor = c.home + layout.cardTipLift;   // above the card
-                    clear = 16;
-                    if (m.tier == 0) rarity = Rarities.Of(m.rarity);
-                }
-            }
+                key = new TipKey { kind = TipKind.Material, id = over.id, a = over.tile, b = over.handIndex };
             else if (!dragging && !over.Is)
             {
                 // an empty tile that an aspect or this depth's event acts on says what it does
                 for (int i = tiles.Length - 1; i >= 0; i--)
                 {
                     if (tileNote[i] == null || !tiles[i].Contains(PointerInput.Bench)) continue;
-                    key = "tile" + i; title = tileNoteTitle[i]; body = tileNote[i]; anchor = tiles[i].centre; clear = 16;
+                    key = new TipKey { kind = TipKind.TileNote, a = i };
                     break;
                 }
             }
-            if (key != hoverKey) { hoverKey = key; hoverTime = 0; tip.Hide(); }
-            if (key == null) return;
-            hoverTime += Time.deltaTime;
-            if (hoverTime > 0.3f) tip.Show(title, body, anchor, clear, rarity);
+            if (!key.Equals(hoverKey)) { hoverKey = key; hoverTime = 0; tip.Hide(); tipUp = false; }
+            if (key.kind == TipKind.None) return;
+            hoverTime += deltaTime;
+            if (hoverTime <= 0.3f) return;
+            // the tip stays as built until what it was built from changes
+            int known = journal.KnownPairs.Count;
+            if (tipUp && tipRefresh == refreshes && tipKnown == known && tipRedraws == run.RedrawsLeft && tipVi == Loc.Vi) return;
+            tipUp = true; tipRefresh = refreshes; tipKnown = known; tipRedraws = run.RedrawsLeft; tipVi = Loc.Vi;
+            BuildTip(key, over, w);
+        }
+
+        /// <summary>Writes the tooltip for what the pointer rests on.</summary>
+        void BuildTip(TipKey key, Pick over, Vector2 w)
+        {
+            string title = null, body = null, rarity = null; Vector2 anchor = w; float clear = 18;
+            switch (key.kind)
+            {
+                case TipKind.Catalyst:
+                {
+                    var c = run.Catalysts[key.a];
+                    title = Loc.T("ui.bench.catalyst_title", ("name", c.name), ("rarity", Loc.Rarity(c.rarity))); body = Loc.C("catalyst." + c.id + ".text", c.text); anchor = Hud.CatalystAnchor(key.a);
+                    break;
+                }
+                case TipKind.Aspect:
+                {
+                    var a = run.Aspects[key.a];
+                    title = a.Data.name; body = Wording.AspectRule(a); anchor = Hud.AspectAnchor(key.a); clear = 16;
+                    break;
+                }
+                case TipKind.Pause:
+                    title = Loc.T("ui.pause.button"); anchor = Hud.PauseAnchor; body = "";
+                    break;
+                case TipKind.Redraw:
+                    title = Loc.T("ui.bench.redraw"); anchor = Hud.RedrawAnchor;
+                    body = Loc.T(run.RedrawsLeft > 0 ? "ui.bench.redraw_text" : "ui.bench.redraw_none");
+                    break;
+                case TipKind.Material:
+                {
+                    var m = db.Material(over.id);
+                    int known = 0; foreach (var r in db.RecipesContaining(m.id)) if (journal.IsKnown(r.items)) known++;
+                    title = m.name;
+                    // on the bench: the heat a recipe with this tile as its hub would have (itself and all it touches)
+                    string heat = over.from == From.Tile ? Loc.T("ui.bench.heat_here", ("n", ChainPlanner.Heat(run.Bench.Tiles, over.tile, db, run.Rules))) : "";
+                    // two lines: the panel has no room for a third
+                    int ri = over.from == From.Tile ? run.Rules.Ri(db, over.tile, m.id) : m.reactivity;
+                    body = Loc.T("ui.bench.material", ("kind", Loc.Kind(m.kind)), ("tier", m.tier), ("known", known), ("ri", ri)) + heat;
+                    if (over.from == From.Tile) { anchor = tiles[over.tile].centre + layout.tileTipLift; clear = 22; }
+                    else
+                    {
+                        foreach (var s in slots) if (s.handIndex == over.handIndex) anchor = s.pos;
+                        foreach (var c in cards) if (c.handIndex == over.handIndex) anchor = c.home + layout.cardTipLift;   // above the card
+                        clear = 16;
+                        if (m.tier == 0) rarity = Rarities.Of(m.rarity);
+                    }
+                    break;
+                }
+                case TipKind.TileNote:
+                    title = tileNoteTitle[key.a]; body = tileNote[key.a]; anchor = tiles[key.a].centre; clear = 16;
+                    break;
+            }
+            tip.Show(title, body, anchor, clear, rarity);
         }
     }
 }

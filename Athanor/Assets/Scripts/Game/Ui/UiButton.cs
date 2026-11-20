@@ -21,6 +21,7 @@ namespace Athanor.Game
         }
         [SerializeField] Look look;
         bool over, down;
+        int shownLook = -1;     // what Update last wrote: sprite, tint and label height
         /// <summary>Raised on a click while the button is enabled.</summary>
         public event Action Clicked;
         /// <summary>The button's label, for text that carries an argument.</summary>
@@ -43,8 +44,14 @@ namespace Athanor.Game
 
         void OnDisable() { over = down = false; }
 
-        void Update()
+        void Update() => Tick(Time.deltaTime);
+
+        /// <summary>One frame of the button: the sprite, tint and label height are written only when the button's look (pressed, disabled, pointed at) changes.</summary>
+        public void Tick(float deltaTime)
         {
+            int now = (down ? 4 : 0) + (disabled ? 0 : over && !down ? 1 : 2);
+            if (now == shownLook) return;
+            shownLook = now;
             body.sprite = Art.Lib.Sprite(down ? "button_down" : "button_up");
             body.color = disabled ? look.disabledTint : over && !down ? look.overTint : Color.white;
             label.transform.localPosition = new Vector3(0, down ? look.labelDown : look.labelUp, 0);

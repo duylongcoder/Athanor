@@ -32,4 +32,4 @@ aliases: []
 [[WindowView]]
 
 ## Tested by
-[[LayoutPinTests]]
+[[HotPathTests]], [[LayoutPinTests]]

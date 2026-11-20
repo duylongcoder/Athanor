@@ -69,7 +69,9 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | TutorialPlan | TutorialPlan | Core | enum | Athanor/Assets/Scripts/Core/Tutorial.cs | 6 |  |
 | BenchView | BenchView | Game | class | Athanor/Assets/Scripts/Game/Bench/BenchView.cs | 14 | The main screen: nine tiles, the hand of cards, the rack of discoveries and the HUD. Materials are placed by dragging them onto a tile, or by clicking one and then a tile; clicking a placed one takes  |
 | BenchView.Layout | BenchView.Layout | Game | struct | Athanor/Assets/Scripts/Game/Bench/BenchView.cs | 29 | Offsets and a colour of the bench, stored in Bench.prefab. |
+| TipKey | TipKey | Game | struct | Athanor/Assets/Scripts/Game/Bench/BenchView.cs | 67 |  |
 | From | From | Game | enum | Athanor/Assets/Scripts/Game/Bench/BenchView.cs | 43 |  |
+| TipKind | TipKind | Game | enum | Athanor/Assets/Scripts/Game/Bench/BenchView.cs | 66 |  |
 | CardView | CardView | Game | class | Athanor/Assets/Scripts/Game/Bench/CardView.cs | 7 | A starting material in the hand, drawn as a parchment card. |
 | CardView.Layout | CardView.Layout | Game | struct | Athanor/Assets/Scripts/Game/Bench/CardView.cs | 22 | Offsets and speeds of the card, stored in Card.prefab. |
 | Dust | Dust | Game | class | Athanor/Assets/Scripts/Game/Bench/Dust.cs | 9 | Dust drifting down through the moonbeam: a loop, each mote's position a pure function of time, all of them drawn as one SparkMesh (one renderer) at order 8. |
@@ -220,6 +222,7 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | DepthLookTests | DepthLookTests | Tests | class | Athanor/Assets/Tests/EditModeGame/DepthLookTests.cs | 5 |  |
 | GameTestSetup | GameTestSetup | Tests | class | Athanor/Assets/Tests/EditModeGame/GameTestSetup.cs | 7 | Once per run of the Game tests: the language files, art library and particle material the game would get from GameFlow and Sparks. |
 | GoldenShotTests | GoldenShotTests | Tests | class | Athanor/Assets/Tests/EditModeGame/GoldenShotTests.cs | 7 | Every view, in both languages, still looks like the picture recorded in production/qa/evidence/phase7/baseline/golden. |
+| HotPathTests | HotPathTests | Tests | class | Athanor/Assets/Tests/EditModeGame/HotPathTests.cs | 12 | Idle frames allocate nothing: a component that has nothing to change this frame builds no string, looks up no sprite and makes no closure. |
 | HudTests | HudTests | Tests | class | Athanor/Assets/Tests/EditModeGame/HudTests.cs | 9 | The Redraw button is live only while a redraw is left and the bench is in play. |
 | LabelLineBoxTests | LabelLineBoxTests | Tests | class | Athanor/Assets/Tests/EditModeGame/LabelLineBoxTests.cs | 15 | Line-box text (the Descent's depth name, SPEC (f)): the mockup sets it in a CSS line box as tall as the size, so the glyphs sit a half-leading below the box top; TMP puts the baseline one ascender dow |
 | LayoutPinTests | LayoutPinTests | Tests | class | Athanor/Assets/Tests/EditModeGame/LayoutPinTests.cs | 11 | Phase 7: numbers that moved from code into Main.unity or a prefab equal the literals the code had. |
@@ -638,34 +641,45 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | BenchView | property | Hud | 21 | public HudView Hud |
 | BenchView | property | TileCount | 23 | public int TileCount |
 | BenchView | property | Pick | 44 | struct Pick |
-| BenchView | method | Bind | 70 | public void Bind(ContentDb content, FxRefs fx) |
-| BenchView | method | Bind | 84 | public void Bind(RunState state, Journal book) |
-| BenchView | method | TileCentre | 92 | public Vector3 TileCentre(int i) |
-| BenchView | method | RackSlot | 94 | public Vector3 RackSlot(int i) |
-| BenchView | method | PreviewOnRack | 96 | public void PreviewOnRack(int i, string id) |
-| BenchView | method | Tile | 101 | public TileView Tile(int i) |
-| BenchView | method | Refresh | 104 | public void Refresh(bool deal = false) |
-| BenchView | method | ClearLinks | 184 | public void ClearLinks() |
-| BenchView | method | FloatText | 187 | public IEnumerator FloatText(string text, Vector3 from, Color color, float seconds = 0.8f, bool small = false) |
-| BenchView | method | PlaceLine | 236 | public static string PlaceLine(int tile) |
-| BenchView | method | UnplaceLine | 237 | public static string UnplaceLine(int tile) |
+| BenchView | method | Bind | 80 | public void Bind(ContentDb content, FxRefs fx) |
+| BenchView | method | Bind | 94 | public void Bind(RunState state, Journal book) |
+| BenchView | method | TileCentre | 102 | public Vector3 TileCentre(int i) |
+| BenchView | method | RackSlot | 104 | public Vector3 RackSlot(int i) |
+| BenchView | method | PreviewOnRack | 106 | public void PreviewOnRack(int i, string id) |
+| BenchView | method | Tile | 111 | public TileView Tile(int i) |
+| BenchView | method | Refresh | 114 | public void Refresh(bool deal = false) |
+| BenchView | method | ClearLinks | 195 | public void ClearLinks() |
+| BenchView | method | FloatText | 198 | public IEnumerator FloatText(string text, Vector3 from, Color color, float seconds = 0.8f, bool small = false) |
+| BenchView | method | PlaceLine | 248 | public static string PlaceLine(int tile) |
+| BenchView | method | UnplaceLine | 249 | public static string UnplaceLine(int tile) |
+| BenchView | method | Tick | 280 | public void Tick(float deltaTime) |
 | BenchView.Layout | field | joinLift | 32 | public Vector3 joinLift |
 | BenchView.Layout | field | floatLiftTo | 34 | public Vector3 floatLiftFrom, floatLiftTo |
 | BenchView.Layout | field | floatShadow | 36 | public Color floatShadow |
 | BenchView.Layout | field | ghostLift | 38 | public float ghostLift |
 | BenchView.Layout | field | cardTipLift | 40 | public Vector3 tileTipLift, cardTipLift |
+| TipKey | field | kind | 69 | public TipKind kind |
+| TipKey | method | Equals | 70 | public bool Equals(TipKey o) |
 | From | value | None | 43 | None |
 | From | value | Hand | 43 | Hand |
 | From | value | Tile | 43 | Tile |
+| TipKind | value | None | 66 | None |
+| TipKind | value | Catalyst | 66 | Catalyst |
+| TipKind | value | Aspect | 66 | Aspect |
+| TipKind | value | Pause | 66 | Pause |
+| TipKind | value | Redraw | 66 | Redraw |
+| TipKind | value | Material | 66 | Material |
+| TipKind | value | TileNote | 66 | TileNote |
 | CardView | field | W | 9 | public const int W = 74, H = 70 |
 | CardView | field | handIndex | 10 | public int handIndex |
 | CardView | field | id | 11 | public string id |
 | CardView | field | home | 12 | public Vector3 home |
 | CardView | field | Dimmed | 13 | public bool Lifted, Selected, Dimmed |
-| CardView | method | Show | 38 | public void Show(MaterialData m, int order) |
-| CardView | method | Fan | 59 | public void Fan(float visible, int front) |
-| CardView | method | DealIn | 84 | public void DealIn(float wait) |
-| CardView | method | Contains | 86 | public bool Contains(Vector2 world) |
+| CardView | method | Show | 42 | public void Show(MaterialData m, int order) |
+| CardView | method | Fan | 64 | public void Fan(float visible, int front) |
+| CardView | method | DealIn | 89 | public void DealIn(float wait) |
+| CardView | method | Contains | 91 | public bool Contains(Vector2 world) |
+| CardView | method | Tick | 100 | public void Tick(float deltaTime) |
 | CardView.Layout | field | nameTwoLines | 25 | public float nameOneLine, nameTwoLines |
 | CardView.Layout | field | pictureSlideMax | 27 | public float pictureSlideMax |
 | CardView.Layout | field | dealDrop | 29 | public float dealDrop |
@@ -682,25 +696,26 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | HudView | field | PauseOrder | 17 | public const int PauseOrder = 650 |
 | HudView | property | HoveredAspect | 23 | public int HoveredAspect |
 | HudView | field | MaxCatalysts | 25 | public const int MaxCatalysts = 6, MaxAspects = 3 |
-| HudView | method | SetPauseShown | 94 | public void SetPauseShown(bool shown) |
-| HudView | property | PauseShown | 100 | public bool PauseShown |
-| HudView | property | PauseAnchor | 101 | public Vector3 PauseAnchor |
-| HudView | property | RedrawRect | 104 | public Rect RedrawRect |
-| HudView | property | PauseRect | 106 | public Rect PauseRect |
-| HudView | property | PotencyPosition | 107 | public Vector3 PotencyPosition |
-| HudView | method | CatalystAnchor | 109 | public Vector3 CatalystAnchor(int i) |
-| HudView | method | AspectAnchor | 110 | public Vector3 AspectAnchor(int i) |
-| HudView | property | RedrawAnchor | 112 | public Vector3 RedrawAnchor |
-| HudView | method | CanRedraw | 114 | public static bool CanRedraw(RunState run) |
-| HudView | method | Number | 115 | public static string Number(long n) |
-| HudView | method | Bind | 120 | public void Bind() |
-| HudView | method | Show | 160 | public void Show(RunState run, ContentDb db, Journal journal, bool inputEnabled, bool keepRedraw = false) |
-| HudView | method | SetPotency | 208 | public void SetPotency(long value, bool instant = false) |
-| HudView | method | Note | 211 | public void Note(ReactionEvent e, ContentDb db) |
-| HudView | method | Hint | 235 | public void Hint(HintData h, ContentDb db) |
-| HudView | method | HintLine | 242 | public static string HintLine(HintData h, ContentDb db, bool withName = true) |
-| HudView | method | Bump | 250 | public void Bump() |
-| HudView | method | ClearNote | 252 | public void ClearNote() |
+| HudView | method | SetPauseShown | 99 | public void SetPauseShown(bool shown) |
+| HudView | property | PauseShown | 105 | public bool PauseShown |
+| HudView | property | PauseAnchor | 106 | public Vector3 PauseAnchor |
+| HudView | property | RedrawRect | 109 | public Rect RedrawRect |
+| HudView | property | PauseRect | 111 | public Rect PauseRect |
+| HudView | property | PotencyPosition | 112 | public Vector3 PotencyPosition |
+| HudView | method | CatalystAnchor | 114 | public Vector3 CatalystAnchor(int i) |
+| HudView | method | AspectAnchor | 115 | public Vector3 AspectAnchor(int i) |
+| HudView | property | RedrawAnchor | 117 | public Vector3 RedrawAnchor |
+| HudView | method | CanRedraw | 119 | public static bool CanRedraw(RunState run) |
+| HudView | method | Number | 120 | public static string Number(long n) |
+| HudView | method | Bind | 125 | public void Bind() |
+| HudView | method | Show | 165 | public void Show(RunState run, ContentDb db, Journal journal, bool inputEnabled, bool keepRedraw = false) |
+| HudView | method | SetPotency | 213 | public void SetPotency(long value, bool instant = false) |
+| HudView | method | Note | 216 | public void Note(ReactionEvent e, ContentDb db) |
+| HudView | method | Hint | 240 | public void Hint(HintData h, ContentDb db) |
+| HudView | method | HintLine | 247 | public static string HintLine(HintData h, ContentDb db, bool withName = true) |
+| HudView | method | Bump | 255 | public void Bump() |
+| HudView | method | ClearNote | 257 | public void ClearNote() |
+| HudView | method | Tick | 266 | public void Tick(float deltaTime) |
 | HudView.Layout | field | rowVi | 32 | public int rowEn, rowVi |
 | HudView.Layout | field | noteCharsVi | 34 | public int noteCharsEn, noteCharsVi |
 | HudView.Layout | field | redrawRect | 36 | public Rect redrawRect |
@@ -728,20 +743,21 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | TileView | field | index | 16 | public int index |
 | TileView | method | Bind | 19 | public void Bind(FxRefs effects) |
 | TileView | field | centre | 25 | public Vector3 centre |
-| TileView | property | Material | 49 | public string Material |
-| TileView | property | Hovered | 50 | public bool Hovered |
-| TileView | property | Pinged | 52 | public bool Pinged |
-| TileView | property | Shut | 54 | public bool Shut |
-| TileView | property | Marked | 55 | public bool Marked |
-| TileView | property | Icon | 56 | public SpriteRenderer Icon |
-| TileView | property | FaceCentre | 59 | public Vector2 FaceCentre |
-| TileView | property | FaceSize | 60 | public Vector2 FaceSize |
-| TileView | method | Contains | 62 | public bool Contains(Vector2 world) |
-| TileView | method | SetState | 66 | public void SetState(Color? marker, bool shut) |
-| TileView | method | Show | 76 | public void Show(MaterialData m, bool pop) |
-| TileView | method | Clear | 89 | public void Clear() |
-| TileView | method | Flash | 97 | public void Flash(Color c) |
-| TileView | method | Consume | 100 | public IEnumerator Consume() |
+| TileView | property | Material | 50 | public string Material |
+| TileView | property | Hovered | 51 | public bool Hovered |
+| TileView | property | Pinged | 53 | public bool Pinged |
+| TileView | property | Shut | 55 | public bool Shut |
+| TileView | property | Marked | 56 | public bool Marked |
+| TileView | property | Icon | 57 | public SpriteRenderer Icon |
+| TileView | property | FaceCentre | 60 | public Vector2 FaceCentre |
+| TileView | property | FaceSize | 61 | public Vector2 FaceSize |
+| TileView | method | Contains | 63 | public bool Contains(Vector2 world) |
+| TileView | method | SetState | 67 | public void SetState(Color? marker, bool shut) |
+| TileView | method | Show | 77 | public void Show(MaterialData m, bool pop) |
+| TileView | method | Clear | 91 | public void Clear() |
+| TileView | method | Flash | 99 | public void Flash(Color c) |
+| TileView | method | Consume | 102 | public IEnumerator Consume() |
+| TileView | method | Tick | 118 | public void Tick(float deltaTime) |
 | TileView.Layout | field | shutLid | 36 | public Color shutLid |
 | TileView.Layout | field | hoverFace | 38 | public Color hoverFace |
 | TileView.Layout | field | consumeLift | 40 | public Vector3 consumeLift |
@@ -1070,8 +1086,9 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | DepthTiltShiftFeature | method | AddRenderPasses | 12 | public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData) |
 | FogSheet | field | speed | 15 | public float speed |
 | FogSheet | field | width | 17 | public int width |
-| FogSheet | method | Offset | 25 | public static int Offset(float t, float speed, int width) |
-| FogSheet | method | Set | 28 | public void Set(float t) |
+| FogSheet | method | Offset | 27 | public static int Offset(float t, float speed, int width) |
+| FogSheet | method | Set | 30 | public void Set(float t) |
+| FogSheet | method | Tick | 47 | public void Tick(float time) |
 | TiltShift | field | material | 18 | public Material material |
 | TiltShift | field | bandBottom | 20 | public float bandTop, bandBottom |
 | TiltShift | field | feather | 22 | public float feather |
@@ -1103,12 +1120,13 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | FxRefs | field | Screen | 9 | public readonly ScreenFx Screen |
 | FxRefs | field | Sparks | 11 | public readonly Sparks Sparks |
 | FxRefs | ctor | FxRefs | 13 | public FxRefs(ScreenFx screen, Sparks sparks) |
-| ScreenFx | method | Bind | 30 | public void Bind(Camera camera, CameraSway worldSway = null) |
-| ScreenFx | method | Flash | 37 | public void Flash(float peak, float seconds) |
-| ScreenFx | method | Shake | 38 | public void Shake(float pixels, float seconds) |
-| ScreenFx | method | FadeOut | 40 | public IEnumerator FadeOut(float seconds) |
-| ScreenFx | method | FadeIn | 41 | public IEnumerator FadeIn(float seconds) |
-| ScreenFx | method | SetBlack | 42 | public void SetBlack(float a) |
+| ScreenFx | method | Bind | 31 | public void Bind(Camera camera, CameraSway worldSway = null) |
+| ScreenFx | method | Flash | 38 | public void Flash(float peak, float seconds) |
+| ScreenFx | method | Shake | 39 | public void Shake(float pixels, float seconds) |
+| ScreenFx | method | FadeOut | 41 | public IEnumerator FadeOut(float seconds) |
+| ScreenFx | method | FadeIn | 42 | public IEnumerator FadeIn(float seconds) |
+| ScreenFx | method | SetBlack | 43 | public void SetBlack(float a) |
+| ScreenFx | method | Tick | 48 | public void Tick(float deltaTime) |
 | ShakeTiming | field | yScale | 19 | public float rateX, rateY, yScale |
 | SparkMesh | property | Vert | 15 | struct Vert |
 | SparkMesh | property | Quad | 16 | struct Quad |
@@ -1324,12 +1342,13 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | Card | field | root | 47 | public Transform root |
 | Card | field | click | 48 | public Clickable click |
 | Card | field | bench | 49 | public SpriteRenderer[] bench = new SpriteRenderer[Bench.TileCount] |
-| EventView | property | Timing | 27 | public struct Timing |
-| EventView | property | Layout | 30 | public struct Layout |
-| EventView | method | OptionLabel | 43 | public Label OptionLabel(int i) |
-| EventView | property | Outcome | 45 | public Label Outcome |
-| EventView | method | Bind | 50 | public void Bind(FxRefs effects) |
-| EventView | method | Show | 80 | public IEnumerator Show(RunState run, Action changed) |
+| EventView | property | Timing | 29 | public struct Timing |
+| EventView | property | Layout | 32 | public struct Layout |
+| EventView | method | OptionLabel | 45 | public Label OptionLabel(int i) |
+| EventView | property | Outcome | 47 | public Label Outcome |
+| EventView | method | Bind | 52 | public void Bind(FxRefs effects) |
+| EventView | method | Show | 82 | public IEnumerator Show(RunState run, Action changed) |
+| EventView | method | Tick | 127 | public void Tick(float deltaTime) |
 | Row | field | root | 21 | public Transform root |
 | GoalRow | field | reward | 8 | public Label text, count, reward |
 | GoalRow | field | icon | 9 | public SpriteRenderer track, fill, icon |
@@ -1414,10 +1433,11 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | Tooltip.Layout | field | border | 25 | public float border |
 | Tooltip.Layout | field | longText | 27 | public int longText |
 | UiButton | field | W | 9 | public const int W = 120, H = 26 |
-| UiButton | field | Clicked | 25 | public event Action Clicked |
-| UiButton | property | Text | 27 | public Label Text |
-| UiButton | property | Disabled | 29 | public bool Disabled |
-| UiButton | method | Bind | 34 | public void Bind() |
+| UiButton | field | Clicked | 26 | public event Action Clicked |
+| UiButton | property | Text | 28 | public Label Text |
+| UiButton | property | Disabled | 30 | public bool Disabled |
+| UiButton | method | Bind | 35 | public void Bind() |
+| UiButton | method | Tick | 50 | public void Tick(float deltaTime) |
 | UiButton.Look | field | disabledText | 18 | public Color disabledTint, overTint, disabledText |
 | UiButton.Look | field | labelDown | 20 | public float labelUp, labelDown |
 | ArtLibraryBuilder | method | Refresh | 19 | public static void Refresh() |
@@ -1585,6 +1605,19 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | DepthLookTests | method | ThemedWindow_OutsideANormalRun_IsFalse | 48 | public void ThemedWindow_OutsideANormalRun_IsFalse() |
 | GameTestSetup | method | Inject | 10 | public void Inject() |
 | GoldenShotTests | method | Render_Shot_MatchesTheGoldenImage | 10 | public void Render_Shot_MatchesTheGoldenImage(string name) |
+| HotPathTests | method | DestroyMade | 19 | public void DestroyMade() |
+| HotPathTests | method | Tick_IdleHud_AllocatesNothing | 43 | public void Tick_IdleHud_AllocatesNothing() |
+| HotPathTests | method | Tick_PotencyUnchanged_KeepsTheSameText | 56 | public void Tick_PotencyUnchanged_KeepsTheSameText() |
+| HotPathTests | method | Tick_IdleBench_AllocatesNothing | 95 | public void Tick_IdleBench_AllocatesNothing() |
+| HotPathTests | method | Tick_BenchWithTooltipUp_AllocatesNothing | 108 | public void Tick_BenchWithTooltipUp_AllocatesNothing() |
+| HotPathTests | method | Tick_TileAndTileWithMaterial_AllocateNothing | 123 | public void Tick_TileAndTileWithMaterial_AllocateNothing() |
+| HotPathTests | method | Tick_IdleCard_AllocatesNothing | 140 | public void Tick_IdleCard_AllocatesNothing() |
+| HotPathTests | method | Tick_IdleEventView_AllocatesNothing | 157 | public void Tick_IdleEventView_AllocatesNothing() |
+| HotPathTests | method | Tick_IdleUiButton_AllocatesNothing | 171 | public void Tick_IdleUiButton_AllocatesNothing() |
+| HotPathTests | method | Tick_FogSheet_AllocatesNothingWithinATexelAndWhenOneIsCrossed | 184 | public void Tick_FogSheet_AllocatesNothingWithinATexelAndWhenOneIsCrossed() |
+| HotPathTests | method | Tick_IdleScreenFx_AllocatesNothing | 199 | public void Tick_IdleScreenFx_AllocatesNothing() |
+| HotPathTests | method | IdleBench_TenSecondsOfEveryUpdate_AllocatesZeroBytes | 220 | public void IdleBench_TenSecondsOfEveryUpdate_AllocatesZeroBytes() |
+| HotPathTests | method | Continuous_DustSparksAndFlame_AllocateNothingWhileRunning | 258 | public void Continuous_DustSparksAndFlame_AllocateNothingWhileRunning() |
 | HudTests | method | CanRedraw_WhileRedrawsRemain_IsTrueUntilTheLastRedrawIsUsed | 14 | public void CanRedraw_WhileRedrawsRemain_IsTrueUntilTheLastRedrawIsUsed() |
 | HudTests | method | CanRedraw_IsFalse_OffTheBench_EvenWithRedrawsLeft | 29 | public void CanRedraw_IsFalse_OffTheBench_EvenWithRedrawsLeft() |
 | HudTests | method | CanRedraw_IsFalse_WithNoRun | 40 | public void CanRedraw_IsFalse_WithNoRun() |

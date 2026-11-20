@@ -12,7 +12,7 @@ aliases: []
 # CardView
 
 `public sealed class CardView` : `MonoBehaviour`
-- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Bench/CardView.cs:7-108`
+- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Bench/CardView.cs:7-123`
 
 > A starting material in the hand, drawn as a parchment card.
 
@@ -24,10 +24,11 @@ aliases: []
 | field | `public string id` | 11 |  |
 | field | `public Vector3 home` | 12 |  |
 | field | `public bool Lifted, Selected, Dimmed` | 13 |  |
-| method | `public void Show(MaterialData m, int order)` | 38 | The per-material part of a card: its icon and glow, name (one or two lines), kind, rarity stars and sorting order. |
-| method | `public void Fan(float visible, int front)` | 59 | In a hand too wide to lay side by side the next card covers this one's right. visible is the width left showing: the name and the icon move to the middle of it. While the card is pointed at or picked it comes to the front (order front) and reads as a whole card again. |
-| method | `public void DealIn(float wait)` | 84 | Starts below the screen and slides up after a short stagger. |
-| method | `public bool Contains(Vector2 world)` | 86 |  |
+| method | `public void Show(MaterialData m, int order)` | 42 | The per-material part of a card: its icon and glow, name (one or two lines), kind, rarity stars and sorting order. |
+| method | `public void Fan(float visible, int front)` | 64 | In a hand too wide to lay side by side the next card covers this one's right. visible is the width left showing: the name and the icon move to the middle of it. While the card is pointed at or picked it comes to the front (order front) and reads as a whole card again. |
+| method | `public void DealIn(float wait)` | 89 | Starts below the screen and slides up after a short stagger. |
+| method | `public bool Contains(Vector2 world)` | 91 |  |
+| method | `public void Tick(float deltaTime)` | 100 | One frame of the card. A card at rest writes nothing: the position, slide, frame sprite and alpha are written only when they change. |
 
 ## Uses
 [[Art]], [[Kind]], [[KindColors]], [[Label]], [[Loc]], [[Px]], [[RarityStars]]
@@ -36,4 +37,4 @@ aliases: []
 [[BenchView]]
 
 ## Tested by
-[[LayoutPinTests]], [[PrefabBakeTests]]
+[[HotPathTests]], [[LayoutPinTests]], [[PrefabBakeTests]]

@@ -79,6 +79,11 @@ namespace Athanor.Game
         float catalystPitch = -1;   // the pitch of the sockets shown; -1 until Show
         Vector3 igniteRest; bool igniteRestSet;
         float shown, bump; long goal, targetValue; bool canIgnite, igniteDown, canRedraw, redrawDown, wired;
+        // what Tick last wrote, so a frame that changes nothing writes nothing (-1 / null / false: not written yet)
+        long shownRounded = long.MinValue;
+        bool shownVi, measuredVi, tight, tightSet, potencyPlaced, potencyBright, potencyColored, barHasTarget;
+        string measuredPotency, measuredTarget;
+        int placedBumpDy, barW = -1, igniteLook = -1, redrawFillLook = -1, redrawTextLook = -1;
 
         static Color Gold => Art.Palette.gold;
         static Color PauseEdgeColor => Art.Palette.edge;
@@ -251,38 +256,85 @@ namespace Athanor.Game
 
         public void ClearNote() { foreach (var n in note) n.Text = ""; }
 
-        void Update()
+        void Update() => Tick(Time.deltaTime);
+
+        /// <summary>
+        /// One frame of the HUD. Idle frames build no string and look up no sprite: the potency text is formatted only when the
+        /// rounded number changes, the Ignite sprite and the two labels move only when the button's look changes, the bar is laid
+        /// out only when its width changes. Only the Ignite glow, a continuous pulse, is written every frame (and only while lit).
+        /// </summary>
+        public void Tick(float deltaTime)
         {
             // potency counts toward its goal: fast when far away, never slower than a few points a second
             if (shown != goal)
             {
-                float step = Mathf.Max(30, Mathf.Abs(goal - shown) * 6) * Time.deltaTime;
+                float step = Mathf.Max(30, Mathf.Abs(goal - shown) * 6) * deltaTime;
                 shown = Mathf.MoveTowards(shown, goal, step);
             }
-            potency.Text = Number((long)Mathf.Round(shown));
-            bump = Mathf.Max(0, bump - Time.deltaTime * 6);
-            // a number long enough to run into the target takes the place of the word before it
-            bool tight = layout.tightFrom + potency.Width + layout.tightGap > layout.tightTo - target.Width;
-            potencyWord.gameObject.SetActive(!tight);
+            long rounded = (long)Mathf.Round(shown);
+            bool vi = Loc.Vi;
+            if (rounded != shownRounded || vi != shownVi) { shownRounded = rounded; shownVi = vi; potency.Text = Number(rounded); }
+            bump = Mathf.Max(0, bump - deltaTime * 6);
+            // a number long enough to run into the target takes the place of the word before it; the widths change only with a text
+            string potencyText = potency.Text, targetText = target.Text;
+            if (!ReferenceEquals(potencyText, measuredPotency) || !ReferenceEquals(targetText, measuredTarget) || vi != measuredVi)
+            {
+                measuredPotency = potencyText; measuredTarget = targetText; measuredVi = vi;
+                bool nowTight = layout.tightFrom + potency.Width + layout.tightGap > layout.tightTo - target.Width;
+                if (nowTight != tight || !tightSet) { tight = nowTight; tightSet = true; potencyWord.gameObject.SetActive(!tight); }
+                potencyPlaced = false;
+            }
             int bumpDy = Mathf.CeilToInt(bump * 2);   // 2 px in the first half of the kick, 1 px in the second
-            potency.transform.position = Px.At(tight ? layout.potencyTightX : layout.potencyX, layout.potencyY - bumpDy);
-            potency.Color = bump > 0.4f ? Color.white : Gold;
+            if (!potencyPlaced || bumpDy != placedBumpDy)
+            {
+                potencyPlaced = true; placedBumpDy = bumpDy;
+                potency.transform.position = Px.At(tight ? layout.potencyTightX : layout.potencyX, layout.potencyY - bumpDy);
+            }
+            bool bright = bump > 0.4f;
+            if (bright != potencyBright || !potencyColored) { potencyBright = bright; potencyColored = true; potency.Color = bright ? Color.white : Gold; }
             float fill = targetValue > 0 ? Mathf.Clamp01(shown / targetValue) : 1;
             int w = Mathf.RoundToInt(layout.barWidth * fill);
-            barFill.enabled = barTip.enabled = w > 0;
-            barFill.transform.position = Px.Mid(layout.barOrigin.x, layout.barOrigin.y, w, layout.barHeight); barFill.transform.localScale = new Vector3(w / DotSize, 1, 1);
-            barFill.color = targetValue > 0 ? Color.white : noTargetBar;
-            barTip.transform.position = Px.Mid(layout.barOrigin.x + Mathf.Max(0, w - 1), layout.barOrigin.y, 1, layout.barHeight); barTip.transform.localScale = layout.barTipScale;
+            bool hasTarget = targetValue > 0;
+            if (w != barW || hasTarget != barHasTarget)
+            {
+                barW = w; barHasTarget = hasTarget;
+                barFill.enabled = barTip.enabled = w > 0;
+                barFill.transform.position = Px.Mid(layout.barOrigin.x, layout.barOrigin.y, w, layout.barHeight); barFill.transform.localScale = new Vector3(w / DotSize, 1, 1);
+                barFill.color = hasTarget ? Color.white : noTargetBar;
+                barTip.transform.position = Px.Mid(layout.barOrigin.x + Mathf.Max(0, w - 1), layout.barOrigin.y, 1, layout.barHeight); barTip.transform.localScale = layout.barTipScale;
+            }
 
-            ignite.sprite = Art.Lib.Sprite(!canIgnite ? "ignite_off" : igniteDown ? "ignite_down" : "ignite_up");
-            float pulse = 0.5f + 0.5f * Mathf.Sin(Time.time * 3);
-            ignitePulse.color = canIgnite && !igniteDown ? layout.pulseColor.Alpha(layout.pulseAlpha.x + layout.pulseAlpha.y * pulse) : Color.clear;
-            igniteText.Alpha = canIgnite ? 1 : 0.45f;
-            if (!igniteRestSet) { igniteRest = igniteText.transform.position; igniteRestSet = true; }   // the label's place is the prefab's
-            igniteText.transform.position = igniteRest + new Vector3(0, canIgnite && igniteDown ? -layout.pressedDy : 0, 0);
-            redrawFill.color = !canRedraw ? redrawOff : redrawDown ? redrawPressed : RedrawHovered ? redrawOver : redrawUp;
-            redrawText.Alpha = canRedraw ? 1 : 0.45f;
-            redrawText.transform.position = Px.At(layout.redrawRect.center.x, layout.redrawRect.y + layout.redrawLabelY + (canRedraw && redrawDown ? layout.pressedDy : 0));
+            // Ignite: 0 dark, 1 up, 2 held down; the sprite, the glow's reset and the label change only when it does
+            int look = !canIgnite ? 0 : igniteDown ? 2 : 1;
+            bool pressedIgnite = look == 2;
+            if (look != igniteLook)
+            {
+                igniteLook = look;
+                ignite.sprite = Art.Lib.Sprite(look == 0 ? "ignite_off" : look == 2 ? "ignite_down" : "ignite_up");
+                if (look != 1) ignitePulse.color = Color.clear;
+                igniteText.Alpha = canIgnite ? 1 : 0.45f;
+                if (!igniteRestSet) { igniteRest = igniteText.transform.position; igniteRestSet = true; }   // the label's place is the prefab's
+                igniteText.transform.position = igniteRest + new Vector3(0, pressedIgnite ? -layout.pressedDy : 0, 0);
+            }
+            if (look == 1)
+            {
+                float pulse = 0.5f + 0.5f * Mathf.Sin(Time.time * 3);
+                ignitePulse.color = layout.pulseColor.Alpha(layout.pulseAlpha.x + layout.pulseAlpha.y * pulse);
+            }
+            int fillLook = !canRedraw ? 0 : redrawDown ? 1 : RedrawHovered ? 2 : 3;
+            if (fillLook != redrawFillLook)
+            {
+                redrawFillLook = fillLook;
+                redrawFill.color = fillLook == 0 ? redrawOff : fillLook == 1 ? redrawPressed : fillLook == 2 ? redrawOver : redrawUp;
+            }
+            int textLook = !canRedraw ? 0 : redrawDown ? 2 : 1;
+            bool pressedRedraw = textLook == 2;
+            if (textLook != redrawTextLook)
+            {
+                redrawTextLook = textLook;
+                redrawText.Alpha = canRedraw ? 1 : 0.45f;
+                redrawText.transform.position = Px.At(layout.redrawRect.center.x, layout.redrawRect.y + layout.redrawLabelY + (pressedRedraw ? layout.pressedDy : 0));
+            }
         }
     }
 }

@@ -12,19 +12,20 @@ aliases: []
 # ScreenFx
 
 `public sealed class ScreenFx` : `MonoBehaviour`
-- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Fx/ScreenFx.cs:8-67`
+- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Fx/ScreenFx.cs:8-72`
 
 > Whole-screen effects: a white flash, camera shake, and fading to and from black.
 
 ## Members
 | Kind | Signature | Line | Note |
 |---|---|---|---|
-| method | `public void Bind(Camera camera, CameraSway worldSway = null)` | 30 | camera is the camera the shake moves, unless a depth rig is given: then the shake moves the world only (owner gate G2 #6), except in a cutscene, which is flat and shakes with its camera. |
-| method | `public void Flash(float peak, float seconds)` | 37 |  |
-| method | `public void Shake(float pixels, float seconds)` | 38 |  |
-| method | `public IEnumerator FadeOut(float seconds)` | 40 |  |
-| method | `public IEnumerator FadeIn(float seconds)` | 41 |  |
-| method | `public void SetBlack(float a)` | 42 |  |
+| method | `public void Bind(Camera camera, CameraSway worldSway = null)` | 31 | camera is the camera the shake moves, unless a depth rig is given: then the shake moves the world only (owner gate G2 #6), except in a cutscene, which is flat and shakes with its camera. |
+| method | `public void Flash(float peak, float seconds)` | 38 |  |
+| method | `public void Shake(float pixels, float seconds)` | 39 |  |
+| method | `public IEnumerator FadeOut(float seconds)` | 41 |  |
+| method | `public IEnumerator FadeIn(float seconds)` | 42 |  |
+| method | `public void SetBlack(float a)` | 43 |  |
+| method | `public void Tick(float deltaTime)` | 48 | One frame of the screen effects. With no flash running the flash sprite is not written. |
 
 ## Uses
 [[CameraSway]], [[DepthRig]], [[Motion]]
@@ -33,4 +34,4 @@ aliases: []
 [[FxRefs]], [[GameFlow]], [[GoldenShots]]
 
 ## Tested by
-[[LayoutPinTests]], [[SceneBakeTests]]
+[[HotPathTests]], [[LayoutPinTests]], [[SceneBakeTests]]

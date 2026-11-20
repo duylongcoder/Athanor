@@ -43,8 +43,9 @@ namespace Athanor.Game
             public float popRise;
         }
         [SerializeField] Layout layout;
-        bool glows;
-        float flash, appear = 1;
+        bool glows, faceSet;
+        float flash, appear = 1, shownLight = float.NaN;
+        Color shownFace;
 
         public string Material { get; private set; }
         public bool Hovered { get; set; }
@@ -83,6 +84,7 @@ namespace Athanor.Game
             icon.enabled = shadow.enabled = ring.enabled = halo.enabled = true;
             icon.color = Color.white;
             glowLight.color = glow;
+            halo.color = glow.Alpha(glows ? 0.3f : 0.07f);       // fixed by the material: set once here, not every frame
             appear = pop ? 0 : 1;
         }
 
@@ -90,7 +92,7 @@ namespace Athanor.Game
         {
             Material = null;
             icon.enabled = shadow.enabled = ring.enabled = halo.enabled = false;
-            glowLight.intensity = 0;
+            glowLight.intensity = 0; shownLight = 0;
         }
 
         /// <summary>A quick bright pulse of the whole tile face.</summary>
@@ -110,21 +112,26 @@ namespace Athanor.Game
             Clear();
         }
 
-        void Update()
+        void Update() => Tick(Time.deltaTime);
+
+        /// <summary>One frame of the tile. An empty tile nobody points at writes nothing; a material's ring pulse is the only thing written every frame.</summary>
+        public void Tick(float deltaTime)
         {
             float t = Time.time;
-            flash = Mathf.Max(0, flash - Time.deltaTime * 2.6f);
+            flash = Mathf.Max(0, flash - deltaTime * 2.6f);
             float hover = Hovered ? 0.45f + 0.3f * Mathf.Sin(t * 5) : 0;
-            face.color = flash > 0 ? flashColor.Alpha(flash) : Hovered && !Shut ? layout.hoverFace.Alpha(hover)
+            Color want = flash > 0 ? flashColor.Alpha(flash) : Hovered && !Shut ? layout.hoverFace.Alpha(hover)
                 : Pinged ? markColor.Alpha(0.35f + 0.25f * Mathf.Sin(t * 6)) : Color.clear;
+            if (!faceSet || want.r != shownFace.r || want.g != shownFace.g || want.b != shownFace.b || want.a != shownFace.a) { face.color = shownFace = want; faceSet = true; }
             if (Material == null) return;
-            appear = Mathf.Min(1, appear + Time.deltaTime * 5);
+            appear = Mathf.Min(1, appear + deltaTime * 5);
             float pop = Anim.OutBack(appear);
             int bob = Mathf.RoundToInt(Mathf.Sin(t * 2 + index * 1.7f) * 1.5f);
-            icon.transform.localPosition = centre + new Vector3(0, layout.iconLift + bob + (1 - pop) * layout.popRise, 0);   // local: below a depth group the flat coordinates stay valid
+            var at = centre + new Vector3(0, layout.iconLift + bob + (1 - pop) * layout.popRise, 0);   // local: below a depth group the flat coordinates stay valid
+            if (icon.transform.localPosition != at) icon.transform.localPosition = at;
             ring.color = glow.Times(1.6f).Alpha((0.55f + 0.25f * Mathf.Sin(t * 3 + index)) * appear);
-            halo.color = glow.Alpha(glows ? 0.3f : 0.07f);
-            glowLight.intensity = (glows ? 0.95f : 0.3f) * appear + flash * 0.8f;
+            float light = (glows ? 0.95f : 0.3f) * appear + flash * 0.8f;
+            if (light != shownLight) { shownLight = light; glowLight.intensity = light; }
         }
     }
 }

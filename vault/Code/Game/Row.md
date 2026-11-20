@@ -12,7 +12,7 @@ aliases: []
 # Row
 
 `sealed class Row`
-- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Ui/EventView.cs:19-23` · Nested in [[EventView]]
+- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Ui/EventView.cs:19-25` · Nested in [[EventView]]
 
 ## Members
 | Kind | Signature | Line | Note |

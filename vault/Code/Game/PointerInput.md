@@ -41,4 +41,4 @@ aliases: []
 [[BenchView]], [[Clickable]], [[Cutscene]], [[GameFlow]]
 
 ## Tested by
-[[MainDepthTests]], [[StaticResetTests]]
+[[HotPathTests]], [[MainDepthTests]], [[StaticResetTests]]

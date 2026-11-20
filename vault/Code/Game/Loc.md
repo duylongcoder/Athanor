@@ -48,4 +48,4 @@ aliases: []
 [[BenchView]], [[CardView]], [[CatalystChoiceView]], [[EditorGlobals]], [[EventView]], [[Fonts]], [[GameFlow]], [[GoalToast]], [[GoalsView]], [[GoldenShots]], [[HudView]], [[IgniteSequence]], [[JournalView]], [[Label]], [[PauseMenu]], [[ReactionCutscene]], [[RunOverView]], [[SimpleCutscene]], [[TitleView]], [[TutorialController]], [[Wording]]
 
 ## Tested by
-[[LabelLineBoxTests]], [[LocTests]], [[NoteTextTests]], [[PrefabBakeTests]], [[RunOverDepthTests]], [[StaticResetTests]]
+[[HotPathTests]], [[LabelLineBoxTests]], [[LocTests]], [[NoteTextTests]], [[PrefabBakeTests]], [[RunOverDepthTests]], [[StaticResetTests]]

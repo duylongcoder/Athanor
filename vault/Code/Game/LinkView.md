@@ -32,4 +32,4 @@ aliases: []
 [[BenchView]]
 
 ## Tested by
-[[LayoutPinTests]]
+[[HotPathTests]], [[LayoutPinTests]]
