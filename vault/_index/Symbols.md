@@ -82,8 +82,8 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | RunTiming | RunTiming | Game | struct | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 85 | Waits and shake of the descent and the end of a run, in seconds. |
 | TitleChoice | TitleChoice | Game | enum | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 138 |  |
 | IgniteSequence | IgniteSequence | Game | class | Athanor/Assets/Scripts/Game/Boot/IgniteSequence.cs | 15 | The choreography of one Ignite: the chain of reactions (flash, draw-in, burst, points), the discovery beat and cutscene, the flight of what was made to the rack, the spent tiles and the final potency. |
-| Timing | Timing | Game | struct | Athanor/Assets/Scripts/Game/Boot/IgniteSequence.cs | 19 | Paces, waits and durations, in seconds unless the name says otherwise. |
-| Look | Look | Game | struct | Athanor/Assets/Scripts/Game/Boot/IgniteSequence.cs | 52 | Bursts, offsets, sizes and colours. |
+| IgniteSequence.Timing | IgniteSequence.Timing | Game | struct | Athanor/Assets/Scripts/Game/Boot/IgniteSequence.cs | 19 | Paces, waits and durations, in seconds unless the name says otherwise. |
+| IgniteSequence.Look | IgniteSequence.Look | Game | struct | Athanor/Assets/Scripts/Game/Boot/IgniteSequence.cs | 52 | Bursts, offsets, sizes and colours. |
 | Save | Save | Game | class | Athanor/Assets/Scripts/Game/Boot/Save.cs | 8 | Keeps the journal and the profile between sessions in PlayerPrefs (browser storage in a web build). |
 | Cutscene | Cutscene | Game | class | Athanor/Assets/Scripts/Game/Cutscene/Cutscene.cs | 7 | A sequence that plays to its end unless the player clicks to skip ahead. |
 | DepthLook | DepthLook | Game | class | Athanor/Assets/Scripts/Game/Cutscene/DepthLook.cs | 9 | What a depth looks like from the bench: the intro line under its name and the view through the window. Pure choices, no scene; the pictures and effects are drawn by WindowView. |
@@ -147,7 +147,7 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | Wording | Wording | Game | class | Athanor/Assets/Scripts/Game/Support/Wording.cs | 8 | The words and colours the Phase 3 screens share: rarities, aspects, event effects and goal rewards. |
 | ChoiceCard | ChoiceCard | Game | class | Athanor/Assets/Scripts/Game/Ui/CatalystChoiceView.cs | 11 | What one card of the chooser shows. |
 | CatalystChoiceView | CatalystChoiceView | Game | class | Athanor/Assets/Scripts/Game/Ui/CatalystChoiceView.cs | 23 | Three parchment cards, pick one: a catalyst after a depth is cleared, or an aspect at the start of a run and of depths 3 and 5. An aspect's card shows the tile it would land on. |
-| Card | Card | Game | class | Athanor/Assets/Scripts/Game/Ui/CatalystChoiceView.cs | 38 |  |
+| Card | Card | Game | class | Athanor/Assets/Scripts/Game/Ui/CatalystChoiceView.cs | 45 |  |
 | EventView | EventView | Game | class | Athanor/Assets/Scripts/Game/Ui/EventView.cs | 13 | The event at the start of a depth: what was found, the options that can be taken (each with what it costs and may give), then what came of the one chosen. |
 | Row | Row | Game | class | Athanor/Assets/Scripts/Game/Ui/EventView.cs | 19 |  |
 | GoalRow | GoalRow | Game | class | Athanor/Assets/Scripts/Game/Ui/GoalRow.cs | 6 | One row of the Goals page: the goal and its count, then the reward and its progress bar. |
@@ -155,11 +155,16 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | GoalsView | GoalsView | Game | class | Athanor/Assets/Scripts/Game/Ui/GoalsView.cs | 12 | The Goals page: every long-term goal with its progress, grouped by the rarity of what it unlocks. Before a goal is done its reward is named only by kind and rarity; afterwards the item it gave is show |
 | JournalCell | JournalCell | Game | class | Athanor/Assets/Scripts/Game/Ui/JournalCell.cs | 10 | One cell of the journal's grid: the material's icon with its click. An Uncommon or better starting material also gets a star at the cell's corner; that row is made when the cell is set up (5 of the 81 |
 | JournalView | JournalView | Game | class | Athanor/Assets/Scripts/Game/Ui/JournalView.cs | 12 | The journal: every material as an icon (a silhouette until it has been made), and for the selected one the reactions found so far, how many are still unknown, and any hints collected. |
+| JournalView.Layout | JournalView.Layout | Game | struct | Athanor/Assets/Scripts/Game/Ui/JournalView.cs | 22 | The numbers of the book that are not its grid (art px, y down), stored in Journal.prefab. |
 | PauseMenu | PauseMenu | Game | class | Athanor/Assets/Scripts/Game/Ui/PauseMenu.cs | 13 | The in-run pause: Resume, Vibration (only where the device can), How to play (greyed: title only) and Quit to title with a confirm. Time.timeScale is 0 while it is open; it is put back on every way ou |
 | RunOverView | RunOverView | Game | class | Athanor/Assets/Scripts/Game/Ui/RunOverView.cs | 9 | The summary at the end of a run, won or lost. |
 | TitleView | TitleView | Game | class | Athanor/Assets/Scripts/Game/Ui/TitleView.cs | 8 | The title, shown over the candlelit workshop. |
-| Tooltip | Tooltip | Game | class | Athanor/Assets/Scripts/Game/Ui/Tooltip.cs | 9 | A small panel with a title and two lines of text that appears beside whatever the pointer rests on. A hand card's tip adds a row under the name with its stars and tier word, and the panel grows by tha |
+| TitleView.Layout | TitleView.Layout | Game | struct | Athanor/Assets/Scripts/Game/Ui/TitleView.cs | 40 | The title's positions and colours (art px, y down), stored in Title.prefab. |
+| TitleView.Timing | TitleView.Timing | Game | struct | Athanor/Assets/Scripts/Game/Ui/TitleView.cs | 55 | The title's motion: logo fade-in, the sub-title's delay and fade, the glow's colour, base, swing and speed. |
+| Tooltip | Tooltip | Game | class | Athanor/Assets/Scripts/Game/Ui/Tooltip.cs | 10 | A small panel with a title and two lines of text that appears beside whatever the pointer rests on. A hand card's tip adds a row under the name with its stars and tier word, and the panel grows by tha |
+| Tooltip.Layout | Tooltip.Layout | Game | struct | Athanor/Assets/Scripts/Game/Ui/Tooltip.cs | 18 | The tooltip's inner offsets (px), stored in the Bench prefab. |
 | UiButton | UiButton | Game | class | Athanor/Assets/Scripts/Game/Ui/UiButton.cs | 7 | A 120x26 red button with a label: brightens under the pointer, sinks when pressed. |
+| UiButton.Look | UiButton.Look | Game | struct | Athanor/Assets/Scripts/Game/Ui/UiButton.cs | 15 | The button's colours and label offsets, stored in each prefab that holds one. |
 | ArtLibraryBuilder | ArtLibraryBuilder | Editor | class | Athanor/Assets/Editor/ArtLibraryBuilder.cs | 12 | Collects the sprites, effect sheets, fonts and materials into Assets/Art/ArtLibrary.asset, the one lookup the game uses by name. Run it after new art or effect sheets are imported (the sprite and flip |
 | AtlasBuilder | AtlasBuilder | Editor | class | Athanor/Assets/Editor/AtlasBuilder.cs | 27 | Two art steps that run after tools/art/export.mjs, both idempotent: 1. Sprite sheets: the numbered frames of each animation (Background/flame_small_0..7.png ...) are merged into one Multiple-mode shee |
 | FlipbookImporter | FlipbookImporter | Editor | class | Athanor/Assets/Editor/FlipbookImporter.cs | 14 | Turns each pixelfx sheet in Assets/Art/Fx/Sheets (name.png + name.json, exported from pixelfx) into sliced sprites and a FlipbookSheet asset, then adds them to the art library so Fx.Spawn(name) can pl |
@@ -758,36 +763,36 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | IgniteSequence | property | Hurry | 96 | public bool Hurry |
 | IgniteSequence | method | Bind | 99 | public void Bind(BenchView bench, ReactionCutscene reaction, FxRefs fx, ScreenFlow flow) |
 | IgniteSequence | method | Play | 108 | public IEnumerator Play(IgniteOutcome outcome, RunState run, ContentDb db, long potencyBefore, TutorialController tutorial, bool auto) |
-| Timing | field | paceDecay | 22 | public float paceHurry, paceFloor, paceDecay |
-| Timing | field | endPace | 24 | public float endPaceHurry, endPace |
-| Timing | field | discoverHurryStep | 26 | public float discoverHurryBase, discoverHurryStep |
-| Timing | field | discoverHurryCap | 27 | public int discoverHurryCap |
-| Timing | field | discoverBeat | 29 | public float discoverBeat |
-| Timing | field | fizzleHintText | 31 | public float fizzleHintWait, fizzleWait, fizzleHintText |
-| Timing | field | sputterText | 33 | public float sputterWait, sputterText |
-| Timing | field | reactFlash | 35 | public float drawSeconds, drawWait, reactWait, pointsSeconds, reactShake, reactFlash |
-| Timing | field | comboText | 37 | public float pointsText, pointsTextPace, comboText |
-| Timing | field | discoverShake | 39 | public float discoverShake |
-| Timing | field | rackStagger | 41 | public float rackPop, rackFly, rackHold, rackStagger |
-| Timing | field | rackWaitNone | 43 | public float rackWaitKept, rackWaitNone |
-| Timing | field | lostText | 45 | public float lostText |
-| Timing | field | rackTrailChance | 47 | public float rackTrailChance |
-| Look | field | rackLand | 54 | public BurstSpec fizzleBurst, sputterBurst, discoverBurst, reactBurst, pointsLand, rackLand |
-| Look | field | sputterFlash | 56 | public Color fizzleFlash, sputterFlash |
-| Look | field | pointsTrailTint | 58 | public Color drawTint, rackTrailTint, pointsTint, pointsTrailTint |
-| Look | field | defaultGlow | 60 | public Color defaultGlow |
-| Look | field | lostText | 62 | public Color pointsText, comboText, chainText, hintText, spoiledText, lostText |
-| Look | field | rackUp | 64 | public Vector3 hubLift, hintTextLift, spoilTileLift, spoilTextLift, drawLift, pointsTextLift, comboTextLift, rackLift, rackUp |
-| Look | field | lostAt | 66 | public Vector2 lostAt |
-| Look | field | burstPerExtra | 68 | public int burstPerChain, burstChainCap, burstPerExtra |
-| Look | field | speedPerChain | 69 | public float speedPerChain |
-| Look | field | discoverShake | 71 | public float shakeBase, shakePerChain, shakePerExtra, shakeMax, discoverShake |
-| Look | field | flashSize | 73 | public int flashChain, flashSize |
-| Look | field | flashMax | 74 | public float flashPerStep, flashMax |
-| Look | field | rackLife | 76 | public float drawJitter, drawLife, pointsJitter, pointsJitter2, pointsLife, pointsLife2, pointsHump, rackJitter, rackLife |
-| Look | field | rackTrailOrder | 77 | public int drawOrder, pointsOrder, pointsOrder2, rackTrailOrder |
-| Look | field | arcHeight | 79 | public float haloSize, haloAlpha, popScale, arcHeight |
-| Look | field | iconOrder | 80 | public int haloOrder, iconOrder |
+| IgniteSequence.Timing | field | paceDecay | 22 | public float paceHurry, paceFloor, paceDecay |
+| IgniteSequence.Timing | field | endPace | 24 | public float endPaceHurry, endPace |
+| IgniteSequence.Timing | field | discoverHurryStep | 26 | public float discoverHurryBase, discoverHurryStep |
+| IgniteSequence.Timing | field | discoverHurryCap | 27 | public int discoverHurryCap |
+| IgniteSequence.Timing | field | discoverBeat | 29 | public float discoverBeat |
+| IgniteSequence.Timing | field | fizzleHintText | 31 | public float fizzleHintWait, fizzleWait, fizzleHintText |
+| IgniteSequence.Timing | field | sputterText | 33 | public float sputterWait, sputterText |
+| IgniteSequence.Timing | field | reactFlash | 35 | public float drawSeconds, drawWait, reactWait, pointsSeconds, reactShake, reactFlash |
+| IgniteSequence.Timing | field | comboText | 37 | public float pointsText, pointsTextPace, comboText |
+| IgniteSequence.Timing | field | discoverShake | 39 | public float discoverShake |
+| IgniteSequence.Timing | field | rackStagger | 41 | public float rackPop, rackFly, rackHold, rackStagger |
+| IgniteSequence.Timing | field | rackWaitNone | 43 | public float rackWaitKept, rackWaitNone |
+| IgniteSequence.Timing | field | lostText | 45 | public float lostText |
+| IgniteSequence.Timing | field | rackTrailChance | 47 | public float rackTrailChance |
+| IgniteSequence.Look | field | rackLand | 54 | public BurstSpec fizzleBurst, sputterBurst, discoverBurst, reactBurst, pointsLand, rackLand |
+| IgniteSequence.Look | field | sputterFlash | 56 | public Color fizzleFlash, sputterFlash |
+| IgniteSequence.Look | field | pointsTrailTint | 58 | public Color drawTint, rackTrailTint, pointsTint, pointsTrailTint |
+| IgniteSequence.Look | field | defaultGlow | 60 | public Color defaultGlow |
+| IgniteSequence.Look | field | lostText | 62 | public Color pointsText, comboText, chainText, hintText, spoiledText, lostText |
+| IgniteSequence.Look | field | rackUp | 64 | public Vector3 hubLift, hintTextLift, spoilTileLift, spoilTextLift, drawLift, pointsTextLift, comboTextLift, rackLift, rackUp |
+| IgniteSequence.Look | field | lostAt | 66 | public Vector2 lostAt |
+| IgniteSequence.Look | field | burstPerExtra | 68 | public int burstPerChain, burstChainCap, burstPerExtra |
+| IgniteSequence.Look | field | speedPerChain | 69 | public float speedPerChain |
+| IgniteSequence.Look | field | discoverShake | 71 | public float shakeBase, shakePerChain, shakePerExtra, shakeMax, discoverShake |
+| IgniteSequence.Look | field | flashSize | 73 | public int flashChain, flashSize |
+| IgniteSequence.Look | field | flashMax | 74 | public float flashPerStep, flashMax |
+| IgniteSequence.Look | field | rackLife | 76 | public float drawJitter, drawLife, pointsJitter, pointsJitter2, pointsLife, pointsLife2, pointsHump, rackJitter, rackLife |
+| IgniteSequence.Look | field | rackTrailOrder | 77 | public int drawOrder, pointsOrder, pointsOrder2, rackTrailOrder |
+| IgniteSequence.Look | field | arcHeight | 79 | public float haloSize, haloAlpha, popScale, arcHeight |
+| IgniteSequence.Look | field | iconOrder | 80 | public int haloOrder, iconOrder |
 | Save | field | Key | 10 | public const string Key = "athanor.journal.v1", IntroKey = "athanor.intro.v1", ProfileKey = "athanor.profile.v1", TutorialKey = "athanor.tutorial.v1", SettingsKey = |
 | Save | method | LoadJournal | 14 | public static Journal LoadJournal() |
 | Save | method | StoreJournal | 24 | public static void StoreJournal(Journal journal) |
@@ -1171,6 +1176,7 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | Palette | field | edge | 36 | public Color edge |
 | Palette | field | pipOff | 38 | public Color pipOn, pipOff |
 | Palette | field | buttonText | 40 | public Color buttonText |
+| Palette | field | starOutline | 42 | public Color starOutline |
 | PointerInput | property | World | 10 | public static Vector2 World |
 | PointerInput | property | Rig | 12 | public static DepthRig Rig |
 | PointerInput | property | Bench | 15 | public static Vector2 Bench |
@@ -1194,18 +1200,18 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | Px | method | Alpha | 35 | public static Color Alpha(this Color c, float a) |
 | Px | method | Times | 36 | public static Color Times(this Color c, float k) |
 | RarityStars | field | Size | 15 | public const int Size = 7, Pitch = 8, Max = 4 |
-| RarityStars | property | Root | 24 | public Transform Root |
-| RarityStars | ctor | RarityStars | 27 | public RarityStars() |
-| RarityStars | ctor | RarityStars | 29 | public RarityStars(Transform parent, int order) |
-| RarityStars | property | GlyphCached | 49 | public static bool GlyphCached |
-| RarityStars | method | ResetStatics | 53 | public static void ResetStatics() |
-| RarityStars | method | Count | 76 | public static int Count(string rarity) |
-| RarityStars | method | WidthOf | 79 | public static int WidthOf(int n) |
-| RarityStars | method | Show | 82 | public void Show(string rarity) |
-| RarityStars | method | Show | 85 | public void Show(int n, Color color) |
-| RarityStars | method | SetAlpha | 92 | public void SetAlpha(float a) |
-| RarityStars | method | SetOrder | 99 | public void SetOrder(int order) |
-| RarityStars | method | SetActive | 105 | public void SetActive(bool on) |
+| RarityStars | property | Root | 23 | public Transform Root |
+| RarityStars | ctor | RarityStars | 26 | public RarityStars() |
+| RarityStars | ctor | RarityStars | 28 | public RarityStars(Transform parent, int order) |
+| RarityStars | property | GlyphCached | 48 | public static bool GlyphCached |
+| RarityStars | method | ResetStatics | 52 | public static void ResetStatics() |
+| RarityStars | method | Count | 75 | public static int Count(string rarity) |
+| RarityStars | method | WidthOf | 78 | public static int WidthOf(int n) |
+| RarityStars | method | Show | 81 | public void Show(string rarity) |
+| RarityStars | method | Show | 84 | public void Show(int n, Color color) |
+| RarityStars | method | SetAlpha | 91 | public void SetAlpha(float a) |
+| RarityStars | method | SetOrder | 98 | public void SetOrder(int order) |
+| RarityStars | method | SetActive | 104 | public void SetActive(bool on) |
 | Spawn | method | Root | 16 | public static Transform Root(string name, Transform parent = null) |
 | Spawn | method | Sprite | 25 | public static SpriteRenderer Sprite(Transform parent, string sprite, Vector3 worldPos, int order, Material material = null) |
 | Spawn | method | Rect | 39 | public static SpriteRenderer Rect(Transform parent, float x, float y, float w, float h, Color color, int order) |
@@ -1237,88 +1243,113 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | ChoiceCard | field | tiles | 15 | public int[] tiles |
 | ChoiceCard | field | dimTiles | 16 | public int[] dimTiles |
 | CatalystChoiceView | field | OpenHook | 32 | public const string OpenHook = |
-| CatalystChoiceView | method | CardName | 60 | public Label CardName(int i) |
-| CatalystChoiceView | method | CornerStars | 62 | public RarityStars CornerStars(int i) |
-| CatalystChoiceView | method | Bind | 67 | public void Bind(FxRefs effects) |
-| CatalystChoiceView | method | Choose | 86 | public IEnumerator Choose(IReadOnlyList<CatalystData> offer, Action<string> done, float autoAfter = -1) |
-| CatalystChoiceView | method | Choose | 98 | public IEnumerator Choose(IReadOnlyList<AspectInstance> offer, Action<string> done, float autoAfter = -1) |
-| CatalystChoiceView | method | Choose | 112 | public IEnumerator Choose(string title, string line, IReadOnlyList<ChoiceCard> offer, Action<string> done, float autoAfter = -1) |
-| Card | field | root | 40 | public Transform root |
-| Card | field | click | 41 | public Clickable click |
-| Card | field | bench | 42 | public SpriteRenderer[] bench = new SpriteRenderer[Bench.TileCount] |
-| EventView | method | OptionLabel | 35 | public Label OptionLabel(int i) |
-| EventView | property | Outcome | 37 | public Label Outcome |
-| EventView | method | Bind | 42 | public void Bind(FxRefs effects) |
-| EventView | method | Show | 72 | public IEnumerator Show(RunState run, Action changed) |
+| CatalystChoiceView | property | Timing | 37 | public struct Timing |
+| CatalystChoiceView | property | Layout | 40 | public struct Layout |
+| CatalystChoiceView | method | CardName | 67 | public Label CardName(int i) |
+| CatalystChoiceView | method | CornerStars | 69 | public RarityStars CornerStars(int i) |
+| CatalystChoiceView | method | Bind | 74 | public void Bind(FxRefs effects) |
+| CatalystChoiceView | method | Choose | 93 | public IEnumerator Choose(IReadOnlyList<CatalystData> offer, Action<string> done, float autoAfter = -1) |
+| CatalystChoiceView | method | Choose | 105 | public IEnumerator Choose(IReadOnlyList<AspectInstance> offer, Action<string> done, float autoAfter = -1) |
+| CatalystChoiceView | method | Choose | 119 | public IEnumerator Choose(string title, string line, IReadOnlyList<ChoiceCard> offer, Action<string> done, float autoAfter = -1) |
+| Card | field | root | 47 | public Transform root |
+| Card | field | click | 48 | public Clickable click |
+| Card | field | bench | 49 | public SpriteRenderer[] bench = new SpriteRenderer[Bench.TileCount] |
+| EventView | property | Timing | 27 | public struct Timing |
+| EventView | property | Layout | 30 | public struct Layout |
+| EventView | method | OptionLabel | 43 | public Label OptionLabel(int i) |
+| EventView | property | Outcome | 45 | public Label Outcome |
+| EventView | method | Bind | 50 | public void Bind(FxRefs effects) |
+| EventView | method | Show | 80 | public IEnumerator Show(RunState run, Action changed) |
 | Row | field | root | 21 | public Transform root |
 | GoalRow | field | reward | 8 | public Label text, count, reward |
 | GoalRow | field | icon | 9 | public SpriteRenderer track, fill, icon |
 | GoalToast | field | Stay | 15 | public const float Stay = 2.5f |
 | GoalToast | field | Slide | 17 | public const float Slide = 0.25f |
-| GoalToast | property | Item | 19 | struct Item |
-| GoalToast | property | Title | 29 | public Label Title |
-| GoalToast | property | Line | 31 | public Label Line |
-| GoalToast | method | Bind | 34 | public void Bind(FxRefs effects) |
-| GoalToast | method | Add | 47 | public void Add(IEnumerable<GoalReward> rewards, ContentDb db) |
-| GoalToast | method | Clear | 59 | public void Clear() |
+| GoalToast | property | Layout | 21 | public struct Layout |
+| GoalToast | property | Item | 24 | struct Item |
+| GoalToast | property | Title | 34 | public Label Title |
+| GoalToast | property | Line | 36 | public Label Line |
+| GoalToast | method | Bind | 39 | public void Bind(FxRefs effects) |
+| GoalToast | method | Add | 52 | public void Add(IEnumerable<GoalReward> rewards, ContentDb db) |
+| GoalToast | method | Clear | 64 | public void Clear() |
 | GoalsView | field | Closed | 17 | public event Action Closed |
 | GoalsView | property | IsOpen | 18 | public bool IsOpen |
-| GoalsView | property | CloseClick | 35 | public Clickable CloseClick |
-| GoalsView | method | Bind | 41 | public void Bind(ContentDb content) |
-| GoalsView | method | Open | 64 | public void Open(Profile profile, Journal journal) |
-| GoalsView | method | Close | 107 | public void Close() |
+| GoalsView | property | Layout | 22 | public struct Layout |
+| GoalsView | property | CloseClick | 44 | public Clickable CloseClick |
+| GoalsView | method | Bind | 50 | public void Bind(ContentDb content) |
+| GoalsView | method | Open | 74 | public void Open(Profile profile, Journal journal) |
+| GoalsView | method | Close | 117 | public void Close() |
 | JournalCell | field | icon | 12 | public SpriteRenderer icon |
 | JournalCell | field | click | 13 | public Clickable click |
-| JournalView | field | Closed | 19 | public event Action Closed |
-| JournalView | property | IsOpen | 20 | public bool IsOpen |
-| JournalView | field | PerPage | 23 | public const int PerPage = Cols * Rows |
-| JournalView | property | Title | 47 | public Label Title |
-| JournalView | property | CloseClick | 49 | public Clickable CloseClick |
-| JournalView | property | PageClick | 51 | public Clickable PageClick |
-| JournalView | method | Bind | 57 | public void Bind(ContentDb content) |
-| JournalView | method | Open | 115 | public void Open(Journal book, Func<string, bool> openStarters = null) |
-| JournalView | method | Close | 166 | public void Close() |
-| JournalView | method | ShowMaterial | 177 | public Rect ShowMaterial(string id) |
-| JournalView | property | IndexRect | 184 | public static Rect IndexRect |
-| JournalView | property | RecipesRect | 186 | public static Rect RecipesRect |
-| JournalView | property | HintsRect | 188 | public static Rect HintsRect |
+| JournalView | field | Closed | 33 | public event Action Closed |
+| JournalView | property | IsOpen | 34 | public bool IsOpen |
+| JournalView | field | PerPage | 37 | public const int PerPage = Cols * Rows |
+| JournalView | property | Title | 60 | public Label Title |
+| JournalView | property | CloseClick | 62 | public Clickable CloseClick |
+| JournalView | property | PageClick | 64 | public Clickable PageClick |
+| JournalView | method | Bind | 70 | public void Bind(ContentDb content) |
+| JournalView | method | Open | 128 | public void Open(Journal book, Func<string, bool> openStarters = null) |
+| JournalView | method | Close | 179 | public void Close() |
+| JournalView | method | ShowMaterial | 190 | public Rect ShowMaterial(string id) |
+| JournalView | property | IndexRect | 197 | public Rect IndexRect |
+| JournalView | property | RecipesRect | 199 | public Rect RecipesRect |
+| JournalView | property | HintsRect | 201 | public Rect HintsRect |
+| JournalView.Layout | field | hintsRect | 25 | public Rect indexRect, recipesRect, hintsRect |
+| JournalView.Layout | field | titleTopLong | 27 | public float titleTop, titleTopLong |
+| JournalView.Layout | field | unknown | 29 | public Color hint, unknown |
 | PauseMenu | field | QuitConfirmed | 17 | public event Action QuitConfirmed |
 | PauseMenu | field | VibrationChanged | 19 | public event Action VibrationChanged |
 | PauseMenu | field | Closed | 21 | public event Action Opened, Closed |
 | PauseMenu | field | CanOpen | 23 | public Func<bool> CanOpen |
 | PauseMenu | property | IsOpen | 25 | public bool IsOpen |
 | PauseMenu | property | Confirming | 26 | public bool Confirming |
-| PauseMenu | method | Bind | 36 | public void Bind(Settings playerSettings) |
-| PauseMenu | method | Open | 63 | public bool Open() |
-| PauseMenu | method | Close | 74 | public void Close() |
-| PauseMenu | method | Toggle | 84 | public void Toggle() |
+| PauseMenu | property | Layout | 30 | public struct Layout |
+| PauseMenu | method | Bind | 40 | public void Bind(Settings playerSettings) |
+| PauseMenu | method | Open | 67 | public bool Open() |
+| PauseMenu | method | Close | 78 | public void Close() |
+| PauseMenu | method | Toggle | 88 | public void Toggle() |
 | RunOverView | property | Again | 12 | public bool Again |
 | RunOverView | field | GoalsClicked | 14 | public event System.Action GoalsClicked |
-| RunOverView | method | Bind | 25 | public void Bind() |
-| RunOverView | method | Pick | 48 | public void Pick(bool again) |
-| RunOverView | property | DepthName | 51 | public Label DepthName |
-| RunOverView | property | DepthValue | 53 | public Label DepthValue |
-| RunOverView | method | ShowDepth | 59 | public void ShowDepth(bool won, int depth, int finalDepth) |
-| RunOverView | method | Show | 67 | public IEnumerator Show(bool won, RunState run, Journal journal, ContentDb db, System.Collections.Generic.IReadOnlyList<GoalReward> goals) |
+| RunOverView | property | Timing | 18 | public struct Timing |
+| RunOverView | method | Bind | 29 | public void Bind() |
+| RunOverView | method | Pick | 52 | public void Pick(bool again) |
+| RunOverView | property | DepthName | 55 | public Label DepthName |
+| RunOverView | property | DepthValue | 57 | public Label DepthValue |
+| RunOverView | method | ShowDepth | 63 | public void ShowDepth(bool won, int depth, int finalDepth) |
+| RunOverView | method | Show | 71 | public IEnumerator Show(bool won, RunState run, Journal journal, ContentDb db, System.Collections.Generic.IReadOnlyList<GoalReward> goals) |
 | TitleView | property | BeginPressed | 11 | public bool BeginPressed |
 | TitleView | property | HowToPressed | 13 | public bool HowToPressed |
 | TitleView | property | IntroPressed | 14 | public bool IntroPressed |
 | TitleView | method | ClearBegin | 16 | public void ClearBegin() |
 | TitleView | field | SettingsClosed | 17 | public event Action JournalClicked, GoalsClicked, ResetConfirmed, SettingsClosed |
 | TitleView | property | Asking | 19 | public bool Asking |
-| TitleView | method | Bind | 46 | public void Bind(Settings playerSettings, FxRefs effects) |
-| TitleView | method | AskSkip | 112 | public void AskSkip(Action<bool> answer) |
-| TitleView | method | Open | 210 | public void Open(int known, int total, int goalsDone, int goals) |
-| TitleView | method | Progress | 221 | public void Progress(int known, int total, int goalsDone, int goals) |
-| TitleView | method | Close | 228 | public void Close() |
-| Tooltip | method | Bind | 22 | public void Bind() |
-| Tooltip | method | Show | 32 | public void Show(string heading, string text, Vector2 anchor, float clearance = 20, string rarity = null) |
-| Tooltip | method | Hide | 58 | public void Hide() |
+| TitleView | method | Bind | 72 | public void Bind(Settings playerSettings, FxRefs effects) |
+| TitleView | method | AskSkip | 138 | public void AskSkip(Action<bool> answer) |
+| TitleView | method | Open | 238 | public void Open(int known, int total, int goalsDone, int goals) |
+| TitleView | method | Progress | 249 | public void Progress(int known, int total, int goalsDone, int goals) |
+| TitleView | method | Close | 256 | public void Close() |
+| TitleView.Layout | field | outlineSpread | 43 | public float centerX, logoY, logoRise, outlineSpread |
+| TitleView.Layout | field | creditYVi | 45 | public float progressY, progressYVi, creditY, creditYVi |
+| TitleView.Layout | field | cellOver | 47 | public Color resetRest, resetOver, cellRest, cellOver |
+| TitleView.Layout | field | resetYNoVib | 49 | public float pitch, pitchNoVib, firstRow, firstRowNoVib, dividerX, dividerW, dividerH, dividerY, dividerYNoVib, resetY, resetYNoVib |
+| TitleView.Layout | field | fillSize | 51 | public float labelX, labelDy, valueDy, valueDx, boxInset, boxSize, fillInset, fillSize |
+| TitleView.Timing | field | glowSpeed | 57 | public float fadeIn, subDelay, subFade, glowBase, glowSwing, glowSpeed |
+| TitleView.Timing | field | glow | 58 | public Color glow |
+| TitleView.Timing | field | emberFall | 60 | public float emberRate, emberY, emberSize, emberFall |
+| Tooltip | method | Bind | 37 | public void Bind() |
+| Tooltip | method | Show | 47 | public void Show(string heading, string text, Vector2 anchor, float clearance = 20, string rarity = null) |
+| Tooltip | method | Hide | 74 | public void Hide() |
+| Tooltip.Layout | field | tierDy | 21 | public float pad, titleDy, bodyDy, starsDy, tierDy |
+| Tooltip.Layout | field | edgeMargin | 23 | public float tierGap, edgeMargin |
+| Tooltip.Layout | field | border | 25 | public float border |
+| Tooltip.Layout | field | longText | 27 | public int longText |
 | UiButton | field | W | 9 | public const int W = 120, H = 26 |
-| UiButton | field | Clicked | 15 | public event Action Clicked |
-| UiButton | property | Text | 17 | public Label Text |
-| UiButton | property | Disabled | 19 | public bool Disabled |
-| UiButton | method | Bind | 24 | public void Bind() |
+| UiButton | field | Clicked | 25 | public event Action Clicked |
+| UiButton | property | Text | 27 | public Label Text |
+| UiButton | property | Disabled | 29 | public bool Disabled |
+| UiButton | method | Bind | 34 | public void Bind() |
+| UiButton.Look | field | disabledText | 18 | public Color disabledTint, overTint, disabledText |
+| UiButton.Look | field | labelDown | 20 | public float labelUp, labelDown |
 | ArtLibraryBuilder | method | Refresh | 19 | public static void Refresh() |
 | ArtLibraryBuilder | method | RefreshBatch | 22 | public static void RefreshBatch() |
 | ArtLibraryBuilder | method | RefreshLibrary | 25 | public static ArtLibrary RefreshLibrary() |
@@ -1495,7 +1526,18 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | LayoutPinTests | method | HudView_Prefab_KeepsTodaysLayout | 120 | public void HudView_Prefab_KeepsTodaysLayout() |
 | LayoutPinTests | method | HudView_IgniteLabel_SitsWhereTheCodePutIt | 141 | public void HudView_IgniteLabel_SitsWhereTheCodePutIt() |
 | LayoutPinTests | method | BenchParts_Prefabs_KeepTodaysLayout | 149 | public void BenchParts_Prefabs_KeepTodaysLayout() |
-| LayoutPinTests | method | Dust_MainScene_KeepsTodaysLook | 181 | public void Dust_MainScene_KeepsTodaysLook() |
+| LayoutPinTests | method | JournalView_Prefab_KeepsTodaysLayout | 202 | public void JournalView_Prefab_KeepsTodaysLayout() |
+| LayoutPinTests | method | GoalsView_Prefab_KeepsTodaysLayout | 218 | public void GoalsView_Prefab_KeepsTodaysLayout() |
+| LayoutPinTests | method | CatalystChoiceView_Prefab_KeepsTodaysLayout | 225 | public void CatalystChoiceView_Prefab_KeepsTodaysLayout() |
+| LayoutPinTests | method | EventView_Prefab_KeepsTodaysLayout | 242 | public void EventView_Prefab_KeepsTodaysLayout() |
+| LayoutPinTests | method | RunOverView_Prefab_KeepsTodaysTiming | 252 | public void RunOverView_Prefab_KeepsTodaysTiming() |
+| LayoutPinTests | method | PauseMenu_Prefab_KeepsTodaysLayout | 259 | public void PauseMenu_Prefab_KeepsTodaysLayout() |
+| LayoutPinTests | method | TitleView_Prefab_KeepsTodaysLayout | 269 | public void TitleView_Prefab_KeepsTodaysLayout() |
+| LayoutPinTests | method | GoalToast_Prefab_KeepsTodaysLayout | 295 | public void GoalToast_Prefab_KeepsTodaysLayout() |
+| LayoutPinTests | method | Tooltip_BenchPrefab_KeepsTodaysLayout | 303 | public void Tooltip_BenchPrefab_KeepsTodaysLayout() |
+| LayoutPinTests | method | UiButton_EveryPrefabInstance_KeepsTodaysLook | 315 | public void UiButton_EveryPrefabInstance_KeepsTodaysLook() |
+| LayoutPinTests | method | Palette_Asset_KeepsTheStarOutline | 339 | public void Palette_Asset_KeepsTheStarOutline() |
+| LayoutPinTests | method | Dust_MainScene_KeepsTodaysLook | 347 | public void Dust_MainScene_KeepsTodaysLook() |
 | LocTests | method | Use_WithInjectedFiles_ServesTheirText | 19 | public void Use_WithInjectedFiles_ServesTheirText() |
 | LocTests | method | Use_NullFile_Throws | 32 | public void Use_NullFile_Throws() |
 | LocTests | method | ViJsonCharacters_AllInCruxAtlas_NoneMissing | 40 | public void ViJsonCharacters_AllInCruxAtlas_NoneMissing() |

@@ -14,7 +14,8 @@ namespace Athanor.Game
         // the numbers match JOURNAL in tools/art/ui.mjs
         const int O = 440, X = 20, Y = 15, Cols = 10, Rows = 6, Cell = 27, Well = 25, GridX = 33, GridY = 60,
             PageX = 324, PageY = 30, PageW = 260, LineCount = 15, HintCount = 5,
-            PipCount = ContentDb.MaxReactivity, WrapAt = 38;
+            PipCount = ContentDb.MaxReactivity, WrapAt = 38,
+            WellOut = Well + 2, PageMid = PageX + PageW / 2;   // a well with its 1 px rim; the page's centre line
 
         /// <summary>The numbers of the book that are not its grid (art px, y down), stored in Journal.prefab.</summary>
         [Serializable]
@@ -190,7 +191,7 @@ namespace Athanor.Game
         {
             int i = Mathf.Max(0, IndexOf(id));
             ShowPage(i / PerPage); Select(i);
-            return new Rect(X + GridX + (i % PerPage % Cols) * Cell - 1, Y + GridY + (i % PerPage / Cols) * Cell - 1, Well + 2, Well + 2);
+            return new Rect(X + GridX + (i % PerPage % Cols) * Cell - 1, Y + GridY + (i % PerPage / Cols) * Cell - 1, WellOut, WellOut);
         }
         /// <summary>The page's line "heat/ reactivity" and its pips.</summary>
         public Rect IndexRect => layout.indexRect;
@@ -210,7 +211,7 @@ namespace Athanor.Game
             bool locked = m.tier == 0 && !known;
             title.Text = known ? m.name : locked ? Loc.T("ui.journal.locked") : Loc.T("ui.journal.unknown");
             title.SetSize(title.Text.Length > layout.titleLongChars ? layout.titleSizeLong : layout.titleSize);
-            title.transform.position = Px.At(X + PageX + PageW / 2, Y + PageY + (title.Text.Length > layout.titleLongChars ? layout.titleTopLong : layout.titleTop));
+            title.transform.position = Px.At(X + PageMid, Y + PageY + (title.Text.Length > layout.titleLongChars ? layout.titleTopLong : layout.titleTop));
             sub.Text = known ? (m.tier == 0 ? Loc.T("ui.journal.sub_starter", ("kind", Loc.Upper(Loc.Kind(m.kind))), ("r", m.reactivity)) : Loc.T("ui.journal.sub_tier", ("kind", Loc.Upper(Loc.Kind(m.kind))), ("tier", m.tier), ("r", m.reactivity))) : "";
             // the rarity is only defined for starting materials; a made one, or one not found yet, shows none
             bool rated = known && m.tier == 0;

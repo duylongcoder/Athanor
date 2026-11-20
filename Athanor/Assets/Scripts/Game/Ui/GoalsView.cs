@@ -23,6 +23,8 @@ namespace Athanor.Game
         [SerializeField] Layout layout;
         /// <summary>The side of the "dot" sprite the bar is stretched from.</summary>
         const float DotSize = 4;
+        /// <summary>The bar's left end in the row: BarW short of the row's inner right edge.</summary>
+        const int BarLeft = ColW - 2 * Pad - BarW;
 
         [SerializeField] GoalRow rowPrefab;
         [SerializeField] Label[] heads = new Label[3];
@@ -64,8 +66,9 @@ namespace Athanor.Game
         void SetBar(SpriteRenderer bar, float width)
         {
             bar.enabled = width >= 1;
+            float x = BarLeft + width / 2f;
             bar.transform.localScale = new Vector3(width / DotSize, layout.barHeight / DotSize, 1);
-            bar.transform.localPosition = new Vector3(ColW - 2 * Pad - BarW + width / 2f, layout.barDy, 0);
+            bar.transform.localPosition = new Vector3(x, layout.barDy, 0);
         }
 
         public void Open(Profile profile, Journal journal)

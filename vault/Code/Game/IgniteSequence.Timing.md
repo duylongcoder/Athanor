@@ -9,9 +9,9 @@ tags: [code/game, kind/struct]
 aliases: []
 ---
 
-# Timing
+# IgniteSequence.Timing
 
-`public struct Timing`
+`public struct IgniteSequence.Timing`
 - Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Boot/IgniteSequence.cs:19-48` · Nested in [[IgniteSequence]]
 
 > Paces, waits and durations, in seconds unless the name says otherwise.

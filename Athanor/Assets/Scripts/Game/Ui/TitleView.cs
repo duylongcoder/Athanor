@@ -154,6 +154,7 @@ namespace Athanor.Game
         // ---- Settings panel ----------------------------------------------------------------------
 
         const int P = O + 20, PX = 160, PY = 75, CellX = 300, CellW = 150, CellH = 26;
+        const float CellMid = CellX + CellW / 2f;
 
         void PaintCell(int i)
         {
@@ -164,7 +165,8 @@ namespace Athanor.Game
         void PlaceCell(int i, float rowY)
         {
             cellEdge[i].transform.position = Px.Mid(CellX, rowY, CellW, CellH);
-            cellFill[i].transform.position = Px.Mid(CellX + layout.cellInset, rowY + layout.cellInset, CellW - 2 * layout.cellInset, CellH - 2 * layout.cellInset);
+            float fillW = CellW - 2 * layout.cellInset, fillH = CellH - 2 * layout.cellInset;
+            cellFill[i].transform.position = Px.Mid(CellX + layout.cellInset, rowY + layout.cellInset, fillW, fillH);
             cellHit[i].transform.position = Px.Mid(CellX, rowY, CellW, CellH);
         }
 
@@ -188,7 +190,7 @@ namespace Athanor.Game
             }
             langLabel.transform.position = Px.At(layout.labelX, row + layout.labelDy);
             PlaceCell(1, row);
-            langValue.transform.position = Px.At(CellX + CellW / 2f, row + layout.valueDy);
+            langValue.transform.position = Px.At(CellMid, row + layout.valueDy);
             langValue.Text = Loc.NativeName;
             for (int i = 0; i < 3; i++) PaintCell(i);
         }

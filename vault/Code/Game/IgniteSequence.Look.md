@@ -9,9 +9,9 @@ tags: [code/game, kind/struct]
 aliases: []
 ---
 
-# Look
+# IgniteSequence.Look
 
-`public struct Look`
+`public struct IgniteSequence.Look`
 - Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Boot/IgniteSequence.cs:52-82` · Nested in [[IgniteSequence]]
 
 > Bursts, offsets, sizes and colours.
@@ -38,6 +38,3 @@ aliases: []
 
 ## Uses
 [[BurstSpec]]
-
-## Used by
-[[DepthStage]], [[GameFlow]]

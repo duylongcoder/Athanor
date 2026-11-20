@@ -31,7 +31,7 @@ aliases: []
 | property | `public bool SwayOn` | 43 | The Settings switch: the idle sway on or off (the shake stays). |
 
 ## Uses
-[[BenchView]], [[CameraSway]], [[DepthLayer]], [[DepthMath]], [[DepthMood]], [[DepthRig]], [[DepthSwitch]], [[Look]], [[Preset]], [[Px]], [[WindowView]]
+[[BenchView]], [[CameraSway]], [[DepthLayer]], [[DepthMath]], [[DepthMood]], [[DepthRig]], [[DepthSwitch]], [[Preset]], [[Px]], [[WindowView]]
 
 ## Used by
 [[GameFlow]]

@@ -51,17 +51,18 @@ namespace Athanor.Game
             panel.size = new Vector2(W, h);
             title.Text = heading; body.Text = text;
             body.main.lineSpacing = text != null && text.Length > layout.longText ? layout.tightSpacing : 0;      // a third line fits when the lines sit closer
-            title.transform.localPosition = new Vector3(-W / 2 + layout.pad, h / 2f - layout.titleDy, 0);
-            body.transform.localPosition = new Vector3(-W / 2 + layout.pad, h / 2f - layout.bodyDy - (row ? RowH : 0), 0);
+            int left = -W / 2; float top = h / 2f;   // the panel's left edge and top, from its centre
+            title.transform.localPosition = new Vector3(left + layout.pad, top - layout.titleDy, 0);
+            body.transform.localPosition = new Vector3(left + layout.pad, top - layout.bodyDy - (row ? RowH : 0), 0);
             stars.SetActive(row); tier.gameObject.SetActive(row);
             if (row)
             {
                 int n = RarityStars.Count(rarity);
-                stars.Root.localPosition = new Vector3(-W / 2 + layout.pad, h / 2f - layout.starsDy, 0);
+                stars.Root.localPosition = new Vector3(left + layout.pad, top - layout.starsDy, 0);
                 stars.Show(rarity);
                 tier.Text = Wording.RarityWord(rarity); // owner decision 4a: the brighter rarity colour here, not SPEC 23's dark tone (about 2.4:1 on the dark panel)
                 tier.Color = Wording.RarityColor(rarity);
-                tier.transform.localPosition = new Vector3(-W / 2 + layout.pad + RarityStars.WidthOf(n) + layout.tierGap, h / 2f - layout.tierDy, 0);
+                tier.transform.localPosition = new Vector3(left + layout.pad + RarityStars.WidthOf(n) + layout.tierGap, top - layout.tierDy, 0);
             }
             float y = anchor.y + clearance + h / 2f;
             if (y + h / 2f > Px.H / 2f - layout.edgeMargin) y = anchor.y - clearance - h / 2f;

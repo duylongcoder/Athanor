@@ -12,7 +12,7 @@ aliases: []
 # Palette
 
 `public sealed class Palette` : `ScriptableObject`
-- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Support/Palette.cs:18-41`
+- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Support/Palette.cs:18-43`
 
 > The colours two or more files share, by role (Assets/Data/Palette.asset). A colour only one file uses stays on that file's view. GameFlow publishes it as Art.Palette.
 
@@ -28,12 +28,13 @@ aliases: []
 | field | `public Color edge` | 36 | Resting border of the pause button and the title's cells. |
 | field | `public Color pipOn, pipOff` | 38 | Reactivity pips and choice tiles: lit and unlit. |
 | field | `public Color buttonText` | 40 | Label of an enabled button. |
+| field | `public Color starOutline` | 42 | The dark outline around the rarity stars. |
 
 ## Uses
 [[RarityColors]]
 
 ## Used by
-[[Art]], [[CatalystChoiceView]], [[EditorGlobals]], [[GameFlow]], [[GoalsView]], [[HudView]], [[JournalView]], [[ReactionCutscene]], [[TileView]], [[TitleView]], [[UiButton]], [[Wording]]
+[[Art]], [[CatalystChoiceView]], [[EditorGlobals]], [[GameFlow]], [[GoalsView]], [[HudView]], [[JournalView]], [[RarityStars]], [[ReactionCutscene]], [[TileView]], [[TitleView]], [[UiButton]], [[Wording]]
 
 ## Tested by
 [[LayoutPinTests]], [[StaticResetTests]]

@@ -12,14 +12,14 @@ aliases: []
 # Card
 
 `sealed class Card`
-- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Ui/CatalystChoiceView.cs:38-44` · Nested in [[CatalystChoiceView]]
+- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Ui/CatalystChoiceView.cs:45-51` · Nested in [[CatalystChoiceView]]
 
 ## Members
 | Kind | Signature | Line | Note |
 |---|---|---|---|
-| field | `public Transform root` | 40 |  |
-| field | `public Clickable click` | 41 |  |
-| field | `public SpriteRenderer[] bench = new SpriteRenderer[Bench.TileCount]` | 42 |  |
+| field | `public Transform root` | 47 |  |
+| field | `public Clickable click` | 48 |  |
+| field | `public SpriteRenderer[] bench = new SpriteRenderer[Bench.TileCount]` | 49 |  |
 
 ## Uses
 [[Bench]], [[Clickable]], [[Label]], [[RarityStars]]

@@ -10,7 +10,7 @@ namespace Athanor.Tests
     /// <summary>Phase 7: numbers that moved from code into Main.unity or a prefab equal the literals the code had.</summary>
     public class LayoutPinTests
     {
-        static void Floats(SerializedObject so, string root, Dictionary<string, float> want)
+        static void AssertFloats(SerializedObject so, string root, Dictionary<string, float> want)
         {
             foreach (var kv in want)
             {
@@ -21,15 +21,15 @@ namespace Athanor.Tests
             }
         }
 
-        static void Colour(SerializedObject so, string path, int rgb)
+        static void AssertColour(SerializedObject so, string path, int rgb)
         {
             var c = so.FindProperty(path).colorValue;
             Assert.AreEqual(((rgb >> 16) & 255) / 255f, c.r, 1e-4f, path); Assert.AreEqual(((rgb >> 8) & 255) / 255f, c.g, 1e-4f, path); Assert.AreEqual((rgb & 255) / 255f, c.b, 1e-4f, path);
         }
 
-        static void Burst(SerializedObject so, string path, int count, float speed, float life, int order, float gravity, float r, float g, float b, float a)
+        static void AssertBurst(SerializedObject so, string path, int count, float speed, float life, int order, float gravity, float r, float g, float b, float a)
         {
-            Floats(so, path, new Dictionary<string, float> { { "count", count }, { "speed", speed }, { "life", life }, { "order", order }, { "gravity", gravity } });
+            AssertFloats(so, path, new Dictionary<string, float> { { "count", count }, { "speed", speed }, { "life", life }, { "order", order }, { "gravity", gravity } });
             var c = so.FindProperty(path + ".color").colorValue;
             Assert.AreEqual(new[] { r, g, b, a }, new[] { c.r, c.g, c.b, c.a }.Select((v, i) => v).ToArray(), "burst colour " + path);
         }
@@ -60,7 +60,7 @@ namespace Athanor.Tests
             using (var main = new MainSceneFixture())
             {
                 var so = new SerializedObject(MainSceneFixture.Field<IgniteSequence>(main.Flow, "ignite"));
-                Floats(so, "timing", new Dictionary<string, float>
+                AssertFloats(so, "timing", new Dictionary<string, float>
                 {
                     { "paceHurry", 0.4f }, { "paceFloor", 0.55f }, { "paceDecay", 0.07f }, { "endPaceHurry", 0.4f }, { "endPace", 0.8f },
                     { "discoverHurryBase", 1 }, { "discoverHurryStep", 0.4f }, { "discoverHurryCap", 3 }, { "discoverBeat", 0.4f },
@@ -71,7 +71,7 @@ namespace Athanor.Tests
                     { "lostText", 1.6f }, { "rackTrailChance", 0.6f },
                 });
                 var run = new SerializedObject(main.Flow);
-                Floats(run, "runTiming", new Dictionary<string, float> { { "descendWait", 0.6f }, { "endingWait", 0.6f }, { "lossShake", 3 }, { "lossShakeSeconds", 0.5f }, { "lossWait", 0.9f } });
+                AssertFloats(run, "runTiming", new Dictionary<string, float> { { "descendWait", 0.6f }, { "endingWait", 0.6f }, { "lossShake", 3 }, { "lossShakeSeconds", 0.5f }, { "lossWait", 0.9f } });
             }
         }
 
@@ -81,18 +81,18 @@ namespace Athanor.Tests
             using (var main = new MainSceneFixture())
             {
                 var so = new SerializedObject(MainSceneFixture.Field<IgniteSequence>(main.Flow, "ignite"));
-                Burst(so, "look.fizzleBurst", 10, 26, 0.7f, 150, -18, 0.62f, 0.62f, 0.7f, 0.8f);
-                Burst(so, "look.sputterBurst", 5, 22, 0.6f, 150, -14, 0.55f, 0.4f, 0.75f, 0.8f);
-                Burst(so, "look.discoverBurst", 26, 95, 0.5f, 150, 0, 2.2f, 2.1f, 1.8f, 1);
-                Burst(so, "look.reactBurst", 14, 60, 0.55f, 150, 40, 2.2f, 2.2f, 2.2f, 1);
-                Burst(so, "look.pointsLand", 8, 45, 0.3f, 172, 0, 2.4f, 1.9f, 0.7f, 1);
-                Burst(so, "look.rackLand", 8, 40, 0.3f, 163, 0, 2, 2, 2, 1);
-                Colour(so, "look.defaultGlow", 0xf0dcc0); Colour(so, "look.pointsText", 0xf8d250); Colour(so, "look.comboText", 0xee6a3c);
-                Colour(so, "look.chainText", 0x6ee6c8); Colour(so, "look.hintText", 0xc486f4); Colour(so, "look.spoiledText", 0xc486f4); Colour(so, "look.lostText", 0xee6a3c);
+                AssertBurst(so, "look.fizzleBurst", 10, 26, 0.7f, 150, -18, 0.62f, 0.62f, 0.7f, 0.8f);
+                AssertBurst(so, "look.sputterBurst", 5, 22, 0.6f, 150, -14, 0.55f, 0.4f, 0.75f, 0.8f);
+                AssertBurst(so, "look.discoverBurst", 26, 95, 0.5f, 150, 0, 2.2f, 2.1f, 1.8f, 1);
+                AssertBurst(so, "look.reactBurst", 14, 60, 0.55f, 150, 40, 2.2f, 2.2f, 2.2f, 1);
+                AssertBurst(so, "look.pointsLand", 8, 45, 0.3f, 172, 0, 2.4f, 1.9f, 0.7f, 1);
+                AssertBurst(so, "look.rackLand", 8, 40, 0.3f, 163, 0, 2, 2, 2, 1);
+                AssertColour(so, "look.defaultGlow", 0xf0dcc0); AssertColour(so, "look.pointsText", 0xf8d250); AssertColour(so, "look.comboText", 0xee6a3c);
+                AssertColour(so, "look.chainText", 0x6ee6c8); AssertColour(so, "look.hintText", 0xc486f4); AssertColour(so, "look.spoiledText", 0xc486f4); AssertColour(so, "look.lostText", 0xee6a3c);
                 Assert.AreEqual(new Vector3(0, 12, 0), so.FindProperty("look.hubLift").vector3Value);
                 Assert.AreEqual(new Vector3(0, 30, 0), so.FindProperty("look.comboTextLift").vector3Value);
                 Assert.AreEqual(new Vector2(320, 232), so.FindProperty("look.lostAt").vector2Value);
-                Floats(so, "look", new Dictionary<string, float>
+                AssertFloats(so, "look", new Dictionary<string, float>
                 {
                     { "burstPerChain", 5 }, { "burstChainCap", 6 }, { "burstPerExtra", 8 }, { "speedPerChain", 10 },
                     { "shakeBase", 1 }, { "shakePerChain", 0.5f }, { "shakePerExtra", 0.6f }, { "shakeMax", 5 }, { "discoverShake", 2 },
@@ -111,27 +111,27 @@ namespace Athanor.Tests
             return c;
         }
 
-        static void Rect4(SerializedObject so, string path, float x, float y, float w, float h) =>
+        static void AssertRect(SerializedObject so, string path, float x, float y, float w, float h) =>
             Assert.AreEqual(new Rect(x, y, w, h), so.FindProperty(path).rectValue, path);
 
-        static void V2(SerializedObject so, string path, float x, float y) => Assert.AreEqual(new Vector2(x, y), so.FindProperty(path).vector2Value, path);
+        static void AssertV2(SerializedObject so, string path, float x, float y) => Assert.AreEqual(new Vector2(x, y), so.FindProperty(path).vector2Value, path);
 
         [Test]
         public void HudView_Prefab_KeepsTodaysLayout()
         {
             var so = new SerializedObject(Part<HudView>("Assets/Prefabs/Parts/Hud.prefab"));
-            Floats(so, "layout", new Dictionary<string, float>
+            AssertFloats(so, "layout", new Dictionary<string, float>
             {
                 { "rowEn", 10 }, { "rowVi", 12 }, { "noteCharsEn", 19 }, { "noteCharsVi", 17 }, { "redrawLabelY", 3 }, { "pressedDy", 2 },
                 { "catalystPitch", 35 }, { "catalystSpread", 105 }, { "catalystSideBySide", 4 }, { "aspectPitch", 29 },
                 { "noteX", 10 }, { "noteTopAspects", 130 }, { "noteTop", 88 }, { "potencyX", 70 }, { "potencyTightX", 17 }, { "potencyY", 49 },
                 { "barWidth", 132 }, { "barHeight", 5 }, { "tightFrom", 70 }, { "tightGap", 4 }, { "tightTo", 153 },
             });
-            Rect4(so, "layout.redrawRect", 556, 88, 76, 20); Rect4(so, "layout.pauseRect", 12, 152, 28, 20);
-            V2(so, "layout.socketOrigin", 488, 24); V2(so, "layout.socketSize", 30, 30); V2(so, "layout.iconOffset", 3, 3); V2(so, "layout.iconSize", 24, 24);
-            V2(so, "layout.aspectAnchor", 22, 111); V2(so, "layout.potencyAnchor", 96, 56); V2(so, "layout.barOrigin", 18, 70); V2(so, "layout.pulseAlpha", 0.1f, 0.2f);
+            AssertRect(so, "layout.redrawRect", 556, 88, 76, 20); AssertRect(so, "layout.pauseRect", 12, 152, 28, 20);
+            AssertV2(so, "layout.socketOrigin", 488, 24); AssertV2(so, "layout.socketSize", 30, 30); AssertV2(so, "layout.iconOffset", 3, 3); AssertV2(so, "layout.iconSize", 24, 24);
+            AssertV2(so, "layout.aspectAnchor", 22, 111); AssertV2(so, "layout.potencyAnchor", 96, 56); AssertV2(so, "layout.barOrigin", 18, 70); AssertV2(so, "layout.pulseAlpha", 0.1f, 0.2f);
             Assert.AreEqual(new Vector3(0.25f, 1.25f, 1), so.FindProperty("layout.barTipScale").vector3Value);
-            Colour(so, "redrawUp", 0x1d5a52); Colour(so, "redrawOver", 0x26706a); Colour(so, "redrawPressed", 0x143f3a); Colour(so, "redrawOff", 0x3a2e28);
+            AssertColour(so, "redrawUp", 0x1d5a52); AssertColour(so, "redrawOver", 0x26706a); AssertColour(so, "redrawPressed", 0x143f3a); AssertColour(so, "redrawOff", 0x3a2e28);
             var pulse = so.FindProperty("layout.pulseColor").colorValue;
             Assert.AreEqual(new Color(1, 0.75f, 0.35f, 1), pulse);
             Assert.AreEqual(new Color(0.55f, 0.5f, 0.75f, 1), so.FindProperty("noTargetBar").colorValue);
@@ -154,18 +154,18 @@ namespace Athanor.Tests
             Assert.AreEqual(new Vector3(0, 28, 0), bench.FindProperty("layout.floatLiftTo").vector3Value);
             Assert.AreEqual(new Vector3(0, 12, 0), bench.FindProperty("layout.tileTipLift").vector3Value);
             Assert.AreEqual(new Vector3(0, CardView.H / 2f, 0), bench.FindProperty("layout.cardTipLift").vector3Value);
-            Floats(bench, "layout", new Dictionary<string, float> { { "ghostLift", 6 } });
-            Colour(bench, "layout.floatShadow", 0x0c0706);
+            AssertFloats(bench, "layout", new Dictionary<string, float> { { "ghostLift", 6 } });
+            AssertColour(bench, "layout.floatShadow", 0x0c0706);
 
             var tile = new SerializedObject(Part<TileView>("Assets/Prefabs/Views/Bench.prefab"));
             var lid = tile.FindProperty("layout.shutLid").colorValue;
             Assert.AreEqual(new Color(0.03f, 0.02f, 0.05f, 0.78f), lid);
             Assert.AreEqual(new Color(1, 0.85f, 0.45f, 1), tile.FindProperty("layout.hoverFace").colorValue);
             Assert.AreEqual(new Vector3(0, 8, 0), tile.FindProperty("layout.consumeLift").vector3Value);
-            Floats(tile, "layout", new Dictionary<string, float> { { "iconLift", 10 }, { "popRise", 8 } });
+            AssertFloats(tile, "layout", new Dictionary<string, float> { { "iconLift", 10 }, { "popRise", 8 } });
 
             var card = new SerializedObject(Part<CardView>("Assets/Prefabs/Parts/Card.prefab"));
-            Floats(card, "layout", new Dictionary<string, float>
+            AssertFloats(card, "layout", new Dictionary<string, float>
             {
                 { "nameOneLine", -3 }, { "nameTwoLines", 2 }, { "pictureSlideMax", 10 }, { "dealDrop", 90 },
                 { "selectedLift", 14 }, { "liftedLift", 9 }, { "liftSpeed", 90 }, { "bobAmp", 1.5f }, { "bobSpeed", 3 },
@@ -173,8 +173,174 @@ namespace Athanor.Tests
 
             var link = new SerializedObject(Part<LinkView>("Assets/Prefabs/Views/Bench.prefab"));
             Assert.AreEqual(new Color(2.2f, 1.7f, 0.8f, 1), link.FindProperty("color").colorValue);
-            V2(link, "moteScale", 0.5f, 0.5f);
+            AssertV2(link, "moteScale", 0.5f, 0.5f);
             Assert.AreEqual(9, link.FindProperty("lift").floatValue);
+        }
+
+        /// <summary>A serialized colour equals want in all four channels.</summary>
+        static void AssertRgba(SerializedObject so, string path, Color want)
+        {
+            var p = so.FindProperty(path);
+            Assert.IsNotNull(p, path);
+            var c = p.colorValue;
+            Assert.AreEqual(want.r, c.r, 1e-4f, path + ".r"); Assert.AreEqual(want.g, c.g, 1e-4f, path + ".g");
+            Assert.AreEqual(want.b, c.b, 1e-4f, path + ".b"); Assert.AreEqual(want.a, c.a, 1e-4f, path + ".a");
+        }
+
+        static void AssertHex(SerializedObject so, string path, string hex) => AssertRgba(so, path, Px.Hex(hex));
+
+        static void AssertVec2(SerializedObject so, string path, float x, float y)
+        {
+            var p = so.FindProperty(path);
+            Assert.IsNotNull(p, path);
+            Assert.AreEqual(x, p.vector2Value.x, 1e-4f, path + ".x"); Assert.AreEqual(y, p.vector2Value.y, 1e-4f, path + ".y");
+        }
+
+        static SerializedObject View<T>(string name) where T : Component => new SerializedObject(Part<T>("Assets/Prefabs/Views/" + name + ".prefab"));
+
+        [Test]
+        public void JournalView_Prefab_KeepsTodaysLayout()
+        {
+            // the old statics: X 20, Y 15, PageX 324, PageY 30, PageW 260, GridX 33, HintsY 240, Cols 10, Cell 27
+            var so = View<JournalView>("Journal");
+            AssertRect(so, "layout.indexRect", 20 + 324 + 12, 15 + 30 + 91, 260 - 24, 22);
+            AssertRect(so, "layout.recipesRect", 20 + 324 + 12, 15 + 30 + 111, 260 - 24, 60);
+            AssertRect(so, "layout.hintsRect", 20 + 33 - 2, 15 + 240 - 2, 10 * 27 + 2, 14 + 2 * 11);
+            AssertFloats(so, "layout", new Dictionary<string, float>
+            {
+                { "titleTop", 62 }, { "titleTopLong", 72 }, { "titleLongChars", 13 }, { "titleSize", 32 }, { "titleSizeLong", 16 },
+            });
+            AssertHex(so, "layout.hint", "#4a1f7a");
+            AssertRgba(so, "layout.unknown", new Color(0.16f, 0.1f, 0.05f, 0.4f));
+        }
+
+        [Test]
+        public void GoalsView_Prefab_KeepsTodaysLayout()
+        {
+            var so = View<GoalsView>("Goals");
+            AssertFloats(so, "layout", new Dictionary<string, float> { { "barHeight", 3 }, { "barDy", -14.5f } });
+        }
+
+        [Test]
+        public void CatalystChoiceView_Prefab_KeepsTodaysLayout()
+        {
+            var so = View<CatalystChoiceView>("CatalystChoice");
+            AssertFloats(so, "timing", new Dictionary<string, float>
+            {
+                { "dealBase", 0.5f }, { "dealPerCard", 0.1f }, { "dealFly", 0.5f }, { "shadeDiv", 2.5f }, { "stagger", 0.1f }, { "away", 0.55f }, { "hopShare", 0.45f },
+            });
+            AssertVec2(so, "timing.pickFlash", 0.22f, 0.35f);
+            AssertFloats(so, "layout", new Dictionary<string, float>
+            {
+                { "dim", 0.8f }, { "startDrop", -300 }, { "fallDrop", -330 }, { "hop", 10 }, { "hoverLift", 8 }, { "liftSpeed", 80 },
+            });
+            AssertHex(so, "layout.kicker", "#a8854e"); AssertHex(so, "layout.kickerCost", "#9a3414");
+            AssertBurst(so, "layout.pickBurst", 40, 150, 0.8f, 440 + 8, 60, 2.2f, 1.7f, 0.6f, 1);
+        }
+
+        [Test]
+        public void EventView_Prefab_KeepsTodaysLayout()
+        {
+            var so = View<EventView>("Event");
+            AssertFloats(so, "timing", new Dictionary<string, float> { { "fadeIn", 0.35f }, { "fadeOut", 0.2f }, { "slide", 0.35f }, { "shadeAlpha", 0.62f }, { "slideFrom", -40 } });
+            AssertVec2(so, "timing.noteFlash", 0.12f, 0.25f);
+            AssertRgba(so, "layout.overTint", new Color(1.25f, 1.15f, 1.05f, 1));
+            AssertFloats(so, "layout", new Dictionary<string, float> { { "labelUp", 9 }, { "labelDown", 7 } });
+        }
+
+        [Test]
+        public void RunOverView_Prefab_KeepsTodaysTiming()
+        {
+            var so = View<RunOverView>("RunOver");
+            AssertFloats(so, "timing", new Dictionary<string, float> { { "fadeIn", 0.35f }, { "slide", 0.35f }, { "shadeAlpha", 0.62f }, { "slideFrom", -40 } });
+        }
+
+        [Test]
+        public void PauseMenu_Prefab_KeepsTodaysLayout()
+        {
+            var so = View<PauseMenu>("Pause");
+            AssertFloats(so, "layout", new Dictionary<string, float>
+            {
+                { "buttonX", 260 }, { "howToDy", 110 }, { "quitDy", 152 }, { "hintX", 320 }, { "hintDy", 137 }, { "noVibrationUp", 30 },
+            });
+        }
+
+        [Test]
+        public void TitleView_Prefab_KeepsTodaysLayout()
+        {
+            var so = View<TitleView>("Title");
+            AssertFloats(so, "layout", new Dictionary<string, float>
+            {
+                { "centerX", 320 }, { "logoY", 96 }, { "logoRise", 10 }, { "outlineSpread", 2 },
+                { "progressY", 334 }, { "progressYVi", 332 }, { "creditY", 348 }, { "creditYVi", 346 }, { "cellInset", 1 },
+                { "pitch", 28 }, { "pitchNoVib", 32 }, { "firstRow", 54 }, { "firstRowNoVib", 58 },
+                { "dividerX", 24 }, { "dividerW", 272 }, { "dividerH", 1 }, { "dividerY", 140 }, { "dividerYNoVib", 126 }, { "resetY", 144 }, { "resetYNoVib", 134 },
+                { "labelX", 188 }, { "labelDy", 4 }, { "valueDy", 3 }, { "valueDx", 26 }, { "boxInset", 8 }, { "boxSize", 10 }, { "fillInset", 9 }, { "fillSize", 8 },
+            });
+            AssertHex(so, "layout.resetRest", "#7a5a3a"); AssertHex(so, "layout.resetOver", "#ee6a3c");
+            AssertHex(so, "layout.cellRest", "#2a1810"); AssertHex(so, "layout.cellOver", "#4a2c14");
+            AssertFloats(so, "timing", new Dictionary<string, float>
+            {
+                { "fadeIn", 1.2f }, { "subDelay", 0.6f }, { "subFade", 0.8f }, { "glowBase", 0.28f }, { "glowSwing", 0.12f }, { "glowSpeed", 1.7f },
+                { "emberRate", 9 }, { "emberY", 300 }, { "emberSize", 4 }, { "emberFall", 0.3f },
+            });
+            // the glow's alpha is computed each frame; only its rgb was a literal
+            var glow = so.FindProperty("timing.glow").colorValue;
+            Assert.AreEqual(1f, glow.r, 1e-4f, "timing.glow.r"); Assert.AreEqual(0.55f, glow.g, 1e-4f, "timing.glow.g"); Assert.AreEqual(0.2f, glow.b, 1e-4f, "timing.glow.b");
+            AssertVec2(so, "timing.emberX", 120, 520); AssertVec2(so, "timing.emberVx", -6, 6); AssertVec2(so, "timing.emberVy", 18, 42);
+            AssertRgba(so, "timing.ember", new Color(2.2f, 1.2f, 0.4f, 0.9f));
+        }
+
+        [Test]
+        public void GoalToast_Prefab_KeepsTodaysLayout()
+        {
+            var so = View<GoalToast>("GoalToast");
+            AssertBurst(so, "layout.burst", 18, 90, 0.6f, 490 + 3, 20, 2.2f, 1.7f, 0.6f, 1);
+            AssertFloats(so, "layout", new Dictionary<string, float> { { "hideGap", 2 } });
+        }
+
+        [Test]
+        public void Tooltip_BenchPrefab_KeepsTodaysLayout()
+        {
+            var so = View<Tooltip>("Bench");
+            AssertFloats(so, "layout", new Dictionary<string, float>
+            {
+                { "pad", 8 }, { "titleDy", 4 }, { "bodyDy", 21 }, { "starsDy", 22 }, { "tierDy", 19 }, { "tierGap", 4 }, { "edgeMargin", 2 },
+                { "border", 4 }, { "longText", 62 }, { "tightSpacing", -30 },
+            });
+            AssertVec2(so, "layout.pivot", 0.5f, 0.5f);
+        }
+
+        [Test]
+        public void UiButton_EveryPrefabInstance_KeepsTodaysLook()
+        {
+            var want = new Dictionary<string, int> { { "Pause", 6 }, { "RunOver", 2 }, { "Title", 11 }, { "Event", 1 } };
+            foreach (var kv in want)
+            {
+                var path = "Assets/Prefabs/Views/" + kv.Key + ".prefab";
+                var go = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+                Assert.IsNotNull(go, path);
+                var buttons = go.GetComponentsInChildren<UiButton>(true);
+                Assert.AreEqual(kv.Value, buttons.Length, "UiButtons in " + path);
+                foreach (var b in buttons)
+                {
+                    var so = new SerializedObject(b);
+                    string at = path + " " + b.name + " ";
+                    AssertRgba(so, "look.disabledTint", new Color(0.45f, 0.42f, 0.42f, 1));
+                    AssertRgba(so, "look.overTint", new Color(1.25f, 1.15f, 1.05f, 1));
+                    AssertHex(so, "look.disabledText", "#8a7a6a");
+                    Assert.AreEqual(10f, so.FindProperty("look.labelUp").floatValue, 1e-4f, at + "labelUp");
+                    Assert.AreEqual(8f, so.FindProperty("look.labelDown").floatValue, 1e-4f, at + "labelDown");
+                }
+            }
+        }
+
+        [Test]
+        public void Palette_Asset_KeepsTheStarOutline()
+        {
+            var p = AssetDatabase.LoadAssetAtPath<Palette>("Assets/Data/Palette.asset");
+            Assert.IsNotNull(p, "Assets/Data/Palette.asset");
+            AssertHex(new SerializedObject(p), "starOutline", "#1a0e08");
         }
 
         [Test]
