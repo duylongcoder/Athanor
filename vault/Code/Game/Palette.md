@@ -34,7 +34,7 @@ aliases: []
 [[RarityColors]]
 
 ## Used by
-[[Art]], [[CatalystChoiceView]], [[EditorGlobals]], [[GameFlow]], [[GoalsView]], [[HudView]], [[JournalView]], [[RarityStars]], [[ReactionCutscene]], [[TileView]], [[TitleView]], [[UiButton]], [[Wording]]
+[[Art]], [[CatalystChoiceView]], [[DevLiveEdit]], [[EditorGlobals]], [[GameFlow]], [[GoalsView]], [[HudView]], [[JournalView]], [[RarityStars]], [[ReactionCutscene]], [[TileView]], [[TitleView]], [[UiButton]], [[Wording]]
 
 ## Tested by
 [[LayoutPinTests]], [[StaticResetTests]]

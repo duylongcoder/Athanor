@@ -34,6 +34,6 @@ count: 24
 - `SimpleCutscene_MainScene_KeepsTodaysBeats`
 - `ReactionCutscene_MainScene_KeepsTodaysBeats`
 - `WindowView_MainScene_KeepsTodaysEffects`
-- `Tutorial_MainScene_KeepsTodaysTargetsAndStyle`
+- `Tutorial_MainScene_KeepsTodaysStyle`
 - `Depth_MainScene_KeepsTodaysRigSwayAndTable`
 - `Effects_MainScene_KeepsTodaysTiltShiftFogAndShake`

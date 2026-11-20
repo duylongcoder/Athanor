@@ -5,7 +5,7 @@ tags: [moc/tests]
 ---
 
 # Tests
-574 test methods in 46 files. Run: `dotnet test tools/CoreTests` (rules) or `unity test Athanor --mode EditMode`.
+583 test methods in 48 files. Run: `dotnet test tools/CoreTests` (rules) or `unity test Athanor --mode EditMode`.
 
 - [[ChainTests]] — 26 tests · covers [[Bench]], [[ChainPlan]], [[ChainPlanner]], [[ContentDb]]
 - [[ContentTests]] — 41 tests · covers [[Bench]], [[ChainPlanner]], [[ContentData]], [[ContentDb]], [[Ops]]
@@ -41,8 +41,10 @@ tags: [moc/tests]
 - [[PrefabBakeTests]] — 40 tests · covers [[Bench]], [[BenchView]], [[CardView]], [[CatalystChoiceView]], [[ChoiceCard]], [[Clickable]], [[ContentData]], [[ContentDb]]
 - [[RunOverDepthTests]] — 4 tests · covers [[ContentData]], [[ContentDb]], [[Label]], [[Loc]], [[RunOverView]]
 - [[SaveTests]] — 14 tests · covers [[ContentData]], [[ContentDb]], [[Journal]], [[Kind]], [[Profile]], [[ProfileData]], [[Save]]
-- [[SceneBakeTests]] — 7 tests · covers [[Bench]], [[Clickable]], [[ContentDb]], [[GameFlow]], [[JournalView]], [[Label]], [[ReactionCutscene]], [[ScreenFx]]
+- [[SceneBakeTests]] — 7 tests · covers [[Bench]], [[Clickable]], [[ContentData]], [[ContentDb]], [[GameFlow]], [[JournalView]], [[Label]], [[ReactionCutscene]]
 - [[SettingsHapticsTests]] — 7 tests · covers [[AudioMute]], [[Haptics]], [[Save]], [[Settings]]
 - [[SparksTests]] — 7 tests · covers [[Art]], [[Particle]], [[SparkMesh]], [[Sparks]]
 - [[StaticResetTests]] — 8 tests · covers [[Art]], [[AudioMute]], [[DepthRig]], [[EditorGlobals]], [[Haptics]], [[Loc]], [[Palette]], [[PointerInput]]
+- [[TutorialAreaTests]] — 4 tests · covers [[AreaKind]], [[Px]], [[TutorialArea]], [[TutorialRect]], [[TutorialStep]]
 - [[TutorialFlowTests]] — 10 tests · covers [[AutoPlayer]], [[Bench]], [[ContentData]], [[ContentDb]], [[Journal]], [[Profile]], [[Px]], [[RunOptions]]
+- [[TutorialStepsBakeTests]] — 5 tests · covers [[AreaKind]], [[ContentData]], [[ContentDb]], [[JournalView]], [[TutorialController]], [[TutorialScript]]

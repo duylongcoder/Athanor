@@ -37,4 +37,4 @@ aliases: []
 [[ContentDb]], [[GameFlow]], [[GoldenShots]], [[Lang]]
 
 ## Tested by
-[[ContentTests]], [[HotPathTests]], [[HudTests]], [[LoreTests]], [[PauseTests]], [[Phase3Tests]], [[PrefabBakeTests]], [[RarityTests]], [[RulesTests]], [[RunOverDepthTests]], [[RunStateTests]], [[SaveTests]], [[TutorialFlowTests]], [[TutorialTests]]
+[[ContentTests]], [[HotPathTests]], [[HudTests]], [[LoreTests]], [[PauseTests]], [[Phase3Tests]], [[PrefabBakeTests]], [[RarityTests]], [[RulesTests]], [[RunOverDepthTests]], [[RunStateTests]], [[SaveTests]], [[SceneBakeTests]], [[TutorialFlowTests]], [[TutorialStepsBakeTests]], [[TutorialTests]]

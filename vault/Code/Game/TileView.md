@@ -42,7 +42,7 @@ aliases: []
 [[Anim]], [[Art]], [[BurstSpec]], [[FxRefs]], [[Motion]], [[Palette]], [[Px]], [[Sparks]]
 
 ## Used by
-[[BenchView]]
+[[BenchView]], [[DevLiveEdit]]
 
 ## Tested by
 [[DepthClickTests]], [[HotPathTests]], [[LayoutPinTests]], [[MainDepthTests]]

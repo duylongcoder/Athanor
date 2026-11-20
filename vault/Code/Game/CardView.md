@@ -34,7 +34,7 @@ aliases: []
 [[Art]], [[Kind]], [[KindColors]], [[Label]], [[Loc]], [[Px]], [[RarityStars]]
 
 ## Used by
-[[BenchView]]
+[[BenchView]], [[DevLiveEdit]]
 
 ## Tested by
 [[HotPathTests]], [[LayoutPinTests]], [[PrefabBakeTests]]

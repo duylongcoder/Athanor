@@ -101,11 +101,16 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | SimpleCutscene.Look | SimpleCutscene.Look | Game | struct | Athanor/Assets/Scripts/Game/Cutscene/SimpleCutscene.cs | 75 | What Update draws each frame: the floating prize and its rays, the rune circle and its ring, the colours of the streams. |
 | LoopSpec | LoopSpec | Game | struct | Athanor/Assets/Scripts/Game/Cutscene/SimpleCutscene.cs | 93 | One looping stream: sort order, particles a second, life, where they are born (art x, y), their speed, gravity and chance to sparkle. |
 | Loop | Loop | Game | class | Athanor/Assets/Scripts/Game/Cutscene/SimpleCutscene.cs | 388 | A stream of glowing particles played as a loop instead of emitted: rate x life fixed slots, each reborn every life seconds at a hashed place and speed, so its position is a function of the clock. A sl |
+| TutorialRect | TutorialRect | Game | class | Athanor/Assets/Scripts/Game/Cutscene/TutorialArea.cs | 6 | Pure rectangle math for tutorial areas (art pixels, top-left origin). No scene needed, so it is tested alone. |
+| TutorialArea | TutorialArea | Game | class | Athanor/Assets/Scripts/Game/Cutscene/TutorialArea.cs | 37 | One lit window of a step. Fixed: the object's world position is the centre and size (pixels) its size. ScriptTile and View follow the game at run time. clicksPass lets clicks in the window reach the g |
+| AreaKind | AreaKind | Game | enum | Athanor/Assets/Scripts/Game/Cutscene/TutorialArea.cs | 25 |  |
+| ViewRef | ViewRef | Game | enum | Athanor/Assets/Scripts/Game/Cutscene/TutorialArea.cs | 28 |  |
+| ScriptTrial | ScriptTrial | Game | enum | Athanor/Assets/Scripts/Game/Cutscene/TutorialArea.cs | 31 |  |
 | TutorialRules | TutorialRules | Game | class | Athanor/Assets/Scripts/Game/Cutscene/TutorialController.cs | 12 | The decisions around the tutorial that need no scene, so they can be tested. What Begin does is the Core rule TutorialScript.Plan. |
 | TutorialController | TutorialController | Game | class | Athanor/Assets/Scripts/Game/Cutscene/TutorialController.cs | 33 | Plays the scripted tutorial over the bench: a dark screen with lit holes and a pulsing gold rim, an arrow, a text box at the top, click locks, and popups held until read. It reads the game's state; it |
 | TutorialHole | TutorialHole | Game | class | Athanor/Assets/Scripts/Game/Cutscene/TutorialHole.cs | 10 | One lit window of the tutorial overlay: a SpriteMask that cuts a hole in the dim (the dim draws "visible outside mask"), and the four gold rim pieces round it. TutorialController keeps a few of these  |
-| TutorialTargets | TutorialTargets | Game | class | Athanor/Assets/Scripts/Game/Cutscene/TutorialSettings.cs | 12 | Where the tutorial points. Art space: 640x360, x to the right, y down from the top-left corner. Every rectangle a step lights comes from here (or from the view it talks about: the Journal's pages, the |
-| TutorialStyle | TutorialStyle | Game | class | Athanor/Assets/Scripts/Game/Cutscene/TutorialSettings.cs | 39 | How the tutorial overlay looks and feels: the text box, the popup lines, the rim and arrow, and their timings. |
+| TutorialStyle | TutorialStyle | Game | class | Athanor/Assets/Scripts/Game/Cutscene/TutorialSettings.cs | 9 | How the tutorial overlay looks and feels: the text box, the popup lines, the rim and arrow, and their timings. |
+| TutorialStep | TutorialStep | Game | class | Athanor/Assets/Scripts/Game/Cutscene/TutorialStep.cs | 10 | One tutorial step, a child of the Tutorial object. Holds the text key, the dim and lock options, and its areas (child objects). The step id is the object's name (e.g. "1.4", "5.4i"). |
 | WindowView | WindowView | Game | class | Athanor/Assets/Scripts/Game/Cutscene/WindowView.cs | 12 | The workshop window shows what the current depth "sees" and plays one tiny looping effect (docs/ATHANOR.md §8): 1 dust motes up a shaft, 2 drips down the glass, 3 a breathing amber glow, 4 roots creep |
 | WindowView.Timing | WindowView.Timing | Game | struct | Athanor/Assets/Scripts/Game/Cutscene/WindowView.cs | 18 | The periods of the effects, in seconds; Main.unity holds the values (see LayoutPinTests). |
 | WindowView.Layout | WindowView.Layout | Game | struct | Athanor/Assets/Scripts/Game/Cutscene/WindowView.cs | 32 | Where the effects sit, as offsets from the pane's centre (art pixels, y up), and the paths they follow. |
@@ -146,6 +151,8 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | AudioMuteHook | AudioMuteHook | Game | class | Athanor/Assets/Scripts/Game/Support/AudioMute.cs | 36 | Feeds the browser's tab visibility and Unity's pause and focus into AudioMute. |
 | Clickable | Clickable | Game | class | Athanor/Assets/Scripts/Game/Support/Clickable.cs | 9 | A rectangle around this object that the pointer can hover and click. The highest order under the pointer wins. Holes (world-space rectangles) are cut out of it: the pointer there is not on this object |
 | Dev | Dev | Game | class | Athanor/Assets/Scripts/Game/Support/Dev.cs | 9 | Log lines that exist only as the hook of tools/web/webtest.mjs ([tut], [drive], [loc]). The calls, and the strings they build, are compiled out of a release build; a development build and the editor k |
+| DevMode | DevMode | Game | class | Athanor/Assets/Scripts/Game/Support/DevMode.cs | 13 | Dev mode (editor only, menu Athanor/Dev Mode): while playing, a number changed in the Inspector of a view or in Palette.asset shows up at once. Sizes, colours and timings that are read every frame alr |
+| DevLiveEdit | DevLiveEdit | Game | class | Athanor/Assets/Scripts/Game/Support/DevMode.cs | 25 | Watches the serialized numbers of the bench views and the Palette, and redraws the bench when one changes. |
 | Fonts | Fonts | Game | class | Athanor/Assets/Scripts/Game/Support/Fonts.cs | 10 | Which font a FontKind uses in the language showing, and the size and line box that go with it. |
 | FontKind | FontKind | Game | enum | Athanor/Assets/Scripts/Game/Support/Fonts.cs | 7 |  |
 | Haptics | Haptics | Game | class | Athanor/Assets/Scripts/Game/Support/Haptics.cs | 11 | Short vibration pulses for rare, meaningful moments (never clicks or Ignite). Only where the browser can vibrate (Android Chrome); Supported is false on desktop, iOS and in the editor, and the Setting |
@@ -183,6 +190,7 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | UiButton.Look | UiButton.Look | Game | struct | Athanor/Assets/Scripts/Game/Ui/UiButton.cs | 15 | The button's colours and label offsets, stored in each prefab that holds one. |
 | ArtLibraryBuilder | ArtLibraryBuilder | Editor | class | Athanor/Assets/Editor/ArtLibraryBuilder.cs | 12 | Collects the sprites, effect sheets, fonts and materials into Assets/Art/ArtLibrary.asset, the one lookup the game uses by name. Run it after new art or effect sheets are imported (the sprite and flip |
 | AtlasBuilder | AtlasBuilder | Editor | class | Athanor/Assets/Editor/AtlasBuilder.cs | 27 | Two art steps that run after tools/art/export.mjs, both idempotent: 1. Sprite sheets: the numbered frames of each animation (Background/flame_small_0..7.png ...) are merged into one Multiple-mode shee |
+| DevModeMenu | DevModeMenu | Editor | class | Athanor/Assets/Editor/DevModeMenu.cs | 7 | Athanor/Dev Mode: the on/off switch. Takes effect at the next Play. |
 | FlipbookImporter | FlipbookImporter | Editor | class | Athanor/Assets/Editor/FlipbookImporter.cs | 14 | Turns each pixelfx sheet in Assets/Art/Fx/Sheets (name.png + name.json, exported from pixelfx) into sliced sprites and a FlipbookSheet asset, then adds them to the art library so Fx.Spawn(name) can pl |
 | FontBuilder | FontBuilder | Editor | class | Athanor/Assets/Editor/FontBuilder.cs | 10 | Bakes the pixel fonts into TextMeshPro bitmap font assets at their native size (crisp, point-filtered). |
 | LayoutData | LayoutData | Editor | class | Athanor/Assets/Editor/LayoutData.cs | 11 |  |
@@ -191,6 +199,10 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | Reserialize | Reserialize | Editor | class | Athanor/Assets/Editor/Shared/Reserialize.cs | 11 | Rewrites every view prefab and the data assets in the current serializer format, so a field added to a component is stored with its value. Phase 7 uses it after a number moves from code to a prefab. M |
 | ViewCapture | ViewCapture | Editor | class | Athanor/Assets/Editor/Shared/ViewCapture.cs | 8 | Renders a GameObject alone (in an otherwise empty scene) to a 640x360 image, the way the UI camera draws it. |
 | SpriteImportRules | SpriteImportRules | Editor | class | Athanor/Assets/Editor/SpriteImportRules.cs | 10 | Every texture under Assets/Art is pixel art: a point-filtered, uncompressed sprite at 1 pixel per unit. The one exception is Assets/Art/Depth (the HD-2D layers): its pre-blurred pictures (*_far, *_nea |
+| TutorialAreaEditor | TutorialAreaEditor | Editor | class | Athanor/Assets/Editor/TutorialStepGizmo.cs | 11 | Scene-view preview of the tutorial steps in Main.unity (Edit Mode): every Fixed area is drawn as an outline, green when clicks pass through it and amber when it is highlight only, with the step name a |
+| TutorialStepsMigration | TutorialStepsMigration | Editor | class | Athanor/Assets/Editor/TutorialStepsMigration.cs | 16 | Creates (or updates, by name) the tutorial step objects under the Tutorial object of Main.unity, from the table below. The table reproduces what Drive lit and which clicks reached the game before the  |
+| A | A | Editor | class | Athanor/Assets/Editor/TutorialStepsMigration.cs | 24 |  |
+| S | S | Editor | class | Athanor/Assets/Editor/TutorialStepsMigration.cs | 32 |  |
 | WebBuild | WebBuild | Editor | class | Athanor/Assets/Editor/WebBuild.cs | 10 | Builds the game for the browser into Build/web. Also callable from the command line: unity build Athanor --target WebGL --execute-method WebBuild.Build |
 | ChainTests | ChainTests | Tests | class | Athanor/Assets/Tests/EditMode/ChainTests.cs | 8 | The chain planner on TestContent.Combo(): p 8, q 5, r 2, s 9, t 4, v 1 (Reaction Index). |
 | ContentTests | ContentTests | Tests | class | Athanor/Assets/Tests/EditMode/ContentTests.cs | 9 |  |
@@ -237,12 +249,14 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | PrefabFixture | PrefabFixture | Tests | class | Athanor/Assets/Tests/EditModeGame/PrefabFixture.cs | 9 | A copy of a prefab for one test. Call Destroy in [TearDown] (or a finally). |
 | RunOverDepthTests | RunOverDepthTests | Tests | class | Athanor/Assets/Tests/EditModeGame/RunOverDepthTests.cs | 15 | The run-over depth row (owner, phase-5-prep 2026-11-16): a won run says "Planted at depth n" on one line with no value; a lost run says "Depth reached" with "n of 5". The view is reused, so each path  |
 | SaveTests | SaveTests | Tests | class | Athanor/Assets/Tests/EditModeGame/SaveTests.cs | 11 | The journal and the profile survive a round trip through PlayerPrefs, and a damaged save never stops the game. |
-| SceneBakeTests | SceneBakeTests | Tests | class | Athanor/Assets/Tests/EditModeGame/SceneBakeTests.cs | 11 | The scene objects of Main.unity that are not prefabs (Task 15): their serialized parts are all there, and Bind finishes them. |
+| SceneBakeTests | SceneBakeTests | Tests | class | Athanor/Assets/Tests/EditModeGame/SceneBakeTests.cs | 12 | The scene objects of Main.unity that are not prefabs (Task 15): their serialized parts are all there, and Bind finishes them. |
 | SettingsHapticsTests | SettingsHapticsTests | Tests | class | Athanor/Assets/Tests/EditModeGame/SettingsHapticsTests.cs | 9 | Saved settings (athanor.settings.v1), the haptics plan and the mute-on-hidden-tab hook. |
 | SparksTests | SparksTests | Tests | class | Athanor/Assets/Tests/EditModeGame/SparksTests.cs | 9 | Sparks on batched meshes: same motion and fade as the old SpriteRenderer pool, whole-pixel centres, HDR kept, no garbage. |
 | StaticResetTests | StaticResetTests | Tests | class | Athanor/Assets/Tests/EditModeGame/StaticResetTests.cs | 13 | With domain reload off, statics survive Stop and Play. Every allowlisted class has a ResetStatics that [RuntimeInitializeOnLoadMethod(SubsystemRegistration)] runs before the first scene loads; these t |
 | TestFx | TestFx | Tests | class | Athanor/Assets/Tests/EditModeGame/TestFx.cs | 10 | Effect players for a test that binds a view: a ScreenFx with its flash and fade sprites, and a Sparks. |
+| TutorialAreaTests | TutorialAreaTests | Tests | class | Athanor/Assets/Tests/EditModeGame/TutorialAreaTests.cs | 7 |  |
 | TutorialFlowTests | TutorialFlowTests | Tests | class | Athanor/Assets/Tests/EditModeGame/TutorialFlowTests.cs | 11 | The tutorial's decisions, its sandbox and the scores it shows (the numbers TutorialTests pins in Core). |
+| TutorialStepsBakeTests | TutorialStepsBakeTests | Tests | class | Athanor/Assets/Tests/EditModeGame/TutorialStepsBakeTests.cs | 17 | The tutorial steps are scene objects of Main.unity. The baseline (tutorial_lit_baseline.json) is what each step lit when the rects were numbers in TutorialTargets and lists in Drive (art pixels, befor |
 
 ## Members
 | type | kind | name | line | sig |
@@ -788,10 +802,10 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | GameFlow | method | MoodLine | 58 | public static string MoodLine(int mood) |
 | GameFlow | method | EffectsLine | 59 | public static string EffectsLine(bool on) |
 | GameFlow | property | JournalView | 129 | public JournalView JournalView |
-| GameFlow | method | JournalAfterQuit | 468 | public static Journal JournalAfterQuit(bool sandbox, Journal current) |
-| GameFlow | method | ProfileAfterQuit | 470 | public static Profile ProfileAfterQuit(bool sandbox, Profile current, ContentDb db) |
-| GameFlow | method | Ignite | 507 | public void Ignite() |
-| GameFlow | method | SettleIgnite | 514 | public static IgniteOutcome SettleIgnite(RunState run, Journal journal, bool sandbox) |
+| GameFlow | method | JournalAfterQuit | 471 | public static Journal JournalAfterQuit(bool sandbox, Journal current) |
+| GameFlow | method | ProfileAfterQuit | 473 | public static Profile ProfileAfterQuit(bool sandbox, Profile current, ContentDb db) |
+| GameFlow | method | Ignite | 510 | public void Ignite() |
+| GameFlow | method | SettleIgnite | 517 | public static IgniteOutcome SettleIgnite(RunState run, Journal journal, bool sandbox) |
 | RunTiming | field | endingWait | 88 | public float descendWait, endingWait |
 | RunTiming | field | lossWait | 90 | public float lossShake, lossShakeSeconds, lossWait |
 | RunTiming | field | runFadeOut | 92 | public float titleFadeIn, titleFadeOut, runFadeIn, runFadeOut |
@@ -917,6 +931,24 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | LoopSpec | field | sparkle | 96 | public float rate, life, x0, x1, y0, y1, vx0, vx1, vy0, vy1, gravity, sparkle |
 | Loop | ctor | Loop | 395 | public Loop(Transform parent, string name, LoopSpec s) |
 | Loop | method | Draw | 405 | public void Draw(float t, float strength, Color color) |
+| TutorialRect | method | Grow | 11 | public static Rect Grow(Rect r, Vector4 m) |
+| TutorialRect | method | ArtRect | 15 | public static Rect ArtRect(Vector2 worldCentre, Vector2 size) |
+| TutorialArea | field | kind | 39 | public AreaKind kind = AreaKind.Fixed |
+| TutorialArea | method | FixedArtRect | 49 | public Rect FixedArtRect() |
+| AreaKind | value | Fixed | 25 | Fixed |
+| AreaKind | value | ScriptTile | 25 | ScriptTile |
+| AreaKind | value | View | 25 | View |
+| ViewRef | value | Bench | 28 | Bench |
+| ViewRef | value | Redraw | 28 | Redraw |
+| ViewRef | value | JournalCell | 28 | JournalCell |
+| ViewRef | value | JournalRecipes | 28 | JournalRecipes |
+| ViewRef | value | JournalIndex | 28 | JournalIndex |
+| ViewRef | value | JournalHints | 28 | JournalHints |
+| ViewRef | value | EventHub | 28 | EventHub |
+| ScriptTrial | value | Reaction | 31 | Reaction |
+| ScriptTrial | value | Miss | 31 | Miss |
+| ScriptTrial | value | Chain | 31 | Chain |
+| ScriptTrial | value | Catalyst | 31 | Catalyst |
 | TutorialRules | method | MarkDone | 15 | public static void MarkDone() |
 | TutorialRules | method | AnswerSkipQuestion | 21 | public static bool AnswerSkipQuestion(bool playIt) |
 | TutorialController | property | Trial | 55 | public int Trial |
@@ -924,52 +956,50 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | TutorialController | field | Shown | 59 | public readonly List<long> Shown = new List<long>() |
 | TutorialController | method | Bind | 62 | public void Bind(GameFlow flow) |
 | TutorialController | method | Union | 74 | public static Rect Union(Rect[] r) |
-| TutorialController | method | Abort | 147 | public void Abort() |
-| TutorialController | method | AfterEvent | 238 | public IEnumerator AfterEvent(ReactionEvent e, int index) |
-| TutorialController | method | AfterIgnite | 278 | public IEnumerator AfterIgnite(IgniteOutcomeView o) |
-| TutorialController | method | AfterChoose | 303 | public void AfterChoose(string catalystId, string name) |
-| TutorialController | method | OnOffer | 313 | public IEnumerator OnOffer() |
-| TutorialController | method | OfferTaken | 320 | public void OfferTaken() |
-| TutorialController | method | Drive | 331 | public IEnumerator Drive() |
-| TutorialController | property | IgniteOutcomeView | 381 | public sealed class IgniteOutcomeView |
+| TutorialController | method | Abort | 154 | public void Abort() |
+| TutorialController | method | Step | 161 | public TutorialStep Step(string id) |
+| TutorialController | method | Holes | 294 | public Rect[] Holes(TutorialStep step, int hub = -1) |
+| TutorialController | method | AfterEvent | 299 | public IEnumerator AfterEvent(ReactionEvent e, int index) |
+| TutorialController | method | AfterIgnite | 338 | public IEnumerator AfterIgnite(IgniteOutcomeView o) |
+| TutorialController | method | AfterChoose | 363 | public void AfterChoose(string catalystId, string name) |
+| TutorialController | method | OnOffer | 373 | public IEnumerator OnOffer() |
+| TutorialController | method | OfferTaken | 381 | public void OfferTaken() |
+| TutorialController | method | Drive | 392 | public IEnumerator Drive() |
+| TutorialController | property | IgniteOutcomeView | 446 | public sealed class IgniteOutcomeView |
 | TutorialHole | method | Open | 18 | public void Open(Rect r, bool showRim) |
 | TutorialHole | method | Close | 30 | public void Close() |
 | TutorialHole | method | SetRimAlpha | 33 | public void SetRimAlpha(float a) |
-| TutorialTargets | field | hand | 16 | public Rect hand |
-| TutorialTargets | field | ignite | 18 | public Rect ignite |
-| TutorialTargets | field | journal | 20 | public Rect journal |
-| TutorialTargets | field | rack | 22 | public Rect rack |
-| TutorialTargets | field | offer | 24 | public Rect offer |
-| TutorialTargets | field | tileSize | 28 | public Vector2 tileSize |
-| TutorialTargets | field | tileShift | 30 | public Vector2 tileShift |
-| TutorialTargets | field | redrawMargin | 34 | public float redrawMargin |
-| TutorialStyle | field | baseOrder | 43 | public int baseOrder |
-| TutorialStyle | field | popupOrderOffset | 44 | public int popupOrderOffset |
-| TutorialStyle | field | brokenOrderOffset | 45 | public int brokenOrderOffset |
-| TutorialStyle | field | boxPos | 49 | public Vector2 boxPos |
-| TutorialStyle | field | boxWidth | 50 | public float boxWidth |
-| TutorialStyle | field | boxBorder | 52 | public float boxBorder |
-| TutorialStyle | field | textInset | 54 | public Vector2 textInset |
-| TutorialStyle | field | textWrapWidth | 56 | public float textWrapWidth |
-| TutorialStyle | field | boxPadding | 58 | public float boxPadding |
-| TutorialStyle | field | readExtra | 59 | public float readExtra |
-| TutorialStyle | field | boxMaxHeight | 61 | public float boxMaxHeight |
-| TutorialStyle | field | maxLines | 63 | public int linePitch, maxLines |
-| TutorialStyle | field | maxLinesVi | 65 | public int linePitchVi, maxLinesVi |
-| TutorialStyle | field | journalBoxDrop | 67 | public int journalBoxDrop |
-| TutorialStyle | field | popupPos | 71 | public Vector2 popupPos |
-| TutorialStyle | field | popupPitch | 72 | public float popupPitch |
-| TutorialStyle | field | popupFontSize | 73 | public int popupFontSize |
-| TutorialStyle | field | popupColor | 74 | public Color popupColor |
-| TutorialStyle | field | popupTotalColor | 76 | public Color popupTotalColor |
-| TutorialStyle | field | popupShadow | 77 | public Color popupShadow |
-| TutorialStyle | field | brokenGhost | 81 | public Color brokenGhost |
-| TutorialStyle | field | clickGuard | 89 | public float clickGuard |
-| TutorialStyle | field | rimSpeed | 94 | public float rimSpeed |
-| TutorialStyle | field | bumpDecay | 96 | public float bumpDecay |
-| TutorialStyle | field | arrowBelow | 100 | public float arrowAbove, arrowBelow |
-| TutorialStyle | field | arrowFlipY | 102 | public float arrowFlipY |
-| TutorialStyle | field | arrowBobAmplitude | 103 | public float arrowBobSpeed, arrowBobAmplitude |
+| TutorialStyle | field | baseOrder | 13 | public int baseOrder |
+| TutorialStyle | field | popupOrderOffset | 14 | public int popupOrderOffset |
+| TutorialStyle | field | brokenOrderOffset | 15 | public int brokenOrderOffset |
+| TutorialStyle | field | boxPos | 19 | public Vector2 boxPos |
+| TutorialStyle | field | boxWidth | 20 | public float boxWidth |
+| TutorialStyle | field | boxBorder | 22 | public float boxBorder |
+| TutorialStyle | field | textInset | 24 | public Vector2 textInset |
+| TutorialStyle | field | textWrapWidth | 26 | public float textWrapWidth |
+| TutorialStyle | field | boxPadding | 28 | public float boxPadding |
+| TutorialStyle | field | readExtra | 29 | public float readExtra |
+| TutorialStyle | field | boxMaxHeight | 31 | public float boxMaxHeight |
+| TutorialStyle | field | maxLines | 33 | public int linePitch, maxLines |
+| TutorialStyle | field | maxLinesVi | 35 | public int linePitchVi, maxLinesVi |
+| TutorialStyle | field | popupPos | 39 | public Vector2 popupPos |
+| TutorialStyle | field | popupPitch | 40 | public float popupPitch |
+| TutorialStyle | field | popupFontSize | 41 | public int popupFontSize |
+| TutorialStyle | field | popupColor | 42 | public Color popupColor |
+| TutorialStyle | field | popupTotalColor | 44 | public Color popupTotalColor |
+| TutorialStyle | field | popupShadow | 45 | public Color popupShadow |
+| TutorialStyle | field | brokenGhost | 49 | public Color brokenGhost |
+| TutorialStyle | field | tileSize | 57 | public Vector2 tileSize |
+| TutorialStyle | field | tileShift | 59 | public Vector2 tileShift |
+| TutorialStyle | field | clickGuard | 63 | public float clickGuard |
+| TutorialStyle | field | rimSpeed | 68 | public float rimSpeed |
+| TutorialStyle | field | bumpDecay | 70 | public float bumpDecay |
+| TutorialStyle | field | arrowBelow | 74 | public float arrowAbove, arrowBelow |
+| TutorialStyle | field | arrowFlipY | 76 | public float arrowFlipY |
+| TutorialStyle | field | arrowBobAmplitude | 77 | public float arrowBobSpeed, arrowBobAmplitude |
+| TutorialStep | field | textKey | 13 | public string textKey = |
+| TutorialStep | field | boxPos | 18 | public Vector2 boxPos |
+| TutorialStep | method | Areas | 21 | public List<TutorialArea> Areas() |
 | WindowView | method | Bind | 69 | public void Bind() |
 | WindowView | property | Soft | 78 | public bool Soft |
 | WindowView | method | Show | 91 | public void Show(int depth) |
@@ -1198,6 +1228,8 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | Clickable | field | onUp | 15 | public Action onClick, onEnter, onExit, onDown, onUp |
 | Clickable | method | Contains | 17 | public bool Contains(Vector2 world) |
 | Dev | method | Hook | 12 | public static void Hook(string line) |
+| DevMode | property | Enabled | 17 | public static bool Enabled |
+| DevLiveEdit | method | Attach | 32 | public static void Attach(GameFlow flow) |
 | Fonts | method | FontFor | 13 | public static TMP_FontAsset FontFor(FontKind kind) |
 | Fonts | method | SizeFor | 21 | public static float SizeFor(FontKind kind, int size) |
 | Fonts | method | HalfLeading | 28 | public static int HalfLeading(UnityEngine.TextCore.FaceInfo face, float size) |
@@ -1388,9 +1420,11 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | JournalView | method | Open | 128 | public void Open(Journal book, Func<string, bool> openStarters = null) |
 | JournalView | method | Close | 179 | public void Close() |
 | JournalView | method | ShowMaterial | 190 | public Rect ShowMaterial(string id) |
-| JournalView | property | IndexRect | 197 | public Rect IndexRect |
-| JournalView | property | RecipesRect | 199 | public Rect RecipesRect |
-| JournalView | property | HintsRect | 201 | public Rect HintsRect |
+| JournalView | method | CellRect | 197 | public static Rect CellRect(int i) |
+| JournalView | method | CellRect | 199 | public Rect CellRect(string id) |
+| JournalView | property | IndexRect | 201 | public Rect IndexRect |
+| JournalView | property | RecipesRect | 203 | public Rect RecipesRect |
+| JournalView | property | HintsRect | 205 | public Rect HintsRect |
 | JournalView.Layout | field | hintsRect | 25 | public Rect indexRect, recipesRect, hintsRect |
 | JournalView.Layout | field | titleTopLong | 27 | public float titleTop, titleTopLong |
 | JournalView.Layout | field | unknown | 29 | public Color hint, unknown |
@@ -1490,6 +1524,10 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | SpriteImportRules | method | GetVersion | 14 | public override uint GetVersion() |
 | SpriteImportRules | method | IsSoftDepthArt | 17 | public static bool IsSoftDepthArt(string assetPath) |
 | SpriteImportRules | method | IsDepthFog | 25 | public static bool IsDepthFog(string assetPath) |
+| TutorialStepsMigration | method | Run | 79 | public static void Run() |
+| TutorialStepsMigration | method | RunBatch | 88 | public static void RunBatch() |
+| A | field | name | 26 | public string name |
+| S | field | key | 34 | public string id, key |
 | WebBuild | field | Output | 12 | public const string Output = "Build/web", DevOutput = |
 | WebBuild | method | Build | 15 | public static void Build() |
 | WebBuild | method | BuildQuick | 19 | public static void BuildQuick() |
@@ -1661,9 +1699,9 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | LayoutPinTests | method | SimpleCutscene_MainScene_KeepsTodaysBeats | 381 | public void SimpleCutscene_MainScene_KeepsTodaysBeats() |
 | LayoutPinTests | method | ReactionCutscene_MainScene_KeepsTodaysBeats | 409 | public void ReactionCutscene_MainScene_KeepsTodaysBeats() |
 | LayoutPinTests | method | WindowView_MainScene_KeepsTodaysEffects | 437 | public void WindowView_MainScene_KeepsTodaysEffects() |
-| LayoutPinTests | method | Tutorial_MainScene_KeepsTodaysTargetsAndStyle | 455 | public void Tutorial_MainScene_KeepsTodaysTargetsAndStyle() |
-| LayoutPinTests | method | Depth_MainScene_KeepsTodaysRigSwayAndTable | 479 | public void Depth_MainScene_KeepsTodaysRigSwayAndTable() |
-| LayoutPinTests | method | Effects_MainScene_KeepsTodaysTiltShiftFogAndShake | 499 | public void Effects_MainScene_KeepsTodaysTiltShiftFogAndShake() |
+| LayoutPinTests | method | Tutorial_MainScene_KeepsTodaysStyle | 455 | public void Tutorial_MainScene_KeepsTodaysStyle() |
+| LayoutPinTests | method | Depth_MainScene_KeepsTodaysRigSwayAndTable | 476 | public void Depth_MainScene_KeepsTodaysRigSwayAndTable() |
+| LayoutPinTests | method | Effects_MainScene_KeepsTodaysTiltShiftFogAndShake | 496 | public void Effects_MainScene_KeepsTodaysTiltShiftFogAndShake() |
 | LocTests | method | Use_WithInjectedFiles_ServesTheirText | 19 | public void Use_WithInjectedFiles_ServesTheirText() |
 | LocTests | method | Use_NullFile_Throws | 32 | public void Use_NullFile_Throws() |
 | LocTests | method | ViJsonCharacters_AllInCruxAtlas_NoneMissing | 40 | public void ViJsonCharacters_AllInCruxAtlas_NoneMissing() |
@@ -1782,13 +1820,13 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | SaveTests | method | StoreThenLoadJournal_WithAThreeItemCombo_KeepsComboRecipes | 149 | public void StoreThenLoadJournal_WithAThreeItemCombo_KeepsComboRecipes() |
 | SaveTests | method | LoadJournal_Phase1PairKeys_StillLoad | 158 | public void LoadJournal_Phase1PairKeys_StillLoad() |
 | SaveTests | method | TutorialDone_DefaultsToFalse_AndRoundTrips | 165 | public void TutorialDone_DefaultsToFalse_AndRoundTrips() |
-| SceneBakeTests | method | TutorialTargets_RedrawAndJournalSteps_MatchTheViews | 21 | public void TutorialTargets_RedrawAndJournalSteps_MatchTheViews() |
-| SceneBakeTests | method | GameFlow_Baked_HasSparksField | 47 | public void GameFlow_Baked_HasSparksField() |
-| SceneBakeTests | method | ScreenFx_Baked_HasFlashAndFadeSprites | 53 | public void ScreenFx_Baked_HasFlashAndFadeSprites() |
-| SceneBakeTests | method | Window_Baked_HasPaneAndEveryEffectSprite_AndShowStartsAnEffect | 73 | public void Window_Baked_HasPaneAndEveryEffectSprite_AndShowStartsAnEffect() |
-| SceneBakeTests | method | Tutorial_Baked_HasItsBoxArrowAndCellRoot_ClosedUntilAStepShows | 94 | public void Tutorial_Baked_HasItsBoxArrowAndCellRoot_ClosedUntilAStepShows() |
-| SceneBakeTests | method | Reaction_Baked_HasEveryPart_AndBindHidesTheStageAndSwitchesTheOthers | 123 | public void Reaction_Baked_HasEveryPart_AndBindHidesTheStageAndSwitchesTheOthers() |
-| SceneBakeTests | method | Story_Baked_HasEveryPart_AndTheRayFacesAreTheRaySprites | 157 | public void Story_Baked_HasEveryPart_AndTheRayFacesAreTheRaySprites() |
+| SceneBakeTests | method | TutorialSteps_RedrawAndJournalSteps_MatchTheViews | 22 | public void TutorialSteps_RedrawAndJournalSteps_MatchTheViews() |
+| SceneBakeTests | method | GameFlow_Baked_HasSparksField | 40 | public void GameFlow_Baked_HasSparksField() |
+| SceneBakeTests | method | ScreenFx_Baked_HasFlashAndFadeSprites | 46 | public void ScreenFx_Baked_HasFlashAndFadeSprites() |
+| SceneBakeTests | method | Window_Baked_HasPaneAndEveryEffectSprite_AndShowStartsAnEffect | 66 | public void Window_Baked_HasPaneAndEveryEffectSprite_AndShowStartsAnEffect() |
+| SceneBakeTests | method | Tutorial_Baked_HasItsBoxArrowAndCellRoot_ClosedUntilAStepShows | 87 | public void Tutorial_Baked_HasItsBoxArrowAndCellRoot_ClosedUntilAStepShows() |
+| SceneBakeTests | method | Reaction_Baked_HasEveryPart_AndBindHidesTheStageAndSwitchesTheOthers | 116 | public void Reaction_Baked_HasEveryPart_AndBindHidesTheStageAndSwitchesTheOthers() |
+| SceneBakeTests | method | Story_Baked_HasEveryPart_AndTheRayFacesAreTheRaySprites | 150 | public void Story_Baked_HasEveryPart_AndTheRayFacesAreTheRaySprites() |
 | SettingsHapticsTests | method | Settings_StoredThenLoaded_RoundTrip | 28 | public void Settings_StoredThenLoaded_RoundTrip() |
 | SettingsHapticsTests | method | Settings_NothingOrGarbageSaved_GivesDefaults | 37 | public void Settings_NothingOrGarbageSaved_GivesDefaults() |
 | SettingsHapticsTests | method | Haptics_Plan_OnlyWhenEnabledAndSupported | 50 | public void Haptics_Plan_OnlyWhenEnabledAndSupported() |
@@ -1813,6 +1851,10 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | StaticResetTests | method | ResetStatics_Art_ClearsTheLibrary | 129 | public void ResetStatics_Art_ClearsTheLibrary() |
 | TestFx | method | DestroyLeftovers | 16 | public void DestroyLeftovers() |
 | TestFx | method | Make | 23 | public static FxRefs Make(Transform parent) |
+| TutorialAreaTests | method | Grow_EachMarginSide_AddsSeparately | 14 | public void Grow_EachMarginSide_AddsSeparately() |
+| TutorialAreaTests | method | ArtRect_OfWorldCentre_IsTheCentredArtRect | 21 | public void ArtRect_OfWorldCentre_IsTheCentredArtRect() |
+| TutorialAreaTests | method | Fixed_Area_ReadsItsTransform | 28 | public void Fixed_Area_ReadsItsTransform() |
+| TutorialAreaTests | method | Step_Lists_Its_Areas_In_Child_Order | 43 | public void Step_Lists_Its_Areas_In_Child_Order() |
 | TutorialFlowTests | method | Union_WithNoHoles_IsTheWholeCanvas_SoATextOnlyStepDimsEverythingAndDrawsNoRim | 33 | public void Union_WithNoHoles_IsTheWholeCanvas_SoATextOnlyStepDimsEverythingAndDrawsNoRim() |
 | TutorialFlowTests | method | Union_OfHoles_IsTheirBoundingBox | 40 | public void Union_OfHoles_IsTheirBoundingBox() |
 | TutorialFlowTests | method | Plan_FreshSave_RunsTheTutorial | 47 | public void Plan_FreshSave_RunsTheTutorial() |
@@ -1823,6 +1865,13 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | TutorialFlowTests | method | ScriptedTrials_Shown_Equal40_0_40_240 | 104 | public void ScriptedTrials_Shown_Equal40_0_40_240() |
 | TutorialFlowTests | method | HowToPlay_ThrowawayJournalAndProfile_LeavesStorageByteIdentical | 113 | public void HowToPlay_ThrowawayJournalAndProfile_LeavesStorageByteIdentical() |
 | TutorialFlowTests | method | ChooseEventOption_EmptiesEventOptions_SoViewsMustKeepTheChosenOption | 133 | public void ChooseEventOption_EmptiesEventOptions_SoViewsMustKeepTheChosenOption() |
+| TutorialStepsBakeTests | field | BaselinePath | 19 | public const string BaselinePath = |
+| TutorialStepsBakeTests | property | AllStepIds | 22 | public static readonly string[] AllStepIds = |
+| TutorialStepsBakeTests | method | EveryStepId_UsedByDrive_ExistsInTheScene | 40 | public void EveryStepId_UsedByDrive_ExistsInTheScene() |
+| TutorialStepsBakeTests | method | EveryStep_TextKey_HasEnglishAndVietnamese | 46 | public void EveryStep_TextKey_HasEnglishAndVietnamese() |
+| TutorialStepsBakeTests | method | FixedAreas_OfEveryStep_HavePositiveSize | 59 | public void FixedAreas_OfEveryStep_HavePositiveSize() |
+| TutorialStepsBakeTests | method | EveryStep_Rects_EqualTheBaseline | 67 | public void EveryStep_Rects_EqualTheBaseline() |
+| TutorialStepsBakeTests | method | ClickRules_PassFlags_MatchTheOldBehaviour | 85 | public void ClickRules_PassFlags_MatchTheOldBehaviour() |
 
 ## Materials
 | id | name | kind | tier | reactivity |

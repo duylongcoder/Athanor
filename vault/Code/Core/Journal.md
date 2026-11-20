@@ -37,7 +37,7 @@ aliases: []
 [[ContentDb]], [[Kind]]
 
 ## Used by
-[[BenchView]], [[FlowState]], [[GameFlow]], [[GoalsView]], [[GoldenShots]], [[HudView]], [[IgniteResolver]], [[JournalView]], [[Profile]], [[RunOverView]], [[RunState]], [[Save]], [[ScreenFlow]], [[TutorialController]]
+[[BenchView]], [[FlowState]], [[GameFlow]], [[GoalsView]], [[GoldenShots]], [[HudView]], [[IgniteResolver]], [[JournalView]], [[Profile]], [[RunOverView]], [[RunState]], [[Save]], [[ScreenFlow]], [[TutorialController]], [[TutorialStepsMigration]]
 
 ## Tested by
 [[HotPathTests]], [[HudTests]], [[IgniteTests]], [[JournalTests]], [[LoreTests]], [[PauseTests]], [[Phase3Tests]], [[PrefabBakeTests]], [[RarityReportTests]], [[RarityTests]], [[RoleSimTests]], [[RulesTests]], [[RunStateTests]], [[SaveTests]], [[ScreenFlowTests]], [[TutorialFlowTests]], [[TutorialTests]]

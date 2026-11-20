@@ -12,7 +12,7 @@ aliases: []
 # JournalView
 
 `public sealed class JournalView` : `MonoBehaviour`
-- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Ui/JournalView.cs:12-265`
+- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Ui/JournalView.cs:12-269`
 
 > The journal: every material as an icon (a silhouette until it has been made), and for the selected one the reactions found so far, how many are still unknown, and any hints collected.
 
@@ -29,9 +29,11 @@ aliases: []
 | method | `public void Open(Journal book, Func<string, bool> openStarters = null)` | 128 | openStarters: which starting materials the player may use; null means all of them. |
 | method | `public void Close()` | 179 |  |
 | method | `public Rect ShowMaterial(string id)` | 190 | Opens the page of a material (its cell picked) and returns the rectangle of its cell in the grid. |
-| property | `public Rect IndexRect` | 197 | The page's line "heat/ reactivity" and its pips. |
-| property | `public Rect RecipesRect` | 199 | The recipe lines of the page. |
-| property | `public Rect HintsRect` | 201 | The latest hints under the grid. |
+| method | `public static Rect CellRect(int i)` | 197 | The cell of material number i in the grid of its page (art space). |
+| method | `public Rect CellRect(string id)` | 199 | The cell of a material by id, without opening its page. |
+| property | `public Rect IndexRect` | 201 | The page's line "heat/ reactivity" and its pips. |
+| property | `public Rect RecipesRect` | 203 | The recipe lines of the page. |
+| property | `public Rect HintsRect` | 205 | The latest hints under the grid. |
 
 ## Uses
 [[Art]], [[Clickable]], [[ContentDb]], [[HudView]], [[Journal]], [[JournalCell]], [[Kind]], [[Label]], [[Loc]], [[Palette]], [[Px]], [[Rarities]], [[RarityStars]], [[Wording]]
@@ -40,4 +42,4 @@ aliases: []
 [[GameFlow]], [[GoldenShots]], [[TutorialController]]
 
 ## Tested by
-[[LayoutPinTests]], [[PrefabBakeTests]], [[SceneBakeTests]]
+[[LayoutPinTests]], [[PrefabBakeTests]], [[SceneBakeTests]], [[TutorialStepsBakeTests]]

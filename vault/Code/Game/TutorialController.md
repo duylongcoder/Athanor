@@ -12,7 +12,7 @@ aliases: []
 # TutorialController
 
 `public sealed class TutorialController` : `MonoBehaviour`
-- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Cutscene/TutorialController.cs:33-382`
+- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Cutscene/TutorialController.cs:33-447`
 
 > Plays the scripted tutorial over the bench: a dark screen with lit holes and a pulsing gold rim, an arrow, a text box at the top, click locks, and popups held until read. It reads the game's state; it decides no rule. The dark screen is one sprite drawn "visible outside mask"; each lit hole is a SpriteMask (the inverse mask), see TutorialHole.
 
@@ -24,20 +24,22 @@ aliases: []
 | field | `public readonly List<long> Shown = new List<long>()` | 59 | The scores the popups showed, in order (checked by the tests against TutorialTests: 40 / 0 / 40 / 240 / ...). |
 | method | `public void Bind(GameFlow flow)` | 62 | Gives the controller the game it reads; the lessons run in Drive. |
 | method | `public static Rect Union(Rect[] r)` | 74 | The box round the holes. No holes (a text-only step such as 2.3) is the whole canvas: a full dim, no rim, no arrow. |
-| method | `public void Abort()` | 147 | Quit to title in the tutorial: stops the lessons and takes the overlay down. Does not mark the tutorial done. |
-| method | `public IEnumerator AfterEvent(ReactionEvent e, int index)` | 238 | After a reaction (or fizzle) has played: the held popups of the script. |
-| method | `public IEnumerator AfterIgnite(IgniteOutcomeView o)` | 278 | After the Ignite has played and its materials are spent: the next scripted hand, and the lines that follow. |
-| method | `public void AfterChoose(string catalystId, string name)` | 303 | The catalyst was taken: deal the scripted hand that shows it. |
-| method | `public IEnumerator OnOffer()` | 313 | The lines of the catalyst offer; the choice itself is the game's own screen. |
-| method | `public void OfferTaken()` | 320 |  |
-| method | `public IEnumerator Drive()` | 331 | Runs the lessons from the first bench to line 5.5. The game plays its own Ignite, descents and choice between. |
-| property | `public sealed class IgniteOutcomeView` | 381 | The stage the AfterIgnite hook needs from the game: what the Ignite made. |
+| method | `public void Abort()` | 154 | Quit to title in the tutorial: stops the lessons and takes the overlay down. Does not mark the tutorial done. |
+| method | `public TutorialStep Step(string id)` | 161 | The step object with this id (its name), under the Tutorial object. |
+| method | `public Rect[] Holes(TutorialStep step, int hub = -1)` | 294 | The art-pixel rects a step lights right now, before the hole snap. For the tests and the Scene-view preview. |
+| method | `public IEnumerator AfterEvent(ReactionEvent e, int index)` | 299 | After a reaction (or fizzle) has played: the held popups of the script. |
+| method | `public IEnumerator AfterIgnite(IgniteOutcomeView o)` | 338 | After the Ignite has played and its materials are spent: the next scripted hand, and the lines that follow. |
+| method | `public void AfterChoose(string catalystId, string name)` | 363 | The catalyst was taken: deal the scripted hand that shows it. |
+| method | `public IEnumerator OnOffer()` | 373 | The lines of the catalyst offer; the choice itself is the game's own screen. |
+| method | `public void OfferTaken()` | 381 |  |
+| method | `public IEnumerator Drive()` | 392 | Runs the lessons from the first bench to line 5.5. The game plays its own Ignite, descents and choice between. |
+| property | `public sealed class IgniteOutcomeView` | 446 | The stage the AfterIgnite hook needs from the game: what the Ignite made. |
 
 ## Uses
-[[Align]], [[Bench]], [[Clickable]], [[Dev]], [[FlowState]], [[FontKind]], [[GameFlow]], [[HudView]], [[Journal]], [[JournalView]], [[Label]], [[Loc]], [[Px]], [[ReactionEvent]], [[RunPhase]], [[ScoreParts]], [[Spawn]], [[TutorialHole]], [[TutorialRules]], [[TutorialScript]], [[TutorialStyle]], [[TutorialTargets]], [[TutorialTrial]]
+[[Align]], [[AreaKind]], [[Bench]], [[Clickable]], [[Dev]], [[FlowState]], [[FontKind]], [[GameFlow]], [[HudView]], [[Journal]], [[JournalCell]], [[JournalView]], [[Label]], [[Loc]], [[Px]], [[ReactionEvent]], [[RunPhase]], [[ScoreParts]], [[ScriptTrial]], [[Spawn]], [[TutorialArea]], [[TutorialHole]], [[TutorialRect]], [[TutorialRules]], [[TutorialScript]], [[TutorialStep]], [[TutorialStyle]], [[TutorialTrial]], [[ViewRef]]
 
 ## Used by
-[[GameFlow]], [[IgniteSequence]]
+[[GameFlow]], [[IgniteSequence]], [[TutorialStepsMigration]]
 
 ## Tested by
-[[LayoutPinTests]], [[PauseTests]], [[SceneBakeTests]], [[TutorialFlowTests]]
+[[LayoutPinTests]], [[PauseTests]], [[SceneBakeTests]], [[TutorialFlowTests]], [[TutorialStepsBakeTests]]

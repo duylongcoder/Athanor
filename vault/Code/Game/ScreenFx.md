@@ -31,7 +31,7 @@ aliases: []
 [[CameraSway]], [[DepthRig]], [[Motion]]
 
 ## Used by
-[[FxRefs]], [[GameFlow]], [[GoldenShots]]
+[[DevLiveEdit]], [[FxRefs]], [[GameFlow]], [[GoldenShots]]
 
 ## Tested by
 [[HotPathTests]], [[LayoutPinTests]], [[SceneBakeTests]]

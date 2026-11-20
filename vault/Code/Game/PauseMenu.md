@@ -35,7 +35,7 @@ aliases: []
 [[Clickable]], [[Haptics]], [[Label]], [[Loc]], [[Px]], [[Settings]], [[UiButton]]
 
 ## Used by
-[[GameFlow]], [[GoldenShots]]
+[[DevLiveEdit]], [[GameFlow]], [[GoldenShots]]
 
 ## Tested by
 [[LayoutPinTests]], [[PauseTests]], [[PrefabBakeTests]]

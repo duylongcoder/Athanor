@@ -27,7 +27,7 @@ aliases: []
 [[Art]], [[Label]], [[Px]], [[RarityStars]], [[Wording]]
 
 ## Used by
-[[BenchView]]
+[[BenchView]], [[TutorialArea]], [[TutorialStep]]
 
 ## Tested by
 [[HotPathTests]], [[LayoutPinTests]], [[PrefabBakeTests]]

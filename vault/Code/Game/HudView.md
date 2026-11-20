@@ -51,7 +51,7 @@ aliases: []
 [[Art]], [[Clickable]], [[ContentDb]], [[Journal]], [[Label]], [[Loc]], [[Palette]], [[Px]], [[ReactionEvent]], [[Row]], [[RunPhase]], [[RunState]]
 
 ## Used by
-[[BenchView]], [[GoldenShots]], [[IgniteSequence]], [[JournalView]], [[ReactionCutscene]], [[TutorialController]]
+[[BenchView]], [[DevLiveEdit]], [[GoldenShots]], [[IgniteSequence]], [[JournalView]], [[ReactionCutscene]], [[TutorialController]]
 
 ## Tested by
 [[HotPathTests]], [[HudTests]], [[LayoutPinTests]], [[PrefabBakeTests]]

@@ -21,7 +21,7 @@ aliases: []
 [[Bench]], [[Journal]]
 
 ## Used by
-[[GameFlow]], [[ScreenFlow]], [[TutorialController]]
+[[DevLiveEdit]], [[GameFlow]], [[ScreenFlow]], [[TutorialController]]
 
 ## Tested by
 [[ScreenFlowTests]]
