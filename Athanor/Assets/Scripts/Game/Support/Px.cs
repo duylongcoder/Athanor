@@ -10,8 +10,15 @@ namespace Athanor.Game
     {
         public const int W = 640, H = 360;
 
+        /// <summary>Side of the "dot" sprite in pixels: a rectangle is that sprite scaled by size / DotSize (the sprite's shape).</summary>
+        public const float DotSize = 4f;
+
         /// <summary>World position of an art-space point.</summary>
-        public static Vector3 At(float x, float y) => new Vector3(x - W / 2f, H / 2f - y, 0);
+        public static Vector3 At(float x, float y)
+        {
+            float wx = x - W / 2f, wy = H / 2f - y;
+            return new Vector3(wx, wy, 0);
+        }
 
         /// <summary>World position of the centre of an art-space rectangle given by its top-left corner and size.</summary>
         public static Vector3 Mid(float x, float y, float w, float h) => At(x + w / 2f, y + h / 2f);
@@ -20,7 +27,7 @@ namespace Athanor.Game
         public static void Fit(Transform t, float x, float y, float w, float h)
         {
             t.position = Mid(x, y, w, h);
-            t.localScale = new Vector3(w / 4f, h / 4f, 1);
+            t.localScale = new Vector3(w / DotSize, h / DotSize, 1);
         }
 
         public static Vector3 Snap(Vector3 p) => new Vector3(Mathf.Round(p.x), Mathf.Round(p.y), p.z);

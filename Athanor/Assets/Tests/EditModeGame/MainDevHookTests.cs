@@ -32,7 +32,7 @@ namespace Athanor.Tests
         [Test]
         public void DrawnFace_AtRestView_IsTheInsetFaceInUiUnits()
         {
-            var pts = DepthMath.DrawnFace(new Vector2(10, -20), new Vector2(40, 20), 150f, Vector2.zero, Vector2.zero, 3f);
+            var pts = DepthMath.DrawnFace(new Vector2(10, -20), new Vector2(40, 20), 150f, Vector2.zero, Vector2.zero, 3f, DepthFixture.D, DepthFixture.Table);
             Assert.AreEqual(4, pts.Length);
             CollectionAssert.AreEquivalent(new[] { new Vector2(-7, -27), new Vector2(27, -27), new Vector2(-7, -13), new Vector2(27, -13) },
                 System.Array.ConvertAll(pts, p => new Vector2(Mathf.Round(p.x), Mathf.Round(p.y))));
@@ -42,12 +42,12 @@ namespace Athanor.Tests
         public void DrawnFace_WithSway_MovesTheFaceButNotAtTheAnchorRow()
         {
             var cam = new Vector2(4, 2);
-            var shift = DepthMath.AnchorShift(cam, DepthMath.TableZ(DepthMath.AnchorY));
-            var rest = DepthMath.DrawnFace(Vector2.zero, new Vector2(40, 20), 100f, Vector2.zero, Vector2.zero, 3f);
-            var swayed = DepthMath.DrawnFace(Vector2.zero, new Vector2(40, 20), 100f, cam, shift, 3f);
+            var shift = DepthMath.AnchorShift(cam, DepthMath.TableZ(DepthFixture.AnchorY, DepthFixture.D, DepthFixture.Table), DepthFixture.D);
+            var rest = DepthMath.DrawnFace(Vector2.zero, new Vector2(40, 20), 100f, Vector2.zero, Vector2.zero, 3f, DepthFixture.D, DepthFixture.Table);
+            var swayed = DepthMath.DrawnFace(Vector2.zero, new Vector2(40, 20), 100f, cam, shift, 3f, DepthFixture.D, DepthFixture.Table);
             Assert.Greater(Vector2.Distance(rest[0], swayed[0]), 0.1f);
-            var anchorRest = DepthMath.DrawnFace(Vector2.zero, new Vector2(40, 20), DepthMath.AnchorY, Vector2.zero, Vector2.zero, 3f);
-            var anchorSway = DepthMath.DrawnFace(Vector2.zero, new Vector2(40, 20), DepthMath.AnchorY, cam, shift, 3f);
+            var anchorRest = DepthMath.DrawnFace(Vector2.zero, new Vector2(40, 20), DepthFixture.AnchorY, Vector2.zero, Vector2.zero, 3f, DepthFixture.D, DepthFixture.Table);
+            var anchorSway = DepthMath.DrawnFace(Vector2.zero, new Vector2(40, 20), DepthFixture.AnchorY, cam, shift, 3f, DepthFixture.D, DepthFixture.Table);
             Assert.Less(Vector2.Distance(anchorRest[0], anchorSway[0]), 0.3f);   // the 0.2 depth offset of a tile group
         }
     }

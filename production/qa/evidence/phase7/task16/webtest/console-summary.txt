@@ -1,0 +1,15 @@
+webtest: raw console dump replaced by this summary (the dump was thousands of lines).
+Counts by level: log=391, warning=6122
+errors=0 warnings=6122
+
+Distinct warning/error messages (digits normalised to N), with counts:
+    6112  [warning] In the render graph API, the output Render Texture must have a depth buffer. When you select a Render Texture in any camera's Output Texture property, the Depth Stencil Format property of the texture 
+       8  [warning] Shader 'Hidden/Universal Render Pipeline/Edge Adaptive Spatial Upsampling' is not supported or has been stripped from the build (in 'Blit FSR Upscaling'). PostProcessing render passes will not execute
+       1  [warning] [save] journal unreadable, starting empty: JSON parse error: Invalid value.
+       1  [warning] [save] profile unreadable, starting fresh: JSON parse error: Invalid value.
+
+Tool result (last lines of the run log):
+  shot e19_title_vi_after_quit
+  errors after E: 0
+  console: 6562 messages, 0 errors, 129 screenshots
+  webtest exit 0

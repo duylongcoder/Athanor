@@ -48,7 +48,7 @@ tags: [moc/agents]
 | [[agent.tools-programmer|tools-programmer]] | inherit | Internal dev tools — editor extensions, content authoring tools, debug utilities, pipeline automation, editor workflow. |
 | [[agent.ui-programmer|ui-programmer]] | inherit | Implements user interface systems — menus, HUDs, inventory screens, dialogue boxes, UI framework code, screen flow. |
 | ★ [[agent.ui-ux-designer|ui-ux-designer]] | inherit | Athanor screen designer: pixel-box layout specs, screen layout specs (prefab and `Editor/layout.json` changes), readability at 1x, tutorial pacing, Vi |
-| ★ [[agent.unity-gameplay-engineer|unity-gameplay-engineer]] | inherit | Athanor Game-layer coder: edits Scripts/Game and Editor tools (GameFlow states, bench/tile/card/HUD views, UI screens, cutscene code, save plumbing, e |
+| ★ [[agent.unity-gameplay-engineer|unity-gameplay-engineer]] | sonnet | Athanor Game-layer coder: edits Scripts/Game and Editor tools (GameFlow states, bench/tile/card/HUD views, UI screens, cutscene code, save plumbing, e |
 | [[agent.unity-shader-specialist|unity-shader-specialist]] | sonnet | Unity rendering — Shader Graph, custom HLSL, VFX Graph, render pipeline customization (URP/HDRP), post-processing within performance budgets. |
 | [[agent.unity-specialist|unity-specialist]] | inherit | Authority on Unity-specific patterns and APIs — guides MonoBehaviour vs DOTS/ECS, Unity subsystems including Addressables and Input System. |
 | [[agent.unity-ui-specialist|unity-ui-specialist]] | sonnet | Unity UI implementation — UI Toolkit (UXML/USS), UGUI Canvas, data binding, runtime UI performance, cross-platform adaptation. |

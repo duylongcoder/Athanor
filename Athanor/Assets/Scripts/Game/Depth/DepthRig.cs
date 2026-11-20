@@ -20,7 +20,7 @@ namespace Athanor.Game
         static readonly int MainTex = Shader.PropertyToID("_MainTex");
 
         /// <summary>D: the world camera's distance to the art plane (z = 0) at rest.</summary>
-        public float distance = DepthMath.RestDistance;
+        public float distance;
         /// <summary>K: the world is rendered at 640K x 360K. A whole number, at least 2 (owner gate G2).</summary>
         [Min(2)] public int scale = 2;
         /// <summary>The perspective camera that renders the layers into <see cref="WorldTexture"/>.</summary>
@@ -32,7 +32,11 @@ namespace Athanor.Game
         /// <summary>When playing, K follows the screen: the largest whole multiple of 640x360 that fits, at least 2.</summary>
         public bool autoScale = true;
         /// <summary>The world camera's clip planes (distance from the camera).</summary>
-        public float near = 50f, far = 2000f;
+        public float near, far;
+        /// <summary>The table the bench stands on: its shape gives the anchor depth and the hit test.</summary>
+        public DepthTable table;
+        /// <summary>Art y of the row that never moves under sway: the middle tile row.</summary>
+        public float anchorY;
 
         MaterialPropertyBlock block;
         bool flat;
@@ -68,8 +72,8 @@ namespace Athanor.Game
         public Vector2 CamOffset { get; private set; }
         /// <summary>The shift of the whole world picture (art px, world y up): the anchor correction of the sway plus the shake.</summary>
         public Vector2 ImageShift { get; private set; }
-        /// <summary>SPEC depth of the anchor row (art y 188), which the sway never moves.</summary>
-        public float AnchorZ => DepthMath.TableZ(DepthMath.AnchorY, distance);
+        /// <summary>SPEC depth of the anchor row, which the sway never moves.</summary>
+        public float AnchorZ => DepthMath.TableZ(anchorY, distance, table.Shape);
 
         /// <summary>
         /// Moves the world camera by cam (the sway) and shifts the world picture by shake whole art px; the anchor row stays
@@ -83,13 +87,17 @@ namespace Athanor.Game
         }
 
         /// <summary>Viewport point (0..1, y up) of the world texture under a point of the UI camera's world (640x360 units, origin at the centre).</summary>
-        public static Vector2 ViewportOf(Vector2 ui) => new Vector2(ui.x / Px.W + 0.5f, ui.y / Px.H + 0.5f);
+        public static Vector2 ViewportOf(Vector2 ui)
+        {
+            float x = ui.x / Px.W + 0.5f, y = ui.y / Px.H + 0.5f;
+            return new Vector2(x, y);
+        }
 
         /// <summary>The world ray under a point of the UI camera's world, through the world texture and the world camera.</summary>
         public Ray WorldRay(Vector2 ui) => DepthMath.ViewportRay(ViewportOf(ui), CamOffset, ImageShift, distance);
 
         /// <summary>The flat (rest) position on the table under a point of the UI camera's world: what the bench's hit tests take.</summary>
-        public bool BenchPoint(Vector2 ui, out Vector2 flat) => DepthMath.HitTable(WorldRay(ui), out flat, distance);
+        public bool BenchPoint(Vector2 ui, out Vector2 flat) => DepthMath.HitTable(WorldRay(ui), out flat, distance, table.Shape);
 
         void ApplyCamera()
         {

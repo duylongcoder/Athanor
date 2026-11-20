@@ -25,7 +25,9 @@ namespace Athanor.Game
             new VertexAttributeDescriptor(VertexAttribute.TexCoord0, VertexAttributeFormat.Float32, 2),
         };
         const MeshUpdateFlags Quiet = MeshUpdateFlags.DontRecalculateBounds | MeshUpdateFlags.DontValidateIndices;
-        static readonly Bounds Everything = new Bounds(Vector3.zero, new Vector3(1e5f, 1e5f, 1e3f));
+        /// <summary>Bounds far larger than any view: the mesh is rebuilt every frame and must never be culled by a stale box (shape, not layout).</summary>
+        const float BoundsSpread = 1e5f, BoundsDepth = 1e3f;
+        static readonly Bounds Everything = new Bounds(Vector3.zero, new Vector3(BoundsSpread, BoundsSpread, BoundsDepth));
         static Material baseMaterial;
 
         /// <summary>The shared "ParticleGlow" material every spark material is copied from. Sparks sets it in Awake; the Game tests set it in GameTestSetup.</summary>

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Athanor.Game
@@ -13,7 +14,16 @@ namespace Athanor.Game
         /// <summary>The sway's on/off switch (the Settings toggle; the shake does not depend on it).</summary>
         public bool swayOn = true;
         /// <summary>A: camera travel in art px at z = 0.</summary>
-        public float amplitude = DepthMath.SwayAmplitude;
+        public float amplitude;
+
+        /// <summary>The sway's two periods (seconds) and the world shake's two frequencies (radians per second); held by Main.unity.</summary>
+        [Serializable]
+        public struct SwayTiming
+        {
+            public float periodX, periodY;
+            public float shakeRateX, shakeRateY;
+        }
+        public SwayTiming timing;
 
         DepthRig rig;
         /// <summary>The game's screen shake (ScreenFx), in whole art px with world y up, added to the shake of <see cref="Shake"/>.</summary>
@@ -29,17 +39,17 @@ namespace Athanor.Game
         }
 
         /// <summary>The shake offset at time t for a shake of the given size: whole art px, the mockup's
-        /// x = round(a sin 53.1 t), y = round(2a/3 cos 41.7 t).</summary>
-        public static Vector2Int ShakeOffset(float t, int size) =>
-            new Vector2Int(Mathf.RoundToInt(size * Mathf.Sin(53.1f * t)), Mathf.RoundToInt(size * 2f / 3f * Mathf.Cos(41.7f * t)));
+        /// x = round(a sin(rateX t)), y = round(2a/3 cos(rateY t)).</summary>
+        public static Vector2Int ShakeOffset(float t, int size, float rateX, float rateY) =>
+            new Vector2Int(Mathf.RoundToInt(size * Mathf.Sin(rateX * t)), Mathf.RoundToInt(size * 2f / 3f * Mathf.Cos(rateY * t)));
 
         /// <summary>Places the world camera for time t.</summary>
         public void Pose(float t)
         {
             if (rig == null) rig = GetComponent<DepthRig>();
             if (rig.Flat) { rig.SetView(Vector2.zero, Vector2.zero); return; }       // a cutscene: flat, nothing moves
-            Vector2 cam = swayOn ? DepthMath.Sway(t, amplitude) : Vector2.zero;
-            Vector2 shake = (t < shakeUntil ? (Vector2)ShakeOffset(t, shakeSize) : Vector2.zero) + external;
+            Vector2 cam = swayOn ? DepthMath.Sway(t, amplitude, timing.periodX, timing.periodY) : Vector2.zero;
+            Vector2 shake = (t < shakeUntil ? (Vector2)ShakeOffset(t, shakeSize, timing.shakeRateX, timing.shakeRateY) : Vector2.zero) + external;
             rig.SetView(cam, shake);
         }
 

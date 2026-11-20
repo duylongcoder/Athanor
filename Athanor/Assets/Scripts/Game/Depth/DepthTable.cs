@@ -19,11 +19,11 @@ namespace Athanor.Game
         /// <summary>Art-space position of the picture's top-left corner.</summary>
         public float artX, artY;
         /// <summary>Camera distance the mesh was last built for.</summary>
-        public float distance = DepthMath.RestDistance;
+        public float distance;
         /// <summary>Distance from the camera of the front and the back edge of the table top, at rest.</summary>
-        public float front = DepthMath.TableFront, back = DepthMath.TableBack;
+        public float front, back;
         /// <summary>Art y of the back edge and the number of art rows of the tilted top.</summary>
-        public float topY = DepthMath.TableTopY, rows = DepthMath.TableRows;
+        public float topY, rows;
 
         Mesh mesh;
         MaterialPropertyBlock block;
@@ -37,7 +37,10 @@ namespace Athanor.Game
         }
 
         /// <summary>Depth of an art row of this table.</summary>
-        public float RowZ(float y) => DepthMath.TableZ(y, distance, front, back, topY, rows);
+        public float RowZ(float y) => DepthMath.TableZ(y, distance, Shape);
+
+        /// <summary>The table's shape for <see cref="DepthMath"/>.</summary>
+        public TableShape Shape => new TableShape(front, back, topY, rows);
 
         /// <summary>World position of an art-space point lying on the table.</summary>
         public Vector3 Point(float x, float y) => DepthMath.Place(Px.At(x, y), RowZ(y), distance);
@@ -60,7 +63,7 @@ namespace Athanor.Game
                 float y = artY + j, v = Mathf.Lerp(uv.w, uv.y, j / (float)h);
                 vertices.Add(Point(artX, y)); vertices.Add(Point(artX + w, y));
                 uvs.Add(new Vector2(uv.x, v)); uvs.Add(new Vector2(uv.z, v));
-                colors.Add(new Color32(255, 255, 255, 255)); colors.Add(new Color32(255, 255, 255, 255));
+                colors.Add(Color.white); colors.Add(Color.white);
                 if (j == h) break;
                 int a = j * 2;
                 triangles.Add(a); triangles.Add(a + 1); triangles.Add(a + 2);

@@ -20,8 +20,7 @@ namespace Athanor.Tests
             root = new GameObject("main depth test");
             var cam = new GameObject("world camera").AddComponent<Camera>();
             cam.transform.SetParent(root.transform, false);
-            rig = root.AddComponent<DepthRig>();
-            rig.worldCamera = cam;
+            rig = DepthFixture.AddRig(root, cam);   // the numbers Main.unity holds (LayoutPinTests pins them)
             rig.Apply();
             var bench = ((GameObject)PrefabUtility.InstantiatePrefab(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Views/Bench.prefab"), root.transform)).GetComponent<BenchView>();
             tiles = new TileView[bench.TileCount];
@@ -29,7 +28,7 @@ namespace Athanor.Tests
             {
                 tiles[i] = bench.Tile(i);
                 foreach (var t in tiles[i].GetComponentsInChildren<Transform>(true)) t.gameObject.layer = DepthRig.WorldLayer;
-                DepthLayer.AddGroup(tiles[i].gameObject, DepthMath.TableZ(Px.H / 2f - tiles[i].centre.y) + 0.2f).Apply(rig.distance);
+                DepthLayer.AddGroup(tiles[i].gameObject, DepthMath.TableZ(Px.H / 2f - tiles[i].centre.y, rig.distance, rig.table.Shape) + 0.2f).Apply(rig.distance);
             }
         }
 
@@ -80,6 +79,7 @@ namespace Athanor.Tests
         public void ShakeFromScreenFx_MovesTheWorldPicture_AndFlatModeIgnoresIt()
         {
             var sway = root.AddComponent<CameraSway>();
+            sway.amplitude = 4f; sway.timing = new CameraSway.SwayTiming { periodX = 6f, periodY = 9f, shakeRateX = 53.1f, shakeRateY = 41.7f };
             sway.external = new Vector2(3, -2);
             sway.Pose(0);
             Assert.AreEqual(3f, rig.ImageShift.x, 1e-4f);
@@ -106,7 +106,7 @@ namespace Athanor.Tests
                         for (int i = 0; i < tiles.Length; i++)
                         {
                             Vector2 flat = tiles[i].FaceCentre;
-                            var world = DepthMath.Place(flat, DepthMath.TableZ(Px.H / 2f - flat.y));
+                            var world = DepthMath.Place(flat, DepthMath.TableZ(Px.H / 2f - flat.y, rig.distance, rig.table.Shape), rig.distance);
                             Vector3 vp = rig.worldCamera.WorldToViewportPoint(world);
                             PointerInput.Resolve(new Vector2((vp.x - 0.5f) * Px.W, (vp.y - 0.5f) * Px.H));
                             var hits = Enumerable.Range(0, tiles.Length).Where(k => tiles[k].Contains(PointerInput.Bench)).ToArray();

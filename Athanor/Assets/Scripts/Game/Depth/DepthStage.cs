@@ -23,7 +23,7 @@ namespace Athanor.Game
                 var t = bench.Tile(i);
                 foreach (var tr in t.GetComponentsInChildren<Transform>(true)) tr.gameObject.layer = DepthRig.WorldLayer;
                 float artY = Px.H / 2f - t.centre.y;
-                DepthLayer.AddGroup(t.gameObject, DepthMath.TableZ(artY) + 0.2f).Apply(rig.distance);
+                DepthLayer.AddGroup(t.gameObject, DepthMath.TableZ(artY, rig.distance, rig.table.Shape) + 0.2f).Apply(rig.distance);
             }
         }
 

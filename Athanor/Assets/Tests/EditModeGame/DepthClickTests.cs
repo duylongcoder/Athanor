@@ -25,8 +25,7 @@ namespace Athanor.Tests
             root = new GameObject("depth click test");
             var cam = new GameObject("world camera").AddComponent<Camera>();
             cam.transform.SetParent(root.transform, false);
-            rig = root.AddComponent<DepthRig>();
-            rig.worldCamera = cam;
+            rig = DepthFixture.AddRig(root, cam);   // the numbers Main.unity holds (LayoutPinTests pins them)
             rig.Apply();
             var bench = ((GameObject)PrefabUtility.InstantiatePrefab(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Views/Bench.prefab"), root.transform)).GetComponent<BenchView>();
             tiles = new TileView[bench.TileCount];
@@ -44,7 +43,7 @@ namespace Athanor.Tests
         Vector2 OnScreen(Vector2 flat)
         {
             var f = Px.H / 2f - flat.y;   // art y of the point
-            var world = DepthMath.Place(flat, DepthMath.TableZ(f));
+            var world = DepthMath.Place(flat, DepthMath.TableZ(f, rig.distance, rig.table.Shape), rig.distance);
             Vector3 vp = rig.worldCamera.WorldToViewportPoint(world);
             return new Vector2((vp.x - 0.5f) * Px.W, (vp.y - 0.5f) * Px.H);
         }
@@ -94,7 +93,7 @@ namespace Athanor.Tests
                         for (int i = 0; i < tiles.Length; i++)
                         {
                             var t = tiles[i];
-                            var pts = DepthMath.DrawnFace(t.FaceCentre, t.FaceSize, Px.H / 2f - t.centre.y, rig.CamOffset, rig.ImageShift, 3f);
+                            var pts = DepthMath.DrawnFace(t.FaceCentre, t.FaceSize, Px.H / 2f - t.centre.y, rig.CamOffset, rig.ImageShift, 3f, rig.distance, rig.table.Shape);
                             Vector2 centre = (pts[0] + pts[1] + pts[2] + pts[3]) / 4f;
                             foreach (var p in new[] { centre, pts[0], pts[1], pts[2], pts[3] })
                             {
@@ -125,14 +124,14 @@ namespace Athanor.Tests
                 rig.SetView(sway, Vector2.zero);
                 for (float x = 100; x <= 540; x += 110)
                 {
-                    var p = Px.At(x, DepthMath.AnchorY);
+                    var p = Px.At(x, DepthFixture.AnchorY);
                     var seen = OnScreen(p);
                     Assert.AreEqual(p.x, seen.x, 1e-2f, $"anchor x {x}, sway {sway}"); Assert.AreEqual(p.y, seen.y, 1e-2f);
                 }
-                var wall = DepthMath.Place(Px.At(60, 40), -400f);
+                var wall = DepthMath.Place(Px.At(60, 40), -400f, rig.distance);
                 Vector3 vp = rig.worldCamera.WorldToViewportPoint(wall);
                 var moved = new Vector2((vp.x - 0.5f) * Px.W, (vp.y - 0.5f) * Px.H) - (Vector2)Px.At(60, 40);
-                float par = DepthMath.Parallax(-400f, rig.AnchorZ);
+                float par = DepthMath.Parallax(-400f, rig.AnchorZ, rig.distance);
                 Assert.AreEqual(sway.x * par, moved.x, 1e-2f, "the wall moves by cam * par(z)");
                 Assert.AreEqual(sway.y * par, moved.y, 1e-2f);
             }
@@ -144,7 +143,7 @@ namespace Athanor.Tests
             rig.SetView(Vector2.zero, new Vector2(3, -2));
             foreach (float z in new[] { -400f, -145.77f, 40f, 180f })
             {
-                Vector3 vp = rig.worldCamera.WorldToViewportPoint(DepthMath.Place(Px.At(320, 180), z));
+                Vector3 vp = rig.worldCamera.WorldToViewportPoint(DepthMath.Place(Px.At(320, 180), z, rig.distance));
                 Assert.AreEqual(3f, (vp.x - 0.5f) * Px.W - Px.At(320, 180).x, 1e-3f, "z " + z);
                 Assert.AreEqual(-2f, (vp.y - 0.5f) * Px.H - Px.At(320, 180).y, 1e-3f, "z " + z);
             }

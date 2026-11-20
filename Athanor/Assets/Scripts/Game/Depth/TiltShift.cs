@@ -17,11 +17,11 @@ namespace Athanor.Game
         /// <summary>The blur material the renderer features draw with (shader "Athanor/Tilt Shift").</summary>
         public Material material;
         /// <summary>The sharp band, in art rows (y down).</summary>
-        public float bandTop = 145f, bandBottom = 235f;
+        public float bandTop, bandBottom;
         /// <summary>Rows from the band edge to full strength.</summary>
-        public float feather = 110f;
+        public float feather;
         /// <summary>Blur sigma at full strength, in art px.</summary>
-        public float maxSigma = 1.5f;
+        public float maxSigma;
 
         /// <summary>Forgets every camera before the first scene (domain reload off).</summary>
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]

@@ -75,7 +75,7 @@ namespace Athanor.Game
                 for (int i = 0; i < Athanor.Core.Bench.TileCount; i++)
                 {
                     var t = Bench.Tile(i);
-                    var pts = DepthMath.DrawnFace(t.FaceCentre, t.FaceSize, Px.H / 2f - t.centre.y, depthStage.rig.CamOffset, depthStage.rig.ImageShift, 3f);
+                    var pts = DepthMath.DrawnFace(t.FaceCentre, t.FaceSize, Px.H / 2f - t.centre.y, depthStage.rig.CamOffset, depthStage.rig.ImageShift, 3f, depthStage.rig.distance, depthStage.rig.table.Shape);
                     Dev.Hook("[dev] tile " + i + " " + string.Join(" ", System.Array.ConvertAll(pts, p => p.x.ToString("0.0", System.Globalization.CultureInfo.InvariantCulture) + "," + p.y.ToString("0.0", System.Globalization.CultureInfo.InvariantCulture))));
                 }
         }

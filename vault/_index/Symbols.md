@@ -108,9 +108,11 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | WindowView.Timing | WindowView.Timing | Game | struct | Athanor/Assets/Scripts/Game/Cutscene/WindowView.cs | 18 | The periods of the effects, in seconds; Main.unity holds the values (see LayoutPinTests). |
 | WindowView.Layout | WindowView.Layout | Game | struct | Athanor/Assets/Scripts/Game/Cutscene/WindowView.cs | 32 | Where the effects sit, as offsets from the pane's centre (art pixels, y up), and the paths they follow. |
 | WindowView.Look | WindowView.Look | Game | struct | Athanor/Assets/Scripts/Game/Cutscene/WindowView.cs | 43 | Colours and strengths of the effects. |
-| CameraSway | CameraSway | Game | class | Athanor/Assets/Scripts/Game/Depth/CameraSway.cs | 11 | The idle sway and the world-only shake of the HD-2D bench. The sway moves the world camera (x = A sin(2 pi t / 6), y = A / 2 sin(2 pi t / 9), A = 4 art px) and re-aims it so the middle tile row (art y |
+| CameraSway | CameraSway | Game | class | Athanor/Assets/Scripts/Game/Depth/CameraSway.cs | 12 | The idle sway and the world-only shake of the HD-2D bench. The sway moves the world camera (x = A sin(2 pi t / 6), y = A / 2 sin(2 pi t / 9), A = 4 art px) and re-aims it so the middle tile row (art y |
+| SwayTiming | SwayTiming | Game | struct | Athanor/Assets/Scripts/Game/Depth/CameraSway.cs | 21 | The sway's two periods (seconds) and the world shake's two frequencies (radians per second); held by Main.unity. |
 | DepthLayer | DepthLayer | Game | class | Athanor/Assets/Scripts/Game/Depth/DepthLayer.cs | 10 | One flat thing of the bench placed in depth: it is moved to its depth and enlarged by (D - z) / D, so that from the camera at rest it covers exactly the art pixels it covers in the flat game. Sorting  |
 | DepthMath | DepthMath | Game | class | Athanor/Assets/Scripts/Game/Depth/DepthMath.cs | 10 | The projection maths of the HD-2D bench (HD-2D mockup SPEC, "Layer stack and projection"; removed in P6-22, see git history). Pure functions, no scene. Depth z follows the SPEC: 0 is the plane where o |
+| TableShape | TableShape | Game | struct | Athanor/Assets/Scripts/Game/Depth/DepthMath.cs | 133 | The table's shape as the maths needs it: the distance from the camera of its front and back edge at rest, the art y of its back edge and the number of art rows of the tilted top. DepthTable holds the  |
 | DepthMood | DepthMood | Game | class | Athanor/Assets/Scripts/Game/Depth/DepthMood.cs | 13 | The five depth presets of the HD-2D test scene (HD-2D mockup SPEC, "Depth presets", with the URP conversions of "Mapping mockup values to Unity"): ambient light, moonbeam, bloom, vignette, the fog she |
 | Preset | Preset | Game | struct | Athanor/Assets/Scripts/Game/Depth/DepthMood.cs | 17 | One depth's look. |
 | DepthRig | DepthRig | Game | class | Athanor/Assets/Scripts/Game/Depth/DepthRig.cs | 12 | The camera split of the HD-2D bench. The world camera is a perspective camera at distance D from the art plane; it renders the layers under this object into a RenderTexture of 640K x 360K pixels (K =  |
@@ -119,7 +121,6 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | SpriteSwap | SpriteSwap | Game | struct | Athanor/Assets/Scripts/Game/Depth/DepthSwitch.cs | 15 | A sprite that has a sharp picture and a pre-blurred one of the same centre. |
 | FlameSwap | FlameSwap | Game | struct | Athanor/Assets/Scripts/Game/Depth/DepthSwitch.cs | 23 | A flame whose frames have a sharp set and a pre-blurred set. |
 | DepthTable | DepthTable | Game | class | Athanor/Assets/Scripts/Game/Depth/DepthTable.cs | 13 | The table as a floor: one mesh lying on the tilted plane of DepthMath.TableZ (plus the upright front face below the front edge), cut along every art row. A plain tilted quad would foreshorten the art, |
-| DepthTestControls | DepthTestControls | Game | class | Athanor/Assets/Scripts/Game/Depth/DepthTestControls.cs | 11 | Play-mode controls of the depth test scene only: the pointer hovers the nine tiles through the world camera (DepthRig.BenchPoint), 1..5 pick a depth preset (0 today's look), E toggles the effects, S t |
 | DepthTiltShiftFeature | DepthTiltShiftFeature | Game | class | Athanor/Assets/Scripts/Game/Depth/DepthTiltShiftFeature.cs | 9 | A full-screen pass of the tilt-shift (one blur direction per feature) that runs only for cameras with an enabled TiltShift, so the HUD camera and the main game's camera are never blurred. |
 | FogSheet | FogSheet | Game | class | Athanor/Assets/Scripts/Game/Depth/FogSheet.cs | 10 | A tiling fog sheet (a tiled SpriteRenderer with the "Athanor/Fog Lit" material) that drifts sideways in whole texels: the picture moves left by trunc(t * speed) texels (back sheet +4, front sheet -6 a |
 | TiltShift | TiltShift | Game | class | Athanor/Assets/Scripts/Game/Depth/TiltShift.cs | 12 | The tilt-shift of the world camera: sharp from art y 145 to 235, then a blur that rises over 110 rows (smoothstep) to sigma 1.5 art px (owner gate G2 #9, #10). Drawn by DepthTiltShiftFeature before bl |
@@ -129,7 +130,8 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | FlipbookSheet | FlipbookSheet | Game | class | Athanor/Assets/Scripts/Game/Fx/FlipbookSheet.cs | 6 | One exported effect: its frames in order and how long each is shown. |
 | Fx | Fx | Game | class | Athanor/Assets/Scripts/Game/Fx/Fx.cs | 6 | Spawns exported pixelfx effects by name. |
 | FxRefs | FxRefs | Game | class | Athanor/Assets/Scripts/Game/Fx/FxRefs.cs | 6 | The scene's two effect players, handed to every view that flashes, shakes or throws sparks (no statics). |
-| ScreenFx | ScreenFx | Game | class | Athanor/Assets/Scripts/Game/Fx/ScreenFx.cs | 7 | Whole-screen effects: a white flash, camera shake, and fading to and from black. |
+| ScreenFx | ScreenFx | Game | class | Athanor/Assets/Scripts/Game/Fx/ScreenFx.cs | 8 | Whole-screen effects: a white flash, camera shake, and fading to and from black. |
+| ShakeTiming | ShakeTiming | Game | struct | Athanor/Assets/Scripts/Game/Fx/ScreenFx.cs | 17 | The camera shake's two frequencies (radians per second) and how much of the x travel the y axis gets; held by Main.unity. |
 | SparkMesh | SparkMesh | Game | class | Athanor/Assets/Scripts/Game/Fx/SparkMesh.cs | 13 | Many 1 px dots and 5x5 sparkles drawn as one mesh at one sorting order: one renderer and at most two draws (one per texture) instead of a SpriteRenderer each. Fill it every frame with Begin, Add, End. |
 | SparkParticles | SparkParticles | Game | class | Athanor/Assets/Scripts/Game/Fx/SparkParticles.cs | 13 | Sparks drawn by ParticleSystems (docs/ATHANOR.md §2), only compiled with ATHANOR_SPARK_PARTICLES. Not shipped: it pulls the ParticleSystem engine module into the wasm, which was the thing measured. On |
 | Sparks | Sparks | Game | class | Athanor/Assets/Scripts/Game/Fx/Sparks.cs | 13 | Glowing pixel particles: bursts, trails and rising embers. Particles are plain structs integrated here; each sorting order is one lane drawn by one SparkMesh (one renderer, at most two draws), so a bu |
@@ -213,6 +215,7 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | AutoHookTests | AutoHookTests | Tests | class | Athanor/Assets/Tests/EditModeGame/AutoHookTests.cs | 12 | F9 (the scripted player) is a toggle, so tools/web/descents.mjs cannot know its state from its own key presses: a press at the wrong moment left the scripted player off after depth 2 and the run stood |
 | ChoiceHookTests | ChoiceHookTests | Tests | class | Athanor/Assets/Tests/EditModeGame/ChoiceHookTests.cs | 14 | The card chooser logs its development hook only once the cards take a click (the deal is over). tools/web/webtest.mjs and descents.mjs click a card after this line; a click before it was lost and the  |
 | DepthClickTests | DepthClickTests | Tests | class | Athanor/Assets/Tests/EditModeGame/DepthClickTests.cs | 13 | Clicks on the HD-2D bench: a point of the UI camera's world goes through the world texture and the perspective world camera to the table's tilted top, and the flat point found there is what TileView.C |
+| DepthFixture | DepthFixture | Tests | class | Athanor/Assets/Tests/EditModeGame/DepthFixture.cs | 10 | The HD-2D rig of the main scene as test data: the numbers Main.unity holds (LayoutPinTests.Depth_MainScene_KeepsTodaysRigSwayAndTable pins the scene against the same literals). The game code has no co |
 | DepthLayerTests | DepthLayerTests | Tests | class | Athanor/Assets/Tests/EditModeGame/DepthLayerTests.cs | 12 | The HD-2D projection maths (HD-2D mockup SPEC, "Layer stack and projection"; removed in P6-22, see git history) and the rules that keep the depth art out of the shipped game. |
 | DepthLookTests | DepthLookTests | Tests | class | Athanor/Assets/Tests/EditModeGame/DepthLookTests.cs | 5 |  |
 | GameTestSetup | GameTestSetup | Tests | class | Athanor/Assets/Tests/EditModeGame/GameTestSetup.cs | 7 | Once per run of the Game tests: the language files, art library and particle material the game would get from GameFlow and Sparks. |
@@ -958,12 +961,15 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | WindowView.Look | field | glowSwing | 47 | public float glowSwing |
 | WindowView.Look | field | dipSwing | 49 | public float dipBase, dipSwing |
 | WindowView.Look | field | rootBackground | 51 | public Color rootBackground |
-| CameraSway | field | swayOn | 14 | public bool swayOn = true |
-| CameraSway | field | amplitude | 16 | public float amplitude = DepthMath.SwayAmplitude |
-| CameraSway | field | external | 20 | public Vector2 external |
-| CameraSway | method | Shake | 25 | public void Shake(int size, float seconds) |
-| CameraSway | method | ShakeOffset | 33 | public static Vector2Int ShakeOffset(float t, int size) |
-| CameraSway | method | Pose | 37 | public void Pose(float t) |
+| CameraSway | field | swayOn | 15 | public bool swayOn = true |
+| CameraSway | field | amplitude | 17 | public float amplitude |
+| CameraSway | field | timing | 26 | public SwayTiming timing |
+| CameraSway | field | external | 30 | public Vector2 external |
+| CameraSway | method | Shake | 35 | public void Shake(int size, float seconds) |
+| CameraSway | method | ShakeOffset | 43 | public static Vector2Int ShakeOffset(float t, int size, float rateX, float rateY) |
+| CameraSway | method | Pose | 47 | public void Pose(float t) |
+| SwayTiming | field | periodY | 23 | public float periodX, periodY |
+| SwayTiming | field | shakeRateY | 24 | public float shakeRateX, shakeRateY |
 | DepthLayer | field | z | 13 | public float z |
 | DepthLayer | field | rest | 15 | public Vector2 rest |
 | DepthLayer | field | restScale | 17 | public Vector3 restScale = Vector3.one |
@@ -974,25 +980,21 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | DepthLayer | field | groupInner | 48 | public float[] groupInner = new float[0], groupOuter = new float[0] |
 | DepthLayer | method | AddGroup | 55 | public static DepthLayer AddGroup(GameObject go, float z) |
 | DepthLayer | method | Apply | 67 | public void Apply(float d) |
-| DepthMath | field | RestDistance | 13 | public const float RestDistance = 600f |
-| DepthMath | field | TableFront | 15 | public const float TableFront = 660f |
-| DepthMath | field | TableBack | 17 | public const float TableBack = 1.27f * TableFront |
-| DepthMath | field | TableTopY | 19 | public const float TableTopY = 132f, TableRows = 122f |
-| DepthMath | field | AnchorY | 21 | public const float AnchorY = 188f |
-| DepthMath | method | Scale | 24 | public static float Scale(float z, float d = RestDistance) |
-| DepthMath | method | FovDegrees | 27 | public static float FovDegrees(float d = RestDistance, float halfHeight = Px.H / 2f) |
-| DepthMath | method | Place | 30 | public static Vector3 Place(Vector2 rest, float z, float d = RestDistance) |
-| DepthMath | method | Seen | 37 | public static Vector2 Seen(Vector3 world, float d = RestDistance) |
-| DepthMath | method | Project | 45 | public static Vector2 Project(Vector3 world, Vector2 cam, Vector2 shift, float d = RestDistance) |
-| DepthMath | method | DrawnFace | 55 | public static Vector2[] DrawnFace(Vector2 faceCentre, Vector2 faceSize, float artY, Vector2 cam, Vector2 shift, float inset, float d = RestDistance) |
-| DepthMath | method | TableZ | 72 | public static float TableZ(float artY, float d = RestDistance, float front = TableFront, float back = TableBack, float topY = TableTopY, float rows = TableRows) |
-| DepthMath | method | Parallax | 83 | public static float Parallax(float z, float zAnchor, float d = RestDistance) |
-| DepthMath | field | SwayAmplitude | 86 | public const float SwayAmplitude = 4f, SwayPeriodX = 6f, SwayPeriodY = 9f |
-| DepthMath | method | Sway | 89 | public static Vector2 Sway(float t, float amplitude = SwayAmplitude) |
-| DepthMath | method | AnchorShift | 96 | public static Vector2 AnchorShift(Vector2 cam, float zAnchor, float d = RestDistance) |
-| DepthMath | method | Projection | 102 | public static Matrix4x4 Projection(float d, Vector2 shift, float near, float far) |
-| DepthMath | method | ViewportRay | 114 | public static Ray ViewportRay(Vector2 viewport, Vector2 cam, Vector2 shift, float d = RestDistance) |
-| DepthMath | method | HitTable | 124 | public static bool HitTable(Ray ray, out Vector2 flat, float d = RestDistance, float front = TableFront, float back = TableBack, float topY = TableTopY, float rows = TableRows) |
+| DepthMath | method | Scale | 13 | public static float Scale(float z, float d) |
+| DepthMath | method | FovDegrees | 16 | public static float FovDegrees(float d, float halfHeight = Px.H / 2f) |
+| DepthMath | method | Place | 19 | public static Vector3 Place(Vector2 rest, float z, float d) |
+| DepthMath | method | Seen | 26 | public static Vector2 Seen(Vector3 world, float d) |
+| DepthMath | method | Project | 34 | public static Vector2 Project(Vector3 world, Vector2 cam, Vector2 shift, float d) |
+| DepthMath | method | DrawnFace | 44 | public static Vector2[] DrawnFace(Vector2 faceCentre, Vector2 faceSize, float artY, Vector2 cam, Vector2 shift, float inset, float d, TableShape table) |
+| DepthMath | method | TableZ | 61 | public static float TableZ(float artY, float d, TableShape table) |
+| DepthMath | method | Parallax | 71 | public static float Parallax(float z, float zAnchor, float d) |
+| DepthMath | method | Sway | 75 | public static Vector2 Sway(float t, float amplitude, float periodX, float periodY) |
+| DepthMath | method | AnchorShift | 86 | public static Vector2 AnchorShift(Vector2 cam, float zAnchor, float d) |
+| DepthMath | method | Projection | 92 | public static Matrix4x4 Projection(float d, Vector2 shift, float near, float far) |
+| DepthMath | method | ViewportRay | 104 | public static Ray ViewportRay(Vector2 viewport, Vector2 cam, Vector2 shift, float d) |
+| DepthMath | method | HitTable | 114 | public static bool HitTable(Ray ray, out Vector2 flat, float d, TableShape table) |
+| TableShape | field | rows | 135 | public readonly float front, back, topY, rows |
+| TableShape | ctor | TableShape | 137 | public TableShape(float front, float back, float topY, float rows) |
 | DepthMood | field | presets | 36 | public Preset[] presets |
 | DepthMood | field | depth | 38 | public int depth |
 | DepthMood | field | moon | 39 | public Light2D ambient, moon |
@@ -1015,24 +1017,26 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | Preset | property | FogTint | 32 | public Color FogTint |
 | DepthRig | field | UiLayer | 15 | public const int UiLayer = 5 |
 | DepthRig | field | WorldLayer | 19 | public const int WorldLayer = 6 |
-| DepthRig | field | distance | 23 | public float distance = DepthMath.RestDistance |
+| DepthRig | field | distance | 23 | public float distance |
 | DepthRig | field | worldCamera | 27 | public Camera worldCamera |
 | DepthRig | field | uiCamera | 29 | public Camera uiCamera |
 | DepthRig | field | worldDisplay | 31 | public MeshRenderer worldDisplay |
 | DepthRig | field | autoScale | 33 | public bool autoScale = true |
-| DepthRig | field | near | 35 | public float near = 50f, far = 2000f |
-| DepthRig | property | Flat | 45 | public bool Flat |
-| DepthRig | method | ScreenScale | 59 | public static int ScreenScale() |
-| DepthRig | property | WorldTexture | 62 | public RenderTexture WorldTexture |
-| DepthRig | property | RestPosition | 65 | public Vector3 RestPosition |
-| DepthRig | property | CamOffset | 68 | public Vector2 CamOffset |
-| DepthRig | property | ImageShift | 70 | public Vector2 ImageShift |
-| DepthRig | property | AnchorZ | 72 | public float AnchorZ |
-| DepthRig | method | SetView | 78 | public void SetView(Vector2 cam, Vector2 shake) |
-| DepthRig | method | ViewportOf | 86 | public static Vector2 ViewportOf(Vector2 ui) |
-| DepthRig | method | WorldRay | 89 | public Ray WorldRay(Vector2 ui) |
-| DepthRig | method | BenchPoint | 92 | public bool BenchPoint(Vector2 ui, out Vector2 flat) |
-| DepthRig | method | Apply | 123 | public void Apply() |
+| DepthRig | field | far | 35 | public float near, far |
+| DepthRig | field | table | 37 | public DepthTable table |
+| DepthRig | field | anchorY | 39 | public float anchorY |
+| DepthRig | property | Flat | 49 | public bool Flat |
+| DepthRig | method | ScreenScale | 63 | public static int ScreenScale() |
+| DepthRig | property | WorldTexture | 66 | public RenderTexture WorldTexture |
+| DepthRig | property | RestPosition | 69 | public Vector3 RestPosition |
+| DepthRig | property | CamOffset | 72 | public Vector2 CamOffset |
+| DepthRig | property | ImageShift | 74 | public Vector2 ImageShift |
+| DepthRig | property | AnchorZ | 76 | public float AnchorZ |
+| DepthRig | method | SetView | 82 | public void SetView(Vector2 cam, Vector2 shake) |
+| DepthRig | method | ViewportOf | 90 | public static Vector2 ViewportOf(Vector2 ui) |
+| DepthRig | method | WorldRay | 97 | public Ray WorldRay(Vector2 ui) |
+| DepthRig | method | BenchPoint | 100 | public bool BenchPoint(Vector2 ui, out Vector2 flat) |
+| DepthRig | method | Apply | 131 | public void Apply() |
 | DepthStage | field | rig | 12 | public DepthRig rig |
 | DepthStage | field | sway | 13 | public CameraSway sway |
 | DepthStage | field | mood | 14 | public DepthMood mood |
@@ -1056,27 +1060,22 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | FlameSwap | field | soft | 26 | public Sprite[] sharp, soft |
 | DepthTable | field | sprite | 18 | public Sprite sprite |
 | DepthTable | field | artY | 20 | public float artX, artY |
-| DepthTable | field | distance | 22 | public float distance = DepthMath.RestDistance |
-| DepthTable | field | front | 24 | public float front = DepthMath.TableFront, back = DepthMath.TableBack |
-| DepthTable | field | topY | 26 | public float topY = DepthMath.TableTopY, rows = DepthMath.TableRows |
+| DepthTable | field | distance | 22 | public float distance |
+| DepthTable | field | back | 24 | public float front, back |
+| DepthTable | field | rows | 26 | public float topY, rows |
 | DepthTable | method | RowZ | 40 | public float RowZ(float y) |
-| DepthTable | method | Point | 43 | public Vector3 Point(float x, float y) |
-| DepthTable | method | Rebuild | 46 | public void Rebuild(float d) |
-| DepthTestControls | field | rig | 13 | public DepthRig rig |
-| DepthTestControls | field | sway | 14 | public CameraSway sway |
-| DepthTestControls | field | effects | 15 | public DepthSwitch effects |
-| DepthTestControls | field | mood | 16 | public DepthMood mood |
-| DepthTestControls | field | tiles | 17 | public TileView[] tiles = new TileView[0] |
-| DepthTestControls | property | Hovered | 19 | public int Hovered |
+| DepthTable | property | Shape | 43 | public TableShape Shape |
+| DepthTable | method | Point | 46 | public Vector3 Point(float x, float y) |
+| DepthTable | method | Rebuild | 49 | public void Rebuild(float d) |
 | DepthTiltShiftFeature | method | AddRenderPasses | 12 | public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData) |
-| FogSheet | field | speed | 15 | public float speed = 4f |
-| FogSheet | field | width | 17 | public int width = 320 |
+| FogSheet | field | speed | 15 | public float speed |
+| FogSheet | field | width | 17 | public int width |
 | FogSheet | method | Offset | 25 | public static int Offset(float t, float speed, int width) |
 | FogSheet | method | Set | 28 | public void Set(float t) |
 | TiltShift | field | material | 18 | public Material material |
-| TiltShift | field | bandTop | 20 | public float bandTop = 145f, bandBottom = 235f |
-| TiltShift | field | feather | 22 | public float feather = 110f |
-| TiltShift | field | maxSigma | 24 | public float maxSigma = 1.5f |
+| TiltShift | field | bandBottom | 20 | public float bandTop, bandBottom |
+| TiltShift | field | feather | 22 | public float feather |
+| TiltShift | field | maxSigma | 24 | public float maxSigma |
 | TiltShift | method | ResetStatics | 28 | public static void ResetStatics() |
 | TiltShift | method | IsOn | 31 | public static bool IsOn(Camera camera) |
 | TiltShift | method | Sigma | 34 | public static float Sigma(float artY, float top, float bottom, float feather, float maxSigma) |
@@ -1104,24 +1103,25 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | FxRefs | field | Screen | 9 | public readonly ScreenFx Screen |
 | FxRefs | field | Sparks | 11 | public readonly Sparks Sparks |
 | FxRefs | ctor | FxRefs | 13 | public FxRefs(ScreenFx screen, Sparks sparks) |
-| ScreenFx | method | Bind | 21 | public void Bind(Camera camera, CameraSway worldSway = null) |
-| ScreenFx | method | Flash | 28 | public void Flash(float peak, float seconds) |
-| ScreenFx | method | Shake | 29 | public void Shake(float pixels, float seconds) |
-| ScreenFx | method | FadeOut | 31 | public IEnumerator FadeOut(float seconds) |
-| ScreenFx | method | FadeIn | 32 | public IEnumerator FadeIn(float seconds) |
-| ScreenFx | method | SetBlack | 33 | public void SetBlack(float a) |
+| ScreenFx | method | Bind | 30 | public void Bind(Camera camera, CameraSway worldSway = null) |
+| ScreenFx | method | Flash | 37 | public void Flash(float peak, float seconds) |
+| ScreenFx | method | Shake | 38 | public void Shake(float pixels, float seconds) |
+| ScreenFx | method | FadeOut | 40 | public IEnumerator FadeOut(float seconds) |
+| ScreenFx | method | FadeIn | 41 | public IEnumerator FadeIn(float seconds) |
+| ScreenFx | method | SetBlack | 42 | public void SetBlack(float a) |
+| ShakeTiming | field | yScale | 19 | public float rateX, rateY, yScale |
 | SparkMesh | property | Vert | 15 | struct Vert |
 | SparkMesh | property | Quad | 16 | struct Quad |
 | SparkMesh | field | DotScale | 19 | public const float DotScale = 0.25f |
-| SparkMesh | property | BaseMaterial | 32 | public static Material BaseMaterial |
-| SparkMesh | method | ResetStatics | 41 | public static void ResetStatics() |
-| SparkMesh | property | Count | 57 | public int Count |
-| SparkMesh | method | Create | 60 | public static SparkMesh Create(Transform parent, string name, int order, Sprite dot, Sprite sparkle) |
-| SparkMesh | method | MaterialFor | 71 | public static Material MaterialFor(Texture texture) |
-| SparkMesh | method | Begin | 106 | public void Begin() |
-| SparkMesh | method | Add | 108 | public void Add(Vector2 pos, Color color, bool sparkle) |
-| SparkMesh | method | End | 115 | public void End() |
-| SparkMesh | property | Mesh | 184 | public Mesh Mesh |
+| SparkMesh | property | BaseMaterial | 34 | public static Material BaseMaterial |
+| SparkMesh | method | ResetStatics | 43 | public static void ResetStatics() |
+| SparkMesh | property | Count | 59 | public int Count |
+| SparkMesh | method | Create | 62 | public static SparkMesh Create(Transform parent, string name, int order, Sprite dot, Sprite sparkle) |
+| SparkMesh | method | MaterialFor | 73 | public static Material MaterialFor(Texture texture) |
+| SparkMesh | method | Begin | 108 | public void Begin() |
+| SparkMesh | method | Add | 110 | public void Add(Vector2 pos, Color color, bool sparkle) |
+| SparkMesh | method | End | 117 | public void End() |
+| SparkMesh | property | Mesh | 186 | public Mesh Mesh |
 | SparkParticles | field | K | 15 | public const float K = 3 |
 | SparkParticles | property | LiveCount | 24 | public int LiveCount |
 | SparkParticles | method | Clear | 26 | public void Clear() |
@@ -1261,13 +1261,14 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | PointerInput | method | ScreenToWorld | 41 | public static Vector2 ScreenToWorld(Vector2 screen) |
 | PointerInput | method | Resolve | 50 | public static void Resolve(Vector2 world) |
 | Px | field | W | 11 | public const int W = 640, H = 360 |
-| Px | method | At | 14 | public static Vector3 At(float x, float y) |
-| Px | method | Mid | 17 | public static Vector3 Mid(float x, float y, float w, float h) |
-| Px | method | Fit | 20 | public static void Fit(Transform t, float x, float y, float w, float h) |
-| Px | method | Snap | 26 | public static Vector3 Snap(Vector3 p) |
-| Px | method | Hex | 29 | public static Color Hex(string hex, float a = 1, float k = 1) |
-| Px | method | Alpha | 35 | public static Color Alpha(this Color c, float a) |
-| Px | method | Times | 36 | public static Color Times(this Color c, float k) |
+| Px | field | DotSize | 14 | public const float DotSize = 4f |
+| Px | method | At | 17 | public static Vector3 At(float x, float y) |
+| Px | method | Mid | 24 | public static Vector3 Mid(float x, float y, float w, float h) |
+| Px | method | Fit | 27 | public static void Fit(Transform t, float x, float y, float w, float h) |
+| Px | method | Snap | 33 | public static Vector3 Snap(Vector3 p) |
+| Px | method | Hex | 36 | public static Color Hex(string hex, float a = 1, float k = 1) |
+| Px | method | Alpha | 42 | public static Color Alpha(this Color c, float a) |
+| Px | method | Times | 43 | public static Color Times(this Color c, float k) |
 | RarityStars | field | Size | 15 | public const int Size = 7, Pitch = 8, Max = 4 |
 | RarityStars | property | Root | 23 | public Transform Root |
 | RarityStars | ctor | RarityStars | 26 | public RarityStars() |
@@ -1281,12 +1282,12 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | RarityStars | method | SetAlpha | 91 | public void SetAlpha(float a) |
 | RarityStars | method | SetOrder | 98 | public void SetOrder(int order) |
 | RarityStars | method | SetActive | 104 | public void SetActive(bool on) |
-| Spawn | method | Root | 16 | public static Transform Root(string name, Transform parent = null) |
-| Spawn | method | Sprite | 25 | public static SpriteRenderer Sprite(Transform parent, string sprite, Vector3 worldPos, int order, Material material = null) |
-| Spawn | method | Rect | 39 | public static SpriteRenderer Rect(Transform parent, float x, float y, float w, float h, Color color, int order) |
-| Spawn | method | Glow | 49 | public static SpriteRenderer Glow(Transform parent, Vector3 worldPos, float radius, Color color, int order) |
-| Spawn | method | Text | 58 | public static Label Text(Transform parent, string text, float x, float y, FontKind font, int size, Color color, int order, Align align = Align.Left, Color? shadow = null, float width = 0) |
-| Spawn | method | Click | 100 | public static Clickable Click(GameObject go, Vector2 size, int order, System.Action onClick = null) |
+| Spawn | method | Root | 21 | public static Transform Root(string name, Transform parent = null) |
+| Spawn | method | Sprite | 30 | public static SpriteRenderer Sprite(Transform parent, string sprite, Vector3 worldPos, int order, Material material = null) |
+| Spawn | method | Rect | 44 | public static SpriteRenderer Rect(Transform parent, float x, float y, float w, float h, Color color, int order) |
+| Spawn | method | Glow | 54 | public static SpriteRenderer Glow(Transform parent, Vector3 worldPos, float radius, Color color, int order) |
+| Spawn | method | Text | 64 | public static Label Text(Transform parent, string text, float x, float y, FontKind font, int size, Color color, int order, Align align = Align.Left, Color? shadow = null, float width = 0) |
+| Spawn | method | Click | 107 | public static Clickable Click(GameObject go, Vector2 size, int order, System.Action onClick = null) |
 | Align | value | Left | 7 | Left |
 | Align | value | Centre | 7 | Centre |
 | Align | value | Right | 7 | Right |
@@ -1551,16 +1552,19 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | AutoHookTests | method | ToggleAuto_FlipsTheScriptedPlayer_AndLogsTheNewState | 33 | public void ToggleAuto_FlipsTheScriptedPlayer_AndLogsTheNewState() |
 | ChoiceHookTests | method | Choose_LogsOpenHook_OnlyAfterTheDeal | 39 | public void Choose_LogsOpenHook_OnlyAfterTheDeal() |
 | DepthClickTests | method | SetUp | 23 | public void SetUp() |
-| DepthClickTests | method | TearDown | 37 | public void TearDown() |
-| DepthClickTests | method | ClickOnTileCentre_AtRestAndUnderMaximumSway_HitsThatTile | 53 | public void ClickOnTileCentre_AtRestAndUnderMaximumSway_HitsThatTile() |
-| DepthClickTests | method | ClickWhereTheCameraShowsTheTileCentre_UnderSwayAndShake_FindsThatPoint | 68 | public void ClickWhereTheCameraShowsTheTileCentre_UnderSwayAndShake_FindsThatPoint() |
-| DepthClickTests | method | DrawnFace_UnderShakeUpToThreePx_IsHitByTheRayAtCentreAndInsetCorners | 85 | public void DrawnFace_UnderShakeUpToThreePx_IsHitByTheRayAtCentreAndInsetCorners() |
-| DepthClickTests | method | WorldRay_UnderSwayAndShake_IsTheWorldCamerasOwnRay | 109 | public void WorldRay_UnderSwayAndShake_IsTheWorldCamerasOwnRay() |
-| DepthClickTests | method | Sway_KeepsTheAnchorRowStill_AndMovesTheWallLessThanAnArtPixel | 121 | public void Sway_KeepsTheAnchorRowStill_AndMovesTheWallLessThanAnArtPixel() |
-| DepthClickTests | method | SetView_ShakeOnly_MovesEveryDepthByTheSameWholeArtPixels | 142 | public void SetView_ShakeOnly_MovesEveryDepthByTheSameWholeArtPixels() |
-| DepthClickTests | method | TiltShiftSigma_IsZeroInTheBand_AndRisesToTheMaximum | 154 | public void TiltShiftSigma_IsZeroInTheBand_AndRisesToTheMaximum() |
-| DepthClickTests | method | Show_TileReloadedFromAScene_ShowsTheMaterialAndTakesClicks | 164 | public void Show_TileReloadedFromAScene_ShowsTheMaterialAndTakesClicks() |
-| DepthClickTests | method | FogOffset_StepsInWholeTexels_AndWraps | 180 | public void FogOffset_StepsInWholeTexels_AndWraps() |
+| DepthClickTests | method | TearDown | 36 | public void TearDown() |
+| DepthClickTests | method | ClickOnTileCentre_AtRestAndUnderMaximumSway_HitsThatTile | 52 | public void ClickOnTileCentre_AtRestAndUnderMaximumSway_HitsThatTile() |
+| DepthClickTests | method | ClickWhereTheCameraShowsTheTileCentre_UnderSwayAndShake_FindsThatPoint | 67 | public void ClickWhereTheCameraShowsTheTileCentre_UnderSwayAndShake_FindsThatPoint() |
+| DepthClickTests | method | DrawnFace_UnderShakeUpToThreePx_IsHitByTheRayAtCentreAndInsetCorners | 84 | public void DrawnFace_UnderShakeUpToThreePx_IsHitByTheRayAtCentreAndInsetCorners() |
+| DepthClickTests | method | WorldRay_UnderSwayAndShake_IsTheWorldCamerasOwnRay | 108 | public void WorldRay_UnderSwayAndShake_IsTheWorldCamerasOwnRay() |
+| DepthClickTests | method | Sway_KeepsTheAnchorRowStill_AndMovesTheWallLessThanAnArtPixel | 120 | public void Sway_KeepsTheAnchorRowStill_AndMovesTheWallLessThanAnArtPixel() |
+| DepthClickTests | method | SetView_ShakeOnly_MovesEveryDepthByTheSameWholeArtPixels | 141 | public void SetView_ShakeOnly_MovesEveryDepthByTheSameWholeArtPixels() |
+| DepthClickTests | method | TiltShiftSigma_IsZeroInTheBand_AndRisesToTheMaximum | 153 | public void TiltShiftSigma_IsZeroInTheBand_AndRisesToTheMaximum() |
+| DepthClickTests | method | Show_TileReloadedFromAScene_ShowsTheMaterialAndTakesClicks | 163 | public void Show_TileReloadedFromAScene_ShowsTheMaterialAndTakesClicks() |
+| DepthClickTests | method | FogOffset_StepsInWholeTexels_AndWraps | 179 | public void FogOffset_StepsInWholeTexels_AndWraps() |
+| DepthFixture | field | D | 12 | public const float D = 600f, Front = 660f, Back = 838.2f, TopY = 132f, Rows = 122f, AnchorY = 188f, Near = 50f, Far = 2000f |
+| DepthFixture | property | Table | 14 | public static TableShape Table |
+| DepthFixture | method | AddRig | 17 | public static DepthRig AddRig(GameObject root, Camera worldCamera) |
 | DepthLayerTests | method | Fov_AtRest_Shows180UnitsAboveAndBelowTheCentre | 35 | public void Fov_AtRest_Shows180UnitsAboveAndBelowTheCentre() |
 | DepthLayerTests | method | Scale_SpecDepths_MatchTheSpecTable | 42 | public void Scale_SpecDepths_MatchTheSpecTable() |
 | DepthLayerTests | method | Place_AtAnyDepth_IsSeenWhereItWasDrawn | 49 | public void Place_AtAnyDepth_IsSeenWhereItWasDrawn() |
@@ -1589,28 +1593,30 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | LabelLineBoxTests | method | LineBoxTitle_SizeSwitchTo32_FollowsTheNewSize | 62 | public void LineBoxTitle_SizeSwitchTo32_FollowsTheNewSize() |
 | LabelLineBoxTests | method | LineBoxTitle_InEnglish_DoesNotMove | 72 | public void LineBoxTitle_InEnglish_DoesNotMove() |
 | LabelLineBoxTests | method | PlainTitle_InVietnamese_DoesNotMove | 81 | public void PlainTitle_InVietnamese_DoesNotMove() |
-| LayoutPinTests | method | Palette_Asset_HasTodaysColours | 38 | public void Palette_Asset_HasTodaysColours() |
-| LayoutPinTests | method | IgniteSequence_MainScene_KeepsTodaysTiming | 58 | public void IgniteSequence_MainScene_KeepsTodaysTiming() |
-| LayoutPinTests | method | IgniteSequence_MainScene_KeepsTodaysLook | 79 | public void IgniteSequence_MainScene_KeepsTodaysLook() |
-| LayoutPinTests | method | HudView_Prefab_KeepsTodaysLayout | 120 | public void HudView_Prefab_KeepsTodaysLayout() |
-| LayoutPinTests | method | HudView_IgniteLabel_SitsWhereTheCodePutIt | 141 | public void HudView_IgniteLabel_SitsWhereTheCodePutIt() |
-| LayoutPinTests | method | BenchParts_Prefabs_KeepTodaysLayout | 149 | public void BenchParts_Prefabs_KeepTodaysLayout() |
-| LayoutPinTests | method | JournalView_Prefab_KeepsTodaysLayout | 202 | public void JournalView_Prefab_KeepsTodaysLayout() |
-| LayoutPinTests | method | GoalsView_Prefab_KeepsTodaysLayout | 218 | public void GoalsView_Prefab_KeepsTodaysLayout() |
-| LayoutPinTests | method | CatalystChoiceView_Prefab_KeepsTodaysLayout | 225 | public void CatalystChoiceView_Prefab_KeepsTodaysLayout() |
-| LayoutPinTests | method | EventView_Prefab_KeepsTodaysLayout | 242 | public void EventView_Prefab_KeepsTodaysLayout() |
-| LayoutPinTests | method | RunOverView_Prefab_KeepsTodaysTiming | 252 | public void RunOverView_Prefab_KeepsTodaysTiming() |
-| LayoutPinTests | method | PauseMenu_Prefab_KeepsTodaysLayout | 259 | public void PauseMenu_Prefab_KeepsTodaysLayout() |
-| LayoutPinTests | method | TitleView_Prefab_KeepsTodaysLayout | 269 | public void TitleView_Prefab_KeepsTodaysLayout() |
-| LayoutPinTests | method | GoalToast_Prefab_KeepsTodaysLayout | 295 | public void GoalToast_Prefab_KeepsTodaysLayout() |
-| LayoutPinTests | method | Tooltip_BenchPrefab_KeepsTodaysLayout | 303 | public void Tooltip_BenchPrefab_KeepsTodaysLayout() |
-| LayoutPinTests | method | UiButton_EveryPrefabInstance_KeepsTodaysLook | 315 | public void UiButton_EveryPrefabInstance_KeepsTodaysLook() |
-| LayoutPinTests | method | Palette_Asset_KeepsTheStarOutline | 339 | public void Palette_Asset_KeepsTheStarOutline() |
-| LayoutPinTests | method | Dust_MainScene_KeepsTodaysLook | 347 | public void Dust_MainScene_KeepsTodaysLook() |
-| LayoutPinTests | method | SimpleCutscene_MainScene_KeepsTodaysBeats | 367 | public void SimpleCutscene_MainScene_KeepsTodaysBeats() |
-| LayoutPinTests | method | ReactionCutscene_MainScene_KeepsTodaysBeats | 395 | public void ReactionCutscene_MainScene_KeepsTodaysBeats() |
-| LayoutPinTests | method | WindowView_MainScene_KeepsTodaysEffects | 423 | public void WindowView_MainScene_KeepsTodaysEffects() |
-| LayoutPinTests | method | Tutorial_MainScene_KeepsTodaysTargetsAndStyle | 441 | public void Tutorial_MainScene_KeepsTodaysTargetsAndStyle() |
+| LayoutPinTests | method | Palette_Asset_HasTodaysColours | 39 | public void Palette_Asset_HasTodaysColours() |
+| LayoutPinTests | method | IgniteSequence_MainScene_KeepsTodaysTiming | 59 | public void IgniteSequence_MainScene_KeepsTodaysTiming() |
+| LayoutPinTests | method | IgniteSequence_MainScene_KeepsTodaysLook | 80 | public void IgniteSequence_MainScene_KeepsTodaysLook() |
+| LayoutPinTests | method | HudView_Prefab_KeepsTodaysLayout | 121 | public void HudView_Prefab_KeepsTodaysLayout() |
+| LayoutPinTests | method | HudView_IgniteLabel_SitsWhereTheCodePutIt | 142 | public void HudView_IgniteLabel_SitsWhereTheCodePutIt() |
+| LayoutPinTests | method | BenchParts_Prefabs_KeepTodaysLayout | 150 | public void BenchParts_Prefabs_KeepTodaysLayout() |
+| LayoutPinTests | method | JournalView_Prefab_KeepsTodaysLayout | 203 | public void JournalView_Prefab_KeepsTodaysLayout() |
+| LayoutPinTests | method | GoalsView_Prefab_KeepsTodaysLayout | 219 | public void GoalsView_Prefab_KeepsTodaysLayout() |
+| LayoutPinTests | method | CatalystChoiceView_Prefab_KeepsTodaysLayout | 226 | public void CatalystChoiceView_Prefab_KeepsTodaysLayout() |
+| LayoutPinTests | method | EventView_Prefab_KeepsTodaysLayout | 243 | public void EventView_Prefab_KeepsTodaysLayout() |
+| LayoutPinTests | method | RunOverView_Prefab_KeepsTodaysTiming | 253 | public void RunOverView_Prefab_KeepsTodaysTiming() |
+| LayoutPinTests | method | PauseMenu_Prefab_KeepsTodaysLayout | 260 | public void PauseMenu_Prefab_KeepsTodaysLayout() |
+| LayoutPinTests | method | TitleView_Prefab_KeepsTodaysLayout | 270 | public void TitleView_Prefab_KeepsTodaysLayout() |
+| LayoutPinTests | method | GoalToast_Prefab_KeepsTodaysLayout | 296 | public void GoalToast_Prefab_KeepsTodaysLayout() |
+| LayoutPinTests | method | Tooltip_BenchPrefab_KeepsTodaysLayout | 304 | public void Tooltip_BenchPrefab_KeepsTodaysLayout() |
+| LayoutPinTests | method | UiButton_EveryPrefabInstance_KeepsTodaysLook | 316 | public void UiButton_EveryPrefabInstance_KeepsTodaysLook() |
+| LayoutPinTests | method | Palette_Asset_KeepsTheStarOutline | 340 | public void Palette_Asset_KeepsTheStarOutline() |
+| LayoutPinTests | method | Dust_MainScene_KeepsTodaysLook | 348 | public void Dust_MainScene_KeepsTodaysLook() |
+| LayoutPinTests | method | SimpleCutscene_MainScene_KeepsTodaysBeats | 368 | public void SimpleCutscene_MainScene_KeepsTodaysBeats() |
+| LayoutPinTests | method | ReactionCutscene_MainScene_KeepsTodaysBeats | 396 | public void ReactionCutscene_MainScene_KeepsTodaysBeats() |
+| LayoutPinTests | method | WindowView_MainScene_KeepsTodaysEffects | 424 | public void WindowView_MainScene_KeepsTodaysEffects() |
+| LayoutPinTests | method | Tutorial_MainScene_KeepsTodaysTargetsAndStyle | 442 | public void Tutorial_MainScene_KeepsTodaysTargetsAndStyle() |
+| LayoutPinTests | method | Depth_MainScene_KeepsTodaysRigSwayAndTable | 466 | public void Depth_MainScene_KeepsTodaysRigSwayAndTable() |
+| LayoutPinTests | method | Effects_MainScene_KeepsTodaysTiltShiftFogAndShake | 486 | public void Effects_MainScene_KeepsTodaysTiltShiftFogAndShake() |
 | LocTests | method | Use_WithInjectedFiles_ServesTheirText | 19 | public void Use_WithInjectedFiles_ServesTheirText() |
 | LocTests | method | Use_NullFile_Throws | 32 | public void Use_NullFile_Throws() |
 | LocTests | method | ViJsonCharacters_AllInCruxAtlas_NoneMissing | 40 | public void ViJsonCharacters_AllInCruxAtlas_NoneMissing() |
@@ -1622,11 +1628,11 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | LocTests | method | FormatNumber_ByLanguage_UsesLocaleSeparators | 103 | public void FormatNumber_ByLanguage_UsesLocaleSeparators() |
 | LocTests | method | ReadLangFromUrl_WithLangParam_ReturnsCode | 111 | public void ReadLangFromUrl_WithLangParam_ReturnsCode() |
 | MainDepthTests | method | SetUp | 18 | public void SetUp() |
-| MainDepthTests | method | TearDown | 37 | public void TearDown() |
-| MainDepthTests | method | SpawnChildren_OfAWorldLayerParent_DrawOnTheWorldLayer | 40 | public void SpawnChildren_OfAWorldLayerParent_DrawOnTheWorldLayer() |
-| MainDepthTests | method | TileGroup_AtRest_KeepsTheFaceOnItsArtPixels | 53 | public void TileGroup_AtRest_KeepsTheFaceOnItsArtPixels() |
-| MainDepthTests | method | TileIcon_MovedByLocalPosition_StaysOnTheTile | 71 | public void TileIcon_MovedByLocalPosition_StaysOnTheTile() |
-| MainDepthTests | method | ShakeFromScreenFx_MovesTheWorldPicture_AndFlatModeIgnoresIt | 80 | public void ShakeFromScreenFx_MovesTheWorldPicture_AndFlatModeIgnoresIt() |
+| MainDepthTests | method | TearDown | 36 | public void TearDown() |
+| MainDepthTests | method | SpawnChildren_OfAWorldLayerParent_DrawOnTheWorldLayer | 39 | public void SpawnChildren_OfAWorldLayerParent_DrawOnTheWorldLayer() |
+| MainDepthTests | method | TileGroup_AtRest_KeepsTheFaceOnItsArtPixels | 52 | public void TileGroup_AtRest_KeepsTheFaceOnItsArtPixels() |
+| MainDepthTests | method | TileIcon_MovedByLocalPosition_StaysOnTheTile | 70 | public void TileIcon_MovedByLocalPosition_StaysOnTheTile() |
+| MainDepthTests | method | ShakeFromScreenFx_MovesTheWorldPicture_AndFlatModeIgnoresIt | 79 | public void ShakeFromScreenFx_MovesTheWorldPicture_AndFlatModeIgnoresIt() |
 | MainDepthTests | method | PointerBench_AllNineTiles_HitAtRestAtSwayExtremesAndUnderShake | 95 | public void PointerBench_AllNineTiles_HitAtRestAtSwayExtremesAndUnderShake() |
 | MainDepthTests | method | MainScene_HasTheRigWorldAndUiCameras_AndTheStageIsWired | 121 | public void MainScene_HasTheRigWorldAndUiCameras_AndTheStageIsWired() |
 | MainDepthTests | method | DepthMoodPresets_MainScene_MatchTheOldGameFlowLooks | 140 | public void DepthMoodPresets_MainScene_MatchTheOldGameFlowLooks() |
@@ -1638,7 +1644,8 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | MainSceneFixture | ctor | MainSceneFixture | 23 | public MainSceneFixture() |
 | MainSceneFixture | method | Field | 35 | public static T Field<T>(object owner, string name) |
 | MainSceneFixture | method | FlowField | 43 | public T FlowField<T>(string name) where T : Component |
-| MainSceneFixture | method | Dispose | 46 | public void Dispose() |
+| MainSceneFixture | method | All | 46 | public T[] All<T>() where T : Component |
+| MainSceneFixture | method | Dispose | 49 | public void Dispose() |
 | MotionTests | method | Clean | 20 | public void Clean() |
 | MotionTests | method | Arc_IsAlive_AndCanJoinASequence | 27 | public void Arc_IsAlive_AndCanJoinASequence() |
 | MotionTests | method | Arc_EndsOnItsTarget_OnWholePixels | 36 | public void Arc_EndsOnItsTarget_OnWholePixels() |

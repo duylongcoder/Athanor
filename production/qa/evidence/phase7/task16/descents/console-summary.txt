@@ -1,0 +1,12 @@
+descents: raw console dump replaced by this summary (the dump was thousands of lines).
+Counts by level: log=114, warning=1822
+errors=0 warnings=1822
+
+Distinct warning/error messages (digits normalised to N), with counts:
+    1820  [warning] In the render graph API, the output Render Texture must have a depth buffer. When you select a Render Texture in any camera's Output Texture property, the Depth Stencil Format property of the texture 
+       2  [warning] Shader 'Hidden/Universal Render Pipeline/Edge Adaptive Spatial Upsampling' is not supported or has been stripped from the build (in 'Blit FSR Upscaling'). PostProcessing render passes will not execute
+
+Tool result (last lines of the run log):
+  descents photographed: 2,3,4,5
+  console: 1936 messages, 0 errors
+  descents exit 0

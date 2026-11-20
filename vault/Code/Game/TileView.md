@@ -41,7 +41,7 @@ aliases: []
 [[Anim]], [[Art]], [[FxRefs]], [[Motion]], [[Palette]], [[Px]], [[Sparks]]
 
 ## Used by
-[[BenchView]], [[DepthTestControls]]
+[[BenchView]]
 
 ## Tested by
 [[DepthClickTests]], [[LayoutPinTests]], [[MainDepthTests]]

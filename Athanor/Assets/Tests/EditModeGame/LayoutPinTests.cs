@@ -14,10 +14,11 @@ namespace Athanor.Tests
         {
             foreach (var kv in want)
             {
-                var p = so.FindProperty(root + "." + kv.Key);
-                Assert.IsNotNull(p, root + "." + kv.Key);
+                string path = root.Length == 0 ? kv.Key : root + "." + kv.Key;
+                var p = so.FindProperty(path);
+                Assert.IsNotNull(p, path);
                 float got = p.propertyType == SerializedPropertyType.Integer ? p.intValue : p.floatValue;
-                Assert.AreEqual(kv.Value, got, 1e-4f, root + "." + kv.Key);
+                Assert.AreEqual(kv.Value, got, 1e-4f, path);
             }
         }
 
@@ -458,6 +459,42 @@ namespace Athanor.Tests
                 var holes = MainSceneFixture.Field<List<TutorialHole>>(tutorial, "holes");
                 Assert.IsNotEmpty(holes);
                 foreach (var h in holes) Assert.AreEqual(2f, new SerializedObject(h).FindProperty("rimThickness").floatValue, "rim thickness of " + h.name);
+            }
+        }
+
+        [Test]
+        public void Depth_MainScene_KeepsTodaysRigSwayAndTable()
+        {
+            using (var main = new MainSceneFixture())
+            {
+                var rigComponent = main.All<DepthRig>().Single();
+                var rig = new SerializedObject(rigComponent);
+                AssertFloats(rig, "", new Dictionary<string, float> { { "distance", 600 }, { "near", 50 }, { "far", 2000 }, { "anchorY", 188 } });
+                Assert.AreSame(main.All<DepthTable>().Single(), rigComponent.table, "the rig's table is the scene's table");
+                var sway = new SerializedObject(main.All<CameraSway>().Single());
+                Assert.AreEqual(4f, sway.FindProperty("amplitude").floatValue, 1e-4f, "amplitude");
+                Pin(sway, "timing", "periodX", 6, "periodY", 9, "shakeRateX", 53.1f, "shakeRateY", 41.7f);
+                var table = new SerializedObject(main.All<DepthTable>().Single());
+                AssertFloats(table, "", new Dictionary<string, float>
+                {
+                    { "distance", 600 }, { "front", 660 }, { "back", 838.2f }, { "topY", 132 }, { "rows", 122 }, { "artX", 102 }, { "artY", 132 },
+                });
+            }
+        }
+
+        [Test]
+        public void Effects_MainScene_KeepsTodaysTiltShiftFogAndShake()
+        {
+            using (var main = new MainSceneFixture())
+            {
+                var tilt = new SerializedObject(main.All<TiltShift>().Single());
+                AssertFloats(tilt, "", new Dictionary<string, float> { { "bandTop", 145 }, { "bandBottom", 235 }, { "feather", 110 }, { "maxSigma", 1.5f } });
+                var fogs = main.All<FogSheet>();
+                Assert.AreEqual(2, fogs.Length);
+                CollectionAssert.AreEquivalent(new[] { 4f, -6f }, fogs.Select(f => new SerializedObject(f).FindProperty("speed").floatValue).ToArray());
+                foreach (var f in fogs) Assert.AreEqual(320, new SerializedObject(f).FindProperty("width").intValue);
+                var fx = new SerializedObject(main.All<ScreenFx>().Single());
+                Pin(fx, "shake", "rateX", 97, "rateY", 71, "yScale", 0.8f);
             }
         }
     }

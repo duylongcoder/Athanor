@@ -36,7 +36,7 @@ aliases: []
 [[DepthSwitch]], [[WindowView]]
 
 ## Used by
-[[DepthStage]], [[DepthTestControls]]
+[[DepthStage]]
 
 ## Tested by
 [[MainDepthTests]]

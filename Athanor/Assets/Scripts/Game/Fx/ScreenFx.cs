@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -10,6 +11,14 @@ namespace Athanor.Game
         void OnDestroy() { StopAllCoroutines(); Motion.StopOn(this); }
 
         [SerializeField] SpriteRenderer flash, black;
+
+        /// <summary>The camera shake's two frequencies (radians per second) and how much of the x travel the y axis gets; held by Main.unity.</summary>
+        [Serializable]
+        public struct ShakeTiming
+        {
+            public float rateX, rateY, yScale;
+        }
+        [SerializeField] ShakeTiming shake;
         Transform cam;
         Vector3 camHome;
         CameraSway world;
@@ -30,7 +39,7 @@ namespace Athanor.Game
 
         public IEnumerator FadeOut(float seconds) => Motion.Fade(black, 0, 1, seconds).ToYieldInstruction();
         public IEnumerator FadeIn(float seconds) => Motion.Fade(black, 1, 0, seconds).ToYieldInstruction();
-        public void SetBlack(float a) => black.color = new Color(0, 0, 0, a);
+        public void SetBlack(float a) => black.color = Color.black.Alpha(a);
 
         void LateUpdate()
         {
@@ -39,7 +48,7 @@ namespace Athanor.Game
             {
                 flashLeft -= Time.deltaTime;
                 float k = Mathf.Clamp01(flashLeft / flashTime);
-                flash.color = new Color(1, 1, 1, flashPeak * k * k);
+                flash.color = Color.white.Alpha(flashPeak * k * k);
             }
             else flash.color = Color.clear;
             Vector3 offset = Vector3.zero;
@@ -47,7 +56,9 @@ namespace Athanor.Game
             {
                 shakeLeft -= Time.deltaTime;
                 float k = Mathf.Clamp01(shakeLeft / shakeTime), t = Time.time;
-                offset = new Vector3(Mathf.Round(Mathf.Sin(t * 97) * shakeSize * k), Mathf.Round(Mathf.Cos(t * 71) * shakeSize * 0.8f * k), 0);
+                float x = Mathf.Round(Mathf.Sin(t * shake.rateX) * shakeSize * k);
+                float y = Mathf.Round(Mathf.Cos(t * shake.rateY) * shakeSize * shake.yScale * k);
+                offset = new Vector3(x, y, 0);
             }
             bool onWorld = world != null && !rig.Flat;
             if (world != null) world.external = onWorld ? (Vector2)offset : Vector2.zero;

@@ -1,0 +1,325 @@
+{
+ "url": "http://127.0.0.1:8083/",
+ "viewport": "1280x720",
+ "scale": 2,
+ "canvas": "1280x720 css 1280x720",
+ "load_seconds": 1.6,
+ "hudShot": "hud-bench-1280x720.png",
+ "sway": {
+  "note": "bursts of 4 pictures 250 ms apart; sway is on by default; the Settings toggle is on the title screen"
+ },
+ "tiles_sway": "27/27",
+ "tiles_shake": "27/27",
+ "checks": [
+  {
+   "name": "shake key sent",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "sway tile 0 point 0",
+   "ok": true,
+   "detail": "art 218.1,165.9"
+  },
+  {
+   "name": "sway tile 0 point 3",
+   "ok": true,
+   "detail": "art 280.8,146.9"
+  },
+  {
+   "name": "sway tile 0 point 4",
+   "ok": true,
+   "detail": "art 249.7,156.6"
+  },
+  {
+   "name": "sway tile 1 point 0",
+   "ok": true,
+   "detail": "art 290.2,166.1"
+  },
+  {
+   "name": "sway tile 1 point 3",
+   "ok": true,
+   "detail": "art 349.8,147.0"
+  },
+  {
+   "name": "sway tile 1 point 4",
+   "ok": true,
+   "detail": "art 320.1,156.4"
+  },
+  {
+   "name": "sway tile 2 point 0",
+   "ok": true,
+   "detail": "art 359.2,165.9"
+  },
+  {
+   "name": "sway tile 2 point 3",
+   "ok": true,
+   "detail": "art 421.9,147.0"
+  },
+  {
+   "name": "sway tile 2 point 4",
+   "ok": true,
+   "detail": "art 390.5,156.6"
+  },
+  {
+   "name": "sway tile 3 point 0",
+   "ok": true,
+   "detail": "art 207.0,197.0"
+  },
+  {
+   "name": "sway tile 3 point 3",
+   "ok": true,
+   "detail": "art 277.0,179.0"
+  },
+  {
+   "name": "sway tile 3 point 4",
+   "ok": true,
+   "detail": "art 242.0,188.0"
+  },
+  {
+   "name": "sway tile 4 point 0",
+   "ok": true,
+   "detail": "art 287.0,197.0"
+  },
+  {
+   "name": "sway tile 4 point 3",
+   "ok": true,
+   "detail": "art 353.0,179.0"
+  },
+  {
+   "name": "sway tile 4 point 4",
+   "ok": true,
+   "detail": "art 320.0,188.0"
+  },
+  {
+   "name": "sway tile 5 point 0",
+   "ok": true,
+   "detail": "art 363.0,197.0"
+  },
+  {
+   "name": "sway tile 5 point 3",
+   "ok": true,
+   "detail": "art 433.0,179.0"
+  },
+  {
+   "name": "sway tile 5 point 4",
+   "ok": true,
+   "detail": "art 398.0,188.0"
+  },
+  {
+   "name": "sway tile 6 point 0",
+   "ok": true,
+   "detail": "art 196.1,229.0"
+  },
+  {
+   "name": "sway tile 6 point 3",
+   "ok": true,
+   "detail": "art 273.0,209.9"
+  },
+  {
+   "name": "sway tile 6 point 4",
+   "ok": true,
+   "detail": "art 234.4,219.6"
+  },
+  {
+   "name": "sway tile 7 point 0",
+   "ok": true,
+   "detail": "art 283.0,229.1"
+  },
+  {
+   "name": "sway tile 7 point 3",
+   "ok": true,
+   "detail": "art 357.1,210.0"
+  },
+  {
+   "name": "sway tile 7 point 4",
+   "ok": true,
+   "detail": "art 319.8,219.4"
+  },
+  {
+   "name": "sway tile 8 point 0",
+   "ok": true,
+   "detail": "art 366.9,228.9"
+  },
+  {
+   "name": "sway tile 8 point 3",
+   "ok": true,
+   "detail": "art 444.2,210.0"
+  },
+  {
+   "name": "sway tile 8 point 4",
+   "ok": true,
+   "detail": "art 405.4,219.6"
+  },
+  {
+   "name": "shake tile 0 point 0",
+   "ok": true,
+   "detail": "art 218.1,166.1"
+  },
+  {
+   "name": "shake tile 0 point 3",
+   "ok": true,
+   "detail": "art 281.1,147.1"
+  },
+  {
+   "name": "shake tile 0 point 4",
+   "ok": true,
+   "detail": "art 249.7,156.6"
+  },
+  {
+   "name": "shake tile 1 point 0",
+   "ok": true,
+   "detail": "art 290.0,165.9"
+  },
+  {
+   "name": "shake tile 1 point 3",
+   "ok": true,
+   "detail": "art 350.0,146.9"
+  },
+  {
+   "name": "shake tile 1 point 4",
+   "ok": true,
+   "detail": "art 320.0,156.4"
+  },
+  {
+   "name": "shake tile 2 point 0",
+   "ok": true,
+   "detail": "art 358.8,166.1"
+  },
+  {
+   "name": "shake tile 2 point 3",
+   "ok": true,
+   "detail": "art 421.8,147.1"
+  },
+  {
+   "name": "shake tile 2 point 4",
+   "ok": true,
+   "detail": "art 390.3,156.6"
+  },
+  {
+   "name": "shake tile 3 point 0",
+   "ok": true,
+   "detail": "art 207.0,197.0"
+  },
+  {
+   "name": "shake tile 3 point 3",
+   "ok": true,
+   "detail": "art 277.0,179.0"
+  },
+  {
+   "name": "shake tile 3 point 4",
+   "ok": true,
+   "detail": "art 242.0,188.0"
+  },
+  {
+   "name": "shake tile 4 point 0",
+   "ok": true,
+   "detail": "art 287.0,197.0"
+  },
+  {
+   "name": "shake tile 4 point 3",
+   "ok": true,
+   "detail": "art 353.0,179.0"
+  },
+  {
+   "name": "shake tile 4 point 4",
+   "ok": true,
+   "detail": "art 320.0,188.0"
+  },
+  {
+   "name": "shake tile 5 point 0",
+   "ok": true,
+   "detail": "art 363.0,197.0"
+  },
+  {
+   "name": "shake tile 5 point 3",
+   "ok": true,
+   "detail": "art 433.0,179.0"
+  },
+  {
+   "name": "shake tile 5 point 4",
+   "ok": true,
+   "detail": "art 398.0,188.0"
+  },
+  {
+   "name": "shake tile 6 point 0",
+   "ok": true,
+   "detail": "art 196.2,228.9"
+  },
+  {
+   "name": "shake tile 6 point 3",
+   "ok": true,
+   "detail": "art 273.2,209.9"
+  },
+  {
+   "name": "shake tile 6 point 4",
+   "ok": true,
+   "detail": "art 234.7,219.4"
+  },
+  {
+   "name": "shake tile 7 point 0",
+   "ok": true,
+   "detail": "art 282.9,229.1"
+  },
+  {
+   "name": "shake tile 7 point 3",
+   "ok": true,
+   "detail": "art 356.8,210.1"
+  },
+  {
+   "name": "shake tile 7 point 4",
+   "ok": true,
+   "detail": "art 319.8,219.6"
+  },
+  {
+   "name": "shake tile 8 point 0",
+   "ok": true,
+   "detail": "art 367.2,229.0"
+  },
+  {
+   "name": "shake tile 8 point 3",
+   "ok": true,
+   "detail": "art 444.2,210.0"
+  },
+  {
+   "name": "shake tile 8 point 4",
+   "ok": true,
+   "detail": "art 405.7,219.5"
+  },
+  {
+   "name": "mood step 1",
+   "ok": true,
+   "detail": "[log] [dev] mood 1\n"
+  },
+  {
+   "name": "mood step 2",
+   "ok": true,
+   "detail": "[log] [dev] mood 2\n"
+  },
+  {
+   "name": "mood step 3",
+   "ok": true,
+   "detail": "[log] [dev] mood 3\n"
+  },
+  {
+   "name": "mood step 4",
+   "ok": true,
+   "detail": "[log] [dev] mood 4\n"
+  },
+  {
+   "name": "mood step 5",
+   "ok": true,
+   "detail": "[log] [dev] mood 5\n"
+  },
+  {
+   "name": "effects toggled off",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "effects back on",
+   "ok": true,
+   "detail": ""
+  }
+ ]
+}

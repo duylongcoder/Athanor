@@ -42,6 +42,9 @@ namespace Athanor.Tests
         /// <summary>The component GameFlow holds in its serialized field.</summary>
         public T FlowField<T>(string name) where T : Component => Field<T>(Flow, name);
 
+        /// <summary>Every component of type T in the scene (inactive ones too).</summary>
+        public T[] All<T>() where T : Component => scene.GetRootGameObjects().SelectMany(g => g.GetComponentsInChildren<T>(true)).ToArray();
+
         /// <summary>Closes the scene without saving, so a test's changes never reach Main.unity.</summary>
         public void Dispose() => EditorSceneManager.CloseScene(scene, true);
     }

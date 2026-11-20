@@ -12,6 +12,11 @@ namespace Athanor.Game
     /// </summary>
     public static class Spawn
     {
+        /// <summary>Radius in pixels of the "glow" sprite at scale 1 (the sprite's shape): a glow of radius r is scaled by r / GlowRadius.</summary>
+        const float GlowRadius = 32f;
+        /// <summary>Box of a text that does not wrap (width 0): the box is only the layout frame, the text overflows it (a TextMeshPro convention, not a layout).</summary>
+        const float DefaultTextWidth = 400f, TextBoxHeight = 100f;
+
         /// <summary>An empty child that draws with its parent (same layer).</summary>
         public static Transform Root(string name, Transform parent = null)
         {
@@ -40,7 +45,7 @@ namespace Athanor.Game
         {
             var r = Sprite(parent, "dot", Px.Mid(x, y, w, h), order);
             r.name = "rect";
-            r.transform.localScale = new Vector3(w / 4f, h / 4f, 1);
+            r.transform.localScale = new Vector3(w / Px.DotSize, h / Px.DotSize, 1);
             r.color = color;
             return r;
         }
@@ -49,7 +54,8 @@ namespace Athanor.Game
         public static SpriteRenderer Glow(Transform parent, Vector3 worldPos, float radius, Color color, int order)
         {
             var r = Sprite(parent, "glow", worldPos, order, Art.Lib.glow);
-            r.transform.localScale = new Vector3(radius / 32f, radius / 32f, 1);
+            float scale = radius / GlowRadius;
+            r.transform.localScale = new Vector3(scale, scale, 1);
             r.color = color;
             return r;
         }
@@ -88,8 +94,9 @@ namespace Athanor.Game
             t.overflowMode = TextOverflowModes.Overflow;
             t.alignment = align == Align.Left ? TextAlignmentOptions.TopLeft : align == Align.Centre ? TextAlignmentOptions.Top : TextAlignmentOptions.TopRight;
             var rt = t.rectTransform;
-            rt.pivot = new Vector2(align == Align.Left ? 0 : align == Align.Centre ? 0.5f : 1, 1);
-            rt.sizeDelta = new Vector2(width > 0 ? width : 400, 100);
+            float pivotX = align == Align.Left ? 0 : align == Align.Centre ? 0.5f : 1;
+            rt.pivot = new Vector2(pivotX, 1);
+            rt.sizeDelta = new Vector2(width > 0 ? width : DefaultTextWidth, TextBoxHeight);
             rt.localPosition = Vector3.zero;
             t.sortingOrder = order;
             t.text = text;

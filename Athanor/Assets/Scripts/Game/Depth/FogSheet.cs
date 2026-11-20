@@ -12,9 +12,9 @@ namespace Athanor.Game
         static readonly int Scroll = Shader.PropertyToID("_ScrollTexels");
 
         /// <summary>Drift in art px (texels) per second; positive moves the picture left.</summary>
-        public float speed = 4f;
+        public float speed;
         /// <summary>Width of the sheet's picture in texels (it repeats after this).</summary>
-        public int width = 320;
+        public int width;
 
         MaterialPropertyBlock block;
 

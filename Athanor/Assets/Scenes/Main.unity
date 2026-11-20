@@ -7273,6 +7273,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Athanor.Game::Athanor.Game.CameraSway
   swayOn: 1
   amplitude: 4
+  timing:
+    periodX: 6
+    periodY: 9
+    shakeRateX: 53.1
+    shakeRateY: 41.7
   external: {x: 0, y: 0}
 --- !u!114 &539019357
 MonoBehaviour:
@@ -7294,6 +7299,8 @@ MonoBehaviour:
   autoScale: 1
   near: 50
   far: 2000
+  table: {fileID: 1819226248}
+  anchorY: 188
 --- !u!1 &549185139
 GameObject:
   m_ObjectHideFlags: 0
@@ -21212,6 +21219,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Athanor.Game::Athanor.Game.ScreenFx
   flash: {fileID: 1022101453}
   black: {fileID: 1232908598}
+  shake:
+    rateX: 97
+    rateY: 71
+    yScale: 0.8
 --- !u!4 &1655642883
 Transform:
   m_ObjectHideFlags: 0

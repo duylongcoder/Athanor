@@ -11,7 +11,7 @@ namespace Athanor.Tests
     /// <summary>The HD-2D projection maths (HD-2D mockup SPEC, "Layer stack and projection"; removed in P6-22, see git history) and the rules that keep the depth art out of the shipped game.</summary>
     public class DepthLayerTests
     {
-        const float D = DepthMath.RestDistance;
+        const float D = DepthFixture.D;
         const string DepthDir = "Assets/Art/Depth";
 
         // SPEC table: layer depth -> scale (D - z) / D
@@ -63,20 +63,20 @@ namespace Athanor.Tests
         [Test]
         public void TableZ_MatchesTheSpecRows_AndClampsOutsideTheTop()
         {
-            foreach (var (y, z) in SpecTableRows) Assert.AreEqual(z, DepthMath.TableZ(y, D), 0.06f, "art y = " + y);
-            Assert.AreEqual(-145.77f, DepthMath.TableZ(DepthMath.AnchorY, D), 0.01f, "the anchor row");
-            Assert.AreEqual(DepthMath.TableZ(132, D), DepthMath.TableZ(100, D), 1e-4f, "above the back edge");
-            Assert.AreEqual(DepthMath.TableZ(254, D), DepthMath.TableZ(277, D), 1e-4f, "the front face shares the front edge's depth");
+            foreach (var (y, z) in SpecTableRows) Assert.AreEqual(z, DepthMath.TableZ(y, D, DepthFixture.Table), 0.06f, "art y = " + y);
+            Assert.AreEqual(-145.77f, DepthMath.TableZ(DepthFixture.AnchorY, D, DepthFixture.Table), 0.01f, "the anchor row");
+            Assert.AreEqual(DepthMath.TableZ(132, D, DepthFixture.Table), DepthMath.TableZ(100, D, DepthFixture.Table), 1e-4f, "above the back edge");
+            Assert.AreEqual(DepthMath.TableZ(254, D, DepthFixture.Table), DepthMath.TableZ(277, D, DepthFixture.Table), 1e-4f, "the front face shares the front edge's depth");
         }
 
         [Test]
         public void TableZ_EveryArtRow_LiesOnOnePlane()
         {
             // 1 / distance linear in the screen row means the rows lie on one plane: world y is linear in world z
-            Vector3 a = DepthMath.Place(Px.At(320, 132), DepthMath.TableZ(132, D), D), b = DepthMath.Place(Px.At(320, 254), DepthMath.TableZ(254, D), D);
+            Vector3 a = DepthMath.Place(Px.At(320, 132), DepthMath.TableZ(132, D, DepthFixture.Table), D), b = DepthMath.Place(Px.At(320, 254), DepthMath.TableZ(254, D, DepthFixture.Table), D);
             for (int y = 133; y < 254; y += 7)
             {
-                var p = DepthMath.Place(Px.At(320, y), DepthMath.TableZ(y, D), D);
+                var p = DepthMath.Place(Px.At(320, y), DepthMath.TableZ(y, D, DepthFixture.Table), D);
                 float t = (p.z - a.z) / (b.z - a.z);
                 Assert.AreEqual(Mathf.Lerp(a.y, b.y, t), p.y, 2e-3f, "art y = " + y);
             }
@@ -85,7 +85,7 @@ namespace Athanor.Tests
         [Test]
         public void Parallax_MatchesTheSpecTable_AndIsZeroAtTheAnchor()
         {
-            float anchor = DepthMath.TableZ(DepthMath.AnchorY, D);
+            float anchor = DepthMath.TableZ(DepthFixture.AnchorY, D, DepthFixture.Table);
             foreach (var (z, par) in SpecParallax) Assert.AreEqual(par, DepthMath.Parallax(z, anchor, D), 0.0006f, "z = " + z);
             Assert.AreEqual(0f, DepthMath.Parallax(anchor, anchor, D), 1e-6f);
         }

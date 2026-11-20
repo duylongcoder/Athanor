@@ -3,14 +3,14 @@ generated: true
 type: test
 file: Athanor/Assets/Tests/EditModeGame/LayoutPinTests.cs
 tags: [test]
-count: 22
+count: 24
 ---
 
 # LayoutPinTests
-`Athanor/Assets/Tests/EditModeGame/LayoutPinTests.cs` — 22 tests
+`Athanor/Assets/Tests/EditModeGame/LayoutPinTests.cs` — 24 tests
 
 ## Covers
-[[BenchView]], [[CardView]], [[CatalystChoiceView]], [[Dust]], [[EventView]], [[GoalToast]], [[GoalsView]], [[HudView]], [[IgniteSequence]], [[JournalView]], [[Label]], [[LinkView]], [[Palette]], [[PauseMenu]], [[Px]], [[ReactionCutscene]], [[RunOverView]], [[SimpleCutscene]], [[TileView]], [[TitleView]], [[Tooltip]], [[TutorialController]], [[TutorialHole]], [[UiButton]], [[WindowView]]
+[[BenchView]], [[CameraSway]], [[CardView]], [[CatalystChoiceView]], [[DepthRig]], [[DepthTable]], [[Dust]], [[EventView]], [[FogSheet]], [[GoalToast]], [[GoalsView]], [[HudView]], [[IgniteSequence]], [[JournalView]], [[Label]], [[LinkView]], [[Palette]], [[PauseMenu]], [[Px]], [[ReactionCutscene]], [[RunOverView]], [[ScreenFx]], [[SimpleCutscene]], [[TileView]], [[TiltShift]], [[TitleView]], [[Tooltip]], [[TutorialController]], [[TutorialHole]], [[UiButton]], [[WindowView]]
 
 ## Tests
 - `Palette_Asset_HasTodaysColours`
@@ -35,3 +35,5 @@ count: 22
 - `ReactionCutscene_MainScene_KeepsTodaysBeats`
 - `WindowView_MainScene_KeepsTodaysEffects`
 - `Tutorial_MainScene_KeepsTodaysTargetsAndStyle`
+- `Depth_MainScene_KeepsTodaysRigSwayAndTable`
+- `Effects_MainScene_KeepsTodaysTiltShiftFogAndShake`
