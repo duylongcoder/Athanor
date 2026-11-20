@@ -191,8 +191,12 @@ namespace Athanor.Game
         {
             int i = Mathf.Max(0, IndexOf(id));
             ShowPage(i / PerPage); Select(i);
-            return new Rect(X + GridX + (i % PerPage % Cols) * Cell - 1, Y + GridY + (i % PerPage / Cols) * Cell - 1, WellOut, WellOut);
+            return CellRect(i);
         }
+        /// <summary>The cell of material number i in the grid of its page (art space).</summary>
+        public static Rect CellRect(int i) => new Rect(X + GridX + (i % PerPage % Cols) * Cell - 1, Y + GridY + (i % PerPage / Cols) * Cell - 1, WellOut, WellOut);
+        /// <summary>The cell of a material by id, without opening its page.</summary>
+        public Rect CellRect(string id) => CellRect(Mathf.Max(0, IndexOf(id)));
         /// <summary>The page's line "heat/ reactivity" and its pips.</summary>
         public Rect IndexRect => layout.indexRect;
         /// <summary>The recipe lines of the page.</summary>
