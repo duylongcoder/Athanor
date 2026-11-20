@@ -69,7 +69,7 @@ namespace Athanor.Tests
                 var db = new ContentDb(JsonUtility.FromJson<ContentData>(Resources.Load<TextAsset>("content").text));
                 Rect Cell(string id) => JournalView.CellRect(Enumerable.Range(0, db.Materials.Count).First(i => db.Materials[i].id == id));
                 Add("2.5", Cell("ember_coal"), jv.RecipesRect);
-                Add("2.6", Cell("ember_coal"), jv.IndexRect);
+                Add("2.6", jv.IndexRect);
                 Add("2.7", Cell("glowmoss"), jv.HintsRect);
                 File.WriteAllText(BaselinePath, JsonUtility.ToJson(b, true));
             }
