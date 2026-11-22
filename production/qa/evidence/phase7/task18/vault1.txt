@@ -1,1 +1,0 @@
-vault: 170 code types, 568 tests, content {'materials': 81, 'recipes': 87, 'catalysts': 26, 'aspects': 16, 'events': 19, 'goals': 22, 'depths': 5}, 440 notes total

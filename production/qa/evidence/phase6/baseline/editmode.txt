@@ -1,3 +1,0 @@
-unity test ./Athanor --mode EditMode (exit 0)
-result=Passed total=458 passed=452 failed=0 inconclusive=0 skipped=6
-failures: none

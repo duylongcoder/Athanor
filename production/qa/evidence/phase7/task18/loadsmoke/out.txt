@@ -1,3 +1,0 @@
-loaded in 1.4 s
-console: 121 messages, 0 errors
-loadsmoke exit 0
