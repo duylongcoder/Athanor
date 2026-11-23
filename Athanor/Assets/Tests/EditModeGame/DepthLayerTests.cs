@@ -12,7 +12,7 @@ namespace Athanor.Tests
     public class DepthLayerTests
     {
         const float D = DepthFixture.D;
-        const string DepthDir = "Assets/Art/Depth";
+        const string DepthDir = "Assets/Art/Art/Depth";
 
         // SPEC table: layer depth -> scale (D - z) / D
         static readonly (float z, float scale)[] SpecScales =

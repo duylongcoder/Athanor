@@ -31,7 +31,7 @@ public static class AtlasBuilder
 
     /// <summary>The HD-2D depth layers (Phase 5b). They stay out of every atlas: they are placed as plain sprites
     /// in the HD-2D bench of Main.unity.</summary>
-    public const string DepthDir = "Assets/Art/Depth";
+    public const string DepthDir = "Assets/Art/Art/Depth";
 
     /// <summary>True for an asset under <see cref="DepthDir"/>.</summary>
     public static bool IsDepthArt(string assetPath) => assetPath.StartsWith(DepthDir + "/");
@@ -56,12 +56,12 @@ public static class AtlasBuilder
     public static readonly (string name, string rule, Func<string, string, bool> match)[] Groups =
     {
         ("Bench", "Fx/tile_face_*, Fx/tile_ring_*, and the bench UI: rack, rack_slot_lit, cross, mark",
-            (dir, n) => (dir == "Fx" && (n.StartsWith("tile_face_") || n.StartsWith("tile_ring_"))) || (dir == "UI" && BenchUi.Contains(n))),
-        ("UI", "the rest of Art/UI (HUD, buttons, cards, panels, journal, goals, dialogs)", (dir, n) => dir == "UI"),
-        ("CatalystIcons", "Icons/cat_*", (dir, n) => dir == "Icons" && n.StartsWith("cat_")),
-        ("AspectIcons", "Icons/asp_*", (dir, n) => dir == "Icons" && n.StartsWith("asp_")),
-        ("EventIcons", "Icons/evt_*", (dir, n) => dir == "Icons" && n.StartsWith("evt_")),
-        ("ItemIcons", "the rest of Art/Icons (one per material)", (dir, n) => dir == "Icons"),
+            (dir, n) => (dir == "Fx" && (n.StartsWith("tile_face_") || n.StartsWith("tile_ring_"))) || (dir == "Art/UI" && BenchUi.Contains(n))),
+        ("UI", "the rest of Art/UI (HUD, buttons, cards, panels, journal, goals, dialogs)", (dir, n) => dir == "Art/UI"),
+        ("CatalystIcons", "Icons/cat_*", (dir, n) => dir == "Art/Icons" && n.StartsWith("cat_")),
+        ("AspectIcons", "Icons/asp_*", (dir, n) => dir == "Art/Icons" && n.StartsWith("asp_")),
+        ("EventIcons", "Icons/evt_*", (dir, n) => dir == "Art/Icons" && n.StartsWith("evt_")),
+        ("ItemIcons", "the rest of Art/Icons (one per material)", (dir, n) => dir == "Art/Icons"),
         ("Fx", "the rest of Art/Fx (dot, glow, sparkle, rune, rings, rays, pillar, liquid sheet), the flame sheets, Fx/Sheets/*",
             (dir, n) => dir == "Fx" || dir == "Fx/Sheets" || (dir == "Background" && n.StartsWith("flame_"))),
         ("Cutscene", "cutscene room and its props: cutscene_room, cauldron, logs",
@@ -296,7 +296,10 @@ public static class AtlasBuilder
             string path = AssetDatabase.GUIDToAssetPath(guid);
             if (IsDepthArt(path)) continue;
             if (!(AssetImporter.GetAtPath(path) is TextureImporter ti) || ti.textureType != TextureImporterType.Sprite) continue;
-            string dir = Path.GetDirectoryName(path).Replace('\\', '/').Substring(ArtDir.Length).TrimStart('/'), name = Path.GetFileNameWithoutExtension(path);
+            string dir = Path.GetDirectoryName(path).Replace('\\', '/').Substring(ArtDir.Length).TrimStart('/');
+            // Remove redundant 'Art/' prefix for files under Assets/Art/Art/* (commit 95c8be51 moved UI/Fx/etc one level deeper)
+            if (dir.StartsWith("Art/")) dir = dir.Substring("Art/".Length);
+            string name = Path.GetFileNameWithoutExtension(path);
             if (Standalone.ContainsKey(name)) continue;
             var g = Groups.FirstOrDefault(x => x.match(dir, name));
             if (g.name == null) unassigned.Add(path); else result[g.name].Add(path);

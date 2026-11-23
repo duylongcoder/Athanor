@@ -39,7 +39,7 @@ namespace Athanor.Tests
         [Test]
         public void ViJsonCharacters_AllInCruxAtlas_NoneMissing()
         {
-            var crux = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Art/Fonts/Crux.asset");
+            var crux = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Art/Art/Fonts/Crux.asset");
             Assert.IsNotNull(crux, "run Athanor > Build Fonts");
             var vi = File("vi");
             var text = vi.name + string.Concat(vi.entries.Select(e => e.text));
@@ -50,7 +50,7 @@ namespace Athanor.Tests
         [Test]
         public void UppercasedViStrings_AreInTheCruxAtlas_BecauseScreensWriteCapitalsThroughLocUpper()
         {
-            var crux = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Art/Fonts/Crux.asset");
+            var crux = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Art/Art/Fonts/Crux.asset");
             var vi = File("vi");
             var text = Loc.Upper(vi.name + string.Concat(vi.entries.Select(e => e.text)));
             var missing = text.Where(c => c != '\n' && !crux.HasCharacter(c, false)).Distinct().Select(c => c + " U+" + ((int)c).ToString("X4")).ToList();
@@ -63,7 +63,7 @@ namespace Athanor.Tests
         [Test]
         public void EveryCharacterInEnJson_IsInTheCruxAtlas_SoALanguageSwitchNeverDrawsABlank()
         {
-            var crux = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Art/Fonts/Crux.asset");
+            var crux = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Art/Art/Fonts/Crux.asset");
             var en = File("en");
             var missing = (en.name + string.Concat(en.entries.Select(e => e.text))).Where(c => c != '\n' && c != '–' && !crux.HasCharacter(c, false)).Distinct().ToList();
             CollectionAssert.IsEmpty(missing);

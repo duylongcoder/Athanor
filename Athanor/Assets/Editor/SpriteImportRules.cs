@@ -11,7 +11,7 @@ public sealed class SpriteImportRules : AssetPostprocessor
 {
     // bump when the rules change, so Unity reimports every texture with the new rules. Not bumped for the Art/Depth
     // exception: those textures were new (never imported under the old rule), and a bump would reimport all the others.
-    public override uint GetVersion() => 2;
+    public override uint GetVersion() => 3;
 
     /// <summary>True for a pre-blurred depth layer: Art/Depth/*_far*, *_near*.</summary>
     public static bool IsSoftDepthArt(string assetPath)

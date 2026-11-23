@@ -17,7 +17,7 @@ namespace Athanor.Core
         public readonly bool[] Blocked = new bool[Bench.TileCount];
         public readonly int[] RiBonus = new int[Bench.TileCount];
         public readonly bool[] Kiln = new bool[Bench.TileCount], Crossroads = new bool[Bench.TileCount];
-        public readonly List<(int a, int b)> Links = new List<(int, int)>();
+        public readonly List<LinkPair> Links = new List<LinkPair>();
         // scoring, read from the hub's tile
         public readonly int[] HubMult = { 1, 1, 1, 1, 1, 1, 1, 1, 1 };
         public readonly bool[] Heavy = new bool[Bench.TileCount];

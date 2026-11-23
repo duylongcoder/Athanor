@@ -103,7 +103,7 @@ performance:
 
 commands:
   build: "unity build Athanor --target WebGL --execute-method WebBuild.Build --allow-dirty-build"
-  test: "dotnet test tools/CoreTests"
+  test: "unity test Athanor --mode EditMode"
   run: "unity open Athanor"
   smoke: "node tools/web/webtest.mjs http://127.0.0.1:8080/ /tmp/athanor-web"
 

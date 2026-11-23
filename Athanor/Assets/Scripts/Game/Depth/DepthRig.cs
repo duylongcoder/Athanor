@@ -154,7 +154,7 @@ namespace Athanor.Game
                 return;
             }
             Release();
-            WorldTexture = new RenderTexture(w, h, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.sRGB)
+            WorldTexture = new RenderTexture(w, h, 16, RenderTextureFormat.ARGB32, RenderTextureReadWrite.sRGB)
             {
                 name = "DepthRig World " + w + "x" + h, filterMode = FilterMode.Point, wrapMode = TextureWrapMode.Clamp,
                 antiAliasing = 1, useMipMap = false, autoGenerateMips = false, hideFlags = HideFlags.DontSave,

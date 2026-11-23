@@ -690,7 +690,7 @@ namespace Athanor.Tests
 
         [Test] public void Around_Links_JoinTwoTilesBothWays()
         {
-            var r = new BenchRules(); r.Links.Add((0, 8));
+            var r = new BenchRules(); r.Links.Add(new LinkPair(0, 8));
             CollectionAssert.AreEqual(new[] { 1, 3, 8 }, r.Around(0));
             CollectionAssert.AreEqual(new[] { 0, 5, 7 }, r.Around(8));
         }
@@ -764,7 +764,7 @@ namespace Athanor.Tests
         {
             var bench = new Bench(); bench.Tiles[0] = "a"; bench.Tiles[8] = "b";
             Assert.AreEqual(0, IgniteResolver.Pairs(bench, BenchRules.None).Count);
-            var r = new BenchRules(); r.Links.Add((0, 8));
+            var r = new BenchRules(); r.Links.Add(new LinkPair(0, 8));
             CollectionAssert.AreEqual(new[] { (0, 8) }, IgniteResolver.Pairs(bench, r));
             var b = new Bench(); b.Tiles[0] = "a"; b.Tiles[1] = "b";
             var shut = new BenchRules(); shut.Blocked[1] = true;

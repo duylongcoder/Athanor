@@ -8,7 +8,6 @@ namespace Athanor.Game
     /// </summary>
     public static class Dev
     {
-        [Conditional("DEVELOPMENT_BUILD"), Conditional("UNITY_EDITOR")]
         public static void Hook(string line) => UnityEngine.Debug.Log(line);
     }
 }

@@ -77,8 +77,8 @@ namespace Athanor.Core
                     case AspectEffects.Seed: r.SeedBonus[t] = (int)a.Data.amount; break;
                     case AspectEffects.Heavy: r.Heavy[t] = true; break;
                     case AspectEffects.Cold: r.Blocked[t] = true; break;
-                    case AspectEffects.Bridge: r.Links.Add((a.Tiles[0], a.Tiles[1])); break;
-                    case AspectEffects.OpenBench: r.Links.Add((t, Bench.Centre)); break;
+                    case AspectEffects.Bridge: r.Links.Add(new LinkPair(a.Tiles[0], a.Tiles[1])); break;
+                    case AspectEffects.OpenBench: r.Links.Add(new LinkPair(t, Bench.Centre)); break;
                     case AspectEffects.Kiln: r.Kiln[t] = true; break;
                     case AspectEffects.Crossroads: r.Crossroads[t] = true; break;
                     case AspectEffects.Pivot: r.Pivot = t; break;
