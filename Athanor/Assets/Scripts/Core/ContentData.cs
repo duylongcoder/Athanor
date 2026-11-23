@@ -87,8 +87,9 @@ namespace Athanor.Core
 
     public static class Rarities
     {
-        public const string Common = "Common", Uncommon = "Uncommon", Rare = "Rare", Legendary = "Legendary";
-        public static readonly string[] All = { Common, Uncommon, Rare, Legendary };
+        public const string Common = "Common", Uncommon = "Uncommon", Rare = "Rare",
+            Epic = "Epic", Legendary = "Legendary", Mythic = "Mythic", WorldSeed = "WorldSeed";
+        public static readonly string[] All = { Common, Uncommon, Rare, Epic, Legendary, Mythic, WorldSeed };
         public static int Rank(string rarity) => Math.Max(0, Array.IndexOf(All, string.IsNullOrEmpty(rarity) ? Common : rarity));
         public static string Of(string rarity) => string.IsNullOrEmpty(rarity) ? Common : rarity;
     }
