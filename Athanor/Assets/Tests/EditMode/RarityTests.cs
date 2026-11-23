@@ -163,5 +163,20 @@ namespace Athanor.Tests
                 foreach (var r in Rarities.All) Assert.GreaterOrEqual(db.RarityWeight(r), 1, r);
             }
         }
+
+        /// <summary>The rarity enum covers six material tiers plus WorldSeed as a unique tier.</summary>
+        [Test]
+        public void Rarities_All_HasSevenEntries()
+        {
+            // Arrange
+            // Act
+            var all = Rarities.All;
+
+            // Assert
+            Assert.AreEqual(7, all.Length);
+            CollectionAssert.Contains(all, Rarities.Epic);
+            CollectionAssert.Contains(all, Rarities.Mythic);
+            CollectionAssert.Contains(all, Rarities.WorldSeed);
+        }
     }
 }
