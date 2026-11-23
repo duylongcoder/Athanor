@@ -10,7 +10,7 @@ count: 98
 `Athanor/Assets/Tests/EditMode/Phase3Tests.cs` — 98 tests
 
 ## Covers
-[[AspectEffects]], [[AutoMove]], [[AutoPlayer]], [[Bench]], [[BenchRules]], [[ChainPlanner]], [[ContentData]], [[ContentDb]], [[Effects]], [[Fx]], [[IgniteOutcome]], [[IgniteResolver]], [[Journal]], [[Kind]], [[Ops]], [[Profile]], [[ProfileData]], [[Rarities]], [[Rng]], [[RunOptions]], [[RunPhase]], [[RunState]], [[ScoreContext]], [[StatIds]], [[Unlocks]]
+[[AspectEffects]], [[AutoMove]], [[AutoPlayer]], [[Bench]], [[BenchRules]], [[ChainPlanner]], [[ContentData]], [[ContentDb]], [[Effects]], [[Fx]], [[IgniteOutcome]], [[IgniteResolver]], [[Journal]], [[Kind]], [[LinkPair]], [[Ops]], [[Profile]], [[ProfileData]], [[Rarities]], [[Rng]], [[RunOptions]], [[RunPhase]], [[RunState]], [[ScoreContext]], [[StatIds]], [[Unlocks]]
 
 ## Tests
 - `Phase2Recipes_AreAllStillThere_Unchanged`

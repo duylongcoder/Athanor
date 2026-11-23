@@ -1,3 +1,4 @@
+using System;
 using System.Reflection;
 using NUnit.Framework;
 using UnityEditor;
@@ -5,8 +6,8 @@ using UnityEngine;
 
 namespace Athanor.Tests
 {
-    /// <summary>A copy of a prefab for one test. Call Destroy in [TearDown] (or a finally).</summary>
-    public sealed class PrefabFixture
+    /// <summary>A copy of a prefab for one test. Dispose calls Destroy automatically.</summary>
+    public sealed class PrefabFixture : IDisposable
     {
         /// <summary>The scene instance of the prefab.</summary>
         public readonly GameObject Root;
@@ -32,6 +33,11 @@ namespace Athanor.Tests
             foreach (var m in Root.GetComponentsInChildren<MonoBehaviour>(true))
                 m.GetType().GetMethod("OnDestroy", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly)?.Invoke(m, null);
             Object.DestroyImmediate(Root);
+        }
+
+        public void Dispose()
+        {
+            Destroy();
         }
     }
 }

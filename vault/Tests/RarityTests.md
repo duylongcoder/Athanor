@@ -3,11 +3,11 @@ generated: true
 type: test
 file: Athanor/Assets/Tests/EditMode/RarityTests.cs
 tags: [test]
-count: 9
+count: 10
 ---
 
 # RarityTests
-`Athanor/Assets/Tests/EditMode/RarityTests.cs` — 9 tests
+`Athanor/Assets/Tests/EditMode/RarityTests.cs` — 10 tests
 
 ## Covers
 [[ContentData]], [[ContentDb]], [[Effects]], [[Journal]], [[Ops]], [[Rarities]], [[RunOptions]], [[RunPhase]], [[RunState]]
@@ -22,3 +22,4 @@ count: 9
 - `Gift_FollowsTheWeights_AndIsDeterministic`
 - `Validation_BadWeights_AreRejected`
 - `RealContent_RarityWeights_AbsentIsUniformOrPresentIsValid`
+- `Rarities_All_HasSevenEntries`

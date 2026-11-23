@@ -198,11 +198,13 @@ namespace Athanor.Tests
             Assert.AreEqual(3, db.NoEventWeight);
         }
 
-        [Test] public void Catalysts_ByRarity_4_10_8_4()
+        [Test] public void Catalysts_ByRarity_4_10_8_0_4()
         {
             var db = new ContentDb(TestContent.Load());
-            int[] want = { 4, 10, 8, 4 };
-            for (int k = 0; k < 4; k++) Assert.AreEqual(want[k], db.Catalysts.Count(c => Rarities.Of(c.rarity) == Rarities.All[k]), Rarities.All[k]);
+            // Current content has 7 rarity tiers: Common, Uncommon, Rare, Epic, Legendary, Mythic, WorldSeed
+            // Actual distribution: Common=4, Uncommon=10, Rare=8, Epic=0, Legendary=4, Mythic=0, WorldSeed=0
+            int[] want = { 4, 10, 8, 0, 4, 0, 0 };
+            for (int k = 0; k < Rarities.All.Length; k++) Assert.AreEqual(want[k], db.Catalysts.Count(c => Rarities.Of(c.rarity) == Rarities.All[k]), Rarities.All[k]);
             Assert.AreEqual(17, db.Catalysts.Count(c => c.locked));
         }
 
@@ -1316,8 +1318,10 @@ namespace Athanor.Tests
             var db = new ContentDb(TestContent.Load());
             var damp = db.Events.First(e => e.id == "damp_air");
             Assert.That(damp.minDepth, Is.GreaterThan(1), "the test needs an event that stays away from depth 1");
+            // db.FinalDepth comes from content.json (5 depths); RunState clamps Depth to it,
+            // so the loop must use db.FinalDepth, not TestContent.FinalDepth.
             for (int seed = 1; seed <= 20; seed++)
-                for (int depth = 1; depth <= TestContent.FinalDepth; depth++)
+                for (int depth = 1; depth <= db.FinalDepth; depth++)
                 {
                     var r = new RunState(db, new Journal(), seed, depth, new RunOptions { Events = true, ForceEvent = damp.id });
                     if (depth < damp.minDepth || depth > damp.maxDepth) Assert.AreEqual(RunPhase.Playing, r.Phase, "seed " + seed + " depth " + depth);

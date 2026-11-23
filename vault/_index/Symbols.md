@@ -33,12 +33,15 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | ContentData | ContentData | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 56 |  |
 | ProfileData | ProfileData | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 78 |  |
 | Rarities | Rarities | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 88 |  |
-| Effects | Effects | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 97 | The catalyst effect names used in content.json. |
-| AspectEffects | AspectEffects | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 116 | The aspect effect names used in content.json. |
-| Ops | Ops | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 128 | The event effect names (EffectData.op) and option requirements used in content.json. |
-| StatIds | StatIds | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 144 | The stats a goal can watch. |
+| Effects | Effects | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 98 | The catalyst effect names used in content.json. |
+| AspectEffects | AspectEffects | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 117 | The aspect effect names used in content.json. |
+| Ops | Ops | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 129 | The event effect names (EffectData.op) and option requirements used in content.json. |
+| StatIds | StatIds | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 145 | The stats a goal can watch. |
 | Kind | Kind | Core | enum | Athanor/Assets/Scripts/Core/ContentData.cs | 5 |  |
 | ContentDb | ContentDb | Core | class | Athanor/Assets/Scripts/Core/ContentDb.cs | 10 | Validated, indexed view of the game's content. |
+| EffectOp | EffectOp | Core | enum | Athanor/Assets/Scripts/Core/EffectOps.cs | 6 |  |
+| EventNeedType | EventNeedType | Core | enum | Athanor/Assets/Scripts/Core/EffectOps.cs | 15 |  |
+| EventType | EventType | Core | enum | Athanor/Assets/Scripts/Core/EffectOps.cs | 25 |  |
 | Bench | Bench | Core | class | Athanor/Assets/Scripts/Core/Ignite.cs | 7 | The 3x3 bench: tile index = row * 3 + column, null where empty. |
 | ReactionEvent | ReactionEvent | Core | class | Athanor/Assets/Scripts/Core/Ignite.cs | 21 | One thing that happened during an Ignite, in the order it should be shown. A reaction: Tiles[0] is the hub, where the result now stands; the other tiles were consumed. A sputter: a combo that stood re |
 | ResolveResult | ResolveResult | Core | class | Athanor/Assets/Scripts/Core/Ignite.cs | 36 |  |
@@ -46,6 +49,7 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | Journal | Journal | Core | class | Athanor/Assets/Scripts/Core/Journal.cs | 8 | What the player has learned across runs: recipes that worked, and hints from ones that did not. |
 | Lang | Lang | Core | class | Athanor/Assets/Scripts/Core/Lang.cs | 20 | The player-facing text of one language, Unity-free. Lookup order: this language, then the fallback (English), then the text the caller supplies (content.json's English for content keys), then the key  |
 | Json | Json | Core | class | Athanor/Assets/Scripts/Core/Lang.cs | 212 |  |
+| LinkPair | LinkPair | Core | struct | Athanor/Assets/Scripts/Core/LinkPair.cs | 7 | Named pair for bench link coordinates — used as an alternative to value tuples so Unity serialization is reliable. |
 | GoalReward | GoalReward | Core | class | Athanor/Assets/Scripts/Core/Profile.cs | 8 | A goal that has just been completed, and the locked item it gave (null when its pool was empty). |
 | Profile | Profile | Core | class | Athanor/Assets/Scripts/Core/Profile.cs | 18 | What the player keeps between runs besides the journal: counters, completed goals and the locked starters and catalysts won from them. |
 | Unlocks | Unlocks | Core | class | Athanor/Assets/Scripts/Core/Profile.cs | 154 | Which starting materials and catalysts a run may use. |
@@ -151,8 +155,6 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | AudioMuteHook | AudioMuteHook | Game | class | Athanor/Assets/Scripts/Game/Support/AudioMute.cs | 36 | Feeds the browser's tab visibility and Unity's pause and focus into AudioMute. |
 | Clickable | Clickable | Game | class | Athanor/Assets/Scripts/Game/Support/Clickable.cs | 9 | A rectangle around this object that the pointer can hover and click. The highest order under the pointer wins. Holes (world-space rectangles) are cut out of it: the pointer there is not on this object |
 | Dev | Dev | Game | class | Athanor/Assets/Scripts/Game/Support/Dev.cs | 9 | Log lines that exist only as the hook of tools/web/webtest.mjs ([tut], [drive], [loc]). The calls, and the strings they build, are compiled out of a release build; a development build and the editor k |
-| DevMode | DevMode | Game | class | Athanor/Assets/Scripts/Game/Support/DevMode.cs | 13 | Dev mode (editor only, menu Athanor/Dev Mode): while playing, a number changed in the Inspector of a view or in Palette.asset shows up at once. Sizes, colours and timings that are read every frame alr |
-| DevLiveEdit | DevLiveEdit | Game | class | Athanor/Assets/Scripts/Game/Support/DevMode.cs | 25 | Watches the serialized numbers of the bench views and the Palette, and redraws the bench when one changes. |
 | Fonts | Fonts | Game | class | Athanor/Assets/Scripts/Game/Support/Fonts.cs | 10 | Which font a FontKind uses in the language showing, and the size and line box that go with it. |
 | FontKind | FontKind | Game | enum | Athanor/Assets/Scripts/Game/Support/Fonts.cs | 7 |  |
 | Haptics | Haptics | Game | class | Athanor/Assets/Scripts/Game/Support/Haptics.cs | 11 | Short vibration pulses for rare, meaningful moments (never clicks or Ignite). Only where the browser can vibrate (Android Chrome); Supported is false on desktop, iOS and in the editor, and the Setting |
@@ -190,7 +192,6 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | UiButton.Look | UiButton.Look | Game | struct | Athanor/Assets/Scripts/Game/Ui/UiButton.cs | 15 | The button's colours and label offsets, stored in each prefab that holds one. |
 | ArtLibraryBuilder | ArtLibraryBuilder | Editor | class | Athanor/Assets/Editor/ArtLibraryBuilder.cs | 12 | Collects the sprites, effect sheets, fonts and materials into Assets/Art/ArtLibrary.asset, the one lookup the game uses by name. Run it after new art or effect sheets are imported (the sprite and flip |
 | AtlasBuilder | AtlasBuilder | Editor | class | Athanor/Assets/Editor/AtlasBuilder.cs | 27 | Two art steps that run after tools/art/export.mjs, both idempotent: 1. Sprite sheets: the numbered frames of each animation (Background/flame_small_0..7.png ...) are merged into one Multiple-mode shee |
-| DevModeMenu | DevModeMenu | Editor | class | Athanor/Assets/Editor/DevModeMenu.cs | 7 | Athanor/Dev Mode: the on/off switch. Takes effect at the next Play. |
 | FlipbookImporter | FlipbookImporter | Editor | class | Athanor/Assets/Editor/FlipbookImporter.cs | 14 | Turns each pixelfx sheet in Assets/Art/Fx/Sheets (name.png + name.json, exported from pixelfx) into sliced sprites and a FlipbookSheet asset, then adds them to the art library so Fx.Spawn(name) can pl |
 | FontBuilder | FontBuilder | Editor | class | Athanor/Assets/Editor/FontBuilder.cs | 10 | Bakes the pixel fonts into TextMeshPro bitmap font assets at their native size (crisp, point-filtered). |
 | LayoutData | LayoutData | Editor | class | Athanor/Assets/Editor/LayoutData.cs | 11 |  |
@@ -199,6 +200,18 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | Reserialize | Reserialize | Editor | class | Athanor/Assets/Editor/Shared/Reserialize.cs | 11 | Rewrites every view prefab and the data assets in the current serializer format, so a field added to a component is stored with its value. Phase 7 uses it after a number moves from code to a prefab. M |
 | ViewCapture | ViewCapture | Editor | class | Athanor/Assets/Editor/Shared/ViewCapture.cs | 8 | Renders a GameObject alone (in an otherwise empty scene) to a 640x360 image, the way the UI camera draws it. |
 | SpriteImportRules | SpriteImportRules | Editor | class | Athanor/Assets/Editor/SpriteImportRules.cs | 10 | Every texture under Assets/Art is pixel art: a point-filtered, uncompressed sprite at 1 pixel per unit. The one exception is Assets/Art/Depth (the HD-2D layers): its pre-blurred pictures (*_far, *_nea |
+| ContentJsonImporter | ContentJsonImporter | Editor | class | Athanor/Assets/Editor/TempImport/ContentJsonImporter.cs | 13 | TEMPORARY IMPORT TOOL — will be deleted after migration. Reads content.json from Assets/Resources and creates a GameConfigSO instance. Run once via Unity Menu: Tools → Athanor → Import Content JSON |
+| JsonRoot | JsonRoot | Editor | class | Athanor/Assets/Editor/TempImport/ContentJsonImporter.cs | 212 |  |
+| JsonRules | JsonRules | Editor | class | Athanor/Assets/Editor/TempImport/ContentJsonImporter.cs | 229 |  |
+| JsonMaterial | JsonMaterial | Editor | class | Athanor/Assets/Editor/TempImport/ContentJsonImporter.cs | 238 |  |
+| JsonRecipe | JsonRecipe | Editor | class | Athanor/Assets/Editor/TempImport/ContentJsonImporter.cs | 246 |  |
+| JsonCatalyst | JsonCatalyst | Editor | class | Athanor/Assets/Editor/TempImport/ContentJsonImporter.cs | 255 |  |
+| JsonGoal | JsonGoal | Editor | class | Athanor/Assets/Editor/TempImport/ContentJsonImporter.cs | 263 |  |
+| JsonAspect | JsonAspect | Editor | class | Athanor/Assets/Editor/TempImport/ContentJsonImporter.cs | 270 |  |
+| JsonEvent | JsonEvent | Editor | class | Athanor/Assets/Editor/TempImport/ContentJsonImporter.cs | 278 |  |
+| JsonEventOption | JsonEventOption | Editor | class | Athanor/Assets/Editor/TempImport/ContentJsonImporter.cs | 286 |  |
+| JsonOutcome | JsonOutcome | Editor | class | Athanor/Assets/Editor/TempImport/ContentJsonImporter.cs | 294 |  |
+| JsonEffect | JsonEffect | Editor | class | Athanor/Assets/Editor/TempImport/ContentJsonImporter.cs | 302 |  |
 | TutorialAreaEditor | TutorialAreaEditor | Editor | class | Athanor/Assets/Editor/TutorialStepGizmo.cs | 11 | Scene-view preview of the tutorial steps in Main.unity (Edit Mode): every Fixed area is drawn as an outline, green when clicks pass through it and amber when it is highlight only, with the step name a |
 | TutorialStepsMigration | TutorialStepsMigration | Editor | class | Athanor/Assets/Editor/TutorialStepsMigration.cs | 16 | Creates (or updates, by name) the tutorial step objects under the Tutorial object of Main.unity, from the table below. The table reproduces what Drive lit and which clicks reached the game before the  |
 | A | A | Editor | class | Athanor/Assets/Editor/TutorialStepsMigration.cs | 24 |  |
@@ -246,7 +259,7 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | NoteTextTests | NoteTextTests | Tests | class | Athanor/Assets/Tests/EditModeGame/NoteTextTests.cs | 8 | An event note (a key and its arguments from the core) reads as the English or Vietnamese sentence the regex-matched wording used to give. |
 | PauseTests | PauseTests | Tests | class | Athanor/Assets/Tests/EditModeGame/PauseTests.cs | 10 | The pause menu: time stops and comes back on every exit, Esc toggles, nothing opens in the tutorial, Quit leaves the stored run data alone. |
 | PrefabBakeTests | PrefabBakeTests | Tests | class | Athanor/Assets/Tests/EditModeGame/PrefabBakeTests.cs | 13 | The shipped prefabs keep what the views need: a label keeps its key, a button still clicks, the tooltip makes its panel. |
-| PrefabFixture | PrefabFixture | Tests | class | Athanor/Assets/Tests/EditModeGame/PrefabFixture.cs | 9 | A copy of a prefab for one test. Call Destroy in [TearDown] (or a finally). |
+| PrefabFixture | PrefabFixture | Tests | class | Athanor/Assets/Tests/EditModeGame/PrefabFixture.cs | 10 | A copy of a prefab for one test. Dispose calls Destroy automatically. |
 | RunOverDepthTests | RunOverDepthTests | Tests | class | Athanor/Assets/Tests/EditModeGame/RunOverDepthTests.cs | 15 | The run-over depth row (owner, phase-5-prep 2026-11-16): a won run says "Planted at depth n" on one line with no value; a lost run says "Depth reached" with "n of 5". The view is reused, so each path  |
 | SaveTests | SaveTests | Tests | class | Athanor/Assets/Tests/EditModeGame/SaveTests.cs | 11 | The journal and the profile survive a round trip through PlayerPrefs, and a damaged save never stops the game. |
 | SceneBakeTests | SceneBakeTests | Tests | class | Athanor/Assets/Tests/EditModeGame/SceneBakeTests.cs | 12 | The scene objects of Main.unity that are not prefabs (Task 15): their serialized parts are all there, and Bind finishes them. |
@@ -285,7 +298,7 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | BenchRules | field | Blocked | 17 | public readonly bool[] Blocked = new bool[Bench.TileCount] |
 | BenchRules | field | RiBonus | 18 | public readonly int[] RiBonus = new int[Bench.TileCount] |
 | BenchRules | field | Kiln | 19 | public readonly bool[] Kiln = new bool[Bench.TileCount], Crossroads = new bool[Bench.TileCount] |
-| BenchRules | method | List | 20 | public readonly List<(int a, int b)> Links = new List<(int, int)>() |
+| BenchRules | field | Links | 20 | public readonly List<LinkPair> Links = new List<LinkPair>() |
 | BenchRules | property | HubMult | 22 | public readonly int[] HubMult = |
 | BenchRules | field | Heavy | 23 | public readonly bool[] Heavy = new bool[Bench.TileCount] |
 | BenchRules | field | AttunedKind | 24 | public readonly string[] AttunedKind = new string[Bench.TileCount] |
@@ -348,21 +361,21 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | ProfileData | field | unlockedCatalysts | 83 | public string[] completed, unlockedStarters, unlockedCatalysts |
 | ProfileData | field | rewards | 84 | public RewardLogData[] rewards |
 | ProfileData | field | lastLore | 85 | public string lastLore |
-| Rarities | field | Common | 90 | public const string Common = "Common", Uncommon = "Uncommon", Rare = "Rare", Legendary = |
-| Rarities | property | All | 91 | public static readonly string[] All = |
-| Rarities | method | Rank | 92 | public static int Rank(string rarity) |
-| Rarities | method | Of | 93 | public static string Of(string rarity) |
-| Effects | field | KindDouble | 99 | public const string KindDouble = "KindDouble", CentreTwice = "CentreTwice", FirstTriple = "FirstTriple", Diagonals = "Diagonals", ExtraTrial = "ExtraTrial", ExtraHand = "ExtraHand", DiscoveryTriple =  |
-| Effects | property | All | 107 | public static readonly string[] All = |
-| AspectEffects | field | Doubled | 118 | public const string Doubled = "Doubled", Anchor = "Anchor", Heated = "Heated", Echo = "Echo", Attuned = "Attuned", Seed = "Seed", Fallow = "Fallow", Heavy = "Heavy", Cold = "Cold", Volatile = "Volatil |
-| AspectEffects | property | All | 121 | public static readonly string[] All = |
-| Ops | field | Trials | 130 | public const string Trials = "Trials", Hand = "Hand", Redraws = "Redraws", RiShift = "RiShift", GiveDiscovery = "GiveDiscovery", LoseRack = "LoseRack", LoseCard = "LoseCard", FirstTriple = "FirstTripl |
-| Ops | property | All | 133 | public static readonly string[] All = |
-| Ops | field | NeedRack | 138 | public const string NeedRack = "Rack", NeedCatalyst = "Catalyst", NeedTrial = "Trial", NeedRedraw = |
-| Ops | property | Needs | 139 | public static readonly string[] Needs = |
-| Ops | property | Types | 140 | public static readonly string[] Types = |
-| StatIds | field | RunsStarted | 146 | public const string RunsStarted = "runsStarted", RunsWon = "runsWon", WonNoRedraw = "wonNoRedraw", DepthReached = "depthReached", Ignites = "ignites", ChainLongest = "chainLongest", ComboLargest = "co |
-| StatIds | property | All | 149 | public static readonly string[] All = |
+| Rarities | field | Common | 90 | public const string Common = "Common", Uncommon = "Uncommon", Rare = "Rare", Epic = "Epic", Legendary = "Legendary", Mythic = "Mythic", WorldSeed = |
+| Rarities | property | All | 92 | public static readonly string[] All = |
+| Rarities | method | Rank | 93 | public static int Rank(string rarity) |
+| Rarities | method | Of | 94 | public static string Of(string rarity) |
+| Effects | field | KindDouble | 100 | public const string KindDouble = "KindDouble", CentreTwice = "CentreTwice", FirstTriple = "FirstTriple", Diagonals = "Diagonals", ExtraTrial = "ExtraTrial", ExtraHand = "ExtraHand", DiscoveryTriple =  |
+| Effects | property | All | 108 | public static readonly string[] All = |
+| AspectEffects | field | Doubled | 119 | public const string Doubled = "Doubled", Anchor = "Anchor", Heated = "Heated", Echo = "Echo", Attuned = "Attuned", Seed = "Seed", Fallow = "Fallow", Heavy = "Heavy", Cold = "Cold", Volatile = "Volatil |
+| AspectEffects | property | All | 122 | public static readonly string[] All = |
+| Ops | field | Trials | 131 | public const string Trials = "Trials", Hand = "Hand", Redraws = "Redraws", RiShift = "RiShift", GiveDiscovery = "GiveDiscovery", LoseRack = "LoseRack", LoseCard = "LoseCard", FirstTriple = "FirstTripl |
+| Ops | property | All | 134 | public static readonly string[] All = |
+| Ops | field | NeedRack | 139 | public const string NeedRack = "Rack", NeedCatalyst = "Catalyst", NeedTrial = "Trial", NeedRedraw = |
+| Ops | property | Needs | 140 | public static readonly string[] Needs = |
+| Ops | property | Types | 141 | public static readonly string[] Types = |
+| StatIds | field | RunsStarted | 147 | public const string RunsStarted = "runsStarted", RunsWon = "runsWon", WonNoRedraw = "wonNoRedraw", DepthReached = "depthReached", Ignites = "ignites", ChainLongest = "chainLongest", ComboLargest = "co |
+| StatIds | property | All | 150 | public static readonly string[] All = |
 | Kind | value | Ore | 5 | Ore |
 | Kind | value | Metal | 5 | Metal |
 | Kind | value | Crystal | 5 | Crystal |
@@ -405,6 +418,32 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | ContentDb | method | BasePotency | 264 | public long BasePotency(int tier) |
 | ContentDb | method | PairKey | 266 | public static string PairKey(string a, string b) |
 | ContentDb | method | ComboKey | 269 | public static string ComboKey(IEnumerable<string> items) |
+| EffectOp | value | Trials | 8 | Trials |
+| EffectOp | value | Hand | 8 | Hand |
+| EffectOp | value | Redraws | 8 | Redraws |
+| EffectOp | value | RiShift | 8 | RiShift |
+| EffectOp | value | GiveDiscovery | 9 | GiveDiscovery |
+| EffectOp | value | LoseRack | 9 | LoseRack |
+| EffectOp | value | LoseCard | 9 | LoseCard |
+| EffectOp | value | FirstTriple | 9 | FirstTriple |
+| EffectOp | value | Hint | 10 | Hint |
+| EffectOp | value | BlockTile | 10 | BlockTile |
+| EffectOp | value | HeatTile | 10 | HeatTile |
+| EffectOp | value | CatalystUpgrade | 10 | CatalystUpgrade |
+| EffectOp | value | CatalystGift | 11 | CatalystGift |
+| EffectOp | value | Nothing | 11 | Nothing |
+| EventNeedType | value | None | 17 | None |
+| EventNeedType | value | Rack | 18 | Rack |
+| EventNeedType | value | Catalyst | 19 | Catalyst |
+| EventNeedType | value | Trial | 20 | Trial |
+| EventNeedType | value | Redraw | 21 | Redraw |
+| EventType | value | Choice | 27 | Choice |
+| EventType | value | Gamble | 27 | Gamble |
+| EventType | value | Find | 27 | Find |
+| EventType | value | Shrine | 27 | Shrine |
+| EventType | value | Hazard | 27 | Hazard |
+| EventType | value | Boon | 27 | Boon |
+| EventType | value | Lore | 27 | Lore |
 | Bench | field | Size | 9 | public const int Size = 3, TileCount = 9, Centre = 4 |
 | Bench | field | Tiles | 10 | public readonly string[] Tiles = new string[TileCount] |
 | Bench | property | Count | 11 | public int Count |
@@ -468,6 +507,15 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | Lang | method | Parse | 193 | public static LangFile Parse(string json) |
 | Json | ctor | Json | 215 | public Json(string text) |
 | Json | method | Value | 217 | public object Value() |
+| LinkPair | field | a | 9 | public int a |
+| LinkPair | field | b | 10 | public int b |
+| LinkPair | ctor | LinkPair | 12 | public LinkPair(int a, int b) |
+| LinkPair | method | Equals | 14 | public bool Equals(LinkPair other) |
+| LinkPair | method | Equals | 16 | public override bool Equals(object obj) |
+| LinkPair | method | GetHashCode | 18 | public override int GetHashCode() |
+| LinkPair | property | operator | 20 | public static bool operator ==(LinkPair left, LinkPair right) |
+| LinkPair | property | public static bool operator ! | 21 | public static bool operator !=(LinkPair left, LinkPair right) |
+| LinkPair | method | Deconstruct | 24 | public void Deconstruct(out int a, out int b) |
 | GoalReward | field | Goal | 10 | public GoalData Goal |
 | GoalReward | field | Item | 11 | public string Item |
 | Profile | field | ComboLargest | 20 | public int RunsStarted, RunsWon, WonNoRedraw, DepthReached, Ignites, ChainLongest, ComboLargest |
@@ -802,10 +850,10 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | GameFlow | method | MoodLine | 58 | public static string MoodLine(int mood) |
 | GameFlow | method | EffectsLine | 59 | public static string EffectsLine(bool on) |
 | GameFlow | property | JournalView | 129 | public JournalView JournalView |
-| GameFlow | method | JournalAfterQuit | 471 | public static Journal JournalAfterQuit(bool sandbox, Journal current) |
-| GameFlow | method | ProfileAfterQuit | 473 | public static Profile ProfileAfterQuit(bool sandbox, Profile current, ContentDb db) |
-| GameFlow | method | Ignite | 510 | public void Ignite() |
-| GameFlow | method | SettleIgnite | 517 | public static IgniteOutcome SettleIgnite(RunState run, Journal journal, bool sandbox) |
+| GameFlow | method | JournalAfterQuit | 468 | public static Journal JournalAfterQuit(bool sandbox, Journal current) |
+| GameFlow | method | ProfileAfterQuit | 470 | public static Profile ProfileAfterQuit(bool sandbox, Profile current, ContentDb db) |
+| GameFlow | method | Ignite | 507 | public void Ignite() |
+| GameFlow | method | SettleIgnite | 514 | public static IgniteOutcome SettleIgnite(RunState run, Journal journal, bool sandbox) |
 | RunTiming | field | endingWait | 88 | public float descendWait, endingWait |
 | RunTiming | field | lossWait | 90 | public float lossShake, lossShakeSeconds, lossWait |
 | RunTiming | field | runFadeOut | 92 | public float titleFadeIn, titleFadeOut, runFadeIn, runFadeOut |
@@ -1227,9 +1275,7 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | Clickable | field | holes | 14 | public readonly List<Rect> holes = new List<Rect>() |
 | Clickable | field | onUp | 15 | public Action onClick, onEnter, onExit, onDown, onUp |
 | Clickable | method | Contains | 17 | public bool Contains(Vector2 world) |
-| Dev | method | Hook | 12 | public static void Hook(string line) |
-| DevMode | property | Enabled | 17 | public static bool Enabled |
-| DevLiveEdit | method | Attach | 32 | public static void Attach(GameFlow flow) |
+| Dev | method | Hook | 11 | public static void Hook(string line) |
 | Fonts | method | FontFor | 13 | public static TMP_FontAsset FontFor(FontKind kind) |
 | Fonts | method | SizeFor | 21 | public static float SizeFor(FontKind kind, int size) |
 | Fonts | method | HalfLeading | 28 | public static int HalfLeading(UnityEngine.TextCore.FaceInfo face, float size) |
@@ -1499,7 +1545,7 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | AtlasBuilder | method | PackBatch | 114 | public static void PackBatch() |
 | AtlasBuilder | method | BuildSpriteSheets | 131 | public static string BuildSpriteSheets() |
 | AtlasBuilder | method | Assign | 290 | public static Dictionary<string, List<string>> Assign() |
-| AtlasBuilder | method | BuildAtlases | 309 | public static string BuildAtlases() |
+| AtlasBuilder | method | BuildAtlases | 312 | public static string BuildAtlases() |
 | FlipbookImporter | field | Dir | 16 | public const string Dir = |
 | FlipbookImporter | method | Import | 26 | public static string Import() |
 | FontBuilder | method | BuildBatch | 15 | public static void BuildBatch() |
@@ -1524,6 +1570,49 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | SpriteImportRules | method | GetVersion | 14 | public override uint GetVersion() |
 | SpriteImportRules | method | IsSoftDepthArt | 17 | public static bool IsSoftDepthArt(string assetPath) |
 | SpriteImportRules | method | IsDepthFog | 25 | public static bool IsDepthFog(string assetPath) |
+| ContentJsonImporter | method | Import | 21 | public static void Import() |
+| JsonRoot | field | rules | 214 | public JsonRules rules |
+| JsonRoot | field | materials | 215 | public JsonMaterial[] materials |
+| JsonRoot | field | recipes | 216 | public JsonRecipe[] recipes |
+| JsonRoot | field | catalysts | 217 | public JsonCatalyst[] catalysts |
+| JsonRoot | field | depthTargets | 218 | public int[] depthTargets |
+| JsonRoot | field | depthNames | 219 | public string[] depthNames |
+| JsonRoot | field | ultimate | 220 | public string ultimate |
+| JsonRoot | field | goals | 221 | public JsonGoal[] goals |
+| JsonRoot | field | aspects | 222 | public JsonAspect[] aspects |
+| JsonRoot | field | events | 223 | public JsonEvent[] events |
+| JsonRoot | field | noEventWeight | 224 | public int? noEventWeight |
+| JsonRoot | field | rarityWeights | 225 | public int[] rarityWeights |
+| JsonRules | field | redraws | 231 | public int handMin, handBase, trials, trialsFinalDepth, redraws |
+| JsonRules | field | firstReactionMult | 232 | public int starterCopies, offerSize, rackSize, maxRi, pouchCards, firstReactionMult |
+| JsonRules | field | aspectDepths | 233 | public int[] aspectDepths |
+| JsonRules | field | potencyByTier | 234 | public long[] potencyByTier |
+| JsonMaterial | field | rarity | 240 | public string id, name, kind, glow, rarity |
+| JsonMaterial | field | reactivity | 241 | public int tier, reactivity |
+| JsonMaterial | field | locked | 242 | public bool locked |
+| JsonRecipe | field | items | 248 | public string[] items |
+| JsonRecipe | field | b | 249 | public string a, b |
+| JsonRecipe | field | minReactivity | 250 | public int minReactivity |
+| JsonRecipe | field | result | 251 | public string result |
+| JsonCatalyst | field | rarity | 257 | public string id, name, text, effect, kind, rarity |
+| JsonCatalyst | field | amount | 258 | public float amount |
+| JsonCatalyst | field | locked | 259 | public bool locked |
+| JsonGoal | field | rewardRarity | 265 | public string id, text, stat, rewardKind, rewardRarity |
+| JsonGoal | field | target | 266 | public int target |
+| JsonAspect | field | group | 272 | public string id, name, text, effect, scope, group |
+| JsonAspect | field | amount | 273 | public float amount |
+| JsonAspect | field | tradeOff | 274 | public bool tradeOff |
+| JsonEvent | field | type | 280 | public string id, name, text, type |
+| JsonEvent | field | weight | 281 | public int minDepth, maxDepth, weight |
+| JsonEvent | field | options | 282 | public JsonEventOption[] options |
+| JsonEventOption | field | requires | 288 | public string label, requires |
+| JsonEventOption | field | cost | 289 | public JsonEffect[] cost |
+| JsonEventOption | field | outcomes | 290 | public JsonOutcome[] outcomes |
+| JsonOutcome | field | weight | 296 | public int weight |
+| JsonOutcome | field | text | 297 | public string text |
+| JsonOutcome | field | gain | 298 | public JsonEffect[] gain |
+| JsonEffect | field | arg | 304 | public string op, arg |
+| JsonEffect | field | amount2 | 305 | public int amount, amount2 |
 | TutorialStepsMigration | method | Run | 79 | public static void Run() |
 | TutorialStepsMigration | method | RunBatch | 88 | public static void RunBatch() |
 | A | field | name | 26 | public string name |
@@ -1544,9 +1633,17 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | LoreTests | method | SkippingALoreEvent_WhenPlayedWithAndWithoutIt_IsBalanceNeutral | 156 | public void SkippingALoreEvent_WhenPlayedWithAndWithoutIt_IsBalanceNeutral() |
 | LoreTests | method | Profile_WhenShownLoreBoonAndNullEvents_RemembersOnlyLoreEvents | 184 | public void Profile_WhenShownLoreBoonAndNullEvents_RemembersOnlyLoreEvents() |
 | LoreTests | method | Profile_LastLore_IsSaved_AndDroppedWhenNoLongerALoreEvent | 196 | public void Profile_LastLore_IsSaved_AndDroppedWhenNoLongerALoreEvent() |
+| RarityTests | method | Rarities_All_HasSevenEntries | 169 | public void Rarities_All_HasSevenEntries() |
 | RulesTests | method | Rules_ShippedContent_HasTodaysValues | 11 | public void Rules_ShippedContent_HasTodaysValues() |
-| RulesTests | method | FinalDepth_ShippedContent_IsFive | 30 | public void FinalDepth_ShippedContent_IsFive() |
-| RulesTests | method | Phase_AspectDepthsTwo_OffersAspectsAtDepthTwoOnly | 79 | public void Phase_AspectDepthsTwo_OffersAspectsAtDepthTwoOnly() |
+| RulesTests | method | FinalDepth_ShippedContent_IsTen | 36 | public void FinalDepth_ShippedContent_IsTen() |
+| RulesTests | method | Constructor_SeedAspectWithoutAmount_Throws | 63 | public void Constructor_SeedAspectWithoutAmount_Throws() |
+| RulesTests | method | Constructor_HeatTileEffectWithoutAmount_Throws | 71 | public void Constructor_HeatTileEffectWithoutAmount_Throws() |
+| RulesTests | method | Constructor_AspectDepthOutsideTheRun_Throws | 116 | public void Constructor_AspectDepthOutsideTheRun_Throws() |
+| RulesTests | method | Constructor_HandBaseBelowHandMin_Throws | 124 | public void Constructor_HandBaseBelowHandMin_Throws() |
+| RulesTests | method | Constructor_DepthTargetsNotOneFewerThanDepths_Throws | 132 | public void Constructor_DepthTargetsNotOneFewerThanDepths_Throws() |
+| RulesTests | method | TrialsLeft_TrialsSix_StartsDepthOneWithSix | 159 | public void TrialsLeft_TrialsSix_StartsDepthOneWithSix() |
+| RulesTests | method | BasePotency_TableDoubled_IsDoubled | 172 | public void BasePotency_TableDoubled_IsDoubled() |
+| RulesTests | method | Phase_AspectDepthsTwo_OffersAspectsAtDepthTwoOnly | 185 | public void Phase_AspectDepthsTwo_OffersAspectsAtDepthTwoOnly() |
 | SettingsTests | method | New_NoArguments_HasDefaultValues | 9 | public void New_NoArguments_HasDefaultValues() |
 | SettingsTests | method | New_NoArguments_SwayIsOn | 20 | public void New_NoArguments_SwayIsOn() |
 | SettingsTests | method | ToJson_ThenFromJson_RoundTripsSwayOff | 26 | public void ToJson_ThenFromJson_RoundTripsSwayOff() |
@@ -1653,23 +1750,23 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | GoldenShotTests | method | Render_Shot_MatchesTheGoldenImage | 10 | public void Render_Shot_MatchesTheGoldenImage(string name) |
 | HotPathTests | method | DestroyMade | 19 | public void DestroyMade() |
 | HotPathTests | method | Tick_IdleHud_AllocatesNothing | 43 | public void Tick_IdleHud_AllocatesNothing() |
-| HotPathTests | method | Tick_PotencyUnchanged_KeepsTheSameText | 56 | public void Tick_PotencyUnchanged_KeepsTheSameText() |
-| HotPathTests | method | Tick_PotencyChanged_RewritesText | 72 | public void Tick_PotencyChanged_RewritesText() |
-| HotPathTests | method | Tick_PotencyRunsIntoTarget_SwapsTheWordAwayAndBack | 92 | public void Tick_PotencyRunsIntoTarget_SwapsTheWordAwayAndBack() |
-| HotPathTests | method | Tick_IdleBench_AllocatesNothing | 135 | public void Tick_IdleBench_AllocatesNothing() |
-| HotPathTests | method | Tick_BenchWithTooltipUp_AllocatesNothing | 148 | public void Tick_BenchWithTooltipUp_AllocatesNothing() |
-| HotPathTests | method | Tick_TooltipUp_RebuildsAfterRedrawsChange | 166 | public void Tick_TooltipUp_RebuildsAfterRedrawsChange() |
-| HotPathTests | method | Tick_TileHoverStartsAndStops_DrawsAndClearsTheFace | 194 | public void Tick_TileHoverStartsAndStops_DrawsAndClearsTheFace() |
-| HotPathTests | method | Tick_TileAndTileWithMaterial_AllocateNothing | 215 | public void Tick_TileAndTileWithMaterial_AllocateNothing() |
-| HotPathTests | method | Tick_IdleCard_AllocatesNothing | 232 | public void Tick_IdleCard_AllocatesNothing() |
-| HotPathTests | method | Tick_IdleEventView_AllocatesNothing | 249 | public void Tick_IdleEventView_AllocatesNothing() |
-| HotPathTests | method | Tick_IdleUiButton_AllocatesNothing | 263 | public void Tick_IdleUiButton_AllocatesNothing() |
-| HotPathTests | method | Tick_FogSheet_AllocatesNothingWithinATexelAndWhenOneIsCrossed | 276 | public void Tick_FogSheet_AllocatesNothingWithinATexelAndWhenOneIsCrossed() |
-| HotPathTests | method | Tick_FogSheet_WritesTheNewTexelOffsetAndOnlyThen | 291 | public void Tick_FogSheet_WritesTheNewTexelOffsetAndOnlyThen() |
-| HotPathTests | method | Tick_ScreenFxFlashEnds_ClearsTheFlashSprite | 312 | public void Tick_ScreenFxFlashEnds_ClearsTheFlashSprite() |
-| HotPathTests | method | Tick_IdleScreenFx_AllocatesNothing | 333 | public void Tick_IdleScreenFx_AllocatesNothing() |
-| HotPathTests | method | IdleBench_TenSecondsOfEveryUpdate_AllocatesZeroBytes | 354 | public void IdleBench_TenSecondsOfEveryUpdate_AllocatesZeroBytes() |
-| HotPathTests | method | Continuous_DustSparksAndFlame_AllocateNothingWhileRunning | 392 | public void Continuous_DustSparksAndFlame_AllocateNothingWhileRunning() |
+| HotPathTests | method | Tick_PotencyUnchanged_KeepsTheSameText | 52 | public void Tick_PotencyUnchanged_KeepsTheSameText() |
+| HotPathTests | method | Tick_PotencyChanged_RewritesText | 64 | public void Tick_PotencyChanged_RewritesText() |
+| HotPathTests | method | Tick_PotencyRunsIntoTarget_SwapsTheWordAwayAndBack | 80 | public void Tick_PotencyRunsIntoTarget_SwapsTheWordAwayAndBack() |
+| HotPathTests | method | Tick_IdleBench_AllocatesNothing | 119 | public void Tick_IdleBench_AllocatesNothing() |
+| HotPathTests | method | Tick_BenchWithTooltipUp_AllocatesNothing | 128 | public void Tick_BenchWithTooltipUp_AllocatesNothing() |
+| HotPathTests | method | Tick_TooltipUp_RebuildsAfterRedrawsChange | 142 | public void Tick_TooltipUp_RebuildsAfterRedrawsChange() |
+| HotPathTests | method | Tick_TileHoverStartsAndStops_DrawsAndClearsTheFace | 167 | public void Tick_TileHoverStartsAndStops_DrawsAndClearsTheFace() |
+| HotPathTests | method | Tick_TileAndTileWithMaterial_AllocateNothing | 184 | public void Tick_TileAndTileWithMaterial_AllocateNothing() |
+| HotPathTests | method | Tick_IdleCard_AllocatesNothing | 197 | public void Tick_IdleCard_AllocatesNothing() |
+| HotPathTests | method | Tick_IdleEventView_AllocatesNothing | 210 | public void Tick_IdleEventView_AllocatesNothing() |
+| HotPathTests | method | Tick_IdleUiButton_AllocatesNothing | 220 | public void Tick_IdleUiButton_AllocatesNothing() |
+| HotPathTests | method | Tick_FogSheet_AllocatesNothingWithinATexelAndWhenOneIsCrossed | 229 | public void Tick_FogSheet_AllocatesNothingWithinATexelAndWhenOneIsCrossed() |
+| HotPathTests | method | Tick_FogSheet_WritesTheNewTexelOffsetAndOnlyThen | 240 | public void Tick_FogSheet_WritesTheNewTexelOffsetAndOnlyThen() |
+| HotPathTests | method | Tick_ScreenFxFlashEnds_ClearsTheFlashSprite | 257 | public void Tick_ScreenFxFlashEnds_ClearsTheFlashSprite() |
+| HotPathTests | method | Tick_IdleScreenFx_AllocatesNothing | 274 | public void Tick_IdleScreenFx_AllocatesNothing() |
+| HotPathTests | method | IdleBench_TenSecondsOfEveryUpdate_AllocatesZeroBytes | 291 | public void IdleBench_TenSecondsOfEveryUpdate_AllocatesZeroBytes() |
+| HotPathTests | method | Continuous_DustSparksAndFlame_AllocateNothingWhileRunning | 326 | public void Continuous_DustSparksAndFlame_AllocateNothingWhileRunning() |
 | HudTests | method | CanRedraw_WhileRedrawsRemain_IsTrueUntilTheLastRedrawIsUsed | 14 | public void CanRedraw_WhileRedrawsRemain_IsTrueUntilTheLastRedrawIsUsed() |
 | HudTests | method | CanRedraw_IsFalse_OffTheBench_EvenWithRedrawsLeft | 29 | public void CanRedraw_IsFalse_OffTheBench_EvenWithRedrawsLeft() |
 | HudTests | method | CanRedraw_IsFalse_WithNoRun | 40 | public void CanRedraw_IsFalse_WithNoRun() |
@@ -1797,10 +1894,11 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | PrefabBakeTests | method | Refresh_BenchPrefab_HasNineTiles | 782 | public void Refresh_BenchPrefab_HasNineTiles() |
 | PrefabBakeTests | method | Refresh_BenchPrefab_DealsOneCardPerStartingMaterialFromTheCardPrefab | 808 | public void Refresh_BenchPrefab_DealsOneCardPerStartingMaterialFromTheCardPrefab() |
 | PrefabBakeTests | method | Show_CardPrefab_OneWordNameHidesTheSecondLine | 834 | public void Show_CardPrefab_OneWordNameHidesTheSecondLine() |
-| PrefabFixture | field | Root | 12 | public readonly GameObject Root |
-| PrefabFixture | ctor | PrefabFixture | 15 | public PrefabFixture(string prefabPath) |
-| PrefabFixture | method | Get | 23 | public T Get<T>() where T : Component |
-| PrefabFixture | method | Destroy | 29 | public void Destroy() |
+| PrefabFixture | field | Root | 13 | public readonly GameObject Root |
+| PrefabFixture | ctor | PrefabFixture | 16 | public PrefabFixture(string prefabPath) |
+| PrefabFixture | method | Get | 24 | public T Get<T>() where T : Component |
+| PrefabFixture | method | Destroy | 30 | public void Destroy() |
+| PrefabFixture | method | Dispose | 38 | public void Dispose() |
 | RunOverDepthTests | method | Won_ShowsPlantedAtDepth_OnOneLine_WithNoValue | 42 | public void Won_ShowsPlantedAtDepth_OnOneLine_WithNoValue() |
 | RunOverDepthTests | method | Lost_ShowsDepthReached_AndNOfFive | 50 | public void Lost_ShowsDepthReached_AndNOfFive() |
 | RunOverDepthTests | method | WonThenLost_OnTheSameView_RestoresTheLostRow | 58 | public void WonThenLost_OnTheSameView_RestoresTheLostRow() |

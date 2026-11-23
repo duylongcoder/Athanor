@@ -12,6 +12,8 @@ namespace Athanor.Tests
         {
             var d = TestContent.Tiny();
             d.depthTargets = targets; d.ultimate = ultimate;
+            if (targets.Length != d.depthNames.Length - 1)
+                d.depthNames = Enumerable.Range(1, targets.Length + 1).Select(i => i.ToString()).ToArray();
             d.catalysts = new[] { TestContent.Cat(Effects.ExtraHand), TestContent.Cat(Effects.ExtraTrial), TestContent.Cat(Effects.FirstTriple), TestContent.Cat(Effects.ChainPlus) };
             return d;
         }
@@ -29,7 +31,7 @@ namespace Athanor.Tests
         }
         static bool PlaceId(RunState r, string id, int tile) => r.Place(r.Hand.ToList().IndexOf(id), tile);
         static int Starters(RunState r) => r.Hand.Count(h => h == "a" || h == "b" || h == "c" || h == "d");
-        static readonly int[] Far = { 999999, 999999, 999999, 999999 };
+        static readonly int[] Far = { 999999, 999999, 999999, 999999, 999999, 999999, 999999, 999999, 999999 };
 
         [Test] public void NewRun_Has5Cards_4Trials_2Redraws_Target300()
         {
@@ -41,7 +43,7 @@ namespace Athanor.Tests
 
         [Test] public void Place_Then_Unplace_ReturnsCard()
         {
-            var r = RunWith(Custom(new[] { 300, 900, 2500, 7000 }), 1, "a");
+            var r = RunWith(Custom(new[] { 300, 900, 2500, 7000, 15000, 30000, 60000, 120000, 250000 }), 1, "a");
             Assert.IsTrue(PlaceId(r, "a", 4));
             Assert.AreEqual(4, r.Hand.Count); Assert.AreEqual("a", r.Bench.Tiles[4]);
             Assert.IsTrue(r.Unplace(4));
@@ -51,7 +53,7 @@ namespace Athanor.Tests
 
         [Test] public void Place_OnOccupiedTile_False()
         {
-            var r = RunWith(Custom(new[] { 300, 900, 2500, 7000 }), 1, "a", "b");
+            var r = RunWith(Custom(new[] { 300, 900, 2500, 7000, 15000, 30000, 60000, 120000, 250000 }), 1, "a", "b");
             Assert.IsTrue(PlaceId(r, "a", 0));
             Assert.IsFalse(PlaceId(r, "b", 0));
             Assert.IsFalse(r.Place(99, 1)); Assert.IsFalse(r.Place(0, 9));
@@ -59,7 +61,7 @@ namespace Athanor.Tests
 
         [Test] public void CanIgnite_False_WithoutAdjacentPair()
         {
-            var r = RunWith(Custom(new[] { 300, 900, 2500, 7000 }), 1, "a", "b");
+            var r = RunWith(Custom(new[] { 300, 900, 2500, 7000, 15000, 30000, 60000, 120000, 250000 }), 1, "a", "b");
             Assert.IsFalse(r.CanIgnite);
             PlaceId(r, "a", 0); PlaceId(r, "b", 8);
             Assert.IsFalse(r.CanIgnite);
@@ -69,7 +71,7 @@ namespace Athanor.Tests
 
         [Test] public void Ignite_SpendsTrial_ClearsBench_RefillsHand_KeepsUnplayedCards()
         {
-            var r = RunWith(Custom(new[] { 300, 900, 2500, 7000 }), 1, "a", "b");
+            var r = RunWith(Custom(new[] { 300, 900, 2500, 7000, 15000, 30000, 60000, 120000, 250000 }), 1, "a", "b");
             PlaceId(r, "a", 0); PlaceId(r, "b", 1);
             var kept = r.Hand.ToList();
             var o = r.Ignite();
@@ -83,7 +85,7 @@ namespace Athanor.Tests
 
         [Test] public void ReachingTarget_GivesDepthCleared_WithThreeDistinctOffers()
         {
-            var r = RunWith(Custom(new[] { 30, 900, 2500, 7000 }), 1, "a", "b");
+            var r = RunWith(Custom(new[] { 30, 900, 2500, 7000, 15000, 30000, 60000, 120000, 250000 }), 1, "a", "b");
             PlaceId(r, "a", 0); PlaceId(r, "b", 1);
             Assert.AreEqual(RunPhase.DepthCleared, r.Ignite().PhaseAfter);
             Assert.AreEqual(3, r.CatalystOffer.Select(c => c.id).Distinct().Count());
@@ -92,7 +94,7 @@ namespace Athanor.Tests
 
         [Test] public void ChooseCatalyst_AdvancesDepth_ResetsPotencyAndTrials()
         {
-            var r = RunWith(Custom(new[] { 30, 900, 2500, 7000 }), 1, "a", "b");
+            var r = RunWith(Custom(new[] { 30, 900, 2500, 7000, 15000, 30000, 60000, 120000, 250000 }), 1, "a", "b");
             PlaceId(r, "a", 0); PlaceId(r, "b", 1); r.Ignite();
             r.Redraw();
             var pick = r.CatalystOffer[0];
@@ -108,7 +110,7 @@ namespace Athanor.Tests
 
         [Test] public void OutOfTrials_BelowTarget_IsLost()
         {
-            var r = new RunState(new ContentDb(Custom(new[] { 999999, 1, 1, 1 })), new Journal(), 3);
+            var r = new RunState(new ContentDb(Custom(new[] { 999999, 1, 1, 1, 1, 1, 1, 1, 1 })), new Journal(), 3);
             for (int i = 0; i < 4; i++)
             {
                 Assert.AreEqual(RunPhase.Playing, r.Phase);
@@ -143,7 +145,7 @@ namespace Athanor.Tests
 
         [Test] public void ExtraHand_WhenChosenAsCatalyst_Gives6Cards()
         {
-            var d = Custom(new[] { 30, 900, 2500, 7000 }); d.catalysts = new[] { TestContent.Cat(Effects.ExtraHand) };
+            var d = Custom(new[] { 30, 900, 2500, 7000, 15000, 30000, 60000, 120000, 250000 }); d.catalysts = new[] { TestContent.Cat(Effects.ExtraHand) };
             var r = RunWith(d, 1, "a", "b");
             PlaceId(r, "a", 0); PlaceId(r, "b", 1); r.Ignite();
             Assert.AreEqual(1, r.CatalystOffer.Count);
@@ -153,9 +155,9 @@ namespace Athanor.Tests
 
         [Test] public void SmallSatchel_WithFewerCardsThanTheHand_DrawsWhatExists()
         {
-            var d = Custom(new[] { 999999, 1, 1, 1 });
+            var d = Custom(new[] { 999999, 1, 1, 1, 1, 1, 1, 1, 1 });
             d.materials = new[] { TestContent.Mat("a", "Ore", 0), TestContent.Mat("b", "Ore", 0), TestContent.Mat("x", "Metal", 1) };
-            d.recipes = new[] { TestContent.Rec("a", "b", "x") }; d.ultimate = "x"; d.depthTargets = new[] { 999999, 1, 1, 1 };
+            d.recipes = new[] { TestContent.Rec("a", "b", "x") }; d.ultimate = "x"; d.depthTargets = new[] { 999999, 1, 1, 1, 1, 1, 1, 1, 1 };
             var r = new RunState(new ContentDb(d), new Journal(), 1, 2);
             Assert.AreEqual(4, r.Hand.Count);
             r.Place(0, 0); r.Place(0, 1);
@@ -315,6 +317,7 @@ namespace Athanor.Tests
             d.recipes = new[] { TestContent.Rec(new[] { "p", "q" }, 0, "x"), TestContent.Rec(new[] { "x", "v" }, 20, "u") };
             d.ultimate = "u";
             d.depthTargets = Far;
+            d.depthNames = Enumerable.Range(1, Far.Length + 1).Select(i => i.ToString()).ToArray();
             var db = new ContentDb(d);
             int wins = 0;
             for (int seed = 1; seed <= 30; seed++)

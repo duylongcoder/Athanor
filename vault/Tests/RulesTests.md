@@ -14,7 +14,7 @@ count: 15
 
 ## Tests
 - `Rules_ShippedContent_HasTodaysValues`
-- `FinalDepth_ShippedContent_IsFive`
+- `FinalDepth_ShippedContent_IsTen`
 - `Constructor_HeatedAspectWithoutAmount_Throws`
 - `Constructor_SeedAspectWithoutAmount_Throws`
 - `Constructor_HeatTileEffectWithoutAmount_Throws`

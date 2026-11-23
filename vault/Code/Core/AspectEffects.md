@@ -12,15 +12,15 @@ aliases: []
 # AspectEffects
 
 `public static class AspectEffects`
-- Layer: **Core** · Source: `Athanor/Assets/Scripts/Core/ContentData.cs:116-125`
+- Layer: **Core** · Source: `Athanor/Assets/Scripts/Core/ContentData.cs:117-126`
 
 > The aspect effect names used in content.json.
 
 ## Members
 | Kind | Signature | Line | Note |
 |---|---|---|---|
-| field | `public const string Doubled = "Doubled", Anchor = "Anchor", Heated = "Heated", Echo = "Echo", Attuned = "Attuned", Seed = "Seed", Fallow = "Fallow", H` | 118 |  |
-| property | `public static readonly string[] All =` | 121 |  |
+| field | `public const string Doubled = "Doubled", Anchor = "Anchor", Heated = "Heated", Echo = "Echo", Attuned = "Attuned", Seed = "Seed", Fallow = "Fallow", H` | 119 |  |
+| property | `public static readonly string[] All =` | 122 |  |
 
 ## Used by
 [[AutoPlayer]], [[CatalystChoiceView]], [[ContentDb]], [[GoldenShots]], [[RunState]], [[Wording]]

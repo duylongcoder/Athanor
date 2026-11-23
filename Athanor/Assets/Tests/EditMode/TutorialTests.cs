@@ -102,7 +102,7 @@ namespace Athanor.Tests
             materials = new[] { TestContent.Mat("a", "Ore", 0, 6), TestContent.Mat("b", "Potion", 0, 4), TestContent.Mat("x", "Metal", 1, 5) },
             recipes = new[] { TestContent.Rec(new[] { "a", "b" }, 0, "x") },
             catalysts = new[] { TestContent.Cat(Effects.ChainPlus), TestContent.Cat(Effects.ExtraTrial), TestContent.Cat(Effects.ExtraRedraw), TestContent.Cat(Effects.PairBonus, "", 2) },
-            depthTargets = new[] { 1, 1, 1, 1 }, depthNames = new[] { "1", "2", "3", "4", "5" }, ultimate = "",
+            depthTargets = new[] { 1, 1, 1, 1, 1, 1, 1, 1, 1 }, depthNames = new[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }, ultimate = "",
         });
 
         [Test]

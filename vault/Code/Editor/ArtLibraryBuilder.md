@@ -12,7 +12,7 @@ aliases: []
 # ArtLibraryBuilder
 
 `public static class ArtLibraryBuilder`
-- Layer: **Editor** · Source: `Athanor/Assets/Editor/ArtLibraryBuilder.cs:12-54`
+- Layer: **Editor** · Source: `Athanor/Assets/Editor/ArtLibraryBuilder.cs:12-53`
 
 > Collects the sprites, effect sheets, fonts and materials into Assets/Art/ArtLibrary.asset, the one lookup the game uses by name. Run it after new art or effect sheets are imported (the sprite and flipbook importers call it too). It touches no scene.
 

@@ -27,7 +27,7 @@ namespace Athanor.Tests
             rules = TestContent.Rules(),
             materials = new[] { TestContent.Mat("a", "Ore", 0, 6), TestContent.Mat("b", "Potion", 0, 4), TestContent.Mat("x", "Metal", 1, 5) },
             recipes = new[] { TestContent.Rec(new[] { "a", "b" }, 0, "x") },
-            catalysts = new CatalystData[0], depthTargets = new[] { 1, 1, 1, 1 }, depthNames = new[] { "1", "2", "3", "4", "5" }, ultimate = "",
+            catalysts = new CatalystData[0], depthTargets = new[] { 1, 1, 1, 1, 1, 1, 1, 1, 1 }, depthNames = new[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }, ultimate = "",
             events = events, noEventWeight = 0,
         });
 

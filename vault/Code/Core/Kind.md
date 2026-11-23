@@ -18,7 +18,7 @@ aliases: []
 `Ore`, `Metal`, `Crystal`, `Powder`, `Potion`, `Plant`, `Beast`
 
 ## Used by
-[[AspectInstance]], [[BenchView]], [[CardView]], [[ContentDb]], [[GoldenShots]], [[Journal]], [[JournalView]], [[Loc]], [[RunState]], [[Wording]]
+[[AspectInstance]], [[BenchView]], [[CardView]], [[ContentDb]], [[ContentJsonImporter]], [[GoldenShots]], [[Journal]], [[JournalView]], [[Loc]], [[RunState]], [[Wording]]
 
 ## Tested by
 [[JournalTests]], [[NoteTextTests]], [[Phase3Tests]], [[SaveTests]]

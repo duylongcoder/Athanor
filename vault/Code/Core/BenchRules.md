@@ -25,7 +25,7 @@ aliases: []
 | field | `public readonly bool[] Blocked = new bool[Bench.TileCount]` | 17 |  |
 | field | `public readonly int[] RiBonus = new int[Bench.TileCount]` | 18 |  |
 | field | `public readonly bool[] Kiln = new bool[Bench.TileCount], Crossroads = new bool[Bench.TileCount]` | 19 |  |
-| method | `public readonly List<(int a, int b)> Links = new List<(int, int)>()` | 20 |  |
+| field | `public readonly List<LinkPair> Links = new List<LinkPair>()` | 20 |  |
 | property | `public readonly int[] HubMult =` | 22 |  |
 | field | `public readonly bool[] Heavy = new bool[Bench.TileCount]` | 23 |  |
 | field | `public readonly string[] AttunedKind = new string[Bench.TileCount]` | 24 |  |
@@ -37,7 +37,7 @@ aliases: []
 | method | `public bool Touch(int a, int b)` | 78 | Either tile reaches the other (Crossroads makes this one-sided for a hub; a pair needs only one side). |
 
 ## Uses
-[[Bench]], [[ContentDb]]
+[[Bench]], [[ContentDb]], [[LinkPair]]
 
 ## Used by
 [[AutoPlayer]], [[ChainPlanner]], [[IgniteResolver]], [[RunState]], [[ScoreContext]]

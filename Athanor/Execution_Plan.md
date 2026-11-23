@@ -9,73 +9,51 @@
 
 | Mức độ | Rủi ro chính | Quyết định |
 |--------|--------------|-----------|
-| **P0** | Unity báo lỗi Missing Reference, scene Main không chạy được. | Sửa file Main.unity (xoá 6 GameObject rỗng). |
-| **P0/P2** | Menu "Import Effect Sheets" lỗi path → sheet Fx không import được. | Sửa `FlipbookImporter.cs` stale path. |
+| **P0** | ~~Unity báo lỗi Missing Reference, scene Main không chạy được.~~ **ĐÃ KIỂM TRA: KHÔNG CÓ LỖI.** 6 GameObject (`liquid_0` + 5× `flame_small_0`) trỏ tới sheet đã merge (`liquid.png` guid f595ba..., `flame_small.png` guid 46fffaea...) — tham chiếu **hợp lệ**, không cần xoá. | Không cần thao tác. Nếu sau này phát hiện chúng là duplicate thừa → xoá qua Unity Editor. |
+| **P0/P2** | ~~Menu "Import Effect Sheets" lỗi path.~~ **ĐÃ KIỂM TRA: PATH ĐÃ ĐÚNG.** `FlipbookImporter.Dir` = `"Assets/Art/Fx/Sheets"` — đúng với working tree (sheets ở `Athanor/Assets/Art/Background/` và `Athanor/Assets/Art/Fx/`). | Không cần sửa code. |
 | **P1** | Core logic sai (LinkPair) → benchmark rules fail runtime. | `dotnet test Athanor.Core.Tests.csproj` (trong workspace root). |
 | **P2** | Nút bấm (button_down) không hiển thị sprite down-state. | Kiểm tra `button_down.png` setup đã đúng. |
 | **P3** | Atlas build báo lỗi hoặc sprites bị group sai nhóm sau khi rebuild v3. | `SpriteImportRules` v3 + atlas rebuild. |
 
 ---
 
-## TASK-P0 — Sửa broken sprite references trong `Main.unity`
+## TASK-P0 — Kiểm tra sprite references trong `Main.unity`
 
 ### Mục tiêu
-Loại bỏ 6 GameObject orphan đang trỏ tới PNG đã xoá trong commit `95c8be51`:
-- `liquid_0` (1 cái, layer 0)
-- `flame_small_0` (5 cái, layer 6)
+~~Loại bỏ 6 GameObject orphan đang trỏ tới PNG đã xoá trong commit `95c8be51`:~~
+- ~~`liquid_0` (1 cái, layer 0)~~
+- ~~`flame_small_0` (5 cái, layer 6)~~
 
-### Cách thực hiện (Unity Editor)
-> ⚠️ **Không mở file `.unity` bằng text editor** để tránh hỏng GUID/YAML Unity. Thao tác hoàn toàn qua Editor.
+### Kết quả kiểm tra (2026-11-23)
+✅ **`liquid_0`** (fileID 622580475): m_Sprite = `{fileID: 7290534985110167030, guid: f595ba8985b494c8b9e4968a9966ea55}` → khớp `liquid.png.meta` (guid f595ba..., internalIDToNameTable `liquid_0: 7290534985110167030`). **Tham chiếu hợp lệ.**
 
-1. Mở Unity Editor → Load project `Athanor`.
-2. Mở scene `Assets/Scenes/Main.unity`.
-3. Trong Hierarchy panel, dùng tìm kiếm (tìm theo tên) xoá lần lượt:
-   - `liquid_0`
-   - `flame_small_0` ×5 (5 cái tiếp theo)
-4. Save scene (`Ctrl+S`).
+✅ **5× `flame_small_0`** (fileID 955363107, 1455281607, 1561044915, 1771957178, 2007537015): m_Sprite + Flame.frames[8] = guid `46fffaea66626415ead195f679a47409` → khớp `flame_small.png.meta` (guid 46fffaea..., internalIDToNameTable đủ flame_small_0..7). **Tham chiếu hợp lệ.**
 
-### Rủi ro
-- Script `DepthSwitch` đang sử dụng `FlameSwap[] flames` có thể thiếu tham chiếu. Kiểm tra xem `flames[]` có đang assign từ các flame object này không.
-- Nếu thiếu, cần copy component `Flame.cs` từ flame object còn lại sang các flame object còn lại, hoặc tạo flame object mới.
+✅ **Kết luận**: 6 GameObject này KHÔNG broken. Chúng trỏ tới các merged sheet (`liquid.png`, `flame_small.png`) vẫn tồn tại trên disk. **Không cần xoá.**
 
-### Tiêu chí nghiệm thu
-- [x] Unity Console không còn warning `Missing Prefab / Broken Reference` cho Main.unity.
-- [x] Scene Main có thể chạy Play mode — flame effects flicker đúng.
-- [x] Không mất dữ liệu prefab/shared.
-
-### Thao tác cần thủ công trong Unity Editor
-✅ **Cần làm:** xoá 6 GameObject trong Hierarchy (bước 3).
+### Điều kiện cân nhắc xoá (nếu sau này phát hiện duplicate)
+Chỉ xoá nếu:
+1. Mở Unity Editor → scene `Main.unity`
+2. Kiểm tra Hierarchy: 6 object này có được `DepthSwitch.flames[]` (fileID `1455281611`, `1561044919`) hoặc component nào khác tham chiếu không
+3. Nếu KHÔNG được tham chiếu → có thể xoá an toàn **qua Unity Editor** (không bao giờ sửa `.unity` bằng text editor)
 
 ---
 
-## TASK-P0/P2 — Sửa stale path trong `FlipbookImporter.cs`
+## TASK-P0/P2 — Kiểm tra `FlipbookImporter.cs` path
 
 ### Mục tiêu
-Cập nhật hằng `Dir` từ `"Assets/Art/Fx/Sheets"` sang `"Assets/Art/Art/Fx/Sheets"`.
+~~Cập nhật hằng `Dir` từ `"Assets/Art/Fx/Sheets"` sang `"Assets/Art/Art/Fx/Sheets"`.~~
 
-### Cách thực hiện (sửa code)
+### Kết quả kiểm tra (2026-11-23)
+✅ `FlipbookImporter.Dir` hiện tại = `"Assets/Art/Fx/Sheets"` — **ĐÃ ĐÚNG** với working tree (sheets xuất pixelfx ở `Athanor/Assets/Art/Fx/Sheets`).
+✅ Doc comment dòng 11 cũng ghi `"Assets/Art/Fx/Sheets"` — đúng.
+✅ Không tồn tại thư mục `Assets/Art/Art/Fx/Sheets/` trên disk; nếu đổi path sẽ báo "No effect sheets found".
 
-```csharp
-// Trước (SALAH):
-public const string Dir = "Assets/Art/Fx/Sheets";
+### Kết luận
+Không cần sửa code. Plan cũ đề nghị đổi thành `"Assets/Art/Art/Fx/Sheets"` là **SAI**.
 
-// Sau (ĐÚNG):
-public const string Dir = "Assets/Art/Art/Fx/Sheets";
-```
-
-Đối với dòng doc comment trên dòng 11 cũng cần sửa theo cách tương tự.
-
-### Rủi ro
-- Nếu `Assets/Art/Art/Fx/Sheets/` không tồn tại thực tế trên disk, menu Import Effect Sheets sẽ báo "No effect sheets found".
-- File `.json` bên trong Sheets directory phải vẫn hợp lệ.
-
-### Tiêu chí nghiệm thu
-- [x] Menu `Athanor > Import Effect Sheets` hoạt động đúng (không báo "No effect sheets found").
-- [x] Các `.asset` FlipbookSheet được tạo ra dưới đường dẫn `Assets/Art/Art/Fx/Sheets/`.
-- [x] Code chạy `r.Links.Add(new LinkPair(...))` đúng định dạng.
-
-### Thao tác cần sửa code
-✅ **Sửa:** `FlipbookImporter.cs` dòng 16 và dòng 11 doc comment.
+### Thao tác sửa code
+❌ **KHÔNG CẦN SỬA** — path đã đúng.
 
 ---
 
@@ -86,14 +64,15 @@ Chạy test suite cho Core rules (BenchRules/RunStart sử dụng `LinkPair`).
 
 ### Cách thực hiện (Bash)
 
-Chạy từ workspace root (không phải trong `Athanor/Assets/`):
+Chạy từ thư mục dự án Unity (nơi chứa `.csproj`): `/home/long.caoduy@nccsoft.office/Desktop/Athanor/Athanor/`:
 
 ```bash
+cd /home/long.caoduy@nccsoft.office/Desktop/Athanor/Athanor
 dotnet test Athanor.Core.Tests.csproj
 ```
 
 ### Rủi ro
-- Nếu run từ thư mục khác sẽ báo `"Project file does not exist"`.
+- Nếu run từ workspace root (nơi không có `.csproj`) sẽ báo `"Project file does not exist"`.
 - Test cần pass trước khi commit.
 
 ### Tiêu chí nghiệm thu
@@ -101,7 +80,7 @@ dotnet test Athanor.Core.Tests.csproj
 - [x] Không có testcase nào fail về `LinkPair` usage.
 
 ### Kết quả đã kiểm tra
-- ✅ `dotnet test Athanor.Core.Tests.csproj` chạy từ `/home/long.caoduy@nccsoft.office/Desktop/Athanor` → exit code 0 (tests pass).
+- ✅ `dotnet test Athanor.Core.Tests.csproj` chạy từ `/home/long.caoduy@nccsoft.office/Desktop/Athanor/Athanor/` → exit code 0 (tests pass).
 
 ---
 
@@ -181,8 +160,8 @@ Xác nhận atlas build succeeds sau khi đã xoá frame PNG (flame_big_0~7, fla
 
 | Task | Mức độ | Trạng thái | Ghi chú |
 |------|--------|-----------|--------|
-| P0 | P0 | ✅ Đã thực hiện | Xoá 6 GameObject orphan trong Main.unity qua Unity Editor |
-| P0/P2 | P0/P2 | ✅ Đã thực hiện | Sửa `FlipbookImporter.cs` stale path |
+| P0 | P0 | ✅ Đã thực hiện | Kiểm tra lại: 6 GameObject (`liquid_0` + 5× `flame_small_0`) tham chiếu **hợp lệ** — không broken. Không cần xoá dựa vào lý do broken reference. Chỉ xoá qua Unity Editor nếu phát hiện duplicate thừa sau này. |
+| P0/P2 | P0/P2 | ✅ Đã thực hiện | Kiểm tra `FlipbookImporter.cs` path — đã đúng (`Assets/Art/Fx/Sheets`), không cần sửa |
 | P1 | P1 | ✅ Đã thực hiện | `dotnet test Athanor.Core.Tests.csproj` pass (exit 0) |
 | P2 | P2 | ✅ Đã thực hiện | Verify `button_down.png.meta` + `UiButton.cs` reference |
 | P3 | P3 | ✅ Đã thực hiện | AtlasBuilder rules v3 compatible + group dirs updated |

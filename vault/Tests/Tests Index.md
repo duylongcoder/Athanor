@@ -5,7 +5,7 @@ tags: [moc/tests]
 ---
 
 # Tests
-583 test methods in 48 files. Run: `dotnet test tools/CoreTests` (rules) or `unity test Athanor --mode EditMode`.
+584 test methods in 48 files. Run: `dotnet test tools/CoreTests` (rules) or `unity test Athanor --mode EditMode`.
 
 - [[ChainTests]] — 26 tests · covers [[Bench]], [[ChainPlan]], [[ChainPlanner]], [[ContentDb]]
 - [[ContentTests]] — 41 tests · covers [[Bench]], [[ChainPlanner]], [[ContentData]], [[ContentDb]], [[Ops]]
@@ -14,7 +14,7 @@ tags: [moc/tests]
 - [[LoreTests]] — 9 tests · covers [[AutoMove]], [[AutoPlayer]], [[ContentData]], [[ContentDb]], [[Journal]], [[Ops]], [[Profile]], [[ProfileData]]
 - [[Phase3Tests]] — 98 tests · covers [[AspectEffects]], [[AutoMove]], [[AutoPlayer]], [[Bench]], [[BenchRules]], [[ChainPlanner]], [[ContentData]], [[ContentDb]]
 - [[RarityReportTests]] — 1 tests · covers [[AutoMove]], [[AutoPlayer]], [[ContentDb]], [[Journal]], [[Rarities]], [[RunOptions]], [[RunPhase]], [[RunState]]
-- [[RarityTests]] — 9 tests · covers [[ContentData]], [[ContentDb]], [[Effects]], [[Journal]], [[Ops]], [[Rarities]], [[RunOptions]], [[RunPhase]]
+- [[RarityTests]] — 10 tests · covers [[ContentData]], [[ContentDb]], [[Effects]], [[Journal]], [[Ops]], [[Rarities]], [[RunOptions]], [[RunPhase]]
 - [[RoleSimTests]] — 2 tests · covers [[ContentDb]], [[Journal]]
 - [[RulesTests]] — 15 tests · covers [[AspectEffects]], [[ContentData]], [[ContentDb]], [[Journal]], [[Ops]], [[Profile]], [[ProfileData]], [[RulesData]]
 - [[RunStateTests]] — 31 tests · covers [[AutoMove]], [[AutoPlayer]], [[Bench]], [[ContentData]], [[ContentDb]], [[Effects]], [[IgniteOutcome]], [[Journal]]

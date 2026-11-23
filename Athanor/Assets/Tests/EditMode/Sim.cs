@@ -91,8 +91,8 @@ namespace Athanor.Tests
                     materials = truth.Materials.ToArray(),
                     recipes = truth.Recipes.Where(r => journal.IsKnown(r.items)).ToArray(),
                     catalysts = truth.Catalysts.ToArray(),
-                    depthTargets = Enumerable.Range(1, 4).Select(truth.TargetFor).ToArray(),
-                    depthNames = new[] { "1", "2", "3", "4", "5" },
+                    depthTargets = Enumerable.Range(1, 10).Select(truth.TargetFor).ToArray(),
+                    depthNames = new[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11" },
                     ultimate = truth.Ultimate,
                 });
                 bot = new AutoPlayer(belief) { HintValue = 1, RedrawWhenIdle = false, SeekFrontier = true };
