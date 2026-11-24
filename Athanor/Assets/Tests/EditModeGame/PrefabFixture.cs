@@ -32,7 +32,7 @@ namespace Athanor.Tests
             if (Root == null) return;
             foreach (var m in Root.GetComponentsInChildren<MonoBehaviour>(true))
                 m.GetType().GetMethod("OnDestroy", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly)?.Invoke(m, null);
-            Object.DestroyImmediate(Root);
+            UnityEngine.Object.DestroyImmediate(Root);
         }
 
         public void Dispose()

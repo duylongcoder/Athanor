@@ -9,12 +9,14 @@ using PrimeTween;
 using UnityEditor;
 using UnityEngine;
 
-/// <summary>
-/// The golden shots: one picture of every view in a fixed, seeded state, in English and Vietnamese. Each view is built the way its
-/// prefab test builds it (instantiate, Bind, Show / Open), never through Update, so a shot holds no Time.time, no Random and no
-/// running animation: tweens are completed (Tween.CompleteAll) rather than waited for. Phase 7 compares every task against these.
-/// </summary>
-public static class GoldenShots
+namespace Athanor.EditorShared
+{
+    /// <summary>
+    /// The golden shots: one picture of every view in a fixed, seeded state, in English and Vietnamese. Each view is built the way its
+    /// prefab test builds it (instantiate, Bind, Show / Open), never through Update, so a shot holds no Time.time, no Random and no
+    /// running animation: tweens are completed (Tween.CompleteAll) rather than waited for. Phase 7 compares every task against these.
+    /// </summary>
+    public static class GoldenShots
 {
     const string Views = "Assets/Prefabs/Views/";
     static readonly string[] Shots =
@@ -295,3 +297,4 @@ public static class GoldenShots
         return go;
     }
 }
+} // namespace Athanor.Editor.Shared
