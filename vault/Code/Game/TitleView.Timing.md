@@ -12,13 +12,13 @@ aliases: []
 # TitleView.Timing
 
 `public struct TitleView.Timing`
-- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Ui/TitleView.cs:55-61` · Nested in [[TitleView]]
+- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Ui/TitleView.cs:57-63` · Nested in [[TitleView]]
 
 > The title's motion: logo fade-in, the sub-title's delay and fade, the glow's colour, base, swing and speed.
 
 ## Members
 | Kind | Signature | Line | Note |
 |---|---|---|---|
-| field | `public float fadeIn, subDelay, subFade, glowBase, glowSwing, glowSpeed` | 57 |  |
-| field | `public Color glow` | 58 |  |
-| field | `public float emberRate, emberY, emberSize, emberFall` | 60 | Embers: sparks a second, x range, start height, speed ranges, colour, size and the share that fall. |
+| field | `public float fadeIn, subDelay, subFade, glowBase, glowSwing, glowSpeed` | 59 |  |
+| field | `public Color glow` | 60 |  |
+| field | `public float emberRate, emberY, emberSize, emberFall` | 62 | Embers: sparks a second, x range, start height, speed ranges, colour, size and the share that fall. |

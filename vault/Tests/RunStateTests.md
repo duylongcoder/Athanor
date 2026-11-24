@@ -10,7 +10,7 @@ count: 31
 `Athanor/Assets/Tests/EditMode/RunStateTests.cs` — 31 tests
 
 ## Covers
-[[AutoMove]], [[AutoPlayer]], [[Bench]], [[ContentData]], [[ContentDb]], [[Effects]], [[IgniteOutcome]], [[Journal]], [[RunPhase]], [[RunState]]
+[[AutoMove]], [[AutoPlayer]], [[Bench]], [[ContentData]], [[ContentDb]], [[Effects]], [[IgniteOutcome]], [[Journal]], [[RunPhase]], [[RunState]], [[RunStats]], [[Sim]]
 
 ## Tests
 - `NewRun_Has5Cards_4Trials_2Redraws_Target300`

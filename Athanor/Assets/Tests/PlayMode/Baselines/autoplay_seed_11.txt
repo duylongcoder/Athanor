@@ -1,0 +1,28 @@
+[intro] 1
+[start] ready
+[ignite] d1 +120 =120 Playing dragon_blood,pixie_wing
+[ignite] d1 +480 =600 DepthCleared sulfur,moonpetal,unicorn_horn
+[descent] 2
+[choice] 1
+[start] ready
+[ignite] d2 +40 =40 Playing steam_wisp
+[ignite] d2 +20 =60 Playing sulfur
+[ignite] d2 +3520 =3580 DepthCleared frost_salt,storm_glass,quicksilver,aurora_dust
+[descent] 3
+[choice] 2
+[start] ready
+[ignite] d3 +90 =90 Playing frost_salt
+[ignite] d3 +2520 =2610 Playing sky_iron,gold_ingot,phoenix_feather,dragon_scale
+[ignite] d3 +30 =2640 Playing moonpetal
+[ignite] d3 +3060 =5700 Playing heaven_s_ash,pixie_wing
+[ignite] d3 +2340 =8040 DepthCleared dragon_blood,basilisk_eye
+[descent] 4
+[choice] 3
+[start] ready
+[ignite] d4 +450 =450 Playing sky_iron,dragon_blood
+[ignite] d4 +300 =750 Playing dragon_blood,quicksilver
+[ignite] d4 +18510 =19260 Playing everflame,steam_wisp,dusk_cap
+[ignite] d4 +5130 =24390 Playing pixie_wing,dusk_cap,nightshade_ink,seer_s_orb
+[ignite] d4 +270 =24660 Playing pixie_wing,nightshade_ink
+[ignite] d4 +9140 =33800 Won hearth_glass,worldseed
+[runover] won

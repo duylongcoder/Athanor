@@ -10,7 +10,7 @@ count: 14
 `Athanor/Assets/Tests/EditModeGame/SaveTests.cs` — 14 tests
 
 ## Covers
-[[ContentData]], [[ContentDb]], [[Journal]], [[Kind]], [[Profile]], [[ProfileData]], [[Save]]
+[[ContentAssets]], [[ContentDb]], [[Journal]], [[Kind]], [[Profile]], [[ProfileData]], [[Save]]
 
 ## Tests
 - `LoadProfile_WithNothingSaved_IsFresh_WithASeedOfItsOwn`

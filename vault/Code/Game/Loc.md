@@ -32,11 +32,11 @@ aliases: []
 | method | `public static void Set(string c)` | 84 |  |
 | method | `public static string T(string key, params (string name, object value)[] args)` | 97 | The text of a key with named placeholders filled; the key itself when no language has it. |
 | method | `public static string P(string key, long n, params (string name, object value)[] args)` | 100 | key.one / key.other by the number; {n} is filled. |
-| method | `public static string C(string key, string english, params (string name, object value)[] args)` | 103 | Content text (events, goals, depth names, catalyst and aspect texts): this language, else the content.json English. |
+| method | `public static string C(string key, string english, params (string name, object value)[] args)` | 103 | Content text (events, goals, depth names, catalyst and aspect texts): this language, else the English in the content assets. |
 | method | `public static bool Has(string key)` | 105 |  |
-| method | `public static string Kind(string kind)` | 108 | "Ore" or "Quặng" for a material kind from content.json ("Ore", "ore"). |
+| method | `public static string Kind(string kind)` | 108 | "Ore" or "Quặng" for a material kind from the content assets ("Ore", "ore"). |
 | method | `public static string Indef(string kind)` | 112 | "an ore" or "quặng": the kind inside a sentence. |
-| method | `public static string Rarity(string rarity)` | 116 | "Rare" or "Hiếm" for a rarity from content.json. |
+| method | `public static string Rarity(string rarity)` | 116 | "Rare" or "Hiếm" for a rarity from the content assets. |
 | method | `public static string Upper(string s)` | 119 | Capitals as the screens write them. Vietnamese keeps its marks (ế becomes Ế). |
 | method | `public static string DepthName(ContentDb db, int depth)` | 122 | The depth's name in this language. |
 | method | `public static string Number(long n)` | 125 | 1,500 in English, 1.500 in Vietnamese. |

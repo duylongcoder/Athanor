@@ -10,7 +10,7 @@ count: 3
 `Athanor/Assets/Tests/EditModeGame/HudTests.cs` — 3 tests
 
 ## Covers
-[[ContentData]], [[ContentDb]], [[HudView]], [[Journal]], [[RunOptions]], [[RunPhase]], [[RunState]], [[Unlocks]]
+[[ContentAssets]], [[ContentDb]], [[HudView]], [[Journal]], [[RunOptions]], [[RunPhase]], [[RunState]], [[Unlocks]]
 
 ## Tests
 - `CanRedraw_WhileRedrawsRemain_IsTrueUntilTheLastRedrawIsUsed`

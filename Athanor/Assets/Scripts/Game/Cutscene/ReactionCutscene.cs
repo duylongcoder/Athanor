@@ -1,6 +1,6 @@
 using System;
 using System.Collections;
-using Athanor.Core;
+using Athanor.Gameplay;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using Random = UnityEngine.Random;

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Regenerate the generated half of the Obsidian vault (vault/) from the repo.
 
-Reads : Athanor/Assets/Scripts, Editor, Tests (C#), Resources/content.json, .claude/agents + skills,
+Reads : Athanor/Assets/Scripts, Editor, Tests (C#), tools/content/snapshot.json (written from Assets/Content), .claude/agents + skills,
         docs/ATHANOR.md (sections 4 and 7), tools/*.
 Writes (all Markdown): vault/Code, vault/Content, vault/Tests, vault/Agents, vault/Tools, vault/Phases, vault/_index.
         Hand-written notes (vault/Home.md, Design, Data, Workflow, Templates) are never touched.
@@ -197,7 +197,7 @@ def parse_cs(path, layer):
 
 
 def collect_code():
-    roots = [(UNITY / "Scripts" / "Core", "Core"), (UNITY / "Scripts" / "Game", "Game"),
+    roots = [(UNITY / "Scripts" / "Gameplay", "Gameplay"), (UNITY / "Scripts" / "Game", "Game"),
              (UNITY / "Editor", "Editor"), (UNITY / "Tests", "Tests")]
     types, bodies = [], {}
     for root, layer in roots:
@@ -237,7 +237,7 @@ def gen_code(types):
     dup = {n for n, v in names.items() if len(v) > 1}
     for t in types: t["note"] = note_name(t, dup)
     idx = {t["name"]: t for t in types if t["name"] not in dup}
-    prod = [t for t in types if t["layer"] in ("Core", "Game", "Editor")]
+    prod = [t for t in types if t["layer"] in ("Gameplay", "Game", "Editor")]
     tests = [t for t in types if t["layer"] == "Tests"]
     use, usedby, tested = defaultdict(set), defaultdict(set), defaultdict(set)
     pat = {n: re.compile(r"\b" + re.escape(n) + r"\b") for n in idx}
@@ -291,7 +291,7 @@ def gen_code(types):
     # tests
     tfiles = defaultdict(list)
     for t in tests: tfiles[t["file"]].append(t)
-    allt = [fm(type="moc", tags=["moc/tests"]), "# Tests", f"{sum(len(t['tests']) for t in tests)} test methods in {len(tfiles)} files. Run: `dotnet test tools/CoreTests` (rules) or `unity test Athanor --mode EditMode`.", ""]
+    allt = [fm(type="moc", tags=["moc/tests"]), "# Tests", f"{sum(len(t['tests']) for t in tests)} test methods in {len(tfiles)} files. Run: `unity test Athanor --mode EditMode`.", ""]
     for f in sorted(tfiles):
         for t in tfiles[f]:
             if not t["tests"]: continue
@@ -307,7 +307,9 @@ def gen_code(types):
 # ---------------------------------------------------------------- content
 
 def gen_content():
-    d = json.loads((UNITY / "Resources" / "content.json").read_text(encoding="utf-8"))
+    # JsonUtility writes whole floats as 0.0; the notes show them as 0
+    d = json.loads((UNITY.parent.parent / "tools" / "content" / "snapshot.json").read_text(encoding="utf-8"),
+                   parse_float=lambda t: int(float(t)) if float(t).is_integer() else float(t))
     mats = {m["id"]: m for m in d["materials"]}
     made, used = defaultdict(list), defaultdict(list)
     for i, r in enumerate(d["recipes"]):
@@ -393,7 +395,7 @@ def gen_content():
     for m in d["materials"]:
         if not made[m["id"]] and m["tier"] != 0: issues.append(f"`{m['id']}` (tier {m['tier']}) is not a starter and no recipe makes it")
         if not used[m["id"]] and m["id"] != ult: info.append(f"`{m['id']}` (tier {m['tier']}) is a dead end: no recipe uses it")
-    w("Content/Content Health.md", fm(type="report", tags=["report"]) + "# Content health\n\nStatic checks only; the real rules live in `tools/CoreTests` (`ContentTests`).\n\n" + ("## Problems\n" + ("\n".join(f"- ⚠ {i}" for i in issues) if issues else "- none") + "\n\n## Dead ends (fine if intended)\n" + ("\n".join(f"- {i}" for i in info) or "- none") + "\n"))
+    w("Content/Content Health.md", fm(type="report", tags=["report"]) + "# Content health\n\nStatic checks only; the real rules live in the Unity tests (`Athanor/Assets/Tests`).\n\n" + ("## Problems\n" + ("\n".join(f"- ⚠ {i}" for i in issues) if issues else "- none") + "\n\n## Dead ends (fine if intended)\n" + ("\n".join(f"- {i}" for i in info) or "- none") + "\n"))
     return d, stats, mats
 
 

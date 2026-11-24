@@ -1,4 +1,4 @@
-using Athanor.Core;
+using Athanor.Gameplay;
 using Athanor.Game;
 using System.Text.RegularExpressions;
 using NUnit.Framework;
@@ -25,7 +25,7 @@ namespace Athanor.Tests
             if (profileBefore == null) PlayerPrefs.DeleteKey(Save.ProfileKey); else PlayerPrefs.SetString(Save.ProfileKey, profileBefore);
         }
 
-        static ContentDb Db() => new ContentDb(JsonUtility.FromJson<ContentData>(Resources.Load<TextAsset>("content").text));
+        static ContentDb Db() => new ContentDb(ContentAssets.Data());
 
         [Test]
         public void LoadProfile_WithNothingSaved_IsFresh_WithASeedOfItsOwn()

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc262143cc5914f09be279d03bf505b1, type: 3}
+  m_Name: tinkers_eye
+  m_EditorClassIdentifier: Athanor.Gameplay::Athanor.Gameplay.CatalystDefinition
+  id: tinkers_eye
+  displayName: Tinker's Eye
+  text: The first new discovery at each depth costs no trial.
+  effect: 19
+  kind: 0
+  amount: 0
+  rarity: 3
+  locked: 1

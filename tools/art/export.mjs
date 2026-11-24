@@ -11,7 +11,7 @@ import * as S from './scene.mjs';
 import { uiSprites, CARD, RACK, JOURNAL, GOALS, OPTION } from './ui.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url)), assets = join(here, '../../Athanor/Assets');
-const content = JSON.parse(readFileSync(join(assets, 'Resources/content.json'), 'utf8'));
+const content = JSON.parse(readFileSync(join(assets, '../../tools/content/snapshot.json'), 'utf8'));
 const placed = {};
 let count = 0;
 function save(rel, cv) { const f = join(assets, 'Art', rel); mkdirSync(dirname(f), { recursive: true }); writeFileSync(f, cv.png()); count++; }

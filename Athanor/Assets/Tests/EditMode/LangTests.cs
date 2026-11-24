@@ -1,21 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Athanor.Core;
+using Athanor.Gameplay;
 using NUnit.Framework;
 
 namespace Athanor.Tests
 {
-    /// <summary>Loads the real language files (Resources/lang/en.json, vi.json), inside Unity or under plain dotnet.</summary>
+    /// <summary>Loads the real language files (Resources/lang/en.json, vi.json), inside Unity.</summary>
     public static class TestLang
     {
         public static string Text(string code)
         {
-#if UNITY_5_3_OR_NEWER
             return UnityEngine.Resources.Load<UnityEngine.TextAsset>("lang/" + code).text;
-#else
-            return System.IO.File.ReadAllText(System.IO.Path.Combine(System.AppContext.BaseDirectory, "lang", code + ".json"));
-#endif
         }
     }
 
@@ -49,7 +45,7 @@ namespace Athanor.Tests
             contentEn = Lang.ContentEnglish(TestContent.Load());
         }
 
-        /// <summary>The current English of a key: the English file, or content.json for content keys.</summary>
+        /// <summary>The current English of a key: the English file, or the content assets for content keys.</summary>
         string English(string key) => en.Has(key) ? en.Template(key) : contentEn.TryGetValue(key, out var s) ? s : null;
 
         Dictionary<string, string> AllEnglish()
@@ -69,25 +65,6 @@ namespace Athanor.Tests
             Assert.Greater(viFile.entries.Length, 350);
         }
 
-#if !UNITY_5_3_OR_NEWER
-        [Test] public void SystemTextJson_WhenReadingBothFiles_ReadsTheSameEntries()
-        {
-            var opts = new System.Text.Json.JsonSerializerOptions { IncludeFields = true };
-            foreach (var (code, mine) in new[] { ("en", enFile), ("vi", viFile) })
-            {
-                var other = System.Text.Json.JsonSerializer.Deserialize<LangFile>(TestLang.Text(code), opts);
-                Assert.AreEqual(mine.language, other.language);
-                Assert.AreEqual(mine.entries.Length, other.entries.Length, code);
-                for (int i = 0; i < mine.entries.Length; i++)
-                {
-                    Assert.AreEqual(mine.entries[i].key, other.entries[i].key);
-                    Assert.AreEqual(mine.entries[i].text, other.entries[i].text, mine.entries[i].key);
-                    Assert.AreEqual(mine.entries[i].en, other.entries[i].en, mine.entries[i].key);
-                }
-            }
-        }
-#endif
-
         [Test] public void LangFiles_WhenGroupedByKey_HaveNoDuplicateKeys()
         {
             foreach (var f in new[] { enFile, viFile })
@@ -105,7 +82,7 @@ namespace Athanor.Tests
 
         [Test] public void EnglishFile_ComparedWithContentKeys_HoldsNoContentKeys()
         {
-            CollectionAssert.IsEmpty(en.Keys.Where(contentEn.ContainsKey).ToList(), "content English stays in content.json");
+            CollectionAssert.IsEmpty(en.Keys.Where(contentEn.ContainsKey).ToList(), "content English stays in the content assets");
         }
 
         [Test] public void VietnameseKeys_WhenLookedUpInEnglish_AreAnEnglishKeyOrAContentKey()
@@ -123,7 +100,7 @@ namespace Athanor.Tests
         {
             bool Name(string k) => k.EndsWith(".name") && (k.StartsWith("material.") || k.StartsWith("catalyst.") || k.StartsWith("aspect."));
             CollectionAssert.IsEmpty(vi.Missing(contentEn.Keys.Where(k => !Name(k))));
-            CollectionAssert.IsEmpty(vi.Keys.Where(Name).ToList(), "item names fall back to content.json");
+            CollectionAssert.IsEmpty(vi.Keys.Where(Name).ToList(), "item names fall back to the content assets");
         }
 
         [Test] public void Vietnamese_ComparedWithCurrentEnglish_IsNotStale()

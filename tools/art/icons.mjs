@@ -506,7 +506,7 @@ function bone(P, band) {
 const withSparks = (s, c = '#ffffff') => { sparkle(s, 18, 5, c); s.px(5, 6, c); s.px(20, 12, c); return s; };
 
 const pale = ['#3a4a6a', '#8fa8d0', '#c8d8f0', '#e8f4ff', '#ffffff'];
-/** Material id (as in content.json) => builder returning a 24x24 Spr. */
+/** Material id (as in Assets/Content/Materials) => builder returning a 24x24 Spr. */
 const ICONS = {
   ember_coal: emberCoal, iron_ore: () => ore(R.stone, R.iron, R.orange[2]), starmetal_ore: () => ore(R.dark, R.blue, '#ffffff'),
   gold_ingot: () => ingot(R.gold), sky_iron: () => ingot(R.iron, R.blue[3]), quicksilver, sun_amalgam: sunAmalgam, living_gold: livingGold,

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Athanor.Core;
+using Athanor.Gameplay;
 using NUnit.Framework;
 
 namespace Athanor.Tests
@@ -1318,7 +1318,7 @@ namespace Athanor.Tests
             var db = new ContentDb(TestContent.Load());
             var damp = db.Events.First(e => e.id == "damp_air");
             Assert.That(damp.minDepth, Is.GreaterThan(1), "the test needs an event that stays away from depth 1");
-            // db.FinalDepth comes from content.json (5 depths); RunState clamps Depth to it,
+            // db.FinalDepth comes from the content assets (5 depths); RunState clamps Depth to it,
             // so the loop must use db.FinalDepth, not TestContent.FinalDepth.
             for (int seed = 1; seed <= 20; seed++)
                 for (int depth = 1; depth <= db.FinalDepth; depth++)

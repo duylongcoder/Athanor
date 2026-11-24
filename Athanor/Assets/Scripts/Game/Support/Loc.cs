@@ -1,5 +1,5 @@
 using System;
-using Athanor.Core;
+using Athanor.Gameplay;
 using UnityEngine;
 
 namespace Athanor.Game
@@ -99,12 +99,12 @@ namespace Athanor.Game
         /// <summary>key.one / key.other by the number; {n} is filled.</summary>
         public static string P(string key, long n, params (string name, object value)[] args) => Current.Plural(key, n, args);
 
-        /// <summary>Content text (events, goals, depth names, catalyst and aspect texts): this language, else the content.json English.</summary>
+        /// <summary>Content text (events, goals, depth names, catalyst and aspect texts): this language, else the English in the content assets.</summary>
         public static string C(string key, string english, params (string name, object value)[] args) => Current.Content(key, english, args);
 
         public static bool Has(string key) => Current.Template(key) != null;
 
-        /// <summary>"Ore" or "Quặng" for a material kind from content.json ("Ore", "ore").</summary>
+        /// <summary>"Ore" or "Quặng" for a material kind from the content assets ("Ore", "ore").</summary>
         public static string Kind(string kind) =>
             string.IsNullOrEmpty(kind) ? "" : Current.Content("kind." + kind.ToLowerInvariant(), kind);
 
@@ -112,7 +112,7 @@ namespace Athanor.Game
         public static string Indef(string kind) =>
             string.IsNullOrEmpty(kind) ? "" : Current.Content("kind." + kind.ToLowerInvariant() + ".indef", kind.ToLowerInvariant());
 
-        /// <summary>"Rare" or "Hiếm" for a rarity from content.json.</summary>
+        /// <summary>"Rare" or "Hiếm" for a rarity from the content assets.</summary>
         public static string Rarity(string rarity) => Current.Content("rarity." + Rarities.Of(rarity).ToLowerInvariant(), Rarities.Of(rarity));
 
         /// <summary>Capitals as the screens write them. Vietnamese keeps its marks (ế becomes Ế).</summary>

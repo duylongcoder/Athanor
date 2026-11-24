@@ -1,0 +1,23 @@
+[intro] 1
+[start] ready
+[ignite] d1 +160 =160 Playing sulfur,mandrake
+[ignite] d1 +440 =600 DepthCleared sky_iron,gold_ingot,frost_salt
+[descent] 2
+[choice] 1
+[start] ready
+[ignite] d2 +240 =240 Playing dragon_blood,moonpetal
+[ignite] d2 +1480 =1720 DepthCleared dragon_scale,phoenix_feather
+[descent] 3
+[choice] 2
+[start] ready
+[ignite] d3 +560 =560 Playing pixie_wing,unicorn_horn
+[ignite] d3 +520 =1080 Playing steam_wisp,frost_salt,storm_glass
+[ignite] d3 +1480 =2560 Playing sulfur,aurora_dust
+[ignite] d3 +40 =2600 Playing dragon_blood
+[ignite] d3 +9040 =11640 DepthCleared everflame,moonpetal
+[descent] 4
+[choice] 3
+[start] ready
+[ignite] d4 +27030 =27030 Playing heaven_s_ash
+[ignite] d4 +6290 =33320 Won worldseed,dusk_cap,quicksilver
+[runover] won

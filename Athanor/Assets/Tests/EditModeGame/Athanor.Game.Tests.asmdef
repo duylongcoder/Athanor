@@ -2,8 +2,9 @@
     "name": "Athanor.Game.Tests",
     "rootNamespace": "Athanor.Tests",
     "references": [
-        "Athanor.Core",
+        "Athanor.Gameplay",
         "Athanor.Game",
+        "Athanor.Simulation",
         "Athanor.EditorShared",
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",

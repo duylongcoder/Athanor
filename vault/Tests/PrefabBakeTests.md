@@ -10,7 +10,7 @@ count: 40
 `Athanor/Assets/Tests/EditModeGame/PrefabBakeTests.cs` — 40 tests
 
 ## Covers
-[[Bench]], [[BenchView]], [[CardView]], [[CatalystChoiceView]], [[ChoiceCard]], [[Clickable]], [[ContentData]], [[ContentDb]], [[EventView]], [[GoalReward]], [[GoalRow]], [[GoalToast]], [[GoalsView]], [[HudView]], [[Journal]], [[JournalCell]], [[JournalView]], [[Label]], [[Loc]], [[PauseMenu]], [[Profile]], [[Rarities]], [[RunOptions]], [[RunOverView]], [[RunPhase]], [[RunState]], [[Settings]], [[TitleView]], [[Tooltip]], [[UiButton]], [[Unlocks]], [[Wording]]
+[[Bench]], [[BenchView]], [[CardView]], [[CatalystChoiceView]], [[ChoiceCard]], [[Clickable]], [[ContentAssets]], [[ContentDb]], [[EventView]], [[GoalReward]], [[GoalRow]], [[GoalToast]], [[GoalsView]], [[HudView]], [[Journal]], [[JournalCell]], [[JournalView]], [[Label]], [[Loc]], [[PauseMenu]], [[Profile]], [[Rarities]], [[RunOptions]], [[RunOverView]], [[RunPhase]], [[RunState]], [[Settings]], [[TitleView]], [[Tooltip]], [[UiButton]], [[Unlocks]], [[Wording]]
 
 ## Tests
 - `Relabel_KeyedLabelInPrefab_FollowsTheLanguage`

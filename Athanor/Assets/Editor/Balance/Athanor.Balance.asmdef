@@ -1,0 +1,8 @@
+{
+    "name": "Athanor.Balance",
+    "rootNamespace": "",
+    "references": ["Athanor.Gameplay", "Athanor.Simulation", "Athanor.EditorShared"],
+    "includePlatforms": ["Editor"],
+    "excludePlatforms": [],
+    "autoReferenced": true
+}

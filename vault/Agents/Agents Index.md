@@ -16,7 +16,7 @@ tags: [moc/agents]
 | ★ [[agent.audio-designer|audio-designer]] | sonnet | Athanor sound planner and asset maker: cue list tied to GameFlow states and reaction events, WebGL audio size budget, CC0 or self-made assets. Only wh |
 | [[agent.audio-director|audio-director]] | inherit | Owns sonic identity — music direction, sound palette, audio implementation strategy, mix balance. |
 | [[agent.community-manager|community-manager]] | sonnet | Player-facing communication — patch notes, social posts, community updates, feedback collection, player bug triage, crisis communication. |
-| ★ [[agent.content-designer|content-designer]] | inherit | Athanor data and balance owner: edits content.json (materials, recipes, catalysts, aspects, events, goals, depth targets) and judges it with the Balan |
+| ★ [[agent.content-designer|content-designer]] | inherit | Athanor data and balance owner: edits the content assets (materials, recipes, catalysts, aspects, events, goals, depth targets) and judges it with the |
 | [[agent.creative-director|creative-director]] | opus | Highest creative authority — vision, tone, aesthetic direction. Use when a decision affects game identity or department leads deadlock. |
 | [[agent.devops-engineer|devops-engineer]] | sonnet | Build pipelines, CI/CD configuration, version control workflow, branching strategy, automated test pipelines, deployment infrastructure. |
 | [[agent.economy-designer|economy-designer]] | inherit | Resource economies — loot tables, sink/faucet analysis, progression curve calibration, economic balance. |

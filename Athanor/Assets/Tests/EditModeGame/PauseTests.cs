@@ -1,4 +1,4 @@
-using Athanor.Core;
+using Athanor.Gameplay;
 using Athanor.Game;
 using NUnit.Framework;
 using UnityEditor;
@@ -105,7 +105,7 @@ namespace Athanor.Tests
         [Test]
         public void AfterQuit_ProfileAndJournalAreWhatIsStored_AndStorageIsNotWritten()
         {
-            var db = new ContentDb(JsonUtility.FromJson<ContentData>(Resources.Load<TextAsset>("content").text));
+            var db = new ContentDb(ContentAssets.Data());
             var profile = new Profile(1); profile.RunStarted();
             Save.StoreProfile(profile);
             string before = PlayerPrefs.GetString(Save.ProfileKey), beforeJ = PlayerPrefs.GetString(Save.Key, "");
@@ -122,7 +122,7 @@ namespace Athanor.Tests
         [Test]
         public void Quit_AfterADiscovery_JournalInStorageHasIt()
         {
-            var db = new ContentDb(JsonUtility.FromJson<ContentData>(Resources.Load<TextAsset>("content").text));
+            var db = new ContentDb(ContentAssets.Data());
             Save.StoreJournal(new Journal());
             var journal = new Journal();
             var run = new RunState(db, journal, TutorialScript.Seed, 1, TutorialScript.Options(Unlocks.Fresh(db)));
@@ -141,7 +141,7 @@ namespace Athanor.Tests
         [Test]
         public void SettleIgnite_Sandbox_StoresNothing()
         {
-            var db = new ContentDb(JsonUtility.FromJson<ContentData>(Resources.Load<TextAsset>("content").text));
+            var db = new ContentDb(ContentAssets.Data());
             Save.StoreJournal(new Journal());
             string before = PlayerPrefs.GetString(Save.Key, "");
             var journal = new Journal();

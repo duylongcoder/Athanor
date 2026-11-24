@@ -1,0 +1,21 @@
+ADMIN: players 40, runs each 60
+ADMIN: first Ultimate at run: median 1, mean 1.4, fastest 1, slowest 6, quartiles 1 / 2; never within 60 runs: 0/40
+ADMIN: runs 1-5: win 74%, depth 3.9 | runs 6-10: win 82%, depth 4.1 | runs 11-20: win 76%, depth 3.9 | runs 21-40: win 77%, depth 4.0 | runs 41-60: win 81%, depth 4.0
+ADMIN: all runs: win 78%, average depth reached 3.98, losses by depth 1..5: 2% 4% 30% 62% 1%, stuck runs 0
+ADMIN: journal entries (of 87) after N runs: 5: 37, 10: 44, 20: 49, 40: 55
+ADMIN: recipes known by result tier, first three players: t1:23/26 t2:20/25 t3:6/18 t4:2/15 t5:1/3 || t1:24/26 t2:19/25 t3:11/18 t4:5/15 t5:1/3 || t1:23/26 t2:20/25 t3:9/18 t4:4/15 t5:1/3
+ADMIN: goals done (of 22) after N runs: 5: 13.6, 10: 16.4, 20: 16.9, 40: 19.4
+NEWCOMER: players 40, runs each 200
+NEWCOMER: first Ultimate at run: median 143, mean 131.4, fastest 64, slowest 188, quartiles 91 / 178; never within 200 runs: 32/40
+NEWCOMER: runs 1-5: win 0%, depth 1.8 | runs 6-10: win 0%, depth 2.1 | runs 11-20: win 0%, depth 2.4 | runs 21-40: win 0%, depth 2.7 | runs 41-80: win 1%, depth 2.9 | runs 81-120: win 3%, depth 3.1 | runs 121-160: win 4%, depth 3.2 | runs 161-200: win 7%, depth 3.3
+NEWCOMER: all runs: win 3%, average depth reached 2.99, losses by depth 1..5: 2% 17% 64% 16% 0%, stuck runs 0
+NEWCOMER: journal entries (of 87) after N runs: 5: 19, 10: 25, 20: 31, 40: 36, 80: 44, 120: 47, 160: 49, 200: 50
+NEWCOMER: recipes known by result tier, first three players: t1:23/26 t2:19/25 t3:10/18 t4:2/15 t5:0/3 || t1:23/26 t2:18/25 t3:6/18 t4:2/15 t5:0/3 || t1:23/26 t2:19/25 t3:6/18 t4:2/15 t5:0/3
+NEWCOMER: goals done (of 22) after N runs: 5: 6.1, 10: 8.4, 20: 11.4, 40: 14.6, 80: 15.9, 120: 17.1, 160: 17.2, 200: 17.5
+ADMIN (no aspects, no events): players 40, runs each 60
+ADMIN (no aspects, no events): first Ultimate at run: median 1, mean 1.4, fastest 1, slowest 3, quartiles 1 / 2; never within 60 runs: 0/40
+ADMIN (no aspects, no events): runs 1-5: win 72%, depth 3.9 | runs 6-10: win 78%, depth 3.9 | runs 11-20: win 77%, depth 3.9 | runs 21-40: win 77%, depth 3.9 | runs 41-60: win 82%, depth 3.9
+ADMIN (no aspects, no events): all runs: win 78%, average depth reached 3.89, losses by depth 1..5: 4% 6% 38% 51% 0%, stuck runs 0
+ADMIN (no aspects, no events): journal entries (of 87) after N runs: 5: 36, 10: 42, 20: 47, 40: 52
+ADMIN (no aspects, no events): recipes known by result tier, first three players: t1:23/26 t2:19/25 t3:9/18 t4:2/15 t5:1/3 || t1:23/26 t2:19/25 t3:8/18 t4:3/15 t5:1/3 || t1:23/26 t2:20/25 t3:7/18 t4:3/15 t5:1/3
+ADMIN (no aspects, no events): goals done (of 22) after N runs: 5: 13.4, 10: 16.5, 20: 16.8, 40: 19.3

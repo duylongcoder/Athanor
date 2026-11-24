@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Athanor.Core;
+using Athanor.Gameplay;
 using Athanor.Game;
 using NUnit.Framework;
 using UnityEngine;
@@ -32,7 +32,7 @@ namespace Athanor.Tests
         TutorialController tutorial;
 
         [SetUp] public void Open() { main = new MainSceneFixture(); tutorial = main.FlowField<TutorialController>("tutorial"); tutorial.Bind(main.Flow);
-            main.Flow.JournalView.Bind(new ContentDb(JsonUtility.FromJson<ContentData>(Resources.Load<TextAsset>("content").text)));   // the cells the tutorial points at
+            main.Flow.JournalView.Bind(new ContentDb(ContentAssets.Data()));   // the cells the tutorial points at
         }
         [TearDown] public void Close() => main?.Dispose();
 

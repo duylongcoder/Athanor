@@ -10,7 +10,7 @@ count: 5
 `Athanor/Assets/Tests/EditModeGame/TutorialStepsBakeTests.cs` — 5 tests
 
 ## Covers
-[[AreaKind]], [[ContentData]], [[ContentDb]], [[JournalView]], [[TutorialController]], [[TutorialScript]]
+[[AreaKind]], [[ContentAssets]], [[ContentDb]], [[JournalView]], [[TutorialController]], [[TutorialScript]]
 
 ## Tests
 - `EveryStepId_UsedByDrive_ExistsInTheScene`

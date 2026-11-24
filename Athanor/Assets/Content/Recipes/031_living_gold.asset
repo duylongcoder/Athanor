@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec9b493c53a82448fa4645eb1c6483c9, type: 3}
+  m_Name: 031_living_gold
+  m_EditorClassIdentifier: Athanor.Gameplay::Athanor.Gameplay.RecipeDefinition
+  items:
+  - {fileID: 11400000, guid: 7582a26dbf7cc40658eaf556d316db71, type: 2}
+  - {fileID: 11400000, guid: 6226bf8096f7e4cd19b8fb7eb4bfdfeb, type: 2}
+  minReactivity: 22
+  result: {fileID: 11400000, guid: 9a865c438acc944f39429b683fa16da3, type: 2}

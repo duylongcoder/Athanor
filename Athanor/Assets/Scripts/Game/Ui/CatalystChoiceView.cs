@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Athanor.Core;
+using Athanor.Gameplay;
 using PrimeTween;
 using UnityEngine;
 

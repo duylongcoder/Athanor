@@ -1,4 +1,4 @@
-using Athanor.Core;
+using Athanor.Gameplay;
 using Athanor.Game;
 using NUnit.Framework;
 using UnityEngine;
@@ -8,7 +8,7 @@ namespace Athanor.Tests
     /// <summary>The Redraw button is live only while a redraw is left and the bench is in play.</summary>
     public class HudTests
     {
-        static ContentDb Db() => new ContentDb(JsonUtility.FromJson<ContentData>(Resources.Load<TextAsset>("content").text));
+        static ContentDb Db() => new ContentDb(ContentAssets.Data());
 
         [Test]
         public void CanRedraw_WhileRedrawsRemain_IsTrueUntilTheLastRedrawIsUsed()

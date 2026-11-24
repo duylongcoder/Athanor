@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Athanor.Core;
+using Athanor.Gameplay;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -57,6 +57,9 @@ namespace Athanor.Game
         public bool Finished { get; private set; }
         /// <summary>The scores the popups showed, in order (checked by the tests against TutorialTests: 40 / 0 / 40 / 240 / ...).</summary>
         public readonly List<long> Shown = new List<long>();
+        /// <summary>Tests and debugging only: read lines advance by themselves and the scripted lays, Ignites and Journal moves are made for the player.</summary>
+        [Tooltip("Tests and debugging only: read lines advance by themselves; the scripted lays, Ignites and Journal moves are made for the player.")]
+        public bool AutoDrive;
 
         /// <summary>Gives the controller the game it reads; the lessons run in Drive.</summary>
         public void Bind(GameFlow flow) => f = flow;
@@ -177,16 +180,17 @@ namespace Athanor.Game
             var step = Step(id);
             Show(step, text ?? Loc.T(step.textKey), true, lines, hub);
             yield return null;
+            if (AutoDrive) advance = true;
             while (!advance) yield return null;
             Hide();
         }
 
-        /// <summary>A line and a lock: clicks in pass-through areas go to the game, every other click pulses the rim once. Ends when done().</summary>
-        IEnumerator Await(string id, Func<bool> done, int hub = -1)
+        /// <summary>A line and a lock: clicks in pass-through areas go to the game, every other click pulses the rim once. Ends when done(). bot plays the move in AutoDrive.</summary>
+        IEnumerator Await(string id, Func<bool> done, int hub = -1, Action bot = null)
         {
             var step = Step(id);
             Show(step, Loc.T(step.textKey), false, null, hub);
-            while (!done()) yield return null;
+            while (!done()) { if (AutoDrive && bot != null) bot(); yield return null; }
             Hide();
         }
 
@@ -203,6 +207,7 @@ namespace Athanor.Game
                 sp.color = i == lay.Length - 1 ? style.brokenGhost : Color.white;
             }
             yield return null;
+            if (AutoDrive) advance = true;
             while (!advance) yield return null;
             Hide();
         }
@@ -218,16 +223,30 @@ namespace Athanor.Game
                 if (on == lay.Id) ok++;
                 else if (on != null) { run.Unplace(lay.Tile); changed = true; }
             }
-            for (int tile = 0; tile < Core.Bench.TileCount; tile++)       // anything off the script goes back to the hand
+            for (int tile = 0; tile < Gameplay.Bench.TileCount; tile++)       // anything off the script goes back to the hand
                 if (run.Bench.Tiles[tile] != null && !t.Lay.Take(n).Any(l => l.Tile == tile)) { run.Unplace(tile); changed = true; }
             if (changed) f.Bench.Refresh();
             return ok == n;
         }
 
+        /// <summary>AutoDrive: lays the next scripted material of the first n, one per frame, as a player would.</summary>
+        void Lay(TutorialTrial t, int n)
+        {
+            var run = f.Run;
+            for (int i = 0; i < n; i++)
+            {
+                var l = t.Lay[i];
+                if (run.Bench.Tiles[l.Tile] == l.Id) continue;
+                for (int h = 0; h < run.Hand.Count; h++)
+                    if (run.Hand[h] == l.Id) { if (run.Place(h, l.Tile)) f.Bench.Refresh(); break; }
+                return;
+            }
+        }
+
         /// <summary>Waits for the player to press Ignite and for the Ignite to play out.</summary>
         IEnumerator IgniteStep(string id)
         {
-            yield return Await(id, () => f.State == FlowState.Resolving);
+            yield return Await(id, () => f.State == FlowState.Resolving, bot: f.Ignite);
             while (f.State == FlowState.Resolving) yield return null;
         }
 
@@ -256,7 +275,7 @@ namespace Athanor.Game
         {
             switch (a.view)
             {
-                case ViewRef.Bench: return UnionTiles(Enumerable.Range(0, Core.Bench.TileCount));
+                case ViewRef.Bench: return UnionTiles(Enumerable.Range(0, Gameplay.Bench.TileCount));
                 case ViewRef.Redraw: return f.Bench.Hud.RedrawRect;
                 case ViewRef.JournalCell: return f.JournalView.CellRect(a.cellId);
                 case ViewRef.JournalRecipes: return f.JournalView.RecipesRect;
@@ -354,7 +373,7 @@ namespace Athanor.Game
             trial++;
             if (trial < 3 && f.Run.Phase == RunPhase.Playing)
             {
-                for (int t = 0; t < Core.Bench.TileCount; t++) f.Run.Unplace(t);     // a fizzle leaves the materials on the bench
+                for (int t = 0; t < Gameplay.Bench.TileCount; t++) f.Run.Unplace(t);     // a fizzle leaves the materials on the bench
                 f.Run.Deal((trial == 1 ? TutorialScript.Miss : TutorialScript.Chain).Hand);
             }
         }
@@ -396,27 +415,27 @@ namespace Athanor.Game
             // trial 1: lay, Ignite, reaction
             yield return WaitBench(0);
             yield return Say("1.1");
-            yield return Await("1.2", () => Laid(TutorialScript.Reaction, 1));
-            yield return Await("1.3", () => Laid(TutorialScript.Reaction, 2));
+            yield return Await("1.2", () => Laid(TutorialScript.Reaction, 1), bot: () => Lay(TutorialScript.Reaction, 1));
+            yield return Await("1.3", () => Laid(TutorialScript.Reaction, 2), bot: () => Lay(TutorialScript.Reaction, 2));
             yield return Say("1.4");
             yield return IgniteStep("1.5");
             // trial 2: a miss, and the Journal
             yield return WaitBench(1);
-            yield return Await("2.1", () => Laid(TutorialScript.Miss, 2));
+            yield return Await("2.1", () => Laid(TutorialScript.Miss, 2), bot: () => Lay(TutorialScript.Miss, 2));
             yield return IgniteStep("2.2");
             yield return WaitBench(2);
-            yield return Await("2.4", () => f.State == FlowState.Journal);
+            yield return Await("2.4", () => f.State == FlowState.Journal, bot: f.RequestJournal);
             OpenJournalPage("2.5");
             yield return Say("2.5");
             yield return Say("2.6");
             OpenJournalPage("2.7");
             var last = Step("2.7");
             Show(last, Loc.T(last.textKey), false);
-            while (f.State == FlowState.Journal) yield return null;
+            while (f.State == FlowState.Journal) { if (AutoDrive) f.JournalView.Close(); yield return null; }
             Hide();
             // trial 3: chains
             yield return Say("3.0");
-            yield return Await("3.1", () => Laid(TutorialScript.Chain, 3));
+            yield return Await("3.1", () => Laid(TutorialScript.Chain, 3), bot: () => Lay(TutorialScript.Chain, 3));
             yield return Say("3.2");
             brokenTotal = f.Run.Preview(TutorialScript.BrokenChain()).Sum(e => e.Potency);     // worked out before the Ignite, so nothing is spent
             yield return IgniteStep("3.3");
@@ -426,7 +445,7 @@ namespace Athanor.Game
             var ct = catalystTrial;
             if (ct != null)
             {
-                yield return Await("5.4", () => Laid(ct, ct.Lay.Length));
+                yield return Await("5.4", () => Laid(ct, ct.Lay.Length), bot: () => Lay(ct, ct.Lay.Length));
                 yield return IgniteStep("5.4i");
                 while (f.State != FlowState.Bench) yield return null;
             }

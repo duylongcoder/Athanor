@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Reflection;
-using Athanor.Core;
+using Athanor.Gameplay;
 using Athanor.Game;
 using NUnit.Framework;
 using PrimeTween;
@@ -128,17 +128,17 @@ namespace Athanor.Tests
             finally { f.Destroy(); }
         }
 
-        // a fresh run that opens on an event: the first one in content.json a fresh run can meet at depth 1 (no aspect offer before it)
+        // a fresh run that opens on an event: the first one in the content a fresh run can meet at depth 1 (no aspect offer before it)
         static RunState EventRun()
         {
-            var db = new ContentDb(JsonUtility.FromJson<ContentData>(AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/Resources/content.json").text));
+            var db = new ContentDb(ContentAssets.Data());
             foreach (var e in db.Events)
             {
                 var options = new RunOptions { Unlocks = Unlocks.Fresh(db), Events = true, ForceEvent = e.id, ForceEventAt = 1 };
                 var run = new RunState(db, new Journal(), 1, 1, options);
                 if (run.Phase == RunPhase.EventOffer) return run;
             }
-            Assert.Fail("no event in content.json opens a fresh run at depth 1");
+            Assert.Fail("no event in the content opens a fresh run at depth 1");
             return null;
         }
 
@@ -394,7 +394,7 @@ namespace Athanor.Tests
         const string GoalsPrefab = "Assets/Prefabs/Views/Goals.prefab";
 
         static ContentDb Content() =>
-            new ContentDb(JsonUtility.FromJson<ContentData>(AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/Resources/content.json").text));
+            new ContentDb(ContentAssets.Data());
 
         [Test]
         public void Bind_GoalsPrefab_MakesOneRowPerGoal()
@@ -668,7 +668,7 @@ namespace Athanor.Tests
         static T HudField<T>(HudView view, string name) =>
             (T)typeof(HudView).GetField(name, BindingFlags.Instance | BindingFlags.NonPublic).GetValue(view);
 
-        static ContentDb ContentFromResources() => new ContentDb(JsonUtility.FromJson<ContentData>(Resources.Load<TextAsset>("content").text));
+        static ContentDb ContentFromResources() => new ContentDb(ContentAssets.Data());
 
         [Test]
         public void Bind_HudPrefab_ShowsTheDepthNumber()
@@ -792,7 +792,7 @@ namespace Athanor.Tests
 
                 view.Refresh();
 
-                Assert.AreEqual(Athanor.Core.Bench.TileCount, view.TileCount);
+                Assert.AreEqual(Athanor.Gameplay.Bench.TileCount, view.TileCount);
                 for (int i = 0; i < view.TileCount; i++)
                 {
                     Assert.IsNotNull(view.Tile(i), "tile " + i);

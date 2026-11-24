@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using Athanor.Core;
+using Athanor.Gameplay;
 using Athanor.Game;
 using PrimeTween;
 using UnityEditor;
@@ -120,7 +120,7 @@ namespace Athanor.EditorShared
         return (GameObject)PrefabUtility.InstantiatePrefab(prefab);
     }
 
-    static ContentDb Db() => new ContentDb(JsonUtility.FromJson<ContentData>(AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/Resources/content.json").text));
+    static ContentDb Db() => new ContentDb(ContentAssets.Data());
 
     static void Click(Component c) => c.GetComponent<Clickable>().onClick();
 
@@ -235,7 +235,7 @@ namespace Athanor.EditorShared
         return go;
     }
 
-    /// <summary>The first event in content.json a fresh run meets at depth 1.</summary>
+    /// <summary>The first event in the content assets a fresh run meets at depth 1.</summary>
     static RunState EventRun()
     {
         var db = Db();
@@ -245,7 +245,7 @@ namespace Athanor.EditorShared
             var run = new RunState(db, new Journal(), 1, 1, options);
             if (run.Phase == RunPhase.EventOffer) return run;
         }
-        throw new InvalidOperationException("no event in content.json opens a fresh run at depth 1");
+        throw new InvalidOperationException("no event in the content opens a fresh run at depth 1");
     }
 
     static GameObject EventShot(bool outcome)

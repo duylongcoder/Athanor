@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Athanor.Core;
+using Athanor.Gameplay;
 using PrimeTween;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -16,8 +16,10 @@ namespace Athanor.Game
         public ArtLibrary library;
         /// <summary>The colours files share (Assets/Data/Palette.asset); GameFlow publishes it as <see cref="Art.Palette"/>.</summary>
         [SerializeField] Palette palette;
-        /// <summary>content.json and the two language files, set in the scene. Awake throws when one is empty.</summary>
-        [SerializeField] TextAsset contentJson, langEn, langVi;
+        /// <summary>The two language files, set in the scene. Awake throws when one is empty.</summary>
+        [SerializeField] TextAsset langEn, langVi;
+        /// <summary>The game's content (Assets/Content/ContentDatabase.asset).</summary>
+        [SerializeField] ContentDatabase content;
         public GameObject workshop, cutsceneRoom;
         public Camera mainCamera;
         /// <summary>The HD-2D bench rig (null in a scene without it: the flat game).</summary>
@@ -40,6 +42,10 @@ namespace Athanor.Game
         public RunOverView RunOver => runOver;
         /// <summary>Debug: the scripted player plays and cutscenes skip themselves. F9 toggles it in the editor and in development builds.</summary>
         public bool Auto;
+        /// <summary>0: each run gets a fresh seed. Any other value: every run uses it (PlayMode traces, bug reproduction).</summary>
+        [Tooltip("0 = a fresh seed each run. Other values: every run uses this seed (PlayMode traces, bug reproduction).")]
+        [SerializeField] int seedOverride;
+        public int SeedOverride { get => seedOverride; set => seedOverride = value; }
 
         /// <summary>The development-build log line of the F9 toggle, followed by "on" or "off" (tools/web/descents.mjs reads it).</summary>
         public const string AutoHook = "[auto] ";
@@ -72,7 +78,7 @@ namespace Athanor.Game
                 Dev.Hook(EffectsLine(on));
             }
             if (kb.f10Key.wasPressedThisFrame && Bench != null)
-                for (int i = 0; i < Athanor.Core.Bench.TileCount; i++)
+                for (int i = 0; i < Athanor.Gameplay.Bench.TileCount; i++)
                 {
                     var t = Bench.Tile(i);
                     var pts = DepthMath.DrawnFace(t.FaceCentre, t.FaceSize, Px.H / 2f - t.centre.y, depthStage.rig.CamOffset, depthStage.rig.ImageShift, 3f, depthStage.rig.distance, depthStage.rig.table.Shape);
@@ -154,7 +160,7 @@ namespace Athanor.Game
 
         void Awake()
         {
-            if (contentJson == null) throw new System.InvalidOperationException("GameFlow: contentJson is not set in the scene");
+            if (content == null) throw new System.InvalidOperationException("GameFlow: content (ContentDatabase) is not set in the scene");
             if (langEn == null) throw new System.InvalidOperationException("GameFlow: langEn is not set in the scene");
             if (langVi == null) throw new System.InvalidOperationException("GameFlow: langVi is not set in the scene");
             if (library == null) throw new System.InvalidOperationException("GameFlow: library is not set in the scene");
@@ -188,7 +194,7 @@ namespace Athanor.Game
             Application.targetFrameRate = 60;
 #endif
             PrimeTweenConfig.SetTweensCapacity(200);   // a long chain runs many FloatTexts, Consumes and rack flights at once
-            Db = new ContentDb(JsonUtility.FromJson<ContentData>(contentJson.text));
+            Db = new ContentDb(content.ToContentData());
             Journal = Save.LoadJournal();
             Profile = Save.LoadProfile(Db);
             unlocks = Unlocks.For(Db, Profile);
@@ -243,6 +249,9 @@ namespace Athanor.Game
         void OnPauseOpened() => Bench.InputEnabled = false;
         void OnPauseClosed() { if (State == FlowState.Bench) Bench.InputEnabled = true; }
         void OpenPause() => pause.Open();
+
+        /// <summary>Opens the Journal as the bench's Journal button would (the tutorial's auto-drive).</summary>
+        public void RequestJournal() => OpenJournal();
 
         void OnDestroy()
         {
@@ -342,7 +351,8 @@ namespace Athanor.Game
             unlocks = Unlocks.For(Db, Profile);
             var options = tutorialRun ? TutorialScript.Options(unlocks) : RunOptions.Full(unlocks);
             options.LastLore = Profile.LastLore;
-            Run = new RunState(Db, Journal, tutorialRun ? TutorialScript.Seed : System.Environment.TickCount * 31 + runs, 1, options);
+            int seed = seedOverride != 0 ? seedOverride : System.Environment.TickCount * 31 + runs;
+            Run = new RunState(Db, Journal, tutorialRun ? TutorialScript.Seed : seed, 1, options);
             if (tutorialRun) { Run.Deal(TutorialScript.Reaction.Hand); tut = tutorial; } else tut = null;
             runEnded = false; abandoned = false;
             goalsThisRun.Clear();
@@ -525,6 +535,8 @@ namespace Athanor.Game
             // the run is settled first: whatever is skipped from here on, nothing can be lost
             var outcome = SettleIgnite(Run, Journal, sandbox);
             Profile.IgniteResolved(outcome);
+            Dev.Hook("[ignite] d" + Run.Depth + " +" + outcome.Gained + " =" + Run.Potency + " " + outcome.PhaseAfter + " "
+                + string.Join(",", outcome.Events.Where(e => e.Result != null).Select(e => e.Result)));
             // the end of a run is counted with the Ignite that ended it: closing the page during the ending cannot lose a win
             bool ended = outcome.PhaseAfter == RunPhase.Won || outcome.PhaseAfter == RunPhase.Lost;
             if (ended) Profile.RunEnded(Run);
@@ -566,7 +578,8 @@ namespace Athanor.Game
             string picked = null;
             if (tut != null) yield return tut.OnOffer();
             var offer = (IReadOnlyList<CatalystData>)Run.CatalystOffer;
-            yield return choice.Choose(offer, id => picked = id, Auto ? runTiming.autoChoiceWait : -1);
+            bool autoPick = Auto || (tut != null && tut.AutoDrive);
+            yield return choice.Choose(offer, id => picked = id, autoPick ? runTiming.autoChoiceWait : -1);
             string pickedName = offer.First(c => c.id == picked).name;
             Run.ChooseCatalyst(picked);
             if (tut != null) { tut.OfferTaken(); tut.AfterChoose(picked, pickedName); }
@@ -616,6 +629,7 @@ namespace Athanor.Game
             if (kb != null && kb.f9Key.wasPressedThisFrame && (Application.isEditor || Debug.isDebugBuild)) ToggleAuto();
             if (State == FlowState.Resolving && !flow.InCutscene && PointerInput.Down) ignite.Hurry = true;
             if (Bench != null && Bench.Hud != null) Bench.Hud.SetPauseShown(!pause.IsOpen && CanPause());
+            if (tut != null && tut.AutoDrive) { reaction.RequestSkip(); story.RequestSkip(); }
             if (!Auto) return;
             autoClock -= Time.deltaTime;
             if (autoClock > 0) return;

@@ -1,5 +1,5 @@
 using System.Reflection;
-using Athanor.Core;
+using Athanor.Gameplay;
 using Athanor.Game;
 using NUnit.Framework;
 using UnityEditor;
@@ -34,7 +34,7 @@ namespace Athanor.Tests
         // labels under a hidden view do not hear Loc.Changed in edit mode; run the same rewrite the label runs on a language change
         static void Relabel(Label l) => typeof(Label).GetMethod("Relabel", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(l, null);
 
-        static readonly int Final = new ContentDb(JsonUtility.FromJson<ContentData>(Resources.Load<TextAsset>("content").text)).FinalDepth;
+        static readonly int Final = new ContentDb(ContentAssets.Data()).FinalDepth;
 
         static string Of(int n) => Loc.T("ui.common.of", ("a", n), ("b", Final));
 

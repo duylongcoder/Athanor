@@ -7,7 +7,6 @@ tags: [moc/tools]
 # Tools
 Scripts outside Unity (art, fx, web tests, rule tests, this vault).
 
-- `tools/CoreReports/Program.cs` — <summary>
 - `tools/art/blur.mjs` — Gaussian blur on premultiplied alpha, so transparent pixels never darken the edge.
 - `tools/art/export-depth.mjs` — HD-2D DepthTest layer art (task 5b-04): pre-blurred far layers, two near foreground corners, two mist layers.
 - `tools/art/export-window.mjs` — Writes only the window views (Background/window_d1..d5.png, Fx/window_drip.png) and a contact sheet; no layout.json, no other sprites.
@@ -21,7 +20,7 @@ Scripts outside Unity (art, fx, web tests, rule tests, this vault).
 - `tools/ci/run.sh` — The one rule set for CI. The workflow and a developer both call this, so "green locally" means "green in CI".
 - `tools/lint/tests/test_unity_lint.py` — 
 - `tools/lint/unity_lint.py` — 
-- `tools/setup/protect-branch.sh` — Bật branch protection: bắt buộc PR + status check "ci-gate" xanh (gom lint, repo-guard, core-tests) + nhánh phải cập nhật,
+- `tools/setup/protect-branch.sh` — Bật branch protection: bắt buộc PR + status check "ci-gate" xanh (gom lint, repo-guard, unity-tests) + nhánh phải cập nhật,
 - `tools/vault/build_vault.py` — 
 - `tools/vault/q.py` — 
 - `tools/web/autoplay.mjs` — Lets the scripted player play a development web build in headless Chrome and photographs it (no dependencies; Node 22+).

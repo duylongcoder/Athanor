@@ -2,7 +2,7 @@
     "name": "Athanor.EditorShared",
     "rootNamespace": "Athanor.EditorShared",
     "references": [
-        "Athanor.Core",
+        "Athanor.Gameplay",
         "Athanor.Game",
         "Unity.TextMeshPro",
         "PrimeTween.Runtime"

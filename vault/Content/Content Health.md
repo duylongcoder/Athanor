@@ -5,7 +5,7 @@ tags: [report]
 ---
 # Content health
 
-Static checks only; the real rules live in `tools/CoreTests` (`ContentTests`).
+Static checks only; the real rules live in the Unity tests (`Athanor/Assets/Tests`).
 
 ## Problems
 - none

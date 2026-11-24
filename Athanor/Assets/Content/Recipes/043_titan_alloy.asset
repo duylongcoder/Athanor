@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec9b493c53a82448fa4645eb1c6483c9, type: 3}
+  m_Name: 043_titan_alloy
+  m_EditorClassIdentifier: Athanor.Gameplay::Athanor.Gameplay.RecipeDefinition
+  items:
+  - {fileID: 11400000, guid: 8b503472d54d44fccbdb9a6aeac760ea, type: 2}
+  - {fileID: 11400000, guid: 601a3462719d141dbb8a0943d978ac42, type: 2}
+  - {fileID: 11400000, guid: 08ccbb0ef00cb46099cfc0f29e05723e, type: 2}
+  - {fileID: 11400000, guid: 1f8571e2316694dc0bcc89145f72751d, type: 2}
+  minReactivity: 14
+  result: {fileID: 11400000, guid: 7a536798a246e42f3873cb1ff718f9f7, type: 2}

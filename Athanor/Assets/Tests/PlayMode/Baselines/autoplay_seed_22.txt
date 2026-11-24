@@ -1,0 +1,25 @@
+[intro] 1
+[start] ready
+[ignite] d1 +160 =160 Playing dragon_blood,pixie_wing
+[ignite] d1 +280 =440 DepthCleared sulfur,wyrm_ichor
+[descent] 2
+[choice] 1
+[start] ready
+[ignite] d2 +780 =780 Playing sky_iron,moonpetal,unicorn_horn
+[ignite] d2 +570 =1350 Playing sky_iron,gold_ingot
+[ignite] d2 +1320 =2670 DepthCleared steam_wisp,phoenix_feather,dusk_cap
+[descent] 3
+[choice] 2
+[start] ready
+[ignite] d3 +3990 =3990 Playing dragon_scale,frost_salt,storm_glass,aurora_dust,starmetal_ore
+[ignite] d3 +90 =4080 Playing moonpetal
+[ignite] d3 +180 =4260 Playing sky_iron,frost_salt
+[ignite] d3 +3090 =7350 Playing starmetal_ore,verdant_tonic,humstone,star_shard
+[ignite] d3 +3090 =10440 DepthCleared sulfur,heaven_s_ash
+[descent] 4
+[choice] 3
+[start] ready
+[ignite] d4 +660 =660 Playing gold_ingot,dragon_blood
+[ignite] d4 +18140 =18800 Playing everflame,wyrm_ichor
+[ignite] d4 +15480 =34280 Won worldseed,quicksilver,sun_amalgam,dusk_cap
+[runover] won

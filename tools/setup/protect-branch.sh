@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Bật branch protection: bắt buộc PR + status check "ci-gate" xanh (gom lint, repo-guard, core-tests) + nhánh phải cập nhật,
+# Bật branch protection: bắt buộc PR + status check "ci-gate" xanh (gom lint, repo-guard, unity-tests) + nhánh phải cập nhật,
 # áp dụng cả cho admin (solo dev là admin nên cần enforce_admins), cấm force-push và xóa nhánh.
 #
 # Mặc định chỉ IN ra payload và lệnh sẽ chạy (dry-run). Đặt APPLY=1 để thực thi.

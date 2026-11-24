@@ -1,0 +1,3160 @@
+{
+    "rules": {
+        "handMin": 3,
+        "handBase": 5,
+        "trials": 4,
+        "trialsFinalDepth": 6,
+        "redraws": 2,
+        "starterCopies": 2,
+        "offerSize": 3,
+        "rackSize": 12,
+        "pouchCards": 1,
+        "maxRi": 13,
+        "firstReactionMult": 2,
+        "aspectDepths": [
+            1,
+            3,
+            5
+        ],
+        "potencyByTier": [
+            0,
+            20,
+            60,
+            180,
+            500,
+            1500
+        ]
+    },
+    "materials": [
+        {
+            "id": "ember_coal",
+            "name": "Ember Coal",
+            "kind": "Ore",
+            "glow": "#ff6a1e",
+            "tier": 0,
+            "reactivity": 9,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "deep_tear",
+            "name": "Deep Tear",
+            "kind": "Potion",
+            "glow": "#6ee6c8",
+            "tier": 0,
+            "reactivity": 4,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "glowmoss",
+            "name": "Glowmoss",
+            "kind": "Plant",
+            "glow": "#6ee6c8",
+            "tier": 0,
+            "reactivity": 2,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "moondust",
+            "name": "Moondust",
+            "kind": "Powder",
+            "glow": "#7cc0f8",
+            "tier": 0,
+            "reactivity": 7,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "iron_ore",
+            "name": "Iron Ore",
+            "kind": "Ore",
+            "glow": "",
+            "tier": 0,
+            "reactivity": 3,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "bone_ash",
+            "name": "Bone Ash",
+            "kind": "Powder",
+            "glow": "",
+            "tier": 0,
+            "reactivity": 5,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "sunbloom",
+            "name": "Sunbloom",
+            "kind": "Plant",
+            "glow": "#ffa63a",
+            "tier": 0,
+            "reactivity": 6,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "wyrm_fang",
+            "name": "Wyrm Fang",
+            "kind": "Beast",
+            "glow": "",
+            "tier": 0,
+            "reactivity": 8,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "steam_wisp",
+            "name": "Steam Wisp",
+            "kind": "Beast",
+            "glow": "#a8fff4",
+            "tier": 1,
+            "reactivity": 8,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "sky_iron",
+            "name": "Sky Iron",
+            "kind": "Metal",
+            "glow": "",
+            "tier": 1,
+            "reactivity": 3,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "sulfur",
+            "name": "Sulfur",
+            "kind": "Powder",
+            "glow": "",
+            "tier": 1,
+            "reactivity": 9,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "frost_salt",
+            "name": "Frost Salt",
+            "kind": "Crystal",
+            "glow": "#7cc0f8",
+            "tier": 1,
+            "reactivity": 2,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "verdant_tonic",
+            "name": "Verdant Tonic",
+            "kind": "Potion",
+            "glow": "#8ad04a",
+            "tier": 1,
+            "reactivity": 5,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "moonpetal",
+            "name": "Moonpetal",
+            "kind": "Plant",
+            "glow": "#7cc0f8",
+            "tier": 1,
+            "reactivity": 4,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "dusk_cap",
+            "name": "Dusk Cap",
+            "kind": "Plant",
+            "glow": "#c486f4",
+            "tier": 1,
+            "reactivity": 1,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "pixie_wing",
+            "name": "Pixie Wing",
+            "kind": "Beast",
+            "glow": "#f890b8",
+            "tier": 1,
+            "reactivity": 7,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "dragon_scale",
+            "name": "Dragon Scale",
+            "kind": "Beast",
+            "glow": "",
+            "tier": 1,
+            "reactivity": 2,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "dragon_blood",
+            "name": "Dragon Blood",
+            "kind": "Potion",
+            "glow": "#ee6a3c",
+            "tier": 1,
+            "reactivity": 10,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "quicksilver",
+            "name": "Quicksilver",
+            "kind": "Metal",
+            "glow": "",
+            "tier": 1,
+            "reactivity": 6,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "mandrake",
+            "name": "Mandrake",
+            "kind": "Plant",
+            "glow": "",
+            "tier": 1,
+            "reactivity": 3,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "hearth_glass",
+            "name": "Hearth Glass",
+            "kind": "Crystal",
+            "glow": "#ffa63a",
+            "tier": 1,
+            "reactivity": 6,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "wyrm_ichor",
+            "name": "Wyrm Ichor",
+            "kind": "Potion",
+            "glow": "#8ad04a",
+            "tier": 1,
+            "reactivity": 4,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "forge_slag",
+            "name": "Forge Slag",
+            "kind": "Ore",
+            "glow": "#e06a1c",
+            "tier": 1,
+            "reactivity": 1,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "primal_bloom",
+            "name": "Primal Bloom",
+            "kind": "Plant",
+            "glow": "#f890b8",
+            "tier": 1,
+            "reactivity": 10,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "gold_ingot",
+            "name": "Gold Ingot",
+            "kind": "Metal",
+            "glow": "#f8d250",
+            "tier": 2,
+            "reactivity": 2,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "cinnabar",
+            "name": "Cinnabar",
+            "kind": "Crystal",
+            "glow": "#ee6a3c",
+            "tier": 2,
+            "reactivity": 7,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "humstone",
+            "name": "Humstone",
+            "kind": "Crystal",
+            "glow": "#c486f4",
+            "tier": 2,
+            "reactivity": 5,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "storm_glass",
+            "name": "Storm Glass",
+            "kind": "Crystal",
+            "glow": "#7cc0f8",
+            "tier": 2,
+            "reactivity": 9,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "basilisk_eye",
+            "name": "Basilisk Eye",
+            "kind": "Beast",
+            "glow": "#8ad04a",
+            "tier": 2,
+            "reactivity": 6,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "unicorn_horn",
+            "name": "Unicorn Horn",
+            "kind": "Beast",
+            "glow": "#f890b8",
+            "tier": 2,
+            "reactivity": 3,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "lifewater",
+            "name": "Lifewater",
+            "kind": "Potion",
+            "glow": "#8ad04a",
+            "tier": 2,
+            "reactivity": 1,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "nightshade_ink",
+            "name": "Nightshade Ink",
+            "kind": "Potion",
+            "glow": "#c486f4",
+            "tier": 2,
+            "reactivity": 8,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "starmetal_ore",
+            "name": "Starmetal Ore",
+            "kind": "Ore",
+            "glow": "#7cc0f8",
+            "tier": 2,
+            "reactivity": 4,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "thunder_ingot",
+            "name": "Thunder Ingot",
+            "kind": "Metal",
+            "glow": "#7cc0f8",
+            "tier": 2,
+            "reactivity": 10,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "witch_salve",
+            "name": "Witch Salve",
+            "kind": "Potion",
+            "glow": "#c486f4",
+            "tier": 2,
+            "reactivity": 3,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "chimera_hide",
+            "name": "Chimera Hide",
+            "kind": "Beast",
+            "glow": "#ee6a3c",
+            "tier": 2,
+            "reactivity": 7,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "phoenix_feather",
+            "name": "Phoenix Feather",
+            "kind": "Beast",
+            "glow": "#ffa63a",
+            "tier": 3,
+            "reactivity": 10,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "star_shard",
+            "name": "Star Shard",
+            "kind": "Crystal",
+            "glow": "#fff6b8",
+            "tier": 3,
+            "reactivity": 6,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "red_tincture",
+            "name": "Red Tincture",
+            "kind": "Potion",
+            "glow": "#ee6a3c",
+            "tier": 3,
+            "reactivity": 3,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "aurora_dust",
+            "name": "Aurora Dust",
+            "kind": "Powder",
+            "glow": "#6ee6c8",
+            "tier": 3,
+            "reactivity": 8,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "seer_s_orb",
+            "name": "Seer's Orb",
+            "kind": "Crystal",
+            "glow": "#c486f4",
+            "tier": 3,
+            "reactivity": 2,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "sun_amalgam",
+            "name": "Sun Amalgam",
+            "kind": "Metal",
+            "glow": "#f8d250",
+            "tier": 3,
+            "reactivity": 5,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "void_pearl",
+            "name": "Void Pearl",
+            "kind": "Crystal",
+            "glow": "#8a3fc8",
+            "tier": 3,
+            "reactivity": 1,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "titan_alloy",
+            "name": "Titan Alloy",
+            "kind": "Metal",
+            "glow": "#ffa63a",
+            "tier": 3,
+            "reactivity": 9,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "dream_spore",
+            "name": "Dream Spore",
+            "kind": "Plant",
+            "glow": "#f890b8",
+            "tier": 3,
+            "reactivity": 7,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "everflame",
+            "name": "Everflame",
+            "kind": "Potion",
+            "glow": "#ffa63a",
+            "tier": 4,
+            "reactivity": 9,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "heaven_s_ash",
+            "name": "Heaven's Ash",
+            "kind": "Powder",
+            "glow": "#e0f6ff",
+            "tier": 4,
+            "reactivity": 1,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "living_gold",
+            "name": "Living Gold",
+            "kind": "Metal",
+            "glow": "#f8d250",
+            "tier": 4,
+            "reactivity": 4,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "azoth",
+            "name": "Azoth",
+            "kind": "Potion",
+            "glow": "#a8fff4",
+            "tier": 4,
+            "reactivity": 7,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "philosopher_s_salt",
+            "name": "Philosopher's Salt",
+            "kind": "Powder",
+            "glow": "#ee6a3c",
+            "tier": 4,
+            "reactivity": 6,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "chrysopoeia",
+            "name": "Chrysopoeia",
+            "kind": "Metal",
+            "glow": "#f8d250",
+            "tier": 4,
+            "reactivity": 2,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "worldseed",
+            "name": "Worldseed",
+            "kind": "Crystal",
+            "glow": "#ffffff",
+            "tier": 5,
+            "reactivity": 10,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "salt_crystal",
+            "name": "Salt Crystal",
+            "kind": "Crystal",
+            "glow": "#e0f6ff",
+            "tier": 0,
+            "reactivity": 5,
+            "rarity": "Uncommon",
+            "locked": true
+        },
+        {
+            "id": "copper_filings",
+            "name": "Copper Filings",
+            "kind": "Metal",
+            "glow": "#ffa63a",
+            "tier": 0,
+            "reactivity": 5,
+            "rarity": "Uncommon",
+            "locked": true
+        },
+        {
+            "id": "grave_beetle",
+            "name": "Grave Beetle",
+            "kind": "Beast",
+            "glow": "",
+            "tier": 0,
+            "reactivity": 4,
+            "rarity": "Uncommon",
+            "locked": true
+        },
+        {
+            "id": "lightning_sand",
+            "name": "Lightning Sand",
+            "kind": "Powder",
+            "glow": "#fff6b8",
+            "tier": 0,
+            "reactivity": 10,
+            "rarity": "Rare",
+            "locked": true
+        },
+        {
+            "id": "hollow_bone",
+            "name": "Hollow Bone",
+            "kind": "Beast",
+            "glow": "",
+            "tier": 0,
+            "reactivity": 1,
+            "rarity": "Rare",
+            "locked": true
+        },
+        {
+            "id": "brine",
+            "name": "Brine",
+            "kind": "Potion",
+            "glow": "#6ee6c8",
+            "tier": 1,
+            "reactivity": 3,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "verdigris",
+            "name": "Verdigris",
+            "kind": "Powder",
+            "glow": "#8ad04a",
+            "tier": 1,
+            "reactivity": 6,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "carapace",
+            "name": "Carapace",
+            "kind": "Beast",
+            "glow": "",
+            "tier": 1,
+            "reactivity": 2,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "static_dust",
+            "name": "Static Dust",
+            "kind": "Powder",
+            "glow": "#fff6b8",
+            "tier": 1,
+            "reactivity": 9,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "marrow",
+            "name": "Marrow",
+            "kind": "Potion",
+            "glow": "#f890b8",
+            "tier": 1,
+            "reactivity": 3,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "spark_quartz",
+            "name": "Spark Quartz",
+            "kind": "Crystal",
+            "glow": "#fff6b8",
+            "tier": 1,
+            "reactivity": 8,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "bronze",
+            "name": "Bronze",
+            "kind": "Metal",
+            "glow": "#ffa63a",
+            "tier": 2,
+            "reactivity": 4,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "lye",
+            "name": "Lye",
+            "kind": "Potion",
+            "glow": "#a8fff4",
+            "tier": 2,
+            "reactivity": 7,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "blue_vitriol",
+            "name": "Blue Vitriol",
+            "kind": "Crystal",
+            "glow": "#7cc0f8",
+            "tier": 2,
+            "reactivity": 5,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "tempest_glass",
+            "name": "Tempest Glass",
+            "kind": "Crystal",
+            "glow": "#c486f4",
+            "tier": 2,
+            "reactivity": 10,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "scarab_amulet",
+            "name": "Scarab Amulet",
+            "kind": "Metal",
+            "glow": "#8ad04a",
+            "tier": 2,
+            "reactivity": 3,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "ossuary_dust",
+            "name": "Ossuary Dust",
+            "kind": "Powder",
+            "glow": "#e0f6ff",
+            "tier": 2,
+            "reactivity": 6,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "thunderstone",
+            "name": "Thunderstone",
+            "kind": "Ore",
+            "glow": "#7cc0f8",
+            "tier": 2,
+            "reactivity": 9,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "quickfire",
+            "name": "Quickfire",
+            "kind": "Potion",
+            "glow": "#ee6a3c",
+            "tier": 2,
+            "reactivity": 8,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "stormcaller_rod",
+            "name": "Stormcaller Rod",
+            "kind": "Metal",
+            "glow": "#7cc0f8",
+            "tier": 3,
+            "reactivity": 9,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "reliquary_bone",
+            "name": "Reliquary Bone",
+            "kind": "Beast",
+            "glow": "#f890b8",
+            "tier": 3,
+            "reactivity": 3,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "salt_of_ages",
+            "name": "Salt of Ages",
+            "kind": "Powder",
+            "glow": "#e0f6ff",
+            "tier": 3,
+            "reactivity": 5,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "ball_lightning",
+            "name": "Ball Lightning",
+            "kind": "Potion",
+            "glow": "#fff6b8",
+            "tier": 3,
+            "reactivity": 10,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "grave_lantern",
+            "name": "Grave Lantern",
+            "kind": "Crystal",
+            "glow": "#8ad04a",
+            "tier": 3,
+            "reactivity": 4,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "green_bronze",
+            "name": "Green Bronze",
+            "kind": "Metal",
+            "glow": "#8ad04a",
+            "tier": 3,
+            "reactivity": 7,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "thunder_heart",
+            "name": "Thunder Heart",
+            "kind": "Beast",
+            "glow": "#fff6b8",
+            "tier": 4,
+            "reactivity": 10,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "ossuary_crown",
+            "name": "Ossuary Crown",
+            "kind": "Metal",
+            "glow": "#c486f4",
+            "tier": 4,
+            "reactivity": 2,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "storm_philter",
+            "name": "Storm Philter",
+            "kind": "Potion",
+            "glow": "#7cc0f8",
+            "tier": 4,
+            "reactivity": 8,
+            "rarity": "",
+            "locked": false
+        },
+        {
+            "id": "copper_sun",
+            "name": "Copper Sun",
+            "kind": "Crystal",
+            "glow": "#ffa63a",
+            "tier": 4,
+            "reactivity": 6,
+            "rarity": "",
+            "locked": false
+        }
+    ],
+    "recipes": [
+        {
+            "items": [
+                "ember_coal",
+                "deep_tear"
+            ],
+            "minReactivity": 0,
+            "result": "steam_wisp",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "ember_coal",
+                "iron_ore"
+            ],
+            "minReactivity": 0,
+            "result": "sky_iron",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "ember_coal",
+                "bone_ash"
+            ],
+            "minReactivity": 0,
+            "result": "sulfur",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "deep_tear",
+                "moondust"
+            ],
+            "minReactivity": 0,
+            "result": "frost_salt",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "deep_tear",
+                "glowmoss"
+            ],
+            "minReactivity": 0,
+            "result": "verdant_tonic",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "sunbloom",
+                "deep_tear"
+            ],
+            "minReactivity": 0,
+            "result": "verdant_tonic",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "glowmoss",
+                "moondust"
+            ],
+            "minReactivity": 0,
+            "result": "moonpetal",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "glowmoss",
+                "bone_ash"
+            ],
+            "minReactivity": 0,
+            "result": "dusk_cap",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "wyrm_fang",
+                "glowmoss"
+            ],
+            "minReactivity": 0,
+            "result": "dusk_cap",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "sunbloom",
+                "moondust"
+            ],
+            "minReactivity": 0,
+            "result": "pixie_wing",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "wyrm_fang",
+                "iron_ore"
+            ],
+            "minReactivity": 0,
+            "result": "dragon_scale",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "wyrm_fang",
+                "deep_tear"
+            ],
+            "minReactivity": 0,
+            "result": "dragon_blood",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "iron_ore",
+                "moondust"
+            ],
+            "minReactivity": 0,
+            "result": "quicksilver",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "sunbloom",
+                "bone_ash"
+            ],
+            "minReactivity": 0,
+            "result": "mandrake",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "sky_iron",
+                "sulfur"
+            ],
+            "minReactivity": 10,
+            "result": "gold_ingot",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "quicksilver",
+                "sulfur"
+            ],
+            "minReactivity": 10,
+            "result": "cinnabar",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "frost_salt",
+                "moonpetal"
+            ],
+            "minReactivity": 10,
+            "result": "humstone",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "steam_wisp",
+                "frost_salt"
+            ],
+            "minReactivity": 10,
+            "result": "storm_glass",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "dragon_blood",
+                "dragon_scale"
+            ],
+            "minReactivity": 10,
+            "result": "basilisk_eye",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "pixie_wing",
+                "moonpetal"
+            ],
+            "minReactivity": 10,
+            "result": "unicorn_horn",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "mandrake",
+                "verdant_tonic"
+            ],
+            "minReactivity": 10,
+            "result": "lifewater",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "dusk_cap",
+                "quicksilver"
+            ],
+            "minReactivity": 10,
+            "result": "nightshade_ink",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "sky_iron",
+                "moondust"
+            ],
+            "minReactivity": 10,
+            "result": "starmetal_ore",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "gold_ingot",
+                "dragon_blood"
+            ],
+            "minReactivity": 14,
+            "result": "phoenix_feather",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "starmetal_ore",
+                "humstone"
+            ],
+            "minReactivity": 14,
+            "result": "star_shard",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "cinnabar",
+                "lifewater"
+            ],
+            "minReactivity": 14,
+            "result": "red_tincture",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "unicorn_horn",
+                "storm_glass"
+            ],
+            "minReactivity": 14,
+            "result": "aurora_dust",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "basilisk_eye",
+                "nightshade_ink"
+            ],
+            "minReactivity": 14,
+            "result": "seer_s_orb",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "gold_ingot",
+                "quicksilver"
+            ],
+            "minReactivity": 14,
+            "result": "sun_amalgam",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "phoenix_feather",
+                "red_tincture"
+            ],
+            "minReactivity": 22,
+            "result": "everflame",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "star_shard",
+                "aurora_dust"
+            ],
+            "minReactivity": 22,
+            "result": "heaven_s_ash",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "seer_s_orb",
+                "sun_amalgam"
+            ],
+            "minReactivity": 22,
+            "result": "living_gold",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "star_shard",
+                "red_tincture"
+            ],
+            "minReactivity": 22,
+            "result": "azoth",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "living_gold",
+                "azoth"
+            ],
+            "minReactivity": 30,
+            "result": "worldseed",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "everflame",
+                "heaven_s_ash"
+            ],
+            "minReactivity": 30,
+            "result": "worldseed",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "ember_coal",
+                "moondust",
+                "bone_ash"
+            ],
+            "minReactivity": 0,
+            "result": "hearth_glass",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "wyrm_fang",
+                "deep_tear",
+                "sunbloom"
+            ],
+            "minReactivity": 0,
+            "result": "wyrm_ichor",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "ember_coal",
+                "iron_ore",
+                "bone_ash",
+                "moondust"
+            ],
+            "minReactivity": 0,
+            "result": "forge_slag",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "glowmoss",
+                "sunbloom",
+                "deep_tear",
+                "moondust",
+                "bone_ash"
+            ],
+            "minReactivity": 0,
+            "result": "primal_bloom",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "sky_iron",
+                "steam_wisp",
+                "ember_coal"
+            ],
+            "minReactivity": 10,
+            "result": "thunder_ingot",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "mandrake",
+                "dusk_cap",
+                "deep_tear",
+                "glowmoss"
+            ],
+            "minReactivity": 10,
+            "result": "witch_salve",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "dragon_scale",
+                "pixie_wing",
+                "wyrm_fang"
+            ],
+            "minReactivity": 10,
+            "result": "chimera_hide",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "storm_glass",
+                "humstone",
+                "moondust"
+            ],
+            "minReactivity": 14,
+            "result": "void_pearl",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "gold_ingot",
+                "starmetal_ore",
+                "ember_coal",
+                "iron_ore"
+            ],
+            "minReactivity": 14,
+            "result": "titan_alloy",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "lifewater",
+                "nightshade_ink",
+                "glowmoss",
+                "sunbloom",
+                "moondust"
+            ],
+            "minReactivity": 14,
+            "result": "dream_spore",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "red_tincture",
+                "aurora_dust",
+                "bone_ash"
+            ],
+            "minReactivity": 22,
+            "result": "philosopher_s_salt",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "sun_amalgam",
+                "phoenix_feather",
+                "ember_coal",
+                "sunbloom"
+            ],
+            "minReactivity": 22,
+            "result": "chrysopoeia",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "void_pearl",
+                "lifewater",
+                "deep_tear"
+            ],
+            "minReactivity": 22,
+            "result": "azoth",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "phoenix_feather",
+                "ember_coal",
+                "sulfur",
+                "dragon_blood"
+            ],
+            "minReactivity": 22,
+            "result": "everflame",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "aurora_dust",
+                "bone_ash",
+                "frost_salt",
+                "moonpetal"
+            ],
+            "minReactivity": 22,
+            "result": "heaven_s_ash",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "hearth_glass",
+                "steam_wisp"
+            ],
+            "minReactivity": 10,
+            "result": "storm_glass",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "thunder_ingot",
+                "humstone"
+            ],
+            "minReactivity": 14,
+            "result": "star_shard",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "chimera_hide",
+                "gold_ingot"
+            ],
+            "minReactivity": 14,
+            "result": "phoenix_feather",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "void_pearl",
+                "titan_alloy"
+            ],
+            "minReactivity": 22,
+            "result": "living_gold",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "philosopher_s_salt",
+                "chrysopoeia"
+            ],
+            "minReactivity": 30,
+            "result": "worldseed",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "wyrm_ichor",
+                "forge_slag"
+            ],
+            "minReactivity": 10,
+            "result": "cinnabar",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "primal_bloom",
+                "verdant_tonic"
+            ],
+            "minReactivity": 10,
+            "result": "lifewater",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "witch_salve",
+                "basilisk_eye"
+            ],
+            "minReactivity": 14,
+            "result": "seer_s_orb",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "dream_spore",
+                "titan_alloy"
+            ],
+            "minReactivity": 22,
+            "result": "chrysopoeia",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "salt_crystal",
+                "deep_tear"
+            ],
+            "minReactivity": 0,
+            "result": "brine",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "copper_filings",
+                "bone_ash"
+            ],
+            "minReactivity": 0,
+            "result": "verdigris",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "grave_beetle",
+                "iron_ore"
+            ],
+            "minReactivity": 0,
+            "result": "carapace",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "lightning_sand",
+                "moondust"
+            ],
+            "minReactivity": 0,
+            "result": "static_dust",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "hollow_bone",
+                "sunbloom"
+            ],
+            "minReactivity": 0,
+            "result": "marrow",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "lightning_sand",
+                "salt_crystal"
+            ],
+            "minReactivity": 0,
+            "result": "spark_quartz",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "hollow_bone",
+                "grave_beetle"
+            ],
+            "minReactivity": 0,
+            "result": "carapace",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "grave_beetle",
+                "bone_ash",
+                "deep_tear"
+            ],
+            "minReactivity": 0,
+            "result": "marrow",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "copper_filings",
+                "sky_iron"
+            ],
+            "minReactivity": 10,
+            "result": "bronze",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "brine",
+                "bone_ash"
+            ],
+            "minReactivity": 10,
+            "result": "lye",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "verdigris",
+                "brine"
+            ],
+            "minReactivity": 10,
+            "result": "blue_vitriol",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "spark_quartz",
+                "static_dust"
+            ],
+            "minReactivity": 10,
+            "result": "tempest_glass",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "carapace",
+                "copper_filings"
+            ],
+            "minReactivity": 10,
+            "result": "scarab_amulet",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "marrow",
+                "bone_ash",
+                "carapace"
+            ],
+            "minReactivity": 10,
+            "result": "ossuary_dust",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "static_dust",
+                "forge_slag"
+            ],
+            "minReactivity": 10,
+            "result": "thunderstone",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "spark_quartz",
+                "ember_coal"
+            ],
+            "minReactivity": 10,
+            "result": "quickfire",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "salt_crystal",
+                "verdigris"
+            ],
+            "minReactivity": 10,
+            "result": "blue_vitriol",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "grave_beetle",
+                "moonpetal",
+                "hollow_bone"
+            ],
+            "minReactivity": 10,
+            "result": "ossuary_dust",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "tempest_glass",
+                "bronze"
+            ],
+            "minReactivity": 14,
+            "result": "stormcaller_rod",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "scarab_amulet",
+                "marrow",
+                "hollow_bone"
+            ],
+            "minReactivity": 14,
+            "result": "reliquary_bone",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "lye",
+                "blue_vitriol",
+                "moonpetal"
+            ],
+            "minReactivity": 14,
+            "result": "salt_of_ages",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "quickfire",
+                "thunderstone"
+            ],
+            "minReactivity": 14,
+            "result": "ball_lightning",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "ossuary_dust",
+                "scarab_amulet",
+                "glowmoss"
+            ],
+            "minReactivity": 14,
+            "result": "grave_lantern",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "bronze",
+                "primal_bloom"
+            ],
+            "minReactivity": 14,
+            "result": "green_bronze",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "stormcaller_rod",
+                "ball_lightning",
+                "phoenix_feather"
+            ],
+            "minReactivity": 22,
+            "result": "thunder_heart",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "reliquary_bone",
+                "grave_lantern",
+                "void_pearl"
+            ],
+            "minReactivity": 22,
+            "result": "ossuary_crown",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "ball_lightning",
+                "salt_of_ages",
+                "aurora_dust",
+                "lightning_sand"
+            ],
+            "minReactivity": 22,
+            "result": "storm_philter",
+            "a": "",
+            "b": ""
+        },
+        {
+            "items": [
+                "green_bronze",
+                "sun_amalgam",
+                "copper_filings"
+            ],
+            "minReactivity": 22,
+            "result": "copper_sun",
+            "a": "",
+            "b": ""
+        }
+    ],
+    "catalysts": [
+        {
+            "id": "bellows",
+            "name": "Bellows",
+            "text": "Reactions involving an Ore score double.",
+            "effect": "KindDouble",
+            "kind": "Ore",
+            "amount": 0.0,
+            "rarity": "Common",
+            "locked": false
+        },
+        {
+            "id": "bestiary",
+            "name": "Bestiary",
+            "text": "Reactions involving a Beast part score double.",
+            "effect": "KindDouble",
+            "kind": "Beast",
+            "amount": 0.0,
+            "rarity": "Common",
+            "locked": false
+        },
+        {
+            "id": "heart_tile",
+            "name": "Heart Tile",
+            "text": "Reactions touching the centre tile score double.",
+            "effect": "CentreTwice",
+            "kind": "",
+            "amount": 0.0,
+            "rarity": "Uncommon",
+            "locked": false
+        },
+        {
+            "id": "first_spark",
+            "name": "First Spark",
+            "text": "The first reaction of each trial scores triple.",
+            "effect": "FirstTriple",
+            "kind": "",
+            "amount": 0.0,
+            "rarity": "Uncommon",
+            "locked": false
+        },
+        {
+            "id": "crooked_mirror",
+            "name": "Crooked Mirror",
+            "text": "Diagonal neighbours also react.",
+            "effect": "Diagonals",
+            "kind": "",
+            "amount": 0.0,
+            "rarity": "Rare",
+            "locked": true
+        },
+        {
+            "id": "hourglass",
+            "name": "Hourglass",
+            "text": "One more trial at every depth.",
+            "effect": "ExtraTrial",
+            "kind": "",
+            "amount": 0.0,
+            "rarity": "Legendary",
+            "locked": true
+        },
+        {
+            "id": "deep_satchel",
+            "name": "Deep Satchel",
+            "text": "Draw one more material each trial.",
+            "effect": "ExtraHand",
+            "kind": "",
+            "amount": 0.0,
+            "rarity": "Rare",
+            "locked": true
+        },
+        {
+            "id": "eureka_lens",
+            "name": "Eureka Lens",
+            "text": "New discoveries score triple.",
+            "effect": "DiscoveryTriple",
+            "kind": "",
+            "amount": 0.0,
+            "rarity": "Uncommon",
+            "locked": true
+        },
+        {
+            "id": "resonant_slab",
+            "name": "Resonant Slab",
+            "text": "Chains build faster: each reaction counts one step higher.",
+            "effect": "ChainPlus",
+            "kind": "",
+            "amount": 0.0,
+            "rarity": "Rare",
+            "locked": true
+        },
+        {
+            "id": "quiet_bench",
+            "name": "Quiet Bench",
+            "text": "Each reaction gains 20 potency per empty tile.",
+            "effect": "EmptyTileBonus",
+            "kind": "",
+            "amount": 20.0,
+            "rarity": "Uncommon",
+            "locked": true
+        },
+        {
+            "id": "herbarium",
+            "name": "Herbarium",
+            "text": "Reactions involving a Plant score double.",
+            "effect": "KindDouble",
+            "kind": "Plant",
+            "amount": 0.0,
+            "rarity": "Common",
+            "locked": false
+        },
+        {
+            "id": "alembic",
+            "name": "Alembic",
+            "text": "Reactions involving a Potion score double.",
+            "effect": "KindDouble",
+            "kind": "Potion",
+            "amount": 0.0,
+            "rarity": "Common",
+            "locked": false
+        },
+        {
+            "id": "wide_crucible",
+            "name": "Wide Crucible",
+            "text": "Reactions of three or more materials score half again.",
+            "effect": "ComboBonus",
+            "kind": "",
+            "amount": 1.5,
+            "rarity": "Uncommon",
+            "locked": false
+        },
+        {
+            "id": "quick_hands",
+            "name": "Quick Hands",
+            "text": "Reactions of two materials score half again.",
+            "effect": "PairBonus",
+            "kind": "",
+            "amount": 1.5,
+            "rarity": "Uncommon",
+            "locked": false
+        },
+        {
+            "id": "grain_of_gold",
+            "name": "Grain of Gold",
+            "text": "Every reaction gains 30 potency.",
+            "effect": "FlatPerReaction",
+            "kind": "",
+            "amount": 30.0,
+            "rarity": "Uncommon",
+            "locked": false
+        },
+        {
+            "id": "tier_seeker",
+            "name": "Tier Seeker",
+            "text": "Reactions that make a tier 3 or higher result score double.",
+            "effect": "TierDouble",
+            "kind": "",
+            "amount": 3.0,
+            "rarity": "Uncommon",
+            "locked": true
+        },
+        {
+            "id": "hearth_habit",
+            "name": "Hearth Habit",
+            "text": "Reactions using two or more starting materials score double.",
+            "effect": "StarterDouble",
+            "kind": "",
+            "amount": 2.0,
+            "rarity": "Uncommon",
+            "locked": true
+        },
+        {
+            "id": "second_wind",
+            "name": "Second Wind",
+            "text": "One more redraw at every depth.",
+            "effect": "ExtraRedraw",
+            "kind": "",
+            "amount": 1.0,
+            "rarity": "Uncommon",
+            "locked": true
+        },
+        {
+            "id": "warm_bench",
+            "name": "Warm Bench",
+            "text": "Every material counts one more Reaction Index for the heat round a hub.",
+            "effect": "HeatPlus",
+            "kind": "",
+            "amount": 1.0,
+            "rarity": "Rare",
+            "locked": true
+        },
+        {
+            "id": "salvage",
+            "name": "Salvage",
+            "text": "Discoveries left standing on the bench after a chain go back to the rack.",
+            "effect": "Salvage",
+            "kind": "",
+            "amount": 0.0,
+            "rarity": "Rare",
+            "locked": true
+        },
+        {
+            "id": "cascade",
+            "name": "Cascade",
+            "text": "Reactions from the third in a chain on score double.",
+            "effect": "ChainFrom",
+            "kind": "",
+            "amount": 3.0,
+            "rarity": "Rare",
+            "locked": true
+        },
+        {
+            "id": "descent",
+            "name": "Descent",
+            "text": "Reactions score a quarter more for each depth below the first.",
+            "effect": "DepthScale",
+            "kind": "",
+            "amount": 0.25,
+            "rarity": "Rare",
+            "locked": true
+        },
+        {
+            "id": "tinkers_eye",
+            "name": "Tinker's Eye",
+            "text": "The first new discovery at each depth costs no trial.",
+            "effect": "FreeDiscovery",
+            "kind": "",
+            "amount": 0.0,
+            "rarity": "Rare",
+            "locked": true
+        },
+        {
+            "id": "bottomless_satchel",
+            "name": "Bottomless Satchel",
+            "text": "Draw two more materials each trial.",
+            "effect": "ExtraHand",
+            "kind": "",
+            "amount": 2.0,
+            "rarity": "Legendary",
+            "locked": true
+        },
+        {
+            "id": "philosophers_fire",
+            "name": "Philosopher's Fire",
+            "text": "Every reaction scores double.",
+            "effect": "AllScale",
+            "kind": "",
+            "amount": 2.0,
+            "rarity": "Legendary",
+            "locked": true
+        },
+        {
+            "id": "last_breath",
+            "name": "Last Breath",
+            "text": "Once per run, a lost depth gives two more trials.",
+            "effect": "SecondChance",
+            "kind": "",
+            "amount": 2.0,
+            "rarity": "Legendary",
+            "locked": true
+        }
+    ],
+    "depthTargets": [
+        300,
+        1500,
+        7500,
+        37500
+    ],
+    "depthNames": [
+        "The Shallow Cellar",
+        "The Dripping Stair",
+        "The Humming Dark",
+        "The Root of Stone",
+        "The Quiet Below"
+    ],
+    "ultimate": "worldseed",
+    "goals": [
+        {
+            "id": "g_depth2",
+            "text": "Reach depth 2",
+            "stat": "depthReached",
+            "rewardKind": "starter",
+            "rewardRarity": "Uncommon",
+            "target": 2
+        },
+        {
+            "id": "g_runs3",
+            "text": "Start 3 runs",
+            "stat": "runsStarted",
+            "rewardKind": "starter",
+            "rewardRarity": "Uncommon",
+            "target": 3
+        },
+        {
+            "id": "g_ignite25",
+            "text": "Ignite 25 times",
+            "stat": "ignites",
+            "rewardKind": "starter",
+            "rewardRarity": "Uncommon",
+            "target": 25
+        },
+        {
+            "id": "g_combo4",
+            "text": "Make a 4-combo",
+            "stat": "comboLargest",
+            "rewardKind": "starter",
+            "rewardRarity": "Rare",
+            "target": 4
+        },
+        {
+            "id": "g_journal20",
+            "text": "Find 20 journal entries",
+            "stat": "journalEntries",
+            "rewardKind": "starter",
+            "rewardRarity": "Rare",
+            "target": 20
+        },
+        {
+            "id": "g_chain3",
+            "text": "Make a chain of 3",
+            "stat": "chainLongest",
+            "rewardKind": "catalyst",
+            "rewardRarity": "Uncommon",
+            "target": 3
+        },
+        {
+            "id": "g_journal10",
+            "text": "Find 10 journal entries",
+            "stat": "journalEntries",
+            "rewardKind": "catalyst",
+            "rewardRarity": "Uncommon",
+            "target": 10
+        },
+        {
+            "id": "g_depth3",
+            "text": "Reach depth 3",
+            "stat": "depthReached",
+            "rewardKind": "catalyst",
+            "rewardRarity": "Uncommon",
+            "target": 3
+        },
+        {
+            "id": "g_runs10",
+            "text": "Start 10 runs",
+            "stat": "runsStarted",
+            "rewardKind": "catalyst",
+            "rewardRarity": "Uncommon",
+            "target": 10
+        },
+        {
+            "id": "g_ignite100",
+            "text": "Ignite 100 times",
+            "stat": "ignites",
+            "rewardKind": "catalyst",
+            "rewardRarity": "Uncommon",
+            "target": 100
+        },
+        {
+            "id": "g_depth4",
+            "text": "Reach depth 4",
+            "stat": "depthReached",
+            "rewardKind": "catalyst",
+            "rewardRarity": "Rare",
+            "target": 4
+        },
+        {
+            "id": "g_runs25",
+            "text": "Start 25 runs",
+            "stat": "runsStarted",
+            "rewardKind": "catalyst",
+            "rewardRarity": "Rare",
+            "target": 25
+        },
+        {
+            "id": "g_ignite300",
+            "text": "Ignite 300 times",
+            "stat": "ignites",
+            "rewardKind": "catalyst",
+            "rewardRarity": "Rare",
+            "target": 300
+        },
+        {
+            "id": "g_chain4",
+            "text": "Make a chain of 4",
+            "stat": "chainLongest",
+            "rewardKind": "catalyst",
+            "rewardRarity": "Rare",
+            "target": 4
+        },
+        {
+            "id": "g_combo5",
+            "text": "Make a 5-combo",
+            "stat": "comboLargest",
+            "rewardKind": "catalyst",
+            "rewardRarity": "Rare",
+            "target": 5
+        },
+        {
+            "id": "g_journal30",
+            "text": "Find 30 journal entries",
+            "stat": "journalEntries",
+            "rewardKind": "catalyst",
+            "rewardRarity": "Rare",
+            "target": 30
+        },
+        {
+            "id": "g_big1500",
+            "text": "Score 1,500 in one Ignite",
+            "stat": "bestIgnite",
+            "rewardKind": "catalyst",
+            "rewardRarity": "Rare",
+            "target": 1500
+        },
+        {
+            "id": "g_win1",
+            "text": "Win a run",
+            "stat": "runsWon",
+            "rewardKind": "catalyst",
+            "rewardRarity": "Rare",
+            "target": 1
+        },
+        {
+            "id": "g_win5",
+            "text": "Win 5 runs",
+            "stat": "runsWon",
+            "rewardKind": "catalyst",
+            "rewardRarity": "Legendary",
+            "target": 5
+        },
+        {
+            "id": "g_noredraw",
+            "text": "Win without a redraw",
+            "stat": "wonNoRedraw",
+            "rewardKind": "catalyst",
+            "rewardRarity": "Legendary",
+            "target": 1
+        },
+        {
+            "id": "g_ignite1000",
+            "text": "Ignite 1,000 times",
+            "stat": "ignites",
+            "rewardKind": "catalyst",
+            "rewardRarity": "Legendary",
+            "target": 1000
+        },
+        {
+            "id": "g_journalfull",
+            "text": "Complete the journal",
+            "stat": "journalComplete",
+            "rewardKind": "catalyst",
+            "rewardRarity": "Legendary",
+            "target": 1
+        }
+    ],
+    "aspects": [
+        {
+            "id": "doubled_tile",
+            "name": "Doubled Tile",
+            "text": "A reaction whose hub is on this tile scores double.",
+            "effect": "Doubled",
+            "scope": "Tile",
+            "group": "Cheap",
+            "amount": 0.0,
+            "tradeOff": false
+        },
+        {
+            "id": "anchor_tile",
+            "name": "Anchor Tile",
+            "text": "A discovery placed here comes back to the rack after the Ignite.",
+            "effect": "Anchor",
+            "scope": "Tile",
+            "group": "Cheap",
+            "amount": 0.0,
+            "tradeOff": false
+        },
+        {
+            "id": "heated_tile",
+            "name": "Heated Tile",
+            "text": "A material on this tile counts 3 more Reaction Index.",
+            "effect": "Heated",
+            "scope": "Tile",
+            "group": "Cheap",
+            "amount": 3.0,
+            "tradeOff": false
+        },
+        {
+            "id": "echo_tile",
+            "name": "Echo Tile",
+            "text": "What a hub on this tile makes also goes to the rack as a copy.",
+            "effect": "Echo",
+            "scope": "Tile",
+            "group": "Cheap",
+            "amount": 0.0,
+            "tradeOff": false
+        },
+        {
+            "id": "attuned_tile",
+            "name": "Attuned Tile",
+            "text": "A hub here whose recipe uses the attuned kind scores as one tier higher.",
+            "effect": "Attuned",
+            "scope": "Tile",
+            "group": "Cheap",
+            "amount": 0.0,
+            "tradeOff": false
+        },
+        {
+            "id": "seed_tile",
+            "name": "Seed Tile",
+            "text": "Left empty, it gives 40 potency to every reaction whose hub touches it.",
+            "effect": "Seed",
+            "scope": "Tile",
+            "group": "Cheap",
+            "amount": 40.0,
+            "tradeOff": false
+        },
+        {
+            "id": "fallow_tile",
+            "name": "Fallow Tile",
+            "text": "Left empty at Ignite, it draws you one more material.",
+            "effect": "Fallow",
+            "scope": "Tile",
+            "group": "Cheap",
+            "amount": 0.0,
+            "tradeOff": false
+        },
+        {
+            "id": "heavy_tile",
+            "name": "Heavy Tile",
+            "text": "A reaction whose hub is on this tile counts one chain step higher.",
+            "effect": "Heavy",
+            "scope": "Tile",
+            "group": "Cheap",
+            "amount": 0.0,
+            "tradeOff": false
+        },
+        {
+            "id": "cold_tile",
+            "name": "Cold Tile",
+            "text": "One more trial at every depth. COST: this tile is shut for the run.",
+            "effect": "Cold",
+            "scope": "Tile",
+            "group": "Cheap",
+            "amount": 0.0,
+            "tradeOff": true
+        },
+        {
+            "id": "volatile_tile",
+            "name": "Volatile Tile",
+            "text": "A hub here scores triple. COST: a starting material placed here is lost for the run.",
+            "effect": "Volatile",
+            "scope": "Tile",
+            "group": "Cheap",
+            "amount": 0.0,
+            "tradeOff": true
+        },
+        {
+            "id": "greedy_bench",
+            "name": "Greedy Bench",
+            "text": "Draw one more material each trial. COST: one redraw fewer at every depth.",
+            "effect": "Greedy",
+            "scope": "Bench",
+            "group": "Cheap",
+            "amount": 0.0,
+            "tradeOff": true
+        },
+        {
+            "id": "bridge",
+            "name": "Bridge",
+            "text": "Two tiles that do not touch count as neighbours.",
+            "effect": "Bridge",
+            "scope": "Link",
+            "group": "Engine",
+            "amount": 0.0,
+            "tradeOff": false
+        },
+        {
+            "id": "open_bench",
+            "name": "Open Bench",
+            "text": "A corner tile also touches the centre tile.",
+            "effect": "OpenBench",
+            "scope": "Link",
+            "group": "Engine",
+            "amount": 0.0,
+            "tradeOff": false
+        },
+        {
+            "id": "kiln_tile",
+            "name": "Kiln Tile",
+            "text": "A hub on this tile needs no heat: its recipe fires in any company.",
+            "effect": "Kiln",
+            "scope": "Tile",
+            "group": "Engine",
+            "amount": 0.0,
+            "tradeOff": false
+        },
+        {
+            "id": "crossroads",
+            "name": "Crossroads",
+            "text": "A hub on this tile also reaches its diagonal neighbours.",
+            "effect": "Crossroads",
+            "scope": "Tile",
+            "group": "Engine",
+            "amount": 0.0,
+            "tradeOff": false
+        },
+        {
+            "id": "pivot_tile",
+            "name": "Pivot Tile",
+            "text": "If the material here can react, it goes first whatever its Reaction Index.",
+            "effect": "Pivot",
+            "scope": "Tile",
+            "group": "Engine",
+            "amount": 0.0,
+            "tradeOff": false
+        }
+    ],
+    "events": [
+        {
+            "id": "cracked_altar",
+            "name": "A Keepers' Altar",
+            "text": "A cracked altar to the Keepers asks for an offering.",
+            "type": "Choice",
+            "minDepth": 1,
+            "maxDepth": 4,
+            "weight": 2,
+            "options": [
+                {
+                    "label": "Offer a discovery",
+                    "requires": "Rack",
+                    "cost": [
+                        {
+                            "op": "LoseRack",
+                            "arg": "",
+                            "amount": 1,
+                            "amount2": 0
+                        }
+                    ],
+                    "outcomes": [
+                        {
+                            "weight": 1,
+                            "text": "The altar drinks it in. Time slows.",
+                            "gain": [
+                                {
+                                    "op": "Trials",
+                                    "arg": "",
+                                    "amount": 1,
+                                    "amount2": 0
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "label": "Walk on",
+                    "requires": "",
+                    "cost": [],
+                    "outcomes": [
+                        {
+                            "weight": 1,
+                            "text": "You leave it be.",
+                            "gain": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "tilted_workbench",
+            "name": "An Old Workbench",
+            "text": "Another Keeper's bench. Tilted, but roomy.",
+            "type": "Choice",
+            "minDepth": 1,
+            "maxDepth": 5,
+            "weight": 2,
+            "options": [
+                {
+                    "label": "Spread out",
+                    "requires": "Trial",
+                    "cost": [
+                        {
+                            "op": "Trials",
+                            "arg": "",
+                            "amount": -1,
+                            "amount2": 0
+                        }
+                    ],
+                    "outcomes": [
+                        {
+                            "weight": 1,
+                            "text": "More room, less time.",
+                            "gain": [
+                                {
+                                    "op": "Hand",
+                                    "arg": "",
+                                    "amount": 2,
+                                    "amount2": 0
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "label": "Steady it",
+                    "requires": "",
+                    "cost": [],
+                    "outcomes": [
+                        {
+                            "weight": 1,
+                            "text": "You wedge it level.",
+                            "gain": [
+                                {
+                                    "op": "Redraws",
+                                    "arg": "",
+                                    "amount": 1,
+                                    "amount2": 0
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "label": "Walk on",
+                    "requires": "",
+                    "cost": [],
+                    "outcomes": [
+                        {
+                            "weight": 1,
+                            "text": "You leave it be.",
+                            "gain": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "old_ledger",
+            "name": "A Keeper's Ledger",
+            "text": "A damp ledger lists what another Keeper tried.",
+            "type": "Choice",
+            "minDepth": 2,
+            "maxDepth": 5,
+            "weight": 2,
+            "options": [
+                {
+                    "label": "Read it",
+                    "requires": "Redraw",
+                    "cost": [
+                        {
+                            "op": "Redraws",
+                            "arg": "",
+                            "amount": -1,
+                            "amount2": 0
+                        }
+                    ],
+                    "outcomes": [
+                        {
+                            "weight": 1,
+                            "text": "One line is still legible.",
+                            "gain": [
+                                {
+                                    "op": "Hint",
+                                    "arg": "",
+                                    "amount": 0,
+                                    "amount2": 0
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "label": "Walk on",
+                    "requires": "",
+                    "cost": [],
+                    "outcomes": [
+                        {
+                            "weight": 1,
+                            "text": "You leave it be.",
+                            "gain": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "hungry_furnace",
+            "name": "A Keeper's Furnace",
+            "text": "An old furnace gapes, still warm after all this time.",
+            "type": "Choice",
+            "minDepth": 2,
+            "maxDepth": 5,
+            "weight": 2,
+            "options": [
+                {
+                    "label": "Feed it a discovery",
+                    "requires": "Rack",
+                    "cost": [
+                        {
+                            "op": "LoseRack",
+                            "arg": "",
+                            "amount": 1,
+                            "amount2": 0
+                        }
+                    ],
+                    "outcomes": [
+                        {
+                            "weight": 1,
+                            "text": "It roars awake.",
+                            "gain": [
+                                {
+                                    "op": "FirstTriple",
+                                    "arg": "",
+                                    "amount": 0,
+                                    "amount2": 0
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "label": "Walk on",
+                    "requires": "",
+                    "cost": [],
+                    "outcomes": [
+                        {
+                            "weight": 1,
+                            "text": "You leave it be.",
+                            "gain": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "dripping_well",
+            "name": "A Dripping Well",
+            "text": "Something glints at the bottom of a dripping well.",
+            "type": "Gamble",
+            "minDepth": 1,
+            "maxDepth": 5,
+            "weight": 2,
+            "options": [
+                {
+                    "label": "Reach in",
+                    "requires": "",
+                    "cost": [],
+                    "outcomes": [
+                        {
+                            "weight": 1,
+                            "text": "Your hand closes on a moment saved.",
+                            "gain": [
+                                {
+                                    "op": "Trials",
+                                    "arg": "",
+                                    "amount": 1,
+                                    "amount2": 0
+                                }
+                            ]
+                        },
+                        {
+                            "weight": 1,
+                            "text": "Something slips from your satchel into the dark.",
+                            "gain": [
+                                {
+                                    "op": "LoseCard",
+                                    "arg": "",
+                                    "amount": 1,
+                                    "amount2": 0
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "label": "Walk on",
+                    "requires": "",
+                    "cost": [],
+                    "outcomes": [
+                        {
+                            "weight": 1,
+                            "text": "You leave it be.",
+                            "gain": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "shifting_bench",
+            "name": "A Shifting Bench",
+            "text": "Roots shift under the floor. The bench grinds.",
+            "type": "Gamble",
+            "minDepth": 2,
+            "maxDepth": 5,
+            "weight": 2,
+            "options": [
+                {
+                    "label": "Let it settle",
+                    "requires": "",
+                    "cost": [],
+                    "outcomes": [
+                        {
+                            "weight": 1,
+                            "text": "A tile settles over a warm root.",
+                            "gain": [
+                                {
+                                    "op": "HeatTile",
+                                    "arg": "",
+                                    "amount": 3,
+                                    "amount2": 0
+                                }
+                            ]
+                        },
+                        {
+                            "weight": 1,
+                            "text": "A tile jams shut.",
+                            "gain": [
+                                {
+                                    "op": "BlockTile",
+                                    "arg": "",
+                                    "amount": 0,
+                                    "amount2": 0
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "label": "Walk on",
+                    "requires": "",
+                    "cost": [],
+                    "outcomes": [
+                        {
+                            "weight": 1,
+                            "text": "You leave it be.",
+                            "gain": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "smugglers_crate",
+            "name": "A Buried Crate",
+            "text": "A crate, half swallowed by the roots.",
+            "type": "Gamble",
+            "minDepth": 3,
+            "maxDepth": 5,
+            "weight": 2,
+            "options": [
+                {
+                    "label": "Open it",
+                    "requires": "",
+                    "cost": [],
+                    "outcomes": [
+                        {
+                            "weight": 7,
+                            "text": "Packed in straw: something useful.",
+                            "gain": [
+                                {
+                                    "op": "GiveDiscovery",
+                                    "arg": "",
+                                    "amount": 1,
+                                    "amount2": 3
+                                }
+                            ]
+                        },
+                        {
+                            "weight": 3,
+                            "text": "It spills grit across the bench.",
+                            "gain": [
+                                {
+                                    "op": "BlockTile",
+                                    "arg": "",
+                                    "amount": 0,
+                                    "amount2": 0
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "label": "Walk on",
+                    "requires": "",
+                    "cost": [],
+                    "outcomes": [
+                        {
+                            "weight": 1,
+                            "text": "You leave it be.",
+                            "gain": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "forgotten_satchel",
+            "name": "A Forgotten Satchel",
+            "text": "A satchel like yours, left on the stair.",
+            "type": "Find",
+            "minDepth": 1,
+            "maxDepth": 3,
+            "weight": 2,
+            "options": [
+                {
+                    "label": "Take what is inside",
+                    "requires": "",
+                    "cost": [],
+                    "outcomes": [
+                        {
+                            "weight": 1,
+                            "text": "Someone's work, half finished.",
+                            "gain": [
+                                {
+                                    "op": "GiveDiscovery",
+                                    "arg": "",
+                                    "amount": 1,
+                                    "amount2": 2
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "label": "Walk on",
+                    "requires": "",
+                    "cost": [],
+                    "outcomes": [
+                        {
+                            "weight": 1,
+                            "text": "You leave it be.",
+                            "gain": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "glinting_seam",
+            "name": "A Glinting Seam",
+            "text": "An old brew has set into the wall like ore.",
+            "type": "Find",
+            "minDepth": 3,
+            "maxDepth": 5,
+            "weight": 2,
+            "options": [
+                {
+                    "label": "Pry it loose",
+                    "requires": "",
+                    "cost": [],
+                    "outcomes": [
+                        {
+                            "weight": 1,
+                            "text": "It comes away whole.",
+                            "gain": [
+                                {
+                                    "op": "GiveDiscovery",
+                                    "arg": "",
+                                    "amount": 2,
+                                    "amount2": 3
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "label": "Walk on",
+                    "requires": "",
+                    "cost": [],
+                    "outcomes": [
+                        {
+                            "weight": 1,
+                            "text": "You leave it be.",
+                            "gain": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "sealed_shrine",
+            "name": "A Sealed Shrine",
+            "text": "A shrine to the first Keeper hums at your catalysts.",
+            "type": "Shrine",
+            "minDepth": 2,
+            "maxDepth": 5,
+            "weight": 1,
+            "options": [
+                {
+                    "label": "Offer a catalyst",
+                    "requires": "Catalyst",
+                    "cost": [],
+                    "outcomes": [
+                        {
+                            "weight": 1,
+                            "text": "It is returned, changed.",
+                            "gain": [
+                                {
+                                    "op": "CatalystUpgrade",
+                                    "arg": "",
+                                    "amount": 0,
+                                    "amount2": 0
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "label": "Walk on",
+                    "requires": "",
+                    "cost": [],
+                    "outcomes": [
+                        {
+                            "weight": 1,
+                            "text": "You leave it be.",
+                            "gain": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "quiet_shrine",
+            "name": "A Quiet Shrine",
+            "text": "A quiet shrine. It has all the time you can give it.",
+            "type": "Shrine",
+            "minDepth": 3,
+            "maxDepth": 5,
+            "weight": 1,
+            "options": [
+                {
+                    "label": "Kneel a while",
+                    "requires": "Trial",
+                    "cost": [
+                        {
+                            "op": "Trials",
+                            "arg": "",
+                            "amount": -2,
+                            "amount2": 0
+                        }
+                    ],
+                    "outcomes": [
+                        {
+                            "weight": 1,
+                            "text": "Something is left in your hands.",
+                            "gain": [
+                                {
+                                    "op": "CatalystGift",
+                                    "arg": "",
+                                    "amount": 0,
+                                    "amount2": 0
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "label": "Walk on",
+                    "requires": "",
+                    "cost": [],
+                    "outcomes": [
+                        {
+                            "weight": 1,
+                            "text": "You leave it be.",
+                            "gain": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "damp_air",
+            "name": "Damp Air",
+            "text": "Water seeps down from the stair. Everything cools.",
+            "type": "Hazard",
+            "minDepth": 2,
+            "maxDepth": 5,
+            "weight": 1,
+            "options": [
+                {
+                    "label": "Go on",
+                    "requires": "",
+                    "cost": [],
+                    "outcomes": [
+                        {
+                            "weight": 1,
+                            "text": "Nothing burns as it should.",
+                            "gain": [
+                                {
+                                    "op": "RiShift",
+                                    "arg": "",
+                                    "amount": -1,
+                                    "amount2": 0
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "falling_grit",
+            "name": "Falling Grit",
+            "text": "Grit falls from the roots onto the bench.",
+            "type": "Hazard",
+            "minDepth": 2,
+            "maxDepth": 5,
+            "weight": 1,
+            "options": [
+                {
+                    "label": "Go on",
+                    "requires": "",
+                    "cost": [],
+                    "outcomes": [
+                        {
+                            "weight": 1,
+                            "text": "One tile is buried.",
+                            "gain": [
+                                {
+                                    "op": "BlockTile",
+                                    "arg": "",
+                                    "amount": 0,
+                                    "amount2": 0
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "cold_draft",
+            "name": "A Cold Draft",
+            "text": "A cold draft comes up the stair, through your pockets.",
+            "type": "Hazard",
+            "minDepth": 3,
+            "maxDepth": 5,
+            "weight": 1,
+            "options": [
+                {
+                    "label": "Go on",
+                    "requires": "",
+                    "cost": [],
+                    "outcomes": [
+                        {
+                            "weight": 1,
+                            "text": "You hold on to less.",
+                            "gain": [
+                                {
+                                    "op": "Hand",
+                                    "arg": "",
+                                    "amount": -1,
+                                    "amount2": 0
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "warm_stone",
+            "name": "A Warm Stone",
+            "text": "A stone in the wall is warm. Something grows behind it.",
+            "type": "Boon",
+            "minDepth": 1,
+            "maxDepth": 5,
+            "weight": 1,
+            "options": [
+                {
+                    "label": "Lean the bench against it",
+                    "requires": "",
+                    "cost": [],
+                    "outcomes": [
+                        {
+                            "weight": 1,
+                            "text": "The warmth spreads into one tile.",
+                            "gain": [
+                                {
+                                    "op": "HeatTile",
+                                    "arg": "",
+                                    "amount": 3,
+                                    "amount2": 0
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "quiet_room",
+            "name": "A Keeper's Room",
+            "text": "A cot, a cup, a name scratched out. Dust turns slowly.",
+            "type": "Lore",
+            "minDepth": 1,
+            "maxDepth": 5,
+            "weight": 3,
+            "options": [
+                {
+                    "label": "Go on",
+                    "requires": "",
+                    "cost": [],
+                    "outcomes": [
+                        {
+                            "weight": 1,
+                            "text": "Nothing happens, and that is welcome.",
+                            "gain": [
+                                {
+                                    "op": "Nothing",
+                                    "arg": "",
+                                    "amount": 0,
+                                    "amount2": 0
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "names_in_wall",
+            "name": "Names in the Wall",
+            "text": "Names cut into the wall, one under another.",
+            "type": "Lore",
+            "minDepth": 1,
+            "maxDepth": 2,
+            "weight": 1,
+            "options": [
+                {
+                    "label": "Go on",
+                    "requires": "",
+                    "cost": [],
+                    "outcomes": [
+                        {
+                            "weight": 1,
+                            "text": "The last one is fresh. There is room below it.",
+                            "gain": [
+                                {
+                                    "op": "Nothing",
+                                    "arg": "",
+                                    "amount": 0,
+                                    "amount2": 0
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "warm_roots",
+            "name": "Warm Roots",
+            "text": "Roots push through the ceiling. They are warm, and hum.",
+            "type": "Lore",
+            "minDepth": 3,
+            "maxDepth": 4,
+            "weight": 1,
+            "options": [
+                {
+                    "label": "Go on",
+                    "requires": "",
+                    "cost": [],
+                    "outcomes": [
+                        {
+                            "weight": 1,
+                            "text": "You feel the hum in your teeth.",
+                            "gain": [
+                                {
+                                    "op": "Nothing",
+                                    "arg": "",
+                                    "amount": 0,
+                                    "amount2": 0
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "pinned_note",
+            "name": "A Pinned Note",
+            "text": "A note pinned to a bench: 'Plant it. Do not climb back.'",
+            "type": "Lore",
+            "minDepth": 5,
+            "maxDepth": 5,
+            "weight": 1,
+            "options": [
+                {
+                    "label": "Go on",
+                    "requires": "",
+                    "cost": [],
+                    "outcomes": [
+                        {
+                            "weight": 1,
+                            "text": "You fold it away.",
+                            "gain": [
+                                {
+                                    "op": "Nothing",
+                                    "arg": "",
+                                    "amount": 0,
+                                    "amount2": 0
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "noEventWeight": 3,
+    "rarityWeights": []
+}

@@ -1,11 +1,11 @@
 using System;
 using System.Linq;
-using Athanor.Core;
+using Athanor.Gameplay;
 using NUnit.Framework;
 
 namespace Athanor.Tests
 {
-    /// <summary>Phase 5a-04: catalyst offers and event gifts draw by the optional content.json "rarityWeights" (Common..WorldSeed).</summary>
+    /// <summary>Phase 5a-04: catalyst offers and event gifts draw by the optional the content assets "rarityWeights" (Common..WorldSeed).</summary>
     public class RarityTests
     {
         static CatalystData Cat(string effect, string rarity) =>

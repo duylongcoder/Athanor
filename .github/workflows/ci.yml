@@ -66,27 +66,48 @@ jobs:
             exit 1
           fi
 
-  core-tests:
-    name: core-tests
+  # Rule and screen tests (EditMode + PlayMode). ADR-0001: needs a Unity licence on every PR;
+  # without the secrets it fails on purpose, like the release gate.
+  unity-tests:
+    name: unity-tests
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 90
+    env:
+      UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+      UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+      UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+      MIN_TESTS: '600'
     steps:
+      - name: Unity secrets are set
+        run: |
+          [ -n "$UNITY_LICENSE" ] || { echo "::error::UNITY_LICENSE is not set: the Unity tests cannot run"; exit 1; }
       - uses: actions/checkout@v4
-      - uses: actions/setup-dotnet@v4
-        with: { dotnet-version: '8.0.x' }
+        with:
+          lfs: true
       - uses: actions/cache@v4
         with:
-          path: ~/.nuget/packages
-          key: nuget-${{ hashFiles('tools/CoreTests/CoreTests.csproj') }}
-      - name: dotnet test (fails on any failure or if fewer than MIN_TESTS pass)
-        run: tools/ci/run.sh core
+          path: Athanor/Library
+          key: Library-tests-${{ hashFiles('Athanor/Packages/manifest.json', 'Athanor/ProjectSettings/ProjectVersion.txt') }}
+      - name: EditMode and PlayMode tests
+        id: tests
+        uses: game-ci/unity-test-runner@v4
+        with:
+          projectPath: Athanor
+          unityVersion: auto
+          testMode: all
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+      - name: Enough tests passed (guards against silently dropped tests)
+        run: |
+          PASSED=$(cat "${{ steps.tests.outputs.artifactsPath }}"/*.xml | grep -o '<test-case [^>]*result="Passed"' | wc -l)
+          echo "passed: $PASSED (minimum $MIN_TESTS)"
+          [ "$PASSED" -ge "$MIN_TESTS" ] || { echo "::error::only $PASSED tests passed, expected at least $MIN_TESTS"; exit 1; }
 
   # The one required check. `if: always()` makes it run (and fail) when a needed job fails, is cancelled or is skipped;
   # without it a skipped job would leave the gate skipped, and GitHub counts a skipped required check as passing.
   ci-gate:
     name: ci-gate
     if: always()
-    needs: [lint, repo-guard, core-tests]
+    needs: [lint, repo-guard, unity-tests]
     runs-on: ubuntu-latest
     steps:
       - name: Every job must be `success`
@@ -119,12 +140,12 @@ jobs:
         with:
           path: Athanor/Library
           key: Library-${{ hashFiles('Athanor/Packages/manifest.json', 'Athanor/ProjectSettings/ProjectVersion.txt') }}
-      - name: Unity EditMode tests (Core and Game layers)
+      - name: Unity tests (EditMode + PlayMode)
         uses: game-ci/unity-test-runner@v4
         with:
           projectPath: Athanor
           unityVersion: auto
-          testMode: EditMode
+          testMode: all
           githubToken: ${{ secrets.GITHUB_TOKEN }}
       # Two builds: the release build is what ships (size budget + load smoke); the development build carries the
       # dev-only hooks (scripted player, tutorial and depth hooks) that the full webtest.mjs needs. No check is dropped.

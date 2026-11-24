@@ -1,4 +1,4 @@
-using Athanor.Core;
+using Athanor.Gameplay;
 using UnityEngine;
 
 namespace Athanor.Game

@@ -572,7 +572,7 @@ class CliTests(Base):
     def test_shipped_config_is_valid(self):
         cfg = ul.load_config(SCRIPT.parent / "lint.config.json")
         self.assertIn("UL001", ul.RULES)
-        self.assertEqual(cfg["pure_logic_paths"], ["Assets/Scripts/Core"])
+        self.assertEqual(cfg["pure_logic_paths"], [])
 
 
 if __name__ == "__main__":

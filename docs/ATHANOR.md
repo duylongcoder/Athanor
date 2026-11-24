@@ -350,6 +350,16 @@ One line each. A decision is written here before it is relied on. Superseded and
 - 2026-11-20: Phase 7 non-goals, so the question "why not X" has an answer: no dependency-injection framework (`Bind`/`FxRefs` pass what a view needs); no uGUI or UI Toolkit (the UI is hand-built sprites on the 640x360 canvas); no Addressables; coroutines are not converted to `async`/`Awaitable`; Unity Timeline is not used for the cutscenes (wasm size, and the look must stay identical).
 - 2026-11-20: the one visible text change of Phase 7 (owner ruling 2026-11-19): the English lost-item note reads "Lost Iron Ore for this run", not "Lost a Iron Ore for this run" (key `note.lost`, no article, so no "a"/"an" error). Vietnamese is unchanged; `NoteTextTests` pin it.
 - 2026-11-20: tutorial highlight areas live in scene objects: `TutorialStep` (text key, `dark`, `lockPad`, `clickAdvances`, optional box position) with `TutorialArea` children (Fixed rect, ScriptTile, or View) under the Tutorial object of `Main.unity`. Clicks pass through a lit area only when its `clicksPass` is on; any other lit area catches the click (advance a read step, or pulse the rim). `TutorialTargets` is removed (supersedes the 2026-11-19 line on it); tile geometry is in `TutorialStyle`. Step order and waiting conditions stay in `Drive`. Edits are made in Edit Mode (Scene-view outlines and move handle), not kept from Play. `Athanor/Tutorial/Create Step Objects` restores the steps to the migrated state; `Baselines/tutorial_lit_baseline.json` pins what each step lights.
+- 2026-11-24 (ADR-0001): `Athanor.Core` becomes the Unity assembly `Athanor.Gameplay` (rule models stay plain C#); five Manager
+  singletons on `Main.unity › Managers` own content, saves, language, progress and the run; `TutorialManager` (on the Tutorial
+  object) and `GameManager` (was `GameFlow`) are singletons too. Narrows "rules in plain C#" (2026-11-11) to the assembly split only;
+  the balance reports are an Editor tool (supersedes the 2026-11-18 `tools/CoreReports` clause).
+- 2026-11-24 (ADR-0001): content is one ScriptableObject asset per entry under `Assets/Content` (`ContentDatabase`, `GameRules`);
+  `content.json` is deleted; `tools/content/snapshot.json` is the generated copy for non-Unity tools. Supersedes "rule numbers
+  live in content.json rules" (2026-11-19).
+- 2026-11-24 (ADR-0001): dotnet is retired; all tests run in Unity (EditMode + PlayMode); CI job `unity-tests` (game-ci) replaces
+  `core-tests` and needs the Unity secrets on every PR. The tutorial is the `TutorialSequence` asset run by `TutorialManager`
+  (supersedes the 2026-11-19 `TutorialScript` clause, and the 2026-11-20 line on `TutorialStep` scene objects once Task 24 lands).
 
 ---
 

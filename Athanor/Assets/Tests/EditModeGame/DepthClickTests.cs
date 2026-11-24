@@ -166,7 +166,7 @@ namespace Athanor.Tests
             var copy = Object.Instantiate(tiles[4], root.transform);
 
             // Act
-            copy.Show(new Athanor.Core.MaterialData { id = "moondust", glow = "#7cc0f8" }, false);
+            copy.Show(new Athanor.Gameplay.MaterialData { id = "moondust", glow = "#7cc0f8" }, false);
 
             // Assert
             Assert.AreEqual("moondust", copy.Material);

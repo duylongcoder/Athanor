@@ -38,7 +38,7 @@ public static class FontBuilder
         {
             var file = AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/Resources/lang/" + lang + ".json");
             if (file == null) continue;
-            var parsed = Athanor.Core.Lang.Parse(file.text);
+            var parsed = Athanor.Gameplay.Lang.Parse(file.text);
             string all = (parsed.name ?? "") + string.Concat(parsed.entries.Select(e => e.text));
             // Screens write many strings in capitals (Loc.Upper), so bake the capitals too: Ộ is not in vi.json until it is uppercased.
             foreach (char c in all + all.ToUpperInvariant())

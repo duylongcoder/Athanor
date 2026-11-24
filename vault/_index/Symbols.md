@@ -22,55 +22,78 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 ## Types
 | name | note | layer | kind | file | line | doc |
 |---|---|---|---|---|---|---|
-| AutoPlayer | AutoPlayer | Core | class | Athanor/Assets/Scripts/Core/AutoPlayer.cs | 13 |  |
-| AutoMove | AutoMove | Core | enum | Athanor/Assets/Scripts/Core/AutoPlayer.cs | 11 |  |
-| BenchRules | BenchRules | Core | class | Athanor/Assets/Scripts/Core/BenchRules.cs | 11 | What catalysts, aspects and events change about the bench itself: which tiles touch, how lively a tile counts, which tiles are shut. The planner, the resolver and the scripted player all read this, so |
-| ScoreContext | ScoreContext | Core | class | Athanor/Assets/Scripts/Core/BenchRules.cs | 82 | What one reaction's score depends on beyond the recipe and the catalysts. |
-| ChainStep | ChainStep | Core | class | Athanor/Assets/Scripts/Core/Chain.cs | 11 | One thing the bench does during an Ignite. A reaction: the hub and the neighbours it consumed (Tiles[0] is the hub, the rest ascending). A sputter: a combo of three or more whose layout was standing r |
-| ChainPlan | ChainPlan | Core | class | Athanor/Assets/Scripts/Core/Chain.cs | 20 |  |
-| ChainPlanner | ChainPlanner | Core | class | Athanor/Assets/Scripts/Core/Chain.cs | 32 | Works out what a bench does, with no side effects. Each round the liveliest tile (highest Reaction Index, earlier tile on a tie) that has a recipe around it becomes the hub; the largest recipe it can  |
-| RulesData | RulesData | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 29 | The run's tuning numbers, read from the "rules" block of content.json. Required: ContentDb throws without it. |
-| ContentData | ContentData | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 56 |  |
-| ProfileData | ProfileData | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 78 |  |
-| Rarities | Rarities | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 88 |  |
-| Effects | Effects | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 98 | The catalyst effect names used in content.json. |
-| AspectEffects | AspectEffects | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 117 | The aspect effect names used in content.json. |
-| Ops | Ops | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 129 | The event effect names (EffectData.op) and option requirements used in content.json. |
-| StatIds | StatIds | Core | class | Athanor/Assets/Scripts/Core/ContentData.cs | 145 | The stats a goal can watch. |
-| Kind | Kind | Core | enum | Athanor/Assets/Scripts/Core/ContentData.cs | 5 |  |
-| ContentDb | ContentDb | Core | class | Athanor/Assets/Scripts/Core/ContentDb.cs | 10 | Validated, indexed view of the game's content. |
-| EffectOp | EffectOp | Core | enum | Athanor/Assets/Scripts/Core/EffectOps.cs | 6 |  |
-| EventNeedType | EventNeedType | Core | enum | Athanor/Assets/Scripts/Core/EffectOps.cs | 15 |  |
-| EventType | EventType | Core | enum | Athanor/Assets/Scripts/Core/EffectOps.cs | 25 |  |
-| Bench | Bench | Core | class | Athanor/Assets/Scripts/Core/Ignite.cs | 7 | The 3x3 bench: tile index = row * 3 + column, null where empty. |
-| ReactionEvent | ReactionEvent | Core | class | Athanor/Assets/Scripts/Core/Ignite.cs | 21 | One thing that happened during an Ignite, in the order it should be shown. A reaction: Tiles[0] is the hub, where the result now stands; the other tiles were consumed. A sputter: a combo that stood re |
-| ResolveResult | ResolveResult | Core | class | Athanor/Assets/Scripts/Core/Ignite.cs | 36 |  |
-| IgniteResolver | IgniteResolver | Core | class | Athanor/Assets/Scripts/Core/Ignite.cs | 43 |  |
-| Journal | Journal | Core | class | Athanor/Assets/Scripts/Core/Journal.cs | 8 | What the player has learned across runs: recipes that worked, and hints from ones that did not. |
-| Lang | Lang | Core | class | Athanor/Assets/Scripts/Core/Lang.cs | 20 | The player-facing text of one language, Unity-free. Lookup order: this language, then the fallback (English), then the text the caller supplies (content.json's English for content keys), then the key  |
-| Json | Json | Core | class | Athanor/Assets/Scripts/Core/Lang.cs | 212 |  |
-| LinkPair | LinkPair | Core | struct | Athanor/Assets/Scripts/Core/LinkPair.cs | 7 | Named pair for bench link coordinates — used as an alternative to value tuples so Unity serialization is reliable. |
-| GoalReward | GoalReward | Core | class | Athanor/Assets/Scripts/Core/Profile.cs | 8 | A goal that has just been completed, and the locked item it gave (null when its pool was empty). |
-| Profile | Profile | Core | class | Athanor/Assets/Scripts/Core/Profile.cs | 18 | What the player keeps between runs besides the journal: counters, completed goals and the locked starters and catalysts won from them. |
-| Unlocks | Unlocks | Core | class | Athanor/Assets/Scripts/Core/Profile.cs | 154 | Which starting materials and catalysts a run may use. |
-| RunOptions | RunOptions | Core | class | Athanor/Assets/Scripts/Core/Profile.cs | 206 | Switches for a run. The default is a Phase 2 run: no aspects, no events, and (with no Unlocks) only what the content leaves open. |
-| AspectInstance | AspectInstance | Core | class | Athanor/Assets/Scripts/Core/RunStart.cs | 8 | An aspect as held by a run (or as offered): where it sits and, for an attuned tile, which kind it favours. |
-| EventResult | EventResult | Core | class | Athanor/Assets/Scripts/Core/RunStart.cs | 16 | What taking an event option did, for the screen. |
-| EventNote | EventNote | Core | class | Athanor/Assets/Scripts/Core/RunStart.cs | 24 | One thing an event option did, as a lang key (note.*) and its arguments; the Game layer words it. |
-| RunState | RunState | Core | class | Athanor/Assets/Scripts/Core/RunStart.cs | 33 | One run: descending through depths, spending trials, collecting catalysts. |
-| IgniteOutcome | IgniteOutcome | Core | class | Athanor/Assets/Scripts/Core/RunState.cs | 9 |  |
-| RunPhase | RunPhase | Core | enum | Athanor/Assets/Scripts/Core/RunState.cs | 7 |  |
-| Rng | Rng | Core | class | Athanor/Assets/Scripts/Core/Satchel.cs | 7 | Small deterministic RNG so shuffles match between Unity and the dotnet test run. |
-| Satchel | Satchel | Core | class | Athanor/Assets/Scripts/Core/Satchel.cs | 20 | The player's deck of starting materials: a draw pile, a discard pile, and the cards currently out. |
-| ScoreParts | ScoreParts | Core | class | Athanor/Assets/Scripts/Core/ScoreParts.cs | 7 | One reaction's potency split into the factors the tutorial names: Total = Base x Used x First x Step x Bonus. Bonus is everything else (catalysts, the hub's tile, events); 1 when nothing else applied. |
-| ScreenFlow | ScreenFlow | Core | class | Athanor/Assets/Scripts/Core/ScreenFlow.cs | 9 | The screen state machine: which screen is up and which moves are allowed. No Unity types. |
-| FlowState | FlowState | Core | enum | Athanor/Assets/Scripts/Core/ScreenFlow.cs | 6 |  |
-| Settings | Settings | Core | class | Athanor/Assets/Scripts/Core/Settings.cs | 12 | Player settings: volumes, haptics and language. Unity-free; Game stores the JSON (PlayerPrefs, key athanor.settings.v1). Public fields so JsonUtility can read it too; ToJson/FromJson are hand-written  |
-| Reader | Reader | Core | class | Athanor/Assets/Scripts/Core/Settings.cs | 62 |  |
-| TutorialLay | TutorialLay | Core | struct | Athanor/Assets/Scripts/Core/Tutorial.cs | 13 | One material laid on one tile. This material goes on this tile, not just any lit tile: another arrangement of the same materials can break the chain (trial 3 then scores 40 and does not clear the dept |
-| TutorialTrial | TutorialTrial | Core | class | Athanor/Assets/Scripts/Core/Tutorial.cs | 21 | One scripted trial: the hand dealt, where each material goes, and what the Ignite makes, in chain order. |
-| TutorialScript | TutorialScript | Core | class | Athanor/Assets/Scripts/Core/Tutorial.cs | 32 | The tutorial (docs/ATHANOR.md §8, v2) as data. Every number the script shows is pinned by TutorialTests; change both together. |
-| TutorialPlan | TutorialPlan | Core | enum | Athanor/Assets/Scripts/Core/Tutorial.cs | 6 |  |
+| AutoPlayer | AutoPlayer | Gameplay | class | Athanor/Assets/Scripts/Gameplay/AutoPlayer.cs | 13 |  |
+| AutoMove | AutoMove | Gameplay | enum | Athanor/Assets/Scripts/Gameplay/AutoPlayer.cs | 11 |  |
+| BenchRules | BenchRules | Gameplay | class | Athanor/Assets/Scripts/Gameplay/BenchRules.cs | 11 | What catalysts, aspects and events change about the bench itself: which tiles touch, how lively a tile counts, which tiles are shut. The planner, the resolver and the scripted player all read this, so |
+| ScoreContext | ScoreContext | Gameplay | class | Athanor/Assets/Scripts/Gameplay/BenchRules.cs | 82 | What one reaction's score depends on beyond the recipe and the catalysts. |
+| ChainStep | ChainStep | Gameplay | class | Athanor/Assets/Scripts/Gameplay/Chain.cs | 11 | One thing the bench does during an Ignite. A reaction: the hub and the neighbours it consumed (Tiles[0] is the hub, the rest ascending). A sputter: a combo of three or more whose layout was standing r |
+| ChainPlan | ChainPlan | Gameplay | class | Athanor/Assets/Scripts/Gameplay/Chain.cs | 20 |  |
+| ChainPlanner | ChainPlanner | Gameplay | class | Athanor/Assets/Scripts/Gameplay/Chain.cs | 32 | Works out what a bench does, with no side effects. Each round the liveliest tile (highest Reaction Index, earlier tile on a tie) that has a recipe around it becomes the hub; the largest recipe it can  |
+| AspectDefinition | AspectDefinition | Gameplay | class | Athanor/Assets/Scripts/Gameplay/Content/AspectDefinition.cs | 7 | A run-long bench modifier offered at GameRules.aspectDepths. |
+| CatalystDefinition | CatalystDefinition | Gameplay | class | Athanor/Assets/Scripts/Gameplay/Content/CatalystDefinition.cs | 7 | A catalyst card: a run-long scoring effect chosen after a depth. |
+| ContentDatabase | ContentDatabase | Gameplay | class | Athanor/Assets/Scripts/Gameplay/Content/ContentDatabase.cs | 12 | The game's content: every definition asset in the order the rules see it (the order matters: offers, draws and "the order of the file" tie-breaks follow it). ToContentData builds the plain data Conten |
+| CatalystEffect | CatalystEffect | Gameplay | enum | Athanor/Assets/Scripts/Gameplay/Content/ContentEnums.cs | 15 | Effects.All in order. |
+| ContentNames | ContentNames | Gameplay | class | Athanor/Assets/Scripts/Gameplay/Content/ContentEnums.cs | 47 | Enum values to and from the strings of ContentData. |
+| RarityId | RarityId | Gameplay | enum | Athanor/Assets/Scripts/Gameplay/Content/ContentEnums.cs | 9 |  |
+| KindOrNone | KindOrNone | Gameplay | enum | Athanor/Assets/Scripts/Gameplay/Content/ContentEnums.cs | 12 |  |
+| AspectEffect | AspectEffect | Gameplay | enum | Athanor/Assets/Scripts/Gameplay/Content/ContentEnums.cs | 23 |  |
+| AspectScope | AspectScope | Gameplay | enum | Athanor/Assets/Scripts/Gameplay/Content/ContentEnums.cs | 26 |  |
+| AspectGroup | AspectGroup | Gameplay | enum | Athanor/Assets/Scripts/Gameplay/Content/ContentEnums.cs | 29 |  |
+| EventOp | EventOp | Gameplay | enum | Athanor/Assets/Scripts/Gameplay/Content/ContentEnums.cs | 32 |  |
+| EventKind | EventKind | Gameplay | enum | Athanor/Assets/Scripts/Gameplay/Content/ContentEnums.cs | 35 |  |
+| EventNeed | EventNeed | Gameplay | enum | Athanor/Assets/Scripts/Gameplay/Content/ContentEnums.cs | 38 |  |
+| GoalStat | GoalStat | Gameplay | enum | Athanor/Assets/Scripts/Gameplay/Content/ContentEnums.cs | 41 |  |
+| RewardKind | RewardKind | Gameplay | enum | Athanor/Assets/Scripts/Gameplay/Content/ContentEnums.cs | 44 |  |
+| EventEffectDef | EventEffectDef | Gameplay | class | Athanor/Assets/Scripts/Gameplay/Content/EventDefinition.cs | 9 | One effect of an event option's cost or outcome. |
+| EventOutcomeDef | EventOutcomeDef | Gameplay | class | Athanor/Assets/Scripts/Gameplay/Content/EventDefinition.cs | 20 | One weighted outcome of an event option. |
+| EventOptionDef | EventOptionDef | Gameplay | class | Athanor/Assets/Scripts/Gameplay/Content/EventDefinition.cs | 31 | One choice of an event: its requirement, cost and weighted outcomes. |
+| EventDefinition | EventDefinition | Gameplay | class | Athanor/Assets/Scripts/Gameplay/Content/EventDefinition.cs | 47 | An event drawn at the start of a depth. |
+| GameRules | GameRules | Gameplay | class | Athanor/Assets/Scripts/Gameplay/Content/GameRules.cs | 7 | The run's tuning numbers (was the "rules" block of the content assets) and the depth table. |
+| GoalDefinition | GoalDefinition | Gameplay | class | Athanor/Assets/Scripts/Gameplay/Content/GoalDefinition.cs | 7 | A long-term goal: reach target on a stat, win one random locked item of rewardKind and rewardRarity. |
+| MaterialDefinition | MaterialDefinition | Gameplay | class | Athanor/Assets/Scripts/Gameplay/Content/MaterialDefinition.cs | 7 | A material. The asset's file name is its id; the id is what saves store, so never change it after release. |
+| RecipeDefinition | RecipeDefinition | Gameplay | class | Athanor/Assets/Scripts/Gameplay/Content/RecipeDefinition.cs | 8 | A combo of 2 to 5 materials (unordered, at most 2 of one) that makes result. |
+| RulesData | RulesData | Gameplay | class | Athanor/Assets/Scripts/Gameplay/ContentData.cs | 29 | The run's tuning numbers, read from the "rules" block of the content assets. Required: ContentDb throws without it. |
+| ContentData | ContentData | Gameplay | class | Athanor/Assets/Scripts/Gameplay/ContentData.cs | 56 |  |
+| ProfileData | ProfileData | Gameplay | class | Athanor/Assets/Scripts/Gameplay/ContentData.cs | 78 |  |
+| Rarities | Rarities | Gameplay | class | Athanor/Assets/Scripts/Gameplay/ContentData.cs | 88 |  |
+| Effects | Effects | Gameplay | class | Athanor/Assets/Scripts/Gameplay/ContentData.cs | 98 | The catalyst effect names used in the content assets. |
+| AspectEffects | AspectEffects | Gameplay | class | Athanor/Assets/Scripts/Gameplay/ContentData.cs | 117 | The aspect effect names used in the content assets. |
+| Ops | Ops | Gameplay | class | Athanor/Assets/Scripts/Gameplay/ContentData.cs | 129 | The event effect names (EffectData.op) and option requirements used in the content assets. |
+| StatIds | StatIds | Gameplay | class | Athanor/Assets/Scripts/Gameplay/ContentData.cs | 145 | The stats a goal can watch. |
+| Kind | Kind | Gameplay | enum | Athanor/Assets/Scripts/Gameplay/ContentData.cs | 5 |  |
+| ContentDb | ContentDb | Gameplay | class | Athanor/Assets/Scripts/Gameplay/ContentDb.cs | 10 | Validated, indexed view of the game's content. |
+| EffectOp | EffectOp | Gameplay | enum | Athanor/Assets/Scripts/Gameplay/EffectOps.cs | 6 |  |
+| EventNeedType | EventNeedType | Gameplay | enum | Athanor/Assets/Scripts/Gameplay/EffectOps.cs | 15 |  |
+| EventType | EventType | Gameplay | enum | Athanor/Assets/Scripts/Gameplay/EffectOps.cs | 25 |  |
+| Bench | Bench | Gameplay | class | Athanor/Assets/Scripts/Gameplay/Ignite.cs | 7 | The 3x3 bench: tile index = row * 3 + column, null where empty. |
+| ReactionEvent | ReactionEvent | Gameplay | class | Athanor/Assets/Scripts/Gameplay/Ignite.cs | 21 | One thing that happened during an Ignite, in the order it should be shown. A reaction: Tiles[0] is the hub, where the result now stands; the other tiles were consumed. A sputter: a combo that stood re |
+| ResolveResult | ResolveResult | Gameplay | class | Athanor/Assets/Scripts/Gameplay/Ignite.cs | 36 |  |
+| IgniteResolver | IgniteResolver | Gameplay | class | Athanor/Assets/Scripts/Gameplay/Ignite.cs | 43 |  |
+| Journal | Journal | Gameplay | class | Athanor/Assets/Scripts/Gameplay/Journal.cs | 8 | What the player has learned across runs: recipes that worked, and hints from ones that did not. |
+| Lang | Lang | Gameplay | class | Athanor/Assets/Scripts/Gameplay/Lang.cs | 20 | The player-facing text of one language, Unity-free. Lookup order: this language, then the fallback (English), then the text the caller supplies (the content assets' English for content keys), then the |
+| Json | Json | Gameplay | class | Athanor/Assets/Scripts/Gameplay/Lang.cs | 212 |  |
+| LinkPair | LinkPair | Gameplay | struct | Athanor/Assets/Scripts/Gameplay/LinkPair.cs | 7 | Named pair for bench link coordinates — used as an alternative to value tuples so Unity serialization is reliable. |
+| GoalReward | GoalReward | Gameplay | class | Athanor/Assets/Scripts/Gameplay/Profile.cs | 8 | A goal that has just been completed, and the locked item it gave (null when its pool was empty). |
+| Profile | Profile | Gameplay | class | Athanor/Assets/Scripts/Gameplay/Profile.cs | 18 | What the player keeps between runs besides the journal: counters, completed goals and the locked starters and catalysts won from them. |
+| Unlocks | Unlocks | Gameplay | class | Athanor/Assets/Scripts/Gameplay/Profile.cs | 154 | Which starting materials and catalysts a run may use. |
+| RunOptions | RunOptions | Gameplay | class | Athanor/Assets/Scripts/Gameplay/Profile.cs | 206 | Switches for a run. The default is a Phase 2 run: no aspects, no events, and (with no Unlocks) only what the content leaves open. |
+| AspectInstance | AspectInstance | Gameplay | class | Athanor/Assets/Scripts/Gameplay/RunStart.cs | 8 | An aspect as held by a run (or as offered): where it sits and, for an attuned tile, which kind it favours. |
+| EventResult | EventResult | Gameplay | class | Athanor/Assets/Scripts/Gameplay/RunStart.cs | 16 | What taking an event option did, for the screen. |
+| EventNote | EventNote | Gameplay | class | Athanor/Assets/Scripts/Gameplay/RunStart.cs | 24 | One thing an event option did, as a lang key (note.*) and its arguments; the Game layer words it. |
+| RunState | RunState | Gameplay | class | Athanor/Assets/Scripts/Gameplay/RunStart.cs | 33 | One run: descending through depths, spending trials, collecting catalysts. |
+| IgniteOutcome | IgniteOutcome | Gameplay | class | Athanor/Assets/Scripts/Gameplay/RunState.cs | 9 |  |
+| RunPhase | RunPhase | Gameplay | enum | Athanor/Assets/Scripts/Gameplay/RunState.cs | 7 |  |
+| Rng | Rng | Gameplay | class | Athanor/Assets/Scripts/Gameplay/Satchel.cs | 7 | Small deterministic RNG so shuffles match between Unity and the dotnet test run. |
+| Satchel | Satchel | Gameplay | class | Athanor/Assets/Scripts/Gameplay/Satchel.cs | 20 | The player's deck of starting materials: a draw pile, a discard pile, and the cards currently out. |
+| ScoreParts | ScoreParts | Gameplay | class | Athanor/Assets/Scripts/Gameplay/ScoreParts.cs | 7 | One reaction's potency split into the factors the tutorial names: Total = Base x Used x First x Step x Bonus. Bonus is everything else (catalysts, the hub's tile, events); 1 when nothing else applied. |
+| ScreenFlow | ScreenFlow | Gameplay | class | Athanor/Assets/Scripts/Gameplay/ScreenFlow.cs | 9 | The screen state machine: which screen is up and which moves are allowed. No Unity types. |
+| FlowState | FlowState | Gameplay | enum | Athanor/Assets/Scripts/Gameplay/ScreenFlow.cs | 6 |  |
+| Settings | Settings | Gameplay | class | Athanor/Assets/Scripts/Gameplay/Settings.cs | 12 | Player settings: volumes, haptics and language. Unity-free; Game stores the JSON (PlayerPrefs, key athanor.settings.v1). Public fields so JsonUtility can read it too; ToJson/FromJson are hand-written  |
+| Reader | Reader | Gameplay | class | Athanor/Assets/Scripts/Gameplay/Settings.cs | 62 |  |
+| TutorialLay | TutorialLay | Gameplay | struct | Athanor/Assets/Scripts/Gameplay/Tutorial.cs | 13 | One material laid on one tile. This material goes on this tile, not just any lit tile: another arrangement of the same materials can break the chain (trial 3 then scores 40 and does not clear the dept |
+| TutorialTrial | TutorialTrial | Gameplay | class | Athanor/Assets/Scripts/Gameplay/Tutorial.cs | 21 | One scripted trial: the hand dealt, where each material goes, and what the Ignite makes, in chain order. |
+| TutorialScript | TutorialScript | Gameplay | class | Athanor/Assets/Scripts/Gameplay/Tutorial.cs | 32 | The tutorial (docs/ATHANOR.md §8, v2) as data. Every number the script shows is pinned by TutorialTests; change both together. |
+| TutorialPlan | TutorialPlan | Gameplay | enum | Athanor/Assets/Scripts/Gameplay/Tutorial.cs | 6 |  |
 | BenchView | BenchView | Game | class | Athanor/Assets/Scripts/Game/Bench/BenchView.cs | 14 | The main screen: nine tiles, the hand of cards, the rack of discoveries and the HUD. Materials are placed by dragging them onto a tile, or by clicking one and then a tile; clicking a placed one takes  |
 | BenchView.Layout | BenchView.Layout | Game | struct | Athanor/Assets/Scripts/Game/Bench/BenchView.cs | 30 | Offsets and a colour of the bench, stored in Bench.prefab. |
 | TipKey | TipKey | Game | struct | Athanor/Assets/Scripts/Game/Bench/BenchView.cs | 76 |  |
@@ -85,8 +108,8 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | TileView | TileView | Game | class | Athanor/Assets/Scripts/Game/Bench/TileView.cs | 10 | One of the nine bench tiles: its hover highlight and, when occupied, the material standing on it. |
 | TileView.Layout | TileView.Layout | Game | struct | Athanor/Assets/Scripts/Game/Bench/TileView.cs | 33 | Colours and offsets of the tile, stored in Bench.prefab. |
 | GameFlow | GameFlow | Game | class | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 13 | Owns the run and moves the game between its screens. |
-| RunTiming | RunTiming | Game | struct | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 85 | Waits and shake of the descent and the end of a run, in seconds. |
-| TitleChoice | TitleChoice | Game | enum | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 142 |  |
+| RunTiming | RunTiming | Game | struct | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 91 | Waits and shake of the descent and the end of a run, in seconds. |
+| TitleChoice | TitleChoice | Game | enum | Athanor/Assets/Scripts/Game/Boot/GameFlow.cs | 148 |  |
 | IgniteSequence | IgniteSequence | Game | class | Athanor/Assets/Scripts/Game/Boot/IgniteSequence.cs | 15 | The choreography of one Ignite: the chain of reactions (flash, draw-in, burst, points), the discovery beat and cutscene, the flight of what was made to the rack, the spent tiles and the final potency. |
 | IgniteSequence.Timing | IgniteSequence.Timing | Game | struct | Athanor/Assets/Scripts/Game/Boot/IgniteSequence.cs | 22 | Paces, waits and durations, in seconds unless the name says otherwise. |
 | IgniteSequence.Look | IgniteSequence.Look | Game | struct | Athanor/Assets/Scripts/Game/Boot/IgniteSequence.cs | 55 | Bursts, offsets, sizes and colours. |
@@ -184,48 +207,50 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | PauseMenu | PauseMenu | Game | class | Athanor/Assets/Scripts/Game/Ui/PauseMenu.cs | 13 | The in-run pause: Resume, Vibration (only where the device can), How to play (greyed: title only) and Quit to title with a confirm. Time.timeScale is 0 while it is open; it is put back on every way ou |
 | RunOverView | RunOverView | Game | class | Athanor/Assets/Scripts/Game/Ui/RunOverView.cs | 9 | The summary at the end of a run, won or lost. |
 | TitleView | TitleView | Game | class | Athanor/Assets/Scripts/Game/Ui/TitleView.cs | 8 | The title, shown over the candlelit workshop. |
-| TitleView.Layout | TitleView.Layout | Game | struct | Athanor/Assets/Scripts/Game/Ui/TitleView.cs | 40 | The title's positions and colours (art px, y down), stored in Title.prefab. |
-| TitleView.Timing | TitleView.Timing | Game | struct | Athanor/Assets/Scripts/Game/Ui/TitleView.cs | 55 | The title's motion: logo fade-in, the sub-title's delay and fade, the glow's colour, base, swing and speed. |
+| TitleView.Layout | TitleView.Layout | Game | struct | Athanor/Assets/Scripts/Game/Ui/TitleView.cs | 42 | The title's positions and colours (art px, y down), stored in Title.prefab. |
+| TitleView.Timing | TitleView.Timing | Game | struct | Athanor/Assets/Scripts/Game/Ui/TitleView.cs | 57 | The title's motion: logo fade-in, the sub-title's delay and fade, the glow's colour, base, swing and speed. |
 | Tooltip | Tooltip | Game | class | Athanor/Assets/Scripts/Game/Ui/Tooltip.cs | 10 | A small panel with a title and two lines of text that appears beside whatever the pointer rests on. A hand card's tip adds a row under the name with its stars and tier word, and the panel grows by tha |
 | Tooltip.Layout | Tooltip.Layout | Game | struct | Athanor/Assets/Scripts/Game/Ui/Tooltip.cs | 18 | The tooltip's inner offsets (px), stored in the Bench prefab. |
 | UiButton | UiButton | Game | class | Athanor/Assets/Scripts/Game/Ui/UiButton.cs | 7 | A 120x26 red button with a label: brightens under the pointer, sinks when pressed. |
 | UiButton.Look | UiButton.Look | Game | struct | Athanor/Assets/Scripts/Game/Ui/UiButton.cs | 15 | The button's colours and label offsets, stored in each prefab that holds one. |
 | ArtLibraryBuilder | ArtLibraryBuilder | Editor | class | Athanor/Assets/Editor/ArtLibraryBuilder.cs | 12 | Collects the sprites, effect sheets, fonts and materials into Assets/Art/ArtLibrary.asset, the one lookup the game uses by name. Run it after new art or effect sheets are imported (the sprite and flip |
 | AtlasBuilder | AtlasBuilder | Editor | class | Athanor/Assets/Editor/AtlasBuilder.cs | 27 | Two art steps that run after tools/art/export.mjs, both idempotent: 1. Sprite sheets: the numbered frames of each animation (Background/flame_small_0..7.png ...) are merged into one Multiple-mode shee |
+| BalanceReports | BalanceReports | Editor | class | Athanor/Assets/Editor/Balance/BalanceReports.cs | 16 | The balance reports (Athanor > Balance, or BalanceReports.RunBatch). They print numbers and assert nothing. dotnet run --project tools/CoreReports -- balance-matrix \| events \| roles \| newcomer \| balan |
+| CheckSprites | CheckSprites | Editor | class | Athanor/Assets/Editor/CheckSprites.cs | 6 |  |
+| FixCandleImport | FixCandleImport | Editor | class | Athanor/Assets/Editor/FixCandleImport.cs | 4 |  |
 | FlipbookImporter | FlipbookImporter | Editor | class | Athanor/Assets/Editor/FlipbookImporter.cs | 14 | Turns each pixelfx sheet in Assets/Art/Fx/Sheets (name.png + name.json, exported from pixelfx) into sliced sprites and a FlipbookSheet asset, then adds them to the art library so Fx.Spawn(name) can pl |
 | FontBuilder | FontBuilder | Editor | class | Athanor/Assets/Editor/FontBuilder.cs | 10 | Bakes the pixel fonts into TextMeshPro bitmap font assets at their native size (crisp, point-filtered). |
 | LayoutData | LayoutData | Editor | class | Athanor/Assets/Editor/LayoutData.cs | 11 |  |
+| ContentFieldMigration | ContentFieldMigration | Editor | class | Athanor/Assets/Editor/Migration/ContentFieldMigration.cs | 11 | Sets GameFlow.content in Main.unity to Assets/Content/ContentDatabase.asset and clears contentJson. |
+| ContentAssets | ContentAssets | Editor | class | Athanor/Assets/Editor/Shared/ContentAssets.cs | 5 | The content assets for Editor tools and tests (no scene, no Resources). |
+| ContentSnapshot | ContentSnapshot | Editor | class | Athanor/Assets/Editor/Shared/ContentSnapshot.cs | 9 | Writes the content assets as tools/content/snapshot.json (the shape the content assets had) for the tools that are not Unity: tools/ci/check_repo.py, tools/vault/build_vault.py, tools/art/export.mjs.  |
 | EditorGlobals | EditorGlobals | Editor | class | Athanor/Assets/Editor/Shared/EditorGlobals.cs | 10 | Sets the globals GameFlow and Sparks would set from their serialized fields at runtime (Art.Lib, Loc.Use, SparkMesh.BaseMaterial), loading the assets through the AssetDatabase. The batch tools (-execu |
-| GoldenShots | GoldenShots | Editor | class | Athanor/Assets/Editor/Shared/GoldenShots.cs | 17 | The golden shots: one picture of every view in a fixed, seeded state, in English and Vietnamese. Each view is built the way its prefab test builds it (instantiate, Bind, Show / Open), never through Up |
+| GoldenShots | GoldenShots | Editor | class | Athanor/Assets/Editor/Shared/GoldenShots.cs | 19 | The golden shots: one picture of every view in a fixed, seeded state, in English and Vietnamese. Each view is built the way its prefab test builds it (instantiate, Bind, Show / Open), never through Up |
 | Reserialize | Reserialize | Editor | class | Athanor/Assets/Editor/Shared/Reserialize.cs | 11 | Rewrites every view prefab and the data assets in the current serializer format, so a field added to a component is stored with its value. Phase 7 uses it after a number moves from code to a prefab. M |
 | ViewCapture | ViewCapture | Editor | class | Athanor/Assets/Editor/Shared/ViewCapture.cs | 8 | Renders a GameObject alone (in an otherwise empty scene) to a 640x360 image, the way the UI camera draws it. |
+| Sim | Sim | Editor | class | Athanor/Assets/Editor/Simulation/Sim.cs | 9 | The simulated players behind the balance tests and the Editor balance reports. |
+| Newcomer | Newcomer | Editor | class | Athanor/Assets/Editor/Simulation/Sim.cs | 70 |  |
+| Career | Career | Editor | class | Athanor/Assets/Editor/Simulation/Sim.cs | 385 |  |
+| RunStats | RunStats | Editor | class | Athanor/Assets/Editor/Simulation/Sim.cs | 483 | What happened over one scripted run, for the balance report. |
 | SpriteImportRules | SpriteImportRules | Editor | class | Athanor/Assets/Editor/SpriteImportRules.cs | 10 | Every texture under Assets/Art is pixel art: a point-filtered, uncompressed sprite at 1 pixel per unit. The one exception is Assets/Art/Depth (the HD-2D layers): its pre-blurred pictures (*_far, *_nea |
-| ContentJsonImporter | ContentJsonImporter | Editor | class | Athanor/Assets/Editor/TempImport/ContentJsonImporter.cs | 13 | TEMPORARY IMPORT TOOL — will be deleted after migration. Reads content.json from Assets/Resources and creates a GameConfigSO instance. Run once via Unity Menu: Tools → Athanor → Import Content JSON |
-| JsonRoot | JsonRoot | Editor | class | Athanor/Assets/Editor/TempImport/ContentJsonImporter.cs | 212 |  |
-| JsonRules | JsonRules | Editor | class | Athanor/Assets/Editor/TempImport/ContentJsonImporter.cs | 229 |  |
-| JsonMaterial | JsonMaterial | Editor | class | Athanor/Assets/Editor/TempImport/ContentJsonImporter.cs | 238 |  |
-| JsonRecipe | JsonRecipe | Editor | class | Athanor/Assets/Editor/TempImport/ContentJsonImporter.cs | 246 |  |
-| JsonCatalyst | JsonCatalyst | Editor | class | Athanor/Assets/Editor/TempImport/ContentJsonImporter.cs | 255 |  |
-| JsonGoal | JsonGoal | Editor | class | Athanor/Assets/Editor/TempImport/ContentJsonImporter.cs | 263 |  |
-| JsonAspect | JsonAspect | Editor | class | Athanor/Assets/Editor/TempImport/ContentJsonImporter.cs | 270 |  |
-| JsonEvent | JsonEvent | Editor | class | Athanor/Assets/Editor/TempImport/ContentJsonImporter.cs | 278 |  |
-| JsonEventOption | JsonEventOption | Editor | class | Athanor/Assets/Editor/TempImport/ContentJsonImporter.cs | 286 |  |
-| JsonOutcome | JsonOutcome | Editor | class | Athanor/Assets/Editor/TempImport/ContentJsonImporter.cs | 294 |  |
-| JsonEffect | JsonEffect | Editor | class | Athanor/Assets/Editor/TempImport/ContentJsonImporter.cs | 302 |  |
 | TutorialAreaEditor | TutorialAreaEditor | Editor | class | Athanor/Assets/Editor/TutorialStepGizmo.cs | 11 | Scene-view preview of the tutorial steps in Main.unity (Edit Mode): every Fixed area is drawn as an outline, green when clicks pass through it and amber when it is highlight only, with the step name a |
 | TutorialStepsMigration | TutorialStepsMigration | Editor | class | Athanor/Assets/Editor/TutorialStepsMigration.cs | 16 | Creates (or updates, by name) the tutorial step objects under the Tutorial object of Main.unity, from the table below. The table reproduces what Drive lit and which clicks reached the game before the  |
 | A | A | Editor | class | Athanor/Assets/Editor/TutorialStepsMigration.cs | 24 |  |
 | S | S | Editor | class | Athanor/Assets/Editor/TutorialStepsMigration.cs | 32 |  |
 | WebBuild | WebBuild | Editor | class | Athanor/Assets/Editor/WebBuild.cs | 10 | Builds the game for the browser into Build/web. Also callable from the command line: unity build Athanor --target WebGL --execute-method WebBuild.Build |
 | ChainTests | ChainTests | Tests | class | Athanor/Assets/Tests/EditMode/ChainTests.cs | 8 | The chain planner on TestContent.Combo(): p 8, q 5, r 2, s 9, t 4, v 1 (Reaction Index). |
+| ContentAssetTests | ContentAssetTests | Tests | class | Athanor/Assets/Tests/EditMode/ContentAssetTests.cs | 7 | Rules about the content assets themselves. |
+| ContentDatabaseTests | ContentDatabaseTests | Tests | class | Athanor/Assets/Tests/EditMode/ContentDatabaseTests.cs | 9 | ContentDatabase built in memory hands the rules the plain data they read. |
+| ContentEnumTests | ContentEnumTests | Tests | class | Athanor/Assets/Tests/EditMode/ContentEnumTests.cs | 9 | The Inspector enums of the content assets spell exactly the names the rules read. |
+| ContentSnapshotTests | ContentSnapshotTests | Tests | class | Athanor/Assets/Tests/EditMode/ContentSnapshotTests.cs | 7 | tools/content/snapshot.json is the assets written out; a content change without a new snapshot fails here. |
 | ContentTests | ContentTests | Tests | class | Athanor/Assets/Tests/EditMode/ContentTests.cs | 9 |  |
 | IgniteTests | IgniteTests | Tests | class | Athanor/Assets/Tests/EditMode/IgniteTests.cs | 8 |  |
-| TestLang | TestLang | Tests | class | Athanor/Assets/Tests/EditMode/LangTests.cs | 10 | Loads the real language files (Resources/lang/en.json, vi.json), inside Unity or under plain dotnet. |
-| LangTests | LangTests | Tests | class | Athanor/Assets/Tests/EditMode/LangTests.cs | 22 |  |
+| TestLang | TestLang | Tests | class | Athanor/Assets/Tests/EditMode/LangTests.cs | 10 | Loads the real language files (Resources/lang/en.json, vi.json), inside Unity. |
+| LangTests | LangTests | Tests | class | Athanor/Assets/Tests/EditMode/LangTests.cs | 18 |  |
 | LoreTests | LoreTests | Tests | class | Athanor/Assets/Tests/EditMode/LoreTests.cs | 9 | Lore events: the last one seen is not drawn again until another Lore event has been seen. |
 | Phase3Tests | Phase3Tests | Tests | class | Athanor/Assets/Tests/EditMode/Phase3Tests.cs | 10 | Phase 3: the profile and its goals, unlocks, the new catalysts, bench rules, aspects, events and the start of a depth. |
 | RarityReportTests | RarityReportTests | Tests | class | Athanor/Assets/Tests/EditMode/RarityReportTests.cs | 17 | Opt-in (Explicit) report: does each rarity pay? Same seeds, the informed bot, but at every catalyst offer it follows one policy: take the first offered catalyst of one rarity (else the bot's pick), a  |
-| RarityTests | RarityTests | Tests | class | Athanor/Assets/Tests/EditMode/RarityTests.cs | 9 | Phase 5a-04: catalyst offers and event gifts draw by the optional content.json "rarityWeights" (Common..Legendary). |
+| RarityTests | RarityTests | Tests | class | Athanor/Assets/Tests/EditMode/RarityTests.cs | 9 | Phase 5a-04: catalyst offers and event gifts draw by the optional the content assets "rarityWeights" (Common..WorldSeed). |
 | RoleSimTests | RoleSimTests | Tests | class | Athanor/Assets/Tests/EditMode/RoleSimTests.cs | 17 | Two simulated players on the full Phase 3 game (unlocks, aspects, events), each starting from an empty journal and a fresh profile and keeping both from run to run. Admin: knows every recipe and how a |
 | RulesTests | RulesTests | Tests | class | Athanor/Assets/Tests/EditMode/RulesTests.cs | 8 |  |
 | RunStateTests | RunStateTests | Tests | class | Athanor/Assets/Tests/EditMode/RunStateTests.cs | 9 |  |
@@ -233,11 +258,7 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | JournalTests | JournalTests | Tests | class | Athanor/Assets/Tests/EditMode/SatchelTests.cs | 45 |  |
 | ScreenFlowTests | ScreenFlowTests | Tests | class | Athanor/Assets/Tests/EditMode/ScreenFlowTests.cs | 6 |  |
 | SettingsTests | SettingsTests | Tests | class | Athanor/Assets/Tests/EditMode/SettingsTests.cs | 6 |  |
-| Sim | Sim | Tests | class | Athanor/Assets/Tests/EditMode/Sim.cs | 12 | The simulated players and shared helpers behind the balance tests and the console reports in tools/CoreReports. No NUnit here: it compiles in the Unity test assembly, in tools/CoreTests and in tools/C |
-| Newcomer | Newcomer | Tests | class | Athanor/Assets/Tests/EditMode/Sim.cs | 73 |  |
-| Career | Career | Tests | class | Athanor/Assets/Tests/EditMode/Sim.cs | 388 |  |
-| RunStats | RunStats | Tests | class | Athanor/Assets/Tests/EditMode/Sim.cs | 486 | What happened over one scripted run, for the balance report. |
-| TestContent | TestContent | Tests | class | Athanor/Assets/Tests/EditMode/TestContent.cs | 6 | Loads the real content.json, inside Unity or under plain dotnet. |
+| TestContent | TestContent | Tests | class | Athanor/Assets/Tests/EditMode/TestContent.cs | 6 | The real content, from Assets/Content. |
 | TutorialTests | TutorialTests | Tests | class | Athanor/Assets/Tests/EditMode/TutorialTests.cs | 9 | Phase 4: the hooks the tutorial needs, and the tutorial script replayed with every number it shows. |
 | AutoHookTests | AutoHookTests | Tests | class | Athanor/Assets/Tests/EditModeGame/AutoHookTests.cs | 12 | F9 (the scripted player) is a toggle, so tools/web/descents.mjs cannot know its state from its own key presses: a press at the wrong moment left the scripted player off after depth 2 and the run stood |
 | ChoiceHookTests | ChoiceHookTests | Tests | class | Athanor/Assets/Tests/EditModeGame/ChoiceHookTests.cs | 14 | The card chooser logs its development hook only once the cards take a click (the deal is over). tools/web/webtest.mjs and descents.mjs click a card after this line; a click before it was lost and the  |
@@ -246,7 +267,7 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | DepthLayerTests | DepthLayerTests | Tests | class | Athanor/Assets/Tests/EditModeGame/DepthLayerTests.cs | 12 | The HD-2D projection maths (HD-2D mockup SPEC, "Layer stack and projection"; removed in P6-22, see git history) and the rules that keep the depth art out of the shipped game. |
 | DepthLookTests | DepthLookTests | Tests | class | Athanor/Assets/Tests/EditModeGame/DepthLookTests.cs | 5 |  |
 | GameTestSetup | GameTestSetup | Tests | class | Athanor/Assets/Tests/EditModeGame/GameTestSetup.cs | 7 | Once per run of the Game tests: the language files, art library and particle material the game would get from GameFlow and Sparks. |
-| GoldenShotTests | GoldenShotTests | Tests | class | Athanor/Assets/Tests/EditModeGame/GoldenShotTests.cs | 7 | Every view, in both languages, still looks like the picture recorded in production/qa/evidence/phase7/baseline/golden. |
+| GoldenShotTests | GoldenShotTests | Tests | class | Athanor/Assets/Tests/EditModeGame/GoldenShotTests.cs | 8 | Every view, in both languages, still looks like the picture recorded in production/qa/evidence/phase7/baseline/golden. |
 | HotPathTests | HotPathTests | Tests | class | Athanor/Assets/Tests/EditModeGame/HotPathTests.cs | 12 | Idle frames allocate nothing: a component that has nothing to change this frame builds no string, looks up no sprite and makes no closure. |
 | HudTests | HudTests | Tests | class | Athanor/Assets/Tests/EditModeGame/HudTests.cs | 9 | The Redraw button is live only while a redraw is left and the bench is in play. |
 | LabelLineBoxTests | LabelLineBoxTests | Tests | class | Athanor/Assets/Tests/EditModeGame/LabelLineBoxTests.cs | 15 | Line-box text (the Descent's depth name, SPEC (f)): the mockup sets it in a CSS line box as tall as the size, so the glyphs sit a half-leading below the box top; TMP puts the baseline one ascender dow |
@@ -270,6 +291,12 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | TutorialAreaTests | TutorialAreaTests | Tests | class | Athanor/Assets/Tests/EditModeGame/TutorialAreaTests.cs | 7 |  |
 | TutorialFlowTests | TutorialFlowTests | Tests | class | Athanor/Assets/Tests/EditModeGame/TutorialFlowTests.cs | 11 | The tutorial's decisions, its sandbox and the scores it shows (the numbers TutorialTests pins in Core). |
 | TutorialStepsBakeTests | TutorialStepsBakeTests | Tests | class | Athanor/Assets/Tests/EditModeGame/TutorialStepsBakeTests.cs | 17 | The tutorial steps are scene objects of Main.unity. The baseline (tutorial_lit_baseline.json) is what each step lit when the rects were numbers in TutorialTargets and lists in Drive (art pixels, befor |
+| AutoplayTraceTests | AutoplayTraceTests | Tests | class | Athanor/Assets/Tests/PlayMode/AutoplayTraceTests.cs | 11 | Main.unity played by the scripted player (F9) on a fixed seed: the gameplay hooks equal the recorded run. |
+| MainScene | MainScene | Tests | class | Athanor/Assets/Tests/PlayMode/PlayModeKit.cs | 16 | Main.unity loaded beside the test runner's scene. |
+| PrefsSnapshot | PrefsSnapshot | Tests | class | Athanor/Assets/Tests/PlayMode/PlayModeKit.cs | 37 | Takes the game's PlayerPrefs keys aside and gives the test a known start; Dispose puts the player's keys back. |
+| TraceRecorder | TraceRecorder | Tests | class | Athanor/Assets/Tests/PlayMode/PlayModeKit.cs | 65 | The gameplay lines of the dev hooks (Dev.Hook logs them), in order. |
+| Baseline | Baseline | Tests | class | Athanor/Assets/Tests/PlayMode/PlayModeKit.cs | 89 | Text baselines under Tests/PlayMode/Baselines. ATHANOR_RECORD=1 writes them instead of comparing. |
+| TutorialTraceTests | TutorialTraceTests | Tests | class | Athanor/Assets/Tests/PlayMode/TutorialTraceTests.cs | 13 | The first-run tutorial auto-driven from Begin to line 5.5: its lines and popup scores equal the recorded run. |
 
 ## Members
 | type | kind | name | line | sig |
@@ -332,6 +359,160 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | ChainPlanner | method | ShortAt | 64 | public static RecipeData ShortAt(string[] tiles, int hub, ContentDb db, BenchRules rules) |
 | ChainPlanner | method | Plan | 109 | public static ChainPlan Plan(string[] tiles, ContentDb db, bool diagonals, bool sputters = true) |
 | ChainPlanner | method | Plan | 112 | public static ChainPlan Plan(string[] tiles, ContentDb db, BenchRules rules, bool sputters = true) |
+| AspectDefinition | field | displayName | 10 | public string displayName = |
+| AspectDefinition | field | effect | 12 | public AspectEffect effect |
+| AspectDefinition | field | scope | 13 | public AspectScope scope |
+| AspectDefinition | field | group | 14 | public AspectGroup group |
+| AspectDefinition | method | ToData | 19 | public AspectData ToData() |
+| CatalystDefinition | field | displayName | 10 | public string displayName = |
+| CatalystDefinition | field | effect | 12 | public CatalystEffect effect |
+| CatalystDefinition | field | amount | 14 | public float amount |
+| CatalystDefinition | field | rarity | 15 | public RarityId rarity = RarityId.Common |
+| CatalystDefinition | method | ToData | 19 | public CatalystData ToData() |
+| ContentDatabase | field | rules | 14 | public GameRules rules |
+| ContentDatabase | field | materials | 15 | public List<MaterialDefinition> materials = new List<MaterialDefinition>() |
+| ContentDatabase | field | recipes | 16 | public List<RecipeDefinition> recipes = new List<RecipeDefinition>() |
+| ContentDatabase | field | catalysts | 17 | public List<CatalystDefinition> catalysts = new List<CatalystDefinition>() |
+| ContentDatabase | field | aspects | 18 | public List<AspectDefinition> aspects = new List<AspectDefinition>() |
+| ContentDatabase | field | events | 19 | public List<EventDefinition> events = new List<EventDefinition>() |
+| ContentDatabase | field | goals | 20 | public List<GoalDefinition> goals = new List<GoalDefinition>() |
+| ContentDatabase | method | ToContentData | 23 | public ContentData ToContentData() |
+| CatalystEffect | value | KindDouble | 17 | KindDouble |
+| CatalystEffect | value | CentreTwice | 17 | CentreTwice |
+| CatalystEffect | value | FirstTriple | 17 | FirstTriple |
+| CatalystEffect | value | Diagonals | 17 | Diagonals |
+| CatalystEffect | value | ExtraTrial | 17 | ExtraTrial |
+| CatalystEffect | value | ExtraHand | 17 | ExtraHand |
+| CatalystEffect | value | DiscoveryTriple | 17 | DiscoveryTriple |
+| CatalystEffect | value | EmptyTileBonus | 17 | EmptyTileBonus |
+| CatalystEffect | value | ChainPlus | 17 | ChainPlus |
+| CatalystEffect | value | ComboBonus | 18 | ComboBonus |
+| CatalystEffect | value | PairBonus | 18 | PairBonus |
+| CatalystEffect | value | FlatPerReaction | 18 | FlatPerReaction |
+| CatalystEffect | value | TierDouble | 18 | TierDouble |
+| CatalystEffect | value | StarterDouble | 18 | StarterDouble |
+| CatalystEffect | value | ExtraRedraw | 18 | ExtraRedraw |
+| CatalystEffect | value | HeatPlus | 18 | HeatPlus |
+| CatalystEffect | value | Salvage | 18 | Salvage |
+| CatalystEffect | value | ChainFrom | 18 | ChainFrom |
+| CatalystEffect | value | DepthScale | 19 | DepthScale |
+| CatalystEffect | value | FreeDiscovery | 19 | FreeDiscovery |
+| CatalystEffect | value | AllScale | 19 | AllScale |
+| CatalystEffect | value | SecondChance | 19 | SecondChance |
+| ContentNames | method | Rarity | 50 | public static string Rarity(RarityId r) |
+| ContentNames | method | Kind | 52 | public static string Kind(KindOrNone k) |
+| ContentNames | method | Need | 54 | public static string Need(EventNeed n) |
+| ContentNames | method | Stat | 56 | public static string Stat(GoalStat s) |
+| ContentNames | method | Reward | 58 | public static string Reward(RewardKind k) |
+| ContentNames | method | Parse | 61 | public static T Parse<T>(string s, T none) where T : struct, Enum |
+| ContentNames | method | ParseStat | 64 | public static GoalStat ParseStat(string s) |
+| ContentNames | method | ParseReward | 72 | public static RewardKind ParseReward(string s) |
+| RarityId | value | Unset | 9 | Unset |
+| RarityId | value | Common | 9 | Common |
+| RarityId | value | Uncommon | 9 | Uncommon |
+| RarityId | value | Rare | 9 | Rare |
+| RarityId | value | Epic | 9 | Epic |
+| RarityId | value | Legendary | 9 | Legendary |
+| RarityId | value | Mythic | 9 | Mythic |
+| RarityId | value | WorldSeed | 9 | WorldSeed |
+| KindOrNone | value | None | 12 | None |
+| KindOrNone | value | Ore | 12 | Ore |
+| KindOrNone | value | Metal | 12 | Metal |
+| KindOrNone | value | Crystal | 12 | Crystal |
+| KindOrNone | value | Powder | 12 | Powder |
+| KindOrNone | value | Potion | 12 | Potion |
+| KindOrNone | value | Plant | 12 | Plant |
+| KindOrNone | value | Beast | 12 | Beast |
+| AspectEffect | value | Doubled | 23 | Doubled |
+| AspectEffect | value | Anchor | 23 | Anchor |
+| AspectEffect | value | Heated | 23 | Heated |
+| AspectEffect | value | Echo | 23 | Echo |
+| AspectEffect | value | Attuned | 23 | Attuned |
+| AspectEffect | value | Seed | 23 | Seed |
+| AspectEffect | value | Fallow | 23 | Fallow |
+| AspectEffect | value | Heavy | 23 | Heavy |
+| AspectEffect | value | Cold | 23 | Cold |
+| AspectEffect | value | Volatile | 23 | Volatile |
+| AspectEffect | value | Greedy | 23 | Greedy |
+| AspectEffect | value | Bridge | 23 | Bridge |
+| AspectEffect | value | OpenBench | 23 | OpenBench |
+| AspectEffect | value | Kiln | 23 | Kiln |
+| AspectEffect | value | Crossroads | 23 | Crossroads |
+| AspectEffect | value | Pivot | 23 | Pivot |
+| AspectScope | value | Tile | 26 | Tile |
+| AspectScope | value | Link | 26 | Link |
+| AspectScope | value | Bench | 26 | Bench |
+| AspectGroup | value | Cheap | 29 | Cheap |
+| AspectGroup | value | Engine | 29 | Engine |
+| EventOp | value | Trials | 32 | Trials |
+| EventOp | value | Hand | 32 | Hand |
+| EventOp | value | Redraws | 32 | Redraws |
+| EventOp | value | RiShift | 32 | RiShift |
+| EventOp | value | GiveDiscovery | 32 | GiveDiscovery |
+| EventOp | value | LoseRack | 32 | LoseRack |
+| EventOp | value | LoseCard | 32 | LoseCard |
+| EventOp | value | FirstTriple | 32 | FirstTriple |
+| EventOp | value | Hint | 32 | Hint |
+| EventOp | value | BlockTile | 32 | BlockTile |
+| EventOp | value | HeatTile | 32 | HeatTile |
+| EventOp | value | CatalystUpgrade | 32 | CatalystUpgrade |
+| EventOp | value | CatalystGift | 32 | CatalystGift |
+| EventOp | value | Nothing | 32 | Nothing |
+| EventKind | value | Choice | 35 | Choice |
+| EventKind | value | Gamble | 35 | Gamble |
+| EventKind | value | Find | 35 | Find |
+| EventKind | value | Shrine | 35 | Shrine |
+| EventKind | value | Hazard | 35 | Hazard |
+| EventKind | value | Boon | 35 | Boon |
+| EventKind | value | Lore | 35 | Lore |
+| EventNeed | value | None | 38 | None |
+| EventNeed | value | Rack | 38 | Rack |
+| EventNeed | value | Catalyst | 38 | Catalyst |
+| EventNeed | value | Trial | 38 | Trial |
+| EventNeed | value | Redraw | 38 | Redraw |
+| GoalStat | value | RunsStarted | 41 | RunsStarted |
+| GoalStat | value | RunsWon | 41 | RunsWon |
+| GoalStat | value | WonNoRedraw | 41 | WonNoRedraw |
+| GoalStat | value | DepthReached | 41 | DepthReached |
+| GoalStat | value | Ignites | 41 | Ignites |
+| GoalStat | value | ChainLongest | 41 | ChainLongest |
+| GoalStat | value | ComboLargest | 41 | ComboLargest |
+| GoalStat | value | BestIgnite | 41 | BestIgnite |
+| GoalStat | value | JournalEntries | 41 | JournalEntries |
+| GoalStat | value | JournalComplete | 41 | JournalComplete |
+| RewardKind | value | Starter | 44 | Starter |
+| RewardKind | value | Catalyst | 44 | Catalyst |
+| EventEffectDef | field | op | 11 | public EventOp op |
+| EventEffectDef | field | amount2 | 13 | public int amount, amount2 |
+| EventEffectDef | method | ToData | 15 | public EffectData ToData() |
+| EventOutcomeDef | field | gain | 24 | public EventEffectDef[] gain = new EventEffectDef[0] |
+| EventOutcomeDef | method | ToData | 26 | public EventOutcome ToData() |
+| EventOptionDef | field | label | 33 | public string label = |
+| EventOptionDef | field | requires | 34 | public EventNeed requires |
+| EventOptionDef | field | cost | 35 | public EventEffectDef[] cost = new EventEffectDef[0] |
+| EventOptionDef | field | outcomes | 36 | public EventOutcomeDef[] outcomes = new EventOutcomeDef[0] |
+| EventOptionDef | method | ToData | 38 | public EventOption ToData() |
+| EventDefinition | field | id | 49 | public string id = |
+| EventDefinition | field | type | 52 | public EventKind type |
+| EventDefinition | field | options | 56 | public EventOptionDef[] options = new EventOptionDef[0] |
+| EventDefinition | method | ToData | 59 | public EventData ToData() |
+| GameRules | field | rarityWeights | 32 | public int[] rarityWeights = new int[0] |
+| GameRules | method | ToData | 35 | public RulesData ToData() |
+| GoalDefinition | field | id | 9 | public string id = |
+| GoalDefinition | field | stat | 11 | public GoalStat stat |
+| GoalDefinition | field | rewardKind | 13 | public RewardKind rewardKind |
+| GoalDefinition | method | ToData | 17 | public GoalData ToData() |
+| MaterialDefinition | field | id | 10 | public string id = |
+| MaterialDefinition | field | displayName | 12 | public string displayName = |
+| MaterialDefinition | field | kind | 13 | public Kind kind |
+| MaterialDefinition | field | glow | 18 | public Color glow = Color.white |
+| MaterialDefinition | field | hasGlow | 20 | public bool hasGlow = true |
+| MaterialDefinition | field | rarity | 22 | public RarityId rarity |
+| MaterialDefinition | field | locked | 24 | public bool locked |
+| MaterialDefinition | method | ToData | 27 | public MaterialData ToData() |
+| RecipeDefinition | field | items | 10 | public MaterialDefinition[] items = new MaterialDefinition[0] |
+| RecipeDefinition | field | result | 13 | public MaterialDefinition result |
+| RecipeDefinition | method | ToData | 16 | public RecipeData ToData() |
 | RulesData | field | handBase | 32 | public int handMin, handBase |
 | RulesData | field | trialsFinalDepth | 34 | public int trials, trialsFinalDepth |
 | RulesData | field | redraws | 36 | public int redraws |
@@ -832,35 +1013,37 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | TileView.Layout | field | consumeTint | 46 | public float consumeTint |
 | TileView.Layout | field | consumeGrow | 48 | public float consumeSeconds, consumeGrow |
 | GameFlow | field | library | 16 | public ArtLibrary library |
-| GameFlow | field | cutsceneRoom | 21 | public GameObject workshop, cutsceneRoom |
-| GameFlow | field | mainCamera | 22 | public Camera mainCamera |
-| GameFlow | field | depthStage | 24 | public DepthStage depthStage |
-| GameFlow | property | Db | 26 | public ContentDb Db |
-| GameFlow | property | Journal | 27 | public Journal Journal |
-| GameFlow | property | Profile | 29 | public Profile Profile |
-| GameFlow | property | Run | 30 | public RunState Run |
-| GameFlow | property | Bench | 32 | public BenchView Bench |
-| GameFlow | property | State | 34 | public FlowState State |
-| GameFlow | property | Flow | 36 | public ScreenFlow Flow |
-| GameFlow | property | RunOver | 40 | public RunOverView RunOver |
-| GameFlow | field | Auto | 42 | public bool Auto |
-| GameFlow | field | AutoHook | 45 | public const string AutoHook = |
-| GameFlow | method | ToggleAuto | 48 | public void ToggleAuto() |
-| GameFlow | method | NextMood | 57 | public static int NextMood(int mood) |
-| GameFlow | method | MoodLine | 58 | public static string MoodLine(int mood) |
-| GameFlow | method | EffectsLine | 59 | public static string EffectsLine(bool on) |
-| GameFlow | property | JournalView | 129 | public JournalView JournalView |
-| GameFlow | method | JournalAfterQuit | 468 | public static Journal JournalAfterQuit(bool sandbox, Journal current) |
-| GameFlow | method | ProfileAfterQuit | 470 | public static Profile ProfileAfterQuit(bool sandbox, Profile current, ContentDb db) |
-| GameFlow | method | Ignite | 507 | public void Ignite() |
-| GameFlow | method | SettleIgnite | 514 | public static IgniteOutcome SettleIgnite(RunState run, Journal journal, bool sandbox) |
-| RunTiming | field | endingWait | 88 | public float descendWait, endingWait |
-| RunTiming | field | lossWait | 90 | public float lossShake, lossShakeSeconds, lossWait |
-| RunTiming | field | runFadeOut | 92 | public float titleFadeIn, titleFadeOut, runFadeIn, runFadeOut |
-| RunTiming | field | autoPace | 94 | public float autoChoiceWait, autoPace |
-| TitleChoice | value | Begin | 142 | Begin |
-| TitleChoice | value | HowToPlay | 142 | HowToPlay |
-| TitleChoice | value | Intro | 142 | Intro |
+| GameFlow | field | cutsceneRoom | 23 | public GameObject workshop, cutsceneRoom |
+| GameFlow | field | mainCamera | 24 | public Camera mainCamera |
+| GameFlow | field | depthStage | 26 | public DepthStage depthStage |
+| GameFlow | property | Db | 28 | public ContentDb Db |
+| GameFlow | property | Journal | 29 | public Journal Journal |
+| GameFlow | property | Profile | 31 | public Profile Profile |
+| GameFlow | property | Run | 32 | public RunState Run |
+| GameFlow | property | Bench | 34 | public BenchView Bench |
+| GameFlow | property | State | 36 | public FlowState State |
+| GameFlow | property | Flow | 38 | public ScreenFlow Flow |
+| GameFlow | property | RunOver | 42 | public RunOverView RunOver |
+| GameFlow | field | Auto | 44 | public bool Auto |
+| GameFlow | property | SeedOverride | 48 | public int SeedOverride |
+| GameFlow | field | AutoHook | 51 | public const string AutoHook = |
+| GameFlow | method | ToggleAuto | 54 | public void ToggleAuto() |
+| GameFlow | method | NextMood | 63 | public static int NextMood(int mood) |
+| GameFlow | method | MoodLine | 64 | public static string MoodLine(int mood) |
+| GameFlow | method | EffectsLine | 65 | public static string EffectsLine(bool on) |
+| GameFlow | property | JournalView | 135 | public JournalView JournalView |
+| GameFlow | method | RequestJournal | 254 | public void RequestJournal() |
+| GameFlow | method | JournalAfterQuit | 478 | public static Journal JournalAfterQuit(bool sandbox, Journal current) |
+| GameFlow | method | ProfileAfterQuit | 480 | public static Profile ProfileAfterQuit(bool sandbox, Profile current, ContentDb db) |
+| GameFlow | method | Ignite | 517 | public void Ignite() |
+| GameFlow | method | SettleIgnite | 524 | public static IgniteOutcome SettleIgnite(RunState run, Journal journal, bool sandbox) |
+| RunTiming | field | endingWait | 94 | public float descendWait, endingWait |
+| RunTiming | field | lossWait | 96 | public float lossShake, lossShakeSeconds, lossWait |
+| RunTiming | field | runFadeOut | 98 | public float titleFadeIn, titleFadeOut, runFadeIn, runFadeOut |
+| RunTiming | field | autoPace | 100 | public float autoChoiceWait, autoPace |
+| TitleChoice | value | Begin | 148 | Begin |
+| TitleChoice | value | HowToPlay | 148 | HowToPlay |
+| TitleChoice | value | Intro | 148 | Intro |
 | IgniteSequence | property | Hurry | 99 | public bool Hurry |
 | IgniteSequence | method | Bind | 102 | public void Bind(BenchView bench, ReactionCutscene reaction, FxRefs fx, ScreenFlow flow) |
 | IgniteSequence | method | Play | 111 | public IEnumerator Play(IgniteOutcome outcome, RunState run, ContentDb db, long potencyBefore, TutorialController tutorial, bool auto) |
@@ -1002,18 +1185,19 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | TutorialController | property | Trial | 55 | public int Trial |
 | TutorialController | property | Finished | 57 | public bool Finished |
 | TutorialController | field | Shown | 59 | public readonly List<long> Shown = new List<long>() |
-| TutorialController | method | Bind | 62 | public void Bind(GameFlow flow) |
-| TutorialController | method | Union | 74 | public static Rect Union(Rect[] r) |
-| TutorialController | method | Abort | 154 | public void Abort() |
-| TutorialController | method | Step | 161 | public TutorialStep Step(string id) |
-| TutorialController | method | Holes | 294 | public Rect[] Holes(TutorialStep step, int hub = -1) |
-| TutorialController | method | AfterEvent | 299 | public IEnumerator AfterEvent(ReactionEvent e, int index) |
-| TutorialController | method | AfterIgnite | 338 | public IEnumerator AfterIgnite(IgniteOutcomeView o) |
-| TutorialController | method | AfterChoose | 363 | public void AfterChoose(string catalystId, string name) |
-| TutorialController | method | OnOffer | 373 | public IEnumerator OnOffer() |
-| TutorialController | method | OfferTaken | 381 | public void OfferTaken() |
-| TutorialController | method | Drive | 392 | public IEnumerator Drive() |
-| TutorialController | property | IgniteOutcomeView | 446 | public sealed class IgniteOutcomeView |
+| TutorialController | field | AutoDrive | 62 | public bool AutoDrive |
+| TutorialController | method | Bind | 65 | public void Bind(GameFlow flow) |
+| TutorialController | method | Union | 77 | public static Rect Union(Rect[] r) |
+| TutorialController | method | Abort | 157 | public void Abort() |
+| TutorialController | method | Step | 164 | public TutorialStep Step(string id) |
+| TutorialController | method | Holes | 313 | public Rect[] Holes(TutorialStep step, int hub = -1) |
+| TutorialController | method | AfterEvent | 318 | public IEnumerator AfterEvent(ReactionEvent e, int index) |
+| TutorialController | method | AfterIgnite | 357 | public IEnumerator AfterIgnite(IgniteOutcomeView o) |
+| TutorialController | method | AfterChoose | 382 | public void AfterChoose(string catalystId, string name) |
+| TutorialController | method | OnOffer | 392 | public IEnumerator OnOffer() |
+| TutorialController | method | OfferTaken | 400 | public void OfferTaken() |
+| TutorialController | method | Drive | 411 | public IEnumerator Drive() |
+| TutorialController | property | IgniteOutcomeView | 465 | public sealed class IgniteOutcomeView |
 | TutorialHole | method | Open | 18 | public void Open(Rect r, bool showRim) |
 | TutorialHole | method | Close | 30 | public void Close() |
 | TutorialHole | method | SetRimAlpha | 33 | public void SetRimAlpha(float a) |
@@ -1498,21 +1682,22 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | TitleView | property | HowToPressed | 13 | public bool HowToPressed |
 | TitleView | property | IntroPressed | 14 | public bool IntroPressed |
 | TitleView | method | ClearBegin | 16 | public void ClearBegin() |
-| TitleView | field | SettingsClosed | 17 | public event Action JournalClicked, GoalsClicked, ResetConfirmed, SettingsClosed |
-| TitleView | property | Asking | 19 | public bool Asking |
-| TitleView | method | Bind | 72 | public void Bind(Settings playerSettings, FxRefs effects) |
-| TitleView | method | AskSkip | 138 | public void AskSkip(Action<bool> answer) |
-| TitleView | method | Open | 238 | public void Open(int known, int total, int goalsDone, int goals) |
-| TitleView | method | Progress | 249 | public void Progress(int known, int total, int goalsDone, int goals) |
-| TitleView | method | Close | 256 | public void Close() |
-| TitleView.Layout | field | outlineSpread | 43 | public float centerX, logoY, logoRise, outlineSpread |
-| TitleView.Layout | field | creditYVi | 45 | public float progressY, progressYVi, creditY, creditYVi |
-| TitleView.Layout | field | cellOver | 47 | public Color resetRest, resetOver, cellRest, cellOver |
-| TitleView.Layout | field | resetYNoVib | 49 | public float pitch, pitchNoVib, firstRow, firstRowNoVib, dividerX, dividerW, dividerH, dividerY, dividerYNoVib, resetY, resetYNoVib |
-| TitleView.Layout | field | fillSize | 51 | public float labelX, labelDy, valueDy, valueDx, boxInset, boxSize, fillInset, fillSize |
-| TitleView.Timing | field | glowSpeed | 57 | public float fadeIn, subDelay, subFade, glowBase, glowSwing, glowSpeed |
-| TitleView.Timing | field | glow | 58 | public Color glow |
-| TitleView.Timing | field | emberFall | 60 | public float emberRate, emberY, emberSize, emberFall |
+| TitleView | method | RequestBegin | 18 | public void RequestBegin() |
+| TitleView | field | SettingsClosed | 19 | public event Action JournalClicked, GoalsClicked, ResetConfirmed, SettingsClosed |
+| TitleView | property | Asking | 21 | public bool Asking |
+| TitleView | method | Bind | 74 | public void Bind(Settings playerSettings, FxRefs effects) |
+| TitleView | method | AskSkip | 140 | public void AskSkip(Action<bool> answer) |
+| TitleView | method | Open | 240 | public void Open(int known, int total, int goalsDone, int goals) |
+| TitleView | method | Progress | 251 | public void Progress(int known, int total, int goalsDone, int goals) |
+| TitleView | method | Close | 258 | public void Close() |
+| TitleView.Layout | field | outlineSpread | 45 | public float centerX, logoY, logoRise, outlineSpread |
+| TitleView.Layout | field | creditYVi | 47 | public float progressY, progressYVi, creditY, creditYVi |
+| TitleView.Layout | field | cellOver | 49 | public Color resetRest, resetOver, cellRest, cellOver |
+| TitleView.Layout | field | resetYNoVib | 51 | public float pitch, pitchNoVib, firstRow, firstRowNoVib, dividerX, dividerW, dividerH, dividerY, dividerYNoVib, resetY, resetYNoVib |
+| TitleView.Layout | field | fillSize | 53 | public float labelX, labelDy, valueDy, valueDx, boxInset, boxSize, fillInset, fillSize |
+| TitleView.Timing | field | glowSpeed | 59 | public float fadeIn, subDelay, subFade, glowBase, glowSwing, glowSpeed |
+| TitleView.Timing | field | glow | 60 | public Color glow |
+| TitleView.Timing | field | emberFall | 62 | public float emberRate, emberY, emberSize, emberFall |
 | Tooltip | method | Bind | 37 | public void Bind() |
 | Tooltip | method | Show | 47 | public void Show(string heading, string text, Vector2 anchor, float clearance = 20, string rarity = null) |
 | Tooltip | method | Hide | 74 | public void Hide() |
@@ -1546,6 +1731,10 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | AtlasBuilder | method | BuildSpriteSheets | 131 | public static string BuildSpriteSheets() |
 | AtlasBuilder | method | Assign | 290 | public static Dictionary<string, List<string>> Assign() |
 | AtlasBuilder | method | BuildAtlases | 312 | public static string BuildAtlases() |
+| BalanceReports | method | Run | 23 | public static int Run(string report, TextWriter output) |
+| BalanceReports | method | RunBatch | 45 | public static void RunBatch() |
+| CheckSprites | method | Check | 9 | public static void Check() |
+| FixCandleImport | method | Fix | 7 | public static void Fix() |
 | FlipbookImporter | field | Dir | 16 | public const string Dir = |
 | FlipbookImporter | method | Import | 26 | public static string Import() |
 | FontBuilder | method | BuildBatch | 15 | public static void BuildBatch() |
@@ -1556,63 +1745,54 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | LayoutData | field | candles | 16 | public PointData[] candles |
 | LayoutData | method | Placed | 19 | public RectData Placed(string name) |
 | LayoutData | field | Path | 25 | public const string Path = |
+| ContentFieldMigration | method | Run | 16 | public static void Run() |
+| ContentFieldMigration | method | RunBatch | 28 | public static void RunBatch() |
+| ContentAssets | field | Root | 7 | public const string Root = "Assets/Content", DatabasePath = Root + "/ContentDatabase.asset", RulesPath = Root + |
+| ContentAssets | method | Database | 10 | public static ContentDatabase Database() |
+| ContentAssets | method | Data | 18 | public static ContentData Data() |
+| ContentSnapshot | property | FilePath | 12 | public static string FilePath |
+| ContentSnapshot | method | Text | 15 | public static string Text() |
+| ContentSnapshot | method | Write | 18 | public static void Write() |
+| ContentSnapshot | method | RunBatch | 26 | public static void RunBatch() |
 | EditorGlobals | method | Inject | 13 | public static void Inject() |
-| GoldenShots | method | Names | 27 | public static IEnumerable<string> Names() |
-| GoldenShots | method | PathOf | 30 | public static string PathOf(string name, string lang) |
-| GoldenShots | method | WriteAll | 37 | public static void WriteAll() |
-| GoldenShots | method | Render | 53 | public static Texture2D Render(string name) |
 | Reserialize | method | All | 14 | public static void All() |
 | ViewCapture | method | Render | 15 | public static Texture2D Render(GameObject root, params string[] keepHidden) |
 | ViewCapture | method | RenderAsShown | 64 | public static Texture2D RenderAsShown(GameObject root) |
 | ViewCapture | method | Save | 73 | public static void Save(Texture2D tex, string path) |
 | ViewCapture | method | Load | 80 | public static Texture2D Load(string path) |
 | ViewCapture | method | Differ | 89 | public static float Differ(Texture2D a, Texture2D b) |
+| Sim | method | With | 11 | public static Unlocks With(ContentDb db, bool starters, bool catalysts) |
+| Sim | method | Autoplay | 21 | public static RunState Autoplay(ContentDb db, int seed, RunOptions options) |
+| Sim | method | Line | 30 | public static string Line(ContentDb db, string label, Func<int, RunOptions> options, int seeds) |
+| Sim | method | RandomPlay | 44 | public static RunState RandomPlay(ContentDb db, int seed, RunOptions options) |
+| Sim | method | Play | 394 | public static Career Play(ContentDb db, bool admin, int player, int runs, bool aspects = true, bool events = true, List<string> log = null, int logFrom = 0, int taughtTier = 0) |
+| Sim | method | Pct | 447 | public static string Pct(double x) |
+| Sim | method | Describe | 449 | public static void Describe(string role, List<Career> careers, int runs, Action<string> w, int finalDepth) |
+| Sim | method | Autoplay | 493 | public static RunState Autoplay(ContentDb db, int seed, List<string> log = null, RunStats stats = null) |
+| Sim | method | RandomPlay | 540 | public static RunState RandomPlay(ContentDb db, int seed) |
+| Sim | method | FullJournal | 562 | public static Journal FullJournal(ContentDb db) |
+| Newcomer | ctor | Newcomer | 78 | public Newcomer(ContentDb truth, Journal journal) |
+| Newcomer | method | List | 130 | public readonly List<(string a, string b)> targets = new List<(string, string)>() |
+| Newcomer | property | TriedCount | 131 | public int TriedCount |
+| Newcomer | property | ColdCount | 132 | public int ColdCount |
+| Newcomer | method | Status | 133 | public string Status(string a, string b) |
+| Newcomer | method | CanMakeNow | 134 | public bool CanMakeNow(string m) |
+| Newcomer | method | Decide | 177 | public bool Decide(RunState run) |
+| Newcomer | method | Learn | 369 | public void Learn(IgniteOutcome outcome, BenchRules rules) |
+| Career | field | FirstWin | 387 | public int FirstWin = -1 |
+| Career | field | Won | 388 | public readonly List<bool> Won = new List<bool>() |
+| Career | field | Depth | 389 | public readonly List<int> Depth = new List<int>(), Journal = new List<int>(), Goals = new List<int>(), Unlocked = new List<int>() |
+| Career | field | Stuck | 390 | public int Stuck |
+| Career | field | Knows | 391 | public string Knows = |
+| RunStats | field | BySize | 485 | public readonly int[] BySize = new int[ContentDb.MaxItems + 1] |
+| RunStats | field | FirstTrialClears | 486 | public int Ignites, LongestChain, Sputters, FirstTrialClears |
+| RunStats | field | UltimateByCombo | 487 | public bool UltimateByCombo |
+| RunStats | field | ComboMade | 488 | public readonly HashSet<string> ComboMade = new HashSet<string>() |
+| RunStats | field | Combos | 489 | public readonly Dictionary<string, int> Combos = new Dictionary<string, int>() |
+| RunStats | field | ClearedIn | 490 | public readonly List<string> ClearedIn = new List<string>() |
 | SpriteImportRules | method | GetVersion | 14 | public override uint GetVersion() |
 | SpriteImportRules | method | IsSoftDepthArt | 17 | public static bool IsSoftDepthArt(string assetPath) |
 | SpriteImportRules | method | IsDepthFog | 25 | public static bool IsDepthFog(string assetPath) |
-| ContentJsonImporter | method | Import | 21 | public static void Import() |
-| JsonRoot | field | rules | 214 | public JsonRules rules |
-| JsonRoot | field | materials | 215 | public JsonMaterial[] materials |
-| JsonRoot | field | recipes | 216 | public JsonRecipe[] recipes |
-| JsonRoot | field | catalysts | 217 | public JsonCatalyst[] catalysts |
-| JsonRoot | field | depthTargets | 218 | public int[] depthTargets |
-| JsonRoot | field | depthNames | 219 | public string[] depthNames |
-| JsonRoot | field | ultimate | 220 | public string ultimate |
-| JsonRoot | field | goals | 221 | public JsonGoal[] goals |
-| JsonRoot | field | aspects | 222 | public JsonAspect[] aspects |
-| JsonRoot | field | events | 223 | public JsonEvent[] events |
-| JsonRoot | field | noEventWeight | 224 | public int? noEventWeight |
-| JsonRoot | field | rarityWeights | 225 | public int[] rarityWeights |
-| JsonRules | field | redraws | 231 | public int handMin, handBase, trials, trialsFinalDepth, redraws |
-| JsonRules | field | firstReactionMult | 232 | public int starterCopies, offerSize, rackSize, maxRi, pouchCards, firstReactionMult |
-| JsonRules | field | aspectDepths | 233 | public int[] aspectDepths |
-| JsonRules | field | potencyByTier | 234 | public long[] potencyByTier |
-| JsonMaterial | field | rarity | 240 | public string id, name, kind, glow, rarity |
-| JsonMaterial | field | reactivity | 241 | public int tier, reactivity |
-| JsonMaterial | field | locked | 242 | public bool locked |
-| JsonRecipe | field | items | 248 | public string[] items |
-| JsonRecipe | field | b | 249 | public string a, b |
-| JsonRecipe | field | minReactivity | 250 | public int minReactivity |
-| JsonRecipe | field | result | 251 | public string result |
-| JsonCatalyst | field | rarity | 257 | public string id, name, text, effect, kind, rarity |
-| JsonCatalyst | field | amount | 258 | public float amount |
-| JsonCatalyst | field | locked | 259 | public bool locked |
-| JsonGoal | field | rewardRarity | 265 | public string id, text, stat, rewardKind, rewardRarity |
-| JsonGoal | field | target | 266 | public int target |
-| JsonAspect | field | group | 272 | public string id, name, text, effect, scope, group |
-| JsonAspect | field | amount | 273 | public float amount |
-| JsonAspect | field | tradeOff | 274 | public bool tradeOff |
-| JsonEvent | field | type | 280 | public string id, name, text, type |
-| JsonEvent | field | weight | 281 | public int minDepth, maxDepth, weight |
-| JsonEvent | field | options | 282 | public JsonEventOption[] options |
-| JsonEventOption | field | requires | 288 | public string label, requires |
-| JsonEventOption | field | cost | 289 | public JsonEffect[] cost |
-| JsonEventOption | field | outcomes | 290 | public JsonOutcome[] outcomes |
-| JsonOutcome | field | weight | 296 | public int weight |
-| JsonOutcome | field | text | 297 | public string text |
-| JsonOutcome | field | gain | 298 | public JsonEffect[] gain |
-| JsonEffect | field | arg | 304 | public string op, arg |
-| JsonEffect | field | amount2 | 305 | public int amount, amount2 |
 | TutorialStepsMigration | method | Run | 79 | public static void Run() |
 | TutorialStepsMigration | method | RunBatch | 88 | public static void RunBatch() |
 | A | field | name | 26 | public string name |
@@ -1621,6 +1801,24 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | WebBuild | method | Build | 15 | public static void Build() |
 | WebBuild | method | BuildQuick | 19 | public static void BuildQuick() |
 | WebBuild | method | BuildDev | 26 | public static void BuildDev() |
+| ContentAssetTests | method | Definitions_EveryAsset_IsNamedAfterItsId | 10 | public void Definitions_EveryAsset_IsNamedAfterItsId() |
+| ContentDatabaseTests | method | ToContentData_TinyDatabase_BuildsAValidContentDb | 37 | public void ToContentData_TinyDatabase_BuildsAValidContentDb() |
+| ContentDatabaseTests | method | ToContentData_Material_WritesTheStringsTheRulesRead | 53 | public void ToContentData_Material_WritesTheStringsTheRulesRead() |
+| ContentDatabaseTests | method | ToContentData_MaterialWithoutGlow_WritesAnEmptyGlowString | 65 | public void ToContentData_MaterialWithoutGlow_WritesAnEmptyGlowString() |
+| ContentDatabaseTests | method | ToContentData_NoRarityWeights_IsNullSoTheDrawStaysUniform | 78 | public void ToContentData_NoRarityWeights_IsNullSoTheDrawStaysUniform() |
+| ContentDatabaseTests | method | ToContentData_RecipeWithAMissingItem_IsRejectedByContentDb | 90 | public void ToContentData_RecipeWithAMissingItem_IsRejectedByContentDb() |
+| ContentDatabaseTests | method | ToContentData_CalledTwice_ReturnsIndependentCopies | 102 | public void ToContentData_CalledTwice_ReturnsIndependentCopies() |
+| ContentEnumTests | method | CatalystEffect_Names_EqualEffectsAll | 14 | public void CatalystEffect_Names_EqualEffectsAll() |
+| ContentEnumTests | method | AspectEffect_Names_EqualAspectEffectsAll | 25 | public void AspectEffect_Names_EqualAspectEffectsAll() |
+| ContentEnumTests | method | EventOp_Names_EqualOpsAll | 36 | public void EventOp_Names_EqualOpsAll() |
+| ContentEnumTests | method | EventKind_Names_EqualOpsTypes | 47 | public void EventKind_Names_EqualOpsTypes() |
+| ContentEnumTests | method | EventNeed_NamesAfterNone_EqualOpsNeeds | 58 | public void EventNeed_NamesAfterNone_EqualOpsNeeds() |
+| ContentEnumTests | method | RarityId_NamesAfterUnset_EqualRaritiesAll | 69 | public void RarityId_NamesAfterUnset_EqualRaritiesAll() |
+| ContentEnumTests | method | KindOrNone_NamesAfterNone_EqualKind | 80 | public void KindOrNone_NamesAfterNone_EqualKind() |
+| ContentEnumTests | method | AspectScopeAndGroup_Names_AreTheStringsTheRulesCompare | 91 | public void AspectScopeAndGroup_Names_AreTheStringsTheRulesCompare() |
+| ContentEnumTests | method | GoalStat_EveryValue_MapsToItsStatId | 105 | public void GoalStat_EveryValue_MapsToItsStatId() |
+| ContentEnumTests | method | ContentNames_NoneValues_WriteEmptyStrings | 117 | public void ContentNames_NoneValues_WriteEmptyStrings() |
+| ContentSnapshotTests | method | Snapshot_File_EqualsTheAssets | 10 | public void Snapshot_File_EqualsTheAssets() |
 | ContentTests | method | EventTexts_OfEveryEvent_FitTheEventWindow | 316 | public void EventTexts_OfEveryEvent_FitTheEventWindow() |
 | ContentTests | method | LoreEvents_DoNothing_AndTellTheStoryInOrder | 328 | public void LoreEvents_DoNothing_AndTellTheStoryInOrder() |
 | TestLang | method | Text | 12 | public static string Text(string code) |
@@ -1633,9 +1831,18 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | LoreTests | method | SkippingALoreEvent_WhenPlayedWithAndWithoutIt_IsBalanceNeutral | 156 | public void SkippingALoreEvent_WhenPlayedWithAndWithoutIt_IsBalanceNeutral() |
 | LoreTests | method | Profile_WhenShownLoreBoonAndNullEvents_RemembersOnlyLoreEvents | 184 | public void Profile_WhenShownLoreBoonAndNullEvents_RemembersOnlyLoreEvents() |
 | LoreTests | method | Profile_LastLore_IsSaved_AndDroppedWhenNoLongerALoreEvent | 196 | public void Profile_LastLore_IsSaved_AndDroppedWhenNoLongerALoreEvent() |
-| RarityTests | method | Rarities_All_HasSevenEntries | 169 | public void Rarities_All_HasSevenEntries() |
+| RarityTests | method | NoField_Equals_AllEqualWeights_Equals_Today | 47 | public void NoField_Equals_AllEqualWeights_Equals_Today() |
+| RarityTests | method | Offer_IsDeterministicPerSeed_AndStaysDistinct | 63 | public void Offer_IsDeterministicPerSeed_AndStaysDistinct() |
+| RarityTests | method | Offer_HeavierRarityWeight_FavoursThatRarity | 78 | public void Offer_HeavierRarityWeight_FavoursThatRarity() |
+| RarityTests | method | Offer_ZeroWeights_ExcludeARarityWhileOthersRemain | 98 | public void Offer_ZeroWeights_ExcludeARarityWhileOthersRemain() |
+| RarityTests | method | FirstOffer_AnyWeights_IsUntouched | 113 | public void FirstOffer_AnyWeights_IsUntouched() |
+| RarityTests | method | Gift_NoField_Equals_Uniform_Today | 155 | public void Gift_NoField_Equals_Uniform_Today() |
+| RarityTests | method | Gift_FollowsTheWeights_AndIsDeterministic | 166 | public void Gift_FollowsTheWeights_AndIsDeterministic() |
+| RarityTests | method | Validation_BadWeights_AreRejected | 185 | public void Validation_BadWeights_AreRejected() |
+| RarityTests | method | RealContent_RarityWeights_AbsentIsUniformOrPresentIsValid | 203 | public void RealContent_RarityWeights_AbsentIsUniformOrPresentIsValid() |
+| RarityTests | method | Rarities_All_HasSevenEntries | 226 | public void Rarities_All_HasSevenEntries() |
 | RulesTests | method | Rules_ShippedContent_HasTodaysValues | 11 | public void Rules_ShippedContent_HasTodaysValues() |
-| RulesTests | method | FinalDepth_ShippedContent_IsTen | 36 | public void FinalDepth_ShippedContent_IsTen() |
+| RulesTests | method | FinalDepth_ShippedContent_IsFive | 36 | public void FinalDepth_ShippedContent_IsFive() |
 | RulesTests | method | Constructor_SeedAspectWithoutAmount_Throws | 63 | public void Constructor_SeedAspectWithoutAmount_Throws() |
 | RulesTests | method | Constructor_HeatTileEffectWithoutAmount_Throws | 71 | public void Constructor_HeatTileEffectWithoutAmount_Throws() |
 | RulesTests | method | Constructor_AspectDepthOutsideTheRun_Throws | 116 | public void Constructor_AspectDepthOutsideTheRun_Throws() |
@@ -1655,45 +1862,16 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | SettingsTests | method | FromJson_MissingFields_KeepDefaults | 86 | public void FromJson_MissingFields_KeepDefaults() |
 | SettingsTests | method | FromJson_OutOfRangeValues_ClampsVolumesAndLanguage | 95 | public void FromJson_OutOfRangeValues_ClampsVolumesAndLanguage() |
 | SettingsTests | method | RoundTrip_LanguageWithEscapes_Survives | 110 | public void RoundTrip_LanguageWithEscapes_Survives() |
-| Sim | method | With | 14 | public static Unlocks With(ContentDb db, bool starters, bool catalysts) |
-| Sim | method | Autoplay | 24 | public static RunState Autoplay(ContentDb db, int seed, RunOptions options) |
-| Sim | method | Line | 33 | public static string Line(ContentDb db, string label, Func<int, RunOptions> options, int seeds) |
-| Sim | method | RandomPlay | 47 | public static RunState RandomPlay(ContentDb db, int seed, RunOptions options) |
-| Sim | method | Play | 397 | public static Career Play(ContentDb db, bool admin, int player, int runs, bool aspects = true, bool events = true, List<string> log = null, int logFrom = 0, int taughtTier = 0) |
-| Sim | method | Pct | 450 | public static string Pct(double x) |
-| Sim | method | Describe | 452 | public static void Describe(string role, List<Career> careers, int runs, Action<string> w, int finalDepth) |
-| Sim | method | Autoplay | 496 | public static RunState Autoplay(ContentDb db, int seed, List<string> log = null, RunStats stats = null) |
-| Sim | method | RandomPlay | 543 | public static RunState RandomPlay(ContentDb db, int seed) |
-| Sim | method | FullJournal | 565 | public static Journal FullJournal(ContentDb db) |
-| Newcomer | ctor | Newcomer | 81 | public Newcomer(ContentDb truth, Journal journal) |
-| Newcomer | method | List | 133 | public readonly List<(string a, string b)> targets = new List<(string, string)>() |
-| Newcomer | property | TriedCount | 134 | public int TriedCount |
-| Newcomer | property | ColdCount | 135 | public int ColdCount |
-| Newcomer | method | Status | 136 | public string Status(string a, string b) |
-| Newcomer | method | CanMakeNow | 137 | public bool CanMakeNow(string m) |
-| Newcomer | method | Decide | 180 | public bool Decide(RunState run) |
-| Newcomer | method | Learn | 372 | public void Learn(IgniteOutcome outcome, BenchRules rules) |
-| Career | field | FirstWin | 390 | public int FirstWin = -1 |
-| Career | field | Won | 391 | public readonly List<bool> Won = new List<bool>() |
-| Career | field | Depth | 392 | public readonly List<int> Depth = new List<int>(), Journal = new List<int>(), Goals = new List<int>(), Unlocked = new List<int>() |
-| Career | field | Stuck | 393 | public int Stuck |
-| Career | field | Knows | 394 | public string Knows = |
-| RunStats | field | BySize | 488 | public readonly int[] BySize = new int[ContentDb.MaxItems + 1] |
-| RunStats | field | FirstTrialClears | 489 | public int Ignites, LongestChain, Sputters, FirstTrialClears |
-| RunStats | field | UltimateByCombo | 490 | public bool UltimateByCombo |
-| RunStats | field | ComboMade | 491 | public readonly HashSet<string> ComboMade = new HashSet<string>() |
-| RunStats | field | Combos | 492 | public readonly Dictionary<string, int> Combos = new Dictionary<string, int>() |
-| RunStats | field | ClearedIn | 493 | public readonly List<string> ClearedIn = new List<string>() |
 | TestContent | method | Load | 8 | public static ContentData Load() |
-| TestContent | method | Tiny | 21 | public static ContentData Tiny() |
-| TestContent | method | Combo | 43 | public static ContentData Combo(int zMin = 15) |
-| TestContent | field | Today | 69 | public static readonly RulesData Today = Rules() |
-| TestContent | field | FinalDepth | 71 | public const int FinalDepth = 5 |
-| TestContent | method | Rules | 74 | public static RulesData Rules() |
-| TestContent | method | Mat | 81 | public static MaterialData Mat(string id, string kind, int tier, int reactivity = 5) |
-| TestContent | method | Rec | 83 | public static RecipeData Rec(string a, string b, string r) |
-| TestContent | method | Rec | 84 | public static RecipeData Rec(string[] items, int min, string r) |
-| TestContent | method | Cat | 85 | public static CatalystData Cat(string effect, string kind = "", float amount = 0) |
+| TestContent | method | Tiny | 11 | public static ContentData Tiny() |
+| TestContent | method | Combo | 33 | public static ContentData Combo(int zMin = 15) |
+| TestContent | field | Today | 59 | public static readonly RulesData Today = Rules() |
+| TestContent | field | FinalDepth | 61 | public const int FinalDepth = 5 |
+| TestContent | method | Rules | 64 | public static RulesData Rules() |
+| TestContent | method | Mat | 71 | public static MaterialData Mat(string id, string kind, int tier, int reactivity = 5) |
+| TestContent | method | Rec | 73 | public static RecipeData Rec(string a, string b, string r) |
+| TestContent | method | Rec | 74 | public static RecipeData Rec(string[] items, int min, string r) |
+| TestContent | method | Cat | 75 | public static CatalystData Cat(string effect, string kind = "", float amount = 0) |
 | TutorialTests | method | Satchel_Take_PullsANamedCard_FromDrawOrDiscard | 17 | public void Satchel_Take_PullsANamedCard_FromDrawOrDiscard() |
 | TutorialTests | method | Deal_ReplacesTheStartingHand_AndKeepsTheSatchelWhole | 45 | public void Deal_ReplacesTheStartingHand_AndKeepsTheSatchelWhole() |
 | TutorialTests | method | Deal_AfterMakingADiscovery_KeepsTheRack | 55 | public void Deal_AfterMakingADiscovery_KeepsTheRack() |
@@ -1747,7 +1925,7 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | DepthLookTests | method | ShowsRunIntro_OnlyDepthOneOfANormalRun_IsTrue | 37 | public void ShowsRunIntro_OnlyDepthOneOfANormalRun_IsTrue() |
 | DepthLookTests | method | ThemedWindow_OutsideANormalRun_IsFalse | 48 | public void ThemedWindow_OutsideANormalRun_IsFalse() |
 | GameTestSetup | method | Inject | 10 | public void Inject() |
-| GoldenShotTests | method | Render_Shot_MatchesTheGoldenImage | 10 | public void Render_Shot_MatchesTheGoldenImage(string name) |
+| GoldenShotTests | method | Render_Shot_MatchesTheGoldenImage | 11 | public void Render_Shot_MatchesTheGoldenImage(string name) |
 | HotPathTests | method | DestroyMade | 19 | public void DestroyMade() |
 | HotPathTests | method | Tick_IdleHud_AllocatesNothing | 43 | public void Tick_IdleHud_AllocatesNothing() |
 | HotPathTests | method | Tick_PotencyUnchanged_KeepsTheSameText | 52 | public void Tick_PotencyUnchanged_KeepsTheSameText() |
@@ -1970,6 +2148,23 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | TutorialStepsBakeTests | method | FixedAreas_OfEveryStep_HavePositiveSize | 59 | public void FixedAreas_OfEveryStep_HavePositiveSize() |
 | TutorialStepsBakeTests | method | EveryStep_Rects_EqualTheBaseline | 67 | public void EveryStep_Rects_EqualTheBaseline() |
 | TutorialStepsBakeTests | method | ClickRules_PassFlags_MatchTheOldBehaviour | 85 | public void ClickRules_PassFlags_MatchTheOldBehaviour() |
+| AutoplayTraceTests | property | Result | 15 | sealed class Result |
+| AutoplayTraceTests | method | Autoplay_Seed11_MatchesBaseline | 43 | public IEnumerator Autoplay_Seed11_MatchesBaseline() |
+| AutoplayTraceTests | method | Autoplay_Seed22_MatchesBaseline | 55 | public IEnumerator Autoplay_Seed22_MatchesBaseline() |
+| AutoplayTraceTests | method | Autoplay_Seed33_MatchesBaseline | 67 | public IEnumerator Autoplay_Seed33_MatchesBaseline() |
+| MainScene | field | Name | 18 | public const string Name = |
+| MainScene | method | Load | 20 | public static IEnumerator Load() |
+| MainScene | method | Unload | 27 | public static IEnumerator Unload() |
+| MainScene | method | Find | 33 | public static T Find<T>() where T : Object |
+| PrefsSnapshot | ctor | PrefsSnapshot | 44 | public PrefsSnapshot(bool introSeen, bool tutorialDone) |
+| PrefsSnapshot | method | Dispose | 55 | public void Dispose() |
+| TraceRecorder | field | Lines | 68 | public readonly List<string> Lines = new List<string>() |
+| TraceRecorder | ctor | TraceRecorder | 70 | public TraceRecorder() |
+| TraceRecorder | method | Has | 76 | public bool Has(string prefix) |
+| TraceRecorder | method | UpTo | 79 | public List<string> UpTo(string prefix) |
+| TraceRecorder | method | Dispose | 85 | public void Dispose() |
+| Baseline | method | Check | 93 | public static void Check(string file, IReadOnlyList<string> lines) |
+| TutorialTraceTests | method | Tutorial_AutoDriven_MatchesBaseline | 18 | public IEnumerator Tutorial_AutoDriven_MatchesBaseline() |
 
 ## Materials
 | id | name | kind | tier | reactivity |

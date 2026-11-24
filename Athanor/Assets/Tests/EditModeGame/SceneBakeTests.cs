@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Reflection;
-using Athanor.Core;
+using Athanor.Gameplay;
 using Athanor.Game;
 using NUnit.Framework;
 using UnityEngine;
@@ -24,7 +24,7 @@ namespace Athanor.Tests
             // the Redraw step lights the button's rectangle (556,88,76,20) plus the area's margin (2)
             var tutorial = main.FlowField<TutorialController>("tutorial");
             tutorial.Bind(main.Flow);
-            main.Flow.JournalView.Bind(new ContentDb(JsonUtility.FromJson<ContentData>(Resources.Load<TextAsset>("content").text)));
+            main.Flow.JournalView.Bind(new ContentDb(ContentAssets.Data()));
             Assert.AreEqual(new Rect(554, 86, 80, 24), tutorial.Holes(tutorial.Step("3.0"))[0]);
 
             // the Journal steps light the page's recipe lines, the index line and the hints
@@ -126,7 +126,7 @@ namespace Athanor.Tests
             foreach (var n in new[] { "rune", "liquid", "liquidGlow", "pillar", "result", "resultGlow" }) Assert.IsNotNull(F<SpriteRenderer>(r, n), n);
             foreach (var n in new[] { "runeLight", "liquidLight", "resultLight" }) Assert.IsNotNull(F<Light2D>(r, n), n);
             foreach (var n in new[] { "headerLeft", "headerRight", "skipHint", "banner", "title", "plus", "times", "total" }) Assert.IsNotNull(F<Label>(r, n), n);
-            int mats = Athanor.Core.ContentDb.MaxItems;
+            int mats = Athanor.Gameplay.ContentDb.MaxItems;
             AllSet(F<SpriteRenderer[]>(r, "mats"), mats, "mats"); AllSet(F<SpriteRenderer[]>(r, "matGlow"), mats, "matGlow");
             AllSet(F<Light2D[]>(r, "matLight"), mats, "matLight"); AllSet(F<SpriteRenderer[]>(r, "rings"), 3, "rings");
             var rays = F<Transform[]>(r, "rays");

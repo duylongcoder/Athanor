@@ -15,14 +15,12 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 RES = ROOT / "Athanor/Assets/Resources"
-CONTENT = RES / "content.json"
+CONTENT = ROOT / "tools/content/snapshot.json"
 LANGS = {"en": RES / "lang/en.json", "vi": RES / "lang/vi.json"}
 ICONS = ROOT / "tools/art/icons.mjs"
-CORE = ROOT / "Athanor/Assets/Scripts/Core"
 
 # Build output that must never be tracked (CLAUDE.md: bin, obj and Athanor/Build are output).
 FORBIDDEN_TRACKED = [
-    r"^tools/Core(Tests|Reports)/(bin|obj)/",
     r"^Athanor/(Build|Builds|Library|Temp|Obj|Logs|UserSettings)/",
     r"(^|/)test-results.*\.xml$",
 ]
@@ -104,20 +102,12 @@ def check_lang() -> list[str]:
             if not k.endswith(".one"):     # Vietnamese has no singular/plural split
                 problems.append(f"LANG: `{k}` is in en.json but not vi.json")
         for k in sorted(set(vi) - set(en)):
-            # content text lives in content.json (English) and is localized by vi.json only
+            # content text lives in the content assets (English) and is localized by vi.json only
             if not k.startswith(CONTENT_PREFIXES):
                 problems.append(f"LANG: `{k}` is in vi.json but not en.json")
         for k in sorted(set(en) & set(vi)):
             if sorted(PLACEHOLDER.findall(en[k])) != sorted(PLACEHOLDER.findall(vi[k])):
                 problems.append(f"LANG: `{k}` placeholders differ between en and vi")
-    return problems
-
-
-def check_core_purity() -> list[str]:
-    problems: list[str] = []
-    for f in sorted(CORE.rglob("*.cs")):
-        if re.search(r"^\s*using\s+Unity(Engine|Editor)\b", f.read_text(encoding="utf-8-sig"), re.M):
-            problems.append(f"CORE-PURITY: {f.relative_to(ROOT)} uses UnityEngine/UnityEditor (Core must not)")
     return problems
 
 
@@ -136,7 +126,6 @@ CHECKS = {
     "CONTENT": check_content,
     "ICONS": check_icons,
     "LANG": check_lang,
-    "CORE-PURITY": check_core_purity,
     "META": check_meta_pairs,
 }
 

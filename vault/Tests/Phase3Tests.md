@@ -18,7 +18,7 @@ count: 98
 - `FreshProfile_WithNothingUnlocked_ReachesOnlyThePhase2Recipes`
 - `Phase2Content_WithNoPhase3Fields_LoadsWithEmptyGoalsAspectsAndEvents`
 - `Content_Has22Goals_16Aspects_16Events`
-- `Catalysts_ByRarity_4_10_8_4`
+- `Catalysts_ByRarity_4_10_8_0_4`
 - `GoalBudget_EveryBucket_HasExactlyAsManyGoalsAsLockedItems`
 - `Constructor_Accepts_OneGoalForOneLockedItem`
 - `Constructor_Throws_WhenGoalsOutnumberLockedItems`

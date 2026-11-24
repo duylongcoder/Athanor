@@ -10,7 +10,7 @@ count: 4
 `Athanor/Assets/Tests/EditModeGame/RunOverDepthTests.cs` — 4 tests
 
 ## Covers
-[[ContentData]], [[ContentDb]], [[Label]], [[Loc]], [[RunOverView]]
+[[ContentAssets]], [[ContentDb]], [[Label]], [[Loc]], [[RunOverView]]
 
 ## Tests
 - `Won_ShowsPlantedAtDepth_OnOneLine_WithNoValue`

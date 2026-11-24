@@ -1,5 +1,5 @@
 using System;
-using Athanor.Core;
+using Athanor.Gameplay;
 using UnityEngine;
 using UnityEngine.InputSystem;
 

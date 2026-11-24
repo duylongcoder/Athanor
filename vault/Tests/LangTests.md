@@ -3,18 +3,17 @@ generated: true
 type: test
 file: Athanor/Assets/Tests/EditMode/LangTests.cs
 tags: [test]
-count: 22
+count: 21
 ---
 
 # LangTests
-`Athanor/Assets/Tests/EditMode/LangTests.cs` — 22 tests
+`Athanor/Assets/Tests/EditMode/LangTests.cs` — 21 tests
 
 ## Covers
-[[Json]], [[Lang]]
+[[Lang]]
 
 ## Tests
 - `LangFiles_WhenParsed_HoldTheirLanguageAndName`
-- `SystemTextJson_WhenReadingBothFiles_ReadsTheSameEntries`
 - `LangFiles_WhenGroupedByKey_HaveNoDuplicateKeys`
 - `LangFiles_WhenCheckingEntries_HaveNoEmptyText`
 - `EnglishFile_ComparedWithContentKeys_HoldsNoContentKeys`

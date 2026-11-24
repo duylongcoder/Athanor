@@ -27,3 +27,8 @@
 # .gitattributes governs the INDEX. It does not retro-fix a working tree that
 # predates the rule -- run `git add --renormalize .` for that.
 .claude/**/*.md text eol=lf
+
+# Refactor baselines (balance reports, PlayMode traces) are compared byte-for-byte with freshly
+# generated LF output (ADR-0001 validation criteria); a CRLF checkout would make every line differ.
+production/qa/evidence/**/*.txt text eol=lf
+Athanor/Assets/Tests/PlayMode/Baselines/*.txt text eol=lf

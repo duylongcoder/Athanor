@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec9b493c53a82448fa4645eb1c6483c9, type: 3}
+  m_Name: 068_lye
+  m_EditorClassIdentifier: Athanor.Gameplay::Athanor.Gameplay.RecipeDefinition
+  items:
+  - {fileID: 11400000, guid: 97bceb4fee12c4e96bcbd530537140b6, type: 2}
+  - {fileID: 11400000, guid: 08a7c9b599cd84818b1ad475f6e6c9d1, type: 2}
+  minReactivity: 10
+  result: {fileID: 11400000, guid: 11c5be710871444528e267964fd2e45f, type: 2}

@@ -9,10 +9,8 @@
     "**/*.g.cs",
     "**/*.Designer.cs"
   ],
-  "_pure_logic_paths": "Athanor Core: no UnityEngine here. Paths are relative to the lint root (Athanor/).",
-  "pure_logic_paths": [
-    "Assets/Scripts/Core"
-  ],
+  "_pure_logic_paths": "ADR-0001: Athanor.Gameplay is a Unity assembly; no pure-logic path is enforced.",
+  "pure_logic_paths": [],
   "unity_object_types": [],
   "assertion_regex": "\\b(?:Assert|CollectionAssert|StringAssert|LogAssert|Assume)\\b|\\b(?:Assert|Verify|Expect|Should|Throws)\\w*\\s*\\(",
   "severity": {

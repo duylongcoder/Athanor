@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Athanor.Core;
+using Athanor.Gameplay;
 using UnityEngine;
 
 namespace Athanor.Game
@@ -74,7 +74,7 @@ namespace Athanor.Game
         static string RuleText(AspectInstance a)
         {
             string text = Loc.C("aspect." + a.Data.id + ".text", a.Data.text ?? "");
-            // content.json writes the price after "COST:"; the language writes it after its own marker (vi.json already does)
+            // the content assets writes the price after "COST:"; the language writes it after its own marker (vi.json already does)
             return text.Replace("COST:", Marker);
         }
 

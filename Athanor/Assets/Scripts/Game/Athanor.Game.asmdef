@@ -2,7 +2,7 @@
     "name": "Athanor.Game",
     "rootNamespace": "Athanor.Game",
     "references": [
-        "Athanor.Core",
+        "Athanor.Gameplay",
         "Unity.TextMeshPro",
         "Unity.InputSystem",
         "Unity.RenderPipelines.Core.Runtime",

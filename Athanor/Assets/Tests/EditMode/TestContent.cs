@@ -1,21 +1,11 @@
-using Athanor.Core;
+using Athanor.Gameplay;
 
 namespace Athanor.Tests
 {
-    /// <summary>Loads the real content.json, inside Unity or under plain dotnet.</summary>
+    /// <summary>The real content, from Assets/Content.</summary>
     public static class TestContent
     {
-        public static ContentData Load()
-        {
-#if UNITY_5_3_OR_NEWER
-            var text = UnityEngine.Resources.Load<UnityEngine.TextAsset>("content").text;
-            return UnityEngine.JsonUtility.FromJson<ContentData>(text);
-#else
-            var path = System.IO.Path.Combine(System.AppContext.BaseDirectory, "content.json");
-            var opts = new System.Text.Json.JsonSerializerOptions { IncludeFields = true };
-            return System.Text.Json.JsonSerializer.Deserialize<ContentData>(System.IO.File.ReadAllText(path), opts);
-#endif
-        }
+        public static ContentData Load() => ContentAssets.Data();
 
         /// <summary>a+b=>x (tier 1), x+c=>y (tier 2); a,b Ore; c Potion; d Plant reacts with nothing.</summary>
         public static ContentData Tiny()

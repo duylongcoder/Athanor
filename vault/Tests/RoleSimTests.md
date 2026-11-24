@@ -10,7 +10,7 @@ count: 2
 `Athanor/Assets/Tests/EditMode/RoleSimTests.cs` — 2 tests
 
 ## Covers
-[[ContentDb]], [[Journal]]
+[[ContentDb]], [[Journal]], [[Sim]]
 
 ## Tests
 - `Newcomer_OverFortyRuns_LearnsAndReachesTheDeep`

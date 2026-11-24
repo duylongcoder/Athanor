@@ -10,7 +10,7 @@ count: 18
 `Athanor/Assets/Tests/EditModeGame/HotPathTests.cs` — 18 tests
 
 ## Covers
-[[Art]], [[BenchView]], [[CardView]], [[Clickable]], [[ContentData]], [[ContentDb]], [[Dust]], [[EventView]], [[Flame]], [[FogSheet]], [[HudView]], [[Journal]], [[Label]], [[LinkView]], [[Loc]], [[PointerInput]], [[RunState]], [[ScreenFx]], [[Sparks]], [[TileView]], [[Tooltip]], [[UiButton]]
+[[Art]], [[BenchView]], [[CardView]], [[Clickable]], [[ContentAssets]], [[ContentDb]], [[Dust]], [[EventView]], [[Flame]], [[FogSheet]], [[HudView]], [[Journal]], [[Label]], [[LinkView]], [[Loc]], [[PointerInput]], [[RunState]], [[ScreenFx]], [[Sparks]], [[TileView]], [[Tooltip]], [[UiButton]]
 
 ## Tests
 - `Tick_IdleHud_AllocatesNothing`

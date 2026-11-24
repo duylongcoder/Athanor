@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d3100de58ca74a8ca24a7a3b157dcc2, type: 3}
+  m_Name: cold_draft
+  m_EditorClassIdentifier: Athanor.Gameplay::Athanor.Gameplay.EventDefinition
+  id: cold_draft
+  displayName: A Cold Draft
+  text: A cold draft comes up the stair, through your pockets.
+  type: 4
+  minDepth: 3
+  maxDepth: 5
+  weight: 1
+  options:
+  - label: Go on
+    requires: 0
+    cost: []
+    outcomes:
+    - weight: 1
+      text: You hold on to less.
+      gain:
+      - op: 1
+        arg: 
+        amount: -1
+        amount2: 0

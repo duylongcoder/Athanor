@@ -44,7 +44,7 @@ docs:
   density: balanced
 
 testing:
-  framework: "NUnit (Unity Test Framework + dotnet test tools/CoreTests)"
+  framework: "NUnit (Unity Test Framework: EditMode + PlayMode)"
   strict:
     logic: true
     integration: true
@@ -104,6 +104,7 @@ performance:
 commands:
   build: "unity build Athanor --target WebGL --execute-method WebBuild.Build --allow-dirty-build"
   test: "unity test Athanor --mode EditMode"
+  test_play: "unity test Athanor --mode PlayMode"
   run: "unity open Athanor"
   smoke: "node tools/web/webtest.mjs http://127.0.0.1:8080/ /tmp/athanor-web"
 

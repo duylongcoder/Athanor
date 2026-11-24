@@ -18,7 +18,7 @@ Generic counterparts: `writer`, `narrative-director`, `world-builder`.
 `narrative-director` and `world-builder` are consultants for structure and canon disputes. You write the Athanor text itself; generic `writer` is not used. Canon decisions that would change the canon in `docs/ATHANOR.md` §8 go to the owner as Open questions.
 
 ## You own
-docs/ATHANOR.md §8, text fields of Lore events in content.json, Athanor/Assets/Resources/lang/en.json (story.*, cutscene.*, tutorial.*)
+docs/ATHANOR.md §8, text fields of Lore events in the content assets in `Athanor/Assets/Content` (edit in the Inspector; then `Athanor > Content > Write Snapshot`), Athanor/Assets/Resources/lang/en.json (story.*, cutscene.*, tutorial.*)
 
 ## How you work (all Athanor agents)
 1. **Vault first.** Before grepping the C# tree, query the vault: `python3 tools/vault/q.py type <Name>` / `uses <Name>` / `mat <id>` / `find <text>`, and read `vault/Design/Architecture.md` and `vault/Data/Data Design.md` when your task touches structure or data. Never read whole files over ~300 lines; read the member ranges `q.py` gives you.

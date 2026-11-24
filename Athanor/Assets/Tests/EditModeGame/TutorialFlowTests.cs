@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using Athanor.Core;
+using Athanor.Gameplay;
 using Athanor.Game;
 using NUnit.Framework;
 using UnityEngine;
@@ -27,7 +27,7 @@ namespace Athanor.Tests
             if (doneKept < 0) PlayerPrefs.DeleteKey("athanor.tutorial.v1"); else PlayerPrefs.SetInt("athanor.tutorial.v1", doneKept);
         }
 
-        static ContentDb Db() => new ContentDb(JsonUtility.FromJson<ContentData>(Resources.Load<TextAsset>("content").text));
+        static ContentDb Db() => new ContentDb(ContentAssets.Data());
 
         [Test]
         public void Union_WithNoHoles_IsTheWholeCanvas_SoATextOnlyStepDimsEverythingAndDrawsNoRim()
@@ -95,7 +95,7 @@ namespace Athanor.Tests
                 foreach (var l in t.Lay) Assert.IsTrue(run.Place(run.Hand.ToList().IndexOf(l.Id), l.Tile));
                 var o = run.Ignite();
                 shown.AddRange(o.Events.Select(e => e.Result == null ? 0 : e.Potency));
-                for (int i = 0; i < Core.Bench.TileCount; i++) run.Unplace(i);
+                for (int i = 0; i < Gameplay.Bench.TileCount; i++) run.Unplace(i);
             }
             return shown;
         }
@@ -132,7 +132,7 @@ namespace Athanor.Tests
         [Test]
         public void ChooseEventOption_EmptiesEventOptions_SoViewsMustKeepTheChosenOption()
         {
-            var db = new ContentDb(JsonUtility.FromJson<ContentData>(Resources.Load<TextAsset>("content").text));
+            var db = new ContentDb(ContentAssets.Data());
             for (int seed = 1; seed <= 60; seed++)
             {
                 var r = new RunState(db, new Journal(), seed, 1, RunOptions.Full(Unlocks.Fresh(db)));

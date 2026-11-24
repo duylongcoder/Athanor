@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec9b493c53a82448fa4645eb1c6483c9, type: 3}
+  m_Name: 085_storm_philter
+  m_EditorClassIdentifier: Athanor.Gameplay::Athanor.Gameplay.RecipeDefinition
+  items:
+  - {fileID: 11400000, guid: 4726fc8f986144d159546eba76bacbbc, type: 2}
+  - {fileID: 11400000, guid: b8489b46e82674076a4a5943fa13f2ff, type: 2}
+  - {fileID: 11400000, guid: f65d31949115a449d912e4c093d5829b, type: 2}
+  - {fileID: 11400000, guid: 41cca925a062e4a98aed025b62745abb, type: 2}
+  minReactivity: 22
+  result: {fileID: 11400000, guid: 91c1d75e6eef048e59774e27518f02ec, type: 2}

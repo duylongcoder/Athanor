@@ -1,5 +1,5 @@
 using System.Collections;
-using Athanor.Core;
+using Athanor.Gameplay;
 using PrimeTween;
 using UnityEngine;
 

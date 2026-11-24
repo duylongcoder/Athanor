@@ -7286,9 +7286,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Athanor.Game::Athanor.Game.GameFlow
   library: {fileID: 11400000, guid: 170479308619b81e6a4b2471ff3e5b46, type: 2}
   palette: {fileID: 11400000, guid: 9c3e5a17d2b84f60a1e7b4c8d0f2a365, type: 2}
-  contentJson: {fileID: 4900000, guid: b6ccaf9d95287b60499fe87b749f4bb7, type: 3}
+  contentJson: {fileID: 0}
   langEn: {fileID: 4900000, guid: d9319a9061e4542b8b0ad437f3abb79b, type: 3}
   langVi: {fileID: 4900000, guid: baa9d998216a14ecebbbfbcba9a6d475, type: 3}
+  content: {fileID: 11400000, guid: c7ab88ee1148c44b8be3c62cfe697fd6, type: 2}
   workshop: {fileID: 888498917}
   cutsceneRoom: {fileID: 310397452}
   mainCamera: {fileID: 57964792}

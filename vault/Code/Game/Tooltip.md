@@ -27,7 +27,7 @@ aliases: []
 [[Art]], [[Label]], [[Px]], [[RarityStars]], [[Wording]]
 
 ## Used by
-[[BenchView]], [[TutorialArea]], [[TutorialStep]]
+[[AspectDefinition]], [[BenchView]], [[CatalystDefinition]], [[EventDefinition]], [[EventEffectDef]], [[EventOutcomeDef]], [[GameFlow]], [[GameRules]], [[GoalDefinition]], [[MaterialDefinition]], [[RecipeDefinition]], [[TutorialArea]], [[TutorialController]], [[TutorialStep]]
 
 ## Tested by
 [[HotPathTests]], [[LayoutPinTests]], [[PrefabBakeTests]]

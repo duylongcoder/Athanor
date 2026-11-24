@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec9b493c53a82448fa4645eb1c6483c9, type: 3}
+  m_Name: 018_basilisk_eye
+  m_EditorClassIdentifier: Athanor.Gameplay::Athanor.Gameplay.RecipeDefinition
+  items:
+  - {fileID: 11400000, guid: 669bc97f1b2ae44a8a4b3f20d1217a8f, type: 2}
+  - {fileID: 11400000, guid: 11cb0b1bbbb54420f8e02d9bac4660ec, type: 2}
+  minReactivity: 10
+  result: {fileID: 11400000, guid: 8673b58378c1a43dd8f6208a7d07ef41, type: 2}

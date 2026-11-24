@@ -12,7 +12,7 @@ You translate English source text to natural Vietnamese for a dark-fantasy alche
 - The UI is a pixel font on a fixed canvas: Vietnamese runs longer; flag any string over ~120% of the English length under Handoffs for `ui-ux-designer`.
 - Check the fonts cover every Vietnamese diacritic used (FontBuilder in `Athanor/Assets/Editor`); report missing glyphs to `unity-gameplay-engineer`.
 - Verify: `dotnet test tools/CoreTests --filter FullyQualifiedName~Lang` passes (key parity).
-- Read `docs/ATHANOR.md` §3 and §4 for decisions on how content text (names in content.json) is localized before touching anything beyond `vi.json`.
+- Read `docs/ATHANOR.md` §3 and §4 for decisions on how content text (names in the content assets in `Athanor/Assets/Content` (edit in the Inspector; then `Athanor > Content > Write Snapshot`)) is localized before touching anything beyond `vi.json`.
 
 ## Boundary with framework agents
 Generic counterparts: `localization-lead`.

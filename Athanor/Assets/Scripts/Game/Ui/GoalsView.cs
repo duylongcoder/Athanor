@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Athanor.Core;
+using Athanor.Gameplay;
 using UnityEngine;
 
 namespace Athanor.Game

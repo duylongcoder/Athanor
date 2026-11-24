@@ -1,5 +1,5 @@
 using System;
-using Athanor.Core;
+using Athanor.Gameplay;
 using UnityEngine;
 
 namespace Athanor.Game
@@ -14,6 +14,8 @@ namespace Athanor.Game
         public bool IntroPressed { get; private set; }
         /// <summary>Forgets a Begin that was answered by the skip question.</summary>
         public void ClearBegin() => BeginPressed = false;
+        /// <summary>Presses Begin as a click would (PlayMode tests).</summary>
+        public void RequestBegin() => PressBegin();
         public event Action JournalClicked, GoalsClicked, ResetConfirmed, SettingsClosed;
         /// <summary>The Settings panel or the "erase progress?" question is up: the buttons under it do nothing.</summary>
         public bool Asking => (confirm != null && confirm.gameObject.activeSelf) || (skip != null && skip.gameObject.activeSelf) || (panel != null && panel.gameObject.activeSelf);

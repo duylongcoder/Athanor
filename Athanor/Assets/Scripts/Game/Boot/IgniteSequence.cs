@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Linq;
-using Athanor.Core;
+using Athanor.Gameplay;
 using PrimeTween;
 using UnityEngine;
 
@@ -132,7 +132,7 @@ namespace Athanor.Game
             int kept = outcome.Made.Count(m => m);
             int slot = Mathf.Max(0, run.Hand.Count(IsDiscovery) - kept);
             float endPace = Hurry || auto ? timing.endPaceHurry : timing.endPace;
-            for (int i = 0; i < Core.Bench.TileCount; i++)
+            for (int i = 0; i < Gameplay.Bench.TileCount; i++)
             {
                 var tile = bench.Tile(i);
                 if (tile.Material == null) continue;

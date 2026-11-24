@@ -1,4 +1,4 @@
-using Athanor.Core;
+using Athanor.Gameplay;
 using Athanor.Game;
 using System.Reflection;
 using NUnit.Framework;
@@ -24,7 +24,7 @@ namespace Athanor.Tests
 
         const string HudPrefab = "Assets/Prefabs/Parts/Hud.prefab";
 
-        static ContentDb Db() => new ContentDb(JsonUtility.FromJson<ContentData>(Resources.Load<TextAsset>("content").text));
+        static ContentDb Db() => new ContentDb(ContentAssets.Data());
 
         static Label PotencyLabel(HudView hud) =>
             (Label)typeof(HudView).GetField("potency", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(hud);

@@ -10,7 +10,7 @@ count: 1
 `Athanor/Assets/Tests/EditMode/RarityReportTests.cs` — 1 tests
 
 ## Covers
-[[AutoMove]], [[AutoPlayer]], [[ContentDb]], [[Journal]], [[Rarities]], [[RunOptions]], [[RunPhase]], [[RunState]], [[Unlocks]]
+[[AutoMove]], [[AutoPlayer]], [[ContentDb]], [[Journal]], [[Rarities]], [[RunOptions]], [[RunPhase]], [[RunState]], [[Sim]], [[Unlocks]]
 
 ## Tests
 - `RarityReport_WhenOptedIn_PrintsWinRatesPerRarity`
