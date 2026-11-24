@@ -88,3 +88,12 @@ See `docs/COLLABORATIVE-DESIGN-PRINCIPLE.md`.
 
 `production/session-state/active.md` is the session checkpoint; read it first after a compaction or `/clear`.
 Reference docs (read on demand): `.claude/docs/context-management.md`, `.claude/docs/directory-structure.md`, `docs/WORKFLOW-GUIDE.md`.
+
+## Graphify map (rule from 2026-11-24)
+
+`graphify-out/` (repo root) holds the Unity project map built from `Athanor/Assets` (`GRAPH_REPORT.md`, `graph.json`, `graph.html`). Code is AST-only; sprites are skipped (no semantic pass).
+
+- **After every task group** that changes C#: rebuild with `/graphify Athanor/Assets --update` (full `/graphify Athanor/Assets` after renames or moves, add `--force` if files were deleted). Run it from the checkout you changed (the worktree for the template refactor), then record node/edge counts in the group's report.
+- **Before writing tests or checking a feature flow**: read `GRAPH_REPORT.md` and use `graphify query|path|explain` to find callers, users and the flow, then pick the tests to run from that (the vault's "Tested by" is the second source).
+- **Next task or session**: start from the latest `graphify-out/`; if the code changed since, rebuild first.
+- Never hand-edit `graphify-out/`. Not part of CI.

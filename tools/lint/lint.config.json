@@ -14,6 +14,7 @@
     "Assets/Scripts/Core"
   ],
   "unity_object_types": [],
+  "assertion_regex": "\\b(?:Assert|CollectionAssert|StringAssert|LogAssert|Assume)\\b|\\b(?:Assert|Verify|Expect|Should|Throws)\\w*\\s*\\(",
   "severity": {
     "_comment": "error | warning | off. Mặc định mọi luật là error. Warning không làm CI fail."
   },
