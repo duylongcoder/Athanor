@@ -450,8 +450,8 @@
     "semantic_hash": "aa3924db69864fef9af042f9d75e0915"
   },
   "Athanor/Assets/Scripts/Game/Support/Fonts.cs": {
-    "mtime": 1795622883.0984273,
-    "seen": 1795628483.6239328,
+    "mtime": 1795703209.1031206,
+    "seen": 1795703909.456157,
     "ast_hash": "d9b24de1ed3506b5decc9b0fa8837f7f",
     "semantic_hash": "d9b24de1ed3506b5decc9b0fa8837f7f"
   },
@@ -534,10 +534,10 @@
     "semantic_hash": "5b88f274ac3751611c88e052b481dfb3"
   },
   "Athanor/Assets/Scripts/Game/Tutorial/TutorialManager.cs": {
-    "mtime": 1795625203.214155,
-    "seen": 1795628483.623938,
-    "ast_hash": "8367029de9ba9335238aac9aab3ffd2a",
-    "semantic_hash": "8367029de9ba9335238aac9aab3ffd2a"
+    "mtime": 1795702494.5978363,
+    "seen": 1795703909.4561641,
+    "ast_hash": "30d5ed1c9570395ee44bd94231590aaa",
+    "semantic_hash": "30d5ed1c9570395ee44bd94231590aaa"
   },
   "Athanor/Assets/Scripts/Game/Tutorial/TutorialSequence.cs": {
     "mtime": 1795624402.1528466,
@@ -552,10 +552,10 @@
     "semantic_hash": "f7dacda8390700beb1ead40c9f05b029"
   },
   "Athanor/Assets/Scripts/Game/Tutorial/TutorialTypes.cs": {
-    "mtime": 1795630694.8149405,
-    "seen": 1795697861.971775,
-    "ast_hash": "5a401ad357059f1d2ce11354cc5e2251",
-    "semantic_hash": "5a401ad357059f1d2ce11354cc5e2251"
+    "mtime": 1795702504.5080884,
+    "seen": 1795703909.456165,
+    "ast_hash": "b9779a642ed72eb139ea656c63fa2558",
+    "semantic_hash": "b9779a642ed72eb139ea656c63fa2558"
   },
   "Athanor/Assets/Scripts/Game/Ui/CatalystChoiceView.cs": {
     "mtime": 1795626252.3468766,
@@ -924,10 +924,10 @@
     "semantic_hash": "1af3b57566b7dc26c6ed88886a37a607"
   },
   "Athanor/Assets/Tests/EditModeGame/Baselines/tutorial_lit_baseline.json": {
-    "mtime": 1795184628.6600108,
-    "seen": 1795628483.623959,
-    "ast_hash": "1f792bc14681ac3c7cb4204154dfd48a",
-    "semantic_hash": "1f792bc14681ac3c7cb4204154dfd48a"
+    "mtime": 1795703574.0178208,
+    "seen": 1795703909.456191,
+    "ast_hash": "025ae317d03e43e58a88ee3b0884788d",
+    "semantic_hash": "025ae317d03e43e58a88ee3b0884788d"
   },
   "Athanor/Assets/Tests/EditModeGame/ChoiceHookTests.cs": {
     "mtime": 1795622883.0804684,
@@ -1098,10 +1098,10 @@
     "semantic_hash": "9a44f2ca29a56f879cb33a3af7ce8b48"
   },
   "Athanor/Assets/Tests/EditModeGame/TutorialFlowTests.cs": {
-    "mtime": 1795625184.28177,
-    "seen": 1795628483.623969,
-    "ast_hash": "77c83add54f12d87338774141edbad25",
-    "semantic_hash": "77c83add54f12d87338774141edbad25"
+    "mtime": 1795702492.968328,
+    "seen": 1795703909.456204,
+    "ast_hash": "eda2b7096900d0b1b01d9cfa045eb534",
+    "semantic_hash": "eda2b7096900d0b1b01d9cfa045eb534"
   },
   "Athanor/Assets/Tests/EditModeGame/TutorialStepsBakeTests.cs": {
     "mtime": 1795625203.206412,

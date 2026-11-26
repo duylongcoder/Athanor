@@ -5,7 +5,7 @@ tags: [moc/tests]
 ---
 
 # Tests
-615 test methods in 57 files. Run: `unity test Athanor --mode EditMode`.
+617 test methods in 57 files. Run: `unity test Athanor --mode EditMode`.
 
 - [[ChainTests]] — 26 tests · covers [[Bench]], [[ChainPlan]], [[ChainPlanner]], [[ContentDb]]
 - [[ContentAssetTests]] — 1 tests · covers [[ContentAssets]]
@@ -50,7 +50,7 @@ tags: [moc/tests]
 - [[SparksTests]] — 7 tests · covers [[Art]], [[Particle]], [[SparkMesh]], [[Sparks]]
 - [[StaticResetTests]] — 8 tests · covers [[Art]], [[AudioMute]], [[DepthRig]], [[EditorGlobals]], [[Haptics]], [[Loc]], [[Palette]], [[PointerInput]]
 - [[TutorialAreaTests]] — 2 tests · covers [[TutorialRect]]
-- [[TutorialFlowTests]] — 10 tests · covers [[AutoPlayer]], [[Bench]], [[ContentAssets]], [[ContentDb]], [[Journal]], [[Profile]], [[Px]], [[RunOptions]]
+- [[TutorialFlowTests]] — 12 tests · covers [[AutoPlayer]], [[Bench]], [[ContentAssets]], [[ContentDb]], [[Journal]], [[Profile]], [[Px]], [[RunOptions]]
 - [[TutorialStepsBakeTests]] — 5 tests · covers [[AreaKind]], [[ContentAssets]], [[ContentDb]], [[JournalView]], [[TutorialManager]]
 - [[TutorialTests]] — 18 tests · covers [[Bench]], [[ContentData]], [[ContentDb]], [[Effects]], [[IgniteOutcome]], [[Journal]], [[ReactionEvent]], [[Row]]
 - [[ManagerBootTests]] — 4 tests · covers [[ContentManager]], [[FlowState]], [[GameManager]], [[Journal]], [[LocalizationManager]], [[Profile]], [[ProgressManager]], [[RunManager]]

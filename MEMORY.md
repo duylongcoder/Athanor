@@ -10,7 +10,7 @@ To add an entry (after every task group):
 
 ## Current state (as of 2026-11-26)
 
-- Branch `feature/phase7-unity-conversion`, HEAD at `efd6a699` (2026-11-26, art-library fix) on top of the automation-set commits. The Unity template refactor is **committed**:
+- Branch `feature/phase7-unity-conversion`, HEAD at `58c5eb4b` (2026-11-26, tutorial dim blocks clicks; on `8da87681` and `efd6a699`, the art-library fix) on top of the automation-set commits. The Unity template refactor is **committed**:
   stages 0-3 in `2d7cb831`, stages 4-7 in `0d14b2d3` (605 paths, most of them `vault/` and `graphify-out/`). Tests were re-run on 2026-11-26 after the fix:
   EditMode 681/681, PlayMode 12/12, `tools/ci/run.sh all` green (see the change log; the remote CI run is not confirmed).
 - Plan: `.claude/2026-11-24-unity-template-refactor.md` (stages 0-7, tasks 0-29; a copy is at
@@ -44,9 +44,21 @@ Plan tasks against the tree (evidence = file or git; the suites passed on 2026-1
 | 29 final gate | partly done | test counts recorded (EditMode 681/681, PlayMode 12/12, 2026-11-26); still no web-build size or web-check evidence; ATHANOR.md § 6 figures not updated by this refactor as far as seen |
 
 Other state: `production/session-state/active.md` is stale (2026-11-18, Phase 6 Task 5); do not trust its "current task". Graphify map
-`graphify-out/GRAPH_REPORT.md` is dated 2026-11-26: 2930 nodes, 10218 edges, 110 communities.
+`graphify-out/GRAPH_REPORT.md` is dated 2026-11-26: 2947 nodes, 10151 edges, 120 communities.
 
 ## Change log
+
+### 2026-11-26 (tutorial: a dark step always blocks clicks)
+- `58c5eb4b` feat(tutorial): `TutorialManager.Blocks(step)` = `dark || lockPad`; `lockPad` and `readPad` switch on it, so the dim never lets a click through outside the `TutorialHole` windows.
+  No current step changes (all 28 dark steps already had `lockPad` on; 2.7 and 5.3 are the only light steps). `TutorialFlowTests` gained 2 `Blocks_*` tests; the `lockPad` hint in `TutorialTypes.cs` was reworded.
+  The commit also carries the owner's `Tutorial.asset` edit: steps 1.1-1.3 light `Fixed` areas instead of `View`/`ScriptTile` (1.3 went from 3 lit windows to 2).
+  Baselines re-recorded to match: `tutorial_lit_baseline.json` (1.1, 1.2, 1.3, read from `TutorialManager.Holes()` at run time) and `tutorial_trace.txt` line 5 (`holes 3` -> `holes 2`).
+- Tests: EditMode filter `Tutorial` 50 passed / 0 failed (it was 49/50 on the stale baseline); PlayMode 12 passed / 0 failed. Full EditMode, `tools/ci/run.sh all` and `tools/ci/run.sh unity` not run; no screenshot of steps 1.1-1.3 yet.
+- uncommitted: `python3 tools/vault/build_vault.py` run (231 code types, 617 tests, 511 notes; touched `TutorialManager.md`, `TutorialStepDef.md`, `TutorialFlowTests.md`, `Tests Index.md`, `_index/Symbols.md`).
+  Graphify `--update` of `Athanor/Assets`, code-only (4 changed files re-extracted: `TutorialManager.cs`, `TutorialTypes.cs`, `TutorialFlowTests.cs`, `tutorial_lit_baseline.json`; 98 old nodes replaced by 133):
+  2947 nodes, 10151 edges, 120 communities (was 2930 / 10218 / 110). Edges fell by 67 while nodes rose by 17; the cause is not checked (replace-on-re-extract drops the old edges of the re-extracted files). Communities were re-clustered and named by majority of the old names.
+  263 sprites and docs reported as changed got no semantic pass (project rule). `Athanor/Assets/graphify-out/` cache deleted.
+- Left alone on purpose: `Athanor/Assets/Settings/UniversalRenderPipelineGlobalSettings.asset` was changed by Unity when the Editor reopened and is not part of this work.
 
 ### 2026-11-26 (art library fix, task-group close)
 - `efd6a699` fix(art): `ArtLibrary.asset` had lost all five font refs (`title`, `body`, `label`, `tiny`, `crux`) since `49ebb63a`; rebuilt with `ArtLibraryBuilder.RefreshBatch` (269 sprites).

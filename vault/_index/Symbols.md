@@ -1586,17 +1586,18 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | TutorialManager | field | AutoDrive | 66 | public bool AutoDrive |
 | TutorialManager | method | Bind | 69 | public void Bind(GameManager flow) |
 | TutorialManager | method | OnAwake | 71 | protected override void OnAwake() |
-| TutorialManager | method | Union | 82 | public static Rect Union(Rect[] r) |
-| TutorialManager | method | Abort | 162 | public void Abort() |
-| TutorialManager | method | Step | 169 | public TutorialStepDef Step(string id) |
-| TutorialManager | method | Holes | 309 | public Rect[] Holes(TutorialStepDef step, int hub = -1) |
-| TutorialManager | method | Drive | 321 | public IEnumerator Drive() |
-| TutorialManager | method | AfterEvent | 385 | public IEnumerator AfterEvent(ReactionEvent e, int index) |
-| TutorialManager | method | AfterIgnite | 403 | public IEnumerator AfterIgnite(IgniteOutcomeView o) |
-| TutorialManager | method | AfterChoose | 418 | public void AfterChoose(string catalystId, string name) |
-| TutorialManager | method | OnOffer | 427 | public IEnumerator OnOffer() |
-| TutorialManager | method | OfferTaken | 448 | public void OfferTaken() |
-| TutorialManager | property | IgniteOutcomeView | 458 | public sealed class IgniteOutcomeView |
+| TutorialManager | method | Blocks | 82 | public static bool Blocks(TutorialStepDef step) |
+| TutorialManager | method | Union | 85 | public static Rect Union(Rect[] r) |
+| TutorialManager | method | Abort | 166 | public void Abort() |
+| TutorialManager | method | Step | 173 | public TutorialStepDef Step(string id) |
+| TutorialManager | method | Holes | 313 | public Rect[] Holes(TutorialStepDef step, int hub = -1) |
+| TutorialManager | method | Drive | 325 | public IEnumerator Drive() |
+| TutorialManager | method | AfterEvent | 389 | public IEnumerator AfterEvent(ReactionEvent e, int index) |
+| TutorialManager | method | AfterIgnite | 407 | public IEnumerator AfterIgnite(IgniteOutcomeView o) |
+| TutorialManager | method | AfterChoose | 422 | public void AfterChoose(string catalystId, string name) |
+| TutorialManager | method | OnOffer | 431 | public IEnumerator OnOffer() |
+| TutorialManager | method | OfferTaken | 452 | public void OfferTaken() |
+| TutorialManager | property | IgniteOutcomeView | 462 | public sealed class IgniteOutcomeView |
 | TutorialSequence | field | trials | 23 | public TutorialTrialDef[] trials = new TutorialTrialDef[0] |
 | TutorialSequence | field | steps | 31 | public List<TutorialStepDef> steps = new List<TutorialStepDef>() |
 | TutorialSequence | field | script | 32 | public List<TutorialAction> script = new List<TutorialAction>() |
@@ -2206,14 +2207,16 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | TutorialAreaTests | method | ArtRect_OfWorldCentre_IsTheCentredArtRect | 17 | public void ArtRect_OfWorldCentre_IsTheCentredArtRect() |
 | TutorialFlowTests | method | Union_WithNoHoles_IsTheWholeCanvas_SoATextOnlyStepDimsEverythingAndDrawsNoRim | 34 | public void Union_WithNoHoles_IsTheWholeCanvas_SoATextOnlyStepDimsEverythingAndDrawsNoRim() |
 | TutorialFlowTests | method | Union_OfHoles_IsTheirBoundingBox | 41 | public void Union_OfHoles_IsTheirBoundingBox() |
-| TutorialFlowTests | method | Plan_FreshSave_RunsTheTutorial | 48 | public void Plan_FreshSave_RunsTheTutorial() |
-| TutorialFlowTests | method | Plan_JournalWithEntries_AsksOnce | 54 | public void Plan_JournalWithEntries_AsksOnce() |
-| TutorialFlowTests | method | MarkDone_AfterSkip_SetsTutorialDone | 62 | public void MarkDone_AfterSkip_SetsTutorialDone() |
-| TutorialFlowTests | method | AnswerSkipQuestion_Skip_MarksDoneAndStartsTheRunWithoutAReplay | 71 | public void AnswerSkipQuestion_Skip_MarksDoneAndStartsTheRunWithoutAReplay() |
-| TutorialFlowTests | method | AnswerSkipQuestion_PlayIt_ReplaysInTheSandboxAndLeavesTheSaveAlone | 81 | public void AnswerSkipQuestion_PlayIt_ReplaysInTheSandboxAndLeavesTheSaveAlone() |
-| TutorialFlowTests | method | ScriptedTrials_Shown_Equal40_0_40_240 | 105 | public void ScriptedTrials_Shown_Equal40_0_40_240() |
-| TutorialFlowTests | method | HowToPlay_ThrowawayJournalAndProfile_LeavesStorageByteIdentical | 114 | public void HowToPlay_ThrowawayJournalAndProfile_LeavesStorageByteIdentical() |
-| TutorialFlowTests | method | ChooseEventOption_EmptiesEventOptions_SoViewsMustKeepTheChosenOption | 134 | public void ChooseEventOption_EmptiesEventOptions_SoViewsMustKeepTheChosenOption() |
+| TutorialFlowTests | method | Blocks_ADarkStep_EvenWithoutLockPad_SoTheDimNeverLetsAClickThrough | 48 | public void Blocks_ADarkStep_EvenWithoutLockPad_SoTheDimNeverLetsAClickThrough() |
+| TutorialFlowTests | method | Blocks_ForEveryDarkStepOfTheSequence_IsTrue | 56 | public void Blocks_ForEveryDarkStepOfTheSequence_IsTrue() |
+| TutorialFlowTests | method | Plan_FreshSave_RunsTheTutorial | 62 | public void Plan_FreshSave_RunsTheTutorial() |
+| TutorialFlowTests | method | Plan_JournalWithEntries_AsksOnce | 68 | public void Plan_JournalWithEntries_AsksOnce() |
+| TutorialFlowTests | method | MarkDone_AfterSkip_SetsTutorialDone | 76 | public void MarkDone_AfterSkip_SetsTutorialDone() |
+| TutorialFlowTests | method | AnswerSkipQuestion_Skip_MarksDoneAndStartsTheRunWithoutAReplay | 85 | public void AnswerSkipQuestion_Skip_MarksDoneAndStartsTheRunWithoutAReplay() |
+| TutorialFlowTests | method | AnswerSkipQuestion_PlayIt_ReplaysInTheSandboxAndLeavesTheSaveAlone | 95 | public void AnswerSkipQuestion_PlayIt_ReplaysInTheSandboxAndLeavesTheSaveAlone() |
+| TutorialFlowTests | method | ScriptedTrials_Shown_Equal40_0_40_240 | 119 | public void ScriptedTrials_Shown_Equal40_0_40_240() |
+| TutorialFlowTests | method | HowToPlay_ThrowawayJournalAndProfile_LeavesStorageByteIdentical | 128 | public void HowToPlay_ThrowawayJournalAndProfile_LeavesStorageByteIdentical() |
+| TutorialFlowTests | method | ChooseEventOption_EmptiesEventOptions_SoViewsMustKeepTheChosenOption | 148 | public void ChooseEventOption_EmptiesEventOptions_SoViewsMustKeepTheChosenOption() |
 | TutorialStepsBakeTests | field | BaselinePath | 19 | public const string BaselinePath = |
 | TutorialStepsBakeTests | property | AllStepIds | 22 | public static readonly string[] AllStepIds = |
 | TutorialStepsBakeTests | method | EveryStepId_UsedByTheScript_ExistsInTheSequence | 40 | public void EveryStepId_UsedByTheScript_ExistsInTheSequence() |

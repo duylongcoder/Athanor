@@ -12,7 +12,7 @@ aliases: []
 # TutorialManager
 
 `public sealed class TutorialManager` : `Singleton<TutorialManager>`
-- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Tutorial/TutorialManager.cs:34-459`
+- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Tutorial/TutorialManager.cs:34-463`
 
 > Plays the scripted tutorial over the bench: a dark screen with lit holes and a pulsing gold rim, an arrow, a text box at the top, click locks, and popups held until read. It reads the game's state; it decides no rule. The dark screen is one sprite drawn "visible outside mask"; each lit hole is a SpriteMask (the inverse mask), see TutorialHole.
 
@@ -26,17 +26,18 @@ aliases: []
 | field | `public bool AutoDrive` | 66 | Tests and debugging only: read lines advance by themselves and the scripted lays, Ignites and Journal moves are made for the player. |
 | method | `public void Bind(GameManager flow)` | 69 | Gives the controller the game it reads; the lessons run in Drive. |
 | method | `protected override void OnAwake()` | 71 |  |
-| method | `public static Rect Union(Rect[] r)` | 82 | The box round the holes. No holes (a text-only step such as 2.3) is the whole canvas: a full dim, no rim, no arrow. |
-| method | `public void Abort()` | 162 | Quit to title in the tutorial: stops the lessons and takes the overlay down. Does not mark the tutorial done. |
-| method | `public TutorialStepDef Step(string id)` | 169 | The step with this id in the sequence. |
-| method | `public Rect[] Holes(TutorialStepDef step, int hub = -1)` | 309 | The art-pixel rects a step lights right now, before the hole snap. For the tests and the Scene-view preview. |
-| method | `public IEnumerator Drive()` | 321 | Runs the sequence's script from the first bench to its last line. The game plays its own Ignite, descents and choice between. |
-| method | `public IEnumerator AfterEvent(ReactionEvent e, int index)` | 385 | After a reaction (or fizzle) has played: the held popups of the current trial. |
-| method | `public IEnumerator AfterIgnite(IgniteOutcomeView o)` | 403 | After the Ignite has played and its materials are spent: the trial's lines, then the next scripted hand. |
-| method | `public void AfterChoose(string catalystId, string name)` | 418 | The catalyst was taken: deal the scripted hand that shows it. |
-| method | `public IEnumerator OnOffer()` | 427 | The lines of the catalyst offer; the choice itself is the game's own screen. |
-| method | `public void OfferTaken()` | 448 |  |
-| property | `public sealed class IgniteOutcomeView` | 458 | The stage the AfterIgnite hook needs from the game: what the Ignite made. |
+| method | `public static bool Blocks(TutorialStepDef step)` | 82 | Whether the step shuts every click outside its lit windows: a dark step always does (the dim is never click-through), a light one only with lockPad. |
+| method | `public static Rect Union(Rect[] r)` | 85 | The box round the holes. No holes (a text-only step such as 2.3) is the whole canvas: a full dim, no rim, no arrow. |
+| method | `public void Abort()` | 166 | Quit to title in the tutorial: stops the lessons and takes the overlay down. Does not mark the tutorial done. |
+| method | `public TutorialStepDef Step(string id)` | 173 | The step with this id in the sequence. |
+| method | `public Rect[] Holes(TutorialStepDef step, int hub = -1)` | 313 | The art-pixel rects a step lights right now, before the hole snap. For the tests and the Scene-view preview. |
+| method | `public IEnumerator Drive()` | 325 | Runs the sequence's script from the first bench to its last line. The game plays its own Ignite, descents and choice between. |
+| method | `public IEnumerator AfterEvent(ReactionEvent e, int index)` | 389 | After a reaction (or fizzle) has played: the held popups of the current trial. |
+| method | `public IEnumerator AfterIgnite(IgniteOutcomeView o)` | 407 | After the Ignite has played and its materials are spent: the trial's lines, then the next scripted hand. |
+| method | `public void AfterChoose(string catalystId, string name)` | 422 | The catalyst was taken: deal the scripted hand that shows it. |
+| method | `public IEnumerator OnOffer()` | 431 | The lines of the catalyst offer; the choice itself is the game's own screen. |
+| method | `public void OfferTaken()` | 452 |  |
+| property | `public sealed class IgniteOutcomeView` | 462 | The stage the AfterIgnite hook needs from the game: what the Ignite made. |
 
 ## Uses
 [[Align]], [[AreaKind]], [[Bench]], [[CatalystTrialDef]], [[Clickable]], [[Dev]], [[FlowState]], [[FontKind]], [[GameManager]], [[HudView]], [[Journal]], [[JournalCell]], [[JournalView]], [[Label]], [[Loc]], [[Px]], [[ReactionEvent]], [[RunPhase]], [[ScoreParts]], [[ScriptTrial]], [[Singleton]], [[Spawn]], [[Tooltip]], [[TutorialAction]], [[TutorialActionKind]], [[TutorialAreaDef]], [[TutorialHole]], [[TutorialRect]], [[TutorialRules]], [[TutorialSequence]], [[TutorialStepDef]], [[TutorialStyle]], [[TutorialTrial]], [[TutorialTrialDef]], [[ViewRef]]
