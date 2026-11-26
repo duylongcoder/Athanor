@@ -4,6 +4,8 @@ Athanor is a run-based alchemy puzzle for the browser. This repo runs on the
 [Claude Code Game Studios](https://github.com/donchitos/claude-code-game-studios) framework (v1.3.0, MIT; licence in
 `.claude/LICENSE-CCGS`), adapted to a Unity project that already exists. Read `README.md` for the game and how to build it.
 
+**Read `RULES.md` first**: it lists the rules in force, each with its date and source (and how `MEMORY.md` is kept true). Update it with date + source on every change.
+
 ## Technology Stack
 
 - **Engine**: Unity 6000.6.7f1, Universal 2D (URP), Pixel Perfect Camera, 640x360 canvas
