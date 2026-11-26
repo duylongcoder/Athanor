@@ -8,6 +8,7 @@ Athanor is a run-based alchemy puzzle for the browser. This repo runs on the
 
 - **Engine**: Unity 6000.6.7f1, Universal 2D (URP), Pixel Perfect Camera, 640x360 canvas
 - **Language**: C# — rules in `Athanor.Gameplay` (plain C# models), managers and screens in `Athanor.Game`
+- **Tweens**: DOTween (decision 2026-11-26, `docs/ATHANOR.md` § 4). PrimeTween is dropped but still in the code until the migration task runs; add no new PrimeTween calls
 - **Target**: WebGL (browser), mouse primary, touch partial
 - **Tests**: Unity Test Framework (NUnit) — `unity test Athanor --mode EditMode` and `unity test Athanor --mode PlayMode`
 - **Config**: `project.yaml` (engine, code root, commands, modes). Per-developer overrides in `project.local.yaml` (gitignored)

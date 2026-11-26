@@ -189,7 +189,7 @@ builds a view at run time. Edit a screen in the Inspector, not in C#.
 
 **Support.** `Label` (TextMeshPro wrapper with `Lines`/`LineBox`, font per role, Vietnamese vertical bias), `UiButton`, `Loc`
 (`Use`, `InitFromPlayer`, `Changed`), `Art`/`ArtLibrary` (fonts, sprites by content id, built by `Athanor > Refresh Art Library`),
-`PointerInput`, `Motion` (PrimeTween), `Haptics`, `AudioMute` (a hook; no sound ships), `Dev` (compiled out of release).
+`PointerInput`, `Motion` (the tween wrapper; DOTween by decision, PrimeTween until the migration lands), `Haptics`, `AudioMute` (a hook; no sound ships), `Dev` (compiled out of release).
 
 **HD-2D rig** (`Scripts/Game/Depth`). The bench is rendered in depth: a perspective **world camera** at distance D from the art
 plane renders the layers under `DepthRig` into a RenderTexture of 640K x 360K px (K = whole display scale; never a fractional
@@ -234,7 +234,7 @@ moonbeam are not set; `Main.unity` always has a stage.
 **Platform and threading rules** (review rules; `unity_lint.py` has no rule for them).
 
 - WebGL only, one thread. No `Task.Run`, `new Thread`, `System.Threading.Timer`, `.Result` or `.Wait()` anywhere in `Scripts/`. Time
-  is coroutines and PrimeTween; Unity's `Awaitable` only with `destroyCancellationToken`.
+  is coroutines and the tween library (DOTween by decision, see section 4); Unity's `Awaitable` only with `destroyCancellationToken`.
 - A platform `#if` (`UNITY_WEBGL`, `UNITY_STANDALONE*`, `UNITY_ANDROID`, `UNITY_IOS`) and any jslib call live only in the bridge files
   today: `Save`, `Haptics`, `AudioMute`, `GameManager` (frame pacing), `Dev`.
 - No NuGet packages. A new package needs a WebGL / IL2CPP check and a line in section 4. Resolution stays 640x360; PC and Steam
@@ -378,6 +378,7 @@ One line each. A decision is written here before it is relied on. Superseded and
 - 2026-11-24 (ADR-0001): dotnet is retired; all tests run in Unity (EditMode + PlayMode); CI job `unity-tests` (game-ci) replaces
   `core-tests` and needs the Unity secrets on every PR. The tutorial is the `TutorialSequence` asset run by `TutorialManager`
   (supersedes the 2026-11-19 `TutorialScript` clause and the 2026-11-20 `TutorialStep` scene-object line; the steps and their lit areas are in `Tutorial.asset`, edited with `TutorialSequenceEditor`).
+- 2026-11-26: **the project drops PrimeTween and uses DOTween** for tweens and sequences (owner instruction). Status: decision only. `Motion`, `Anim`, the views, `IgniteSequence`, `GameManager`, three asmdefs and `Packages/manifest.json` still use PrimeTween until a migration task replaces them; new code must not add PrimeTween calls. Constraints that carry over: no real-time waits in tests (UL104), WebGL single thread, cutscene look unchanged (golden shots 0 %, traces identical). The PrimeTween licence note in `CREDITS.md` stays until the package is removed; DOTween needs its own credit line.
 
 ---
 

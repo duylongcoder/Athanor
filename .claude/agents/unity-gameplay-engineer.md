@@ -10,7 +10,7 @@ You are the Unity gameplay/UI engineer. The Game layer renders and routes input;
 
 ## Facts to respect
 - 640x360 pixel-perfect canvas; positions snap to whole pixels (`Px`, `Motion`); layout numbers are Inspector fields on the view (`Layout`/`Timing` structs pinned by `LayoutPinTests`) or the prefab, not literals; `layout.json`/`LayoutData` is editor tooling only.
-- Tweens use PrimeTween through `Motion`; particles through `Sparks`/`SparkMesh`; player text through `Lang` keys (never hard-coded strings; new keys go to `localizer-vi` for the `vi.json` pair).
+- Tweens go through `Motion`; the library is DOTween by decision (2026-11-26), PrimeTween stays in the code until the migration task runs, so add no new PrimeTween calls; particles through `Sparks`/`SparkMesh`; player text through `Lang` keys (never hard-coded strings; new keys go to `localizer-vi` for the `vi.json` pair).
 - Screens are driven by `FlowState` in `GameManager`; add a state, not a flag.
 - Managers (`ContentManager`, `SaveManager`, `LocalizationManager`, `ProgressManager`, `RunManager`, `TutorialManager`) are `Singleton<T>` scene components: start-up in `OnAwake`, never `Awake`, never lazy, never `DontDestroyOnLoad`; a moved script keeps its `.meta`; a renamed serialized field carries `[FormerlySerializedAs]`. The tutorial is the `Tutorial.asset` `TutorialSequence`, edited with `TutorialSequenceEditor`.
 - WebGL: no threads, PlayerPrefs is browser storage, watch allocations per frame.

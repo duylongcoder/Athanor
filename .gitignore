@@ -133,6 +133,8 @@ production/session-state/
 .scratch/
 .claude/agent-memory/
 .claude/worktrees/
+# Nested Claude worktrees inside the Unity project folder (the pattern above is anchored to the repo root)
+Athanor/.claude/
 # Obsidian: personal layout only; the vault notes themselves are committed
 .obsidian/workspace.json
 .obsidian/workspaces.json
