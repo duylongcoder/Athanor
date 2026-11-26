@@ -4,7 +4,7 @@ namespace Athanor.Game
 {
     /// <summary>
     /// The HD-2D bench of the main scene as the game sees it: the rig (world camera, UI camera), the sway, the per-depth
-    /// moods and the effects switch, all objects of Main.unity. GameFlow talks to this and nothing else of the depth layer.
+    /// moods and the effects switch, all objects of Main.unity. GameManager talks to this and nothing else of the depth layer.
     /// Cutscenes stay flat (z = 0): <see cref="SetFlat"/> turns the world camera off and lets the UI camera draw the frame.
     /// </summary>
     public sealed class DepthStage : MonoBehaviour

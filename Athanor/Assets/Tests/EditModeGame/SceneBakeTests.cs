@@ -22,7 +22,7 @@ namespace Athanor.Tests
         public void TutorialSteps_RedrawAndJournalSteps_MatchTheViews()
         {
             // the Redraw step lights the button's rectangle (556,88,76,20) plus the area's margin (2)
-            var tutorial = main.FlowField<TutorialController>("tutorial");
+            var tutorial = main.FlowField<TutorialManager>("tutorial");
             tutorial.Bind(main.Flow);
             main.Flow.JournalView.Bind(new ContentDb(ContentAssets.Data()));
             Assert.AreEqual(new Rect(554, 86, 80, 24), tutorial.Holes(tutorial.Step("3.0"))[0]);
@@ -39,15 +39,15 @@ namespace Athanor.Tests
         [Test]
         public void GameFlow_Baked_HasSparksField()
         {
-            Assert.IsNotNull(main.FlowField<Sparks>("sparks"), "GameFlow.sparks");
+            Assert.IsNotNull(main.FlowField<Sparks>("sparks"), "GameManager.sparks");
         }
 
         [Test]
         public void ScreenFx_Baked_HasFlashAndFadeSprites()
         {
             var fx = main.FlowField<ScreenFx>("screenFx");
-            Assert.IsNotNull(fx, "GameFlow.screenFx");
-            Assert.AreNotSame(main.Flow.gameObject, fx.gameObject, "its own scene object, not GameFlow's");
+            Assert.IsNotNull(fx, "GameManager.screenFx");
+            Assert.AreNotSame(main.Flow.gameObject, fx.gameObject, "its own scene object, not GameManager's");
             var flash = F<SpriteRenderer>(fx, "flash"); var black = F<SpriteRenderer>(fx, "black");
             Assert.IsNotNull(flash); Assert.IsNotNull(black);
             Assert.AreEqual(Color.clear, flash.color); Assert.AreEqual(Color.clear, black.color);
@@ -66,8 +66,8 @@ namespace Athanor.Tests
         public void Window_Baked_HasPaneAndEveryEffectSprite_AndShowStartsAnEffect()
         {
             var w = main.FlowField<WindowView>("window");
-            Assert.IsNotNull(w, "GameFlow.window");
-            Assert.AreNotSame(main.Flow.gameObject, w.gameObject, "its own scene object, not GameFlow's");
+            Assert.IsNotNull(w, "GameManager.window");
+            Assert.AreNotSame(main.Flow.gameObject, w.gameObject, "its own scene object, not GameManager's");
             Assert.IsNotNull(F<SpriteRenderer>(w, "pane"), "the workshop's window sprite");
             Assert.IsNotNull(F<SpriteRenderer>(w, "glow")); Assert.IsNotNull(F<SpriteRenderer>(w, "point"));
             var motes = F<SpriteRenderer[]>(w, "motes"); var drips = F<SpriteRenderer[]>(w, "drips");
@@ -86,9 +86,9 @@ namespace Athanor.Tests
         [Test]
         public void Tutorial_Baked_HasItsBoxArrowAndCellRoot_ClosedUntilAStepShows()
         {
-            var t = main.FlowField<TutorialController>("tutorial");
-            Assert.IsNotNull(t, "GameFlow.tutorial");
-            Assert.AreNotSame(main.Flow.gameObject, t.gameObject, "its own scene object, not GameFlow's");
+            var t = main.FlowField<TutorialManager>("tutorial");
+            Assert.IsNotNull(t, "GameManager.tutorial");
+            Assert.AreNotSame(main.Flow.gameObject, t.gameObject, "its own scene object, not GameManager's");
             var root = F<Transform>(t, "root");
             Assert.IsNotNull(root); Assert.IsNotNull(F<Transform>(t, "extras"));
             Assert.IsNotNull(F<Label>(t, "line"));
@@ -103,7 +103,7 @@ namespace Athanor.Tests
             foreach (var h in holes) Assert.IsNotNull(h);
 
             t.Bind(main.Flow);
-            Assert.AreSame(main.Flow, F<GameFlow>(t, "f"));
+            Assert.AreSame(main.Flow, F<GameManager>(t, "f"));
         }
 
         static void AllSet<T>(T[] items, int length, string what) where T : Object
@@ -116,8 +116,8 @@ namespace Athanor.Tests
         public void Reaction_Baked_HasEveryPart_AndBindHidesTheStageAndSwitchesTheOthers()
         {
             var r = main.FlowField<ReactionCutscene>("reaction");
-            Assert.IsNotNull(r, "GameFlow.reaction");
-            Assert.AreNotSame(main.Flow.gameObject, r.gameObject, "its own scene object, not GameFlow's");
+            Assert.IsNotNull(r, "GameManager.reaction");
+            Assert.AreNotSame(main.Flow.gameObject, r.gameObject, "its own scene object, not GameManager's");
             var room = F<GameObject>(r, "room");
             Assert.AreSame(main.Flow.cutsceneRoom, room);
             var stage = F<Transform>(r, "stage"); var ui = F<Transform>(r, "ui");
@@ -150,8 +150,8 @@ namespace Athanor.Tests
         public void Story_Baked_HasEveryPart_AndTheRayFacesAreTheRaySprites()
         {
             var s = main.FlowField<SimpleCutscene>("story");
-            Assert.IsNotNull(s, "GameFlow.story");
-            Assert.AreNotSame(main.Flow.gameObject, s.gameObject, "its own scene object, not GameFlow's");
+            Assert.IsNotNull(s, "GameManager.story");
+            Assert.AreNotSame(main.Flow.gameObject, s.gameObject, "its own scene object, not GameManager's");
             Assert.AreSame(main.Flow.cutsceneRoom, F<GameObject>(s, "room"));
             Assert.AreSame(main.Flow.workshop, F<GameObject>(s, "workshop"));
             Assert.AreSame(main.Flow.Bench.gameObject, F<GameObject>(s, "bench"));

@@ -38,7 +38,7 @@ aliases: []
 [[Bench]], [[Clickable]], [[DepthRig]], [[Px]]
 
 ## Used by
-[[BenchView]], [[Clickable]], [[Cutscene]], [[GameFlow]]
+[[BenchView]], [[Clickable]], [[Cutscene]], [[GameManager]]
 
 ## Tested by
 [[HotPathTests]], [[MainDepthTests]], [[StaticResetTests]]

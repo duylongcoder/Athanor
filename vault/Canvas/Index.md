@@ -20,8 +20,8 @@ This folder contains **Obsidian-style canvas maps** for Athanor's vault structur
 | `VaultOverview.md` | Master summary of entire vault architecture | Overview |
 | `architecture.canvas.md` | Core/Game layer separation and flow diagram | Architecture |
 | `game.canvas.md` | Unity runtime screens and state machine mapping | Game UI |
-| `core.canvas.md` | Athanor.Core rules engine structure | Core Rules |
-| `content.canvas.md` | Data structures in content.json | Content Balance |
+| `core.canvas.md` | Athanor.Gameplay rules structure | Core Rules |
+| `content.canvas.md` | Data structures in content assets | Content Balance |
 | `data.canvas.md` | Persistence layer and localization files | Data Layer |
 | `tests.canvas.md` | Testing strategy and evidence gates | Quality Assurance |
 | `content.stats.canvas.md` | Inventory statistics across all content types | Content Stats |

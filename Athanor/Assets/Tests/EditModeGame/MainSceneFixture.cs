@@ -16,18 +16,18 @@ namespace Athanor.Tests
         const string Path = "Assets/Scenes/Main.unity";
         readonly Scene scene;
 
-        /// <summary>The GameFlow of the scene.</summary>
-        public readonly GameFlow Flow;
+        /// <summary>The GameManager of the scene.</summary>
+        public readonly GameManager Flow;
 
-        /// <summary>Opens Main.unity additively; fails the test when it has no GameFlow.</summary>
+        /// <summary>Opens Main.unity additively; fails the test when it has no GameManager.</summary>
         public MainSceneFixture()
         {
             scene = EditorSceneManager.OpenScene(Path, OpenSceneMode.Additive);
-            Flow = scene.GetRootGameObjects().SelectMany(g => g.GetComponentsInChildren<GameFlow>(true)).SingleOrDefault();
+            Flow = scene.GetRootGameObjects().SelectMany(g => g.GetComponentsInChildren<GameManager>(true)).SingleOrDefault();
             if (Flow == null)
             {
                 EditorSceneManager.CloseScene(scene, true);
-                Assert.Fail("no GameFlow in " + Path);
+                Assert.Fail("no GameManager in " + Path);
             }
         }
 
@@ -39,7 +39,7 @@ namespace Athanor.Tests
             return (T)f.GetValue(owner);
         }
 
-        /// <summary>The component GameFlow holds in its serialized field.</summary>
+        /// <summary>The component GameManager holds in its serialized field.</summary>
         public T FlowField<T>(string name) where T : Component => Field<T>(Flow, name);
 
         /// <summary>Every component of type T in the scene (inactive ones too).</summary>

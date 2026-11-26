@@ -121,11 +121,11 @@
   <div class="hud">
     <div class="hud-title">Athanor — Obsidian Vault Graph</div>
     <div class="hud-section">
-      <span>Core Rules: <strong>Athanor.Core</strong></span>
+      <span>Core Rules: <strong>Athanor.Gameplay</strong></span>
       <div class="hud-divider"></div>
       <span>Game Layer: <strong>Athanor.Game</strong></span>
       <div class="hud-divider"></div>
-      <span>Content: <strong>content.json</strong></span>
+      <span>Content: <strong>content assets</strong></span>
     </div>
     <div class="hud-section" style="margin-left: auto;">
       <button onclick="toggleTheme()" style="background: transparent; border: 1px solid var(--ink-primary); color: var(--ink-primary); cursor: pointer;">↻ Theme</button>

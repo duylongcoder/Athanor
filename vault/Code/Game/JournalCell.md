@@ -26,7 +26,7 @@ aliases: []
 [[Clickable]], [[RarityStars]]
 
 ## Used by
-[[JournalView]], [[TutorialController]], [[TutorialStepsMigration]], [[ViewRef]]
+[[JournalView]], [[TutorialManager]], [[ViewRef]]
 
 ## Tested by
 [[PrefabBakeTests]]

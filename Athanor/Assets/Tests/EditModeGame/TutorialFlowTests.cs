@@ -10,6 +10,7 @@ namespace Athanor.Tests
     /// <summary>The tutorial's decisions, its sandbox and the scores it shows (the numbers TutorialTests pins in Core).</summary>
     public class TutorialFlowTests
     {
+        static readonly TutorialSequence Seq = UnityEditor.AssetDatabase.LoadAssetAtPath<TutorialSequence>("Assets/Content/Tutorial/Tutorial.asset");
         string[] keys = { Save.Key, Save.ProfileKey };
         readonly Dictionary<string, string> kept = new Dictionary<string, string>();
         int doneKept;
@@ -32,29 +33,29 @@ namespace Athanor.Tests
         [Test]
         public void Union_WithNoHoles_IsTheWholeCanvas_SoATextOnlyStepDimsEverythingAndDrawsNoRim()
         {
-            Assert.AreEqual(new Rect(0, 0, Px.W, Px.H), TutorialController.Union(new Rect[0]));
-            Assert.AreEqual(new Rect(0, 0, Px.W, Px.H), TutorialController.Union(null));
+            Assert.AreEqual(new Rect(0, 0, Px.W, Px.H), TutorialManager.Union(new Rect[0]));
+            Assert.AreEqual(new Rect(0, 0, Px.W, Px.H), TutorialManager.Union(null));
         }
 
         [Test]
         public void Union_OfHoles_IsTheirBoundingBox()
         {
-            var u = TutorialController.Union(new[] { new Rect(10, 20, 30, 40), new Rect(100, 5, 10, 10) });
+            var u = TutorialManager.Union(new[] { new Rect(10, 20, 30, 40), new Rect(100, 5, 10, 10) });
             Assert.AreEqual(new Rect(10, 5, 100, 55), u);
         }
 
         [Test]
         public void Plan_FreshSave_RunsTheTutorial()
         {
-            Assert.AreEqual(TutorialPlan.Run, TutorialScript.Plan(false, 0));
+            Assert.AreEqual(TutorialPlan.Run, TutorialGate.Plan(false, 0));
         }
 
         [Test]
         public void Plan_JournalWithEntries_AsksOnce()
         {
-            Assert.AreEqual(TutorialPlan.AskSkip, TutorialScript.Plan(false, 12));
-            Assert.AreEqual(TutorialPlan.None, TutorialScript.Plan(true, 12));
-            Assert.AreEqual(TutorialPlan.None, TutorialScript.Plan(true, 0));
+            Assert.AreEqual(TutorialPlan.AskSkip, TutorialGate.Plan(false, 12));
+            Assert.AreEqual(TutorialPlan.None, TutorialGate.Plan(true, 12));
+            Assert.AreEqual(TutorialPlan.None, TutorialGate.Plan(true, 0));
         }
 
         [Test]
@@ -63,17 +64,17 @@ namespace Athanor.Tests
             Save.SetTutorialDone(false);
             TutorialRules.MarkDone();
             Assert.IsTrue(Save.TutorialDone);
-            Assert.AreEqual(TutorialPlan.None, TutorialScript.Plan(Save.TutorialDone, 0));
+            Assert.AreEqual(TutorialPlan.None, TutorialGate.Plan(Save.TutorialDone, 0));
         }
 
         [Test]
         public void AnswerSkipQuestion_Skip_MarksDoneAndStartsTheRunWithoutAReplay()
         {
             Save.SetTutorialDone(false);
-            Assert.AreEqual(TutorialPlan.AskSkip, TutorialScript.Plan(Save.TutorialDone, 12));
+            Assert.AreEqual(TutorialPlan.AskSkip, TutorialGate.Plan(Save.TutorialDone, 12));
             Assert.IsFalse(TutorialRules.AnswerSkipQuestion(false), "Skip: no sandbox replay, Main goes straight to the run");
             Assert.IsTrue(Save.TutorialDone);
-            Assert.AreEqual(TutorialPlan.None, TutorialScript.Plan(Save.TutorialDone, 12), "the run that starts is a normal one, and Begin is not asked again");
+            Assert.AreEqual(TutorialPlan.None, TutorialGate.Plan(Save.TutorialDone, 12), "the run that starts is a normal one, and Begin is not asked again");
         }
 
         [Test]
@@ -87,9 +88,9 @@ namespace Athanor.Tests
         /// <summary>Plays the whole script on a RunState exactly as the controller lays it, collecting every reaction's potency.</summary>
         static List<long> PlayScript(ContentDb db, Journal journal, out RunState run)
         {
-            run = new RunState(db, journal, TutorialScript.Seed, 1, TutorialScript.Options(Unlocks.Fresh(db)));
+            run = new RunState(db, journal, Seq.seed, 1, Seq.Options(Unlocks.Fresh(db)));
             var shown = new List<long>();
-            foreach (var t in TutorialScript.Depth1)
+            foreach (var t in new[] { Seq.Trial(0), Seq.Trial(1), Seq.Trial(2) })
             {
                 Assert.IsTrue(run.Deal(t.Hand));
                 foreach (var l in t.Lay) Assert.IsTrue(run.Place(run.Hand.ToList().IndexOf(l.Id), l.Tile));

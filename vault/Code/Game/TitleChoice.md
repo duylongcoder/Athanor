@@ -4,7 +4,7 @@ type: code
 layer: Game
 kind: enum
 namespace: Athanor.Game
-file: Athanor/Assets/Scripts/Game/Boot/GameFlow.cs
+file: Athanor/Assets/Scripts/Game/Boot/GameManager.cs
 tags: [code/game, kind/enum]
 aliases: []
 ---
@@ -12,7 +12,7 @@ aliases: []
 # TitleChoice
 
 `enum TitleChoice`
-- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Boot/GameFlow.cs:148-148` · Nested in [[GameFlow]]
+- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Boot/GameManager.cs:138-138` · Nested in [[GameManager]]
 
 ## Members
 `Begin`, `HowToPlay`, `Intro`

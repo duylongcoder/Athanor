@@ -12,13 +12,13 @@ aliases: []
 # TutorialPlan
 
 `public enum TutorialPlan`
-- Layer: **Gameplay** · Source: `Athanor/Assets/Scripts/Gameplay/Tutorial.cs:6-6`
+- Layer: **Gameplay** · Source: `Athanor/Assets/Scripts/Gameplay/Tutorial.cs:4-4`
 
 ## Members
 `None`, `Run`, `AskSkip`
 
 ## Used by
-[[GameFlow]], [[TutorialScript]]
+[[GameManager]], [[TutorialGate]]
 
 ## Tested by
 [[TutorialFlowTests]], [[TutorialTests]]

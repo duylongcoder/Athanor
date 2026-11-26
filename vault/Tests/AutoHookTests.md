@@ -10,7 +10,7 @@ count: 1
 `Athanor/Assets/Tests/EditModeGame/AutoHookTests.cs` — 1 tests
 
 ## Covers
-[[GameFlow]]
+[[GameManager]]
 
 ## Tests
 - `ToggleAuto_FlipsTheScriptedPlayer_AndLogsTheNewState`

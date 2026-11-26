@@ -10,7 +10,7 @@ count: 4
 `Athanor/Assets/Tests/EditModeGame/MainDevHookTests.cs` — 4 tests
 
 ## Covers
-[[BenchView]], [[DepthMath]], [[GameFlow]]
+[[BenchView]], [[DepthMath]], [[GameManager]]
 
 ## Tests
 - `NextMood_StepsOneToFive_AndWraps`

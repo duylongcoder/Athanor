@@ -36,7 +36,7 @@ namespace Athanor.Game
         /// <summary>The reward line of the toast showing (or last shown).</summary>
         public Label Line => line;
 
-        /// <summary>Hooks the click. GameFlow calls it once at start; a test calls it after instantiating the prefab.</summary>
+        /// <summary>Hooks the click. GameManager calls it once at start; a test calls it after instantiating the prefab.</summary>
         public void Bind(FxRefs effects)
         {
             if (effects == null) throw new System.ArgumentNullException(nameof(effects));

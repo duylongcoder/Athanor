@@ -32,7 +32,7 @@ aliases: []
 | field | `public HintData Hint` | 33 |  |
 
 ## Used by
-[[HudView]], [[IgniteOutcome]], [[IgniteResolver]], [[IgniteSequence]], [[ReactionCutscene]], [[ResolveResult]], [[RunState]], [[ScoreParts]], [[TutorialController]]
+[[HudView]], [[IgniteOutcome]], [[IgniteResolver]], [[IgniteSequence]], [[ReactionCutscene]], [[ResolveResult]], [[RunState]], [[ScoreParts]], [[TutorialManager]]
 
 ## Tested by
 [[IgniteTests]], [[TutorialTests]]

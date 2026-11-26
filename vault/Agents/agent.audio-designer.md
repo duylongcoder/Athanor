@@ -8,7 +8,7 @@ tags: [agent, agent/athanor]
 ---
 # audio-designer
 
-Athanor sound planner and asset maker: cue list tied to GameFlow states and reaction events, WebGL audio size budget, CC0 or self-made assets. Only when the owner has put sound in scope.
+Athanor sound planner and asset maker: cue list tied to GameManager states and reaction events, WebGL audio size budget, CC0 or self-made assets. Only when the owner has put sound in scope.
 
 - Definition: `.claude/agents/audio-designer.md`
 - Model: sonnet · tools: Read, Glob, Grep, Write, Edit, Bash

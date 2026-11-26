@@ -4,9 +4,9 @@ tags: [data, schema]
 ---
 # Data Design
 
-All shapes are plain `[Serializable]` classes in `ContentData.cs` ([[ContentData]], [[ContentDb]]), read by `JsonUtility` in Unity and `System.Text.Json` in the dotnet tests (so fields are public, no properties).
+The rules read plain `[Serializable]` classes in `ContentData.cs` ([[ContentData]], [[ContentDb]]; fields are public, no properties). The source of truth is one ScriptableObject asset per entry under `Athanor/Assets/Content` ([[ContentDatabase]], [[GameRules]], `MaterialDefinition` and the other `*Definition` types); `ContentDatabase.ToContentData()` builds the shape below, and `Athanor > Content > Write Snapshot` writes it to `tools/content/snapshot.json` for the tools that run outside Unity.
 
-## content.json  (`Athanor/Assets/Resources/content.json`)
+## Content shape  (the snapshot, `tools/content/snapshot.json`)
 | Key | Shape | Notes / validation ([[ContentDb]]) | Vault |
 |---|---|---|---|
 | `materials[]` | `{id,name,kind,tier,reactivity,glow,rarity?,locked?}` | `kind` ∈ [[Kind]]; `reactivity` 1–10 = Reaction Index; tier 0 = starting material; `rarity` Common/Uncommon/Rare, `locked` = won from a goal | [[Materials]] |
@@ -59,7 +59,7 @@ Canvas `w:640,h:360`; `tiles[]` with `x,y,w` and `face{x,y,w,h}`; read through [
 ## Where a change goes
 | Change | Edit | Then |
 |---|---|---|
-| Recipe / material / balance | `content.json` | icon in `tools/art/icons.mjs`; `dotnet test tools/CoreTests`; read BalanceMatrix; rebuild vault |
+| Recipe / material / balance | the asset under `Assets/Content` (Inspector) | `Athanor > Content > Write Snapshot`; icon in `tools/art/icons.mjs`; `unity test`; `BalanceReports.RunBatch`; rebuild vault |
 | New catalyst/aspect effect | name list in `ContentData.cs` + handler in [[RunState]] / [[BenchRules]] / [[ChainPlanner]] | tests first; icon; vault |
 | New event op | `Ops` + the apply code in `RunStart.cs` | `EventReport` |
 | Player-visible text | `lang/en.json` and `lang/vi.json` together | `LangTests` |

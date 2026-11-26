@@ -27,11 +27,15 @@ namespace Athanor.Game
 
         /// <summary>
         /// The development-build log line once the dealt cards take a click (tools/web/webtest.mjs and descents.mjs click a card after it).
-        /// Not "[choice] ...": descents.mjs counts that one from GameFlow.Descend.
+        /// Not "[choice] ...": descents.mjs counts that one from GameManager.Descend.
         /// </summary>
         public const string OpenHook = "[cards] open";
 
-        const int O = 440, CardW = 150, CardH = 180, Gap = 18, Top = 112;
+        const int O = 440;
+        /// <summary>One card's size, the gap between cards and the top of the row (art px), stored in CatalystChoice.prefab.</summary>
+        [Serializable]
+        public struct CardRow { public int width, height, gap, top; }
+        [SerializeField] CardRow cardRow;
         /// <summary>The chooser's motion: the deal (base and per card, flight, stagger, the shade's fade divisor), the exit (length, the chosen card's hop as a share of it) and the flash on a pick.</summary>
         [Serializable]
         public struct Timing { public float dealBase, dealPerCard, dealFly, shadeDiv, stagger, away, hopShare; public Vector2 pickFlash; }
@@ -70,7 +74,7 @@ namespace Athanor.Game
 
         FxRefs fx;
 
-        /// <summary>Hooks the clicks. GameFlow calls it once at start; a test calls it after instantiating the prefab.</summary>
+        /// <summary>Hooks the clicks. GameManager calls it once at start; a test calls it after instantiating the prefab.</summary>
         public void Bind(FxRefs effects)
         {
             if (effects == null) throw new System.ArgumentNullException(nameof(effects));
@@ -122,7 +126,7 @@ namespace Athanor.Game
             count = Mathf.Min(offer.Count, cards.Length);
             if (count == 0) { done(null); yield break; }
             heading.Text = title; sub.Text = line;
-            float start = (Px.W - (count * CardW + (count - 1) * Gap)) / 2f;
+            float start = (Px.W - (count * cardRow.width + (count - 1) * cardRow.gap)) / 2f;
             for (int i = 0; i < cards.Length; i++)
             {
                 var c = cards[i];
@@ -145,7 +149,7 @@ namespace Athanor.Game
                     c.bench[k].enabled = bench;
                     c.bench[k].color = bench && Array.IndexOf(o.tiles, k) >= 0 ? On : o.dimTiles != null && Array.IndexOf(o.dimTiles, k) >= 0 ? Joined : Off;
                 }
-                c.home = Px.Snap(Px.Mid(start + i * (CardW + Gap), Top, CardW, CardH));
+                c.home = Px.Snap(Px.Mid(start + i * (cardRow.width + cardRow.gap), cardRow.top, cardRow.width, cardRow.height));
                 c.root.position = c.home + new Vector3(0, layout.startDrop, 0);
             }
             heading.Alpha = sub.Alpha = 0;

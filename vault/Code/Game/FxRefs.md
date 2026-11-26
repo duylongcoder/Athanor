@@ -27,4 +27,4 @@ aliases: []
 [[ScreenFx]], [[Sparks]]
 
 ## Used by
-[[BenchView]], [[CatalystChoiceView]], [[EventView]], [[GameFlow]], [[GoalToast]], [[GoldenShots]], [[IgniteSequence]], [[ReactionCutscene]], [[SimpleCutscene]], [[TileView]], [[TitleView]]
+[[BenchView]], [[CatalystChoiceView]], [[EventView]], [[GameManager]], [[GoalToast]], [[GoldenShots]], [[IgniteSequence]], [[ReactionCutscene]], [[SimpleCutscene]], [[TileView]], [[TitleView]]

@@ -20,4 +20,4 @@ aliases: []
 [[AudioMute]]
 
 ## Used by
-[[GameFlow]]
+[[GameManager]]

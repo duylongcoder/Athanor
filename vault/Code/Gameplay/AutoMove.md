@@ -18,7 +18,7 @@ aliases: []
 `None`, `ChoseCatalyst`, `Redrew`, `ReadyToIgnite`, `ChoseAspect`, `ChoseEvent`
 
 ## Used by
-[[AutoPlayer]], [[GameFlow]], [[Newcomer]], [[Sim]]
+[[AutoPlayer]], [[GameManager]], [[Newcomer]], [[Sim]]
 
 ## Tested by
 [[LoreTests]], [[Phase3Tests]], [[RarityReportTests]], [[RunStateTests]]

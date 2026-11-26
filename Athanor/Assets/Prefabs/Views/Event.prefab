@@ -1724,6 +1724,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3aa22c3eff6f2373a2fe8bed45ed169, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Athanor.Game::Athanor.Game.EventView
+  timing:
+    fadeIn: 0.35
+    fadeOut: 0.2
+    slide: 0.35
+    shadeAlpha: 0.62
+    slideFrom: -40
+    noteFlash: {x: 0.12, y: 0.25}
+  layout:
+    overTint: {r: 1.25, g: 1.15, b: 1.05, a: 1}
+    labelUp: 9
+    labelDown: 7
   rows:
   - root: {fileID: 6840776443585330049}
     body: {fileID: 8541173671595201234}
@@ -1753,17 +1764,6 @@ MonoBehaviour:
   outcome: {fileID: 1325536772571438423}
   proceed: {fileID: 2073381628599702834}
   body: {fileID: 174319710234001525}
-  timing:
-    fadeIn: 0.35
-    fadeOut: 0.2
-    slide: 0.35
-    shadeAlpha: 0.62
-    slideFrom: -40
-    noteFlash: {x: 0.12, y: 0.25}
-  layout:
-    overTint: {r: 1.25, g: 1.15, b: 1.05, a: 1}
-    labelUp: 9
-    labelDown: 7
 --- !u!1 &2876157703789458242
 GameObject:
   m_ObjectHideFlags: 0
@@ -6128,7 +6128,7 @@ MonoBehaviour:
   look:
     disabledTint: {r: 0.45, g: 0.42, b: 0.42, a: 1}
     overTint: {r: 1.25, g: 1.15, b: 1.05, a: 1}
-    disabledText: {r: 0.54117647, g: 0.47843137, b: 0.41568627, a: 1}
+    disabledText: {r: 0.5411765, g: 0.47843137, b: 0.41568628, a: 1}
     labelUp: 10
     labelDown: 8
 --- !u!114 &8844355390650698003

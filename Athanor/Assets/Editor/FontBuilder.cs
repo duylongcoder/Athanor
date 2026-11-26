@@ -9,7 +9,7 @@ using UnityEngine.TextCore.LowLevel;
 /// <summary>Bakes the pixel fonts into TextMeshPro bitmap font assets at their native size (crisp, point-filtered).</summary>
 public static class FontBuilder
 {
-    const string Dir = "Assets/Art/Art/Fonts/";
+    const string Dir = "Assets/Art/Fonts/";
 
     /// <summary>Batch: unity run Athanor -- -executeMethod FontBuilder.BuildBatch -quit</summary>
     public static void BuildBatch() { Debug.Log(Build()); }

@@ -123,7 +123,7 @@ namespace Athanor.Tests
             var scene = EditorSceneManager.OpenScene("Assets/Scenes/Main.unity", OpenSceneMode.Additive);
             try
             {
-                var flow = scene.GetRootGameObjects().SelectMany(g => g.GetComponentsInChildren<GameFlow>(true)).Single();
+                var flow = scene.GetRootGameObjects().SelectMany(g => g.GetComponentsInChildren<GameManager>(true)).Single();
                 Assert.NotNull(flow.depthStage);
                 var stage = flow.depthStage;
                 Assert.AreEqual(1 << DepthRig.WorldLayer, stage.rig.worldCamera.cullingMask);

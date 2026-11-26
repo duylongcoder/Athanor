@@ -34,7 +34,7 @@ aliases: []
 [[Unlocks]]
 
 ## Used by
-[[BalanceReports]], [[GameFlow]], [[GoldenShots]], [[RunState]], [[Sim]], [[TutorialScript]]
+[[BalanceReports]], [[GameManager]], [[GoldenShots]], [[RunManager]], [[RunState]], [[Sim]], [[TutorialSequence]]
 
 ## Tested by
 [[HudTests]], [[LoreTests]], [[Phase3Tests]], [[PrefabBakeTests]], [[RarityReportTests]], [[RarityTests]], [[RulesTests]], [[TutorialFlowTests]], [[TutorialTests]]

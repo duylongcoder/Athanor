@@ -24,8 +24,8 @@ namespace Athanor.Tests
             try
             {
                 yield return MainScene.Load();
-                var game = MainScene.Find<GameFlow>();
-                var tutorial = MainScene.Find<TutorialController>();
+                var game = MainScene.Find<GameManager>();
+                var tutorial = MainScene.Find<TutorialManager>();
                 tutorial.AutoDrive = true;
                 Time.timeScale = Speed;
                 while (game.State != FlowState.Title) yield return null;

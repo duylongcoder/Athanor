@@ -81,7 +81,7 @@ Based on vault content, graph will contain:
 - `[[ContentDb]]` — referenced in EVERY file about gameplay rules
 - `[[RunState]]` — central to run mechanics docs
 - `[[BenchView]]` — core screen referenced across game docs
-- `[[GameFlow]]` — state machine appears in all flow docs
+- `[[GameManager]]` — state machine appears in all flow docs
 
 ### Content Nodes (medium degree)
 - `[[Materials]]`, `[[Recipes]]` — 50+ files reference these

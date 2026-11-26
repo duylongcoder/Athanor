@@ -37,7 +37,7 @@ aliases: []
 [[Art]], [[SparkMesh]], [[SparkParticles]]
 
 ## Used by
-[[BurstSpec]], [[CatalystChoiceView]], [[FxRefs]], [[GameFlow]], [[GoalToast]], [[GoldenShots]], [[IgniteSequence]], [[ReactionCutscene]], [[SimpleCutscene]], [[SparkParticles]], [[TileView]], [[TitleView]]
+[[BurstSpec]], [[CatalystChoiceView]], [[FxRefs]], [[GameManager]], [[GoalToast]], [[GoldenShots]], [[IgniteSequence]], [[ReactionCutscene]], [[SimpleCutscene]], [[SparkParticles]], [[TileView]], [[TitleView]]
 
 ## Tested by
 [[HotPathTests]], [[SceneBakeTests]], [[SparksTests]]

@@ -37,7 +37,7 @@ aliases: []
 [[ContentDb]], [[Kind]]
 
 ## Used by
-[[BenchView]], [[Career]], [[FlowState]], [[GameFlow]], [[GoalsView]], [[GoldenShots]], [[HudView]], [[IgniteResolver]], [[JournalView]], [[Newcomer]], [[Profile]], [[RunOverView]], [[RunState]], [[Save]], [[ScreenFlow]], [[Sim]], [[TutorialController]], [[TutorialStepsMigration]]
+[[BenchView]], [[Career]], [[FlowState]], [[GameManager]], [[GoalsView]], [[GoldenShots]], [[HudView]], [[IgniteResolver]], [[JournalView]], [[Newcomer]], [[Profile]], [[ProgressManager]], [[ProgressManagerEditor]], [[RunManager]], [[RunOverView]], [[RunState]], [[Save]], [[ScreenFlow]], [[Sim]], [[TutorialManager]]
 
 ## Tested by
-[[HotPathTests]], [[HudTests]], [[IgniteTests]], [[JournalTests]], [[LoreTests]], [[PauseTests]], [[Phase3Tests]], [[PrefabBakeTests]], [[RarityReportTests]], [[RarityTests]], [[RoleSimTests]], [[RulesTests]], [[RunStateTests]], [[SaveTests]], [[ScreenFlowTests]], [[TutorialFlowTests]], [[TutorialTests]]
+[[HotPathTests]], [[HudTests]], [[IgniteTests]], [[JournalTests]], [[LoreTests]], [[ManagerBootTests]], [[PauseTests]], [[Phase3Tests]], [[PrefabBakeTests]], [[RarityReportTests]], [[RarityTests]], [[RoleSimTests]], [[RulesTests]], [[RunStateTests]], [[SaveTests]], [[ScreenFlowTests]], [[TutorialFlowTests]], [[TutorialTests]]

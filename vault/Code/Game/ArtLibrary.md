@@ -31,7 +31,7 @@ aliases: []
 [[FlipbookSheet]]
 
 ## Used by
-[[Art]], [[ArtLibraryBuilder]], [[EditorGlobals]], [[GameFlow]]
+[[Art]], [[ArtLibraryBuilder]], [[EditorGlobals]], [[GameManager]]
 
 ## Tested by
 [[DepthLayerTests]]

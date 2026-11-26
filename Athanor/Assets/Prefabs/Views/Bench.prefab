@@ -12858,6 +12858,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 869b51270f29c9319894b2a6172fc782, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Athanor.Game::Athanor.Game.Tooltip
+  size:
+    width: 176
+    baseHeight: 58
+    tierRow: 12
   title: {fileID: 6727632065041752320}
   body: {fileID: 5445110478910145554}
   tier: {fileID: 6232809222693135573}

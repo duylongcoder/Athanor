@@ -8,9 +8,12 @@ names in advance. Built with Unity 6000.6.7f1 (Universal 2D, Pixel Perfect Camer
 
 Open the project with `unity open Athanor` (or add the `Athanor` folder in Unity Hub), open `Assets/Scenes/Main.unity` and press Play.
 
-    dotnet test tools/CoreTests                       # the rules, no Unity
-    unity test Athanor --mode EditMode                # the same plus the Unity tests (editor closed)
-    tools/ci/run.sh all                               # what CI runs; run it before pushing
+    unity test Athanor --mode EditMode                # rules and screens (editor closed)
+    unity test Athanor --mode PlayMode                # seeded autoplay, tutorial and manager boot
+    tools/ci/run.sh all                               # lint, repo guard, rotate text (what CI runs besides Unity)
+    tools/ci/run.sh unity                             # EditMode + PlayMode in one go; run both before pushing
+
+    unity run Athanor -- -executeMethod BalanceReports.RunBatch -report balance-matrix -out /tmp/m.txt   # balance report (menu Athanor > Balance)
 
     unity build Athanor --target WebGL --execute-method WebBuild.Build --allow-dirty-build        # release, writes Athanor/Build/web
     unity build Athanor --target WebGL --execute-method WebBuild.BuildQuick --allow-dirty-build   # quick check

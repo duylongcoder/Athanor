@@ -67,7 +67,7 @@ aliases: []
 [[AspectEffects]], [[AspectInstance]], [[Bench]], [[BenchRules]], [[ContentDb]], [[Effects]], [[EventNote]], [[EventResult]], [[IgniteOutcome]], [[IgniteResolver]], [[Journal]], [[Kind]], [[LinkPair]], [[Ops]], [[Rarities]], [[ReactionEvent]], [[Rng]], [[RunOptions]], [[RunPhase]], [[Satchel]], [[ScoreContext]], [[Unlocks]]
 
 ## Used by
-[[AutoPlayer]], [[BenchView]], [[EventView]], [[GameFlow]], [[GoldenShots]], [[HudView]], [[IgniteSequence]], [[Newcomer]], [[Profile]], [[RunOverView]], [[Sim]]
+[[AutoPlayer]], [[BenchView]], [[EventView]], [[GameManager]], [[GoldenShots]], [[HudView]], [[IgniteSequence]], [[Newcomer]], [[Profile]], [[RunManager]], [[RunOverView]], [[Sim]]
 
 ## Tested by
 [[HotPathTests]], [[HudTests]], [[LoreTests]], [[PauseTests]], [[Phase3Tests]], [[PrefabBakeTests]], [[RarityReportTests]], [[RarityTests]], [[RulesTests]], [[RunStateTests]], [[TutorialFlowTests]], [[TutorialTests]]

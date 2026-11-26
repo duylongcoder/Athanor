@@ -18,4 +18,4 @@ aliases: []
 `Title`, `Body`, `Name`, `Tiny`, `Logo`, `Numeral`
 
 ## Used by
-[[BenchView]], [[Fonts]], [[Label]], [[Spawn]], [[TutorialController]]
+[[BenchView]], [[Fonts]], [[Label]], [[Spawn]], [[TutorialManager]]

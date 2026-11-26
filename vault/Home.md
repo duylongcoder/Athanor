@@ -10,13 +10,13 @@ Generated notes are rebuilt from the repo by `python3 tools/vault/build_vault.py
 ## Start here
 - [[Game Overview]] — what the game is and its core loop
 - [[Architecture]] — layers, run lifecycle, who owns what
-- [[Data Design]] — `content.json`, lang files, save keys, `layout.json`
+- [[Data Design]] — content assets, lang files, save keys, `layout.json`
 - [[Vault Guide]] — how humans and agents query and update this vault
 - [[Agent Workflow]] — which sub-agent does what; how a phase is split
 - [[Phase 5 Kickoff]] — the open Phase 5 backlog and its task split
 
 ## Maps (generated)
-- Code: [[Core Index]] · [[Game Index]] · [[Editor Index]] · [[Tests Index]] · [[Tools Index]]
+- Code: [[Gameplay Index]] · [[Game Index]] · [[Editor Index]] · [[Tests Index]] · [[Tools Index]]
 - Content: [[Materials]] · [[Recipes]] · [[Catalysts]] · [[Aspects]] · [[Events]] · [[Goals]] · [[Depths]] · [[Content Health]]
 - Project: [[Phases]] · [[Agents Index]] · [[Skills Index]]
 

@@ -25,7 +25,7 @@ aliases: []
 | method | `public void Clear()` | 12 |  |
 
 ## Used by
-[[AspectScope]], [[AutoPlayer]], [[BenchRules]], [[BenchView]], [[Card]], [[CatalystChoiceView]], [[FlowState]], [[GameFlow]], [[IgniteResolver]], [[IgniteSequence]], [[Newcomer]], [[PointerInput]], [[RunState]], [[ScreenFlow]], [[Sim]], [[TutorialArea]], [[TutorialController]], [[TutorialScript]], [[TutorialStepsMigration]], [[ViewRef]]
+[[AspectScope]], [[AutoPlayer]], [[BenchRules]], [[BenchView]], [[Card]], [[CatalystChoiceView]], [[FlowState]], [[GameManager]], [[IgniteResolver]], [[IgniteSequence]], [[Newcomer]], [[PointerInput]], [[RunState]], [[ScreenFlow]], [[Sim]], [[TutorialAreaDef]], [[TutorialManager]], [[TutorialSequence]], [[ViewRef]]
 
 ## Tested by
 [[ChainTests]], [[ContentTests]], [[IgniteTests]], [[MainDepthTests]], [[Phase3Tests]], [[PrefabBakeTests]], [[RunStateTests]], [[SceneBakeTests]], [[ScreenFlowTests]], [[TutorialFlowTests]], [[TutorialTests]]

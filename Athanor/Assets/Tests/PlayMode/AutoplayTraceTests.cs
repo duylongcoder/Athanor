@@ -21,8 +21,8 @@ namespace Athanor.Tests
             try
             {
                 yield return MainScene.Load();
-                var game = MainScene.Find<GameFlow>();
-                game.SeedOverride = seed;
+                var game = MainScene.Find<GameManager>();
+                RunManager.Instance.SeedOverride = seed;
                 game.Auto = true;
                 Time.timeScale = Speed;
                 float elapsed = 0f;  // deterministic cap: accumulated unscaled frame time, not the wall clock

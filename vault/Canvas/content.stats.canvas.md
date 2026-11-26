@@ -12,7 +12,7 @@ generated-from: Content Tests Index
 [Athanor Content Inventory]
 
    └─→ Materials[81+ types]
-        └─→ 70+ distinct (79 listed in Core Index.md)
+        └─→ 70+ distinct (79 listed in Gameplay Index.md)
              │
              └─→ [Starting Tiers][Tier 0]
                   ├─→ Stone
@@ -48,7 +48,7 @@ generated-from: Content Tests Index
              └─→ Hazard/Boon/Lore
 
    └─→ Goals[22 total]
-        └─→ Per locked item in content.json
+        └─→ Per locked item in content assets
              │
              └─→ RewardRarity bucket:
                   ├─→ Uncommon
@@ -68,12 +68,12 @@ generated-from: Content Tests Index
 
 | Document | Vault Path | Source Count |
 |----------|------------|---------------|
-| Materials | Code/Core Index.md + Symbols.md | 81+ types |
+| Materials | Code/Gameplay Index.md + Symbols.md | 81+ types |
 | Recipes | vault/Code/Core | 87 pairs |
 | Catalysts | vault/Content/Catalysts/ | 26 total |
 | Aspects | vault/Content/Aspects/ | 16 types |
 | Events | vault/Content/Events/ | 19 types |
-| Goals | content.json goals[] | 22 total |
+| Goals | goal assets | 22 total |
 
 ## Content Health Check
 

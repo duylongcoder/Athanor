@@ -9,6 +9,7 @@ namespace Athanor.Tests
     /// <summary>The pause menu: time stops and comes back on every exit, Esc toggles, nothing opens in the tutorial, Quit leaves the stored run data alone.</summary>
     public class PauseTests
     {
+        static readonly TutorialSequence Seq = AssetDatabase.LoadAssetAtPath<TutorialSequence>("Assets/Content/Tutorial/Tutorial.asset");
         PrefabFixture fixture;
         GameObject go;
         PauseMenu menu;
@@ -80,7 +81,7 @@ namespace Athanor.Tests
             Save.SetTutorialDone(false);
             using (var main = new MainSceneFixture())
             {
-                var t = main.FlowField<TutorialController>("tutorial");
+                var t = main.FlowField<TutorialManager>("tutorial");
                 t.Abort();
                 Assert.IsFalse(Save.TutorialDone);
             }
@@ -111,12 +112,12 @@ namespace Athanor.Tests
             string before = PlayerPrefs.GetString(Save.ProfileKey), beforeJ = PlayerPrefs.GetString(Save.Key, "");
             // a run in memory that earned things the page would never have saved
             var live = Save.LoadProfile(db); live.RunStarted(); live.DepthBegan(4);
-            var after = GameFlow.ProfileAfterQuit(false, live, db);
+            var after = ProgressManager.ProfileAfterQuit(false, live, db);
             Assert.AreEqual(1, after.RunsStarted);
             Assert.AreEqual(before, JsonUtility.ToJson(after.ToData()));
             Assert.AreEqual(before, PlayerPrefs.GetString(Save.ProfileKey));
             Assert.AreEqual(beforeJ, PlayerPrefs.GetString(Save.Key, ""));
-            Assert.AreSame(live, GameFlow.ProfileAfterQuit(true, live, db), "a How-to-play sandbox keeps its throwaway");
+            Assert.AreSame(live, ProgressManager.ProfileAfterQuit(true, live, db), "a How-to-play sandbox keeps its throwaway");
         }
 
         [Test]
@@ -125,15 +126,15 @@ namespace Athanor.Tests
             var db = new ContentDb(ContentAssets.Data());
             Save.StoreJournal(new Journal());
             var journal = new Journal();
-            var run = new RunState(db, journal, TutorialScript.Seed, 1, TutorialScript.Options(Unlocks.Fresh(db)));
-            var trial = TutorialScript.Depth1[0];
+            var run = new RunState(db, journal, Seq.seed, 1, Seq.Options(Unlocks.Fresh(db)));
+            var trial = Seq.Trial(0);
             Assert.IsTrue(run.Deal(trial.Hand));
             foreach (var l in trial.Lay) Assert.IsTrue(run.Place(System.Linq.Enumerable.ToList(run.Hand).IndexOf(l.Id), l.Tile));
             // the same call Resolve makes: the Ignite and the store are one step, before the chain plays or Quit can be pressed
-            GameFlow.SettleIgnite(run, journal, false);
+            RunManager.SettleIgnite(run, journal, false);
             Assert.Greater(journal.KnownPairs.Count, 0, "the Ignite discovered something");
             // Quit to title: the page-close view of the world is what is stored
-            var after = GameFlow.JournalAfterQuit(false, journal);
+            var after = ProgressManager.JournalAfterQuit(false, journal);
             Assert.AreNotSame(journal, after, "read back from storage, not the live object");
             CollectionAssert.AreEquivalent(journal.KnownPairs, after.KnownPairs);
         }
@@ -145,11 +146,11 @@ namespace Athanor.Tests
             Save.StoreJournal(new Journal());
             string before = PlayerPrefs.GetString(Save.Key, "");
             var journal = new Journal();
-            var run = new RunState(db, journal, TutorialScript.Seed, 1, TutorialScript.Options(Unlocks.Fresh(db)));
-            var trial = TutorialScript.Depth1[0];
+            var run = new RunState(db, journal, Seq.seed, 1, Seq.Options(Unlocks.Fresh(db)));
+            var trial = Seq.Trial(0);
             Assert.IsTrue(run.Deal(trial.Hand));
             foreach (var l in trial.Lay) Assert.IsTrue(run.Place(System.Linq.Enumerable.ToList(run.Hand).IndexOf(l.Id), l.Tile));
-            GameFlow.SettleIgnite(run, journal, true);
+            RunManager.SettleIgnite(run, journal, true);
             Assert.Greater(journal.KnownPairs.Count, 0);
             Assert.AreEqual(before, PlayerPrefs.GetString(Save.Key, ""), "a How-to-play replay writes no journal");
         }

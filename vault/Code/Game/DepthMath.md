@@ -37,7 +37,7 @@ aliases: []
 [[Px]], [[TableShape]]
 
 ## Used by
-[[CameraSway]], [[DepthLayer]], [[DepthRig]], [[DepthStage]], [[DepthTable]], [[GameFlow]]
+[[CameraSway]], [[DepthLayer]], [[DepthRig]], [[DepthStage]], [[DepthTable]], [[GameManager]]
 
 ## Tested by
 [[DepthClickTests]], [[DepthLayerTests]], [[MainDepthTests]], [[MainDevHookTests]]

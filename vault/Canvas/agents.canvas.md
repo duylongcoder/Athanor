@@ -29,7 +29,7 @@ generated-from: Agents Index
         │
         ├─→ Unity Gameplay Engineer Layer
         │    ├─→ unity-gameplay-engineer (primary)
-        │    │    ├─→ Screens, views, GameFlow
+        │    │    ├─→ Screens, views, GameManager
         │    │    ├─→ Save plumbing, cutscenes
         │    │    └─→ Editor tools
         │    │
@@ -107,7 +107,7 @@ generated-from: Agents Index
 |------|---------------|-----------------|
 | phase-lead | Summarise → decide → split → dispatch | Task splitting |
 | rules-engineer | Core rule changes + tests | Scoring formula validation |
-| unity-gameplay-engineer | UI screens + GameFlow state | Save/load plumbing |
+| unity-gameplay-engineer | UI screens + GameManager state | Save/load plumbing |
 | content-designer | Balance tuning + icon consistency | Recipes/catalyst tuning |
 | ui-ux-designer | Mockups + screen layouts | 640x360 pixel specs |
 

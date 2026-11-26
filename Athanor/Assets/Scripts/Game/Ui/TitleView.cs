@@ -9,7 +9,7 @@ namespace Athanor.Game
     {
         const int O = 420;
         public bool BeginPressed { get; private set; }
-        /// <summary>How to play or Watch intro was pressed (GameFlow reads them while the title waits).</summary>
+        /// <summary>How to play or Watch intro was pressed (GameManager reads them while the title waits).</summary>
         public bool HowToPressed { get; private set; }
         public bool IntroPressed { get; private set; }
         /// <summary>Forgets a Begin that was answered by the skip question.</summary>
@@ -70,7 +70,7 @@ namespace Athanor.Game
         FxRefs fx;
 
         /// <summary>Takes the player's settings (the title edits them and raises SettingsClosed when the panel closes) and hooks every
-        /// click. GameFlow calls it once at start.</summary>
+        /// click. GameManager calls it once at start.</summary>
         public void Bind(Settings playerSettings, FxRefs effects)
         {
             if (effects == null) throw new System.ArgumentNullException(nameof(effects));
@@ -155,8 +155,12 @@ namespace Athanor.Game
 
         // ---- Settings panel ----------------------------------------------------------------------
 
-        const int P = O + 20, PX = 160, PY = 75, CellX = 300, CellW = 150, CellH = 26;
-        const float CellMid = CellX + CellW / 2f;
+        const int P = O + 20;
+        /// <summary>The panel's top-left corner and the value cells' left edge, width and height (art px), stored in Title.prefab.</summary>
+        [Serializable]
+        public struct PanelBox { public int x, y, cellX, cellW, cellH; }
+        [SerializeField] PanelBox panelBox;
+        float CellMid => panelBox.cellX + panelBox.cellW / 2f;
 
         void PaintCell(int i)
         {
@@ -166,10 +170,10 @@ namespace Athanor.Game
 
         void PlaceCell(int i, float rowY)
         {
-            cellEdge[i].transform.position = Px.Mid(CellX, rowY, CellW, CellH);
-            float fillW = CellW - 2 * layout.cellInset, fillH = CellH - 2 * layout.cellInset;
-            cellFill[i].transform.position = Px.Mid(CellX + layout.cellInset, rowY + layout.cellInset, fillW, fillH);
-            cellHit[i].transform.position = Px.Mid(CellX, rowY, CellW, CellH);
+            cellEdge[i].transform.position = Px.Mid(panelBox.cellX, rowY, panelBox.cellW, panelBox.cellH);
+            float fillW = panelBox.cellW - 2 * layout.cellInset, fillH = panelBox.cellH - 2 * layout.cellInset;
+            cellFill[i].transform.position = Px.Mid(panelBox.cellX + layout.cellInset, rowY + layout.cellInset, fillW, fillH);
+            cellHit[i].transform.position = Px.Mid(panelBox.cellX, rowY, panelBox.cellW, panelBox.cellH);
         }
 
         /// <summary>Lays out the rows (Camera sway, Vibration where the device can, Language) and writes the values.</summary>
@@ -177,10 +181,10 @@ namespace Athanor.Game
         {
             if (panel == null) return;
             bool vib = Haptics.Supported;
-            float pitch = vib ? layout.pitch : layout.pitchNoVib, row = PY + (vib ? layout.firstRow : layout.firstRowNoVib);
+            float pitch = vib ? layout.pitch : layout.pitchNoVib, row = panelBox.y + (vib ? layout.firstRow : layout.firstRowNoVib);
             // the third row pushes the lower divider and the erase link down
-            divider2.transform.position = Px.Mid(PX + layout.dividerX, PY + (vib ? layout.dividerY : layout.dividerYNoVib), layout.dividerW, layout.dividerH);
-            resetLabel.transform.position = Px.At(layout.centerX, PY + (vib ? layout.resetY : layout.resetYNoVib));
+            divider2.transform.position = Px.Mid(panelBox.x + layout.dividerX, panelBox.y + (vib ? layout.dividerY : layout.dividerYNoVib), layout.dividerW, layout.dividerH);
+            resetLabel.transform.position = Px.At(layout.centerX, panelBox.y + (vib ? layout.resetY : layout.resetYNoVib));
             PlaceRow(2, row, swayLabel, swayBox, swayFill, swayValue, settings.sway);
             row += pitch;
             cell[0].gameObject.SetActive(vib); vibLabel.gameObject.SetActive(vib); vibBox.gameObject.SetActive(vib);
@@ -202,10 +206,10 @@ namespace Athanor.Game
         {
             label.transform.position = Px.At(layout.labelX, row + layout.labelDy);
             PlaceCell(i, row);
-            box.transform.position = Px.Mid(CellX + layout.boxInset, row + layout.boxInset, layout.boxSize, layout.boxSize);
-            fill.transform.position = Px.Mid(CellX + layout.fillInset, row + layout.fillInset, layout.fillSize, layout.fillSize);
+            box.transform.position = Px.Mid(panelBox.cellX + layout.boxInset, row + layout.boxInset, layout.boxSize, layout.boxSize);
+            fill.transform.position = Px.Mid(panelBox.cellX + layout.fillInset, row + layout.fillInset, layout.fillSize, layout.fillSize);
             fill.gameObject.SetActive(on);
-            value.transform.position = Px.At(CellX + layout.valueDx, row + layout.valueDy);
+            value.transform.position = Px.At(panelBox.cellX + layout.valueDx, row + layout.valueDy);
             value.SetKey(on ? "ui.settings.on" : "ui.settings.off");
         }
 

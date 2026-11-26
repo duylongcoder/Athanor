@@ -103,7 +103,7 @@ framework agent is consulted only for the question named in the right-hand colum
 | `phase-lead` | phase plans, briefs | `producer` | writing code or content |
 | `rules-engineer` | `Scripts/Core`, EditMode tests | `lead-programmer` | anything with `UnityEngine` |
 | `unity-gameplay-engineer` | `Scripts/Game`, `Editor` | `unity-specialist`, `unity-ui-specialist`, `unity-shader-specialist` | game rules, data |
-| `content-designer` | `content.json`, balance | `game-designer`, `systems-designer`, `economy-designer` | new mechanics, story text |
+| `content-designer` | content assets (`Assets/Content`), balance | `game-designer`, `systems-designer`, `economy-designer` | new mechanics, story text |
 | `lore-writer` | English story text, lore canon (`docs/ATHANOR.md` §8) | `narrative-director`, `world-builder` | `vi.json`, event structure |
 | `localizer-vi` | `lang/vi.json`, glossary | `localization-lead` | i18n architecture |
 | `pixel-artist` | `tools/art`, generated art | `art-director`, `technical-artist` | style or palette changes |

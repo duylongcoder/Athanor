@@ -16,6 +16,6 @@ tags: [design]
 ## Pillars (from the phase specs)
 - Discovery over instruction: recipes are never listed up front. The tutorial teaches the rules, not the recipes.
 - Every placement is spent; the rack (12 places) keeps only what a chain left standing.
-- Content is data (`content.json`); rules are Unity-free ([[Architecture]]).
+- Content is data (assets under `Assets/Content`); rules are plain C# models ([[Architecture]]).
 
 Specs and decisions: [[Phases]].

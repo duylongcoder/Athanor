@@ -42,7 +42,7 @@ namespace Athanor.Tests
         [Test]
         public void HalfLeading_Crux48_IsElevenPixels()
         {
-            var crux = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Art/Art/Fonts/Crux.asset");
+            var crux = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Art/Fonts/Crux.asset");
             Assert.IsNotNull(crux, "run Athanor > Build Fonts");
             // (48 - (ascent 7 - descent -2) x 48/16) / 2 = 10.5, rounded up to a whole pixel
             Assert.AreEqual(11, Fonts.HalfLeading(crux.faceInfo, 48));

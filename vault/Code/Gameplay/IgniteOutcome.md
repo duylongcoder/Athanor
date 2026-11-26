@@ -28,7 +28,7 @@ aliases: []
 [[ReactionEvent]], [[RunPhase]]
 
 ## Used by
-[[GameFlow]], [[IgniteSequence]], [[Newcomer]], [[Profile]], [[RunState]], [[Sim]]
+[[IgniteSequence]], [[Newcomer]], [[Profile]], [[RunManager]], [[RunState]], [[Sim]]
 
 ## Tested by
 [[Phase3Tests]], [[RunStateTests]], [[TutorialTests]]

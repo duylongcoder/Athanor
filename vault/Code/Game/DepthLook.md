@@ -27,7 +27,7 @@ aliases: []
 | method | `public static string WindowSprite(int depth)` | 30 | Name of the window sprite in the art library for a depth. |
 
 ## Used by
-[[GameFlow]], [[SimpleCutscene]], [[WindowView]]
+[[GameManager]], [[SimpleCutscene]], [[WindowView]]
 
 ## Tested by
 [[DepthLookTests]]

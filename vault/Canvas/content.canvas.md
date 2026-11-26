@@ -10,7 +10,7 @@ generated-from: Content Index.md
 
 ```
 [Athanor Content Data]
-   └─→ content.json (All Shapes in ContentData.cs)
+   └─→ content assets (All Shapes in ContentData.cs)
 
        ├─→ Materials[81 types]
        │    ├─→ [Stone] ← Tier 0 (starting)

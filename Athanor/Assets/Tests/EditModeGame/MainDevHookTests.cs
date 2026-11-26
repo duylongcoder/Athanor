@@ -13,18 +13,18 @@ namespace Athanor.Tests
         [Test]
         public void NextMood_StepsOneToFive_AndWraps()
         {
-            Assert.AreEqual(2, GameFlow.NextMood(1));
-            Assert.AreEqual(5, GameFlow.NextMood(4));
-            Assert.AreEqual(1, GameFlow.NextMood(5));
-            Assert.AreEqual(1, GameFlow.NextMood(0));
+            Assert.AreEqual(2, GameManager.NextMood(1));
+            Assert.AreEqual(5, GameManager.NextMood(4));
+            Assert.AreEqual(1, GameManager.NextMood(5));
+            Assert.AreEqual(1, GameManager.NextMood(0));
         }
 
         [Test]
         public void HookLines_ForEachHook_MatchTheScriptPatterns()
         {
-            Assert.AreEqual("[dev] mood 3", GameFlow.MoodLine(3));
-            Assert.AreEqual("[dev] effects on", GameFlow.EffectsLine(true));
-            Assert.AreEqual("[dev] effects off", GameFlow.EffectsLine(false));
+            Assert.AreEqual("[dev] mood 3", GameManager.MoodLine(3));
+            Assert.AreEqual("[dev] effects on", GameManager.EffectsLine(true));
+            Assert.AreEqual("[dev] effects off", GameManager.EffectsLine(false));
             Assert.AreEqual("[bench] place 4", BenchView.PlaceLine(4));
             Assert.AreEqual("[bench] unplace 7", BenchView.UnplaceLine(7));
         }

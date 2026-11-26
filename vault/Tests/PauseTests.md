@@ -10,7 +10,7 @@ count: 9
 `Athanor/Assets/Tests/EditModeGame/PauseTests.cs` — 9 tests
 
 ## Covers
-[[Clickable]], [[ContentAssets]], [[ContentDb]], [[GameFlow]], [[Haptics]], [[Journal]], [[PauseMenu]], [[Profile]], [[RunState]], [[Save]], [[Settings]], [[TutorialController]], [[TutorialScript]], [[Unlocks]]
+[[Clickable]], [[ContentAssets]], [[ContentDb]], [[Haptics]], [[Journal]], [[PauseMenu]], [[Profile]], [[ProgressManager]], [[RunManager]], [[RunState]], [[Save]], [[Settings]], [[TutorialManager]], [[TutorialSequence]], [[Unlocks]]
 
 ## Tests
 - `Open_StopsTime_AndEveryExitRestoresIt`

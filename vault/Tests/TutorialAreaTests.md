@@ -3,17 +3,15 @@ generated: true
 type: test
 file: Athanor/Assets/Tests/EditModeGame/TutorialAreaTests.cs
 tags: [test]
-count: 4
+count: 2
 ---
 
 # TutorialAreaTests
-`Athanor/Assets/Tests/EditModeGame/TutorialAreaTests.cs` — 4 tests
+`Athanor/Assets/Tests/EditModeGame/TutorialAreaTests.cs` — 2 tests
 
 ## Covers
-[[AreaKind]], [[Px]], [[TutorialArea]], [[TutorialRect]], [[TutorialStep]]
+[[TutorialRect]]
 
 ## Tests
 - `Grow_EachMarginSide_AddsSeparately`
 - `ArtRect_OfWorldCentre_IsTheCentredArtRect`
-- `Fixed_Area_ReadsItsTransform`
-- `Step_Lists_Its_Areas_In_Child_Order`

@@ -1170,7 +1170,7 @@ MonoBehaviour:
   look:
     disabledTint: {r: 0.45, g: 0.42, b: 0.42, a: 1}
     overTint: {r: 1.25, g: 1.15, b: 1.05, a: 1}
-    disabledText: {r: 0.54117647, g: 0.47843137, b: 0.41568627, a: 1}
+    disabledText: {r: 0.5411765, g: 0.47843137, b: 0.41568628, a: 1}
     labelUp: 10
     labelDown: 8
 --- !u!114 &5913710490250556683
@@ -2568,6 +2568,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d07dbb149c865e15a2d56d6704e103d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Athanor.Game::Athanor.Game.RunOverView
+  timing:
+    fadeIn: 0.35
+    slide: 0.35
+    shadeAlpha: 0.62
+    slideFrom: -40
+  goalLineFits: 25
   heading: {fileID: 4632171556102469694}
   sub: {fileID: 2864924125339959867}
   goalsLine: {fileID: 4640743761413933765}
@@ -2586,11 +2592,6 @@ MonoBehaviour:
   goalsClick: {fileID: 6887273964816007417}
   again: {fileID: 6564416673737209466}
   toTitle: {fileID: 157921426951328401}
-  timing:
-    fadeIn: 0.35
-    slide: 0.35
-    shadeAlpha: 0.62
-    slideFrom: -40
 --- !u!1 &5263368793070098300
 GameObject:
   m_ObjectHideFlags: 0
@@ -4499,7 +4500,7 @@ MonoBehaviour:
   look:
     disabledTint: {r: 0.45, g: 0.42, b: 0.42, a: 1}
     overTint: {r: 1.25, g: 1.15, b: 1.05, a: 1}
-    disabledText: {r: 0.54117647, g: 0.47843137, b: 0.41568627, a: 1}
+    disabledText: {r: 0.5411765, g: 0.47843137, b: 0.41568628, a: 1}
     labelUp: 10
     labelDown: 8
 --- !u!114 &4109333158020981729

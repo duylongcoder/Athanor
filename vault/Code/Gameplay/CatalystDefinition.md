@@ -29,4 +29,4 @@ aliases: []
 [[CatalystEffect]], [[ContentNames]], [[Kind]], [[KindOrNone]], [[RarityId]], [[Tooltip]]
 
 ## Used by
-[[ContentDatabase]]
+[[CatalystTrialDef]], [[ContentDatabase]], [[TutorialSequence]]

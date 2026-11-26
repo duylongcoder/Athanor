@@ -24,7 +24,7 @@ generated-from: Data Design.md
        │         │
        │         └─→ Validation: LangTests ensures parity
        │
-       ├─→ content.json (Resources/)
+       ├─→ content assets (Assets/Content)
        │    ├─→ materials[] → 81 types, 70+ distinct
        │    ├─→ recipes[] → 87 pairs (59 known + 28 new)
        │    ├─→ catalysts[] → 26 total (10 existing + 16 new)
@@ -69,7 +69,7 @@ When shape changes:
 ## Data Flow Diagram
 
 ```
-┌───────── content.json ───┐
+┌───────── content assets ───┐
 │  (All Game Content)      │
 └────────────┬─────────────┘
              │

@@ -13,7 +13,7 @@ tags: [moc/agents]
 | [[agent.ai-programmer|ai-programmer]] | inherit | Implements game AI — behavior trees, state machines, pathfinding, perception, decision-making, NPC and enemy behavior, AI debugging. |
 | [[agent.analytics-engineer|analytics-engineer]] | inherit | Telemetry and analytics — event tracking, player behavior, A/B test frameworks, dashboard specification, data pipelines. |
 | [[agent.art-director|art-director]] | inherit | Owns visual identity — style guides, art bible, asset standards, color palettes, UI visual direction. |
-| ★ [[agent.audio-designer|audio-designer]] | sonnet | Athanor sound planner and asset maker: cue list tied to GameFlow states and reaction events, WebGL audio size budget, CC0 or self-made assets. Only wh |
+| ★ [[agent.audio-designer|audio-designer]] | sonnet | Athanor sound planner and asset maker: cue list tied to GameManager states and reaction events, WebGL audio size budget, CC0 or self-made assets. Only |
 | [[agent.audio-director|audio-director]] | inherit | Owns sonic identity — music direction, sound palette, audio implementation strategy, mix balance. |
 | [[agent.community-manager|community-manager]] | sonnet | Player-facing communication — patch notes, social posts, community updates, feedback collection, player bug triage, crisis communication. |
 | ★ [[agent.content-designer|content-designer]] | inherit | Athanor data and balance owner: edits the content assets (materials, recipes, catalysts, aspects, events, goals, depth targets) and judges it with the |
@@ -35,11 +35,11 @@ tags: [moc/agents]
 | ★ [[agent.pixel-artist|pixel-artist]] | sonnet | Athanor sprite and effect producer: runs and edits the code that generates art (tools/art), adds icons with matching ids, exports effect sheets, holds |
 | [[agent.producer|producer]] | opus | Production concerns — sprint planning, milestone tracking, risk, scope, cross-department coordination when multiple departments must synchronize. |
 | [[agent.prototyper|prototyper]] | sonnet | Throwaway builds — concept prototypes after brainstorm to test an idea is fun before GDDs; vertical slices pre-production. Speed over standards. |
-| ★ [[agent.qa-engineer|qa-engineer]] | inherit | Athanor sign-off runner: executes dotnet and Unity tests, BalanceMatrix/RoleReport/EventReport, headless Chrome web checks; reproduces bugs with a see |
+| ★ [[agent.qa-engineer|qa-engineer]] | inherit | Athanor sign-off runner: executes the Unity tests (EditMode and PlayMode), the balance reports, headless Chrome web checks; reproduces bugs with a see |
 | [[agent.qa-lead|qa-lead]] | inherit | Test strategy and process — test plan creation, bug severity assessment, regression planning, release quality gates, readiness evaluation. |
 | [[agent.qa-tester|qa-tester]] | inherit | Writes test cases, bug reports, and checklists — test case generation, regression checklist creation, execution documentation. |
 | [[agent.release-manager|release-manager]] | inherit | Release pipeline — certification checklists, store submissions and page prep, platform requirements, version numbering, release-day coordination. |
-| ★ [[agent.rules-engineer|rules-engineer]] | inherit | Athanor Core rules coder: edits Scripts/Core (ignite and chain resolution, scoring, run state, profile, journal, satchel, tutorial script, auto-player |
+| ★ [[agent.rules-engineer|rules-engineer]] | inherit | Athanor rules coder: edits Scripts/Gameplay (ignite and chain resolution, scoring, run state, profile, journal, satchel, tutorial gate, auto-player) t |
 | [[agent.security-engineer|security-engineer]] | inherit | Protects against cheating, exploits, breaches — anti-cheat measures, secure save data and network comms, player privacy compliance. |
 | [[agent.sound-designer|sound-designer]] | inherit | SFX specifications and spec sheets — audio event documentation, mixing parameters, sound category definitions. |
 | [[agent.systems-designer|systems-designer]] | inherit | Detailed subsystem mechanics — combat formulas, progression curves, crafting recipes, status effect interactions, mathematical modeling of a mechanic. |
@@ -48,7 +48,7 @@ tags: [moc/agents]
 | [[agent.tools-programmer|tools-programmer]] | inherit | Internal dev tools — editor extensions, content authoring tools, debug utilities, pipeline automation, editor workflow. |
 | [[agent.ui-programmer|ui-programmer]] | inherit | Implements user interface systems — menus, HUDs, inventory screens, dialogue boxes, UI framework code, screen flow. |
 | ★ [[agent.ui-ux-designer|ui-ux-designer]] | inherit | Athanor screen designer: pixel-box layout specs, screen layout specs (prefab and `Editor/layout.json` changes), readability at 1x, tutorial pacing, Vi |
-| ★ [[agent.unity-gameplay-engineer|unity-gameplay-engineer]] | sonnet | Athanor Game-layer coder: edits Scripts/Game and Editor tools (GameFlow states, bench/tile/card/HUD views, UI screens, cutscene code, save plumbing, e |
+| ★ [[agent.unity-gameplay-engineer|unity-gameplay-engineer]] | sonnet | Athanor Game-layer coder: edits Scripts/Game (Managers, Tutorial, Boot, views) and Editor tools (GameManager states, bench/tile/card/HUD views, UI scr |
 | [[agent.unity-shader-specialist|unity-shader-specialist]] | sonnet | Unity rendering — Shader Graph, custom HLSL, VFX Graph, render pipeline customization (URP/HDRP), post-processing within performance budgets. |
 | [[agent.unity-specialist|unity-specialist]] | inherit | Authority on Unity-specific patterns and APIs — guides MonoBehaviour vs DOTS/ECS, Unity subsystems including Addressables and Input System. |
 | [[agent.unity-ui-specialist|unity-ui-specialist]] | sonnet | Unity UI implementation — UI Toolkit (UXML/USS), UGUI Canvas, data binding, runtime UI performance, cross-platform adaptation. |

@@ -11,7 +11,7 @@ generated-from: Tests Index.md
 ```
 [Testing Strategy]
 
-   ├─→ Rule Tests (dotnet/CoreTests) ← Run without Unity
+   ├─→ Rule Tests (EditMode, Athanor.Gameplay.Tests)
    │    ├─→ ContentTests → 41 tests
    │    │    ├─→ Material validation
    │    │    ├─→ Recipe validity check

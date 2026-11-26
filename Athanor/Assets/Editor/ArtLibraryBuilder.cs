@@ -38,11 +38,11 @@ public static class ArtLibraryBuilder
             .SelectMany(p => AssetDatabase.LoadAllAssetsAtPath(p).OfType<Sprite>())
             .Where(s => s != null && !sheetTextures.Contains(s.texture)).OrderBy(s => s.name).ToArray();
         lib.sheets = sheets;
-        lib.title = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Art/Art/Fonts/Alagard.asset");
-        lib.body = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Art/Art/Fonts/BitPotion.asset");
-        lib.label = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Art/Art/Fonts/PixelOperator-Bold.asset");
-        lib.tiny = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Art/Art/Fonts/PixelOperator8.asset");
-        lib.crux = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Art/Art/Fonts/Crux.asset");
+        lib.title = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Art/Fonts/Alagard.asset");
+        lib.body = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Art/Fonts/BitPotion.asset");
+        lib.label = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Art/Fonts/PixelOperator-Bold.asset");
+        lib.tiny = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Art/Fonts/PixelOperator8.asset");
+        lib.crux = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Art/Fonts/Crux.asset");
         lib.lit = AssetDatabase.LoadAssetAtPath<Material>(UrpMaterials + "Sprite-Lit-Default.mat");
         lib.unlit = AssetDatabase.LoadAssetAtPath<Material>(UrpMaterials + "Sprite-Unlit-Default.mat");
         var glow = AssetDatabase.LoadAssetAtPath<Material>("Assets/Resources/ParticleGlow.mat");

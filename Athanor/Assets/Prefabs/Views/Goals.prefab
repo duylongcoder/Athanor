@@ -1270,6 +1270,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fec74fb1761f17bb97fe9b28a840d25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Athanor.Game::Athanor.Game.GoalsView
+  layout:
+    barHeight: 3
+    barDy: -14.5
+  grid:
+    x: 20
+    y: 15
+    leftX: 14
+    rightX: 304
+    top: 30
+    colW: 282
+    rowH: 20
+    headH: 14
+    pad: 10
+    barW: 92
+    dotSize: 4
   rowPrefab: {fileID: 6159085495081843688, guid: ccd426d1da70e44cda14ddc5206bdca1, type: 3}
   heads:
   - {fileID: 4815859155690366846}
@@ -1278,9 +1293,6 @@ MonoBehaviour:
   found: {fileID: 8887135099762449389}
   outside: {fileID: 599863407791520328}
   closeClick: {fileID: 3056155905596197834}
-  layout:
-    barHeight: 3
-    barDy: -14.5
 --- !u!1 &6338703934319716461
 GameObject:
   m_ObjectHideFlags: 0

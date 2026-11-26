@@ -160,7 +160,7 @@ namespace Athanor.Game
 
         /// <summary>
         /// Everything except the potency number, which is animated separately. keepRedraw leaves the Redraw button and its
-        /// counter as they are: GameFlow.Resolve passes it while an Ignite plays out, so they do not show the outcome early.
+        /// counter as they are: GameManager.Resolve passes it while an Ignite plays out, so they do not show the outcome early.
         /// </summary>
         public void Show(RunState run, ContentDb db, Journal journal, bool inputEnabled, bool keepRedraw = false)
         {

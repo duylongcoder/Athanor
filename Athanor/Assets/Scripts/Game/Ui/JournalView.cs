@@ -11,11 +11,16 @@ namespace Athanor.Game
     /// </summary>
     public sealed class JournalView : MonoBehaviour
     {
-        // the numbers match JOURNAL in tools/art/ui.mjs
-        const int O = 440, X = 20, Y = 15, Cols = 10, Rows = 6, Cell = 27, Well = 25, GridX = 33, GridY = 60,
-            PageX = 324, PageY = 30, PageW = 260, LineCount = 15, HintCount = 5,
-            PipCount = ContentDb.MaxReactivity, WrapAt = 38,
-            WellOut = Well + 2, PageMid = PageX + PageW / 2;   // a well with its 1 px rim; the page's centre line
+        const int O = 440, Cols = 10, Rows = 6, LineCount = 15, HintCount = 5, PipCount = ContentDb.MaxReactivity;
+
+        /// <summary>The book's grid and its right-hand page (art px, y down), stored in Journal.prefab; the numbers match JOURNAL in tools/art/ui.mjs.</summary>
+        [Serializable]
+        public struct Grid { public int x, y, cell, well, gridX, gridY, pageX, pageY, pageW, wrapAt; }
+        [SerializeField] Grid grid;
+        /// <summary>A well with its 1 px rim.</summary>
+        int WellOut => grid.well + 2;
+        /// <summary>The page's centre line.</summary>
+        int PageMid => grid.pageX + grid.pageW / 2;
 
         /// <summary>The numbers of the book that are not its grid (art px, y down), stored in Journal.prefab.</summary>
         [Serializable]
@@ -65,7 +70,7 @@ namespace Athanor.Game
 
         /// <summary>
         /// Takes the content and makes one cell per material from the JournalCell part (cells are not baked: a new material needs its cell).
-        /// Hooks the clicks. GameFlow calls it once at start; a test calls it after instantiating the prefab.
+        /// Hooks the clicks. GameManager calls it once at start; a test calls it after instantiating the prefab.
         /// </summary>
         public void Bind(ContentDb content)
         {
@@ -99,12 +104,12 @@ namespace Athanor.Game
             if (m.tier == 0 && Rarities.Rank(m.rarity) > 0)
             {
                 cell.stars = new RarityStars(cell.transform, O + 4);
-                cell.stars.Root.position = Px.At(X + GridX + (i % PerPage % Cols) * Cell - 1, Y + GridY + (i % PerPage / Cols) * Cell - 1);
+                cell.stars.Root.position = Px.At(grid.x + grid.gridX + (i % PerPage % Cols) * grid.cell - 1, grid.y + grid.gridY + (i % PerPage / Cols) * grid.cell - 1);
                 cell.stars.Show(1, Wording.RarityColor(m.rarity));
             }
         }
 
-        Vector3 CellCentre(int i) => Px.Mid(X + GridX + (i % PerPage % Cols) * Cell, Y + GridY + (i % PerPage / Cols) * Cell, Well, Well);
+        Vector3 CellCentre(int i) => Px.Mid(grid.x + grid.gridX + (i % PerPage % Cols) * grid.cell, grid.y + grid.gridY + (i % PerPage / Cols) * grid.cell, grid.well, grid.well);
 
         /// <summary>Shows one page of the grid; the selection moves to that page's first material if it was on another.</summary>
         void ShowPage(int p)
@@ -161,13 +166,13 @@ namespace Athanor.Game
         string Heat(RecipeData r) => db.Company(r) > 0 ? " " + Loc.T("ui.journal.heat", ("n", r.minReactivity)).Replace(' ', '\u00a0') : "";
 
         /// <summary>Breaks a long recipe line between words so it stays on the page; later lines are indented.</summary>
-        static IEnumerable<string> Wrap(string text)
+        IEnumerable<string> Wrap(string text)
         {
-            if (text.Length <= WrapAt) { yield return Plain(text); yield break; }
+            if (text.Length <= grid.wrapAt) { yield return Plain(text); yield break; }
             string line = "";
             foreach (var word in text.Trim().Split(' '))
             {
-                if (line.Length > 0 && line.Length + 1 + word.Length > WrapAt) { yield return Plain(line); line = "     " + word; }
+                if (line.Length > 0 && line.Length + 1 + word.Length > grid.wrapAt) { yield return Plain(line); line = "     " + word; }
                 else line = line.Length == 0 ? "  " + word : line + " " + word;
             }
             if (line.Length > 0) yield return Plain(line);
@@ -194,7 +199,7 @@ namespace Athanor.Game
             return CellRect(i);
         }
         /// <summary>The cell of material number i in the grid of its page (art space).</summary>
-        public static Rect CellRect(int i) => new Rect(X + GridX + (i % PerPage % Cols) * Cell - 1, Y + GridY + (i % PerPage / Cols) * Cell - 1, WellOut, WellOut);
+        public Rect CellRect(int i) => new Rect(grid.x + grid.gridX + (i % PerPage % Cols) * grid.cell - 1, grid.y + grid.gridY + (i % PerPage / Cols) * grid.cell - 1, WellOut, WellOut);
         /// <summary>The cell of a material by id, without opening its page.</summary>
         public Rect CellRect(string id) => CellRect(Mathf.Max(0, IndexOf(id)));
         /// <summary>The page's line "heat/ reactivity" and its pips.</summary>
@@ -215,7 +220,7 @@ namespace Athanor.Game
             bool locked = m.tier == 0 && !known;
             title.Text = known ? m.name : locked ? Loc.T("ui.journal.locked") : Loc.T("ui.journal.unknown");
             title.SetSize(title.Text.Length > layout.titleLongChars ? layout.titleSizeLong : layout.titleSize);
-            title.transform.position = Px.At(X + PageMid, Y + PageY + (title.Text.Length > layout.titleLongChars ? layout.titleTopLong : layout.titleTop));
+            title.transform.position = Px.At(grid.x + PageMid, grid.y + grid.pageY + (title.Text.Length > layout.titleLongChars ? layout.titleTopLong : layout.titleTop));
             sub.Text = known ? (m.tier == 0 ? Loc.T("ui.journal.sub_starter", ("kind", Loc.Upper(Loc.Kind(m.kind))), ("r", m.reactivity)) : Loc.T("ui.journal.sub_tier", ("kind", Loc.Upper(Loc.Kind(m.kind))), ("tier", m.tier), ("r", m.reactivity))) : "";
             // the rarity is only defined for starting materials; a made one, or one not found yet, shows none
             bool rated = known && m.tier == 0;

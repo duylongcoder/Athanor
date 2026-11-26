@@ -12,7 +12,7 @@ generated-from: vault
 [Athanor Vault Structure]
 
   ↓ Core Layer
-[Athanor.Core (Unity-Free)]
+[Athanor.Gameplay (plain C# models)]
   └─→ ContentDb
       ├─→ Recipes[87 pairs] ← Materials[81 types]
       ├─→ RunState
@@ -24,7 +24,7 @@ generated-from: vault
 
   ↓ Game Layer
 [Athanor.Game (Unity Runtime)]
-  └─→ GameFlow
+  └─→ GameManager
      ├─→ BenchView ↔ TileView[Hover/Mark]
      ├─→ LinkView[Light Motes]
      ├─→ HudView ← RunState
@@ -47,8 +47,8 @@ generated-from: vault
 
 | Layer | Path | Rule |
 |-------|-------|------|
-| **Core** | `Athanor/Assets/Scripts/Core` | Deterministic (seeded RNG), no UnityEngine, compiled by tools/CoreTests |
-| **Game** | `Athanor/Assets/Scripts/Game` | All rendering, input, tweens (PrimeTween), cutscenes; owns screen state machine in GameFlow |
+| **Gameplay** | `Athanor/Assets/Scripts/Gameplay` | Deterministic (seeded RNG) plain C# models in the Unity assembly Athanor.Gameplay |
+| **Game** | `Athanor/Assets/Scripts/Game` | All rendering, input, tweens (PrimeTween), cutscenes; managers and the screen loop (GameManager) |
 | **Editor** | `Athanor/Assets/Editor` | Scene/font/atlas/web-build tools; menu Athanor |
 
 ## Run Lifecycle Flow

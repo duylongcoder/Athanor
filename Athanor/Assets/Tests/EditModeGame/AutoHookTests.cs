@@ -32,16 +32,16 @@ namespace Athanor.Tests
         [Test]
         public void ToggleAuto_FlipsTheScriptedPlayer_AndLogsTheNewState()
         {
-            var flow = go.AddComponent<GameFlow>();      // edit mode: Awake does not run, only the toggle is exercised
+            var flow = go.AddComponent<GameManager>();      // edit mode: Awake does not run, only the toggle is exercised
             Assert.IsFalse(flow.Auto);
 
             flow.ToggleAuto();
             Assert.IsTrue(flow.Auto);
-            CollectionAssert.AreEqual(new[] { GameFlow.AutoHook + "on" }, heard);
+            CollectionAssert.AreEqual(new[] { GameManager.AutoHook + "on" }, heard);
 
             flow.ToggleAuto();
             Assert.IsFalse(flow.Auto);
-            CollectionAssert.AreEqual(new[] { GameFlow.AutoHook + "on", GameFlow.AutoHook + "off" }, heard);
+            CollectionAssert.AreEqual(new[] { GameManager.AutoHook + "on", GameManager.AutoHook + "off" }, heard);
         }
     }
 }

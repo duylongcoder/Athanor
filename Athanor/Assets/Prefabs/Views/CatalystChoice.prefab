@@ -4828,6 +4828,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d6f8f5a958c22135b46a8679dd5cca7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Athanor.Game::Athanor.Game.CatalystChoiceView
+  cardRow:
+    width: 150
+    height: 180
+    gap: 18
+    top: 112
+  timing:
+    dealBase: 0.5
+    dealPerCard: 0.1
+    dealFly: 0.5
+    shadeDiv: 2.5
+    stagger: 0.1
+    away: 0.55
+    hopShare: 0.45
+    pickFlash: {x: 0.22, y: 0.35}
+  layout:
+    dim: 0.8
+    startDrop: -300
+    fallDrop: -330
+    hop: 10
+    hoverLift: 8
+    liftSpeed: 80
+    kicker: {r: 0.65882355, g: 0.52156866, b: 0.30588236, a: 1}
+    kickerCost: {r: 0.6039216, g: 0.20392157, b: 0.07843137, a: 1}
+    pickBurst:
+      count: 40
+      color: {r: 2.2, g: 1.7, b: 0.6, a: 1}
+      speed: 150
+      life: 0.8
+      order: 448
+      gravity: 60
   cards:
   - root: {fileID: 6813397310419971482}
     lit: {fileID: 3132727726658204959}
@@ -5033,31 +5063,6 @@ MonoBehaviour:
   shade: {fileID: 5121872703785673299}
   heading: {fileID: 4371372129527831073}
   sub: {fileID: 3311327501335574789}
-  timing:
-    dealBase: 0.5
-    dealPerCard: 0.1
-    dealFly: 0.5
-    shadeDiv: 2.5
-    stagger: 0.1
-    away: 0.55
-    hopShare: 0.45
-    pickFlash: {x: 0.22, y: 0.35}
-  layout:
-    dim: 0.8
-    startDrop: -300
-    fallDrop: -330
-    hop: 10
-    hoverLift: 8
-    liftSpeed: 80
-    kicker: {r: 0.65882353, g: 0.52156863, b: 0.30588235, a: 1}
-    kickerCost: {r: 0.60392157, g: 0.20392157, b: 0.07843137, a: 1}
-    pickBurst:
-      count: 40
-      color: {r: 2.2, g: 1.7, b: 0.6, a: 1}
-      speed: 150
-      life: 0.8
-      order: 448
-      gravity: 60
 --- !u!1 &2656529088778450259
 GameObject:
   m_ObjectHideFlags: 0

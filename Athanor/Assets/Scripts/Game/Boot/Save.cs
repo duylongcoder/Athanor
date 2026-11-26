@@ -76,7 +76,7 @@ namespace Athanor.Game
         public static bool IntroSeen => PlayerPrefs.GetInt(IntroKey, 0) == 1;
         public static void SetIntroSeen(bool v) { PlayerPrefs.SetInt(IntroKey, v ? 1 : 0); PlayerPrefs.Save(); }
 
-        /// <summary>The tutorial was played to its end (or skipped). See TutorialScript.ShouldRun.</summary>
+        /// <summary>The tutorial was played to its end (or skipped). See TutorialGate.ShouldRun.</summary>
         public static bool TutorialDone => PlayerPrefs.GetInt(TutorialKey, 0) == 1;
         public static void SetTutorialDone(bool v) { PlayerPrefs.SetInt(TutorialKey, v ? 1 : 0); PlayerPrefs.Save(); }
     }

@@ -22,4 +22,4 @@ aliases: []
 | method | `public static void Hook(string line)` | 11 |  |
 
 ## Used by
-[[BenchView]], [[CatalystChoiceView]], [[EventView]], [[GameFlow]], [[TitleView]], [[TutorialController]]
+[[BenchView]], [[CatalystChoiceView]], [[EventView]], [[GameManager]], [[TitleView]], [[TutorialManager]]

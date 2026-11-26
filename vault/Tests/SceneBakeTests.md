@@ -10,7 +10,7 @@ count: 7
 `Athanor/Assets/Tests/EditModeGame/SceneBakeTests.cs` — 7 tests
 
 ## Covers
-[[Bench]], [[Clickable]], [[ContentAssets]], [[ContentDb]], [[GameFlow]], [[JournalView]], [[Label]], [[ReactionCutscene]], [[ScreenFx]], [[SimpleCutscene]], [[Sparks]], [[TutorialController]], [[TutorialHole]], [[WindowView]]
+[[Bench]], [[Clickable]], [[ContentAssets]], [[ContentDb]], [[GameManager]], [[JournalView]], [[Label]], [[ReactionCutscene]], [[ScreenFx]], [[SimpleCutscene]], [[Sparks]], [[TutorialHole]], [[TutorialManager]], [[WindowView]]
 
 ## Tests
 - `TutorialSteps_RedrawAndJournalSteps_MatchTheViews`

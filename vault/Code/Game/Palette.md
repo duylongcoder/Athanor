@@ -14,7 +14,7 @@ aliases: []
 `public sealed class Palette` : `ScriptableObject`
 - Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Support/Palette.cs:18-43`
 
-> The colours two or more files share, by role (Assets/Data/Palette.asset). A colour only one file uses stays on that file's view. GameFlow publishes it as Art.Palette.
+> The colours two or more files share, by role (Assets/Data/Palette.asset). A colour only one file uses stays on that file's view. GameManager publishes it as Art.Palette.
 
 ## Members
 | Kind | Signature | Line | Note |
@@ -34,7 +34,7 @@ aliases: []
 [[RarityColors]]
 
 ## Used by
-[[Art]], [[CatalystChoiceView]], [[EditorGlobals]], [[GameFlow]], [[GoalsView]], [[HudView]], [[JournalView]], [[RarityStars]], [[ReactionCutscene]], [[TileView]], [[TitleView]], [[UiButton]], [[Wording]]
+[[Art]], [[CatalystChoiceView]], [[EditorGlobals]], [[GameManager]], [[GoalsView]], [[HudView]], [[JournalView]], [[RarityStars]], [[ReactionCutscene]], [[TileView]], [[TitleView]], [[UiButton]], [[Wording]]
 
 ## Tested by
 [[LayoutPinTests]], [[StaticResetTests]]

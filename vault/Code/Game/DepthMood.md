@@ -19,7 +19,7 @@ aliases: []
 ## Members
 | Kind | Signature | Line | Note |
 |---|---|---|---|
-| field | `public Preset[] presets` | 36 | Depth 1..5 (index 0..4), set in Main.unity: ambient, moon and accent of GameFlow's old arrays, bloom threshold 1.0 + (bth - 0.80), bloom intensity 1.1 * bin / 0.55, vignette 0.34 * vi / 0.30 (HD-2D SPEC). |
+| field | `public Preset[] presets` | 36 | Depth 1..5 (index 0..4), set in Main.unity: ambient, moon and accent of GameManager's old arrays, bloom threshold 1.0 + (bth - 0.80), bloom intensity 1.1 * bin / 0.55, vignette 0.34 * vi / 0.30 (HD-2D SPEC). |
 | field | `public int depth` | 38 | The depth showing: 0 is today's look, 1..5 a preset. |
 | field | `public Light2D ambient, moon` | 39 |  |
 | field | `public Volume volume` | 40 |  |

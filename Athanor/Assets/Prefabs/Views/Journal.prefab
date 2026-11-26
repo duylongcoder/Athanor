@@ -3789,6 +3789,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6a20e81b2947af36ad2d2a1fa997120, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Athanor.Game::Athanor.Game.JournalView
+  grid:
+    x: 20
+    y: 15
+    cell: 27
+    well: 25
+    gridX: 33
+    gridY: 60
+    pageX: 324
+    pageY: 30
+    pageW: 260
+    wrapAt: 38
+  layout:
+    indexRect:
+      serializedVersion: 2
+      x: 356
+      y: 136
+      width: 236
+      height: 22
+    recipesRect:
+      serializedVersion: 2
+      x: 356
+      y: 156
+      width: 236
+      height: 60
+    hintsRect:
+      serializedVersion: 2
+      x: 51
+      y: 253
+      width: 272
+      height: 36
+    titleTop: 62
+    titleTopLong: 72
+    titleLongChars: 13
+    titleSize: 32
+    titleSizeLong: 16
+    hint: {r: 0.2901961, g: 0.12156863, b: 0.47843137, a: 1}
+    unknown: {r: 0.16, g: 0.1, b: 0.05, a: 0.4}
   cellPrefab: {fileID: 4770250064285881463, guid: 9c549809667425ffb82fa2266831844d, type: 3}
   pageLabel: {fileID: 59959659727092223}
   found: {fileID: 1594864244379147286}
@@ -3858,32 +3895,6 @@ MonoBehaviour:
   outside: {fileID: 92307894576072507}
   closeClick: {fileID: 7152502873312631148}
   pageClick: {fileID: 880152581608917386}
-  layout:
-    indexRect:
-      serializedVersion: 2
-      x: 356
-      y: 136
-      width: 236
-      height: 22
-    recipesRect:
-      serializedVersion: 2
-      x: 356
-      y: 156
-      width: 236
-      height: 60
-    hintsRect:
-      serializedVersion: 2
-      x: 51
-      y: 253
-      width: 272
-      height: 36
-    titleTop: 62
-    titleTopLong: 72
-    titleLongChars: 13
-    titleSize: 32
-    titleSizeLong: 16
-    hint: {r: 0.29019608, g: 0.12156863, b: 0.47843137, a: 1}
-    unknown: {r: 0.16, g: 0.1, b: 0.05, a: 0.4}
 --- !u!1 &2968606952024215458
 GameObject:
   m_ObjectHideFlags: 0

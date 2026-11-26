@@ -7,19 +7,21 @@ Athanor is a run-based alchemy puzzle for the browser. This repo runs on the
 ## Technology Stack
 
 - **Engine**: Unity 6000.6.7f1, Universal 2D (URP), Pixel Perfect Camera, 640x360 canvas
-- **Language**: C# — rules in `Athanor.Core` (no Unity dependency), screens in `Athanor.Game`
+- **Language**: C# — rules in `Athanor.Gameplay` (plain C# models), managers and screens in `Athanor.Game`
 - **Target**: WebGL (browser), mouse primary, touch partial
-- **Tests**: NUnit — `dotnet test tools/CoreTests` (rules, no Unity) and `unity test Athanor --mode EditMode`
+- **Tests**: Unity Test Framework (NUnit) — `unity test Athanor --mode EditMode` and `unity test Athanor --mode PlayMode`
 - **Config**: `project.yaml` (engine, code root, commands, modes). Per-developer overrides in `project.local.yaml` (gitignored)
 
 ## Project layout
 
 | Path | What |
 |---|---|
-| `Athanor/Assets/Scripts/Core`, `.../Game`, `Athanor/Assets/Editor` | code (project.yaml `engine.code_root`) |
-| `Athanor/Assets/Tests`, `tools/CoreTests` | tests |
-| `Athanor/Assets/Resources/` | `content.json`, `lang/en.json`, `lang/vi.json`, `layout.json` |
-| `tools/` | `art` (sprite generator), `fx`, `web` (headless checks), `CoreTests`, `CoreReports` (balance reports: `dotnet run --project tools/CoreReports -- balance-matrix|events|roles|newcomer|balance|trace`), `vault` (Obsidian generator + query) |
+| `Athanor/Assets/Scripts/Gameplay`, `.../Game` (`Managers`, `Tutorial`, `Boot`, views), `Athanor/Assets/Editor` | code (project.yaml `engine.code_root`) |
+| `Athanor/Assets/Tests` (`EditMode`, `EditModeGame`, `PlayMode`) | tests |
+| `Athanor/Assets/Content/` | content assets (one per material, recipe, catalyst, aspect, event, goal, plus `GameRules`, `ContentDatabase`, `Tutorial/Tutorial.asset`); `tools/content/snapshot.json` is their generated copy |
+| `Athanor/Assets/Resources/lang/` | `en.json`, `vi.json` (`Athanor/Assets/Editor/layout.json` is read by editor tools only) |
+| `Athanor/Assets/Editor/Balance` | the balance reports (`Athanor > Balance`; batch `BalanceReports.RunBatch`: `balance-matrix`, `events`, `roles`, `newcomer`, `balance`, `trace`) |
+| `tools/` | `art` (sprite generator), `fx`, `web` (headless checks), `content` (`snapshot.json`), `vault` (Obsidian generator + query) |
 | `vault/` | **Obsidian vault** — read this before grepping code (see below) |
 | `docs/ATHANOR.md` | **the project document**: game, architecture, data, decisions in force, CI rules, build, carry-overs, lore |
 | `.claude/` | agents, skills, hooks, rules (framework) |
@@ -34,7 +36,7 @@ every material/recipe/catalyst/aspect/event/goal, tests, agents, phases. Open th
 
 - **Query before you search:** `python3 tools/vault/q.py type|member|uses|mat|recipe|list|find <arg>`; architecture in
   `vault/Design/Architecture.md`, schemas in `vault/Data/Data Design.md`. Full guide: `vault/Workflow/Vault Guide.md`.
-- **Keep it true:** after changing C#, `content.json`, agents or devlogs, run `python3 tools/vault/build_vault.py`.
+- **Keep it true:** after changing C#, content assets, agents or devlogs, run `python3 tools/vault/build_vault.py`.
   Generated notes (`generated: true`) are never hand-edited.
 
 ## Agents and how work is split
@@ -45,9 +47,9 @@ The main session dispatches; sub-agents cannot ask the owner questions or spawn 
 | Need | Agent |
 |---|---|
 | Summarise the phase, split into briefs | `phase-lead` |
-| Core rules, scoring, run state, Core tests | `rules-engineer` |
-| Screens, views, GameFlow, save plumbing, Editor tools | `unity-gameplay-engineer` |
-| content.json, balance | `content-designer` |
+| Gameplay rules, scoring, run state, rule tests | `rules-engineer` |
+| Screens, views, managers, GameManager, save plumbing, tutorial, Editor tools | `unity-gameplay-engineer` |
+| Content assets, balance | `content-designer` |
 | Story, event and cutscene text (English) | `lore-writer` |
 | Vietnamese text, key parity, glossary | `localizer-vi` |
 | Sprites, icons, effects | `pixel-artist` |
@@ -72,12 +74,12 @@ See `docs/COLLABORATIVE-DESIGN-PRINCIPLE.md`.
 
 ## Hard rules
 
-- No game rules in the Game layer; no `UnityEngine` in Core. New rule → test first.
+- No game rules in views or managers: rules live in the `Athanor.Gameplay` models. New rule → test first.
 - Every player-visible string is a `Lang` key with both `en.json` and `vi.json` entries (or content text localized per the settings devlog).
 - A new material, catalyst or aspect needs an icon with the same id in `tools/art/icons.mjs`.
-- Content changes require `dotnet test tools/CoreTests` plus the balance report (`tools/CoreReports`); quote the numbers.
-- `tools/CoreTests/bin`, `tools/CoreReports/bin`, `obj` and `Athanor/Build` are build output: never hand-edit or stage by accident.
-- **CI is the merge gate.** `ci-gate` red means no merge, for everyone. Run `tools/ci/run.sh all` before pushing. Never weaken a check to get green. Rules and the case-to-check map: `docs/ATHANOR.md` § CI and rules.
+- Content changes require `unity test` plus the balance reports (`BalanceReports.RunBatch`) and a fresh `tools/content/snapshot.json` (`Athanor > Content > Write Snapshot`); quote the numbers.
+- `obj` and `Athanor/Build` are build output: never hand-edit or stage by accident.
+- **CI is the merge gate.** `ci-gate` red means no merge, for everyone. Run `tools/ci/run.sh all` and `tools/ci/run.sh unity` before pushing. Never weaken a check to get green. Rules and the case-to-check map: `docs/ATHANOR.md` § CI and rules.
 - A decision is written in *Decisions in force* of `docs/ATHANOR.md` before it is relied on.
 
 ## Coordination, standards, context

@@ -48,7 +48,7 @@ namespace Athanor.Game
 
         FxRefs fx;
 
-        /// <summary>Hooks the clicks. GameFlow calls it once at start; a test calls it after instantiating the prefab.</summary>
+        /// <summary>Hooks the clicks. GameManager calls it once at start; a test calls it after instantiating the prefab.</summary>
         public void Bind(FxRefs effects)
         {
             if (effects == null) throw new System.ArgumentNullException(nameof(effects));

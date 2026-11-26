@@ -35,7 +35,7 @@ namespace Athanor.Game
         static TextAsset enFile, viFile;
 
         /// <summary>
-        /// Gives Loc its language files. GameFlow calls it first thing; the Game tests and editor tools call it through EditorGlobals.
+        /// Gives Loc its language files. GameManager calls it first thing; the Game tests and editor tools call it through EditorGlobals.
         /// Call it before any Label exists: it does not raise <see cref="Changed"/>, so existing labels keep their old text.
         /// </summary>
         public static void Use(TextAsset english, TextAsset vietnamese)

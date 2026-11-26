@@ -12,7 +12,7 @@ namespace Athanor.Game
 
     /// <summary>
     /// The colours two or more files share, by role (Assets/Data/Palette.asset). A colour only one file uses stays on that file's view.
-    /// GameFlow publishes it as <see cref="Art.Palette"/>.
+    /// GameManager publishes it as <see cref="Art.Palette"/>.
     /// </summary>
     [CreateAssetMenu(menuName = "Athanor/Palette")]
     public sealed class Palette : ScriptableObject

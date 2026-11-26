@@ -26,7 +26,7 @@ aliases: []
 | property | `public static bool Vi` | 30 |  |
 | property | `public static Lang Current` | 31 |  |
 | property | `public static string NativeName` | 33 | The language's own name for the Settings panel ("English", "Tiếng Việt"). |
-| method | `public static void Use(TextAsset english, TextAsset vietnamese)` | 41 | Gives Loc its language files. GameFlow calls it first thing; the Game tests and editor tools call it through EditorGlobals. Call it before any Label exists: it does not raise Changed, so existing labels keep their old text. |
+| method | `public static void Use(TextAsset english, TextAsset vietnamese)` | 41 | Gives Loc its language files. GameManager calls it first thing; the Game tests and editor tools call it through EditorGlobals. Call it before any Label exists: it does not raise Changed, so existing labels keep their old text. |
 | method | `public static void InitFromPlayer(string saved)` | 66 | The language to start in: a "?lang=" in the page address (for checking), else the saved choice, else the device language. |
 | method | `public static string FromUrl(string url)` | 75 | The value of "lang=" in an address when it names a language we have, else null. |
 | method | `public static void Set(string c)` | 84 |  |
@@ -45,7 +45,7 @@ aliases: []
 [[ContentDb]], [[Kind]], [[Lang]], [[Rarities]]
 
 ## Used by
-[[BenchView]], [[CardView]], [[CatalystChoiceView]], [[EditorGlobals]], [[EventView]], [[Fonts]], [[GameFlow]], [[GoalToast]], [[GoalsView]], [[GoldenShots]], [[HudView]], [[IgniteSequence]], [[JournalView]], [[Label]], [[PauseMenu]], [[ReactionCutscene]], [[RunOverView]], [[SimpleCutscene]], [[TitleView]], [[TutorialController]], [[Wording]]
+[[BenchView]], [[CardView]], [[CatalystChoiceView]], [[EditorGlobals]], [[EventView]], [[Fonts]], [[GameManager]], [[GoalToast]], [[GoalsView]], [[GoldenShots]], [[HudView]], [[IgniteSequence]], [[JournalView]], [[Label]], [[LocalizationManager]], [[PauseMenu]], [[ReactionCutscene]], [[RunOverView]], [[SimpleCutscene]], [[TitleView]], [[TutorialManager]], [[Wording]]
 
 ## Tested by
 [[HotPathTests]], [[LabelLineBoxTests]], [[LocTests]], [[NoteTextTests]], [[PrefabBakeTests]], [[RunOverDepthTests]], [[StaticResetTests]]

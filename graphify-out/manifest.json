@@ -1,2660 +1,1154 @@
 {
-  "Art/Fx/Sheets/collect-burst.json": {
+  "Athanor/Assets/Art/Fx/Sheets/collect-burst.json": {
     "mtime": 1795448319.7055793,
-    "seen": 1795528432.463337,
+    "seen": 1795628483.623905,
     "ast_hash": "889f0321809950edaccded05944fe197",
-    "semantic_hash": ""
+    "semantic_hash": "889f0321809950edaccded05944fe197"
   },
-  "Art/Fx/Sheets/holy-pillar.json": {
+  "Athanor/Assets/Art/Fx/Sheets/holy-pillar.json": {
     "mtime": 1795448319.7059317,
-    "seen": 1795528432.46334,
+    "seen": 1795628483.623907,
     "ast_hash": "ff526befd570ea68f713bea77d39b7c3",
-    "semantic_hash": ""
+    "semantic_hash": "ff526befd570ea68f713bea77d39b7c3"
   },
-  "Art/Fx/Sheets/implosion.json": {
+  "Athanor/Assets/Art/Fx/Sheets/implosion.json": {
     "mtime": 1795448319.706771,
-    "seen": 1795528432.4633422,
+    "seen": 1795628483.623907,
     "ast_hash": "08fce9b7655cbef2d46707baf9c3543f",
-    "semantic_hash": ""
+    "semantic_hash": "08fce9b7655cbef2d46707baf9c3543f"
   },
-  "Art/Fx/Sheets/poof.json": {
+  "Athanor/Assets/Art/Fx/Sheets/poof.json": {
     "mtime": 1795448319.707548,
-    "seen": 1795528432.4633422,
+    "seen": 1795628483.623908,
     "ast_hash": "3bbb5c868acbe8486569a4250f65066d",
-    "semantic_hash": ""
+    "semantic_hash": "3bbb5c868acbe8486569a4250f65066d"
   },
-  "Editor/ArtLibraryBuilder.cs": {
-    "mtime": 1795448319.7528038,
-    "seen": 1795528432.4633431,
-    "ast_hash": "b9a902d095e4045df4e2786336ad6fc2",
-    "semantic_hash": ""
+  "Athanor/Assets/Editor/ArtLibraryBuilder.cs": {
+    "mtime": 1795622883.0644665,
+    "seen": 1795628483.6239092,
+    "ast_hash": "48d24c5b426ab6d126e11aaa3f9aa150",
+    "semantic_hash": "48d24c5b426ab6d126e11aaa3f9aa150"
   },
-  "Editor/AtlasBuilder.cs": {
-    "mtime": 1795448319.7529056,
-    "seen": 1795528432.4633431,
-    "ast_hash": "d07b93957549ae7a52f4424bd0c50c80",
-    "semantic_hash": ""
+  "Athanor/Assets/Editor/AtlasBuilder.cs": {
+    "mtime": 1795622883.0623925,
+    "seen": 1795628483.6239092,
+    "ast_hash": "9356929e234e3b8734a3c051dcd229cc",
+    "semantic_hash": "9356929e234e3b8734a3c051dcd229cc"
   },
-  "Editor/Balance/BalanceReports.cs": {
-    "mtime": 1795523407.8165476,
-    "seen": 1795528432.4633431,
-    "ast_hash": "8e58f243019033093c6271e3ccdaa506",
-    "semantic_hash": ""
+  "Athanor/Assets/Editor/Balance/BalanceReports.cs": {
+    "mtime": 1795622883.0657086,
+    "seen": 1795628483.6239092,
+    "ast_hash": "2b02375067fb84c2b282780950b938b8",
+    "semantic_hash": "2b02375067fb84c2b282780950b938b8"
   },
-  "Editor/CheckSprites.cs": {
-    "mtime": 1795481618.1892638,
-    "seen": 1795528432.463344,
+  "Athanor/Assets/Editor/CheckSprites.cs": {
+    "mtime": 1795622883.06209,
+    "seen": 1795628483.62391,
     "ast_hash": "55faf76fa144f5a027951b9eb5011b80",
-    "semantic_hash": ""
+    "semantic_hash": "55faf76fa144f5a027951b9eb5011b80"
   },
-  "Editor/FixCandleImport.cs": {
-    "mtime": 1795451145.8192103,
-    "seen": 1795528432.463344,
+  "Athanor/Assets/Editor/Content/ContentInspectors.cs": {
+    "mtime": 1795625816.2573838,
+    "seen": 1795628483.62391,
+    "ast_hash": "fa5e47a556a4c0b6f01a395a039c1597",
+    "semantic_hash": "fa5e47a556a4c0b6f01a395a039c1597"
+  },
+  "Athanor/Assets/Editor/FixCandleImport.cs": {
+    "mtime": 1795622883.0634642,
+    "seen": 1795628483.62391,
     "ast_hash": "8ca3a34d3c1e0484e08bd1872de91c80",
-    "semantic_hash": ""
+    "semantic_hash": "8ca3a34d3c1e0484e08bd1872de91c80"
   },
-  "Editor/FlipbookImporter.cs": {
-    "mtime": 1795026550.403494,
-    "seen": 1795528432.4633448,
+  "Athanor/Assets/Editor/FlipbookImporter.cs": {
+    "mtime": 1795622883.0641801,
+    "seen": 1795628483.623911,
     "ast_hash": "08d4d5dcdb2fb745c16e7bb1763cc3af",
-    "semantic_hash": ""
+    "semantic_hash": "08d4d5dcdb2fb745c16e7bb1763cc3af"
   },
-  "Editor/FontBuilder.cs": {
-    "mtime": 1795521968.0033247,
-    "seen": 1795528432.4633448,
-    "ast_hash": "27f606e20b9db943499263e3183760d2",
-    "semantic_hash": ""
+  "Athanor/Assets/Editor/FontBuilder.cs": {
+    "mtime": 1795622883.0632033,
+    "seen": 1795628483.623911,
+    "ast_hash": "7e23fa8a59ae6683831ccf45d9ff8b5a",
+    "semantic_hash": "7e23fa8a59ae6683831ccf45d9ff8b5a"
   },
-  "Editor/LayoutData.cs": {
-    "mtime": 1795016395.5989416,
-    "seen": 1795528432.4633448,
+  "Athanor/Assets/Editor/LayoutData.cs": {
+    "mtime": 1795622883.062668,
+    "seen": 1795628483.6239119,
     "ast_hash": "16877c676b9fe3743c1bccc2f914cc37",
-    "semantic_hash": ""
+    "semantic_hash": "16877c676b9fe3743c1bccc2f914cc37"
   },
-  "Editor/Shared/EditorGlobals.cs": {
-    "mtime": 1795099125.233201,
-    "seen": 1795528432.463346,
-    "ast_hash": "beb6430928ff1f4c8c351429540ba467",
-    "semantic_hash": ""
+  "Athanor/Assets/Editor/ManagerInspectors.cs": {
+    "mtime": 1795625816.2613184,
+    "seen": 1795628483.6239119,
+    "ast_hash": "7b9ed0e2412e6814660de6cc06bb8484",
+    "semantic_hash": "7b9ed0e2412e6814660de6cc06bb8484"
   },
-  "Editor/Shared/GoldenShots.cs": {
-    "mtime": 1795521968.0035717,
-    "seen": 1795528432.463346,
-    "ast_hash": "73ad6866b0b146d96f9d9078018e8670",
-    "semantic_hash": ""
+  "Athanor/Assets/Editor/Migration/ContentFieldMigration.cs": {
+    "mtime": 1795622883.067764,
+    "seen": 1795628483.623913,
+    "ast_hash": "c2bf1147e691196d969c0bafa65687be",
+    "semantic_hash": "c2bf1147e691196d969c0bafa65687be"
   },
-  "Editor/Shared/Reserialize.cs": {
-    "mtime": 1795088920.9249907,
-    "seen": 1795528432.463346,
+  "Athanor/Assets/Editor/Migration/ManagerSceneMigration.cs": {
+    "mtime": 1795624249.904432,
+    "seen": 1795628483.623913,
+    "ast_hash": "7e00570bbe33dc9e075f6152214dee90",
+    "semantic_hash": "7e00570bbe33dc9e075f6152214dee90"
+  },
+  "Athanor/Assets/Editor/Shared/ContentAssets.cs": {
+    "mtime": 1795622883.0670435,
+    "seen": 1795628483.623913,
+    "ast_hash": "542a5cb1e8863f5c5064c55e73268daa",
+    "semantic_hash": "542a5cb1e8863f5c5064c55e73268daa"
+  },
+  "Athanor/Assets/Editor/Shared/ContentSnapshot.cs": {
+    "mtime": 1795622883.0664868,
+    "seen": 1795628483.623914,
+    "ast_hash": "ac80c5bd12b0e5be27d8b101b222ebf7",
+    "semantic_hash": "ac80c5bd12b0e5be27d8b101b222ebf7"
+  },
+  "Athanor/Assets/Editor/Shared/EditorGlobals.cs": {
+    "mtime": 1795622883.0675075,
+    "seen": 1795628483.623914,
+    "ast_hash": "34c8d810ea78de001b512354d68b1ff7",
+    "semantic_hash": "34c8d810ea78de001b512354d68b1ff7"
+  },
+  "Athanor/Assets/Editor/Shared/GoldenShots.cs": {
+    "mtime": 1795625185.2600074,
+    "seen": 1795628483.623914,
+    "ast_hash": "9902bd3b07ef984148afa5c0d901f2bf",
+    "semantic_hash": "9902bd3b07ef984148afa5c0d901f2bf"
+  },
+  "Athanor/Assets/Editor/Shared/Reserialize.cs": {
+    "mtime": 1795622883.0659616,
+    "seen": 1795628483.623915,
     "ast_hash": "5be7cfea8f13757c468cd4281cbb51d3",
-    "semantic_hash": ""
+    "semantic_hash": "5be7cfea8f13757c468cd4281cbb51d3"
   },
-  "Editor/Shared/ViewCapture.cs": {
-    "mtime": 1795088920.9251013,
-    "seen": 1795528432.463347,
+  "Athanor/Assets/Editor/Shared/ViewCapture.cs": {
+    "mtime": 1795622883.0667892,
+    "seen": 1795628483.623915,
     "ast_hash": "9cc1cf0a170e54a985d7b234bfd56fdc",
-    "semantic_hash": ""
+    "semantic_hash": "9cc1cf0a170e54a985d7b234bfd56fdc"
   },
-  "Editor/Simulation/Sim.cs": {
-    "mtime": 1795522214.3352928,
-    "seen": 1795528432.463347,
+  "Athanor/Assets/Editor/Simulation/Sim.cs": {
+    "mtime": 1795622883.0653052,
+    "seen": 1795628483.623915,
     "ast_hash": "eb613120f13dd24ce0f92c9dee7aa0bb",
-    "semantic_hash": ""
+    "semantic_hash": "eb613120f13dd24ce0f92c9dee7aa0bb"
   },
-  "Editor/SpriteImportRules.cs": {
-    "mtime": 1795448319.753074,
-    "seen": 1795528432.463348,
+  "Athanor/Assets/Editor/SpriteImportRules.cs": {
+    "mtime": 1795622883.0647933,
+    "seen": 1795628483.6239161,
     "ast_hash": "9730185198dcf89c86bea924bff96bb9",
-    "semantic_hash": ""
+    "semantic_hash": "9730185198dcf89c86bea924bff96bb9"
   },
-  "Editor/TutorialStepGizmo.cs": {
-    "mtime": 1795185017.3164313,
-    "seen": 1795528432.463348,
-    "ast_hash": "8144c3d5eddfb5bbabf4e04d07ab5fa6",
-    "semantic_hash": ""
+  "Athanor/Assets/Editor/TutorialSequenceEditor.cs": {
+    "mtime": 1795625481.332811,
+    "seen": 1795628483.6239161,
+    "ast_hash": "37a5ff190084adc25cc9b2af0119796c",
+    "semantic_hash": "37a5ff190084adc25cc9b2af0119796c"
   },
-  "Editor/TutorialStepsMigration.cs": {
-    "mtime": 1795184939.2349875,
-    "seen": 1795528432.463348,
-    "ast_hash": "20b20ff058a41a7f8ebb5c9a197fcc69",
-    "semantic_hash": ""
-  },
-  "Editor/WebBuild.cs": {
-    "mtime": 1795018488.8989012,
-    "seen": 1795528432.463349,
+  "Athanor/Assets/Editor/WebBuild.cs": {
+    "mtime": 1795622883.0639527,
+    "seen": 1795628483.6239161,
     "ast_hash": "4685979b3ba8db7b89a8d4961a50792c",
-    "semantic_hash": ""
+    "semantic_hash": "4685979b3ba8db7b89a8d4961a50792c"
   },
-  "Editor/layout.json": {
+  "Athanor/Assets/Editor/layout.json": {
     "mtime": 1795016395.5996256,
-    "seen": 1795528432.463349,
+    "seen": 1795628483.623917,
     "ast_hash": "565dd8b1d93f08142011a234a25c71e5",
-    "semantic_hash": ""
+    "semantic_hash": "565dd8b1d93f08142011a234a25c71e5"
   },
-  "Resources/content.json": {
-    "mtime": 1795091541.7570553,
-    "seen": 1795528432.463349,
-    "ast_hash": "cfabee882b5feb8d441d694101d17bc1",
-    "semantic_hash": ""
-  },
-  "Resources/lang/en.json": {
+  "Athanor/Assets/Resources/lang/en.json": {
     "mtime": 1794919516.2512963,
-    "seen": 1795528432.46335,
+    "seen": 1795628483.623917,
     "ast_hash": "57dd55d629c4c03a489730f4dff1fd94",
-    "semantic_hash": ""
+    "semantic_hash": "57dd55d629c4c03a489730f4dff1fd94"
   },
-  "Resources/lang/vi.json": {
+  "Athanor/Assets/Resources/lang/vi.json": {
     "mtime": 1794919516.251539,
-    "seen": 1795528432.46335,
+    "seen": 1795628483.623917,
     "ast_hash": "6853d0320562a0513f189d250599bcd0",
-    "semantic_hash": ""
+    "semantic_hash": "6853d0320562a0513f189d250599bcd0"
   },
-  "Scripts/Game/Bench/BenchView.cs": {
-    "mtime": 1795521967.9969878,
-    "seen": 1795528432.46335,
+  "Athanor/Assets/Scripts/Game/Bench/BenchView.cs": {
+    "mtime": 1795622883.092143,
+    "seen": 1795628483.623918,
     "ast_hash": "f54782b9f251313df68337c9cb4fd6ca",
-    "semantic_hash": ""
+    "semantic_hash": "f54782b9f251313df68337c9cb4fd6ca"
   },
-  "Scripts/Game/Bench/CardView.cs": {
-    "mtime": 1795521967.9964821,
-    "seen": 1795528432.463351,
+  "Athanor/Assets/Scripts/Game/Bench/CardView.cs": {
+    "mtime": 1795622883.091298,
+    "seen": 1795628483.623918,
     "ast_hash": "8e2483f541ed0af1b9265feacd0ed4f5",
-    "semantic_hash": ""
+    "semantic_hash": "8e2483f541ed0af1b9265feacd0ed4f5"
   },
-  "Scripts/Game/Bench/Dust.cs": {
-    "mtime": 1795099752.3815353,
-    "seen": 1795528432.463351,
+  "Athanor/Assets/Scripts/Game/Bench/Dust.cs": {
+    "mtime": 1795622883.0908988,
+    "seen": 1795628483.623918,
     "ast_hash": "932fd9c41115573241e69726d06bd5af",
-    "semantic_hash": ""
+    "semantic_hash": "932fd9c41115573241e69726d06bd5af"
   },
-  "Scripts/Game/Bench/HudView.cs": {
-    "mtime": 1795521967.996168,
-    "seen": 1795528432.463352,
-    "ast_hash": "508e7308913b1f38e6ac0137340be581",
-    "semantic_hash": ""
+  "Athanor/Assets/Scripts/Game/Bench/HudView.cs": {
+    "mtime": 1795622883.091119,
+    "seen": 1795628483.623919,
+    "ast_hash": "db850efaa05720ed2d13241939e2d4b7",
+    "semantic_hash": "db850efaa05720ed2d13241939e2d4b7"
   },
-  "Scripts/Game/Bench/LinkView.cs": {
-    "mtime": 1795099752.3821144,
-    "seen": 1795528432.463352,
+  "Athanor/Assets/Scripts/Game/Bench/LinkView.cs": {
+    "mtime": 1795622883.0916612,
+    "seen": 1795628483.623919,
     "ast_hash": "013696e95350bf96759cc58a689982c8",
-    "semantic_hash": ""
+    "semantic_hash": "013696e95350bf96759cc58a689982c8"
   },
-  "Scripts/Game/Bench/TileView.cs": {
-    "mtime": 1795521967.9967434,
-    "seen": 1795528432.463352,
+  "Athanor/Assets/Scripts/Game/Bench/TileView.cs": {
+    "mtime": 1795622883.0915039,
+    "seen": 1795628483.623919,
     "ast_hash": "fd1d168da187227b2bcf248e92523fb7",
-    "semantic_hash": ""
+    "semantic_hash": "fd1d168da187227b2bcf248e92523fb7"
   },
-  "Scripts/Game/Boot/GameFlow.cs": {
-    "mtime": 1795521967.9976964,
-    "seen": 1795528432.4633532,
-    "ast_hash": "4ad5124dace1424becf940d31a34ed4d",
-    "semantic_hash": ""
+  "Athanor/Assets/Scripts/Game/Boot/GameManager.cs": {
+    "mtime": 1795625172.9493778,
+    "seen": 1795628483.6239202,
+    "ast_hash": "a73d222cd8e73004476c7c11f8d0d70b",
+    "semantic_hash": "a73d222cd8e73004476c7c11f8d0d70b"
   },
-  "Scripts/Game/Boot/IgniteSequence.cs": {
-    "mtime": 1795521968.025285,
-    "seen": 1795528432.4633532,
-    "ast_hash": "448d62d87c9207730046a974a2d07397",
-    "semantic_hash": ""
+  "Athanor/Assets/Scripts/Game/Boot/IgniteSequence.cs": {
+    "mtime": 1795624801.877221,
+    "seen": 1795628483.6239202,
+    "ast_hash": "5ef59e3f12b8e0f7d6ed46150c8b4526",
+    "semantic_hash": "5ef59e3f12b8e0f7d6ed46150c8b4526"
   },
-  "Scripts/Game/Boot/Save.cs": {
-    "mtime": 1795521967.9974282,
-    "seen": 1795528432.4633532,
-    "ast_hash": "5d0439cfa4859d7563ff8597340d3493",
-    "semantic_hash": ""
+  "Athanor/Assets/Scripts/Game/Boot/Save.cs": {
+    "mtime": 1795625203.2145007,
+    "seen": 1795628483.6239202,
+    "ast_hash": "dbeae6b464f752af0038ca2e90c15c7e",
+    "semantic_hash": "dbeae6b464f752af0038ca2e90c15c7e"
   },
-  "Scripts/Game/Cutscene/Cutscene.cs": {
-    "mtime": 1795025670.083059,
-    "seen": 1795528432.463354,
+  "Athanor/Assets/Scripts/Game/Cutscene/Cutscene.cs": {
+    "mtime": 1795622883.1004226,
+    "seen": 1795628483.623921,
     "ast_hash": "486a9fad88f9c8eb2be97967919a5e1c",
-    "semantic_hash": ""
+    "semantic_hash": "486a9fad88f9c8eb2be97967919a5e1c"
   },
-  "Scripts/Game/Cutscene/DepthLook.cs": {
-    "mtime": 1794770440.8317704,
-    "seen": 1795528432.463354,
+  "Athanor/Assets/Scripts/Game/Cutscene/DepthLook.cs": {
+    "mtime": 1795622883.1016366,
+    "seen": 1795628483.623921,
     "ast_hash": "983c6c409d44adb4ddf33cc0ce1a9d6f",
-    "semantic_hash": ""
+    "semantic_hash": "983c6c409d44adb4ddf33cc0ce1a9d6f"
   },
-  "Scripts/Game/Cutscene/ReactionCutscene.cs": {
-    "mtime": 1795521967.9989884,
-    "seen": 1795528432.463354,
+  "Athanor/Assets/Scripts/Game/Cutscene/ReactionCutscene.cs": {
+    "mtime": 1795622883.100629,
+    "seen": 1795628483.623921,
     "ast_hash": "7581f44221aa8b52c417b21479e21a6d",
-    "semantic_hash": ""
+    "semantic_hash": "7581f44221aa8b52c417b21479e21a6d"
   },
-  "Scripts/Game/Cutscene/SimpleCutscene.cs": {
-    "mtime": 1795521967.9995112,
-    "seen": 1795528432.4633548,
-    "ast_hash": "fef7d1a23962e441fe0231a860001ffc",
-    "semantic_hash": ""
+  "Athanor/Assets/Scripts/Game/Cutscene/SimpleCutscene.cs": {
+    "mtime": 1795622883.1020932,
+    "seen": 1795628483.6239219,
+    "ast_hash": "c44f7f6e625c5de11e7c585dcd734c71",
+    "semantic_hash": "c44f7f6e625c5de11e7c585dcd734c71"
   },
-  "Scripts/Game/Cutscene/TutorialArea.cs": {
-    "mtime": 1795184939.2351706,
-    "seen": 1795528432.4633548,
-    "ast_hash": "3aa31c0922e194605a6f8924c2dcaaf1",
-    "semantic_hash": ""
-  },
-  "Scripts/Game/Cutscene/TutorialController.cs": {
-    "mtime": 1795521968.0254972,
-    "seen": 1795528432.463356,
-    "ast_hash": "984add778843318af1b03fea44b2ea1c",
-    "semantic_hash": ""
-  },
-  "Scripts/Game/Cutscene/TutorialHole.cs": {
-    "mtime": 1795180268.149578,
-    "seen": 1795528432.463356,
-    "ast_hash": "43272cb05ca3bda1cdc872a7b0f4ab95",
-    "semantic_hash": ""
-  },
-  "Scripts/Game/Cutscene/TutorialSettings.cs": {
-    "mtime": 1795184748.266018,
-    "seen": 1795528432.463356,
-    "ast_hash": "f7dacda8390700beb1ead40c9f05b029",
-    "semantic_hash": ""
-  },
-  "Scripts/Game/Cutscene/TutorialStep.cs": {
-    "mtime": 1795184645.9565222,
-    "seen": 1795528432.463357,
-    "ast_hash": "0fc785c519a75205928e05870c5b5d3a",
-    "semantic_hash": ""
-  },
-  "Scripts/Game/Cutscene/WindowView.cs": {
-    "mtime": 1795180268.1499383,
-    "seen": 1795528432.463357,
+  "Athanor/Assets/Scripts/Game/Cutscene/WindowView.cs": {
+    "mtime": 1795622883.1009917,
+    "seen": 1795628483.6239219,
     "ast_hash": "87538839508175d296165189c2fc1ceb",
-    "semantic_hash": ""
+    "semantic_hash": "87538839508175d296165189c2fc1ceb"
   },
-  "Scripts/Game/Depth/CameraSway.cs": {
-    "mtime": 1795180268.150152,
-    "seen": 1795528432.463358,
+  "Athanor/Assets/Scripts/Game/Depth/CameraSway.cs": {
+    "mtime": 1795622883.0941148,
+    "seen": 1795628483.6239219,
     "ast_hash": "49776fc2a3cd2711324f9c55f7253a9d",
-    "semantic_hash": ""
+    "semantic_hash": "49776fc2a3cd2711324f9c55f7253a9d"
   },
-  "Scripts/Game/Depth/DepthLayer.cs": {
-    "mtime": 1794919351.001472,
-    "seen": 1795528432.463358,
+  "Athanor/Assets/Scripts/Game/Depth/DepthLayer.cs": {
+    "mtime": 1795622883.0948021,
+    "seen": 1795628483.6239228,
     "ast_hash": "2ae83b8a91ae2e90acc4a4c163700892",
-    "semantic_hash": ""
+    "semantic_hash": "2ae83b8a91ae2e90acc4a4c163700892"
   },
-  "Scripts/Game/Depth/DepthMath.cs": {
-    "mtime": 1795180268.1503549,
-    "seen": 1795528432.463358,
+  "Athanor/Assets/Scripts/Game/Depth/DepthMath.cs": {
+    "mtime": 1795622883.093607,
+    "seen": 1795628483.6239228,
     "ast_hash": "b2a7055348c0114ca60add2dcb5a6d71",
-    "semantic_hash": ""
+    "semantic_hash": "b2a7055348c0114ca60add2dcb5a6d71"
   },
-  "Scripts/Game/Depth/DepthMood.cs": {
-    "mtime": 1795097801.0976453,
-    "seen": 1795528432.4633589,
-    "ast_hash": "d5ebadeb414bc959cd695ad705646424",
-    "semantic_hash": ""
+  "Athanor/Assets/Scripts/Game/Depth/DepthMood.cs": {
+    "mtime": 1795622883.094991,
+    "seen": 1795628483.6239228,
+    "ast_hash": "d8d465cd1152545c74851e1f9b6b139d",
+    "semantic_hash": "d8d465cd1152545c74851e1f9b6b139d"
   },
-  "Scripts/Game/Depth/DepthRig.cs": {
-    "mtime": 1795448319.755992,
-    "seen": 1795528432.4633589,
+  "Athanor/Assets/Scripts/Game/Depth/DepthRig.cs": {
+    "mtime": 1795622883.0938349,
+    "seen": 1795628483.623924,
     "ast_hash": "92a682773aa96eb599232767b4d9c7db",
-    "semantic_hash": ""
+    "semantic_hash": "92a682773aa96eb599232767b4d9c7db"
   },
-  "Scripts/Game/Depth/DepthStage.cs": {
-    "mtime": 1795180268.1512048,
-    "seen": 1795528432.4633589,
-    "ast_hash": "715bad569e47f01afcb872681c95756a",
-    "semantic_hash": ""
+  "Athanor/Assets/Scripts/Game/Depth/DepthStage.cs": {
+    "mtime": 1795622883.093049,
+    "seen": 1795628483.623924,
+    "ast_hash": "7320ed52b6cfd3dcbeb372ee8c0c2098",
+    "semantic_hash": "7320ed52b6cfd3dcbeb372ee8c0c2098"
   },
-  "Scripts/Game/Depth/DepthSwitch.cs": {
-    "mtime": 1794919446.964212,
-    "seen": 1795528432.46336,
+  "Athanor/Assets/Scripts/Game/Depth/DepthSwitch.cs": {
+    "mtime": 1795622883.093402,
+    "seen": 1795628483.623924,
     "ast_hash": "6d3671eb9b1c2f89081f484ae51a891e",
-    "semantic_hash": ""
+    "semantic_hash": "6d3671eb9b1c2f89081f484ae51a891e"
   },
-  "Scripts/Game/Depth/DepthTable.cs": {
-    "mtime": 1795180268.1517096,
-    "seen": 1795528432.46336,
+  "Athanor/Assets/Scripts/Game/Depth/DepthTable.cs": {
+    "mtime": 1795622883.0932317,
+    "seen": 1795628483.623925,
     "ast_hash": "0a84d33946ff386069279e20fbf6c1ae",
-    "semantic_hash": ""
+    "semantic_hash": "0a84d33946ff386069279e20fbf6c1ae"
   },
-  "Scripts/Game/Depth/DepthTiltShiftFeature.cs": {
-    "mtime": 1794915816.7943442,
-    "seen": 1795528432.46336,
+  "Athanor/Assets/Scripts/Game/Depth/DepthTiltShiftFeature.cs": {
+    "mtime": 1795622883.0944633,
+    "seen": 1795628483.623925,
     "ast_hash": "b268b233341e2e8fb49164e85eb86af3",
-    "semantic_hash": ""
+    "semantic_hash": "b268b233341e2e8fb49164e85eb86af3"
   },
-  "Scripts/Game/Depth/FogSheet.cs": {
-    "mtime": 1795180268.15183,
-    "seen": 1795528432.463361,
+  "Athanor/Assets/Scripts/Game/Depth/FogSheet.cs": {
+    "mtime": 1795622883.094309,
+    "seen": 1795628483.623925,
     "ast_hash": "2057d0090726be46dd8e173982e13213",
-    "semantic_hash": ""
+    "semantic_hash": "2057d0090726be46dd8e173982e13213"
   },
-  "Scripts/Game/Depth/TiltShift.cs": {
-    "mtime": 1795180268.1520362,
-    "seen": 1795528432.463361,
+  "Athanor/Assets/Scripts/Game/Depth/TiltShift.cs": {
+    "mtime": 1795622883.0946095,
+    "seen": 1795628483.623925,
     "ast_hash": "d601b9e9fd8a799755ccf1a546d53c96",
-    "semantic_hash": ""
+    "semantic_hash": "d601b9e9fd8a799755ccf1a546d53c96"
   },
-  "Scripts/Game/Fx/BurstSpec.cs": {
-    "mtime": 1795097742.1454754,
-    "seen": 1795528432.463361,
+  "Athanor/Assets/Scripts/Game/Fx/BurstSpec.cs": {
+    "mtime": 1795622883.0967703,
+    "seen": 1795628483.623926,
     "ast_hash": "04f64623cdad19771519a1acf2d72861",
-    "semantic_hash": ""
+    "semantic_hash": "04f64623cdad19771519a1acf2d72861"
   },
-  "Scripts/Game/Fx/Flame.cs": {
-    "mtime": 1794386188.0,
-    "seen": 1795528432.463362,
+  "Athanor/Assets/Scripts/Game/Fx/Flame.cs": {
+    "mtime": 1795622883.0957692,
+    "seen": 1795628483.623926,
     "ast_hash": "027a1d8f689066e0f51db51c5484b0d7",
-    "semantic_hash": ""
+    "semantic_hash": "027a1d8f689066e0f51db51c5484b0d7"
   },
-  "Scripts/Game/Fx/Flipbook.cs": {
-    "mtime": 1794386188.0,
-    "seen": 1795528432.463362,
+  "Athanor/Assets/Scripts/Game/Fx/Flipbook.cs": {
+    "mtime": 1795622883.0956273,
+    "seen": 1795628483.623926,
     "ast_hash": "b1c19b2ddc946fbc2e272bd7a860bb58",
-    "semantic_hash": ""
+    "semantic_hash": "b1c19b2ddc946fbc2e272bd7a860bb58"
   },
-  "Scripts/Game/Fx/FlipbookSheet.cs": {
-    "mtime": 1794386188.0,
-    "seen": 1795528432.463362,
+  "Athanor/Assets/Scripts/Game/Fx/FlipbookSheet.cs": {
+    "mtime": 1795622883.0951347,
+    "seen": 1795628483.623927,
     "ast_hash": "097858c41cb872a15b34f69bb26c4a71",
-    "semantic_hash": ""
+    "semantic_hash": "097858c41cb872a15b34f69bb26c4a71"
   },
-  "Scripts/Game/Fx/Fx.cs": {
-    "mtime": 1794937943.634073,
-    "seen": 1795528432.4633632,
+  "Athanor/Assets/Scripts/Game/Fx/Fx.cs": {
+    "mtime": 1795622883.0959077,
+    "seen": 1795628483.623927,
     "ast_hash": "b7af8e90642da4e4c5cd9fed42c47aee",
-    "semantic_hash": ""
+    "semantic_hash": "b7af8e90642da4e4c5cd9fed42c47aee"
   },
-  "Scripts/Game/Fx/FxRefs.cs": {
-    "mtime": 1795093465.1957831,
-    "seen": 1795528432.4633632,
+  "Athanor/Assets/Scripts/Game/Fx/FxRefs.cs": {
+    "mtime": 1795622883.0962045,
+    "seen": 1795628483.623927,
     "ast_hash": "db9b9864be02ebe89aae3c3197e6fb87",
-    "semantic_hash": ""
+    "semantic_hash": "db9b9864be02ebe89aae3c3197e6fb87"
   },
-  "Scripts/Game/Fx/ScreenFx.cs": {
-    "mtime": 1795180268.152194,
-    "seen": 1795528432.4633641,
+  "Athanor/Assets/Scripts/Game/Fx/ScreenFx.cs": {
+    "mtime": 1795622883.0953012,
+    "seen": 1795628483.623928,
     "ast_hash": "9348bacdfed4c533dbd94dfef865d98b",
-    "semantic_hash": ""
+    "semantic_hash": "9348bacdfed4c533dbd94dfef865d98b"
   },
-  "Scripts/Game/Fx/SparkMesh.cs": {
-    "mtime": 1795180268.1525693,
-    "seen": 1795528432.4633641,
+  "Athanor/Assets/Scripts/Game/Fx/SparkMesh.cs": {
+    "mtime": 1795622883.0964062,
+    "seen": 1795628483.623928,
     "ast_hash": "e63c581e27f9f08e1e10531cc1ccd38d",
-    "semantic_hash": ""
+    "semantic_hash": "e63c581e27f9f08e1e10531cc1ccd38d"
   },
-  "Scripts/Game/Fx/SparkParticles.cs": {
-    "mtime": 1795095115.4393802,
-    "seen": 1795528432.4633641,
+  "Athanor/Assets/Scripts/Game/Fx/SparkParticles.cs": {
+    "mtime": 1795622883.0965986,
+    "seen": 1795628483.623928,
     "ast_hash": "7520567caf606851c2afbe499a478287",
-    "semantic_hash": ""
+    "semantic_hash": "7520567caf606851c2afbe499a478287"
   },
-  "Scripts/Game/Fx/Sparks.cs": {
-    "mtime": 1795093236.6669424,
-    "seen": 1795528432.463365,
+  "Athanor/Assets/Scripts/Game/Fx/Sparks.cs": {
+    "mtime": 1795622883.0954986,
+    "seen": 1795628483.623929,
     "ast_hash": "0f4407ae5acee59f21c41412d8f4bbaa",
-    "semantic_hash": ""
+    "semantic_hash": "0f4407ae5acee59f21c41412d8f4bbaa"
   },
-  "Scripts/Game/Support/Anim.cs": {
-    "mtime": 1794577933.1291475,
-    "seen": 1795528432.463365,
-    "ast_hash": "9428441f9af170915169cbb0eaad62c7",
-    "semantic_hash": ""
+  "Athanor/Assets/Scripts/Game/Managers/ContentManager.cs": {
+    "mtime": 1795622920.9043314,
+    "seen": 1795628483.623929,
+    "ast_hash": "3be68258388f4af5ba6b5fb1f564fb21",
+    "semantic_hash": "3be68258388f4af5ba6b5fb1f564fb21"
   },
-  "Scripts/Game/Support/Art.cs": {
-    "mtime": 1795099108.0512362,
-    "seen": 1795528432.463365,
-    "ast_hash": "f79d587ed51d63b8a825487582118f9d",
-    "semantic_hash": ""
+  "Athanor/Assets/Scripts/Game/Managers/LocalizationManager.cs": {
+    "mtime": 1795622920.9089863,
+    "seen": 1795628483.623929,
+    "ast_hash": "430339134e68371596d0e4d83921193c",
+    "semantic_hash": "430339134e68371596d0e4d83921193c"
   },
-  "Scripts/Game/Support/ArtLibrary.cs": {
-    "mtime": 1795018494.4791174,
-    "seen": 1795528432.4633658,
+  "Athanor/Assets/Scripts/Game/Managers/ProgressManager.cs": {
+    "mtime": 1795622920.9112544,
+    "seen": 1795628483.6239302,
+    "ast_hash": "694d1b1c794c3087c1d5538b72588f5f",
+    "semantic_hash": "694d1b1c794c3087c1d5538b72588f5f"
+  },
+  "Athanor/Assets/Scripts/Game/Managers/RunManager.cs": {
+    "mtime": 1795622955.158227,
+    "seen": 1795628483.6239302,
+    "ast_hash": "3acb49188d4991881e593b2c186b0b93",
+    "semantic_hash": "3acb49188d4991881e593b2c186b0b93"
+  },
+  "Athanor/Assets/Scripts/Game/Managers/SaveManager.cs": {
+    "mtime": 1795622920.9066808,
+    "seen": 1795628483.6239302,
+    "ast_hash": "ab8935c9811ab3e1b4fe85823e25e1b8",
+    "semantic_hash": "ab8935c9811ab3e1b4fe85823e25e1b8"
+  },
+  "Athanor/Assets/Scripts/Game/Managers/Singleton.cs": {
+    "mtime": 1795622883.0969439,
+    "seen": 1795628483.6239302,
+    "ast_hash": "c34fb0d28b927de945dfce5904284498",
+    "semantic_hash": "c34fb0d28b927de945dfce5904284498"
+  },
+  "Athanor/Assets/Scripts/Game/Support/Anim.cs": {
+    "mtime": 1795622883.0977426,
+    "seen": 1795628483.623931,
+    "ast_hash": "956c764088137c64daf610d28f7759aa",
+    "semantic_hash": "956c764088137c64daf610d28f7759aa"
+  },
+  "Athanor/Assets/Scripts/Game/Support/Art.cs": {
+    "mtime": 1795622883.1002169,
+    "seen": 1795628483.623931,
+    "ast_hash": "56352f04a4efe5125dd1688ae5444f69",
+    "semantic_hash": "56352f04a4efe5125dd1688ae5444f69"
+  },
+  "Athanor/Assets/Scripts/Game/Support/ArtLibrary.cs": {
+    "mtime": 1795622883.098599,
+    "seen": 1795628483.623931,
     "ast_hash": "9ec272cb6b490cf8d7ff5c2b32ff034c",
-    "semantic_hash": ""
+    "semantic_hash": "9ec272cb6b490cf8d7ff5c2b32ff034c"
   },
-  "Scripts/Game/Support/AudioMute.cs": {
-    "mtime": 1795095103.9554377,
-    "seen": 1795528432.4633658,
+  "Athanor/Assets/Scripts/Game/Support/AudioMute.cs": {
+    "mtime": 1795622883.098732,
+    "seen": 1795628483.623932,
     "ast_hash": "37c06d356acb73a2643a7baf6e638b1a",
-    "semantic_hash": ""
+    "semantic_hash": "37c06d356acb73a2643a7baf6e638b1a"
   },
-  "Scripts/Game/Support/Clickable.cs": {
-    "mtime": 1795088883.6388257,
-    "seen": 1795528432.4633658,
+  "Athanor/Assets/Scripts/Game/Support/Clickable.cs": {
+    "mtime": 1795622883.0972571,
+    "seen": 1795628483.623932,
     "ast_hash": "86ddf984d122a034107a86880604ef22",
-    "semantic_hash": ""
+    "semantic_hash": "86ddf984d122a034107a86880604ef22"
   },
-  "Scripts/Game/Support/Dev.cs": {
-    "mtime": 1795448319.7560892,
-    "seen": 1795528432.463367,
+  "Athanor/Assets/Scripts/Game/Support/Dev.cs": {
+    "mtime": 1795622883.0981085,
+    "seen": 1795628483.623932,
     "ast_hash": "aa3924db69864fef9af042f9d75e0915",
-    "semantic_hash": ""
+    "semantic_hash": "aa3924db69864fef9af042f9d75e0915"
   },
-  "Scripts/Game/Support/Fonts.cs": {
-    "mtime": 1795018383.9672818,
-    "seen": 1795528432.463367,
+  "Athanor/Assets/Scripts/Game/Support/Fonts.cs": {
+    "mtime": 1795622883.0984273,
+    "seen": 1795628483.6239328,
     "ast_hash": "d9b24de1ed3506b5decc9b0fa8837f7f",
-    "semantic_hash": ""
+    "semantic_hash": "d9b24de1ed3506b5decc9b0fa8837f7f"
   },
-  "Scripts/Game/Support/Haptics.cs": {
-    "mtime": 1795095103.9553177,
-    "seen": 1795528432.463367,
+  "Athanor/Assets/Scripts/Game/Support/Haptics.cs": {
+    "mtime": 1795622883.097118,
+    "seen": 1795628483.6239328,
     "ast_hash": "b282ce96a8333a1fa644e0e67b79228c",
-    "semantic_hash": ""
+    "semantic_hash": "b282ce96a8333a1fa644e0e67b79228c"
   },
-  "Scripts/Game/Support/KindColors.cs": {
-    "mtime": 1794386256.0,
-    "seen": 1795528432.463368,
+  "Athanor/Assets/Scripts/Game/Support/KindColors.cs": {
+    "mtime": 1795622883.0992842,
+    "seen": 1795628483.6239328,
     "ast_hash": "c0fb67325f7d151062766c12ee67d5c3",
-    "semantic_hash": ""
+    "semantic_hash": "c0fb67325f7d151062766c12ee67d5c3"
   },
-  "Scripts/Game/Support/Label.cs": {
-    "mtime": 1795018388.1971884,
-    "seen": 1795528432.463368,
+  "Athanor/Assets/Scripts/Game/Support/Label.cs": {
+    "mtime": 1795622883.0998738,
+    "seen": 1795628483.623934,
     "ast_hash": "830e740f95c2cc70a0deaad82a982135",
-    "semantic_hash": ""
+    "semantic_hash": "830e740f95c2cc70a0deaad82a982135"
   },
-  "Scripts/Game/Support/Loc.cs": {
-    "mtime": 1795521967.9979396,
-    "seen": 1795528432.463368,
-    "ast_hash": "352a3cf9e26b685401a70e90348fdb9d",
-    "semantic_hash": ""
+  "Athanor/Assets/Scripts/Game/Support/Loc.cs": {
+    "mtime": 1795622883.0976062,
+    "seen": 1795628483.623934,
+    "ast_hash": "86311b99f48c8d07b64fb58d3aae33b6",
+    "semantic_hash": "86311b99f48c8d07b64fb58d3aae33b6"
   },
-  "Scripts/Game/Support/Motion.cs": {
-    "mtime": 1795095160.6844153,
-    "seen": 1795528432.463369,
+  "Athanor/Assets/Scripts/Game/Support/Motion.cs": {
+    "mtime": 1795622883.0991066,
+    "seen": 1795628483.623934,
     "ast_hash": "99c0a23df36b5b82ef1c9a942e29b947",
-    "semantic_hash": ""
+    "semantic_hash": "99c0a23df36b5b82ef1c9a942e29b947"
   },
-  "Scripts/Game/Support/Palette.cs": {
-    "mtime": 1795100125.81948,
-    "seen": 1795528432.463369,
-    "ast_hash": "674cbac0633d302069ce4bd81eba591e",
-    "semantic_hash": ""
+  "Athanor/Assets/Scripts/Game/Support/Palette.cs": {
+    "mtime": 1795622883.0974264,
+    "seen": 1795628483.623935,
+    "ast_hash": "bab976bcea33f0ad20db7ac0f97b5def",
+    "semantic_hash": "bab976bcea33f0ad20db7ac0f97b5def"
   },
-  "Scripts/Game/Support/PointerInput.cs": {
-    "mtime": 1795095103.9551787,
-    "seen": 1795528432.463369,
+  "Athanor/Assets/Scripts/Game/Support/PointerInput.cs": {
+    "mtime": 1795622883.0996788,
+    "seen": 1795628483.623935,
     "ast_hash": "5bc8c0eb312bf4b9d0b3c7b389cc8d4a",
-    "semantic_hash": ""
+    "semantic_hash": "5bc8c0eb312bf4b9d0b3c7b389cc8d4a"
   },
-  "Scripts/Game/Support/Px.cs": {
-    "mtime": 1795180268.1527002,
-    "seen": 1795528432.46337,
+  "Athanor/Assets/Scripts/Game/Support/Px.cs": {
+    "mtime": 1795622883.0982833,
+    "seen": 1795628483.623935,
     "ast_hash": "7c1877ac446094ebefe44ac5723af566",
-    "semantic_hash": ""
+    "semantic_hash": "7c1877ac446094ebefe44ac5723af566"
   },
-  "Scripts/Game/Support/RarityStars.cs": {
-    "mtime": 1795521967.9986024,
-    "seen": 1795528432.46337,
+  "Athanor/Assets/Scripts/Game/Support/RarityStars.cs": {
+    "mtime": 1795622883.0989158,
+    "seen": 1795628483.623936,
     "ast_hash": "a886c27586c131ebb23316701b9d1dce",
-    "semantic_hash": ""
+    "semantic_hash": "a886c27586c131ebb23316701b9d1dce"
   },
-  "Scripts/Game/Support/Spawn.cs": {
-    "mtime": 1795180268.1530519,
-    "seen": 1795528432.46337,
+  "Athanor/Assets/Scripts/Game/Support/Spawn.cs": {
+    "mtime": 1795622883.0994816,
+    "seen": 1795628483.623936,
     "ast_hash": "4fed667ce98017f715ac7d9ae80709da",
-    "semantic_hash": ""
+    "semantic_hash": "4fed667ce98017f715ac7d9ae80709da"
   },
-  "Scripts/Game/Support/TileData.cs": {
-    "mtime": 1795018433.241719,
-    "seen": 1795528432.463371,
+  "Athanor/Assets/Scripts/Game/Support/TileData.cs": {
+    "mtime": 1795622883.1000376,
+    "seen": 1795628483.6239371,
     "ast_hash": "309f09f41a1070f330e9f705a3f745c8",
-    "semantic_hash": ""
+    "semantic_hash": "309f09f41a1070f330e9f705a3f745c8"
   },
-  "Scripts/Game/Support/Wording.cs": {
-    "mtime": 1795521967.9982796,
-    "seen": 1795528432.463371,
-    "ast_hash": "f780404f62d4e5851ddd4928135a68ac",
-    "semantic_hash": ""
+  "Athanor/Assets/Scripts/Game/Support/Wording.cs": {
+    "mtime": 1795622883.0979323,
+    "seen": 1795628483.6239371,
+    "ast_hash": "862f1dcfb558b2154ed33753b198986c",
+    "semantic_hash": "862f1dcfb558b2154ed33753b198986c"
   },
-  "Scripts/Game/Ui/CatalystChoiceView.cs": {
-    "mtime": 1795521967.994226,
-    "seen": 1795528432.463372,
-    "ast_hash": "b679aa79b62c6a9aa99156ef41311892",
-    "semantic_hash": ""
+  "Athanor/Assets/Scripts/Game/Tutorial/TutorialHole.cs": {
+    "mtime": 1795624801.8740082,
+    "seen": 1795628483.6239371,
+    "ast_hash": "5b88f274ac3751611c88e052b481dfb3",
+    "semantic_hash": "5b88f274ac3751611c88e052b481dfb3"
   },
-  "Scripts/Game/Ui/EventView.cs": {
-    "mtime": 1795521967.994006,
-    "seen": 1795528432.463372,
-    "ast_hash": "881067ee62da6fc46d057bb9a7adc630",
-    "semantic_hash": ""
+  "Athanor/Assets/Scripts/Game/Tutorial/TutorialManager.cs": {
+    "mtime": 1795625203.214155,
+    "seen": 1795628483.623938,
+    "ast_hash": "8367029de9ba9335238aac9aab3ffd2a",
+    "semantic_hash": "8367029de9ba9335238aac9aab3ffd2a"
   },
-  "Scripts/Game/Ui/GoalRow.cs": {
-    "mtime": 1795016395.6052644,
-    "seen": 1795528432.463373,
+  "Athanor/Assets/Scripts/Game/Tutorial/TutorialSequence.cs": {
+    "mtime": 1795624402.1528466,
+    "seen": 1795628483.623938,
+    "ast_hash": "3a7309324c183bb09b45ea33955821c7",
+    "semantic_hash": "3a7309324c183bb09b45ea33955821c7"
+  },
+  "Athanor/Assets/Scripts/Game/Tutorial/TutorialSettings.cs": {
+    "mtime": 1795622883.1019118,
+    "seen": 1795628483.623938,
+    "ast_hash": "f7dacda8390700beb1ead40c9f05b029",
+    "semantic_hash": "f7dacda8390700beb1ead40c9f05b029"
+  },
+  "Athanor/Assets/Scripts/Game/Tutorial/TutorialTypes.cs": {
+    "mtime": 1795624402.1527076,
+    "seen": 1795628483.623939,
+    "ast_hash": "341512bbd8cbc5705d8a97598246ea68",
+    "semantic_hash": "341512bbd8cbc5705d8a97598246ea68"
+  },
+  "Athanor/Assets/Scripts/Game/Ui/CatalystChoiceView.cs": {
+    "mtime": 1795626252.3468766,
+    "seen": 1795628483.623939,
+    "ast_hash": "690edfbca6bdc2209736654cb7109f44",
+    "semantic_hash": "690edfbca6bdc2209736654cb7109f44"
+  },
+  "Athanor/Assets/Scripts/Game/Ui/EventView.cs": {
+    "mtime": 1795622883.0885177,
+    "seen": 1795628483.623939,
+    "ast_hash": "061a629b7c76e1208ed82ec04209018c",
+    "semantic_hash": "061a629b7c76e1208ed82ec04209018c"
+  },
+  "Athanor/Assets/Scripts/Game/Ui/GoalRow.cs": {
+    "mtime": 1795622883.0900915,
+    "seen": 1795628483.62394,
     "ast_hash": "c633a797cc1761ee9a07ce1f56a54d58",
-    "semantic_hash": ""
+    "semantic_hash": "c633a797cc1761ee9a07ce1f56a54d58"
   },
-  "Scripts/Game/Ui/GoalToast.cs": {
-    "mtime": 1795521967.9953444,
-    "seen": 1795528432.463373,
-    "ast_hash": "a2cddc7d89b10f36b625e0a29c3b9619",
-    "semantic_hash": ""
+  "Athanor/Assets/Scripts/Game/Ui/GoalToast.cs": {
+    "mtime": 1795622883.0902553,
+    "seen": 1795628483.62394,
+    "ast_hash": "65bcc1385508157e3701eeaa0f857730",
+    "semantic_hash": "65bcc1385508157e3701eeaa0f857730"
   },
-  "Scripts/Game/Ui/GoalsView.cs": {
-    "mtime": 1795521967.9947724,
-    "seen": 1795528432.4633741,
-    "ast_hash": "f9b2300f48f971236443b055c2a9b85d",
-    "semantic_hash": ""
+  "Athanor/Assets/Scripts/Game/Ui/GoalsView.cs": {
+    "mtime": 1795626102.2815661,
+    "seen": 1795628483.62394,
+    "ast_hash": "d29b94ea8e38847ae3d03a57fc2d459b",
+    "semantic_hash": "d29b94ea8e38847ae3d03a57fc2d459b"
   },
-  "Scripts/Game/Ui/JournalCell.cs": {
-    "mtime": 1795016395.605529,
-    "seen": 1795528432.4633741,
+  "Athanor/Assets/Scripts/Game/Ui/JournalCell.cs": {
+    "mtime": 1795622883.0887134,
+    "seen": 1795628483.6239412,
     "ast_hash": "47cba5dadab5585d38bd8896a6cf2770",
-    "semantic_hash": ""
+    "semantic_hash": "47cba5dadab5585d38bd8896a6cf2770"
   },
-  "Scripts/Game/Ui/JournalView.cs": {
-    "mtime": 1795521967.9958835,
-    "seen": 1795528432.4633741,
-    "ast_hash": "d0fe68ca3040055666cc9a64bfbe3551",
-    "semantic_hash": ""
+  "Athanor/Assets/Scripts/Game/Ui/JournalView.cs": {
+    "mtime": 1795626192.950302,
+    "seen": 1795628483.6239412,
+    "ast_hash": "9b7033656384550961a6149804bebb3b",
+    "semantic_hash": "9b7033656384550961a6149804bebb3b"
   },
-  "Scripts/Game/Ui/PauseMenu.cs": {
-    "mtime": 1795521967.9950907,
-    "seen": 1795528432.463375,
-    "ast_hash": "601753861e47cb30e53bc95aa01ae50d",
-    "semantic_hash": ""
+  "Athanor/Assets/Scripts/Game/Ui/PauseMenu.cs": {
+    "mtime": 1795622883.089945,
+    "seen": 1795628483.6239412,
+    "ast_hash": "34be278729628448ee466b880d5ce7f6",
+    "semantic_hash": "34be278729628448ee466b880d5ce7f6"
   },
-  "Scripts/Game/Ui/RunOverView.cs": {
-    "mtime": 1795521967.9956253,
-    "seen": 1795528432.463375,
-    "ast_hash": "adaa880ca72d69027b8b642a3875c0f2",
-    "semantic_hash": ""
+  "Athanor/Assets/Scripts/Game/Ui/RunOverView.cs": {
+    "mtime": 1795626252.3481817,
+    "seen": 1795628483.623942,
+    "ast_hash": "85c71aa4c3e88946a6c0fc90121be502",
+    "semantic_hash": "85c71aa4c3e88946a6c0fc90121be502"
   },
-  "Scripts/Game/Ui/TitleView.cs": {
-    "mtime": 1795521967.9944518,
-    "seen": 1795528432.463375,
-    "ast_hash": "faf0564b87242993254bda1afe11c2aa",
-    "semantic_hash": ""
+  "Athanor/Assets/Scripts/Game/Ui/TitleView.cs": {
+    "mtime": 1795626252.347692,
+    "seen": 1795628483.623942,
+    "ast_hash": "8e2f9b52eaf7b0692a48cd4832fbaafa",
+    "semantic_hash": "8e2f9b52eaf7b0692a48cd4832fbaafa"
   },
-  "Scripts/Game/Ui/Tooltip.cs": {
-    "mtime": 1795180268.1545017,
-    "seen": 1795528432.4633758,
-    "ast_hash": "479206cd84aa8feade3968b2f5ffd623",
-    "semantic_hash": ""
+  "Athanor/Assets/Scripts/Game/Ui/Tooltip.cs": {
+    "mtime": 1795625956.5959888,
+    "seen": 1795628483.623942,
+    "ast_hash": "6e3a666e382188a4ee250a0480919a35",
+    "semantic_hash": "6e3a666e382188a4ee250a0480919a35"
   },
-  "Scripts/Game/Ui/UiButton.cs": {
-    "mtime": 1795180268.154714,
-    "seen": 1795528432.4633758,
+  "Athanor/Assets/Scripts/Game/Ui/UiButton.cs": {
+    "mtime": 1795622883.0892987,
+    "seen": 1795628483.6239429,
     "ast_hash": "25c0c9835877116385b57bede1363a9c",
-    "semantic_hash": ""
+    "semantic_hash": "25c0c9835877116385b57bede1363a9c"
   },
-  "Scripts/Gameplay/AutoPlayer.cs": {
-    "mtime": 1795521968.0005212,
-    "seen": 1795528432.4633758,
+  "Athanor/Assets/Scripts/Gameplay/AutoPlayer.cs": {
+    "mtime": 1795622883.0695179,
+    "seen": 1795628483.6239429,
     "ast_hash": "9d4cc4f34d974c993515519a21031139",
-    "semantic_hash": ""
+    "semantic_hash": "9d4cc4f34d974c993515519a21031139"
   },
-  "Scripts/Gameplay/BenchRules.cs": {
-    "mtime": 1795521968.000772,
-    "seen": 1795528432.463377,
+  "Athanor/Assets/Scripts/Gameplay/BenchRules.cs": {
+    "mtime": 1795622883.0697892,
+    "seen": 1795628483.6239429,
     "ast_hash": "5ecd1e45a2cc8c9fc3a40411b1de7b67",
-    "semantic_hash": ""
+    "semantic_hash": "5ecd1e45a2cc8c9fc3a40411b1de7b67"
   },
-  "Scripts/Gameplay/Chain.cs": {
-    "mtime": 1795521967.9996846,
-    "seen": 1795528432.463377,
+  "Athanor/Assets/Scripts/Gameplay/Chain.cs": {
+    "mtime": 1795622883.0680513,
+    "seen": 1795628483.623944,
     "ast_hash": "d6e5a3711164d044fdfbfb53c5dbffd1",
-    "semantic_hash": ""
+    "semantic_hash": "d6e5a3711164d044fdfbfb53c5dbffd1"
   },
-  "Scripts/Gameplay/ContentData.cs": {
-    "mtime": 1795521968.0017617,
-    "seen": 1795528432.463377,
-    "ast_hash": "4dee88cdc07b968356ad7b54300acdaa",
-    "semantic_hash": ""
+  "Athanor/Assets/Scripts/Gameplay/Content/AspectDefinition.cs": {
+    "mtime": 1795622883.073973,
+    "seen": 1795628483.623944,
+    "ast_hash": "993e9dab019e3410b6e5417d000cdcdb",
+    "semantic_hash": "993e9dab019e3410b6e5417d000cdcdb"
   },
-  "Scripts/Gameplay/ContentDb.cs": {
-    "mtime": 1795521968.002297,
-    "seen": 1795528432.463378,
-    "ast_hash": "443a885c086e4e7e43d45ef6af676f93",
-    "semantic_hash": ""
+  "Athanor/Assets/Scripts/Gameplay/Content/CatalystDefinition.cs": {
+    "mtime": 1795622883.0737603,
+    "seen": 1795628483.623944,
+    "ast_hash": "02ceca763a6fe67ea0c479036e3748f1",
+    "semantic_hash": "02ceca763a6fe67ea0c479036e3748f1"
   },
-  "Scripts/Gameplay/EffectOps.cs": {
-    "mtime": 1795521968.0028517,
-    "seen": 1795528432.463378,
+  "Athanor/Assets/Scripts/Gameplay/Content/ContentDatabase.cs": {
+    "mtime": 1795622883.0746725,
+    "seen": 1795628483.623945,
+    "ast_hash": "4e6ee48376b40af0933f3ca2d3c5de18",
+    "semantic_hash": "4e6ee48376b40af0933f3ca2d3c5de18"
+  },
+  "Athanor/Assets/Scripts/Gameplay/Content/ContentEnums.cs": {
+    "mtime": 1795622883.075171,
+    "seen": 1795628483.623945,
+    "ast_hash": "be39b5143acf12bcb4bdb21fda998b28",
+    "semantic_hash": "be39b5143acf12bcb4bdb21fda998b28"
+  },
+  "Athanor/Assets/Scripts/Gameplay/Content/ContentValidation.cs": {
+    "mtime": 1795628406.9370897,
+    "seen": 1795628483.623945,
+    "ast_hash": "c254b4321f2475f036d20f058a697ead",
+    "semantic_hash": "c254b4321f2475f036d20f058a697ead"
+  },
+  "Athanor/Assets/Scripts/Gameplay/Content/EventDefinition.cs": {
+    "mtime": 1795622883.074885,
+    "seen": 1795628483.623946,
+    "ast_hash": "3abcdf1d2875b13b99ea6848726861e9",
+    "semantic_hash": "3abcdf1d2875b13b99ea6848726861e9"
+  },
+  "Athanor/Assets/Scripts/Gameplay/Content/GameRules.cs": {
+    "mtime": 1795622883.0742037,
+    "seen": 1795628483.623946,
+    "ast_hash": "383d48f447462425e154d01f5b2e81c5",
+    "semantic_hash": "383d48f447462425e154d01f5b2e81c5"
+  },
+  "Athanor/Assets/Scripts/Gameplay/Content/GoalDefinition.cs": {
+    "mtime": 1795622883.0732772,
+    "seen": 1795628483.623946,
+    "ast_hash": "5cb73f2ef855e093ff669e7689d21371",
+    "semantic_hash": "5cb73f2ef855e093ff669e7689d21371"
+  },
+  "Athanor/Assets/Scripts/Gameplay/Content/MaterialDefinition.cs": {
+    "mtime": 1795622883.0735013,
+    "seen": 1795628483.623947,
+    "ast_hash": "a76b4ec1598b089e73c6562d7d924f10",
+    "semantic_hash": "a76b4ec1598b089e73c6562d7d924f10"
+  },
+  "Athanor/Assets/Scripts/Gameplay/Content/RecipeDefinition.cs": {
+    "mtime": 1795622883.0744417,
+    "seen": 1795628483.623947,
+    "ast_hash": "dd4e6940e0aa43fde9acb727ec5746ef",
+    "semantic_hash": "dd4e6940e0aa43fde9acb727ec5746ef"
+  },
+  "Athanor/Assets/Scripts/Gameplay/ContentData.cs": {
+    "mtime": 1795622883.0711987,
+    "seen": 1795628483.623947,
+    "ast_hash": "a1ba857ddad824b419987c46973b9992",
+    "semantic_hash": "a1ba857ddad824b419987c46973b9992"
+  },
+  "Athanor/Assets/Scripts/Gameplay/ContentDb.cs": {
+    "mtime": 1795622883.0720413,
+    "seen": 1795628483.623947,
+    "ast_hash": "b0eeeee8cb317c1a091b5e6914fc3017",
+    "semantic_hash": "b0eeeee8cb317c1a091b5e6914fc3017"
+  },
+  "Athanor/Assets/Scripts/Gameplay/EffectOps.cs": {
+    "mtime": 1795622883.0727365,
+    "seen": 1795628483.623948,
     "ast_hash": "56670eb115a70590c5c81f327a7193a7",
-    "semantic_hash": ""
+    "semantic_hash": "56670eb115a70590c5c81f327a7193a7"
   },
-  "Scripts/Gameplay/Ignite.cs": {
-    "mtime": 1795521968.0024781,
-    "seen": 1795528432.463378,
+  "Athanor/Assets/Scripts/Gameplay/Ignite.cs": {
+    "mtime": 1795622883.0722945,
+    "seen": 1795628483.623948,
     "ast_hash": "3ff94fdcde3bbf10556a0d73e6b3faa3",
-    "semantic_hash": ""
+    "semantic_hash": "3ff94fdcde3bbf10556a0d73e6b3faa3"
   },
-  "Scripts/Gameplay/Journal.cs": {
-    "mtime": 1795521968.001115,
-    "seen": 1795528432.463379,
+  "Athanor/Assets/Scripts/Gameplay/Journal.cs": {
+    "mtime": 1795622883.0703325,
+    "seen": 1795628483.623948,
     "ast_hash": "4e54d41862b1bacaf9e8a538e93b717b",
-    "semantic_hash": ""
+    "semantic_hash": "4e54d41862b1bacaf9e8a538e93b717b"
   },
-  "Scripts/Gameplay/Lang.cs": {
-    "mtime": 1795521968.0009625,
-    "seen": 1795528432.463379,
-    "ast_hash": "6d7686b47e60fab641286b10dde1d8e7",
-    "semantic_hash": ""
+  "Athanor/Assets/Scripts/Gameplay/Lang.cs": {
+    "mtime": 1795622883.0700798,
+    "seen": 1795628483.623949,
+    "ast_hash": "f831be0faeead637b3a916aff3c77d70",
+    "semantic_hash": "f831be0faeead637b3a916aff3c77d70"
   },
-  "Scripts/Gameplay/LinkPair.cs": {
-    "mtime": 1795521968.002108,
-    "seen": 1795528432.463379,
+  "Athanor/Assets/Scripts/Gameplay/LinkPair.cs": {
+    "mtime": 1795622883.0717494,
+    "seen": 1795628483.623949,
     "ast_hash": "e592c5bcf01767239df8486912de651a",
-    "semantic_hash": ""
+    "semantic_hash": "e592c5bcf01767239df8486912de651a"
   },
-  "Scripts/Gameplay/Profile.cs": {
-    "mtime": 1795521967.9998887,
-    "seen": 1795528432.4633799,
+  "Athanor/Assets/Scripts/Gameplay/Profile.cs": {
+    "mtime": 1795622883.0683427,
+    "seen": 1795628483.623949,
     "ast_hash": "e5a693a3d42a5e1f1bd8020911010118",
-    "semantic_hash": ""
+    "semantic_hash": "e5a693a3d42a5e1f1bd8020911010118"
   },
-  "Scripts/Gameplay/RunStart.cs": {
-    "mtime": 1795521968.0003128,
-    "seen": 1795528432.4633799,
+  "Athanor/Assets/Scripts/Gameplay/RunStart.cs": {
+    "mtime": 1795622883.0691144,
+    "seen": 1795628483.62395,
     "ast_hash": "f76a4291cc83f040f7fdcd9649b5b96c",
-    "semantic_hash": ""
+    "semantic_hash": "f76a4291cc83f040f7fdcd9649b5b96c"
   },
-  "Scripts/Gameplay/RunState.cs": {
-    "mtime": 1795521968.001559,
-    "seen": 1795528432.4633799,
+  "Athanor/Assets/Scripts/Gameplay/RunState.cs": {
+    "mtime": 1795622883.0708942,
+    "seen": 1795628483.62395,
     "ast_hash": "83a1d2c5654dfd2fba132cc4718b25dd",
-    "semantic_hash": ""
+    "semantic_hash": "83a1d2c5654dfd2fba132cc4718b25dd"
   },
-  "Scripts/Gameplay/Satchel.cs": {
-    "mtime": 1795521968.0019364,
-    "seen": 1795528432.463381,
+  "Athanor/Assets/Scripts/Gameplay/Satchel.cs": {
+    "mtime": 1795622883.071504,
+    "seen": 1795628483.62395,
     "ast_hash": "956a01bbd2c521864d4787a45fe61cfd",
-    "semantic_hash": ""
+    "semantic_hash": "956a01bbd2c521864d4787a45fe61cfd"
   },
-  "Scripts/Gameplay/ScoreParts.cs": {
-    "mtime": 1795521968.002671,
-    "seen": 1795528432.463381,
+  "Athanor/Assets/Scripts/Gameplay/ScoreParts.cs": {
+    "mtime": 1795622883.072533,
+    "seen": 1795628483.6239512,
     "ast_hash": "6e0074909812b38371d9d87d72e668dc",
-    "semantic_hash": ""
+    "semantic_hash": "6e0074909812b38371d9d87d72e668dc"
   },
-  "Scripts/Gameplay/ScreenFlow.cs": {
-    "mtime": 1795521968.0000932,
-    "seen": 1795528432.463381,
+  "Athanor/Assets/Scripts/Gameplay/ScreenFlow.cs": {
+    "mtime": 1795622883.0686302,
+    "seen": 1795628483.6239512,
     "ast_hash": "74b26f07dacc3f602e4c1f2fe3dfe3d6",
-    "semantic_hash": ""
+    "semantic_hash": "74b26f07dacc3f602e4c1f2fe3dfe3d6"
   },
-  "Scripts/Gameplay/Settings.cs": {
-    "mtime": 1795521968.0031042,
-    "seen": 1795528432.463382,
+  "Athanor/Assets/Scripts/Gameplay/Settings.cs": {
+    "mtime": 1795622883.0729964,
+    "seen": 1795628483.6239512,
     "ast_hash": "32d2f2da3c9c1b315603528f7b6b55f8",
-    "semantic_hash": ""
+    "semantic_hash": "32d2f2da3c9c1b315603528f7b6b55f8"
   },
-  "Scripts/Gameplay/Tutorial.cs": {
-    "mtime": 1795521968.0013409,
-    "seen": 1795528432.463382,
-    "ast_hash": "00634d7568cb07cb8a86857c3beb77cc",
-    "semantic_hash": ""
+  "Athanor/Assets/Scripts/Gameplay/Tutorial.cs": {
+    "mtime": 1795625203.206652,
+    "seen": 1795628483.623952,
+    "ast_hash": "7b0c332c3a801d0fa0b9fd71705f415c",
+    "semantic_hash": "7b0c332c3a801d0fa0b9fd71705f415c"
   },
-  "Tests/EditMode/ChainTests.cs": {
-    "mtime": 1795521967.991719,
-    "seen": 1795528432.463382,
+  "Athanor/Assets/Tests/EditMode/ChainTests.cs": {
+    "mtime": 1795622883.0868683,
+    "seen": 1795628483.623952,
     "ast_hash": "6b1f465fa08ef4dbe4c2cc650b2e5854",
-    "semantic_hash": ""
+    "semantic_hash": "6b1f465fa08ef4dbe4c2cc650b2e5854"
   },
-  "Tests/EditMode/ContentTests.cs": {
-    "mtime": 1795521967.9900012,
-    "seen": 1795528432.463383,
+  "Athanor/Assets/Tests/EditMode/ContentAssetTests.cs": {
+    "mtime": 1795622883.083796,
+    "seen": 1795628483.623952,
+    "ast_hash": "c501e5ed5aeb77707141de0749d72b84",
+    "semantic_hash": "c501e5ed5aeb77707141de0749d72b84"
+  },
+  "Athanor/Assets/Tests/EditMode/ContentDatabaseTests.cs": {
+    "mtime": 1795622883.0861485,
+    "seen": 1795628483.6239529,
+    "ast_hash": "8579f8f95d6e616bcc95154fe094a6f7",
+    "semantic_hash": "8579f8f95d6e616bcc95154fe094a6f7"
+  },
+  "Athanor/Assets/Tests/EditMode/ContentEnumTests.cs": {
+    "mtime": 1795622883.085929,
+    "seen": 1795628483.6239529,
+    "ast_hash": "62579ee8b342749ecbff2f77204bab87",
+    "semantic_hash": "62579ee8b342749ecbff2f77204bab87"
+  },
+  "Athanor/Assets/Tests/EditMode/ContentSnapshotTests.cs": {
+    "mtime": 1795622883.086353,
+    "seen": 1795628483.6239529,
+    "ast_hash": "9a73284d4a668caed9dab30179ba6029",
+    "semantic_hash": "9a73284d4a668caed9dab30179ba6029"
+  },
+  "Athanor/Assets/Tests/EditMode/ContentTests.cs": {
+    "mtime": 1795622883.0848186,
+    "seen": 1795628483.6239538,
     "ast_hash": "4a29a6bffcb97673f4bebbbfb9a312a6",
-    "semantic_hash": ""
+    "semantic_hash": "4a29a6bffcb97673f4bebbbfb9a312a6"
   },
-  "Tests/EditMode/IgniteTests.cs": {
-    "mtime": 1795521967.9905949,
-    "seen": 1795528432.463383,
+  "Athanor/Assets/Tests/EditMode/ContentValidationTests.cs": {
+    "mtime": 1795625787.529485,
+    "seen": 1795628483.6239538,
+    "ast_hash": "cf5879a118bcaa03ebf82f72dd69cdb1",
+    "semantic_hash": "cf5879a118bcaa03ebf82f72dd69cdb1"
+  },
+  "Athanor/Assets/Tests/EditMode/IgniteTests.cs": {
+    "mtime": 1795622883.0853157,
+    "seen": 1795628483.6239538,
     "ast_hash": "68db882899486ee05ed4ba17e44d7541",
-    "semantic_hash": ""
+    "semantic_hash": "68db882899486ee05ed4ba17e44d7541"
   },
-  "Tests/EditMode/LangTests.cs": {
-    "mtime": 1795522214.335652,
-    "seen": 1795528432.463383,
-    "ast_hash": "256a7c88db70f5bf9c41a0ef1c0c325f",
-    "semantic_hash": ""
+  "Athanor/Assets/Tests/EditMode/LangTests.cs": {
+    "mtime": 1795622883.0842664,
+    "seen": 1795628483.623955,
+    "ast_hash": "1fed6b85615f5c43d0520a8c31d26716",
+    "semantic_hash": "1fed6b85615f5c43d0520a8c31d26716"
   },
-  "Tests/EditMode/LoreTests.cs": {
-    "mtime": 1795521967.9897747,
-    "seen": 1795528432.4633842,
+  "Athanor/Assets/Tests/EditMode/LoreTests.cs": {
+    "mtime": 1795622883.0845172,
+    "seen": 1795628483.623955,
     "ast_hash": "de79ebb8bdaef67e55c0d9a50e3d23be",
-    "semantic_hash": ""
+    "semantic_hash": "de79ebb8bdaef67e55c0d9a50e3d23be"
   },
-  "Tests/EditMode/Phase3Tests.cs": {
-    "mtime": 1795521967.993287,
-    "seen": 1795528432.4633842,
-    "ast_hash": "23f5ebea4f0cc3b91cc2ad7549895ae6",
-    "semantic_hash": ""
+  "Athanor/Assets/Tests/EditMode/Phase3Tests.cs": {
+    "mtime": 1795622883.0878606,
+    "seen": 1795628483.623955,
+    "ast_hash": "a7e049711bc3cf9ba6f865082a2c6cc0",
+    "semantic_hash": "a7e049711bc3cf9ba6f865082a2c6cc0"
   },
-  "Tests/EditMode/RarityReportTests.cs": {
-    "mtime": 1795521967.9890056,
-    "seen": 1795528432.4633842,
+  "Athanor/Assets/Tests/EditMode/RarityReportTests.cs": {
+    "mtime": 1795622883.083622,
+    "seen": 1795628483.623956,
     "ast_hash": "c2b4e707d6b1edd384ae7a10421bb5e0",
-    "semantic_hash": ""
+    "semantic_hash": "c2b4e707d6b1edd384ae7a10421bb5e0"
   },
-  "Tests/EditMode/RarityTests.cs": {
-    "mtime": 1795521967.9921613,
-    "seen": 1795528432.463385,
-    "ast_hash": "ad2d469c4949d4b0080bbdbb797e1b4f",
-    "semantic_hash": ""
+  "Athanor/Assets/Tests/EditMode/RarityTests.cs": {
+    "mtime": 1795622883.0871153,
+    "seen": 1795628483.623956,
+    "ast_hash": "475549e452ebb596db0dc0e6006b70e7",
+    "semantic_hash": "475549e452ebb596db0dc0e6006b70e7"
   },
-  "Tests/EditMode/RoleSimTests.cs": {
-    "mtime": 1795521967.9937096,
-    "seen": 1795528432.463385,
+  "Athanor/Assets/Tests/EditMode/RoleSimTests.cs": {
+    "mtime": 1795622883.0882993,
+    "seen": 1795628483.623956,
     "ast_hash": "52527b7bf4697b11ba7a291b72ed824d",
-    "semantic_hash": ""
+    "semantic_hash": "52527b7bf4697b11ba7a291b72ed824d"
   },
-  "Tests/EditMode/RulesTests.cs": {
-    "mtime": 1795521967.990336,
-    "seen": 1795528432.463385,
+  "Athanor/Assets/Tests/EditMode/RulesTests.cs": {
+    "mtime": 1795622883.0850997,
+    "seen": 1795628483.623957,
     "ast_hash": "04e8f1153a0ce20b05b5c98f19672a62",
-    "semantic_hash": ""
+    "semantic_hash": "04e8f1153a0ce20b05b5c98f19672a62"
   },
-  "Tests/EditMode/RunStateTests.cs": {
-    "mtime": 1795521967.9935133,
-    "seen": 1795528432.463386,
+  "Athanor/Assets/Tests/EditMode/RunStateTests.cs": {
+    "mtime": 1795622883.088091,
+    "seen": 1795628483.623957,
     "ast_hash": "e0976e9205500a5ef4792cefd2470b72",
-    "semantic_hash": ""
+    "semantic_hash": "e0976e9205500a5ef4792cefd2470b72"
   },
-  "Tests/EditMode/SatchelTests.cs": {
-    "mtime": 1795521967.9892857,
-    "seen": 1795528432.463386,
+  "Athanor/Assets/Tests/EditMode/SatchelTests.cs": {
+    "mtime": 1795622883.0840225,
+    "seen": 1795628483.623957,
     "ast_hash": "041e74c371db14ccb0340f996a7431a9",
-    "semantic_hash": ""
+    "semantic_hash": "041e74c371db14ccb0340f996a7431a9"
   },
-  "Tests/EditMode/ScreenFlowTests.cs": {
-    "mtime": 1795521967.992526,
-    "seen": 1795528432.463386,
+  "Athanor/Assets/Tests/EditMode/ScreenFlowTests.cs": {
+    "mtime": 1795622883.087329,
+    "seen": 1795628483.623958,
     "ast_hash": "5883bc1d93b55af7d5fabd5cb0d7a3c0",
-    "semantic_hash": ""
+    "semantic_hash": "5883bc1d93b55af7d5fabd5cb0d7a3c0"
   },
-  "Tests/EditMode/SettingsTests.cs": {
-    "mtime": 1795521967.9908242,
-    "seen": 1795528432.4633868,
+  "Athanor/Assets/Tests/EditMode/SettingsTests.cs": {
+    "mtime": 1795622883.085655,
+    "seen": 1795628483.623958,
     "ast_hash": "a43b277210711992a9eccf216bd3bad9",
-    "semantic_hash": ""
+    "semantic_hash": "a43b277210711992a9eccf216bd3bad9"
   },
-  "Tests/EditMode/TestContent.cs": {
-    "mtime": 1795522214.3354368,
-    "seen": 1795528432.4633868,
-    "ast_hash": "53077e753b83b2259ee5724f65dd7c4c",
-    "semantic_hash": ""
+  "Athanor/Assets/Tests/EditMode/TestContent.cs": {
+    "mtime": 1795622883.0875158,
+    "seen": 1795628483.623958,
+    "ast_hash": "9a2ee97cb20942a99351967caf0def73",
+    "semantic_hash": "9a2ee97cb20942a99351967caf0def73"
   },
-  "Tests/EditMode/TutorialTests.cs": {
-    "mtime": 1795521967.9914389,
-    "seen": 1795528432.4633868,
-    "ast_hash": "98a29ac26ecf266fe3c99f71bc29073e",
-    "semantic_hash": ""
+  "Athanor/Assets/Tests/EditModeGame/AutoHookTests.cs": {
+    "mtime": 1795622883.0792425,
+    "seen": 1795628483.623959,
+    "ast_hash": "1af3b57566b7dc26c6ed88886a37a607",
+    "semantic_hash": "1af3b57566b7dc26c6ed88886a37a607"
   },
-  "Tests/EditModeGame/AutoHookTests.cs": {
-    "mtime": 1794937943.592573,
-    "seen": 1795528432.463388,
-    "ast_hash": "0b07c89b0aa995562155bf13dcfc6a83",
-    "semantic_hash": ""
-  },
-  "Tests/EditModeGame/Baselines/tutorial_lit_baseline.json": {
+  "Athanor/Assets/Tests/EditModeGame/Baselines/tutorial_lit_baseline.json": {
     "mtime": 1795184628.6600108,
-    "seen": 1795528432.463388,
+    "seen": 1795628483.623959,
     "ast_hash": "1f792bc14681ac3c7cb4204154dfd48a",
-    "semantic_hash": ""
+    "semantic_hash": "1f792bc14681ac3c7cb4204154dfd48a"
   },
-  "Tests/EditModeGame/ChoiceHookTests.cs": {
-    "mtime": 1795093273.9252093,
-    "seen": 1795528432.463388,
+  "Athanor/Assets/Tests/EditModeGame/ChoiceHookTests.cs": {
+    "mtime": 1795622883.0804684,
+    "seen": 1795628483.623959,
     "ast_hash": "b51e140fd64896ac007d5264cdd0a9fa",
-    "semantic_hash": ""
+    "semantic_hash": "b51e140fd64896ac007d5264cdd0a9fa"
   },
-  "Tests/EditModeGame/DepthClickTests.cs": {
-    "mtime": 1795521967.9859555,
-    "seen": 1795528432.463389,
+  "Athanor/Assets/Tests/EditModeGame/DepthClickTests.cs": {
+    "mtime": 1795622883.0794458,
+    "seen": 1795628483.62396,
     "ast_hash": "d7fa3210f7e716917bf0aebccbb2ee7f",
-    "semantic_hash": ""
+    "semantic_hash": "d7fa3210f7e716917bf0aebccbb2ee7f"
   },
-  "Tests/EditModeGame/DepthFixture.cs": {
-    "mtime": 1795180268.1556916,
-    "seen": 1795528432.463389,
+  "Athanor/Assets/Tests/EditModeGame/DepthFixture.cs": {
+    "mtime": 1795622883.081322,
+    "seen": 1795628483.62396,
     "ast_hash": "54f72a5e21c758384d3405e810d95551",
-    "semantic_hash": ""
+    "semantic_hash": "54f72a5e21c758384d3405e810d95551"
   },
-  "Tests/EditModeGame/DepthLayerTests.cs": {
-    "mtime": 1795450767.290167,
-    "seen": 1795528432.463389,
+  "Athanor/Assets/Tests/EditModeGame/DepthLayerTests.cs": {
+    "mtime": 1795622883.0778856,
+    "seen": 1795628483.62396,
     "ast_hash": "2372328f9881722eba352ecc9def00cc",
-    "semantic_hash": ""
+    "semantic_hash": "2372328f9881722eba352ecc9def00cc"
   },
-  "Tests/EditModeGame/DepthLookTests.cs": {
-    "mtime": 1794937943.602171,
-    "seen": 1795528432.4633899,
+  "Athanor/Assets/Tests/EditModeGame/DepthLookTests.cs": {
+    "mtime": 1795622883.0783062,
+    "seen": 1795628483.623961,
     "ast_hash": "e4786595fec6a49cf4aebf9c03f9a581",
-    "semantic_hash": ""
+    "semantic_hash": "e4786595fec6a49cf4aebf9c03f9a581"
   },
-  "Tests/EditModeGame/GameTestSetup.cs": {
-    "mtime": 1794954668.175394,
-    "seen": 1795528432.4633899,
-    "ast_hash": "15c4ac6892dd4f91920f691b3622b36a",
-    "semantic_hash": ""
+  "Athanor/Assets/Tests/EditModeGame/GameTestSetup.cs": {
+    "mtime": 1795622883.077671,
+    "seen": 1795628483.623961,
+    "ast_hash": "04834a0e168d8dd711f973a974424df1",
+    "semantic_hash": "04834a0e168d8dd711f973a974424df1"
   },
-  "Tests/EditModeGame/GoldenShotTests.cs": {
-    "mtime": 1795453370.7181065,
-    "seen": 1795528432.4633899,
+  "Athanor/Assets/Tests/EditModeGame/GoldenShotTests.cs": {
+    "mtime": 1795622883.0800455,
+    "seen": 1795628483.623961,
     "ast_hash": "8f11960d95bef23b0f7728436be7e08c",
-    "semantic_hash": ""
+    "semantic_hash": "8f11960d95bef23b0f7728436be7e08c"
   },
-  "Tests/EditModeGame/HotPathTests.cs": {
-    "mtime": 1795521967.9845376,
-    "seen": 1795528432.463391,
-    "ast_hash": "cbb5dfb624ae9bcf216078e603c65996",
-    "semantic_hash": ""
+  "Athanor/Assets/Tests/EditModeGame/HotPathTests.cs": {
+    "mtime": 1795622883.0774705,
+    "seen": 1795628483.6239622,
+    "ast_hash": "43dcc608a1b9ac34c95704a1d4ae8f7d",
+    "semantic_hash": "43dcc608a1b9ac34c95704a1d4ae8f7d"
   },
-  "Tests/EditModeGame/HudTests.cs": {
-    "mtime": 1795521967.9851437,
-    "seen": 1795528432.463391,
-    "ast_hash": "b2d313b10e932eac16f5d6f08408dec3",
-    "semantic_hash": ""
+  "Athanor/Assets/Tests/EditModeGame/HudTests.cs": {
+    "mtime": 1795622883.0785155,
+    "seen": 1795628483.6239622,
+    "ast_hash": "14507634f6e67c73f656d359d9f36fe8",
+    "semantic_hash": "14507634f6e67c73f656d359d9f36fe8"
   },
-  "Tests/EditModeGame/LabelLineBoxTests.cs": {
-    "mtime": 1795448319.7576618,
-    "seen": 1795528432.463391,
-    "ast_hash": "ded091698e21fab14a930162c39c9acd",
-    "semantic_hash": ""
+  "Athanor/Assets/Tests/EditModeGame/LabelLineBoxTests.cs": {
+    "mtime": 1795622883.0762618,
+    "seen": 1795628483.6239622,
+    "ast_hash": "2563cb7e796e25f7813deffa78f738dd",
+    "semantic_hash": "2563cb7e796e25f7813deffa78f738dd"
   },
-  "Tests/EditModeGame/LayoutPinTests.cs": {
-    "mtime": 1795184788.061077,
-    "seen": 1795528432.463392,
-    "ast_hash": "70f33792e7ee4e4ee3fff7d41bc2ffbe",
-    "semantic_hash": ""
+  "Athanor/Assets/Tests/EditModeGame/LayoutPinTests.cs": {
+    "mtime": 1795626204.4284632,
+    "seen": 1795628483.6239629,
+    "ast_hash": "3e4e4b59dece431f950e0f027317f396",
+    "semantic_hash": "3e4e4b59dece431f950e0f027317f396"
   },
-  "Tests/EditModeGame/LocTests.cs": {
-    "mtime": 1795521967.987395,
-    "seen": 1795528432.463392,
-    "ast_hash": "22535b16048661f654423d4349a651fa",
-    "semantic_hash": ""
+  "Athanor/Assets/Tests/EditModeGame/LocTests.cs": {
+    "mtime": 1795622883.081125,
+    "seen": 1795628483.6239629,
+    "ast_hash": "0129df053a564d0603f532ece04d5caf",
+    "semantic_hash": "0129df053a564d0603f532ece04d5caf"
   },
-  "Tests/EditModeGame/MainDepthTests.cs": {
-    "mtime": 1795180268.1572742,
-    "seen": 1795528432.463392,
-    "ast_hash": "27404430dd373f4cff0c4319f1ebb926",
-    "semantic_hash": ""
+  "Athanor/Assets/Tests/EditModeGame/MainDepthTests.cs": {
+    "mtime": 1795622883.079001,
+    "seen": 1795628483.6239629,
+    "ast_hash": "40471d2228e541aa8fc9e487cafb51b5",
+    "semantic_hash": "40471d2228e541aa8fc9e487cafb51b5"
   },
-  "Tests/EditModeGame/MainDevHookTests.cs": {
-    "mtime": 1795180268.1574419,
-    "seen": 1795528432.463393,
-    "ast_hash": "7e4db00ba1e8498f38b4878d1d1f3825",
-    "semantic_hash": ""
+  "Athanor/Assets/Tests/EditModeGame/MainDevHookTests.cs": {
+    "mtime": 1795622883.0758824,
+    "seen": 1795628483.6239638,
+    "ast_hash": "953188268a0f78804d6debe5a628f83c",
+    "semantic_hash": "953188268a0f78804d6debe5a628f83c"
   },
-  "Tests/EditModeGame/MainSceneFixture.cs": {
-    "mtime": 1795180268.1577623,
-    "seen": 1795528432.463393,
-    "ast_hash": "489ed5ea49d23104ab4863dc7a6cd628",
-    "semantic_hash": ""
+  "Athanor/Assets/Tests/EditModeGame/MainSceneFixture.cs": {
+    "mtime": 1795622883.0767086,
+    "seen": 1795628483.6239638,
+    "ast_hash": "4eae0a8d655689ff7532c3b088eebd18",
+    "semantic_hash": "4eae0a8d655689ff7532c3b088eebd18"
   },
-  "Tests/EditModeGame/MotionTests.cs": {
-    "mtime": 1795025170.3376505,
-    "seen": 1795528432.463393,
+  "Athanor/Assets/Tests/EditModeGame/MotionTests.cs": {
+    "mtime": 1795622883.076479,
+    "seen": 1795628483.623965,
     "ast_hash": "a09babcb58ccb80e8cb50b250b3fb8c0",
-    "semantic_hash": ""
+    "semantic_hash": "a09babcb58ccb80e8cb50b250b3fb8c0"
   },
-  "Tests/EditModeGame/NoteTextTests.cs": {
-    "mtime": 1795521967.9855177,
-    "seen": 1795528432.4633942,
+  "Athanor/Assets/Tests/EditModeGame/NoteTextTests.cs": {
+    "mtime": 1795622883.0787487,
+    "seen": 1795628483.623965,
     "ast_hash": "f410a7d2fa350a98045d1714782777ec",
-    "semantic_hash": ""
+    "semantic_hash": "f410a7d2fa350a98045d1714782777ec"
   },
-  "Tests/EditModeGame/PauseTests.cs": {
-    "mtime": 1795521967.9840884,
-    "seen": 1795528432.4633942,
-    "ast_hash": "5e10cc6fc6f937056a3355062e72c148",
-    "semantic_hash": ""
+  "Athanor/Assets/Tests/EditModeGame/PauseTests.cs": {
+    "mtime": 1795625185.1607888,
+    "seen": 1795628483.623965,
+    "ast_hash": "4b1a7e058904e0592fb4830282155b28",
+    "semantic_hash": "4b1a7e058904e0592fb4830282155b28"
   },
-  "Tests/EditModeGame/PrefabBakeTests.cs": {
-    "mtime": 1795521967.9863448,
-    "seen": 1795528432.4633942,
-    "ast_hash": "d96d0b5edf7c176be0fe0b1fb86241fa",
-    "semantic_hash": ""
+  "Athanor/Assets/Tests/EditModeGame/PrefabBakeTests.cs": {
+    "mtime": 1795622883.0798292,
+    "seen": 1795628483.623966,
+    "ast_hash": "d37589eea2006adeb6b32b71e8f33a8a",
+    "semantic_hash": "d37589eea2006adeb6b32b71e8f33a8a"
   },
-  "Tests/EditModeGame/PrefabFixture.cs": {
-    "mtime": 1795450421.2075315,
-    "seen": 1795528432.463395,
+  "Athanor/Assets/Tests/EditModeGame/PrefabFixture.cs": {
+    "mtime": 1795622883.0820162,
+    "seen": 1795628483.623966,
     "ast_hash": "011a48dd8fc60a3210ffade76ff4f1b1",
-    "semantic_hash": ""
+    "semantic_hash": "011a48dd8fc60a3210ffade76ff4f1b1"
   },
-  "Tests/EditModeGame/RunOverDepthTests.cs": {
-    "mtime": 1795521967.984938,
-    "seen": 1795528432.463395,
-    "ast_hash": "cb9458a43cea15e8c7fd3c28bac5f9bb",
-    "semantic_hash": ""
+  "Athanor/Assets/Tests/EditModeGame/RunOverDepthTests.cs": {
+    "mtime": 1795622883.0780716,
+    "seen": 1795628483.623966,
+    "ast_hash": "d84d5bf8ce3c7605178e93aa60875361",
+    "semantic_hash": "d84d5bf8ce3c7605178e93aa60875361"
   },
-  "Tests/EditModeGame/SaveTests.cs": {
-    "mtime": 1795521967.9867256,
-    "seen": 1795528432.463395,
-    "ast_hash": "25ee3ec07a7622fd19922eb6e1a047a5",
-    "semantic_hash": ""
+  "Athanor/Assets/Tests/EditModeGame/SaveTests.cs": {
+    "mtime": 1795622883.0802624,
+    "seen": 1795628483.623967,
+    "ast_hash": "d26efe09cada1609122ce75293316fe9",
+    "semantic_hash": "d26efe09cada1609122ce75293316fe9"
   },
-  "Tests/EditModeGame/SceneBakeTests.cs": {
-    "mtime": 1795521967.9876852,
-    "seen": 1795528432.463396,
-    "ast_hash": "8fce534609b9c7196533a89ab20d8979",
-    "semantic_hash": ""
+  "Athanor/Assets/Tests/EditModeGame/SceneBakeTests.cs": {
+    "mtime": 1795624801.8597307,
+    "seen": 1795628483.623967,
+    "ast_hash": "b1ccf176432d67feed8dbad8aafe957b",
+    "semantic_hash": "b1ccf176432d67feed8dbad8aafe957b"
   },
-  "Tests/EditModeGame/SettingsHapticsTests.cs": {
-    "mtime": 1795521967.9843,
-    "seen": 1795528432.463396,
+  "Athanor/Assets/Tests/EditModeGame/SettingsHapticsTests.cs": {
+    "mtime": 1795622883.0760744,
+    "seen": 1795628483.623967,
     "ast_hash": "8ca784a890876a916c625ed722281d09",
-    "semantic_hash": ""
+    "semantic_hash": "8ca784a890876a916c625ed722281d09"
   },
-  "Tests/EditModeGame/SparksTests.cs": {
-    "mtime": 1794937943.636518,
-    "seen": 1795528432.463396,
+  "Athanor/Assets/Tests/EditModeGame/SparksTests.cs": {
+    "mtime": 1795622883.082539,
+    "seen": 1795628483.623968,
     "ast_hash": "984407fcbe65e7055fc21e05d3f818f3",
-    "semantic_hash": ""
+    "semantic_hash": "984407fcbe65e7055fc21e05d3f818f3"
   },
-  "Tests/EditModeGame/StaticResetTests.cs": {
-    "mtime": 1795099072.7439263,
-    "seen": 1795528432.463397,
+  "Athanor/Assets/Tests/EditModeGame/StaticResetTests.cs": {
+    "mtime": 1795622883.081806,
+    "seen": 1795628483.623968,
     "ast_hash": "32b971090b5f564be165380001473789",
-    "semantic_hash": ""
+    "semantic_hash": "32b971090b5f564be165380001473789"
   },
-  "Tests/EditModeGame/TestFx.cs": {
-    "mtime": 1795093636.4855058,
-    "seen": 1795528432.463397,
+  "Athanor/Assets/Tests/EditModeGame/TestFx.cs": {
+    "mtime": 1795622883.0754137,
+    "seen": 1795628483.623968,
     "ast_hash": "7b90315dbd5241375ebad7ad3f7574e8",
-    "semantic_hash": ""
+    "semantic_hash": "7b90315dbd5241375ebad7ad3f7574e8"
   },
-  "Tests/EditModeGame/TutorialAreaTests.cs": {
-    "mtime": 1795184939.2355247,
-    "seen": 1795528432.463397,
-    "ast_hash": "faa1d8bc095b40d7fd52fe96208ab1e8",
-    "semantic_hash": ""
+  "Athanor/Assets/Tests/EditModeGame/TutorialAreaTests.cs": {
+    "mtime": 1795625485.0334148,
+    "seen": 1795628483.623969,
+    "ast_hash": "9a44f2ca29a56f879cb33a3af7ce8b48",
+    "semantic_hash": "9a44f2ca29a56f879cb33a3af7ce8b48"
   },
-  "Tests/EditModeGame/TutorialFlowTests.cs": {
-    "mtime": 1795521968.0250869,
-    "seen": 1795528432.463398,
-    "ast_hash": "8ddc9f147bbd211d08d3ac311cfaed1b",
-    "semantic_hash": ""
+  "Athanor/Assets/Tests/EditModeGame/TutorialFlowTests.cs": {
+    "mtime": 1795625184.28177,
+    "seen": 1795628483.623969,
+    "ast_hash": "77c83add54f12d87338774141edbad25",
+    "semantic_hash": "77c83add54f12d87338774141edbad25"
   },
-  "Tests/EditModeGame/TutorialStepsBakeTests.cs": {
-    "mtime": 1795521967.9880068,
-    "seen": 1795528432.463398,
-    "ast_hash": "bce779fa07f5e55a273ff01b8911034b",
-    "semantic_hash": ""
+  "Athanor/Assets/Tests/EditModeGame/TutorialStepsBakeTests.cs": {
+    "mtime": 1795625203.206412,
+    "seen": 1795628483.623969,
+    "ast_hash": "19a64fb2c46476f860021e19419abb79",
+    "semantic_hash": "19a64fb2c46476f860021e19419abb79"
   },
-  "Tests/PlayMode/AutoplayTraceTests.cs": {
-    "mtime": 1795526061.5752141,
-    "seen": 1795528432.463398,
-    "ast_hash": "d1bc9181e8ff88d8e43fd464f6d78c25",
-    "semantic_hash": ""
+  "Athanor/Assets/Tests/EditModeGame/TutorialTests.cs": {
+    "mtime": 1795625172.9392264,
+    "seen": 1795628483.62397,
+    "ast_hash": "f33a3d660c811ca18ade0553fb73b1a7",
+    "semantic_hash": "f33a3d660c811ca18ade0553fb73b1a7"
   },
-  "Tests/PlayMode/PlayModeKit.cs": {
-    "mtime": 1795521967.9882793,
-    "seen": 1795528432.463399,
+  "Athanor/Assets/Tests/PlayMode/AutoplayTraceTests.cs": {
+    "mtime": 1795622943.0774627,
+    "seen": 1795628483.62397,
+    "ast_hash": "59d73fad775f3216e63ad308122cef5e",
+    "semantic_hash": "59d73fad775f3216e63ad308122cef5e"
+  },
+  "Athanor/Assets/Tests/PlayMode/ManagerBootTests.cs": {
+    "mtime": 1795624303.847138,
+    "seen": 1795628483.62397,
+    "ast_hash": "7d6b9e0eda6f67e5a17e5ec602a72398",
+    "semantic_hash": "7d6b9e0eda6f67e5a17e5ec602a72398"
+  },
+  "Athanor/Assets/Tests/PlayMode/PlayModeKit.cs": {
+    "mtime": 1795622883.0831745,
+    "seen": 1795628483.623971,
     "ast_hash": "67e616974ae70ec5b5e1b0e3025ecebb",
-    "semantic_hash": ""
-  },
-  "Tests/PlayMode/TutorialTraceTests.cs": {
-    "mtime": 1795526061.575337,
-    "seen": 1795528432.463399,
-    "ast_hash": "69a91f213f3797b0c5107c4f5ab9949f",
-    "semantic_hash": ""
-  },
-  "Tests/PlayMode/Baselines/autoplay_seed_11.txt": {
-    "mtime": 1795520735.2833169,
-    "seen": 1795528432.463399,
-    "ast_hash": "ae75766a383f55883db2ec42fca85aa3",
-    "semantic_hash": ""
-  },
-  "Tests/PlayMode/Baselines/autoplay_seed_22.txt": {
-    "mtime": 1795520750.8819366,
-    "seen": 1795528432.4634,
-    "ast_hash": "916af7a95123589fa71e30fd29377be2",
-    "semantic_hash": ""
-  },
-  "Tests/PlayMode/Baselines/autoplay_seed_33.txt": {
-    "mtime": 1795520763.415379,
-    "seen": 1795528432.4634,
-    "ast_hash": "053c4bd3664110c313fbd86ad9504fda",
-    "semantic_hash": ""
-  },
-  "Tests/PlayMode/Baselines/tutorial_trace.txt": {
-    "mtime": 1795521202.0237,
-    "seen": 1795528432.4634,
-    "ast_hash": "2bec4260f240ca49a22bc8ac9f6ac1d4",
-    "semantic_hash": ""
-  },
-  "TextMesh Pro/Resources/LineBreaking Following Characters.txt": {
-    "mtime": 1794385926.0,
-    "seen": 1795528432.463401,
-    "ast_hash": "345c77ed32179f5f982dcf8e2b1d92af",
-    "semantic_hash": ""
-  },
-  "TextMesh Pro/Resources/LineBreaking Leading Characters.txt": {
-    "mtime": 1794385926.0,
-    "seen": 1795528432.463401,
-    "ast_hash": "d52dd40acd32a62df3bc764b1e783ddf",
-    "semantic_hash": ""
-  },
-  "WebGLTemplates/Athanor/index.html": {
-    "mtime": 1794770440.8376453,
-    "seen": 1795528432.463402,
-    "ast_hash": "127c85e63cc98ce416e332eaa0de2ef8",
-    "semantic_hash": ""
-  },
-  "Art/Background/candle.png": {
-    "mtime": 1795448319.6934857,
-    "seen": 1795528432.463402,
-    "ast_hash": "a847d4190330265ffa2a907b79c6d293",
-    "semantic_hash": ""
-  },
-  "Art/Background/cauldron.png": {
-    "mtime": 1795448319.6935842,
-    "seen": 1795528432.463403,
-    "ast_hash": "2331a723a7305ad8fd8c13adeb9bab80",
-    "semantic_hash": ""
-  },
-  "Art/Background/cutscene_room.png": {
-    "mtime": 1795448319.6939197,
-    "seen": 1795528432.463403,
-    "ast_hash": "b627f95930b388064a52d29cee1e4d97",
-    "semantic_hash": ""
-  },
-  "Art/Background/flame_big.png": {
-    "mtime": 1795448319.6940653,
-    "seen": 1795528432.463403,
-    "ast_hash": "7407e702b4d07f8cd98af6c612cc420b",
-    "semantic_hash": ""
-  },
-  "Art/Background/flame_small.png": {
-    "mtime": 1795448319.6941912,
-    "seen": 1795528432.463404,
-    "ast_hash": "0959a2310fd343a557623aabe2d351b6",
-    "semantic_hash": ""
-  },
-  "Art/Background/logs.png": {
-    "mtime": 1795448319.6943212,
-    "seen": 1795528432.463404,
-    "ast_hash": "07157ec13d805e0f713fd6ccdeca9ad9",
-    "semantic_hash": ""
-  },
-  "Art/Background/moon_shaft.png": {
-    "mtime": 1795448319.694509,
-    "seen": 1795528432.463404,
-    "ast_hash": "b46c70b78d5e9ccf113be0a3dacbfee4",
-    "semantic_hash": ""
-  },
-  "Art/Background/window.png": {
-    "mtime": 1795448319.6946156,
-    "seen": 1795528432.4634051,
-    "ast_hash": "0312074b9368856e56e5037db960980c",
-    "semantic_hash": ""
-  },
-  "Art/Background/window_d1.png": {
-    "mtime": 1795448319.6947255,
-    "seen": 1795528432.4634051,
-    "ast_hash": "1196e83addcacff1badd39b3e3ae455c",
-    "semantic_hash": ""
-  },
-  "Art/Background/window_d2.png": {
-    "mtime": 1795448319.6950085,
-    "seen": 1795528432.4634051,
-    "ast_hash": "3044f8a31de2f4ef2c7ddbe12f266844",
-    "semantic_hash": ""
-  },
-  "Art/Background/window_d3.png": {
-    "mtime": 1795448319.6951127,
-    "seen": 1795528432.463406,
-    "ast_hash": "5b446bda33b058be437196ecbf1c2319",
-    "semantic_hash": ""
-  },
-  "Art/Background/window_d4.png": {
-    "mtime": 1795448319.69521,
-    "seen": 1795528432.463406,
-    "ast_hash": "fcdcc317d346a36e632ef229c979a9a6",
-    "semantic_hash": ""
-  },
-  "Art/Background/window_d5.png": {
-    "mtime": 1795448319.6954944,
-    "seen": 1795528432.463406,
-    "ast_hash": "e19cfdf271c1bb7f9886ed80407a242b",
-    "semantic_hash": ""
-  },
-  "Art/Background/workshop_table.png": {
-    "mtime": 1795448319.6956742,
-    "seen": 1795528432.463407,
-    "ast_hash": "cec5b6935e0822aa3c37b19a16af2877",
-    "semantic_hash": ""
-  },
-  "Art/Background/workshop_wall.png": {
-    "mtime": 1795448319.695924,
-    "seen": 1795528432.463407,
-    "ast_hash": "6a09d33171493b20086803d7bc9a2bbf",
-    "semantic_hash": ""
-  },
-  "Art/Depth/candle_far.png": {
-    "mtime": 1795448319.696732,
-    "seen": 1795528432.463407,
-    "ast_hash": "c73c97553fc5f4b791bbddaa6a99212e",
-    "semantic_hash": ""
-  },
-  "Art/Depth/fg_corner_left_near.png": {
-    "mtime": 1795448319.6968822,
-    "seen": 1795528432.4634082,
-    "ast_hash": "2866d45e2427cb2954b9970d725e465f",
-    "semantic_hash": ""
-  },
-  "Art/Depth/fg_corner_right_near.png": {
-    "mtime": 1795448319.6972296,
-    "seen": 1795528432.4634082,
-    "ast_hash": "2858cb0bcb9b65c36505db554cceaab9",
-    "semantic_hash": ""
-  },
-  "Art/Depth/flame_small_far_0.png": {
-    "mtime": 1795448319.6973357,
-    "seen": 1795528432.4634082,
-    "ast_hash": "95c912a6ebffb28cfd616e164fe33947",
-    "semantic_hash": ""
-  },
-  "Art/Depth/flame_small_far_1.png": {
-    "mtime": 1795448319.6974304,
-    "seen": 1795528432.463409,
-    "ast_hash": "5f9b43270dbe075758396ee604c1acc6",
-    "semantic_hash": ""
-  },
-  "Art/Depth/flame_small_far_2.png": {
-    "mtime": 1795448319.6975133,
-    "seen": 1795528432.463409,
-    "ast_hash": "c8c9a40d5af514f6cacb724a731fcf07",
-    "semantic_hash": ""
-  },
-  "Art/Depth/flame_small_far_3.png": {
-    "mtime": 1795448319.697679,
-    "seen": 1795528432.463409,
-    "ast_hash": "b890a078e22f3ea58f6d020aa617b187",
-    "semantic_hash": ""
-  },
-  "Art/Depth/flame_small_far_4.png": {
-    "mtime": 1795448319.697775,
-    "seen": 1795528432.46341,
-    "ast_hash": "693e7c75adf6caf52d08bcff45fc28ac",
-    "semantic_hash": ""
-  },
-  "Art/Depth/flame_small_far_5.png": {
-    "mtime": 1795448319.6978703,
-    "seen": 1795528432.46341,
-    "ast_hash": "fa59b687f8670614fe6e866cdefd6284",
-    "semantic_hash": ""
-  },
-  "Art/Depth/flame_small_far_6.png": {
-    "mtime": 1795448319.6979632,
-    "seen": 1795528432.46341,
-    "ast_hash": "95c912a6ebffb28cfd616e164fe33947",
-    "semantic_hash": ""
-  },
-  "Art/Depth/flame_small_far_7.png": {
-    "mtime": 1795448319.6980486,
-    "seen": 1795528432.4634109,
-    "ast_hash": "96eaf90b6c78703a20400075fc8ab725",
-    "semantic_hash": ""
-  },
-  "Art/Depth/fog_back.png": {
-    "mtime": 1795448319.6981537,
-    "seen": 1795528432.4634109,
-    "ast_hash": "6ae71c98d5de089bbc55c8b24f9939a0",
-    "semantic_hash": ""
-  },
-  "Art/Depth/fog_front.png": {
-    "mtime": 1795448319.6983302,
-    "seen": 1795528432.4634109,
-    "ast_hash": "3d52ab6147de2e5d8a53bf03eb3bff7c",
-    "semantic_hash": ""
-  },
-  "Art/Depth/window_d1_far.png": {
-    "mtime": 1795448319.6984344,
-    "seen": 1795528432.463412,
-    "ast_hash": "800f9601d8d59f1bebbbcd1f98587b9f",
-    "semantic_hash": ""
-  },
-  "Art/Depth/window_d2_far.png": {
-    "mtime": 1795448319.6985402,
-    "seen": 1795528432.463412,
-    "ast_hash": "b118dac342e4c691555d60b2e0f7188d",
-    "semantic_hash": ""
-  },
-  "Art/Depth/window_d3_far.png": {
-    "mtime": 1795448319.698716,
-    "seen": 1795528432.463412,
-    "ast_hash": "e9b18a2a9d156c3c3e0caa4e1ead1681",
-    "semantic_hash": ""
-  },
-  "Art/Depth/window_d4_far.png": {
-    "mtime": 1795448319.6988325,
-    "seen": 1795528432.463413,
-    "ast_hash": "80d64cfcf7617e6ba09d1ac41ce4a389",
-    "semantic_hash": ""
-  },
-  "Art/Depth/window_d5_far.png": {
-    "mtime": 1795448319.6989727,
-    "seen": 1795528432.463413,
-    "ast_hash": "c9e1a68a2d05d55b98e50289f3e171d3",
-    "semantic_hash": ""
-  },
-  "Art/Depth/workshop_wall_far.png": {
-    "mtime": 1795448319.6993947,
-    "seen": 1795528432.463413,
-    "ast_hash": "fbecb4bb91464dcd0a7d2a27c4cbf4ad",
-    "semantic_hash": ""
-  },
-  "Art/Fx/Sheets/collect-burst.png": {
-    "mtime": 1795448319.7057076,
-    "seen": 1795528432.463414,
-    "ast_hash": "de3eda7368a6c3a871ef18cc978455ec",
-    "semantic_hash": ""
-  },
-  "Art/Fx/Sheets/holy-pillar.png": {
-    "mtime": 1795448319.7064524,
-    "seen": 1795528432.463414,
-    "ast_hash": "27a845402500061bd285eecdf85d2bce",
-    "semantic_hash": ""
-  },
-  "Art/Fx/Sheets/implosion.png": {
-    "mtime": 1795448319.707294,
-    "seen": 1795528432.4634151,
-    "ast_hash": "dde6f771842366afe22bb84c372e41ba",
-    "semantic_hash": ""
-  },
-  "Art/Fx/Sheets/poof.png": {
-    "mtime": 1795448319.7076783,
-    "seen": 1795528432.4634151,
-    "ast_hash": "c6bc71b53c5cecaf10b869facec1e3ff",
-    "semantic_hash": ""
-  },
-  "Art/Fx/button_down.png": {
-    "mtime": 1795448319.7078047,
-    "seen": 1795528432.4634151,
-    "ast_hash": "7175bc0f2c2839e4f3b51d9593687ad5",
-    "semantic_hash": ""
-  },
-  "Art/Fx/button_up.png": {
-    "mtime": 1795448319.7079017,
-    "seen": 1795528432.463416,
-    "ast_hash": "77e8d652a3f804400a72fe5c7403e73a",
-    "semantic_hash": ""
-  },
-  "Art/Fx/cross.png": {
-    "mtime": 1795448319.70799,
-    "seen": 1795528432.463416,
-    "ast_hash": "3256fca74c2e612057d3f595f4b95bbc",
-    "semantic_hash": ""
-  },
-  "Art/Fx/dot.png": {
-    "mtime": 1795448319.7080903,
-    "seen": 1795528432.463416,
-    "ast_hash": "d1563f712da01a66392b6d798398d093",
-    "semantic_hash": ""
-  },
-  "Art/Fx/floor_ring.png": {
-    "mtime": 1795448319.708182,
-    "seen": 1795528432.463417,
-    "ast_hash": "3d14764e0d696c03f247df24e39abcc7",
-    "semantic_hash": ""
-  },
-  "Art/Fx/glow.png": {
-    "mtime": 1795448319.7082615,
-    "seen": 1795528432.463417,
-    "ast_hash": "74cc16a8adc5d6324143703ec3a429b6",
-    "semantic_hash": ""
-  },
-  "Art/Fx/ignite_down.png": {
-    "mtime": 1795448319.7083366,
-    "seen": 1795528432.463417,
-    "ast_hash": "27aed68eaabfe19d60c2be23025c06ed",
-    "semantic_hash": ""
-  },
-  "Art/Fx/ignite_off.png": {
-    "mtime": 1795448319.7084265,
-    "seen": 1795528432.463418,
-    "ast_hash": "3380fd9a4b63e222f05aa00ebe409077",
-    "semantic_hash": ""
-  },
-  "Art/Fx/ignite_up.png": {
-    "mtime": 1795448319.7085161,
-    "seen": 1795528432.463418,
-    "ast_hash": "8a3e04a929713a300c95e6416b451684",
-    "semantic_hash": ""
-  },
-  "Art/Fx/liquid.png": {
-    "mtime": 1795448319.708628,
-    "seen": 1795528432.463418,
-    "ast_hash": "fce5e2d9327d3cf36e371b2e64bc350a",
-    "semantic_hash": ""
-  },
-  "Art/Fx/mark.png": {
-    "mtime": 1795448319.708731,
-    "seen": 1795528432.463419,
-    "ast_hash": "3256fca74c2e612057d3f595f4b95bbc",
-    "semantic_hash": ""
-  },
-  "Art/Fx/option_down.png": {
-    "mtime": 1795448319.7088232,
-    "seen": 1795528432.463419,
-    "ast_hash": "7175bc0f2c2839e4f3b51d9593687ad5",
-    "semantic_hash": ""
-  },
-  "Art/Fx/option_up.png": {
-    "mtime": 1795448319.708915,
-    "seen": 1795528432.463419,
-    "ast_hash": "77e8d652a3f804400a72fe5c7403e73a",
-    "semantic_hash": ""
-  },
-  "Art/Fx/pillar.png": {
-    "mtime": 1795448319.709132,
-    "seen": 1795528432.46342,
-    "ast_hash": "6c5f1fb0d6d5a90552ec352c9221cb62",
-    "semantic_hash": ""
-  },
-  "Art/Fx/rack.png": {
-    "mtime": 1795448319.7092247,
-    "seen": 1795528432.46342,
-    "ast_hash": "411d3db941d3ff94515d2d45f3b737dd",
-    "semantic_hash": ""
-  },
-  "Art/Fx/rack_slot_lit.png": {
-    "mtime": 1795448319.709312,
-    "seen": 1795528432.46342,
-    "ast_hash": "470a02b0059f1acf80866bbfdafde8bd",
-    "semantic_hash": ""
-  },
-  "Art/Fx/ray.png": {
-    "mtime": 1795448319.7094035,
-    "seen": 1795528432.4634209,
-    "ast_hash": "878ae17ab25e7903eb6064a3901b8356",
-    "semantic_hash": ""
-  },
-  "Art/Fx/rune_circle.png": {
-    "mtime": 1795448319.7094824,
-    "seen": 1795528432.4634209,
-    "ast_hash": "2403fd27e63b576b102184643978c321",
-    "semantic_hash": ""
-  },
-  "Art/Fx/sparkle.png": {
-    "mtime": 1795448319.7095568,
-    "seen": 1795528432.4634209,
-    "ast_hash": "4da587a3a6e38b1354ad91d24840ffb6",
-    "semantic_hash": ""
-  },
-  "Art/Fx/star.png": {
-    "mtime": 1795448319.7096398,
-    "seen": 1795528432.463422,
-    "ast_hash": "959fae59f0b6841d3bc062895844cb0f",
-    "semantic_hash": ""
-  },
-  "Art/Fx/tile_face_0.png": {
-    "mtime": 1795448319.709721,
-    "seen": 1795528432.463422,
-    "ast_hash": "2cdc4c244c43948913fcb30fe3301508",
-    "semantic_hash": ""
-  },
-  "Art/Fx/tile_face_1.png": {
-    "mtime": 1795448319.7098083,
-    "seen": 1795528432.463423,
-    "ast_hash": "d7503ad24a28b7970f1af9a59c5062ff",
-    "semantic_hash": ""
-  },
-  "Art/Fx/tile_face_2.png": {
-    "mtime": 1795448319.7100105,
-    "seen": 1795528432.463423,
-    "ast_hash": "5518bff85088b0749ced1738f55d0992",
-    "semantic_hash": ""
-  },
-  "Art/Fx/tile_face_3.png": {
-    "mtime": 1795448319.7101097,
-    "seen": 1795528432.463423,
-    "ast_hash": "4f767e28fdaa141c32991b066c1a3d11",
-    "semantic_hash": ""
-  },
-  "Art/Fx/tile_face_4.png": {
-    "mtime": 1795448319.7102041,
-    "seen": 1795528432.463424,
-    "ast_hash": "4582d268d5f6d27233ba54f787ad9769",
-    "semantic_hash": ""
-  },
-  "Art/Fx/tile_face_5.png": {
-    "mtime": 1795448319.7102923,
-    "seen": 1795528432.463424,
-    "ast_hash": "bbb467b8d0ade61fde6e7fdb31da9a86",
-    "semantic_hash": ""
-  },
-  "Art/Fx/tile_face_6.png": {
-    "mtime": 1795448319.7103958,
-    "seen": 1795528432.463424,
-    "ast_hash": "e1d6387eb2ccc3f385cfbff0ae04ec97",
-    "semantic_hash": ""
-  },
-  "Art/Fx/tile_face_7.png": {
-    "mtime": 1795448319.7105665,
-    "seen": 1795528432.463425,
-    "ast_hash": "e8de42c80a1bd66bdabb8da799156a04",
-    "semantic_hash": ""
-  },
-  "Art/Fx/tile_face_8.png": {
-    "mtime": 1795448319.7106729,
-    "seen": 1795528432.463425,
-    "ast_hash": "99ecfa2ad443e5057c270ad71828b6ff",
-    "semantic_hash": ""
-  },
-  "Art/Fx/tile_ring_0.png": {
-    "mtime": 1795448319.710796,
-    "seen": 1795528432.463425,
-    "ast_hash": "49d769b7e5aa9eb7b643d89f569f1897",
-    "semantic_hash": ""
-  },
-  "Art/Fx/tile_ring_1.png": {
-    "mtime": 1795448319.7108963,
-    "seen": 1795528432.463426,
-    "ast_hash": "9571cd9c7d9fa9c99bba903e53919929",
-    "semantic_hash": ""
-  },
-  "Art/Fx/tile_ring_2.png": {
-    "mtime": 1795448319.7110777,
-    "seen": 1795528432.463426,
-    "ast_hash": "8df5c3fd9f2a3c8b3d0e2b63e1e02456",
-    "semantic_hash": ""
-  },
-  "Art/Fx/tooltip.png": {
-    "mtime": 1795448319.7111998,
-    "seen": 1795528432.463426,
-    "ast_hash": "1a23f9ccc4a5afadea14ff6ace6a3f8f",
-    "semantic_hash": ""
-  },
-  "Art/Fx/window_drip.png": {
-    "mtime": 1795448319.7113528,
-    "seen": 1795528432.463427,
-    "ast_hash": "729550b34b8040eda1e3db29e14dc069",
-    "semantic_hash": ""
-  },
-  "Art/Icons/amber_resin.png": {
-    "mtime": 1795448319.7117379,
-    "seen": 1795528432.463427,
-    "ast_hash": "ef7c91d2d073e42e1d4a4e848ef06350",
-    "semantic_hash": ""
-  },
-  "Art/Icons/archon_blood.png": {
-    "mtime": 1795448319.711983,
-    "seen": 1795528432.463427,
-    "ast_hash": "c3e8d8bf8f6112feb41541c27223fff5",
-    "semantic_hash": ""
-  },
-  "Art/Icons/asp_anchor_tile.png": {
-    "mtime": 1795448319.7122579,
-    "seen": 1795528432.463428,
-    "ast_hash": "dc2c30aae5c29682ce3f0c18d78c50da",
-    "semantic_hash": ""
-  },
-  "Art/Icons/asp_attuned_tile.png": {
-    "mtime": 1795448319.7124457,
-    "seen": 1795528432.463428,
-    "ast_hash": "0889dfb961ca6318d1ff54137da04aeb",
-    "semantic_hash": ""
-  },
-  "Art/Icons/asp_bridge.png": {
-    "mtime": 1795448319.71276,
-    "seen": 1795528432.463428,
-    "ast_hash": "0638c2b9e687996b9b6f7084f4bc7153",
-    "semantic_hash": ""
-  },
-  "Art/Icons/asp_cold_tile.png": {
-    "mtime": 1795448319.7129397,
-    "seen": 1795528432.4634292,
-    "ast_hash": "a3dc17ca6af7203e7f618d9eb09d138a",
-    "semantic_hash": ""
-  },
-  "Art/Icons/asp_crossroads.png": {
-    "mtime": 1795448319.7132192,
-    "seen": 1795528432.4634292,
-    "ast_hash": "ef557cb0a4333518f722a1e4be298b9d",
-    "semantic_hash": ""
-  },
-  "Art/Icons/asp_doubled_tile.png": {
-    "mtime": 1795448319.7134922,
-    "seen": 1795528432.4634292,
-    "ast_hash": "276f1c60eee666c3fc3219dc422f200b",
-    "semantic_hash": ""
-  },
-  "Art/Icons/asp_echo_tile.png": {
-    "mtime": 1795448319.7137465,
-    "seen": 1795528432.46343,
-    "ast_hash": "b667e36e5de0ac101d1a550a1567cc2d",
-    "semantic_hash": ""
-  },
-  "Art/Icons/asp_fallow_tile.png": {
-    "mtime": 1795448319.713887,
-    "seen": 1795528432.46343,
-    "ast_hash": "286d8acd1ad21e355283920dd67262ef",
-    "semantic_hash": ""
-  },
-  "Art/Icons/asp_greedy_bench.png": {
-    "mtime": 1795448319.7140832,
-    "seen": 1795528432.46343,
-    "ast_hash": "49655d42b43c84128f6230e9ebce549a",
-    "semantic_hash": ""
-  },
-  "Art/Icons/asp_heated_tile.png": {
-    "mtime": 1795448319.7142777,
-    "seen": 1795528432.463431,
-    "ast_hash": "63955b5ffee33394a344e7533f0dbc21",
-    "semantic_hash": ""
-  },
-  "Art/Icons/asp_heavy_tile.png": {
-    "mtime": 1795448319.714714,
-    "seen": 1795528432.463431,
-    "ast_hash": "f004e34e5352a5db6ee1cefb6d854389",
-    "semantic_hash": ""
-  },
-  "Art/Icons/asp_kiln_tile.png": {
-    "mtime": 1795448319.7149606,
-    "seen": 1795528432.463431,
-    "ast_hash": "1ba8922eaf93f147f1d3c7e7ab767d99",
-    "semantic_hash": ""
-  },
-  "Art/Icons/asp_open_bench.png": {
-    "mtime": 1795448319.7151456,
-    "seen": 1795528432.4634318,
-    "ast_hash": "75113a82055f621c42e3c7975d1ea193",
-    "semantic_hash": ""
-  },
-  "Art/Icons/asp_pivot_tile.png": {
-    "mtime": 1795448319.7153327,
-    "seen": 1795528432.4634318,
-    "ast_hash": "7cf16c4c1a89f53d8fed1c778f6f4919",
-    "semantic_hash": ""
-  },
-  "Art/Icons/asp_seed_tile.png": {
-    "mtime": 1795448319.7154763,
-    "seen": 1795528432.4634318,
-    "ast_hash": "96dbaf551f6cbd110bda71c86dfc98f2",
-    "semantic_hash": ""
-  },
-  "Art/Icons/asp_volatile_tile.png": {
-    "mtime": 1795448319.715625,
-    "seen": 1795528432.463433,
-    "ast_hash": "5e15da8545d3f7a69c94622bf53caf82",
-    "semantic_hash": ""
-  },
-  "Art/Icons/astral_core.png": {
-    "mtime": 1795448319.7158632,
-    "seen": 1795528432.463433,
-    "ast_hash": "1e4dee6ac850b40949c94957337c64a7",
-    "semantic_hash": ""
-  },
-  "Art/Icons/astral_dust.png": {
-    "mtime": 1795448319.7161958,
-    "seen": 1795528432.463433,
-    "ast_hash": "e4e4a3c4e8de49a09609d3d2db541863",
-    "semantic_hash": ""
-  },
-  "Art/Icons/aurora_dust.png": {
-    "mtime": 1795448319.7163918,
-    "seen": 1795528432.463434,
-    "ast_hash": "5395b4c2352f82b0e9ee9e2b36918aae",
-    "semantic_hash": ""
-  },
-  "Art/Icons/azoth.png": {
-    "mtime": 1795448319.716567,
-    "seen": 1795528432.463434,
-    "ast_hash": "43f4ba4730b7477f00ba938f851d466b",
-    "semantic_hash": ""
-  },
-  "Art/Icons/azoth_prime.png": {
-    "mtime": 1795448319.7167716,
-    "seen": 1795528432.463434,
-    "ast_hash": "76d15bdbc378da3e492f2de9b3bf52c7",
-    "semantic_hash": ""
-  },
-  "Art/Icons/ball_lightning.png": {
-    "mtime": 1795448319.7169595,
-    "seen": 1795528432.463435,
-    "ast_hash": "3582cec6926d2a76edc3d6c8772491cb",
-    "semantic_hash": ""
-  },
-  "Art/Icons/basilisk_eye.png": {
-    "mtime": 1795448319.7171662,
-    "seen": 1795528432.463435,
-    "ast_hash": "5a8f0d3b844e4697a24d1f12368b6dbd",
-    "semantic_hash": ""
-  },
-  "Art/Icons/blood_chalice.png": {
-    "mtime": 1795448319.717416,
-    "seen": 1795528432.463435,
-    "ast_hash": "96172c5a009865758aab340d33844eaf",
-    "semantic_hash": ""
-  },
-  "Art/Icons/blue_vitriol.png": {
-    "mtime": 1795448319.7176285,
-    "seen": 1795528432.4634361,
-    "ast_hash": "2d1b46dd4c81560aea608526b5715390",
-    "semantic_hash": ""
-  },
-  "Art/Icons/bone_ash.png": {
-    "mtime": 1795448319.717765,
-    "seen": 1795528432.4634361,
-    "ast_hash": "d8aa9c9de5cbc3f41b29fbce3fcb34bb",
-    "semantic_hash": ""
-  },
-  "Art/Icons/brine.png": {
-    "mtime": 1795448319.717972,
-    "seen": 1795528432.4634361,
-    "ast_hash": "b4e5c615b412878667628332e0fe7a99",
-    "semantic_hash": ""
-  },
-  "Art/Icons/bronze.png": {
-    "mtime": 1795448319.7181249,
-    "seen": 1795528432.463437,
-    "ast_hash": "dfe4ee367142a3c3dc924813cfb7cf85",
-    "semantic_hash": ""
-  },
-  "Art/Icons/carapace.png": {
-    "mtime": 1795448319.7183237,
-    "seen": 1795528432.463437,
-    "ast_hash": "b0fedc0d2494d67f9d475da837ffed13",
-    "semantic_hash": ""
-  },
-  "Art/Icons/card.png": {
-    "mtime": 1795448319.7187223,
-    "seen": 1795528432.463438,
-    "ast_hash": "91daf13b064e84bae4e5bf18079857e5",
-    "semantic_hash": ""
-  },
-  "Art/Icons/card_sel.png": {
-    "mtime": 1795448319.7188153,
-    "seen": 1795528432.463438,
-    "ast_hash": "91daf13b064e84bae4e5bf18079857e5",
-    "semantic_hash": ""
-  },
-  "Art/Icons/cat_alembic.png": {
-    "mtime": 1795448319.7188952,
-    "seen": 1795528432.463438,
-    "ast_hash": "f8f501ab10af0851650cb51fe11606b1",
-    "semantic_hash": ""
-  },
-  "Art/Icons/cat_bellows.png": {
-    "mtime": 1795448319.719111,
-    "seen": 1795528432.463439,
-    "ast_hash": "b8871db12c029c962cb2ff298bd42053",
-    "semantic_hash": ""
-  },
-  "Art/Icons/cat_bestiary.png": {
-    "mtime": 1795448319.7192504,
-    "seen": 1795528432.463439,
-    "ast_hash": "ed82d2628aff8791ed5bddc4f14cc8bb",
-    "semantic_hash": ""
-  },
-  "Art/Icons/cat_bottomless_satchel.png": {
-    "mtime": 1795448319.7194688,
-    "seen": 1795528432.463439,
-    "ast_hash": "5bfeac14098e0114e9da9e5bb220d257",
-    "semantic_hash": ""
-  },
-  "Art/Icons/cat_cascade.png": {
-    "mtime": 1795448319.719649,
-    "seen": 1795528432.46344,
-    "ast_hash": "87727b7b1dfacbf4e28278b03ffec11d",
-    "semantic_hash": ""
-  },
-  "Art/Icons/cat_crooked_mirror.png": {
-    "mtime": 1795448319.7197988,
-    "seen": 1795528432.46344,
-    "ast_hash": "2b4076e4f2497415a067fbb57b132586",
-    "semantic_hash": ""
-  },
-  "Art/Icons/cat_deep_satchel.png": {
-    "mtime": 1795448319.7199473,
-    "seen": 1795528432.46344,
-    "ast_hash": "5fb4fcc7a245dc1026c287c99acd4b4e",
-    "semantic_hash": ""
-  },
-  "Art/Icons/cat_descent.png": {
-    "mtime": 1795448319.7201424,
-    "seen": 1795528432.463441,
-    "ast_hash": "0d42a21b52bb77d453af24529ae8fbc6",
-    "semantic_hash": ""
-  },
-  "Art/Icons/cat_eureka_lens.png": {
-    "mtime": 1795448319.7203217,
-    "seen": 1795528432.463441,
-    "ast_hash": "9f3334678e8a2b083515f70cbb86cde0",
-    "semantic_hash": ""
-  },
-  "Art/Icons/cat_first_spark.png": {
-    "mtime": 1795448319.7205155,
-    "seen": 1795528432.463441,
-    "ast_hash": "9b9bc94e9c3a4422a2ac572bd456201d",
-    "semantic_hash": ""
-  },
-  "Art/Icons/cat_grain_of_gold.png": {
-    "mtime": 1795448319.72071,
-    "seen": 1795528432.4634418,
-    "ast_hash": "edd875dc170aff3437a24c1351fac04e",
-    "semantic_hash": ""
-  },
-  "Art/Icons/cat_heart_tile.png": {
-    "mtime": 1795448319.7209394,
-    "seen": 1795528432.4634418,
-    "ast_hash": "c4a9e86a66c65f98e9c32ed2d4cc4d4d",
-    "semantic_hash": ""
-  },
-  "Art/Icons/cat_hearth_habit.png": {
-    "mtime": 1795448319.7210758,
-    "seen": 1795528432.4634418,
-    "ast_hash": "0128ac8e956fd4030411fc96910a199e",
-    "semantic_hash": ""
-  },
-  "Art/Icons/cat_herbarium.png": {
-    "mtime": 1795448319.7212753,
-    "seen": 1795528432.463443,
-    "ast_hash": "b0ab3a3e274d947a77abad463a1e16d5",
-    "semantic_hash": ""
-  },
-  "Art/Icons/cat_hourglass.png": {
-    "mtime": 1795448319.7214253,
-    "seen": 1795528432.463443,
-    "ast_hash": "3c5cfe65ede9611015b194f6d258ab89",
-    "semantic_hash": ""
-  },
-  "Art/Icons/cat_last_breath.png": {
-    "mtime": 1795448319.7216303,
-    "seen": 1795528432.463443,
-    "ast_hash": "da1e0717566007768952f100a0b5d549",
-    "semantic_hash": ""
-  },
-  "Art/Icons/cat_philosophers_fire.png": {
-    "mtime": 1795448319.72179,
-    "seen": 1795528432.463444,
-    "ast_hash": "e539d4df4077d599e4745f355a1bfaae",
-    "semantic_hash": ""
-  },
-  "Art/Icons/cat_quick_hands.png": {
-    "mtime": 1795448319.7219605,
-    "seen": 1795528432.463444,
-    "ast_hash": "65c8c1354485496f671a068a2c3ee26c",
-    "semantic_hash": ""
-  },
-  "Art/Icons/cat_quiet_bench.png": {
-    "mtime": 1795448319.7220964,
-    "seen": 1795528432.463444,
-    "ast_hash": "fa99b150860c9243fcbd60862e69aa3f",
-    "semantic_hash": ""
-  },
-  "Art/Icons/cat_resonant_slab.png": {
-    "mtime": 1795448319.722276,
-    "seen": 1795528432.463445,
-    "ast_hash": "30b2e10f82829a431dbf51d1a8efca9d",
-    "semantic_hash": ""
-  },
-  "Art/Icons/cat_salvage.png": {
-    "mtime": 1795448319.7224336,
-    "seen": 1795528432.463445,
-    "ast_hash": "c39a223d7e4a612261a0cfc2508642fb",
-    "semantic_hash": ""
-  },
-  "Art/Icons/cat_second_wind.png": {
-    "mtime": 1795448319.7226002,
-    "seen": 1795528432.463445,
-    "ast_hash": "1d6454193dd12fbcbe927017fe2b0af1",
-    "semantic_hash": ""
-  },
-  "Art/Icons/cat_tier_seeker.png": {
-    "mtime": 1795448319.7228174,
-    "seen": 1795528432.463446,
-    "ast_hash": "7ed4191f210f640915af023c90696643",
-    "semantic_hash": ""
-  },
-  "Art/Icons/cat_tinkers_eye.png": {
-    "mtime": 1795448319.7230504,
-    "seen": 1795528432.463446,
-    "ast_hash": "5a8f0d3b844e4697a24d1f12368b6dbd",
-    "semantic_hash": ""
-  },
-  "Art/Icons/cat_warm_bench.png": {
-    "mtime": 1795448319.7232304,
-    "seen": 1795528432.463446,
-    "ast_hash": "13baec8b166dd002db8d2dede9353bae",
-    "semantic_hash": ""
-  },
-  "Art/Icons/cat_wide_crucible.png": {
-    "mtime": 1795448319.7235234,
-    "seen": 1795528432.463447,
-    "ast_hash": "e953176f307cfec7bf6dd959a8948010",
-    "semantic_hash": ""
-  },
-  "Art/Icons/celestial_gold.png": {
-    "mtime": 1795448319.7239397,
-    "seen": 1795528432.463447,
-    "ast_hash": "4a927e099b2833c3f9109bf7b06c3cf6",
-    "semantic_hash": ""
-  },
-  "Art/Icons/chimera_hide.png": {
-    "mtime": 1795448319.7241259,
-    "seen": 1795528432.463447,
-    "ast_hash": "4ee12c187648ec03a3cdb723a6e9b1f6",
-    "semantic_hash": ""
-  },
-  "Art/Icons/chrysopoeia.png": {
-    "mtime": 1795448319.7243197,
-    "seen": 1795528432.463448,
-    "ast_hash": "2eac6ba22275e195ef0543e21af19bbb",
-    "semantic_hash": ""
-  },
-  "Art/Icons/cinnabar.png": {
-    "mtime": 1795448319.7245114,
-    "seen": 1795528432.463448,
-    "ast_hash": "259be67f5ea16bfe2bba6cdc3ab8571a",
-    "semantic_hash": ""
-  },
-  "Art/Icons/copper_filings.png": {
-    "mtime": 1795448319.7247975,
-    "seen": 1795528432.463449,
-    "ast_hash": "ba751dda3b8e236ff92454b1a0d0d607",
-    "semantic_hash": ""
-  },
-  "Art/Icons/copper_sun.png": {
-    "mtime": 1795448319.7250547,
-    "seen": 1795528432.463449,
-    "ast_hash": "97e778932b392257f7c9bcee38ae2e79",
-    "semantic_hash": ""
-  },
-  "Art/Icons/cosmic_ore.png": {
-    "mtime": 1795448319.7253065,
-    "seen": 1795528432.463449,
-    "ast_hash": "7aca30fac8add0eeafe7c7630311eaf0",
-    "semantic_hash": ""
-  },
-  "Art/Icons/creation_shard.png": {
-    "mtime": 1795448319.7256296,
-    "seen": 1795528432.4634502,
-    "ast_hash": "feeed33db4935fe58e9b01037a106bc7",
-    "semantic_hash": ""
-  },
-  "Art/Icons/creations_core.png": {
-    "mtime": 1795448319.7258658,
-    "seen": 1795528432.4634502,
-    "ast_hash": "e7f5d72bb94c30bd58b579d6ee7acac2",
-    "semantic_hash": ""
-  },
-  "Art/Icons/deep_tear.png": {
-    "mtime": 1795448319.7260635,
-    "seen": 1795528432.4634502,
-    "ast_hash": "690f056d12cf7ce989bb7893f730ef17",
-    "semantic_hash": ""
-  },
-  "Art/Icons/divine_ichor.png": {
-    "mtime": 1795448319.7263734,
-    "seen": 1795528432.463451,
-    "ast_hash": "58ed0c03e1118fee0f32779619c9e1b0",
-    "semantic_hash": ""
-  },
-  "Art/Icons/dragon_blood.png": {
-    "mtime": 1795448319.7265265,
-    "seen": 1795528432.463451,
-    "ast_hash": "98b68db3ee5f24f3c9a6598c5ce906cf",
-    "semantic_hash": ""
-  },
-  "Art/Icons/dragon_heart.png": {
-    "mtime": 1795448319.726783,
-    "seen": 1795528432.463451,
-    "ast_hash": "928538a82f27a2b510fa4fd1ee6a015a",
-    "semantic_hash": ""
-  },
-  "Art/Icons/dragon_scale.png": {
-    "mtime": 1795448319.7269523,
-    "seen": 1795528432.4634519,
-    "ast_hash": "7bd271604de6d7d0773e617785735afa",
-    "semantic_hash": ""
-  },
-  "Art/Icons/drake_bone.png": {
-    "mtime": 1795448319.7271948,
-    "seen": 1795528432.4634519,
-    "ast_hash": "eed3d7cc4bfa5798f149380c801d17b6",
-    "semantic_hash": ""
-  },
-  "Art/Icons/dream_spore.png": {
-    "mtime": 1795448319.727348,
-    "seen": 1795528432.4634519,
-    "ast_hash": "bbfbe336db88d5d7c23db59c7e51ba31",
-    "semantic_hash": ""
-  },
-  "Art/Icons/dusk_cap.png": {
-    "mtime": 1795448319.7274847,
-    "seen": 1795528432.4634528,
-    "ast_hash": "d3bb9ee6bebe6cbdbf51cd77fd00df67",
-    "semantic_hash": ""
-  },
-  "Art/Icons/elder_essence.png": {
-    "mtime": 1795448319.7277305,
-    "seen": 1795528432.4634528,
-    "ast_hash": "5f004f4b0891262884cc57788eeb3647",
-    "semantic_hash": ""
-  },
-  "Art/Icons/ember_coal.png": {
-    "mtime": 1795448319.7278826,
-    "seen": 1795528432.4634528,
-    "ast_hash": "0128ac8e956fd4030411fc96910a199e",
-    "semantic_hash": ""
-  },
-  "Art/Icons/eternal_flame.png": {
-    "mtime": 1795448319.7281532,
-    "seen": 1795528432.463454,
-    "ast_hash": "2819402e20f9105416748dfe4b127a88",
-    "semantic_hash": ""
-  },
-  "Art/Icons/eternal_ice.png": {
-    "mtime": 1795448319.7284396,
-    "seen": 1795528432.463454,
-    "ast_hash": "0a673a2471a58e90ee39d27b5c2dacb8",
-    "semantic_hash": ""
-  },
-  "Art/Icons/everflame.png": {
-    "mtime": 1795448319.7285893,
-    "seen": 1795528432.463455,
-    "ast_hash": "e539d4df4077d599e4745f355a1bfaae",
-    "semantic_hash": ""
-  },
-  "Art/Icons/evt_boon.png": {
-    "mtime": 1795448319.728823,
-    "seen": 1795528432.463455,
-    "ast_hash": "5646a7d7109bdac8976ada3fd4dfa31f",
-    "semantic_hash": ""
-  },
-  "Art/Icons/evt_choice.png": {
-    "mtime": 1795448319.72899,
-    "seen": 1795528432.463455,
-    "ast_hash": "9b0ce37d692f4c3889bced6eb442f79c",
-    "semantic_hash": ""
-  },
-  "Art/Icons/evt_find.png": {
-    "mtime": 1795448319.7291822,
-    "seen": 1795528432.463456,
-    "ast_hash": "5b6636245489465620542fb171ba5c05",
-    "semantic_hash": ""
-  },
-  "Art/Icons/evt_gamble.png": {
-    "mtime": 1795448319.72932,
-    "seen": 1795528432.463456,
-    "ast_hash": "51c11815809b01fb73a2c1a7b4c5cd03",
-    "semantic_hash": ""
-  },
-  "Art/Icons/evt_hazard.png": {
-    "mtime": 1795448319.7294476,
-    "seen": 1795528432.463456,
-    "ast_hash": "a20931550452a3ebbfa9c79afc3e7776",
-    "semantic_hash": ""
-  },
-  "Art/Icons/evt_lore.png": {
-    "mtime": 1795448319.7296028,
-    "seen": 1795528432.463457,
-    "ast_hash": "929d8f90fb2172552dd40878e8be96f2",
-    "semantic_hash": ""
-  },
-  "Art/Icons/evt_shrine.png": {
-    "mtime": 1795448319.7297683,
-    "seen": 1795528432.463457,
-    "ast_hash": "c2134405763be5e34f24a8d88b7c89b8",
-    "semantic_hash": ""
-  },
-  "Art/Icons/forge_slag.png": {
-    "mtime": 1795448319.7299032,
-    "seen": 1795528432.463457,
-    "ast_hash": "1236ee61995a6e1a335f8f75092de7e2",
-    "semantic_hash": ""
-  },
-  "Art/Icons/frost_salt.png": {
-    "mtime": 1795448319.7300603,
-    "seen": 1795528432.463458,
-    "ast_hash": "653f04c0e5459efef41999d5ba7eb601",
-    "semantic_hash": ""
-  },
-  "Art/Icons/glowmoss.png": {
-    "mtime": 1795448319.7303083,
-    "seen": 1795528432.463458,
-    "ast_hash": "a9aac246357a228284a4f17062d762e5",
-    "semantic_hash": ""
-  },
-  "Art/Icons/gold_ingot.png": {
-    "mtime": 1795448319.7305212,
-    "seen": 1795528432.463458,
-    "ast_hash": "f13abc382bee0e7c618228a846d365c5",
-    "semantic_hash": ""
-  },
-  "Art/Icons/grave_beetle.png": {
-    "mtime": 1795448319.730696,
-    "seen": 1795528432.463459,
-    "ast_hash": "2f01edf06d91080af0d081f5dd64e4c1",
-    "semantic_hash": ""
-  },
-  "Art/Icons/grave_lantern.png": {
-    "mtime": 1795448319.730855,
-    "seen": 1795528432.463459,
-    "ast_hash": "372a3f40ef1872bf15e61820fd981709",
-    "semantic_hash": ""
-  },
-  "Art/Icons/green_bronze.png": {
-    "mtime": 1795448319.7309933,
-    "seen": 1795528432.463459,
-    "ast_hash": "9cc97edf8f61ef92cc1f7e083ee21062",
-    "semantic_hash": ""
-  },
-  "Art/Icons/hearth_glass.png": {
-    "mtime": 1795448319.7311738,
-    "seen": 1795528432.4634602,
-    "ast_hash": "f11ec7b2d4c1f2399ae694f98b67461e",
-    "semantic_hash": ""
-  },
-  "Art/Icons/heaven_s_ash.png": {
-    "mtime": 1795448319.731349,
-    "seen": 1795528432.4634602,
-    "ast_hash": "a2d84c46112952de8452c5ed55746d26",
-    "semantic_hash": ""
-  },
-  "Art/Icons/hollow_bone.png": {
-    "mtime": 1795448319.7315876,
-    "seen": 1795528432.4634602,
-    "ast_hash": "1fdab921fd712397c2c87be52d6bcafb",
-    "semantic_hash": ""
-  },
-  "Art/Icons/humstone.png": {
-    "mtime": 1795448319.7317595,
-    "seen": 1795528432.4634619,
-    "ast_hash": "7e9a2513b99cd1425a628456816def89",
-    "semantic_hash": ""
-  },
-  "Art/Icons/iron_ore.png": {
-    "mtime": 1795448319.7320528,
-    "seen": 1795528432.4634619,
-    "ast_hash": "375bd96befeef5c9b6b98e718d53d110",
-    "semantic_hash": ""
-  },
-  "Art/Icons/lifewater.png": {
-    "mtime": 1795448319.7323549,
-    "seen": 1795528432.4634628,
-    "ast_hash": "b1b285ab2dddec292b78903dc469fde3",
-    "semantic_hash": ""
-  },
-  "Art/Icons/lightning_sand.png": {
-    "mtime": 1795448319.7325294,
-    "seen": 1795528432.4634628,
-    "ast_hash": "decb5068f189caf1e10fe2c58f7955cb",
-    "semantic_hash": ""
-  },
-  "Art/Icons/living_gold.png": {
-    "mtime": 1795448319.7326624,
-    "seen": 1795528432.4634628,
-    "ast_hash": "6cf574d916486936f6d50efdcf198211",
-    "semantic_hash": ""
-  },
-  "Art/Icons/lye.png": {
-    "mtime": 1795448319.732856,
-    "seen": 1795528432.463464,
-    "ast_hash": "3490326a5c5d0b0d161492d0b39006ed",
-    "semantic_hash": ""
-  },
-  "Art/Icons/mandrake.png": {
-    "mtime": 1795448319.732987,
-    "seen": 1795528432.463464,
-    "ast_hash": "4fb015eab04f2985a48fe19e87e37958",
-    "semantic_hash": ""
-  },
-  "Art/Icons/marrow.png": {
-    "mtime": 1795448319.7332754,
-    "seen": 1795528432.463464,
-    "ast_hash": "ebab6b556dd7881511b11245d145dca4",
-    "semantic_hash": ""
-  },
-  "Art/Icons/mithral_alloy.png": {
-    "mtime": 1795448319.7335622,
-    "seen": 1795528432.463465,
-    "ast_hash": "f6c56b3366c2d03d5d15929a3d63d9b8",
-    "semantic_hash": ""
-  },
-  "Art/Icons/moon_silver.png": {
-    "mtime": 1795448319.733787,
-    "seen": 1795528432.463465,
-    "ast_hash": "37319efa2a03d519e70e197503df8e9a",
-    "semantic_hash": ""
-  },
-  "Art/Icons/moondust.png": {
-    "mtime": 1795448319.7339454,
-    "seen": 1795528432.463465,
-    "ast_hash": "b4da01a9f72367e5330ea8b48eb0b351",
-    "semantic_hash": ""
-  },
-  "Art/Icons/moonpetal.png": {
-    "mtime": 1795448319.7341323,
-    "seen": 1795528432.463466,
-    "ast_hash": "3d36956fa3d9c294dac1956687bc0679",
-    "semantic_hash": ""
-  },
-  "Art/Icons/nightshade_ink.png": {
-    "mtime": 1795448319.7342632,
-    "seen": 1795528432.463466,
-    "ast_hash": "574f7856849b80b1788959fd1d854661",
-    "semantic_hash": ""
-  },
-  "Art/Icons/ossuary_crown.png": {
-    "mtime": 1795448319.736052,
-    "seen": 1795528432.4634671,
-    "ast_hash": "627d526d6b876c29956b4bd600dd8abe",
-    "semantic_hash": ""
-  },
-  "Art/Icons/ossuary_dust.png": {
-    "mtime": 1795448319.7362783,
-    "seen": 1795528432.4634671,
-    "ast_hash": "b7f3c7b48b9fb66a4a09d48e96fe0079",
-    "semantic_hash": ""
-  },
-  "Art/Icons/philosopher_s_salt.png": {
-    "mtime": 1795448319.7365854,
-    "seen": 1795528432.4634671,
-    "ast_hash": "e953176f307cfec7bf6dd959a8948010",
-    "semantic_hash": ""
-  },
-  "Art/Icons/phoenix_ash.png": {
-    "mtime": 1795448319.737182,
-    "seen": 1795528432.463468,
-    "ast_hash": "a5ce514db9e0d2dfc731bd91b797e0a0",
-    "semantic_hash": ""
-  },
-  "Art/Icons/phoenix_feather.png": {
-    "mtime": 1795448319.7379887,
-    "seen": 1795528432.463468,
-    "ast_hash": "fd174999c129fe9ad0f770116bcc28c4",
-    "semantic_hash": ""
-  },
-  "Art/Icons/pixie_wing.png": {
-    "mtime": 1795448319.738477,
-    "seen": 1795528432.463468,
-    "ast_hash": "65c8c1354485496f671a068a2c3ee26c",
-    "semantic_hash": ""
-  },
-  "Art/Icons/primal_bloom.png": {
-    "mtime": 1795448319.7386794,
-    "seen": 1795528432.463469,
-    "ast_hash": "175a1c4a28d0f374a80304c5bc9f534f",
-    "semantic_hash": ""
-  },
-  "Art/Icons/primordial_clay.png": {
-    "mtime": 1795448319.7389922,
-    "seen": 1795528432.463469,
-    "ast_hash": "6f7ce53bc24474249b0d1a6d2584ae4a",
-    "semantic_hash": ""
-  },
-  "Art/Icons/quickfire.png": {
-    "mtime": 1795448319.7392757,
-    "seen": 1795528432.463469,
-    "ast_hash": "b2a5a8291926d3cc47d2c7fecc5fdcae",
-    "semantic_hash": ""
-  },
-  "Art/Icons/quicksilver.png": {
-    "mtime": 1795448319.739455,
-    "seen": 1795528432.46347,
-    "ast_hash": "9afcf1ec8eb9498ad2ff3eac9fb2809a",
-    "semantic_hash": ""
-  },
-  "Art/Icons/red_tincture.png": {
-    "mtime": 1795448319.7396386,
-    "seen": 1795528432.46347,
-    "ast_hash": "a4926da9095b57d1113f02688123cf40",
-    "semantic_hash": ""
-  },
-  "Art/Icons/reliquary_bone.png": {
-    "mtime": 1795448319.739829,
-    "seen": 1795528432.46347,
-    "ast_hash": "8c774459ba3ae78c416c3ffc6ec8c27b",
-    "semantic_hash": ""
-  },
-  "Art/Icons/salt_crystal.png": {
-    "mtime": 1795448319.740009,
-    "seen": 1795528432.4634712,
-    "ast_hash": "44f64634625e507545865ff3f70f6abc",
-    "semantic_hash": ""
-  },
-  "Art/Icons/salt_of_ages.png": {
-    "mtime": 1795448319.7401698,
-    "seen": 1795528432.4634712,
-    "ast_hash": "60c8011eebe7ae3837a2678b78c271ed",
-    "semantic_hash": ""
-  },
-  "Art/Icons/scarab_amulet.png": {
-    "mtime": 1795448319.7403226,
-    "seen": 1795528432.4634721,
-    "ast_hash": "22a0cbfd584b6d0f1292890812beb4fa",
-    "semantic_hash": ""
-  },
-  "Art/Icons/seer_s_orb.png": {
-    "mtime": 1795448319.7405,
-    "seen": 1795528432.4634721,
-    "ast_hash": "74c1466ca5843810ec152faa055215f1",
-    "semantic_hash": ""
-  },
-  "Art/Icons/sky_iron.png": {
-    "mtime": 1795448319.740706,
-    "seen": 1795528432.4634721,
-    "ast_hash": "a50695f809e34050ef0fc417fce6c970",
-    "semantic_hash": ""
-  },
-  "Art/Icons/sorcerer_stone.png": {
-    "mtime": 1795448319.740923,
-    "seen": 1795528432.4634728,
-    "ast_hash": "871011da5fee0211a172ccd710b23952",
-    "semantic_hash": ""
-  },
-  "Art/Icons/soul_glass.png": {
-    "mtime": 1795448319.7411885,
-    "seen": 1795528432.4634728,
-    "ast_hash": "b75a14d5169429c1a33466c6930eeaf7",
-    "semantic_hash": ""
-  },
-  "Art/Icons/spark_quartz.png": {
-    "mtime": 1795448319.7413573,
-    "seen": 1795528432.4634728,
-    "ast_hash": "8643b200e4dee7bff2c0da425a873eae",
-    "semantic_hash": ""
-  },
-  "Art/Icons/star_iron.png": {
-    "mtime": 1795448319.7415905,
-    "seen": 1795528432.463474,
-    "ast_hash": "a62bd66581a59dd9d891d095a2a00b2c",
-    "semantic_hash": ""
-  },
-  "Art/Icons/star_shard.png": {
-    "mtime": 1795448319.7418315,
-    "seen": 1795528432.463474,
-    "ast_hash": "87727b7b1dfacbf4e28278b03ffec11d",
-    "semantic_hash": ""
-  },
-  "Art/Icons/starmetal_ore.png": {
-    "mtime": 1795448319.7420185,
-    "seen": 1795528432.463474,
-    "ast_hash": "243d083998ae8c5074a2f198abb15052",
-    "semantic_hash": ""
-  },
-  "Art/Icons/static_dust.png": {
-    "mtime": 1795448319.7421875,
-    "seen": 1795528432.463475,
-    "ast_hash": "a9aff08ab07166632ea2facf7946c6e9",
-    "semantic_hash": ""
-  },
-  "Art/Icons/steam_wisp.png": {
-    "mtime": 1795448319.7423334,
-    "seen": 1795528432.463475,
-    "ast_hash": "1d6454193dd12fbcbe927017fe2b0af1",
-    "semantic_hash": ""
-  },
-  "Art/Icons/storm_glass.png": {
-    "mtime": 1795448319.742521,
-    "seen": 1795528432.463475,
-    "ast_hash": "fcb5a505e5c45fe17b1b2c4b523bbfff",
-    "semantic_hash": ""
-  },
-  "Art/Icons/storm_philter.png": {
-    "mtime": 1795448319.7426662,
-    "seen": 1795528432.463476,
-    "ast_hash": "5fc5dc9a5081ebb91111a0a62ca113c7",
-    "semantic_hash": ""
-  },
-  "Art/Icons/stormcaller_rod.png": {
-    "mtime": 1795448319.7428727,
-    "seen": 1795528432.463476,
-    "ast_hash": "727f4c2c7799df4c5b38427cd923da21",
-    "semantic_hash": ""
-  },
-  "Art/Icons/sulfur.png": {
-    "mtime": 1795448319.743035,
-    "seen": 1795528432.463476,
-    "ast_hash": "b9e035585f93f0184c1e6cc78f3fcb95",
-    "semantic_hash": ""
-  },
-  "Art/Icons/sun_amalgam.png": {
-    "mtime": 1795448319.7432263,
-    "seen": 1795528432.463477,
-    "ast_hash": "18e436e69119ab137829cd2db7a82dab",
-    "semantic_hash": ""
-  },
-  "Art/Icons/sunbloom.png": {
-    "mtime": 1795448319.7433877,
-    "seen": 1795528432.463477,
-    "ast_hash": "ae655df2ab78279ffa0ed15da2028005",
-    "semantic_hash": ""
-  },
-  "Art/Icons/tempest_glass.png": {
-    "mtime": 1795448319.7435381,
-    "seen": 1795528432.463477,
-    "ast_hash": "b208b9376a7d2fd524210cae227590c8",
-    "semantic_hash": ""
-  },
-  "Art/Icons/thunder_heart.png": {
-    "mtime": 1795448319.7437136,
-    "seen": 1795528432.463478,
-    "ast_hash": "4d3a1c7125eaf9f0ab0074bb81a416d2",
-    "semantic_hash": ""
-  },
-  "Art/Icons/thunder_ingot.png": {
-    "mtime": 1795448319.7438874,
-    "seen": 1795528432.463478,
-    "ast_hash": "f6ced5f42de866028bb877bcb465f169",
-    "semantic_hash": ""
-  },
-  "Art/Icons/thunderstone.png": {
-    "mtime": 1795448319.7440503,
-    "seen": 1795528432.463478,
-    "ast_hash": "52d9dde994ddeac282a592df7dda8793",
-    "semantic_hash": ""
-  },
-  "Art/Icons/time_sand.png": {
-    "mtime": 1795448319.7442744,
-    "seen": 1795528432.463479,
-    "ast_hash": "15fde970d4adb42697001f1adf44cbc0",
-    "semantic_hash": ""
-  },
-  "Art/Icons/titan_alloy.png": {
-    "mtime": 1795448319.7445824,
-    "seen": 1795528432.463479,
-    "ast_hash": "f7ffecf9ff33aaf2725b539bc41fdb08",
-    "semantic_hash": ""
-  },
-  "Art/Icons/titan_heart.png": {
-    "mtime": 1795448319.7448046,
-    "seen": 1795528432.463479,
-    "ast_hash": "7d7d69e20c3ba876a4caa2f16f2554a5",
-    "semantic_hash": ""
-  },
-  "Art/Icons/unicorn_horn.png": {
-    "mtime": 1795448319.7449574,
-    "seen": 1795528432.46348,
-    "ast_hash": "0d42a21b52bb77d453af24529ae8fbc6",
-    "semantic_hash": ""
-  },
-  "Art/Icons/verdant_crown.png": {
-    "mtime": 1795448319.7452104,
-    "seen": 1795528432.46348,
-    "ast_hash": "164688a300480122f904afced7a45f60",
-    "semantic_hash": ""
-  },
-  "Art/Icons/verdant_tonic.png": {
-    "mtime": 1795448319.7453601,
-    "seen": 1795528432.4634812,
-    "ast_hash": "bcec9f7078738930a8e9480cf71782cb",
-    "semantic_hash": ""
-  },
-  "Art/Icons/verdigris.png": {
-    "mtime": 1795448319.7455342,
-    "seen": 1795528432.4634812,
-    "ast_hash": "6ef203bf9ad5e648836c40d35bf5a574",
-    "semantic_hash": ""
-  },
-  "Art/Icons/void_crystal.png": {
-    "mtime": 1795448319.745802,
-    "seen": 1795528432.4634812,
-    "ast_hash": "4928c45b9b57bdc89bdd15ff3eda96e4",
-    "semantic_hash": ""
-  },
-  "Art/Icons/void_essence.png": {
-    "mtime": 1795448319.7460246,
-    "seen": 1795528432.4634821,
-    "ast_hash": "946d2883c1442514152ed8f96c1bb6d2",
-    "semantic_hash": ""
-  },
-  "Art/Icons/void_metal.png": {
-    "mtime": 1795448319.7462883,
-    "seen": 1795528432.4634821,
-    "ast_hash": "f44eeafc307b14c948c8c7743602313e",
-    "semantic_hash": ""
-  },
-  "Art/Icons/void_pearl.png": {
-    "mtime": 1795448319.7464473,
-    "seen": 1795528432.4634821,
-    "ast_hash": "6c0979b752ef8ce9370c224aa8926d39",
-    "semantic_hash": ""
-  },
-  "Art/Icons/witch_salve.png": {
-    "mtime": 1795448319.746584,
-    "seen": 1795528432.4634829,
-    "ast_hash": "da41827ea4cac469c17c9e2acbb98505",
-    "semantic_hash": ""
-  },
-  "Art/Icons/world_tree_heart.png": {
-    "mtime": 1795448319.746835,
-    "seen": 1795528432.4634829,
-    "ast_hash": "a6b831b398f70934dd62b6cc0baa2398",
-    "semantic_hash": ""
-  },
-  "Art/Icons/world_tree_sap.png": {
-    "mtime": 1795448319.7470703,
-    "seen": 1795528432.4634829,
-    "ast_hash": "4ee060bf5348c297971212d36c71c076",
-    "semantic_hash": ""
-  },
-  "Art/Icons/worldseed.png": {
-    "mtime": 1795448319.7472713,
-    "seen": 1795528432.4634838,
-    "ast_hash": "91daf13b064e84bae4e5bf18079857e5",
-    "semantic_hash": ""
-  },
-  "Art/Icons/worldseed_1.png": {
-    "mtime": 1795448319.7473629,
-    "seen": 1795528432.4634838,
-    "ast_hash": "91daf13b064e84bae4e5bf18079857e5",
-    "semantic_hash": ""
-  },
-  "Art/Icons/worldseed_2.png": {
-    "mtime": 1795448319.7475765,
-    "seen": 1795528432.4634838,
-    "ast_hash": "308bf40a4d3e8cf70e76634221faf446",
-    "semantic_hash": ""
-  },
-  "Art/Icons/worldseed_3.png": {
-    "mtime": 1795448319.7478383,
-    "seen": 1795528432.463485,
-    "ast_hash": "0c549c4fb2897798b839444108afe6a0",
-    "semantic_hash": ""
-  },
-  "Art/Icons/wyrm_fang.png": {
-    "mtime": 1795448319.7480068,
-    "seen": 1795528432.463485,
-    "ast_hash": "a967b0a0e6d42ad83f346c7cefc7807f",
-    "semantic_hash": ""
-  },
-  "Art/Icons/wyrm_ichor.png": {
-    "mtime": 1795448319.748191,
-    "seen": 1795528432.463485,
-    "ast_hash": "3575875757f2d7a1a3344ddc165216f1",
-    "semantic_hash": ""
-  },
-  "Art/UI/aspect_socket.png": {
-    "mtime": 1795448319.7488465,
-    "seen": 1795528432.463486,
-    "ast_hash": "b67f07e755615ce10dc305a2df6880b5",
-    "semantic_hash": ""
-  },
-  "Art/UI/bar_fill.png": {
-    "mtime": 1795448319.748964,
-    "seen": 1795528432.463486,
-    "ast_hash": "f0d9d9ec9ad0694d3058a38f92b81c4b",
-    "semantic_hash": ""
-  },
-  "Art/UI/book.png": {
-    "mtime": 1795448319.7490702,
-    "seen": 1795528432.463487,
-    "ast_hash": "e63be61d2718d5ef2018c7a2a65826bf",
-    "semantic_hash": ""
-  },
-  "Art/UI/button_down.png": {
-    "mtime": 1795448319.7491992,
-    "seen": 1795528432.463487,
-    "ast_hash": "8f7a147d740741f2ccd9fbaf07efbf61",
-    "semantic_hash": ""
-  },
-  "Art/UI/button_up.png": {
-    "mtime": 1795448319.7493346,
-    "seen": 1795528432.463487,
-    "ast_hash": "106b61147d3d30cca93a26c40423bf9e",
-    "semantic_hash": ""
-  },
-  "Art/UI/card.png": {
-    "mtime": 1795448319.7494643,
-    "seen": 1795528432.463488,
-    "ast_hash": "6c91860ccae8413712ba180a36583e8c",
-    "semantic_hash": ""
-  },
-  "Art/UI/card_sel.png": {
-    "mtime": 1795448319.749568,
-    "seen": 1795528432.463488,
-    "ast_hash": "9a05ab426faa5ee3109e68792dd87f11",
-    "semantic_hash": ""
-  },
-  "Art/UI/choice.png": {
-    "mtime": 1795448319.7496867,
-    "seen": 1795528432.463488,
-    "ast_hash": "5b61f4c9c4cb76fd3e365d15fa90a0ac",
-    "semantic_hash": ""
-  },
-  "Art/UI/choice_lit.png": {
-    "mtime": 1795448319.749789,
-    "seen": 1795528432.463489,
-    "ast_hash": "6cba226c40bf4429dd626d68e348f868",
-    "semantic_hash": ""
-  },
-  "Art/UI/corner.png": {
-    "mtime": 1795448319.749893,
-    "seen": 1795528432.463489,
-    "ast_hash": "cd2f206bbc310e77f1e386dc17a8a6cc",
-    "semantic_hash": ""
-  },
-  "Art/UI/cross.png": {
-    "mtime": 1795448319.750005,
-    "seen": 1795528432.463489,
-    "ast_hash": "4860112b5088027ed369344007b1bf8d",
-    "semantic_hash": ""
-  },
-  "Art/UI/dialog.png": {
-    "mtime": 1795448319.750255,
-    "seen": 1795528432.46349,
-    "ast_hash": "d6645f5b5f44ad12c0593fc28f09b29a",
-    "semantic_hash": ""
-  },
-  "Art/UI/goals.png": {
-    "mtime": 1795448319.7504158,
-    "seen": 1795528432.46349,
-    "ast_hash": "7cf3945395a9db2bf344cdd192635e28",
-    "semantic_hash": ""
-  },
-  "Art/UI/hud_left.png": {
-    "mtime": 1795448319.7505658,
-    "seen": 1795528432.46349,
-    "ast_hash": "8b85277e1d72b3825bb852e60ea4942d",
-    "semantic_hash": ""
-  },
-  "Art/UI/hud_right.png": {
-    "mtime": 1795448319.750669,
-    "seen": 1795528432.463491,
-    "ast_hash": "d304198b804a154ced6a65d331eb7221",
-    "semantic_hash": ""
-  },
-  "Art/UI/ignite_down.png": {
-    "mtime": 1795448319.750776,
-    "seen": 1795528432.463491,
-    "ast_hash": "55ad5e37c82527231b7570279b6069ed",
-    "semantic_hash": ""
-  },
-  "Art/UI/ignite_off.png": {
-    "mtime": 1795448319.7508771,
-    "seen": 1795528432.4634922,
-    "ast_hash": "165b448c57c26d2f15f918f9bcd25679",
-    "semantic_hash": ""
-  },
-  "Art/UI/ignite_up.png": {
-    "mtime": 1795448319.7509744,
-    "seen": 1795528432.4634922,
-    "ast_hash": "6e2f39e912278b87ef5e073624fe8221",
-    "semantic_hash": ""
-  },
-  "Art/UI/journal.png": {
-    "mtime": 1795448319.7512112,
-    "seen": 1795528432.4634922,
-    "ast_hash": "a23f6af3125a57922405a3def03b2815",
-    "semantic_hash": ""
-  },
-  "Art/UI/journal_pick.png": {
-    "mtime": 1795448319.75136,
-    "seen": 1795528432.463493,
-    "ast_hash": "11b09551d8259b239556ceb68f261c9c",
-    "semantic_hash": ""
-  },
-  "Art/UI/mark.png": {
-    "mtime": 1795448319.7514808,
-    "seen": 1795528432.463493,
-    "ast_hash": "414f4e4ac68c4d4fe9b73886ea0de961",
-    "semantic_hash": ""
-  },
-  "Art/UI/mini_tile.png": {
-    "mtime": 1795448319.7516139,
-    "seen": 1795528432.463493,
-    "ast_hash": "8a7ed4ece3b0740df2c8af69c3197269",
-    "semantic_hash": ""
-  },
-  "Art/UI/note.png": {
-    "mtime": 1795448319.751726,
-    "seen": 1795528432.4634938,
-    "ast_hash": "b9a0c34370bb919d47ba16c478d04890",
-    "semantic_hash": ""
-  },
-  "Art/UI/option_down.png": {
-    "mtime": 1795448319.7518234,
-    "seen": 1795528432.4634938,
-    "ast_hash": "343c163ab2fb94fbbd7aa2fefbb735b9",
-    "semantic_hash": ""
-  },
-  "Art/UI/option_off.png": {
-    "mtime": 1795448319.7519226,
-    "seen": 1795528432.4634938,
-    "ast_hash": "66a446a1514850a85711dafdc7746b46",
-    "semantic_hash": ""
-  },
-  "Art/UI/option_up.png": {
-    "mtime": 1795448319.7520123,
-    "seen": 1795528432.463495,
-    "ast_hash": "b86d98907d701dfa7afbfc3f4da3d376",
-    "semantic_hash": ""
-  },
-  "Art/UI/pip.png": {
-    "mtime": 1795448319.7520885,
-    "seen": 1795528432.463495,
-    "ast_hash": "808fe3f69eba501e9a046d2d25d2f2a5",
-    "semantic_hash": ""
-  },
-  "Art/UI/rack.png": {
-    "mtime": 1795448319.7521698,
-    "seen": 1795528432.463495,
-    "ast_hash": "a1fce2003ba7ffc4b8667cdbfd71add3",
-    "semantic_hash": ""
-  },
-  "Art/UI/rack_slot_lit.png": {
-    "mtime": 1795448319.752266,
-    "seen": 1795528432.463496,
-    "ast_hash": "b67f07e755615ce10dc305a2df6880b5",
-    "semantic_hash": ""
-  },
-  "Art/UI/socket_filled.png": {
-    "mtime": 1795448319.7523584,
-    "seen": 1795528432.463496,
-    "ast_hash": "c2f2a16d28598d78755b7a26857ffff4",
-    "semantic_hash": ""
-  },
-  "Art/UI/star.png": {
-    "mtime": 1795448319.7524555,
-    "seen": 1795528432.463496,
-    "ast_hash": "2d029c91a3bd9bc72ac5e361cd375095",
-    "semantic_hash": ""
-  },
-  "Art/UI/toast.png": {
-    "mtime": 1795448319.7525673,
-    "seen": 1795528432.463497,
-    "ast_hash": "24417def190e000b1463ab230d10b9ea",
-    "semantic_hash": ""
-  },
-  "Art/UI/tooltip.png": {
-    "mtime": 1795448319.752653,
-    "seen": 1795528432.463497,
-    "ast_hash": "4a8c12a255400eb992aeaafa8e4759de",
-    "semantic_hash": ""
+    "semantic_hash": "67e616974ae70ec5b5e1b0e3025ecebb"
+  },
+  "Athanor/Assets/Tests/PlayMode/SingletonTests.cs": {
+    "mtime": 1795624249.9043114,
+    "seen": 1795628483.623971,
+    "ast_hash": "4df51cafcb036eb17b456c67b140cc83",
+    "semantic_hash": "4df51cafcb036eb17b456c67b140cc83"
+  },
+  "Athanor/Assets/Tests/PlayMode/TutorialTraceTests.cs": {
+    "mtime": 1795624801.8672495,
+    "seen": 1795628483.623971,
+    "ast_hash": "5ea231acdcd3c834bb324216cf1463ed",
+    "semantic_hash": "5ea231acdcd3c834bb324216cf1463ed"
   }
 }

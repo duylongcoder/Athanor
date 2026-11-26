@@ -33,7 +33,7 @@ generated-from: vault/
         └─→ Lang[EN/Vi parity]
 
    └─→ Game Systems (Unity Runtime)
-        ├─→ GameFlow (State Machine)
+        ├─→ GameManager (State Machine)
         │    ├─→ Screen Views[14 types]
         │    ├─→ Cutscenes[3 types]
         │    └─→ Save plumbing
@@ -42,7 +42,7 @@ generated-from: vault/
         ├─→ LinkView → Light Motes
         └─→ UI/HUD/Tooltip
 
-   └─→ Content Data (content.json)
+   └─→ Content Data (content assets)
         ├─→ Materials[81+ types] ← 70+ distinct
         ├─→ Recipes[87 pairs] ← 59 known + 28 new
         ├─→ Catalysts[26 total] ← 10 existing + 16 new
@@ -56,7 +56,7 @@ generated-from: vault/
         └─→ lang/en.json, vi.json ← mirror parity
 
    └─→ Testing Coverage
-        ├─→ Core Tests[dotnet/Unity-free] → 41+ tests
+        ├─→ Rule Tests[EditMode, Athanor.Gameplay.Tests]
         ├─→ Unity Tests → Integration coverage
         ├─→ Lang Tests → EN/Vi parity check
         └─→ Automated Rules: Determinism + Isolation
@@ -64,7 +64,7 @@ generated-from: vault/
    └─→ Agent Team Structure
         ├─→ phase-lead → Summarise → decide → split → dispatch
         ├─→ rules-engineer → Core rules + tests
-        ├─→ unity-gameplay-engineer → UI + GameFlow
+        ├─→ unity-gameplay-engineer → UI + GameManager
         ├─→ content-designer → Balance tuning
         ├─→ ui-ux-designer → Screen layouts
         └─→ qa-engineer → Sign-off & releases

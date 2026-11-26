@@ -29,14 +29,14 @@ aliases: []
 | method | `public static void StoreSettings(Settings settings)` | 64 |  |
 | property | `public static bool IntroSeen` | 76 |  |
 | method | `public static void SetIntroSeen(bool v)` | 77 |  |
-| property | `public static bool TutorialDone` | 80 | The tutorial was played to its end (or skipped). See TutorialScript.ShouldRun. |
+| property | `public static bool TutorialDone` | 80 | The tutorial was played to its end (or skipped). See TutorialGate.ShouldRun. |
 | method | `public static void SetTutorialDone(bool v)` | 81 |  |
 
 ## Uses
 [[ContentDb]], [[Journal]], [[Profile]], [[ProfileData]], [[Settings]]
 
 ## Used by
-[[AtlasBuilder]], [[GameFlow]], [[GoldenShots]], [[TutorialRules]], [[ViewCapture]]
+[[AtlasBuilder]], [[GoldenShots]], [[ProgressManager]], [[RunManager]], [[SaveManager]], [[TutorialRules]], [[ViewCapture]]
 
 ## Tested by
 [[PauseTests]], [[SaveTests]], [[SettingsHapticsTests]], [[TutorialFlowTests]]

@@ -31,7 +31,7 @@ public static class AtlasBuilder
 
     /// <summary>The HD-2D depth layers (Phase 5b). They stay out of every atlas: they are placed as plain sprites
     /// in the HD-2D bench of Main.unity.</summary>
-    public const string DepthDir = "Assets/Art/Art/Depth";
+    public const string DepthDir = "Assets/Art/Depth";
 
     /// <summary>True for an asset under <see cref="DepthDir"/>.</summary>
     public static bool IsDepthArt(string assetPath) => assetPath.StartsWith(DepthDir + "/");

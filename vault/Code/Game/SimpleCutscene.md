@@ -23,7 +23,7 @@ aliases: []
 | property | `public struct DescentName` | 53 | Descent beat 3, the name of the place: fades in while the name rises from art y fromY to toY, then the line under it, then a hold. |
 | property | `public struct DescentArrive` | 57 | Descent beat 4, arriving: the texts and the rune fade while the room rises back; streaks is the motes' strength meanwhile. |
 | property | `public struct DepthLine` | 61 | The depth's line at the start of a run: fade in, hold, fade out; the bench is dimmed by shade. |
-| method | `public void Bind(FxRefs effects)` | 126 | Takes the effect players. GameFlow calls it once at start. |
+| method | `public void Bind(FxRefs effects)` | 126 | Takes the effect players. GameManager calls it once at start. |
 | method | `public override IEnumerator Play()` | 133 |  |
 | method | `public void Close()` | 150 | Puts the workshop back and hides everything this cutscene drew. |
 | method | `public IEnumerator Intro()` | 169 | Starts and ends on a black screen. |
@@ -35,7 +35,7 @@ aliases: []
 [[Anim]], [[Art]], [[BurstSpec]], [[Cutscene]], [[DepthLook]], [[FxRefs]], [[Label]], [[Loc]], [[Motion]], [[Px]], [[SparkMesh]], [[Sparks]]
 
 ## Used by
-[[GameFlow]]
+[[GameManager]]
 
 ## Tested by
 [[LayoutPinTests]], [[SceneBakeTests]]

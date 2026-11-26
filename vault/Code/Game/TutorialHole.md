@@ -4,7 +4,7 @@ type: code
 layer: Game
 kind: class
 namespace: Athanor.Game
-file: Athanor/Assets/Scripts/Game/Cutscene/TutorialHole.cs
+file: Athanor/Assets/Scripts/Game/Tutorial/TutorialHole.cs
 tags: [code/game, kind/class]
 aliases: []
 ---
@@ -12,9 +12,9 @@ aliases: []
 # TutorialHole
 
 `public sealed class TutorialHole` : `MonoBehaviour`
-- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Cutscene/TutorialHole.cs:10-39`
+- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Tutorial/TutorialHole.cs:10-39`
 
-> One lit window of the tutorial overlay: a SpriteMask that cuts a hole in the dim (the dim draws "visible outside mask"), and the four gold rim pieces round it. TutorialController keeps a few of these in the scene and opens as many as a step needs.
+> One lit window of the tutorial overlay: a SpriteMask that cuts a hole in the dim (the dim draws "visible outside mask"), and the four gold rim pieces round it. TutorialManager keeps a few of these in the scene and opens as many as a step needs.
 
 ## Members
 | Kind | Signature | Line | Note |
@@ -27,7 +27,7 @@ aliases: []
 [[Px]]
 
 ## Used by
-[[TutorialController]]
+[[TutorialManager]]
 
 ## Tested by
 [[LayoutPinTests]], [[SceneBakeTests]]

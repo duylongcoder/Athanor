@@ -30,7 +30,7 @@ aliases: []
 [[ContentDb]], [[Profile]], [[Rarities]], [[Rng]]
 
 ## Used by
-[[BalanceReports]], [[GameFlow]], [[GoldenShots]], [[RunOptions]], [[RunState]], [[Sim]], [[TutorialScript]]
+[[BalanceReports]], [[GameManager]], [[GoldenShots]], [[ProgressManager]], [[RunOptions]], [[RunState]], [[Sim]], [[TutorialSequence]]
 
 ## Tested by
 [[HudTests]], [[LoreTests]], [[PauseTests]], [[Phase3Tests]], [[PrefabBakeTests]], [[RarityReportTests]], [[RulesTests]], [[TutorialFlowTests]], [[TutorialTests]]

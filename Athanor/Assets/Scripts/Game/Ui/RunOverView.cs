@@ -2,6 +2,7 @@ using System.Collections;
 using Athanor.Gameplay;
 using PrimeTween;
 using UnityEngine;
+using Hint = UnityEngine.TooltipAttribute;   // not "Tooltip": the game has a Tooltip view of its own
 
 namespace Athanor.Game
 {
@@ -17,6 +18,8 @@ namespace Athanor.Game
         [System.Serializable]
         public struct Timing { public float fadeIn, slide, shadeAlpha, slideFrom; }
         [SerializeField] Timing timing;
+        /// <summary>Letters of goal names that fit on one line before VIEW GOALS.</summary>
+        [SerializeField, Hint("Letters of goal names that fit on one line before VIEW GOALS.")] int goalLineFits;
         [SerializeField] Label heading, sub, goalsLine;
         [SerializeField] Label[] names = new Label[4], values = new Label[4];
         [SerializeField] SpriteRenderer shade;
@@ -25,7 +28,7 @@ namespace Athanor.Game
         [SerializeField] UiButton again, toTitle;
         bool done, wired;
 
-        /// <summary>Hooks the clicks. GameFlow calls it once at start; a test calls it after instantiating the prefab.</summary>
+        /// <summary>Hooks the clicks. GameManager calls it once at start; a test calls it after instantiating the prefab.</summary>
         public void Bind()
         {
             if (wired) return;
@@ -77,15 +80,14 @@ namespace Athanor.Game
             values[1].Text = run.DiscoveriesThisRun.ToString();
             values[2].Text = Loc.T("ui.common.of", ("a", journal.KnownPairs.Count), ("b", db.Recipes.Count));
             values[3].Text = goals.Count.ToString();
-            // as many of the goals' names as fit on one line with "VIEW GOALS" after them: 25 letters, inside the dialog's rules
-            const int Fits = 25;
+            // as many of the goals' names as fit on one line with "VIEW GOALS" after them: goalLineFits letters, inside the dialog's rules
             string list = "";
             for (int i = 0; i < goals.Count; i++)
             {
                 string next = (list.Length > 0 ? ", " : "") + Loc.Upper(Loc.C("goal." + goals[i].Goal.id + ".text", goals[i].Goal.text));
                 int left = goals.Count - i - 1;
                 string more = left > 0 ? Loc.T("ui.runover.and_more", ("list", ""), ("n", left)) : "";
-                if (list.Length + next.Length + more.Length > Fits)
+                if (list.Length + next.Length + more.Length > goalLineFits)
                 {
                     // the names so far were checked with this ending last time round; with none so far, say how many
                     list = list.Length > 0 ? Loc.T("ui.runover.and_more", ("list", list), ("n", goals.Count - i)) : Loc.P("ui.runover.goal_count", goals.Count);

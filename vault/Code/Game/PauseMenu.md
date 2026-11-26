@@ -26,7 +26,7 @@ aliases: []
 | property | `public bool IsOpen` | 24 |  |
 | property | `public bool Confirming` | 25 |  |
 | property | `public struct Layout` | 29 | Where the lower buttons sit (art px, y down): the dialog's top edge, the buttons' left edge and tops below the dialog's top, the hint's centre and top, and how far they move up without Vibration. |
-| method | `public void Bind(Settings playerSettings)` | 39 | Takes the player's settings (Vibration writes to them) and hooks the clicks. GameFlow calls it once at start. |
+| method | `public void Bind(Settings playerSettings)` | 39 | Takes the player's settings (Vibration writes to them) and hooks the clicks. GameManager calls it once at start. |
 | method | `public bool Open()` | 66 | Opens the menu and stops time. False when a pause is not allowed now or one is already open. |
 | method | `public void Close()` | 77 | Closes whatever is up and puts time back. |
 | method | `public void Toggle()` | 87 | Esc: opens; closes the menu; or backs out of the quit question to the menu. |
@@ -35,7 +35,7 @@ aliases: []
 [[Clickable]], [[Haptics]], [[Label]], [[Loc]], [[Px]], [[Settings]], [[UiButton]]
 
 ## Used by
-[[GameFlow]], [[GoldenShots]]
+[[GameManager]], [[GoldenShots]]
 
 ## Tested by
 [[LayoutPinTests]], [[PauseTests]], [[PrefabBakeTests]]

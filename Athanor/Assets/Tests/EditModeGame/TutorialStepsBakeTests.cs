@@ -29,16 +29,27 @@ namespace Athanor.Tests
         [Serializable] public class Baseline { public List<StepRects> steps = new List<StepRects>(); }
 
         MainSceneFixture main;
-        TutorialController tutorial;
+        TutorialManager tutorial;
 
-        [SetUp] public void Open() { main = new MainSceneFixture(); tutorial = main.FlowField<TutorialController>("tutorial"); tutorial.Bind(main.Flow);
+        [SetUp] public void Open() { main = new MainSceneFixture(); tutorial = main.FlowField<TutorialManager>("tutorial"); tutorial.Bind(main.Flow);
             main.Flow.JournalView.Bind(new ContentDb(ContentAssets.Data()));   // the cells the tutorial points at
         }
         [TearDown] public void Close() => main?.Dispose();
 
         [Test]
-        public void EveryStepId_UsedByDrive_ExistsInTheScene()
+        public void EveryStepId_UsedByTheScript_ExistsInTheSequence()
         {
+            // Arrange
+            var s = tutorial.Sequence;
+            var named = s.script.Select(a => a.step)
+                .Concat(s.trials.SelectMany(t => new[] { t.reactionStep, t.reactionFollowUp, t.fizzleStep }.Concat(t.afterIgnite.Select(a => a.step))))
+                .Concat(s.catalystTrials.SelectMany(c => new[] { c.trial.reactionStep }))
+                .Concat(s.offerLines).Concat(new[] { s.offerHold })
+                .Where(id => !string.IsNullOrEmpty(id)).Distinct();
+            // Act
+            var missing = named.Where(id => s.steps.All(st => st.id != id)).ToList();
+            // Assert
+            CollectionAssert.IsEmpty(missing);
             foreach (var id in AllStepIds) Assert.DoesNotThrow(() => tutorial.Step(id), "missing step " + id);
         }
 
@@ -59,8 +70,8 @@ namespace Athanor.Tests
         public void FixedAreas_OfEveryStep_HavePositiveSize()
         {
             foreach (var id in AllStepIds)
-                foreach (var a in tutorial.Step(id).Areas())
-                    if (a.kind == AreaKind.Fixed) Assert.IsTrue(a.size.x > 0 && a.size.y > 0, id + " " + a.name);
+                foreach (var a in tutorial.Step(id).areas)
+                    if (a.kind == AreaKind.Fixed) Assert.IsTrue(a.rect.width > 0 && a.rect.height > 0, id + " " + a.name);
         }
 
         [Test]
@@ -68,7 +79,7 @@ namespace Athanor.Tests
         {
             var baseline = JsonUtility.FromJson<Baseline>(File.ReadAllText(BaselinePath));
             Assert.GreaterOrEqual(baseline.steps.Count, 20);
-            int hub = TutorialScript.Chain.Lay[1].Tile;   // the baseline stands the chain hub in for "the hub of the event that just played"
+            int hub = tutorial.Sequence.Trial(2).Lay[1].Tile;   // the baseline stands the chain hub in for "the hub of the event that just played"
             foreach (var want in baseline.steps)
             {
                 var got = tutorial.Holes(tutorial.Step(want.id), hub);
@@ -86,9 +97,9 @@ namespace Athanor.Tests
         {
             // awaited steps let clicks through their areas; read steps keep them (a click advances)
             foreach (var id in new[] { "1.2", "1.3", "1.5", "2.1", "2.2", "2.4", "3.1", "3.3", "5.3", "5.4", "5.4i" })
-                foreach (var a in tutorial.Step(id).Areas()) Assert.IsTrue(a.clicksPass, id + " " + a.name);
+                foreach (var a in tutorial.Step(id).areas) Assert.IsTrue(a.clicksPass, id + " " + a.name);
             foreach (var id in new[] { "1.1", "1.4", "1.6", "1.7", "2.5", "2.6", "3.0", "3.2", "3.5", "3.6" })
-                foreach (var a in tutorial.Step(id).Areas()) Assert.IsFalse(a.clicksPass, id + " " + a.name);
+                foreach (var a in tutorial.Step(id).areas) Assert.IsFalse(a.clicksPass, id + " " + a.name);
             var last = tutorial.Step("2.7"); Assert.IsFalse(last.dark); Assert.IsFalse(last.lockPad);
             var offer = tutorial.Step("5.3"); Assert.IsFalse(offer.dark); Assert.IsTrue(offer.lockPad);
             Assert.IsTrue(tutorial.Step("2.5").useBoxPos); Assert.AreEqual(262f, tutorial.Step("2.5").boxPos.y);

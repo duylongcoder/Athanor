@@ -53,7 +53,7 @@ MonoBehaviour:
   look:
     disabledTint: {r: 0.45, g: 0.42, b: 0.42, a: 1}
     overTint: {r: 1.25, g: 1.15, b: 1.05, a: 1}
-    disabledText: {r: 0.54117647, g: 0.47843137, b: 0.41568627, a: 1}
+    disabledText: {r: 0.5411765, g: 0.47843137, b: 0.41568628, a: 1}
     labelUp: 10
     labelDown: 8
 --- !u!114 &2709045520009866071
@@ -4889,7 +4889,7 @@ MonoBehaviour:
   look:
     disabledTint: {r: 0.45, g: 0.42, b: 0.42, a: 1}
     overTint: {r: 1.25, g: 1.15, b: 1.05, a: 1}
-    disabledText: {r: 0.54117647, g: 0.47843137, b: 0.41568627, a: 1}
+    disabledText: {r: 0.5411765, g: 0.47843137, b: 0.41568628, a: 1}
     labelUp: 10
     labelDown: 8
 --- !u!114 &5314285661097443769
@@ -6283,7 +6283,7 @@ MonoBehaviour:
   look:
     disabledTint: {r: 0.45, g: 0.42, b: 0.42, a: 1}
     overTint: {r: 1.25, g: 1.15, b: 1.05, a: 1}
-    disabledText: {r: 0.54117647, g: 0.47843137, b: 0.41568627, a: 1}
+    disabledText: {r: 0.5411765, g: 0.47843137, b: 0.41568628, a: 1}
     labelUp: 10
     labelDown: 8
 --- !u!114 &2981503856521578087
@@ -6354,7 +6354,7 @@ MonoBehaviour:
   look:
     disabledTint: {r: 0.45, g: 0.42, b: 0.42, a: 1}
     overTint: {r: 1.25, g: 1.15, b: 1.05, a: 1}
-    disabledText: {r: 0.54117647, g: 0.47843137, b: 0.41568627, a: 1}
+    disabledText: {r: 0.5411765, g: 0.47843137, b: 0.41568628, a: 1}
     labelUp: 10
     labelDown: 8
 --- !u!114 &3528959449223907871
@@ -10041,7 +10041,7 @@ MonoBehaviour:
   look:
     disabledTint: {r: 0.45, g: 0.42, b: 0.42, a: 1}
     overTint: {r: 1.25, g: 1.15, b: 1.05, a: 1}
-    disabledText: {r: 0.54117647, g: 0.47843137, b: 0.41568627, a: 1}
+    disabledText: {r: 0.5411765, g: 0.47843137, b: 0.41568628, a: 1}
     labelUp: 10
     labelDown: 8
 --- !u!114 &6102278012293717961
@@ -11373,8 +11373,6 @@ MonoBehaviour:
   - {fileID: 7240869220426914870}
   - {fileID: 9026140890360517860}
   - {fileID: 1359388220400638176}
-  glow: {fileID: 6040261451019495426}
-  shade: {fileID: 5622675632351352659}
   layout:
     centerX: 320
     logoY: 96
@@ -11384,10 +11382,10 @@ MonoBehaviour:
     progressYVi: 332
     creditY: 348
     creditYVi: 346
-    resetRest: {r: 0.47843137, g: 0.35294118, b: 0.22745098, a: 1}
-    resetOver: {r: 0.93333333, g: 0.41568627, b: 0.23529412, a: 1}
-    cellRest: {r: 0.16470588, g: 0.09411765, b: 0.0627451, a: 1}
-    cellOver: {r: 0.29019608, g: 0.17254902, b: 0.07843137, a: 1}
+    resetRest: {r: 0.47843137, g: 0.3529412, b: 0.22745098, a: 1}
+    resetOver: {r: 0.93333334, g: 0.41568628, b: 0.23529412, a: 1}
+    cellRest: {r: 0.16470589, g: 0.09411765, b: 0.0627451, a: 1}
+    cellOver: {r: 0.2901961, g: 0.17254902, b: 0.07843137, a: 1}
     cellInset: 1
     pitch: 28
     pitchNoVib: 32
@@ -11424,6 +11422,14 @@ MonoBehaviour:
     emberVx: {x: -6, y: 6}
     emberVy: {x: 18, y: 42}
     ember: {r: 2.2, g: 1.2, b: 0.4, a: 0.9}
+  glow: {fileID: 6040261451019495426}
+  shade: {fileID: 5622675632351352659}
+  panelBox:
+    x: 160
+    y: 75
+    cellX: 300
+    cellW: 150
+    cellH: 26
 --- !u!1 &7152039012277428222
 GameObject:
   m_ObjectHideFlags: 0
@@ -11477,7 +11483,7 @@ MonoBehaviour:
   look:
     disabledTint: {r: 0.45, g: 0.42, b: 0.42, a: 1}
     overTint: {r: 1.25, g: 1.15, b: 1.05, a: 1}
-    disabledText: {r: 0.54117647, g: 0.47843137, b: 0.41568627, a: 1}
+    disabledText: {r: 0.5411765, g: 0.47843137, b: 0.41568628, a: 1}
     labelUp: 10
     labelDown: 8
 --- !u!114 &5879740298449205684
@@ -11745,7 +11751,7 @@ MonoBehaviour:
   look:
     disabledTint: {r: 0.45, g: 0.42, b: 0.42, a: 1}
     overTint: {r: 1.25, g: 1.15, b: 1.05, a: 1}
-    disabledText: {r: 0.54117647, g: 0.47843137, b: 0.41568627, a: 1}
+    disabledText: {r: 0.5411765, g: 0.47843137, b: 0.41568628, a: 1}
     labelUp: 10
     labelDown: 8
 --- !u!114 &211192138727479791
@@ -11997,7 +12003,7 @@ MonoBehaviour:
   look:
     disabledTint: {r: 0.45, g: 0.42, b: 0.42, a: 1}
     overTint: {r: 1.25, g: 1.15, b: 1.05, a: 1}
-    disabledText: {r: 0.54117647, g: 0.47843137, b: 0.41568627, a: 1}
+    disabledText: {r: 0.5411765, g: 0.47843137, b: 0.41568628, a: 1}
     labelUp: 10
     labelDown: 8
 --- !u!114 &4224629898424606474
@@ -13711,7 +13717,7 @@ MonoBehaviour:
   look:
     disabledTint: {r: 0.45, g: 0.42, b: 0.42, a: 1}
     overTint: {r: 1.25, g: 1.15, b: 1.05, a: 1}
-    disabledText: {r: 0.54117647, g: 0.47843137, b: 0.41568627, a: 1}
+    disabledText: {r: 0.5411765, g: 0.47843137, b: 0.41568628, a: 1}
     labelUp: 10
     labelDown: 8
 --- !u!114 &8770695376143495260
@@ -14182,7 +14188,7 @@ MonoBehaviour:
   look:
     disabledTint: {r: 0.45, g: 0.42, b: 0.42, a: 1}
     overTint: {r: 1.25, g: 1.15, b: 1.05, a: 1}
-    disabledText: {r: 0.54117647, g: 0.47843137, b: 0.41568627, a: 1}
+    disabledText: {r: 0.5411765, g: 0.47843137, b: 0.41568628, a: 1}
     labelUp: 10
     labelDown: 8
 --- !u!114 &3035221231837083133
@@ -15724,7 +15730,7 @@ MonoBehaviour:
   look:
     disabledTint: {r: 0.45, g: 0.42, b: 0.42, a: 1}
     overTint: {r: 1.25, g: 1.15, b: 1.05, a: 1}
-    disabledText: {r: 0.54117647, g: 0.47843137, b: 0.41568627, a: 1}
+    disabledText: {r: 0.5411765, g: 0.47843137, b: 0.41568628, a: 1}
     labelUp: 10
     labelDown: 8
 --- !u!114 &1410955871147642769

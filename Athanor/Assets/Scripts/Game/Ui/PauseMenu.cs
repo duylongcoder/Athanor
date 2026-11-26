@@ -35,7 +35,7 @@ namespace Athanor.Game
         Settings settings;
         bool wired;
 
-        /// <summary>Takes the player's settings (Vibration writes to them) and hooks the clicks. GameFlow calls it once at start.</summary>
+        /// <summary>Takes the player's settings (Vibration writes to them) and hooks the clicks. GameManager calls it once at start.</summary>
         public void Bind(Settings playerSettings)
         {
             settings = playerSettings;

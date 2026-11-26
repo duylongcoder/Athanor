@@ -30,7 +30,7 @@ aliases: []
 [[Align]], [[Art]], [[Clickable]], [[FontKind]], [[Fonts]], [[Label]], [[Px]]
 
 ## Used by
-[[BenchView]], [[Fx]], [[IgniteSequence]], [[LinkView]], [[RarityStars]], [[ReactionCutscene]], [[TutorialController]]
+[[BenchView]], [[Fx]], [[IgniteSequence]], [[LinkView]], [[RarityStars]], [[ReactionCutscene]], [[TutorialManager]]
 
 ## Tested by
 [[MainDepthTests]]

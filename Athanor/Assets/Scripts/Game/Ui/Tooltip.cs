@@ -9,7 +9,10 @@ namespace Athanor.Game
     /// </summary>
     public sealed class Tooltip : MonoBehaviour
     {
-        const int W = 176, BaseH = 58, RowH = 12, Order = 400;
+        /// <summary>The panel's width, its height without the tier row, and the tier row's height (px), stored in the Bench prefab.</summary>
+        [Serializable]
+        public struct Size { public int width, baseHeight, tierRow; }
+        [SerializeField] Size size;
         [SerializeField] Label title, body, tier;
         [SerializeField] SpriteRenderer panel;
         [SerializeField] RarityStars stars;
@@ -27,7 +30,7 @@ namespace Athanor.Game
             public int longText; public float tightSpacing;
         }
         [SerializeField] Layout layout;
-        int h = BaseH;
+        int h;
 
         /// <summary>
         /// The panel's 9-slice sprite (the panel stretches only in its middle, so the taller tip keeps the same border). It is made by
@@ -36,24 +39,25 @@ namespace Athanor.Game
         /// </summary>
         public void Bind()
         {
+            h = size.baseHeight;
             if (panel.sprite != null && panel.sprite.border != Vector4.zero) return;
             var art = Art.Lib.Sprite("tooltip");
             panel.sprite = Sprite.Create(art.texture, art.textureRect, layout.pivot, art.pixelsPerUnit, 0, SpriteMeshType.FullRect, new Vector4(layout.border, layout.border, layout.border, layout.border));
             panel.drawMode = SpriteDrawMode.Sliced;
-            panel.size = new Vector2(W, BaseH);
+            panel.size = new Vector2(size.width, size.baseHeight);
         }
 
         /// <summary>Shows the tip above the anchor (below it when there is no room), kept on screen. A rarity adds the tier row.</summary>
         public void Show(string heading, string text, Vector2 anchor, float clearance = 20, string rarity = null)
         {
             bool row = rarity != null;
-            h = BaseH + (row ? RowH : 0);
-            panel.size = new Vector2(W, h);
+            h = size.baseHeight + (row ? size.tierRow : 0);
+            panel.size = new Vector2(size.width, h);
             title.Text = heading; body.Text = text;
             body.main.lineSpacing = text != null && text.Length > layout.longText ? layout.tightSpacing : 0;      // a third line fits when the lines sit closer
-            int left = -W / 2; float top = h / 2f;   // the panel's left edge and top, from its centre
+            int left = -size.width / 2; float top = h / 2f;   // the panel's left edge and top, from its centre
             title.transform.localPosition = new Vector3(left + layout.pad, top - layout.titleDy, 0);
-            body.transform.localPosition = new Vector3(left + layout.pad, top - layout.bodyDy - (row ? RowH : 0), 0);
+            body.transform.localPosition = new Vector3(left + layout.pad, top - layout.bodyDy - (row ? size.tierRow : 0), 0);
             stars.SetActive(row); tier.gameObject.SetActive(row);
             if (row)
             {
@@ -66,7 +70,7 @@ namespace Athanor.Game
             }
             float y = anchor.y + clearance + h / 2f;
             if (y + h / 2f > Px.H / 2f - layout.edgeMargin) y = anchor.y - clearance - h / 2f;
-            float x = Mathf.Clamp(anchor.x, -Px.W / 2f + W / 2f + layout.edgeMargin, Px.W / 2f - W / 2f - layout.edgeMargin);
+            float x = Mathf.Clamp(anchor.x, -Px.W / 2f + size.width / 2f + layout.edgeMargin, Px.W / 2f - size.width / 2f - layout.edgeMargin);
             transform.position = new Vector3(Mathf.Round(x), Mathf.Round(y), 0);
             gameObject.SetActive(true);
         }

@@ -10,14 +10,14 @@ tags: [workflow, vault]
 | `Design/`, `Data/`, `Workflow/`, `Templates/`, `Home.md` | hand-written | this vault |
 | `Code/{Core,Game,Editor}/` | generated: one note per type (members, file:line, Uses / Used by / Tested by) | C# under `Athanor/Assets` |
 | `Tests/` | generated: one note per test class, what it covers | `Assets/Tests` |
-| `Content/` | generated: one note per material, catalyst, aspect, event + goal/recipe/depth tables | `content.json` |
+| `Content/` | generated: one note per material, catalyst, aspect, event + goal/recipe/depth tables | `tools/content/snapshot.json` (written from the content assets) |
 | `Agents/`, `Tools/`, `Phases/` | generated indexes | `.claude/`, `tools/`, `docs/ATHANOR.md` §4 and §7 |
 | `_index/Symbols.md` | generated flat tables used by `q.py` (Markdown, like everything else) | all of the above |
 
 `docs/ATHANOR.md` is also inside the vault, so `[[docs/ATHANOR]]` links work. Open the **repo root** as the vault in Obsidian; `.obsidian/app.json` hides Unity's `Library`, `Build`, `node_modules` and other build output.
 
 ## Keeping it fresh
-`python3 tools/vault/build_vault.py` (stdlib only, ~1 s). Run it after any change to C#, `content.json`, agents or `docs/ATHANOR.md` §4 / §7. It deletes and rewrites only the generated folders; hand-written notes are never touched. Generated notes say `generated: true` in frontmatter: never edit them.
+`python3 tools/vault/build_vault.py` (stdlib only, ~1 s). Run it after any change to C#, the content assets (then `Athanor > Content > Write Snapshot`), agents or `docs/ATHANOR.md` §4 / §7. It deletes and rewrites only the generated folders; hand-written notes are never touched. Generated notes say `generated: true` in frontmatter: never edit them.
 
 ## Querying (agents and humans)
 ```

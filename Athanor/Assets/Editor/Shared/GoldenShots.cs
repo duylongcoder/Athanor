@@ -160,8 +160,9 @@ namespace Athanor.EditorShared
     static GameObject BenchTutorial()
     {
         var db = Db();
-        var run = new RunState(db, new Journal(), TutorialScript.Seed, 1, TutorialScript.Options(Unlocks.Fresh(db)));
-        run.Deal(TutorialScript.Reaction.Hand);
+        var seq = AssetDatabase.LoadAssetAtPath<TutorialSequence>("Assets/Content/Tutorial/Tutorial.asset");
+        var run = new RunState(db, new Journal(), seq.seed, 1, seq.Options(Unlocks.Fresh(db)));
+        run.Deal(seq.Trial(0).Hand);
         return BenchWith(run, new Journal(), db);
     }
 

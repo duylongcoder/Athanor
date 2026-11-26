@@ -25,7 +25,7 @@ aliases: []
 | property | `struct Item` | 25 |  |
 | property | `public Label Title` | 35 | The goal line of the toast showing (or last shown). |
 | property | `public Label Line` | 37 | The reward line of the toast showing (or last shown). |
-| method | `public void Bind(FxRefs effects)` | 40 | Hooks the click. GameFlow calls it once at start; a test calls it after instantiating the prefab. |
+| method | `public void Bind(FxRefs effects)` | 40 | Hooks the click. GameManager calls it once at start; a test calls it after instantiating the prefab. |
 | method | `public void Add(IEnumerable<GoalReward> rewards, ContentDb db)` | 53 | Queues one toast for each goal just completed. |
 | method | `public void Clear()` | 65 | Drops whatever is showing or waiting (the profile was reset). |
 
@@ -33,7 +33,7 @@ aliases: []
 [[Anim]], [[Art]], [[BurstSpec]], [[Clickable]], [[ContentDb]], [[FxRefs]], [[GoalReward]], [[Label]], [[Loc]], [[Px]], [[Sparks]], [[Wording]]
 
 ## Used by
-[[GameFlow]], [[GoldenShots]]
+[[GameManager]], [[GoldenShots]]
 
 ## Tested by
 [[LayoutPinTests]], [[PrefabBakeTests]]

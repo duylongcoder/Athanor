@@ -23,7 +23,7 @@ aliases: []
 | field | `public string Item` | 11 |  |
 
 ## Used by
-[[GameFlow]], [[GoalToast]], [[GoldenShots]], [[Profile]], [[RunOverView]]
+[[GameManager]], [[GoalToast]], [[GoldenShots]], [[Profile]], [[ProgressManager]], [[RunOverView]]
 
 ## Tested by
 [[PrefabBakeTests]]

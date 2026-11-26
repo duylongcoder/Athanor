@@ -1,7 +1,7 @@
 # Athanor: the project document
 
 The single project document. It describes Athanor **as it is now**; history is in git. If something here disagrees with the
-code or `content.json`, the code wins: fix this file in the same change.
+code or the content assets, the code wins: fix this file in the same change.
 
 Not in this file, and kept where they are: every `CLAUDE.md`, `README.md` (game in two sentences plus commands), `CHANGELOG.md`,
 `CREDITS.md` (font, effect and library licences), `docs/engine-reference/`, `.claude/` (agents, skills, rules), `vault/` (generated
@@ -21,7 +21,7 @@ asking for more potency, end in one substance the game never names in advance (t
 **Run loop.**
 
 - A run descends through 5 depths. Depths 1 to 4 each have a potency target and **4 trials**; depth 5 has no target and **6 trials**
-  (`RunState.BaseTrials`, `FinalTrials`). Targets: **300, 1,500, 7,500, 37,500** (ratio 5; `content.json` `depthTargets`).
+  (`RunState.BaseTrials`, `FinalTrials`). Targets: **300, 1,500, 7,500, 37,500** (ratio 5; `GameRules` `depthTargets`).
 - A trial: the hand is **5 materials** from the satchel (`BaseHand`), the player places any number on empty tiles, presses **Ignite**,
   the bench resolves, and what is spent is gone. **2 redraws** per depth swap the hand (`BaseRedraws`).
 - Clearing a depth: descent cutscene, then pick 1 of 3 catalysts (permanent for the run), then the next depth.
@@ -57,7 +57,7 @@ asking for more potency, end in one substance the game never names in advance (t
 by n), then catalysts, then the hub tile's aspect multiplier, plus flat bonuses. A pair is x1, a 5-item combo x4. The first-ever
 discovery also plays the full reaction cutscene; known reactions play a short one.
 
-**Content kinds** (counts from `content.json`, 2026-11-19): 81 materials (13 starters at tier 0, 22 / 20 / 15 / 10 at tiers 1 to 4,
+**Content kinds** (counts from the content assets, as in `tools/content/snapshot.json`, 2026-11-19): 81 materials (13 starters at tier 0, 22 / 20 / 15 / 10 at tiers 1 to 4,
 the ultimate `worldseed` at tier 5; 5 locked until won), 7 kinds (Potion, Crystal, Metal, Beast, Powder, Plant, Ore), 87 recipes
 (62 pairs, 16 three-item, 7 four-item, 2 five-item), 26 catalysts (4 Common, 10 Uncommon, 8 Rare, 4 Legendary; 17 locked, 9 open on a
 fresh profile), 16 aspects, 19 events, 22 goals.
@@ -68,7 +68,7 @@ Doubled, Anchor, Heated (+3 RI), Echo, Attuned (a Kind), Seed, Fallow, Heavy, Co
 Kiln, Crossroads, Pivot (\* = trade-off; Cold shuts a tile for +1 trial per depth, Volatile scores x3 but burns a starter, Greedy
 trades a redraw for a card). Rules are in `BenchRules` and read by the one planner that both the game and the scripted player use.
 
-**Events** (one per depth or none; RNG `seed ^ 0x7F4A7C15`, stepped once per depth; `noEventWeight` 3). Types in `content.json`:
+**Events** (one per depth or none; RNG `seed ^ 0x7F4A7C15`, stepped once per depth; `noEventWeight` 3). Types in the event assets:
 Choice 4, Lore 4, Gamble 3, Hazard 3, Find 2, Shrine 2, Boon 1. Every event except a forced Hazard has a "Walk on" option. An option
 that cannot be paid is not shown. An event lasts that depth only (cleared by `BeginDepth`). Lore events do nothing mechanical and
 are not shown twice in a row. `BlockTile` never takes the centre and a corner is twice as likely as an edge.
@@ -82,9 +82,9 @@ it, before the ending plays. The content does not load when a reward bucket has 
 **Depths.** The Shallow Cellar, The Dripping Stair, The Humming Dark, The Root of Stone, The Quiet Below. Each opens with one intro
 line under its name (`depth.<n>.intro`, max 56 chars) and a window view for that layer.
 
-**Tutorial.** The first run itself: depth 1 and the first trial of depth 2, with scripted hands (`TutorialScript`, fixed seed
-`TutorialScript.Seed`, fixed first catalyst offer Bellows / Heart Tile / First Spark, aspects and events held back until depth 3 by
-`RunOptions.QuietBefore = 3`). It teaches reactions, the Journal and catalysts, plays once after the intro on a fresh profile, can
+**Tutorial.** The first run itself: depth 1 and the first trial of depth 2, with scripted hands (the `TutorialSequence` asset `Assets/Content/Tutorial/Tutorial.asset`: fixed `seed`, fixed `firstOffer`
+Bellows / Heart Tile / First Spark, aspects and events held back until depth 3 by `quietBefore` = 3, which becomes
+`RunOptions.QuietBefore`; `TutorialManager` runs it). It teaches reactions, the Journal and catalysts, plays once after the intro on a fresh profile, can
 be skipped (asked once) when the save has a non-empty Journal, and "How to play" replays it on a throwaway journal and profile.
 
 **Other player-facing parts.** Title (Begin, Journal, Goals, How to play, Watch intro, Settings), Settings (language, vibration,
@@ -98,44 +98,59 @@ on a win), goal toasts. Sound is not included.
 
 ```
 Athanor/Assets/
-  Scripts/Core/    rules, no UnityEngine (UL008 + CORE-PURITY), compiled by tools/CoreTests too
-  Scripts/Game/    Boot, Bench, Ui, Cutscene, Depth, Fx, Support
+  Scripts/Gameplay/ rules: plain C# models in the Unity assembly Athanor.Gameplay (no UnityEngine; by review, not lint)
+  Scripts/Game/    Managers, Tutorial, Boot, Bench, Ui, Cutscene, Depth, Fx, Support
+  Content/         content assets (Materials, Recipes, Catalysts, Aspects, Events, Goals, GameRules, ContentDatabase, Tutorial/Tutorial.asset)
   Scenes/Main.unity           the only scene; hand-edited source of truth
   Prefabs/Views, Prefabs/Parts
-  Editor/          ArtLibraryBuilder, AtlasBuilder, FlipbookImporter, FontBuilder, SpriteImportRules, ViewCapture, WebBuild
-  Resources/       content.json, lang/en.json, lang/vi.json
-  Tests/EditMode (Core, Athanor.Core.Tests), Tests/EditModeGame (Game, Athanor.Game.Tests)
+  Editor/          ArtLibraryBuilder, AtlasBuilder, FlipbookImporter, FontBuilder, SpriteImportRules, ViewCapture, WebBuild,
+                   Balance (BalanceReports), Shared (ContentSnapshot, GoldenShots), Content and manager inspectors, TutorialSequenceEditor
+  Resources/       lang/en.json, lang/vi.json
+  Tests/EditMode (rules, Athanor.Gameplay.Tests), Tests/EditModeGame (Game, Athanor.Game.Tests), Tests/PlayMode (Athanor.PlayMode.Tests)
 ```
 
-**Core / Game split.** `Athanor.Core` holds the rules and is deterministic (seeded `Rng`): `ContentDb`, `RunState` (+ `RunStart`,
+**Gameplay / Game split and the managers** (ADR-0001: `docs/architecture/adr-0001-unity-managers-and-content-assets.md`).
+`Athanor.Gameplay` holds the rules as plain C# models and is deterministic (seeded `Rng`): `ContentDb`, `RunState` (+ `RunStart`,
 the second half: aspects, events, start of a depth), `Satchel`, `Bench`/`BenchRules`, `IgniteResolver`/`ChainPlanner`, `Journal`,
-`Profile` (+ `Unlocks`, `RunOptions`), `Settings`, `Lang`, `TutorialScript`, `AutoPlayer`, `ScoreParts`, `ScreenFlow` (below).
-`Athanor.Game` draws and listens; it never decides a rule. A new rule means Core plus a test first. Core keeps no mutable `static`
-(UL011); what an event option did is reported as `EventNote` (a `note.*` key plus `n`, `item`, `other`, `kind`, `plural`), and the
-Game layer words it through `Loc`, so Core carries no English sentence and no `Regex`.
+`Profile` (+ `Unlocks`, `RunOptions`), `Settings`, `Lang`, `TutorialGate`, `AutoPlayer`, `ScoreParts`, `ScreenFlow` (below), and the
+content definitions (`Scripts/Gameplay/Content`). Models call no Unity API, so seeded tests and the balance simulations stay fast; only
+review enforces this (UL008 exists but `pure_logic_paths` is empty). `Athanor.Game` holds seven `Singleton<T>` MonoBehaviours (five data managers, `TutorialManager` and `GameManager`) and the
+views. A manager is in `Main.unity` once, never created lazily, never `DontDestroyOnLoad`, and cleared at `SubsystemRegistration`
+(`Singletons.ResetStatics`, `SingletonTests`); `Instance` throws when it is missing. On the `Managers` object, in `DefaultExecutionOrder`:
+
+- `ContentManager` (-200): holds the `ContentDatabase` asset and builds the validated `ContentDb` once.
+- `SaveManager` (-190): `Settings`, the intro and tutorial flags; storage is still `Save` over PlayerPrefs.
+- `LocalizationManager` (-180): loads `lang/en.json` and `vi.json` and publishes them through `Loc`.
+- `ProgressManager` (-170): `Journal`, `Profile`, `Unlocks`, goal rewards, the sandbox replay and "reset progress".
+- `RunManager` (-160): the `RunState`, its seed and the `AutoPlayer`; Ignite settles and stores the journal at once.
+
+`TutorialManager` (-150, on the `Tutorial` object, was `TutorialController`) runs the `TutorialSequence`. `GameManager` (was
+`GameFlow`) keeps the screen loop. A view never decides a rule: a new rule means a Gameplay model plus a test first. A model keeps no mutable
+`static`; what an event option did is reported as `EventNote` (a `note.*` key plus `n`, `item`, `other`, `kind`, `plural`), and the
+Game layer words it through `Loc`, so Gameplay carries no English sentence and no `Regex`.
 
 **Where a number goes (Phase 7).** One owner means a serialized field on that owner; two or more owners means a ScriptableObject; the
-game's rules mean `content.json`. There are no code defaults: a field starts with today's value only long enough to be saved into the
+game's rules mean a content asset (`GameRules`). There are no code defaults: a field starts with today's value only long enough to be saved into the
 prefab or asset, then the initializer is removed and a `LayoutPinTests` case pins the serialized value.
 
 | Kind | Example | Goes to |
 |---|---|---|
-| Rule tuning | hand size, trials, redraws, potency table | `content.json` `rules`, read as `ContentDb.Rules` (missing block: `ContentDb` throws) |
-| Shape of the board or data | `Bench.Size = 3`, nine tiles, 2 to 5 combo items | a named `const` in Core |
+| Rule tuning | hand size, trials, redraws, potency table | `Assets/Content/GameRules.asset`, read as `ContentDb.Rules` (missing rules: `ContentDb` throws) |
+| Shape of the board or data | `Bench.Size = 3`, nine tiles, 2 to 5 combo items | a named `const` in `Scripts/Gameplay` |
 | Meaning of an effect | `KindDouble` is x2 | code (the name is the number) |
 | Fixed position of a part | the Ignite label | the part's Transform in the prefab; no code line |
 | Layout parameter used in a formula | catalyst pitch, bar origin, row pitch | the nested `[Serializable] struct Layout` on that view, values held by the prefab |
-| Timing of one sequence | story fade, hold, `IgniteSequence.Timing`, `GameFlow.RunTiming` | the nested `Timing` struct (or `SwayTiming`, `ShakeTiming`) on the owner |
+| Timing of one sequence | story fade, hold, `IgniteSequence.Timing`, `GameManager.RunTiming` | the nested `Timing` struct (or `SwayTiming`, `ShakeTiming`) on the owner |
 | Colour used by one view | Redraw up / over / pressed | a field on that view |
 | Colour used by several files | rarity colours, gold, ink | `Assets/Data/Palette.asset` (`Palette`), published as `Art.Palette` |
 | Depth look | ambient, moonbeam, bloom, fog | `DepthMood.presets` in `Main.unity` (5 entries); nothing in code |
 | Dev hooks the web tools read | `"[auto] "`, `"[dev] mood "` | stays a `const` |
 | Plain arithmetic | `/ 2f`, 0, 1, array sizes | stays |
 
-UL009 (colours) and UL010 (positions and sizes) are errors in `Scripts/Game`. The lint cannot see a named `const` or a bare duration
-argument, so "lint is clean" does not mean every number moved; the files the Phase 7 final review named were read by hand, the rest were
+No lint rule checks colours or positions (UL009 and UL010 are no longer in `tools/lint/unity_lint.py` at HEAD: they existed in earlier commits, e.g. a4d33092, and were dropped when the lint script was rewritten; until the owner decides to restore them they are review rules), so "lint is clean"
+says nothing about numbers; review and `LayoutPinTests` hold them. The files the Phase 7 final review named were read by hand, the rest were
 not. What stays in code is listed in section 7 item 11(e). No `Pacing` asset exists: the timings of the sequences that were split
-out (`IgniteSequence`, `GameFlow.RunTiming`, the cutscenes, `GoalToast`, `BenchView`) have one owner each. Add a `Pacing` asset only
+out (`IgniteSequence`, `GameManager.RunTiming`, the cutscenes, `GoalToast`, `BenchView`) have one owner each. Add a `Pacing` asset only
 when a timing gets a second owner.
 
 **Main.unity and prefabs.** `Main.unity` plus the prefabs are the source of truth; there is no scene generator and no code that
@@ -143,20 +158,20 @@ builds a view at run time. Edit a screen in the Inspector, not in C#.
 
 - Views as prefabs (`Prefabs/Views`): Bench (nests the HUD prefab), CatalystChoice, Event, Goals, GoalToast, Journal, Pause, RunOver,
   Title. Parts (`Prefabs/Parts`): Card, GoalRow, Hud, JournalCell. Goal rows and Journal cells are data-driven repeats of a part.
-- Scene objects (no prefab): Screen Fx, Window, Tutorial, Reaction Cutscene, Story Cutscene, the depth stage and rig.
-- `GameFlow` (Boot) is the composition root and the bridge; it owns the run, the saves and the main coroutine loop. The screen state
-  machine is Core `ScreenFlow` (`FlowState`: Boot, Title, Intro, Bench, Resolving, Journal, Descent, CatalystChoice, Ending, RunOver,
+- Scene objects (no prefab): Managers (the five managers above, one component each), Screen Fx, Window, Tutorial, Reaction Cutscene, Story Cutscene, the depth stage and rig. The Tutorial object has no step children: the steps and their areas are the `Tutorial.asset` sequence, which `TutorialManager` reads.
+- `GameManager` (Boot, a singleton) is the bridge between the managers and the views; it owns the main coroutine loop. The screen state
+  machine is Gameplay `ScreenFlow` (`FlowState`: Boot, Title, Intro, Bench, Resolving, Journal, Descent, CatalystChoice, Ending, RunOver,
   AspectChoice, Event, Goals): current state, where Journal and Goals return to, when pause and abandon are allowed (`CanPause`,
-  `CanAbandon`), the Ignite gate (`StartIgnite`), the sandbox replay, and a `Changed` event. `GameFlow` turns view events into
+  `CanAbandon`), the Ignite gate (`StartIgnite`), the sandbox replay, and a `Changed` event. `GameManager` turns view events into
   `ScreenFlow` calls (`OpenJournal`, `CloseGoals`, ...) and `ScreenFlow` answers with a yes or no; `ScreenFlowTests` cover every
-  guarded move, the illegal ones included (`Enter` is unconditional and GameFlow drives most plain moves through it; the title choices and the tutorial gate stay in GameFlow; `Changed` has no production subscriber yet). Every view is a `[SerializeField]` on `GameFlow`; `GameFlow.Awake` throws if one is missing.
+  guarded move, the illegal ones included (`Enter` is unconditional and GameManager drives most plain moves through it; the title choices and the tutorial gate stay in GameManager; `Changed` has no production subscriber yet). Every view is a `[SerializeField]` on `GameManager`; `GameManager.Awake` throws if one is missing.
   It publishes the art library as `Art.Lib` and the shared colours as `Art.Palette`, calls `Loc.Use(en, vi)` first thing, then
   `Bind(...)` once on each view.
-- **`IgniteSequence`** (Boot, on the GameFlow object) is the choreography of one Ignite: the chain of reactions (flash, draw-in, burst,
+- **`IgniteSequence`** (Boot, on the GameManager object) is the choreography of one Ignite: the chain of reactions (flash, draw-in, burst,
   points), the discovery beat and cutscene, the flight to the rack, the spent tiles and the final potency. The Ignite is settled before
-  it plays (`GameFlow.SettleIgnite`); nothing in it decides a rule. Its paces and waits are the serialized `Timing` and `Look` structs
-  in `Main.unity`; `GameFlow` keeps its own in `RunTiming`. `Descend` and `EndRun` stay in `GameFlow`.
-- **`FxRefs`** (Fx) holds the scene's two effect players, `ScreenFx` and `Sparks`; `GameFlow` builds it from its `screenFx` and
+  it plays (`GameManager.SettleIgnite`); nothing in it decides a rule. Its paces and waits are the serialized `Timing` and `Look` structs
+  in `Main.unity`; `GameManager` keeps its own in `RunTiming`. `Descend` and `EndRun` stay in `GameManager`.
+- **`FxRefs`** (Fx) holds the scene's two effect players, `ScreenFx` and `Sparks`; `GameManager` builds it from its `screenFx` and
   `sparks` fields and passes it through `Bind` to every view that flashes, shakes or throws sparks. There is no `ScreenFx.I` or
   `Sparks.I`.
 - **`Palette`** (Support, `Assets/Data/Palette.asset`) is the ScriptableObject of colours that two or more files share, by role
@@ -183,27 +198,27 @@ the HUD never moves and stays 640x360. `DepthLayer` moves a flat object to its d
 covers exactly the art pixels it covers in the flat game. `DepthTable` is the table as a tilted floor mesh cut along every art row.
 `DepthMood` holds the five per-depth presets (ambient, moonbeam, bloom, vignette, fog sheets, window view); `DepthSwitch` is the
 effects-off switch; the tilt-shift is a URP renderer feature (`DepthTiltShiftFeature`, band sharp from art y 145 to 235).
-`DepthStage` is the one handle `GameFlow` uses (rig, sway, moods, effects, `PlaceTiles`, `SetFlat`). **`CameraSway`**: idle sway
+`DepthStage` is the one handle `GameManager` uses (rig, sway, moods, effects, `PlaceTiles`, `SetFlat`). **`CameraSway`**: idle sway
 x = A sin(2 pi t / 6), y = A/2 sin(2 pi t / 9), A = 4 art px, re-aimed so the middle tile row (art y 188) stays still; the Settings
 toggle turns it off. **Shake moves the world only.** Cutscenes stay flat at z = 0 (`SetFlat`). The depth groups are placed by
-`GameFlow` at run time (`DepthStage.PlaceTiles`), not baked into the Bench prefab.
+`GameManager` at run time (`DepthStage.PlaceTiles`), not baked into the Bench prefab.
 
 **Save** (`Save`, PlayerPrefs; browser storage in a web build): `athanor.journal.v1`, `athanor.profile.v1`, `athanor.intro.v1`,
 `athanor.tutorial.v1`, `athanor.settings.v1`. A damaged journal or profile loads empty / fresh (`SaveTests`). Changing a shape
 means bumping the key version and keeping a reader for the old one. "Reset progress" (inside Settings) erases the profile and keeps
 the Journal.
 
-**Localization** (`Loc` over `Core/Lang`). `lang/en.json` and `lang/vi.json` are `{language, name, entries:[{key, text}]}`
+**Localization** (`LocalizationManager` and `Loc` over `Gameplay/Lang`). `lang/en.json` and `lang/vi.json` are `{language, name, entries:[{key, text}]}`
 (258 and 420 entries). Lookup: chosen language, then English, then the key. Start language: `?lang=` in the page address, else the
 saved choice, else the device language (Vietnamese if the system says so, English otherwise). `Loc.Use` must run before any `Label`
 exists; the Game tests do it once in `GameTestSetup`. Key prefixes: `ui.*`, `story.*`, `tutorial.*`, `cutscene.*`, `effect.*`,
 `note.*`, `kind.*`, `depth.<n>.intro`. Number format: "1,500" in English, "1.500" in Vietnamese (`Wording.Number`).
 
-**Allowed statics.** Presentation code keeps no writable static, except in eight classes: `Loc`, `PointerInput`, `Art`, `Haptics`,
-`AudioMute`, `SparkMesh`, `TiltShift`, `RarityStars` (`static_allowlist` in `tools/lint/lint.config.json`; UL012 is an error). Domain
-reload is off in the Editor, so statics survive Stop and Play. Each of the eight has a
+**Allowed statics.** Presentation code keeps no writable static, except in nine classes: `Loc`, `PointerInput`, `Art`, `Haptics`,
+`AudioMute`, `SparkMesh`, `TiltShift`, `RarityStars`, `Singletons` (a review rule: no lint rule or allowlist exists; `StaticResetTests` pin the resets of the other eight, the PlayMode `SingletonTests` that of `Singletons`). Domain
+reload is off in the Editor, so statics survive Stop and Play. Each of the nine has a
 `[RuntimeInitializeOnLoadMethod(SubsystemRegistration)] ResetStatics()` that restores every static to its declared default, drops event
-handlers and destroys what the class created (`StaticResetTests`). A ninth class needs a line here, a reset and a test. A component that
+handlers and destroys what the class created (`StaticResetTests`, except `Singletons`). A tenth class needs a line here, a reset and a test. `Singletons` holds the clear actions of every `Singleton<T>.instance`; its reset forgets all of them (PlayMode `SingletonTests.ResetStatics_AfterAStop_ForgetsEveryInstance`). A component that
 starts coroutines or tweens stops them in `OnDestroy` (`StopAllCoroutines()` and `Motion.StopOn(this)`).
 
 **Hot-path rule.** An `Update` (or a `Tick` it calls) returns early when nothing changed: no string building, no sprite lookup, no
@@ -216,12 +231,12 @@ needs both kinds of test.
 **Flat path.** Without a `DepthStage` (no scene builds one without it today) the descent banner accent is white and ambient light and
 moonbeam are not set; `Main.unity` always has a stage.
 
-**Platform and threading rules** (enforced by lint, UL013 and UL014).
+**Platform and threading rules** (review rules; `unity_lint.py` has no rule for them).
 
 - WebGL only, one thread. No `Task.Run`, `new Thread`, `System.Threading.Timer`, `.Result` or `.Wait()` anywhere in `Scripts/`. Time
   is coroutines and PrimeTween; Unity's `Awaitable` only with `destroyCancellationToken`.
 - A platform `#if` (`UNITY_WEBGL`, `UNITY_STANDALONE*`, `UNITY_ANDROID`, `UNITY_IOS`) and any jslib call live only in the bridge files
-  of `platform_define_allowlist` in `tools/lint/lint.config.json`: `Save`, `Haptics`, `AudioMute`, `GameFlow` (frame pacing), `Dev`.
+  today: `Save`, `Haptics`, `AudioMute`, `GameManager` (frame pacing), `Dev`.
 - No NuGet packages. A new package needs a WebGL / IL2CPP check and a line in section 4. Resolution stays 640x360; PC and Steam
   later means platform code only in bridge files (section 4, 2026-11-19).
 
@@ -240,9 +255,13 @@ moonbeam are not set; `Main.unity` always has a stage.
 
 ## 3. Data
 
-**`content.json`** (`Resources/content.json`; plain `[Serializable]` classes in `ContentData.cs`, read by `JsonUtility` in Unity and
-`System.Text.Json` in dotnet, so fields are public and there are no properties). Full field tables, validation and the "where does a
-change go" table: `vault/Data/Data Design.md`. Summary:
+**Content assets** (ADR-0001). One ScriptableObject per entry under `Athanor/Assets/Content`: `Materials/`, `Recipes/` (reference
+material assets), `Catalysts/`, `Aspects/`, `Events/`, `Goals/`, plus `GameRules.asset`, `ContentDatabase.asset` (lists them all) and
+`Tutorial/Tutorial.asset`. `ContentManager` builds the validated `ContentDb` from `ContentDatabase.ToContentData()`, which hands the rules
+the plain `[Serializable]` shape of `ContentData.cs` (public fields, no properties), so the field tables below are unchanged. Saves keep
+string ids. **Edit in the Inspector, then `Athanor > Content > Write Snapshot`**: that writes `tools/content/snapshot.json`, the copy that
+`check_repo.py`, `tools/art/export.mjs` and the vault generator read (the game never does); `ContentSnapshotTests` fails when it is stale.
+Full field tables, validation and the "where does a change go" table: `vault/Data/Data Design.md`. Summary of the snapshot shape:
 
 | Key | Shape |
 |---|---|
@@ -252,7 +271,7 @@ change go" table: `vault/Data/Data Design.md`. Summary:
 | `aspects[]` | `{id, name, text, effect, scope, group, amount, tradeOff}` |
 | `events[]` | `{id, name, text, type, minDepth, maxDepth, weight, options[{label, requires, cost[], outcomes[{weight, text, gain[]}]}]}` |
 | `goals[]` | `{id, text, stat, target, rewardKind, rewardRarity}` |
-| `rules` | flat object (`RulesData`): `handMin, handBase, trials, trialsFinalDepth, redraws, starterCopies, offerSize, rackSize, pouchCards, firstReactionMult, maxRi, aspectDepths[], potencyByTier[]`; required (`ContentDb` throws without it and validates ranges and array lengths; no hidden defaults in code); read as `db.Rules` by Core, the Game views, the tests and `tools/CoreReports`; table in `vault/Data/Data Design.md`. `amount` must be above 0 on the Heated and Seed aspects and on a HeatTile event effect (no code fallback). The pouch mode is `RunOptions.PouchMode` (default 2, `ATHANOR_POUCH` in the reports) |
+| `rules` | flat object (`RulesData`): `handMin, handBase, trials, trialsFinalDepth, redraws, starterCopies, offerSize, rackSize, pouchCards, firstReactionMult, maxRi, aspectDepths[], potencyByTier[]`; required (`ContentDb` throws without it and validates ranges and array lengths; no hidden defaults in code); read as `db.Rules` by Gameplay, the Game views, the tests and `BalanceReports`; held by `GameRules.asset`; table in `vault/Data/Data Design.md`. `amount` must be above 0 on the Heated and Seed aspects and on a HeatTile event effect (no code fallback). The pouch mode is `RunOptions.PouchMode` (default 2, `ATHANOR_POUCH` in the reports) |
 | `depthTargets[]`, `depthNames[]`, `ultimate`, `noEventWeight` | 4 targets for 5 depths; `ultimate` = `worldseed` |
 
 Text limits for events: name 22 characters, text 56, outcome 52. Item names (materials, catalysts, aspects) stay English in Vietnamese;
@@ -311,7 +330,7 @@ One line each. A decision is written here before it is relied on. Superseded and
 **Presentation and platform**
 
 - 2026-11-15: sound is out of scope (FMOD dropped for good; music and cue lines in the lore are notes); the hooks stay (`AudioMute`,
-  `GameFlow` reactions, descent and endings, `ScreenFx`).
+  `GameManager` reactions, descent and endings, `ScreenFx`).
 - 2026-11-15: Vietnamese is written by `localizer-vi` in plain modern Vietnamese, "bạn" for the player; item names stay English; "The
   Keeper" stays unnamed in Vietnamese lines; forced capitals are kept, HUD rows grow to 12 to 13 px, and a string that still
   overflows switches to normal case; SVN-Determination Sans is deleted (no licence), Coder's Crux serves all four Vietnamese roles.
@@ -343,13 +362,12 @@ One line each. A decision is written here before it is relied on. Superseded and
 - 2026-11-18: the owner commits; agents never commit. A task ends at a checkpoint with a suggested Conventional Commit message
   and `Story: P6-<n>` in the body. The balance reports are a console program (`tools/CoreReports`), not tests.
 - 2026-11-19: this file replaces the devlogs, plans, specs, phase sign-offs and the old CI doc.
-- 2026-11-19: the tutorial's dark screen is one `Dim` sprite drawn "visible outside mask"; each lit window is a `SpriteMask` in a pooled `TutorialHole` (with its gold rim), and the click lock is one `Clickable` with the holes cut out of it. Nothing is built or destroyed per step except popup lines. Replaces the per-step grid of dim rectangles. The tutorial's numbers (rectangles each step lights, text box, popup lines, rim and arrow, timings) are Inspector fields of the Tutorial object (`TutorialTargets`, `TutorialStyle`); the scripted hands and lays stay in Core `TutorialScript`, pinned by tests.
-- 2026-11-19: Phase 7 (Unity conversion, spec 2026-11-19): rule numbers live in content.json "rules"; presentation numbers in the prefab or scene that owns them, shared colours in the Palette asset; GameFlow splits into Core ScreenFlow, the GameFlow bridge and IgniteSequence; Game statics only from the lint allowlist, each reset at SubsystemRegistration; Core reports note keys, not sentences. Nothing visible or scored changes (golden shots, byte-identical reports).
+- 2026-11-19: the tutorial's dark screen is one `Dim` sprite drawn "visible outside mask"; each lit window is a `SpriteMask` in a pooled `TutorialHole` (with its gold rim), and the click lock is one `Clickable` with the holes cut out of it. Nothing is built or destroyed per step except popup lines. Replaces the per-step grid of dim rectangles. The overlay's numbers (text box, popup lines, rim and arrow, timings) are the `TutorialStyle` Inspector fields of `TutorialManager`; the steps, lit areas and scripted hands are the `TutorialSequence` asset (2026-11-24, ADR-0001), pinned by tests and `tutorial_lit_baseline.json`.
+- 2026-11-19: Phase 7 (Unity conversion, spec 2026-11-19): rule numbers live in the `GameRules` asset (was content.json "rules"); presentation numbers in the prefab or scene that owns them, shared colours in the Palette asset; GameFlow (now `GameManager`) splits into ScreenFlow, the bridge and IgniteSequence; Game statics only from the lint allowlist, each reset at SubsystemRegistration; Core reports note keys, not sentences. Nothing visible or scored changes (golden shots, byte-identical reports).
 - 2026-11-19: resolution stays 640x360 (a 1920x1080 canvas needs every sprite redrawn; dropped); PC / Steam later, platform code only in bridge files.
-- 2026-11-20: Phase 7 close. No `Pacing` asset (after the split every timing has one owner; add one only when a timing gets a second owner). `PointerInput.Rig` stays a static of the allowlisted `PointerInput`, set by `PointerInput.Use(rig)` and cleared by its reset. UL009 to UL014 are all errors and the lint baseline is empty. The number-placement rule, the allowed statics and the platform and threading rules are in section 2. The Phase 7 spec and plan are not kept: their lasting content is in sections 2 to 7 (their deletion follows the final-review fix wave). Not every presentation number moved: the list that stays in code on purpose is in section 7 item 11(e); the claim "every timing has one owner" holds for the split-out sequences only.
+- 2026-11-20: Phase 7 close. No `Pacing` asset (after the split every timing has one owner; add one only when a timing gets a second owner). `PointerInput.Rig` stays a static of the allowlisted `PointerInput`, set by `PointerInput.Use(rig)` and cleared by its reset. The lint baseline is empty (the UL009 to UL014 rules this line once named are no longer in `unity_lint.py` at HEAD: they existed in earlier commits, e.g. a4d33092, and were dropped when the lint script was rewritten; until the owner restores them they are review rules). The number-placement rule, the allowed statics and the platform and threading rules are in section 2. The Phase 7 spec and plan are not kept: their lasting content is in sections 2 to 7 (their deletion follows the final-review fix wave). Not every presentation number moved: the list that stays in code on purpose is in section 7 item 11(e); the claim "every timing has one owner" holds for the split-out sequences only.
 - 2026-11-20: Phase 7 non-goals, so the question "why not X" has an answer: no dependency-injection framework (`Bind`/`FxRefs` pass what a view needs); no uGUI or UI Toolkit (the UI is hand-built sprites on the 640x360 canvas); no Addressables; coroutines are not converted to `async`/`Awaitable`; Unity Timeline is not used for the cutscenes (wasm size, and the look must stay identical).
 - 2026-11-20: the one visible text change of Phase 7 (owner ruling 2026-11-19): the English lost-item note reads "Lost Iron Ore for this run", not "Lost a Iron Ore for this run" (key `note.lost`, no article, so no "a"/"an" error). Vietnamese is unchanged; `NoteTextTests` pin it.
-- 2026-11-20: tutorial highlight areas live in scene objects: `TutorialStep` (text key, `dark`, `lockPad`, `clickAdvances`, optional box position) with `TutorialArea` children (Fixed rect, ScriptTile, or View) under the Tutorial object of `Main.unity`. Clicks pass through a lit area only when its `clicksPass` is on; any other lit area catches the click (advance a read step, or pulse the rim). `TutorialTargets` is removed (supersedes the 2026-11-19 line on it); tile geometry is in `TutorialStyle`. Step order and waiting conditions stay in `Drive`. Edits are made in Edit Mode (Scene-view outlines and move handle), not kept from Play. `Athanor/Tutorial/Create Step Objects` restores the steps to the migrated state; `Baselines/tutorial_lit_baseline.json` pins what each step lights.
 - 2026-11-24 (ADR-0001): `Athanor.Core` becomes the Unity assembly `Athanor.Gameplay` (rule models stay plain C#); five Manager
   singletons on `Main.unity › Managers` own content, saves, language, progress and the run; `TutorialManager` (on the Tutorial
   object) and `GameManager` (was `GameFlow`) are singletons too. Narrows "rules in plain C#" (2026-11-11) to the assembly split only;
@@ -359,7 +377,7 @@ One line each. A decision is written here before it is relied on. Superseded and
   live in content.json rules" (2026-11-19).
 - 2026-11-24 (ADR-0001): dotnet is retired; all tests run in Unity (EditMode + PlayMode); CI job `unity-tests` (game-ci) replaces
   `core-tests` and needs the Unity secrets on every PR. The tutorial is the `TutorialSequence` asset run by `TutorialManager`
-  (supersedes the 2026-11-19 `TutorialScript` clause, and the 2026-11-20 line on `TutorialStep` scene objects once Task 24 lands).
+  (supersedes the 2026-11-19 `TutorialScript` clause and the 2026-11-20 `TutorialStep` scene-object line; the steps and their lit areas are in `Tutorial.asset`, edited with `TutorialSequenceEditor`).
 
 ---
 
@@ -367,33 +385,36 @@ One line each. A decision is written here before it is relied on. Superseded and
 
 **If `ci-gate` is not green, the change is not merged.** Branch protection requires it, including for admins
 (`APPLY=1 tools/setup/protect-branch.sh <owner>/<repo> main`). Reproduce any failure locally with the command CI runs:
-`tools/ci/run.sh all` (or `lint`, `repo`, `core`, `rotate`, `commits <range>`).
+`tools/ci/run.sh` modes `lint`, `repo`, `rotate`, `unity`, `commits <range>`; `all` runs lint + repo + rotate and does not start Unity, so
+run `tools/ci/run.sh all` and `tools/ci/run.sh unity` (EditMode + PlayMode, editor closed) before pushing.
+
+Lint rules that exist in `tools/lint/unity_lint.py`: UL000 to UL008, UL100 to UL105, UL200 to UL204, UL300 and UL301. Nothing else is
+enforced by lint: colours, positions, mutable statics, threads and platform `#if` are review rules (section 2). `tools/lint/lint.config.json`
+carries `exclude`, `pure_logic_paths` (empty), `assertion_regex` and `commit_regex` only.
 
 | Failure in practice | Caught by | Job |
 |---|---|---|
-| Hard-rule code bugs: `Find*` in `Update`, swallowed `catch`, `?.` on a Unity object, event never unsubscribed, hard-coded secret | `unity_lint` UL001-UL007 | lint |
-| `UnityEngine` inside `Scripts/Core` | UL008 and `check_repo` CORE-PURITY | lint, repo-guard |
-| Hard-coded colour in `Scripts/Game` (`Px.Hex("#..")`, `new Color(<numbers>)`) | UL009 (error) | lint |
-| Hard-coded position or size in `Scripts/Game` (`Px.At`, `Px.Mid`, `new Rect`, `new Vector2/3` with a number other than 0 or 1) | UL010 (error) | lint |
-| Mutable `static` (field, event, property with a setter) in `Scripts/Core` | UL011 (error) | lint |
-| Mutable or collection `static` in `Scripts/Game` outside `static_allowlist`, or an allowlisted class without a `SubsystemRegistration` reset | UL012 (error) | lint |
-| `Task.Run`, `new Thread`, `.Result`, `.Wait()`, `System.Threading.Timer` in `Scripts/` (WebGL is single-threaded) | UL013 (error) | lint |
-| `#if UNITY_WEBGL/STANDALONE*/ANDROID/IOS` outside `platform_define_allowlist` | UL014 (error) | lint |
-| Bad tests: no assertion, `[Ignore]`/`[Explicit]`/`[Retry]`, `Thread.Sleep`, unseeded random or clock, name not `Method_Condition_Result` | UL100-UL105 | lint |
-| Missing or duplicate `.meta`, wrong `ProjectSettings` | UL200-UL203 | lint |
+| Hard-rule code bugs: `Find*` in `Update`, swallowed `catch`, `?.` on a Unity object, event never unsubscribed, `async void`, hard-coded secret | `unity_lint` UL001-UL007 | lint |
+| `UnityEngine` in a rule model | review only: UL008 exists but `pure_logic_paths` is empty (ADR-0001 (b)); `check_repo` CORE-PURITY is retired | none |
+| Bad tests: no assertion, `[Ignore]`/`[Explicit]`/`[Retry]`, `Thread.Sleep`, unseeded random or clock, name not `Method_Condition_Result`, GameObject without TearDown | UL100-UL105 | lint |
+| Missing or duplicate `.meta`, wrong `ProjectSettings`, missing `.gitignore` entry | UL200-UL203, `check_repo` META | lint, repo-guard |
 | Build output staged (`bin`, `obj`, `Athanor/Build`, `test-results.xml`) | `check_repo` BUILD-OUTPUT, UL204 | repo-guard |
 | Renamed serialized field loses scene/prefab data | UL301 (`FormerlySerializedAs`) | lint |
 | Bad PR title (becomes the squash commit) | UL300 | lint |
-| Broken or duplicate ids in `content.json` | CONTENT | repo-guard |
+| Broken or duplicate ids in the content | CONTENT (reads `tools/content/snapshot.json`) | repo-guard |
+| Content assets changed without a fresh `tools/content/snapshot.json` | `ContentSnapshotTests` (EditMode; `Athanor > Content > Write Snapshot` re-writes) | unity-tests |
+| Content assets invalid or different from the shape the rules read | `ContentValidationTests`, `ContentAssetTests`, `ContentDatabaseTests` (EditMode) | unity-tests |
 | New material, catalyst or aspect without an icon in `tools/art/icons.mjs` | ICONS | repo-guard |
 | String missing in `vi.json`, empty text, placeholder that differs between en and vi | LANG | repo-guard |
-| Rules regress or a test is silently dropped (fewer than `MIN_TESTS` = 250 pass) | `dotnet test tools/CoreTests` | core-tests |
+| Rules or screens regress, or a test is silently dropped (fewer than `MIN_TESTS` = 600 pass) | `unity-tests` (game-ci, EditMode + PlayMode, MIN_TESTS 600) | unity-tests |
+| The played game changes: seeded autoplay (seeds 11, 22, 33) and the tutorial run no longer match their recorded traces; a manager is missing or stale after Stop and Play | `AutoplayTraceTests`, `TutorialTraceTests`, `ManagerBootTests`, `SingletonTests` (PlayMode, baselines in `Tests/PlayMode/Baselines`) | unity-tests |
 | `vault/` stale after a code or content change | `build_vault.py` then no diff | repo-guard |
 | Rotate-device text in the WebGL template drifts from `ui.rotate.title` / `ui.rotate.body` | `tools/web/rotate_sync.mjs` (`run.sh rotate`) | repo-guard |
 | Art/web scripts do not parse | `node --check` | repo-guard |
-| A presentation number drifts from the value pinned when it moved into a prefab or the scene | `LayoutPinTests` (EditMode) | release-gate (tags, manual), local |
-| A view or scene object looks different (golden shots, 0 % difference, English and Vietnamese) | `GoldenShotTests` (EditMode; `Athanor > Write Golden Shots` re-records) | release-gate (tags, manual), local |
-| An allowlisted static is not back at its default after `ResetStatics`, or an idle frame allocates | `StaticResetTests`, `HotPathTests` (EditMode) | release-gate (tags, manual), local |
+| A presentation number drifts from the value pinned when it moved into a prefab or the scene | `LayoutPinTests` (EditMode) | unity-tests |
+| A view or scene object looks different (golden shots, 0 % difference, English and Vietnamese) | `GoldenShotTests` (EditMode; `Athanor > Write Golden Shots` re-records) | unity-tests |
+| The tutorial lights different areas | `tutorial_lit_baseline.json` (`Tests/EditModeGame/Baselines`, `TutorialAreaTests`) | unity-tests |
+| An allowlisted static is not back at its default after `ResetStatics`, or an idle frame allocates | `StaticResetTests`, `HotPathTests` (EditMode) | unity-tests |
 | A job fails, is cancelled or is skipped | `ci-gate` needs every job `success` | ci-gate |
 | Release build broken, over its size budget (Build/ + index.html > 11,824,672 B), console error while loading | EditMode, `WebBuild.Build`, byte budget, `loadsmoke.mjs` | release-gate (tags, manual) |
 | Game flow broken in the browser, console error in play | `WebBuild.BuildDev` then `webtest.mjs` | release-gate (tags, manual) |
@@ -405,11 +426,12 @@ One line each. A decision is written here before it is relied on. Superseded and
 - **The lint baseline is empty** (`tools/lint/baseline.json` has `entries: []`). Every finding fails CI; do not add entries.
 - There is no `DepthTest` scene, builder or evidence tool any more; depth is checked on `Main.unity` (`DepthClickTests`,
   `MainDepthTests`, `tools/web/mainhd2d.mjs`).
-- The six balance reports are `dotnet run --project tools/CoreReports -- balance-matrix | events | roles | newcomer | balance | trace`
-  (add `DOTNET_ROLL_FORWARD=Major` on a machine with only a newer .NET). They print numbers and assert nothing, so they are not
-  tests. After a content or scoring change quote them.
-- `release-gate` needs the secrets `UNITY_LICENSE`, `UNITY_EMAIL`, `UNITY_PASSWORD`; without them it fails on purpose.
-- Hard rules also in `CLAUDE.md`: no game rules in the Game layer; no `UnityEngine` in Core; new rule means a test first; every
+- The six balance reports are `unity run Athanor -- -executeMethod BalanceReports.RunBatch -report <name> -out <file>` with `<name>` =
+  `balance-matrix`, `events`, `roles`, `newcomer`, `balance`, `trace` (menu `Athanor > Balance`, editor closed for the batch form). They
+  print numbers and assert nothing, so they are not tests. After a content or scoring change quote them against
+  `production/qa/evidence/refactor/baseline/`.
+- `unity-tests` and `release-gate` need the secrets `UNITY_LICENSE`, `UNITY_EMAIL`, `UNITY_PASSWORD`; without them it fails on purpose.
+- Hard rules also in `CLAUDE.md`: no game rules in views or managers (they live in the `Athanor.Gameplay` models); new rule means a test first; every
   player-visible string a `Lang` key in both languages; new content needs an icon; build output is never edited or staged.
 - Not covered by CI (on a human): visual and UI review (screenshots under `production/qa/evidence/`), balance reading.
 
@@ -419,9 +441,11 @@ One line each. A decision is written here before it is relied on. Superseded and
 
 | Name | Command | Pass when |
 |---|---|---|
-| CI | `tools/ci/run.sh all` | exit 0 |
-| Core tests | `dotnet test tools/CoreTests` (`DOTNET_ROLL_FORWARD=Major` if only a newer runtime) | 0 failed |
+| CI | `tools/ci/run.sh all` (lint, repo, rotate) and `tools/ci/run.sh unity` | exit 0 |
 | EditMode | `unity test Athanor --mode EditMode` (editor closed) | 0 failed |
+| PlayMode | `unity test Athanor --mode PlayMode` (editor closed) | 0 failed |
+| Balance reports | `unity run Athanor -- -executeMethod BalanceReports.RunBatch -report <name> -out <file>` | exit 0; output byte-identical to the baseline unless the change moves balance |
+| Content snapshot | menu `Athanor > Content > Write Snapshot` (batch: `-executeMethod ContentSnapshot.RunBatch`) | `ContentSnapshotTests` pass |
 | Release build | `unity build Athanor --target WebGL --execute-method WebBuild.Build --allow-dirty-build` | exit 0; writes `Athanor/Build/web` |
 | Quick build | same with `WebBuild.BuildQuick` | exit 0 |
 | Dev build | same with `WebBuild.BuildDev` | exit 0; writes `Athanor/Build/web-dev`, F9 autoplay |
@@ -444,20 +468,33 @@ path (`./Athanor`).
 not credited to it (no isolated build was made). The build is Gzip-compressed with Unity's built-in fallback, so any static host
 works; the page keeps the 640x360 picture at a whole-number scale, centred on black.
 
-**Figures at this writing (2026-11-20, end of Phase 7).** Core 367 passed, 0 failed, 0 skipped. EditMode 641 total, 641 passed, 0
-failed, 0 skipped (18 `GoldenShotTests` cases at 0 % difference). The six `tools/CoreReports` outputs are byte-identical to the
-Phase 7 baseline (`production/qa/evidence/phase7/baseline/`). BalanceMatrix (informed bot, 200 seeds): fresh 132 (66%); fresh + all
-catalysts 164 (82%); fresh + all starters 134 (67%); half 164 (82%); full 166 (83%); with aspects and events: fresh 129 (64%),
-fresh + all starters 140 (70%), half 163 (81%), full 169 (84%); aspects alone 144 (72%), events alone 129 (64%). Web checks on the
-final builds, all exit 0 with 0 console errors (evidence `production/qa/evidence/phase7/task18/`): `loadsmoke` (release),
-`webtest` (129 screenshots), `autoplay` 120 s, `descents` 240 s, `mainhd2d` 640x360 `hud,tiles` (54 of 54 checks, sway 27/27,
-shake 27/27). `tools/ci/run.sh all` exit 0 (lint clean with an empty baseline, repo check 0 problems, rotate OK, Core 367 passed).
+**Figures at the end of the template refactor (Task 29, 2026-11-26).** Measured on the uncommitted working tree of
+`feature/phase7-unity-conversion`. The Phase 7 figures (Core 367, EditMode 641) described the dotnet and `Athanor.Core` build and no longer apply.
+
+| Check | Result |
+|---|---|
+| EditMode | 681 total, 677 passed, **4 failed** |
+| PlayMode | 12 total, 12 passed |
+| Total vs `MIN_TESTS` 600 | 693 |
+| `GoldenShotTests` | 16/16, 0% difference |
+| Balance reports (balance-matrix, events, roles, newcomer, balance, trace) | byte-identical to `production/qa/evidence/refactor/baseline/` (measured at the end of group 25-27, not rerun; since then only docs, agents, vault and one log line changed) |
+| PlayMode traces (autoplay seeds 11/22/33, `tutorial_trace`), `tutorial_lit_baseline.json` | unchanged |
+| Release build (Build/ + `index.html`) | 10,998,694 B: +79,191 B vs 10,919,503 B at the end of Phase 7; 825,978 B under the 11,824,672 B ceiling |
+| `webtest` | exit 0, 129 screenshots, 0 console errors |
+| `autoplay` | exit 0, 40 pictures, 0 errors |
+
+Web evidence: `production/qa/evidence/refactor/` (`web`, `autoplay`, `baseline`). None of the 4 EditMode failures is caused by the refactor.
+Open, owner decision needed; the `unity-tests` CI job stays red until they are fixed or waived:
+
+- `LabelLineBoxTests` x2: `ArtLibrary.asset` has the five font references at fileID 0 (also at HEAD) after the uncommitted `Assets/Art/Art/Fonts` -> `Assets/Art/Fonts` path change. Rebuilding the library fixes them but breaks 11 `GoldenShotTests`, whose goldens were baked with null fonts.
+- `DepthLayerTests.ArtLibrary_MainScene_HasEveryDepthArtSpriteOnce`: 284 vs 269 distinct sprite names.
+- `HotPathTests.Tick_PotencyRunsIntoTarget_SwapsTheWordAwayAndBack`.
 
 **Idle bench views (Phase 7 Task 17).** GC allocation of the idle bench views (bench, HUD, tiles, cards, links, dust, sparks, flame): **0 B** over 600 frames (10 s at 60 fps). This is not the whole idle game. Measured in EditMode, not in the
 Editor Profiler: `HotPathTests.IdleBench_TenSecondsOfEveryUpdate_AllocatesZeroBytes` ticks the Bench prefab's BenchView, HudView, nine
 TileViews, the CardViews and the LinkViews 600 times inside one `Is.Not.AllocatingGCMemory()` (Unity's GC.Alloc counter, the one the
 Profiler's GC Alloc column reads); `Continuous_DustSparksAndFlame_...` does the same for Dust, Sparks (40 live particles) and Flame.
-PointerInput, GameFlow, TitleView, DepthRig and the cutscene views were read, not measured (no input device or run in a batch test).
+PointerInput, GameManager, TitleView, DepthRig and the cutscene views were read, not measured (no input device or run in a batch test).
 Owner to confirm in the Editor Profiler (Play, reach the bench, idle 10 s: script updates 0 B GC Alloc).
 
 **Release steps.** Version is `project.yaml` `project.version` (0.4.0); the owner sets it. Player-facing notes go in `CHANGELOG.md`
@@ -486,7 +523,7 @@ Undecided or not done. None is decided by being listed.
    (SwiftShader) and not on release with a GPU; depth 5 descent frames not photographed; Vietnamese half-leading offsets of 2 to 7 px
    on some banners, tight Vietnamese catalyst lines and tall buttons; fog grain judged by eye only; no Legendary material exists so a
    Legendary Journal frame was never shot (do not add one for a screenshot); the lost-run summary is covered by tests only.
-7. ~~**Singletons left:** `ScreenFx.I` and `Sparks.I`~~ closed in Phase 7 Task 7: both are passed through `Bind` as an `FxRefs` (GameFlow builds it from its `screenFx` and `sparks` fields).
+7. ~~**Singletons left:** `ScreenFx.I` and `Sparks.I`~~ closed in Phase 7 Task 7: both are passed through `Bind` as an `FxRefs` (GameManager builds it from its `screenFx` and `sparks` fields).
 8. **Leftover DepthTest tools:** `tools/web/depthmatrix.sh`, `depthprobe.mjs`, `depthshimmer.py`, `depthshimmer.sh` still exist
    although the prototype they measured is gone; the Phase 6 spec called for deleting them.
 9. **studio-tests were removed** in Phase 6. The framework skills `skill-test` and `skill-improve` are left in place, but their
@@ -500,13 +537,13 @@ Undecided or not done. None is decided by being listed.
     and in a Task 17 run, never with a console error; the rerun passed). Fix: take `offerFrom` at step 5_1. Still open; the fix belongs to the QA
     tooling, not to the game. (d) The Phase 7 spec and plan files are deleted after the final-review fix wave (their lasting content is in
     sections 2 to 7). (e) Presentation numbers that stay in code, on purpose or not yet moved: `Flame` flicker and `Flipbook` 1/30 s,
-    font sizes and sort orders, the `Dev` hook strings, `Tooltip` `W`/`BaseH`/`RowH` (layout used in a formula),
-    `CX = 320` / `O = 300` in `ReactionCutscene` and `SimpleCutscene` (half-canvas), the sizes in `WindowView` and `RunOverView`
-    (`Fits = 25`), and similar sizes of baked art in views the final review did not read line by line, the float-text fade split in `BenchView.FloatText` (0.7 / 0.3 of its own
-    length, arithmetic), and the page-grid constants of `GoalsView`, `JournalView`, the `TitleView` settings panel and
-    `CatalystChoiceView` (`X`, `Y`, `Top`, `ColW`, `Cell`, `GridX`, `P`, `PX`, `CellX`, `CardW`, `Gap`, ...): they mirror
-    `tools/art/ui.mjs` and sit inside many formulas, so moving them is a per-view refactor with golden-shot risk; not done in Phase 7.
-    Moved in the final-review wave: `GameFlow.RunTiming` fades and autoplay pace, `TileView` consume burst, `BenchView` hand strip,
+    font sizes and sort orders, the `Dev` hook strings,
+    `CX = 320` / `O = 300` in `ReactionCutscene` and `SimpleCutscene` (half-canvas), the sizes in `WindowView`, and similar sizes of baked art in views the final review did not read line by line, the float-text fade split in `BenchView.FloatText` (0.7 / 0.3 of its own
+    length, arithmetic), and the data shapes (`Cols`, `Rows`, `PerPage`, `Slots`, `LineCount`, `HintCount`, `PipCount`).
+    Moved to Inspector fields in the template refactor (Tasks 26 and 27, pinned by `LayoutPinTests`): `Tooltip.size`, the page grids of
+    `GoalsView` (`grid`), `JournalView` (`grid`), `CatalystChoiceView` (`cardRow`) and the `TitleView` settings panel (`panelBox`),
+    and `RunOverView.goalLineFits`; their sort orders (`O`, `P`) stay in code.
+    Moved in the final-review wave: `GameManager.RunTiming` fades and autoplay pace, `TileView` consume burst, `BenchView` hand strip,
     hit boxes, deal stagger and tooltip delay, `GoalToast` box and `Timing`, `PauseMenu.dialogTop`.
     (f) Owner: the real second session. In the Editor press Play, then Stop, then Play again, and go Title, Bench, Journal, Title:
     no console error and no doubled handler (a click acts once). `StaticResetTests` check each reset alone, not a second session.

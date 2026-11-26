@@ -30,7 +30,7 @@ aliases: []
 | method | `public static Color Times(this Color c, float k)` | 43 |  |
 
 ## Used by
-[[BenchView]], [[CardView]], [[CatalystChoiceView]], [[DepthMath]], [[DepthRig]], [[DepthStage]], [[DepthTable]], [[Dust]], [[GameFlow]], [[GoalToast]], [[GoalsView]], [[HudView]], [[IgniteSequence]], [[JournalView]], [[LinkView]], [[Loop]], [[Motion]], [[PauseMenu]], [[PointerInput]], [[ReactionCutscene]], [[RunOverView]], [[SimpleCutscene]], [[Spawn]], [[TileView]], [[TitleView]], [[Tooltip]], [[TutorialController]], [[TutorialHole]], [[TutorialRect]], [[TutorialStepsMigration]], [[ViewCapture]], [[WindowView]]
+[[BenchView]], [[CardView]], [[CatalystChoiceView]], [[DepthMath]], [[DepthRig]], [[DepthStage]], [[DepthTable]], [[Dust]], [[GameManager]], [[GoalToast]], [[GoalsView]], [[HudView]], [[IgniteSequence]], [[JournalView]], [[LinkView]], [[Loop]], [[Motion]], [[PauseMenu]], [[PointerInput]], [[ReactionCutscene]], [[RunOverView]], [[SimpleCutscene]], [[Spawn]], [[TileView]], [[TitleView]], [[Tooltip]], [[TutorialHole]], [[TutorialManager]], [[TutorialRect]], [[TutorialSequenceEditor]], [[ViewCapture]], [[WindowView]]
 
 ## Tested by
-[[DepthClickTests]], [[DepthLayerTests]], [[LayoutPinTests]], [[MainDepthTests]], [[TutorialAreaTests]], [[TutorialFlowTests]]
+[[DepthClickTests]], [[DepthLayerTests]], [[LayoutPinTests]], [[MainDepthTests]], [[TutorialFlowTests]]

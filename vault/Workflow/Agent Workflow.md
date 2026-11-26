@@ -28,9 +28,9 @@ flowchart LR
 | Agent | Owns | Typical task |
 |---|---|---|
 | [[agent.phase-lead]] | plans, briefs | summarise the phase, write briefs |
-| [[agent.rules-engineer]] | `Scripts/Core`, EditMode tests | new effect, scoring or chain rule |
+| [[agent.rules-engineer]] | `Scripts/Gameplay`, EditMode tests | new effect, scoring or chain rule |
 | [[agent.unity-gameplay-engineer]] | `Scripts/Game`, `Editor` | screen, view, flow state, save plumbing |
-| [[agent.content-designer]] | `content.json` | recipes, events, goals, balance |
+| [[agent.content-designer]] | `Assets/Content` | recipes, events, goals, balance |
 | [[agent.lore-writer]] | story text, lore canon (ATHANOR.md §8) | cutscene lines, Lore events |
 | [[agent.localizer-vi]] | `lang/vi.json`, glossary | translation, key parity |
 | [[agent.pixel-artist]] | `tools/art`, `tools/fx` | icons, sprites, effect sheets |

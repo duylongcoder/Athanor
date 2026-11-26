@@ -18,4 +18,4 @@ aliases: []
 `Left`, `Centre`, `Right`
 
 ## Used by
-[[BenchView]], [[Spawn]], [[TutorialController]]
+[[BenchView]], [[Spawn]], [[TutorialManager]]

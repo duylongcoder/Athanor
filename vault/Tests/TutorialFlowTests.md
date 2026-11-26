@@ -10,7 +10,7 @@ count: 10
 `Athanor/Assets/Tests/EditModeGame/TutorialFlowTests.cs` — 10 tests
 
 ## Covers
-[[AutoPlayer]], [[Bench]], [[ContentAssets]], [[ContentDb]], [[Journal]], [[Profile]], [[Px]], [[RunOptions]], [[RunPhase]], [[RunState]], [[Save]], [[TutorialController]], [[TutorialPlan]], [[TutorialRules]], [[TutorialScript]], [[Unlocks]]
+[[AutoPlayer]], [[Bench]], [[ContentAssets]], [[ContentDb]], [[Journal]], [[Profile]], [[Px]], [[RunOptions]], [[RunPhase]], [[RunState]], [[Save]], [[TutorialGate]], [[TutorialManager]], [[TutorialPlan]], [[TutorialRules]], [[TutorialSequence]], [[Unlocks]]
 
 ## Tests
 - `Union_WithNoHoles_IsTheWholeCanvas_SoATextOnlyStepDimsEverythingAndDrawsNoRim`

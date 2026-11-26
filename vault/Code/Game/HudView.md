@@ -38,7 +38,7 @@ aliases: []
 | method | `public static bool CanRedraw(RunState run)` | 119 | The Redraw button is live: a redraw is left and the bench is being played (not an offer, not a cleared depth). |
 | method | `public static string Number(long n)` | 120 |  |
 | method | `public void Bind()` | 125 | Hooks the hit boxes to the hover and click handlers. Once per instance: the pointer calls them, nothing else does. |
-| method | `public void Show(RunState run, ContentDb db, Journal journal, bool inputEnabled, bool keepRedraw = false)` | 165 | Everything except the potency number, which is animated separately. keepRedraw leaves the Redraw button and its counter as they are: GameFlow.Resolve passes it while an Ignite plays out, so they do not show the outcome early. |
+| method | `public void Show(RunState run, ContentDb db, Journal journal, bool inputEnabled, bool keepRedraw = false)` | 165 | Everything except the potency number, which is animated separately. keepRedraw leaves the Redraw button and its counter as they are: GameManager.Resolve passes it while an Ignite plays out, so they do not show the outcome early. |
 | method | `public void SetPotency(long value, bool instant = false)` | 213 |  |
 | method | `public void Note(ReactionEvent e, ContentDb db)` | 216 | Writes one reaction on the note: what went in, what came of it and its potency. |
 | method | `public void Hint(HintData h, ContentDb db)` | 240 |  |
@@ -51,7 +51,7 @@ aliases: []
 [[Art]], [[Clickable]], [[ContentDb]], [[Journal]], [[Label]], [[Loc]], [[Palette]], [[Px]], [[ReactionEvent]], [[Row]], [[RunPhase]], [[RunState]]
 
 ## Used by
-[[BenchView]], [[GoldenShots]], [[IgniteSequence]], [[JournalView]], [[ReactionCutscene]], [[TutorialController]]
+[[BenchView]], [[GoldenShots]], [[IgniteSequence]], [[JournalView]], [[ReactionCutscene]], [[TutorialManager]]
 
 ## Tested by
 [[HotPathTests]], [[HudTests]], [[LayoutPinTests]], [[PrefabBakeTests]]

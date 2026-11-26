@@ -228,10 +228,30 @@ namespace Athanor.Tests
         }
 
         [Test]
+        public void JournalView_Grid_HasTodaysNumbers()
+        {
+            var so = View<JournalView>("Journal");
+            AssertFloats(so, "grid", new Dictionary<string, float>
+            {
+                { "x", 20 }, { "y", 15 }, { "cell", 27 }, { "well", 25 }, { "gridX", 33 }, { "gridY", 60 }, { "pageX", 324 }, { "pageY", 30 }, { "pageW", 260 }, { "wrapAt", 38 },
+            });
+        }
+
+        [Test]
         public void GoalsView_Prefab_KeepsTodaysLayout()
         {
             var so = View<GoalsView>("Goals");
             AssertFloats(so, "layout", new Dictionary<string, float> { { "barHeight", 3 }, { "barDy", -14.5f } });
+        }
+
+        [Test]
+        public void GoalsView_Grid_HasTodaysNumbers()
+        {
+            var so = View<GoalsView>("Goals");
+            AssertFloats(so, "grid", new Dictionary<string, float>
+            {
+                { "x", 20 }, { "y", 15 }, { "leftX", 14 }, { "rightX", 304 }, { "top", 30 }, { "colW", 282 }, { "rowH", 20 }, { "headH", 14 }, { "pad", 10 }, { "barW", 92 }, { "dotSize", 4 },
+            });
         }
 
         [Test]
@@ -249,6 +269,27 @@ namespace Athanor.Tests
             });
             AssertHex(so, "layout.kicker", "#a8854e"); AssertHex(so, "layout.kickerCost", "#9a3414");
             AssertBurst(so, "layout.pickBurst", 40, 150, 0.8f, 440 + 8, 60, 2.2f, 1.7f, 0.6f, 1);
+        }
+
+        [Test]
+        public void CatalystChoiceView_CardRow_HasTodaysNumbers()
+        {
+            var so = View<CatalystChoiceView>("CatalystChoice");
+            AssertFloats(so, "cardRow", new Dictionary<string, float> { { "width", 150 }, { "height", 180 }, { "gap", 18 }, { "top", 112 } });
+        }
+
+        [Test]
+        public void TitleView_PanelBox_HasTodaysNumbers()
+        {
+            var so = View<TitleView>("Title");
+            AssertFloats(so, "panelBox", new Dictionary<string, float> { { "x", 160 }, { "y", 75 }, { "cellX", 300 }, { "cellW", 150 }, { "cellH", 26 } });
+        }
+
+        [Test]
+        public void RunOverView_GoalLineFits_HasTodaysNumber()
+        {
+            var so = View<RunOverView>("RunOver");
+            AssertFloats(so, "", new Dictionary<string, float> { { "goalLineFits", 25 } });
         }
 
         [Test]
@@ -323,6 +364,13 @@ namespace Athanor.Tests
                 { "border", 4 }, { "longText", 62 }, { "tightSpacing", -30 },
             });
             AssertVec2(so, "layout.pivot", 0.5f, 0.5f);
+        }
+
+        [Test]
+        public void Tooltip_Size_HasTodaysNumbers()
+        {
+            var so = View<Tooltip>("Bench");
+            AssertFloats(so, "size", new Dictionary<string, float> { { "width", 176 }, { "baseHeight", 58 }, { "tierRow", 12 } });
         }
 
         [Test]
@@ -456,7 +504,7 @@ namespace Athanor.Tests
         {
             using (var main = new MainSceneFixture())
             {
-                var tutorial = main.FlowField<TutorialController>("tutorial");
+                var tutorial = main.FlowField<TutorialManager>("tutorial");
                 var so = new SerializedObject(tutorial);
                 AssertVec2(so, "style.tileSize", 72, 44); AssertVec2(so, "style.tileShift", 36, 24);
                 Pin(so, "style", "baseOrder", 600, "popupOrderOffset", 12, "brokenOrderOffset", 6, "boxWidth", 304, "boxBorder", 1, "textWrapWidth", 288, "boxPadding", 12, "readExtra", 12,

@@ -11,7 +11,7 @@ generated-from: Game Index.md
 ```
 [Athanor.Game - Unity Runtime]
         ↓
-[GameFlow: State Machine]
+[GameManager: State Machine]
    └─→ Screen Views
        ├─→ [BootView] → TitleScreen
        ├─→ [TitleView] ← ResetButton → RunStats

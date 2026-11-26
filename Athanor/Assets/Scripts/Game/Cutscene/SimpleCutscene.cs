@@ -122,7 +122,7 @@ namespace Athanor.Game
         Color tint = Color.white;
         FxRefs fx;
 
-        /// <summary>Takes the effect players. GameFlow calls it once at start.</summary>
+        /// <summary>Takes the effect players. GameManager calls it once at start.</summary>
         public void Bind(FxRefs effects)
         {
             if (effects == null) throw new System.ArgumentNullException(nameof(effects));

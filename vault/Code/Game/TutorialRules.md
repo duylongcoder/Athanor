@@ -4,7 +4,7 @@ type: code
 layer: Game
 kind: class
 namespace: Athanor.Game
-file: Athanor/Assets/Scripts/Game/Cutscene/TutorialController.cs
+file: Athanor/Assets/Scripts/Game/Tutorial/TutorialManager.cs
 tags: [code/game, kind/class]
 aliases: []
 ---
@@ -12,9 +12,9 @@ aliases: []
 # TutorialRules
 
 `public static class TutorialRules`
-- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Cutscene/TutorialController.cs:12-26`
+- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Tutorial/TutorialManager.cs:12-26`
 
-> The decisions around the tutorial that need no scene, so they can be tested. What Begin does is the Core rule TutorialScript.Plan.
+> The decisions around the tutorial that need no scene, so they can be tested. What Begin does is the Core rule TutorialGate.Plan.
 
 ## Members
 | Kind | Signature | Line | Note |
@@ -26,7 +26,7 @@ aliases: []
 [[Save]]
 
 ## Used by
-[[GameFlow]], [[TutorialController]]
+[[GameManager]], [[TutorialManager]]
 
 ## Tested by
 [[TutorialFlowTests]]

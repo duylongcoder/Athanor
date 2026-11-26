@@ -18,7 +18,7 @@ aliases: []
 `Playing`, `DepthCleared`, `Lost`, `Won`, `AspectOffer`, `EventOffer`
 
 ## Used by
-[[AutoPlayer]], [[BalanceReports]], [[GameFlow]], [[GoldenShots]], [[HudView]], [[IgniteOutcome]], [[Newcomer]], [[Profile]], [[RunState]], [[Sim]], [[TutorialController]]
+[[AutoPlayer]], [[BalanceReports]], [[GameManager]], [[GoldenShots]], [[HudView]], [[IgniteOutcome]], [[Newcomer]], [[Profile]], [[RunState]], [[Sim]], [[TutorialManager]]
 
 ## Tested by
 [[HudTests]], [[LoreTests]], [[Phase3Tests]], [[PrefabBakeTests]], [[RarityReportTests]], [[RarityTests]], [[RulesTests]], [[RunStateTests]], [[TutorialFlowTests]], [[TutorialTests]]

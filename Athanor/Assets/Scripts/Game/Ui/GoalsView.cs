@@ -11,9 +11,6 @@ namespace Athanor.Game
     /// </summary>
     public sealed class GoalsView : MonoBehaviour
     {
-        // the numbers match GOALS in tools/art/ui.mjs; the page itself (Goals.prefab) is laid out in the prefab
-        const int X = 20, Y = 15, LeftX = 14, RightX = 304, Top = 30, ColW = 282, RowH = 20, HeadH = 14, Pad = 10, BarW = 92;
-
         public event Action Closed;
         public bool IsOpen => gameObject.activeSelf;
 
@@ -21,10 +18,15 @@ namespace Athanor.Game
         [Serializable]
         public struct Layout { public float barHeight, barDy; }
         [SerializeField] Layout layout;
-        /// <summary>The side of the "dot" sprite the bar is stretched from.</summary>
-        const float DotSize = 4;
-        /// <summary>The bar's left end in the row: BarW short of the row's inner right edge.</summary>
-        const int BarLeft = ColW - 2 * Pad - BarW;
+        /// <summary>
+        /// The page's grid (art px, y down), stored in Goals.prefab; the numbers match GOALS in tools/art/ui.mjs.
+        /// <c>dotSize</c> is the side of the "dot" sprite the bar is stretched from.
+        /// </summary>
+        [Serializable]
+        public struct Grid { public int x, y, leftX, rightX, top, colW, rowH, headH, pad, barW; public float dotSize; }
+        [SerializeField] Grid grid;
+        /// <summary>The bar's left end in the row: grid.barW short of the row's inner right edge.</summary>
+        int BarLeft => grid.colW - 2 * grid.pad - grid.barW;
 
         [SerializeField] GoalRow rowPrefab;
         [SerializeField] Label[] heads = new Label[3];
@@ -45,7 +47,7 @@ namespace Athanor.Game
 
         /// <summary>
         /// Takes the content and makes one row per goal from the GoalRow part (rows are not baked: a new goal needs its row).
-        /// Hooks the clicks. GameFlow calls it once at start; a test calls it after instantiating the prefab.
+        /// Hooks the clicks. GameManager calls it once at start; a test calls it after instantiating the prefab.
         /// </summary>
         public void Bind(ContentDb content)
         {
@@ -62,22 +64,22 @@ namespace Athanor.Game
             }
         }
 
-        /// <summary>A bar of the given width whose left end is BarW short of the row's right edge, 13 down from the row's top.</summary>
+        /// <summary>A bar of the given width whose left end is grid.barW short of the row's right edge, 13 down from the row's top.</summary>
         void SetBar(SpriteRenderer bar, float width)
         {
             bar.enabled = width >= 1;
             float x = BarLeft + width / 2f;
-            bar.transform.localScale = new Vector3(width / DotSize, layout.barHeight / DotSize, 1);
+            bar.transform.localScale = new Vector3(width / grid.dotSize, layout.barHeight / grid.dotSize, 1);
             bar.transform.localPosition = new Vector3(x, layout.barDy, 0);
         }
 
         public void Open(Profile profile, Journal journal)
         {
             int done = 0, used = 0;
-            float[] y = { Y + Top + 6, Y + Top + 6 };       // the next free line of each column
+            float[] y = { grid.y + grid.top + 6, grid.y + grid.top + 6 };       // the next free line of each column
             for (int s = 0; s < Sections.Length; s++)
             {
-                int col = Sections[s] == Rarities.Rare ? 1 : 0, x = X + (col == 0 ? LeftX : RightX) + Pad;
+                int col = Sections[s] == Rarities.Rare ? 1 : 0, x = grid.x + (col == 0 ? grid.leftX : grid.rightX) + grid.pad;
                 // goals still open first, in the order of the content; the finished ones after them
                 var open = new List<GoalData>(); var finished = new List<GoalData>();
                 foreach (var g in db.Goals)
@@ -86,7 +88,7 @@ namespace Athanor.Game
                 heads[s].Text = Loc.T("ui.goals.section", ("rarity", Loc.Upper(Loc.Rarity(Sections[s]))), ("done", finished.Count), ("all", open.Count + finished.Count));
                 heads[s].Color = Wording.RarityColor(Sections[s]).Times(0.55f).Alpha(1);
                 heads[s].transform.position = Px.At(x, y[col]);
-                y[col] += HeadH;
+                y[col] += grid.headH;
                 open.AddRange(finished);
                 foreach (var g in open)
                 {
@@ -100,12 +102,12 @@ namespace Athanor.Game
                     r.count.Text = complete ? "" : Wording.Number(progress) + " / " + Wording.Number(g.target);
                     r.reward.Text = Loc.Upper(complete ? Loc.T("ui.goals.unlocked", ("item", Wording.ItemName(db, item))) : Wording.RewardLine(g));
                     r.reward.Color = complete ? Teal : Faded;
-                    SetBar(r.track, complete ? 0 : BarW);
-                    SetBar(r.fill, complete ? 0 : Mathf.Floor(BarW * Mathf.Clamp01(progress / (float)g.target)));
+                    SetBar(r.track, complete ? 0 : grid.barW);
+                    SetBar(r.fill, complete ? 0 : Mathf.Floor(grid.barW * Mathf.Clamp01(progress / (float)g.target)));
                     r.icon.enabled = complete && !string.IsNullOrEmpty(item);
                     if (r.icon.enabled) r.icon.sprite = Art.Lib.Sprite(Wording.ItemSprite(db, item));
                     if (complete) done++;
-                    y[col] += RowH;
+                    y[col] += grid.rowH;
                 }
                 y[col] += 4;
             }

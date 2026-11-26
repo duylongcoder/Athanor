@@ -32,7 +32,7 @@ aliases: []
 [[ContentDb]], [[ContentNames]], [[Kind]], [[RarityId]], [[Tooltip]]
 
 ## Used by
-[[ContentDatabase]], [[GameRules]], [[RecipeDefinition]]
+[[ContentDatabase]], [[GameRules]], [[MaterialDefinitionEditor]], [[RecipeDefinition]], [[TutorialLayDef]], [[TutorialTrialDef]]
 
 ## Tested by
 [[ContentDatabaseTests]]

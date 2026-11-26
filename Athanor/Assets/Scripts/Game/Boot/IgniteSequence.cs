@@ -9,7 +9,7 @@ namespace Athanor.Game
     /// <summary>
     /// The choreography of one Ignite: the chain of reactions (flash, draw-in, burst, points), the discovery beat
     /// and cutscene, the flight of what was made to the rack, the spent tiles and the final potency.
-    /// The Ignite is settled before this plays (<see cref="GameFlow.SettleIgnite"/>); nothing here decides a rule.
+    /// The Ignite is settled before this plays (<see cref="RunManager.SettleIgnite"/>); nothing here decides a rule.
     /// All pace, wait and look numbers are fields of <see cref="Timing"/> and <see cref="Look"/>, stored in Main.unity.
     /// </summary>
     public sealed class IgniteSequence : MonoBehaviour
@@ -95,7 +95,7 @@ namespace Athanor.Game
         RunState run;
         long shownPotency;
 
-        /// <summary>True once the player pressed during the Ignite: the remaining links play fast. GameFlow sets it.</summary>
+        /// <summary>True once the player pressed during the Ignite: the remaining links play fast. GameManager sets it.</summary>
         public bool Hurry { get; set; }
 
         /// <summary>Hands the sequence what it plays on.</summary>
@@ -108,7 +108,7 @@ namespace Athanor.Game
         /// Plays an Ignite that is already settled: the chain, the flights to the rack, the dropped items and the final
         /// potency, then the tutorial's lines. potencyBefore is the counter's value before the Ignite.
         /// </summary>
-        public IEnumerator Play(IgniteOutcome outcome, RunState run, ContentDb db, long potencyBefore, TutorialController tutorial, bool auto)
+        public IEnumerator Play(IgniteOutcome outcome, RunState run, ContentDb db, long potencyBefore, TutorialManager tutorial, bool auto)
         {
             this.run = run; this.db = db;
             Hurry = false;
@@ -150,7 +150,7 @@ namespace Athanor.Game
                 StartCoroutine(bench.FloatText(Loc.T("ui.bench.lost", ("item", db.Material(id).name)), Px.At(look.lostAt.x, look.lostAt.y), look.lostText, timing.lostText));
             shownPotency = run.Potency;
             bench.Hud.SetPotency(shownPotency);
-            if (tutorial != null) yield return tutorial.AfterIgnite(new TutorialController.IgniteOutcomeView { Events = outcome.Events });
+            if (tutorial != null) yield return tutorial.AfterIgnite(new TutorialManager.IgniteOutcomeView { Events = outcome.Events });
         }
 
         bool IsDiscovery(string id) => db.Material(id).tier > 0;

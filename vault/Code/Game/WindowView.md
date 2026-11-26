@@ -28,7 +28,7 @@ aliases: []
 [[Art]], [[DepthLayer]], [[DepthLook]], [[Dust]], [[Px]]
 
 ## Used by
-[[DepthMood]], [[DepthStage]], [[DepthSwitch]], [[GameFlow]]
+[[DepthMood]], [[DepthStage]], [[DepthSwitch]], [[GameManager]]
 
 ## Tested by
 [[LayoutPinTests]], [[SceneBakeTests]]

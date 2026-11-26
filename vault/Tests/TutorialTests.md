@@ -1,16 +1,16 @@
 ---
 generated: true
 type: test
-file: Athanor/Assets/Tests/EditMode/TutorialTests.cs
+file: Athanor/Assets/Tests/EditModeGame/TutorialTests.cs
 tags: [test]
 count: 18
 ---
 
 # TutorialTests
-`Athanor/Assets/Tests/EditMode/TutorialTests.cs` — 18 tests
+`Athanor/Assets/Tests/EditModeGame/TutorialTests.cs` — 18 tests
 
 ## Covers
-[[Bench]], [[ContentData]], [[ContentDb]], [[Effects]], [[IgniteOutcome]], [[Journal]], [[ReactionEvent]], [[Row]], [[RunOptions]], [[RunPhase]], [[RunState]], [[Satchel]], [[ScoreParts]], [[TutorialPlan]], [[TutorialScript]], [[TutorialTrial]], [[Unlocks]]
+[[Bench]], [[ContentData]], [[ContentDb]], [[Effects]], [[IgniteOutcome]], [[Journal]], [[ReactionEvent]], [[Row]], [[RunOptions]], [[RunPhase]], [[RunState]], [[Satchel]], [[ScoreParts]], [[TutorialGate]], [[TutorialPlan]], [[TutorialSequence]], [[TutorialTrial]], [[Unlocks]]
 
 ## Tests
 - `Satchel_Take_PullsANamedCard_FromDrawOrDiscard`

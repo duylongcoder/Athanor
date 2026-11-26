@@ -4,7 +4,7 @@ type: code
 layer: Game
 kind: class
 namespace: Athanor.Game
-file: Athanor/Assets/Scripts/Game/Cutscene/TutorialSettings.cs
+file: Athanor/Assets/Scripts/Game/Tutorial/TutorialSettings.cs
 tags: [code/game, kind/class]
 aliases: []
 ---
@@ -12,7 +12,7 @@ aliases: []
 # TutorialStyle
 
 `public sealed class TutorialStyle`
-- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Cutscene/TutorialSettings.cs:9-78`
+- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Tutorial/TutorialSettings.cs:9-78`
 
 > How the tutorial overlay looks and feels: the text box, the popup lines, the rim and arrow, and their timings.
 
@@ -49,4 +49,4 @@ aliases: []
 | field | `public float arrowBobSpeed, arrowBobAmplitude` | 77 |  |
 
 ## Used by
-[[TutorialController]]
+[[TutorialManager]]

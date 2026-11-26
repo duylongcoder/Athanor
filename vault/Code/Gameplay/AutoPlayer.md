@@ -34,7 +34,7 @@ aliases: []
 [[AspectEffects]], [[AutoMove]], [[Bench]], [[BenchRules]], [[ChainPlanner]], [[ContentDb]], [[Effects]], [[IgniteResolver]], [[Ops]], [[RunPhase]], [[RunState]], [[ScoreContext]]
 
 ## Used by
-[[GameFlow]], [[Newcomer]], [[Sim]]
+[[GameManager]], [[Newcomer]], [[RunManager]], [[Sim]]
 
 ## Tested by
 [[LoreTests]], [[Phase3Tests]], [[RarityReportTests]], [[RunStateTests]], [[TutorialFlowTests]]

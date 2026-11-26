@@ -15,8 +15,8 @@ You are the content and balance designer. Content is data: the content assets in
 - A new material/catalyst/aspect needs an icon with the same id: hand off to `pixel-artist`.
 
 ## Verify (all three, quote results)
-1. `dotnet test tools/CoreTests` passes (content loads and validates).
-2. `unity run Athanor -- -executeMethod BalanceReports.RunBatch -report balance-matrix -out /tmp/m.txt`: report win rates per profile against the figures in `docs/ATHANOR.md` §6; a move >3 points needs an explanation or a revert.
+1. `unity test Athanor --mode EditMode` passes (content loads and validates) and `tools/content/snapshot.json` is fresh (`ContentSnapshotTests`).
+2. `unity run Athanor -- -executeMethod BalanceReports.RunBatch -report balance-matrix -out /tmp/m.txt`: report win rates per profile against `production/qa/evidence/refactor/baseline/` and the figures in `docs/ATHANOR.md` §6; a move >3 points needs an explanation or a revert.
 3. `unity run Athanor -- -executeMethod BalanceReports.RunBatch -report events -out /tmp/e.txt` when events changed (hazard/gamble must keep >=70% of event-free wins).
 
 ## Boundary with framework agents

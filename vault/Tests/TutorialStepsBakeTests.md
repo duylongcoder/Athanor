@@ -10,10 +10,10 @@ count: 5
 `Athanor/Assets/Tests/EditModeGame/TutorialStepsBakeTests.cs` — 5 tests
 
 ## Covers
-[[AreaKind]], [[ContentAssets]], [[ContentDb]], [[JournalView]], [[TutorialController]], [[TutorialScript]]
+[[AreaKind]], [[ContentAssets]], [[ContentDb]], [[JournalView]], [[TutorialManager]]
 
 ## Tests
-- `EveryStepId_UsedByDrive_ExistsInTheScene`
+- `EveryStepId_UsedByTheScript_ExistsInTheSequence`
 - `EveryStep_TextKey_HasEnglishAndVietnamese`
 - `FixedAreas_OfEveryStep_HavePositiveSize`
 - `EveryStep_Rects_EqualTheBaseline`

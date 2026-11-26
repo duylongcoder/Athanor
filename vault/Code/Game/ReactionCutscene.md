@@ -33,7 +33,7 @@ aliases: []
 [[Anim]], [[Art]], [[BurstSpec]], [[ContentDb]], [[Cutscene]], [[Fx]], [[FxRefs]], [[HudView]], [[Label]], [[Loc]], [[Palette]], [[Px]], [[ReactionEvent]], [[Sparks]], [[Spawn]]
 
 ## Used by
-[[GameFlow]], [[IgniteSequence]]
+[[GameManager]], [[IgniteSequence]]
 
 ## Tested by
 [[LayoutPinTests]], [[SceneBakeTests]]

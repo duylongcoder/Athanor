@@ -3,13 +3,13 @@ type: canvas
 tags: [core, rules-engineering]
 structure: mind-map
 author: athanor-devs
-generated-from: Core Index.md
+generated-from: Gameplay Index.md
 ---
 
-# Athanor.Core Canvas (Unity-Free Rules)
+# Athanor.Gameplay Canvas (plain C# rule models)
 
 ```
-[Athanor.Core]
+[Athanor.Gameplay]
    └─→ ContentDb
        │
        ├─→ [RecipeData] ← [MaterialData]
@@ -31,7 +31,7 @@ generated-from: Core Index.md
        │    │    └─→ Target = DepthTarget[5 depths]
        │    │
        │    └─→ RunState.Fields:
-       │         ├─→ materials[81] (from content.json)
+       │         ├─→ materials[81] (from the content assets)
        │         ├─→ recipes[87 pairs]
        │         ├─→ catalysts[26]
        │         ├─→ aspects[16]
@@ -58,7 +58,7 @@ generated-from: Core Index.md
 
 | System | Responsibility | Implementation |
 |--------|---------------|----------------|
-| **ContentDb** | Index content.json + validation rules | C# JSON deserialization with JsonUtility |
+| **ContentDb** | Index content assets + validation rules | C# JSON deserialization with JsonUtility |
 | **RunState** | Track run state per depth, scoring, combos | Seed-based RNG for deterministic behavior |
 | **IgniteResolver** | Pick liveliest tile → resolve first reaction | Up to 4 neighbours (3 edge, 2 corner) |
 | **ChainPlanner** | Sequentially chain reactions; score combo | Max 5-item combos rare by design |
@@ -68,10 +68,10 @@ generated-from: Core Index.md
 1. **Potency Score**: `Base × Used × First × Step × Bonus`
 2. **Reaction Index**: `Reactivity[1-10]` from materials → determines reaction order
 3. **Recipe Matching**: Unordered items; old `{a,b}` syntax still read for backwards compat
-4. **Depth Targets**: 5 depths, each with target potency (from `content.json`)
+4. **Depth Targets**: 5 depths, each with target potency (from the content assets)
 
 ## Test Strategy
 
-- Runs without Unity dependency: `dotnet test tools/CoreTests`
+- Plain C# models: `unity test Athanor --mode EditMode`
 - Determinism required: same seeds → same results every run
-- No hardcoded values: all numbers from content.json
+- No hardcoded values: all numbers from the content assets

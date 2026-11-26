@@ -59,7 +59,7 @@ aliases: []
 [[AspectEffects]], [[ContentData]], [[Effects]], [[Kind]], [[Ops]], [[Rarities]], [[Rng]], [[RulesData]], [[StatIds]]
 
 ## Used by
-[[AutoPlayer]], [[BalanceReports]], [[BenchRules]], [[BenchView]], [[ChainPlanner]], [[GameFlow]], [[GoalToast]], [[GoalsView]], [[GoldenShots]], [[HudView]], [[IgniteResolver]], [[IgniteSequence]], [[Journal]], [[JournalView]], [[Loc]], [[MaterialDefinition]], [[Newcomer]], [[Profile]], [[ReactionCutscene]], [[RunOverView]], [[RunState]], [[RunStats]], [[Save]], [[ScoreParts]], [[Sim]], [[Unlocks]], [[Wording]]
+[[AutoPlayer]], [[BalanceReports]], [[BenchRules]], [[BenchView]], [[ChainPlanner]], [[ContentManager]], [[ContentValidation]], [[GameManager]], [[GoalToast]], [[GoalsView]], [[GoldenShots]], [[HudView]], [[IgniteResolver]], [[IgniteSequence]], [[Journal]], [[JournalView]], [[Loc]], [[MaterialDefinition]], [[Newcomer]], [[Profile]], [[ProgressManager]], [[ReactionCutscene]], [[RunOverView]], [[RunState]], [[RunStats]], [[Save]], [[ScoreParts]], [[Sim]], [[Unlocks]], [[Wording]]
 
 ## Tested by
 [[ChainTests]], [[ContentDatabaseTests]], [[ContentTests]], [[HotPathTests]], [[HudTests]], [[IgniteTests]], [[JournalTests]], [[LoreTests]], [[PauseTests]], [[Phase3Tests]], [[PrefabBakeTests]], [[RarityReportTests]], [[RarityTests]], [[RoleSimTests]], [[RulesTests]], [[RunOverDepthTests]], [[RunStateTests]], [[SaveTests]], [[SceneBakeTests]], [[TutorialFlowTests]], [[TutorialStepsBakeTests]], [[TutorialTests]]

@@ -18,7 +18,7 @@ aliases: []
 `Unset`, `Common`, `Uncommon`, `Rare`, `Epic`, `Legendary`, `Mythic`, `WorldSeed`
 
 ## Used by
-[[CatalystDefinition]], [[ContentNames]], [[GoalDefinition]], [[MaterialDefinition]]
+[[CatalystDefinition]], [[ContentNames]], [[GoalDefinition]], [[MaterialDefinition]], [[MaterialDefinitionEditor]]
 
 ## Tested by
 [[ContentEnumTests]]

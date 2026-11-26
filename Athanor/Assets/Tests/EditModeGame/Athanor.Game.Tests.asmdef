@@ -5,6 +5,7 @@
         "Athanor.Gameplay",
         "Athanor.Game",
         "Athanor.Simulation",
+        "Athanor.Gameplay.Tests",
         "Athanor.EditorShared",
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
