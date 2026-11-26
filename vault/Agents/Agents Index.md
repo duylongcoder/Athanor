@@ -5,7 +5,7 @@ tags: [moc/agents]
 ---
 
 # Agents
-48 sub-agents in `.claude/agents/`. Athanor's own roles are marked ★ (see [[Agent Workflow]]).
+49 sub-agents in `.claude/agents/`. Athanor's own roles are marked ★ (see [[Agent Workflow]]).
 
 | Agent | Model | Description |
 |---|---|---|
@@ -40,6 +40,7 @@ tags: [moc/agents]
 | [[agent.qa-tester|qa-tester]] | inherit | Writes test cases, bug reports, and checklists — test case generation, regression checklist creation, execution documentation. |
 | [[agent.release-manager|release-manager]] | inherit | Release pipeline — certification checklists, store submissions and page prep, platform requirements, version numbering, release-day coordination. |
 | ★ [[agent.rules-engineer|rules-engineer]] | inherit | Athanor rules coder: edits Scripts/Gameplay (ignite and chain resolution, scoring, run state, profile, journal, satchel, tutorial gate, auto-player) t |
+| ★ [[agent.scene-diff-reviewer|scene-diff-reviewer]] | sonnet | Athanor read-only reviewer for .unity / .prefab diffs: separates real serialized changes from Editor noise (block reordering, float rounding, camera a |
 | [[agent.security-engineer|security-engineer]] | inherit | Protects against cheating, exploits, breaches — anti-cheat measures, secure save data and network comms, player privacy compliance. |
 | [[agent.sound-designer|sound-designer]] | inherit | SFX specifications and spec sheets — audio event documentation, mixing parameters, sound category definitions. |
 | [[agent.systems-designer|systems-designer]] | inherit | Detailed subsystem mechanics — combat formulas, progression curves, crafting recipes, status effect interactions, mathematical modeling of a mechanic. |

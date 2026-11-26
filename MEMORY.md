@@ -10,8 +10,9 @@ To add an entry (after every task group):
 
 ## Current state (as of 2026-11-26)
 
-- Branch `feature/phase7-unity-conversion`, HEAD at `0d14b2d3` (2026-11-26) plus the commit that adds this file's automation set. The Unity template refactor is **committed**:
-  stages 0-3 in `2d7cb831`, stages 4-7 in `0d14b2d3` (605 paths, most of them `vault/` and `graphify-out/`). Their tests were NOT re-run after that commit.
+- Branch `feature/phase7-unity-conversion`, HEAD at `efd6a699` (2026-11-26, art-library fix) on top of the automation-set commits. The Unity template refactor is **committed**:
+  stages 0-3 in `2d7cb831`, stages 4-7 in `0d14b2d3` (605 paths, most of them `vault/` and `graphify-out/`). Tests were re-run on 2026-11-26 after the fix:
+  EditMode 681/681, PlayMode 12/12, `tools/ci/run.sh all` green (see the change log; the remote CI run is not confirmed).
 - Plan: `.claude/2026-11-24-unity-template-refactor.md` (stages 0-7, tasks 0-29; a copy is at
   `docs/superpowers/plans/2026-11-24-unity-template-refactor.md`). Decision record: `docs/architecture/adr-0001-unity-managers-and-content-assets.md`
   (status: Accepted, owner, 2026-11-24).
@@ -24,7 +25,7 @@ To add an entry (after every task group):
   - Scene-object tutorial steps (`TutorialStep`, `TutorialArea`) -> `Athanor/Assets/Content/Tutorial/Tutorial.asset` run by `TutorialManager`.
   - dotnet retired: `tools/CoreTests` and `tools/CoreReports` deleted; balance reports are `Athanor/Assets/Editor/Balance/BalanceReports.cs`; CI job `unity-tests` (`.github/workflows/ci.yml`; `MIN_TESTS: 600` is the CI minimum-pass setting, not a test result).
 
-Plan tasks against the tree (evidence = file or git; passing tests were NOT re-run for this note):
+Plan tasks against the tree (evidence = file or git; the suites passed on 2026-11-26 at `efd6a699`, see the change log):
 
 | Tasks | Status | Evidence |
 |---|---|---|
@@ -35,17 +36,29 @@ Plan tasks against the tree (evidence = file or git; passing tests were NOT re-r
 | 6-8 Unity-only tests, balance in Editor, dotnet deleted | done, committed | `Editor/Balance`, `Editor/Simulation`, `tools/CoreTests` absent, `ci.yml` job `unity-tests` |
 | 9-13 content assets, snapshot, content.json deleted | done, committed | `Content/` asset folders, `Tests/EditMode/Content*Tests.cs`, `tools/content/snapshot.json`, `Resources/content.json` absent |
 | 14-18 Singleton, GameManager, 5 managers | present, in `0d14b2d3` | `Scripts/Game/Managers/` untracked; `GameFlow.cs -> GameManager.cs` staged; `Managers` object in `Main.unity` |
-| 19 PlayMode second-session / clean boot | present, in `0d14b2d3` | `Tests/PlayMode/ManagerBootTests.cs`, `SingletonTests.cs` untracked; pass/fail unverified |
+| 19 PlayMode second-session / clean boot | present, in `0d14b2d3` | `Tests/PlayMode/ManagerBootTests.cs`, `SingletonTests.cs` (PlayMode 12/12 passed on 2026-11-26) |
 | 20-24 tutorial as data | present, in `0d14b2d3` | `Tutorial.asset`, `TutorialSequence.cs`, `TutorialTypes.cs`, `TutorialManager.cs`; `TutorialStep.cs`, `TutorialArea.cs`, `TutorialStepsMigration.cs` deleted (staged); `Main.unity` has 0 `Step ...` objects (30 at HEAD) |
 | 25 Inspectors | present, in `0d14b2d3` | `Editor/ManagerInspectors.cs`, `Editor/Content/ContentInspectors.cs`, `Editor/TutorialSequenceEditor.cs`, `Scripts/Gameplay/Content/ContentValidation.cs` |
 | 26-27 tooltip and view grids in the Inspector | partly, in `0d14b2d3` | `Tooltip.cs` and other `Ui/*View.cs` modified; which grids moved is unverified |
 | 28 documents, agents, vault | present, in `0d14b2d3` | `CLAUDE.md`, `README.md`, `docs/ATHANOR.md`, six `.claude/agents/*.md`, `.claude/docs/agent-roster.md`, `vault/` modified. `Athanor/Execution_Plan.md` still exists (plan says ask the owner before deleting) |
-| 29 final gate | not done / unverified | no web-build size, test counts or final evidence recorded; ATHANOR.md § 6 figures not updated by this refactor as far as seen |
+| 29 final gate | partly done | test counts recorded (EditMode 681/681, PlayMode 12/12, 2026-11-26); still no web-build size or web-check evidence; ATHANOR.md § 6 figures not updated by this refactor as far as seen |
 
 Other state: `production/session-state/active.md` is stale (2026-11-18, Phase 6 Task 5); do not trust its "current task". Graphify map
-`graphify-out/GRAPH_REPORT.md` is dated 2026-11-26: 2932 nodes, 10233 edges, 116 communities.
+`graphify-out/GRAPH_REPORT.md` is dated 2026-11-26: 2930 nodes, 10218 edges, 110 communities.
 
 ## Change log
+
+### 2026-11-26 (art library fix, task-group close)
+- `efd6a699` fix(art): `ArtLibrary.asset` had lost all five font refs (`title`, `body`, `label`, `tiny`, `crux`) since `49ebb63a`; rebuilt with `ArtLibraryBuilder.RefreshBatch` (269 sprites).
+  15 stray placeholder PNGs (13 in `Art/Fx`, 2 in `Art/Icons`, added by `3bcd3c40`) duplicated UI sprite names and were removed (library 284 -> 269 distinct names).
+  The 844c6937 golden-shot baselines had been recorded with the font-less library (unreadable text), so 22 PNGs under `production/qa/evidence/phase7/baseline/golden/` were re-recorded;
+  9 of them are byte-identical to the 2026-11-19 baselines (`606f6967`). Fixes `DepthLayerTests.ArtLibrary_MainScene_HasEveryDepthArtSpriteOnce`, `HotPathTests.Tick_PotencyRunsIntoTarget_SwapsTheWordAwayAndBack`,
+  and the two `LabelLineBoxTests` Vietnamese half-leading tests.
+- Tests after the fix: EditMode 681 passed / 0 failed / 0 skipped; PlayMode 12 passed / 0 failed; `tools/ci/run.sh all` green (71 lint unit tests, lint clean, `check_repo` 0 problems, rotate in sync).
+  Before the fix: EditMode 677/681 (those 4 failures). Remote CI (`unity-tests`) not run.
+- uncommitted: `python3 tools/vault/build_vault.py` run (231 code types, 615 tests, 511 notes; touched `vault/Agents/Agents Index.md`, `Skills Index.md`, `Phases/Phases.md`, new `agent.scene-diff-reviewer.md`,
+  which the vault had not picked up since the automation-set commit). Graphify `--update` of `Athanor/Assets`, code-only (2 changed C# files re-extracted, 1 deleted file pruned: `ContentFieldMigration.cs`):
+  2930 nodes, 10218 edges, 110 communities (was 2932 / 10233 / 116); needed the force write because the pruned file shrank the graph. Images and docs got no semantic pass (project rule).
 
 ### 2026-11-26 (automation set, DOTween decision, this file)
 - `MEMORY.md` created; `.gitignore` now ignores `Athanor/.claude/` (nested worktrees; the root pattern `.claude/worktrees/` is anchored to the repo root).
@@ -107,6 +120,11 @@ Dated decisions live in `docs/ATHANOR.md` § 4 "Decisions in force"; not duplica
 - Enter Play Mode Options has domain reload off: statics survive Stop/Play, so singletons and allowlisted statics reset at `SubsystemRegistration`.
 - Art exporter drift: do not run `node tools/art/export.mjs` (re-encodes PNGs, changes `layout.json`); use `node tools/art/export-depth.mjs` alone (from `production/session-state/active.md`; re-check before relying on it, the file is stale).
 - Never edit `.unity`/`.prefab` as text; move scripts with `git mv` of the `.cs` and `.meta`; renamed serialized fields need `[FormerlySerializedAs]` (UL301).
+- `unity test` writes `test-results.xml` at the repo root (gitignored) and EditMode then PlayMode overwrite the same file; pass `-o <path>` per mode to keep both reports. It prints only a one-line summary, so read the XML for counts.
+- Batch `-executeMethod` needs the full namespaced name for editor tools, e.g. `Athanor.EditorShared.GoldenShots.WriteAll` (`GoldenShots.WriteAll` alone exits 1: class not found). `ArtLibraryBuilder.RefreshBatch` has no namespace.
+- `ArtLibraryBuilder` writes null fonts without any warning when the font assets fail to load, which is how the library lost its fonts unnoticed (see `efd6a699`). After any refresh, check that `ArtLibrary.asset` `title/body/label/tiny/crux` are not `{fileID: 0}`.
+- Golden baselines can silently bake in a broken state: when the four Vietnamese or any text shot changes, look at the image before re-recording.
+- Graphify drops a cache folder `Athanor/Assets/graphify-out/` (untracked) on every scan of that root; Unity would import it, so delete it after each run. A full-corpus report header needs a full `detect`, not the incremental one (the incremental run says "2 files").
 - Run full suites once per task group (groups 1-4, 5-8, 9-13, 14-18, 19, 20-24, 25-27, 28, 29), not per task; baseline-recording tests stay in their task.
 
 ## Update procedure

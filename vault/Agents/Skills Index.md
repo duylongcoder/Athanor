@@ -5,7 +5,7 @@ tags: [moc/skills]
 ---
 
 # Skills (slash commands)
-79 skills in `.claude/skills/`.
+81 skills in `.claude/skills/`.
 
 - `/adopt` — Brownfield audit — do existing artifacts actually work? Numbered migration plan. Unlike /project-stage-detect, checks compliance not existence.
 - `/architecture-decision` — Create an ADR documenting a technical decision: context, alternatives considered, consequences.
@@ -36,6 +36,7 @@ tags: [moc/skills]
 - `/hotfix` — Emergency fix bypassing normal sprint process — hotfix branch, approvals tracked, backport verified, full audit trail.
 - `/launch-checklist` — Launch readiness across every department: code, content, store, marketing, community, infrastructure, legal, go/no-go sign-offs.
 - `/localize` — Localization pipeline — find hardcoded strings, extract string tables, cultural review, VO, RTL, enforce string freeze.
+- `/log-change` — Record a finished task group in MEMORY.md, regenerate the vault and remind the graphify rebuild. Use at the end of every task group.
 - `/map-systems` — Decompose a concept into individual systems, map dependencies, prioritize design order, create the systems index.
 - `/milestone-review` — Milestone progress review — completeness, quality metrics, risk, go/no-go recommendation. At checkpoints or before a deadline.
 - `/next-step` — Names the one next step: make a game, change it after play, grow it, or the next studio-mode step. Use when asked what to do next, or stuck.
@@ -55,6 +56,7 @@ tags: [moc/skills]
 - `/retrospective` — Sprint or milestone retrospective from completed work, velocity, blockers. Actionable insights for the next iteration.
 - `/reverse-document` — Writes missing design or architecture docs, or a game's brief, from code. Use when code or prototypes have no docs.
 - `/review-all-gdds` — Holistic cross-GDD review — contradictions between systems, dominant strategies, economic imbalance, cognitive overload, pillar drift.
+- `/scene-refresh` — Refresh Main.unity and the view prefabs to the latest setup through the Unity CLI, revert batch-save drift, and prove nothing a player sees changed. Use after a
 - `/scope-check` — Scope creep check — current scope versus the original plan. Flags additions, quantifies bloat, recommends cuts. 'Any scope creep?' Finishing a game from its bri
 - `/security-audit` — Security audit — save tampering, cheat vectors, network exploits, data exposure, input validation. Before public or multiplayer release.
 - `/settings` — Old name of /project-settings. Prints one line, then runs /project-settings.

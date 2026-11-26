@@ -83,12 +83,6 @@
     "ast_hash": "7b9ed0e2412e6814660de6cc06bb8484",
     "semantic_hash": "7b9ed0e2412e6814660de6cc06bb8484"
   },
-  "Athanor/Assets/Editor/Migration/ContentFieldMigration.cs": {
-    "mtime": 1795622883.067764,
-    "seen": 1795628483.623913,
-    "ast_hash": "c2bf1147e691196d969c0bafa65687be",
-    "semantic_hash": "c2bf1147e691196d969c0bafa65687be"
-  },
   "Athanor/Assets/Editor/Migration/ManagerSceneMigration.cs": {
     "mtime": 1795624249.904432,
     "seen": 1795628483.623913,
@@ -414,10 +408,10 @@
     "semantic_hash": "ab8935c9811ab3e1b4fe85823e25e1b8"
   },
   "Athanor/Assets/Scripts/Game/Managers/Singleton.cs": {
-    "mtime": 1795622883.0969439,
-    "seen": 1795628483.6239302,
-    "ast_hash": "c34fb0d28b927de945dfce5904284498",
-    "semantic_hash": "c34fb0d28b927de945dfce5904284498"
+    "mtime": 1795630694.8150575,
+    "seen": 1795697861.971754,
+    "ast_hash": "f3c4de5fe37d7c3a0afb9b4f2d10cc89",
+    "semantic_hash": "f3c4de5fe37d7c3a0afb9b4f2d10cc89"
   },
   "Athanor/Assets/Scripts/Game/Support/Anim.cs": {
     "mtime": 1795622883.0977426,
@@ -558,10 +552,10 @@
     "semantic_hash": "f7dacda8390700beb1ead40c9f05b029"
   },
   "Athanor/Assets/Scripts/Game/Tutorial/TutorialTypes.cs": {
-    "mtime": 1795624402.1527076,
-    "seen": 1795628483.623939,
-    "ast_hash": "341512bbd8cbc5705d8a97598246ea68",
-    "semantic_hash": "341512bbd8cbc5705d8a97598246ea68"
+    "mtime": 1795630694.8149405,
+    "seen": 1795697861.971775,
+    "ast_hash": "5a401ad357059f1d2ce11354cc5e2251",
+    "semantic_hash": "5a401ad357059f1d2ce11354cc5e2251"
   },
   "Athanor/Assets/Scripts/Game/Ui/CatalystChoiceView.cs": {
     "mtime": 1795626252.3468766,
