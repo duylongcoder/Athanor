@@ -45,6 +45,20 @@ namespace Athanor.Tests
         }
 
         [Test]
+        public void Blocks_ADarkStep_EvenWithoutLockPad_SoTheDimNeverLetsAClickThrough()
+        {
+            Assert.IsTrue(TutorialManager.Blocks(new TutorialStepDef { dark = true, lockPad = false }));
+            Assert.IsTrue(TutorialManager.Blocks(new TutorialStepDef { dark = false, lockPad = true }));
+            Assert.IsFalse(TutorialManager.Blocks(new TutorialStepDef { dark = false, lockPad = false }));
+        }
+
+        [Test]
+        public void Blocks_ForEveryDarkStepOfTheSequence_IsTrue()
+        {
+            foreach (var s in Seq.steps.Where(s => s.dark)) Assert.IsTrue(TutorialManager.Blocks(s), s.id);
+        }
+
+        [Test]
         public void Plan_FreshSave_RunsTheTutorial()
         {
             Assert.AreEqual(TutorialPlan.Run, TutorialGate.Plan(false, 0));

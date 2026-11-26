@@ -2,7 +2,7 @@
 [drive] start
 [tut] This is the bench. Nine tiles. Materials go on them. (holes 1)
 [tut] Click Ember Coal, then the lit tile. (holes 2)
-[tut] Put Deep Tear next to it. Neighbours react. (holes 3)
+[tut] Put Deep Tear next to it. Neighbours react. (holes 2)
 [tut] Changed your mind? Click a placed material to take it back. (holes 3)
 [tut] Ignite. (holes 1)
 [ignite] d1 +40 =40 Playing steam_wisp

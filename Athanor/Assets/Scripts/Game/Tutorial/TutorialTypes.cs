@@ -55,7 +55,7 @@ namespace Athanor.Game
         [Hint("The id the script names, e.g. 1.4 or 5.4i.")] public string id = "";
         [Hint("Lang key, e.g. tutorial.1_4. Two steps may share one.")] public string textKey = "";
         [Hint("Dim the screen outside the areas.")] public bool dark = true;
-        [Hint("Clicks on the dark pulse the rim; clicks in pass-through areas reach the game.")] public bool lockPad = true;
+        [Hint("Block clicks outside the areas: a click on the dark pulses the rim, clicks in pass-through areas reach the game. A dark step blocks even with this off.")] public bool lockPad = true;
         [Hint("Read steps: a click in a non-pass area advances the text. Off: it only pulses the rim.")] public bool clickAdvances = true;
         [Hint("Own text box position (art pixels, top-left). Off = TutorialStyle.boxPos.")] public bool useBoxPos;
         public Vector2 boxPos;

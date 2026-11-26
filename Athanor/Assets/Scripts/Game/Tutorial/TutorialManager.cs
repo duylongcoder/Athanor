@@ -78,6 +78,9 @@ namespace Athanor.Game
 
         // ---- overlay ----------------------------------------------------------------------------
 
+        /// <summary>Whether the step shuts every click outside its lit windows: a dark step always does (the dim is never click-through), a light one only with lockPad.</summary>
+        public static bool Blocks(TutorialStepDef step) => step.dark || step.lockPad;
+
         /// <summary>The box round the holes. No holes (a text-only step such as 2.3) is the whole canvas: a full dim, no rim, no arrow.</summary>
         public static Rect Union(Rect[] r) { if (r == null || r.Length == 0) return new Rect(0, 0, Px.W, Px.H); var u = r[0]; for (int i = 1; i < r.Length; i++) u = Rect.MinMaxRect(Mathf.Min(u.xMin, r[i].xMin), Mathf.Min(u.yMin, r[i].yMin), Mathf.Max(u.xMax, r[i].xMax), Mathf.Max(u.yMax, r[i].yMax)); return u; }
 
@@ -112,7 +115,8 @@ namespace Athanor.Game
             rimOn = (step.dark || !step.lockPad) && !full;
             // the dark, and the holes cut out of it
             dim.color = dim.color.Alpha(step.dark ? dimAlpha : 0f);
-            lockPad.gameObject.SetActive(step.lockPad);
+            bool blocks = Blocks(step);
+            lockPad.gameObject.SetActive(blocks);
             lockPad.holes.Clear(); readPad.holes.Clear();
             while (holes.Count < holeRects.Length) holes.Add(Instantiate(holes[0], holes[0].transform.parent));
             for (int i = 0; i < holeRects.Length; i++)
@@ -123,7 +127,7 @@ namespace Athanor.Game
                 lockPad.holes.Add(world);                                   // every lit window is open in the lock ...
                 if (areas[i].area.clicksPass) readPad.holes.Add(world);     // ... and the ones that pass are open in the read pad too
             }
-            readPad.gameObject.SetActive(step.lockPad);
+            readPad.gameObject.SetActive(blocks);
             Dev.Hook("[tut] " + text + (lines != null ? " | " + string.Join(" / ", lines) : "") + " (holes " + holeRects.Length + ")");
             PlaceRim(1);
             arrow.gameObject.SetActive(rimOn);
