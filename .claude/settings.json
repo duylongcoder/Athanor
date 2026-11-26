@@ -221,6 +221,11 @@
             "type": "command",
             "command": "echo `# <#` >/dev/null; bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/validate-write.sh\"; exit $? #> ; exit 0",
             "timeout": 15
+          },
+          {
+            "type": "command",
+            "command": "echo `# <#` >/dev/null; bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/guard-scene-files.sh\"; exit $? #> ; exit 0",
+            "timeout": 5
           }
         ]
       },
@@ -248,6 +253,11 @@
             "type": "command",
             "command": "echo `# <#` >/dev/null; bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/validate-skill-change.sh\"; exit $? #> ; exit 0",
             "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "echo `# <#` >/dev/null; python3 \"$CLAUDE_PROJECT_DIR/tools/lint/unity_lint.py\" --hook --root \"$CLAUDE_PROJECT_DIR/Athanor\" --config \"$CLAUDE_PROJECT_DIR/tools/lint/lint.config.json\" --baseline \"$CLAUDE_PROJECT_DIR/tools/lint/baseline.json\"; exit $? #> ; exit 0",
+            "timeout": 20
           }
         ]
       }
