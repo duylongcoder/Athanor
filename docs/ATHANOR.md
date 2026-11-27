@@ -474,9 +474,9 @@ works; the page keeps the 640x360 picture at a whole-number scale, centred on bl
 
 | Check | Result |
 |---|---|
-| EditMode | 681 total, 677 passed, **4 failed** |
+| EditMode | 683 total, 683 passed, 0 failed (2026-11-27; the 2026-11-26 run had 681 total and 4 failed, fixed since) |
 | PlayMode | 12 total, 12 passed |
-| Total vs `MIN_TESTS` 600 | 693 |
+| Total vs `MIN_TESTS` 600 | 695 |
 | `GoldenShotTests` | 16/16, 0% difference |
 | Balance reports (balance-matrix, events, roles, newcomer, balance, trace) | byte-identical to `production/qa/evidence/refactor/baseline/` (measured at the end of group 25-27, not rerun; since then only docs, agents, vault and one log line changed) |
 | PlayMode traces (autoplay seeds 11/22/33, `tutorial_trace`), `tutorial_lit_baseline.json` | unchanged |
@@ -484,8 +484,8 @@ works; the page keeps the 640x360 picture at a whole-number scale, centred on bl
 | `webtest` | exit 0, 129 screenshots, 0 console errors |
 | `autoplay` | exit 0, 40 pictures, 0 errors |
 
-Web evidence: `production/qa/evidence/refactor/` (`web`, `autoplay`, `baseline`). None of the 4 EditMode failures is caused by the refactor.
-Open, owner decision needed; the `unity-tests` CI job stays red until they are fixed or waived:
+Web evidence: `production/qa/evidence/refactor/` (`web`, `autoplay`, `baseline`). The folders `web` and `autoplay` are empty today, so the 129 screenshots and 40 pictures above are not retained: run `webtest` and `autoplay` again to restore them (section 7 item 11(h)).
+The 4 EditMode failures of the 2026-11-26 run were not caused by the refactor and all pass in the 2026-11-27 run (`run.sh all` and `run.sh unity` exit 0). Their causes, for the record:
 
 - `LabelLineBoxTests` x2: `ArtLibrary.asset` has the five font references at fileID 0 (also at HEAD) after the uncommitted `Assets/Art/Art/Fonts` -> `Assets/Art/Fonts` path change. Rebuilding the library fixes them but breaks 11 `GoldenShotTests`, whose goldens were baked with null fonts.
 - `DepthLayerTests.ArtLibrary_MainScene_HasEveryDepthArtSpriteOnce`: 284 vs 269 distinct sprite names.
@@ -548,6 +548,7 @@ Undecided or not done. None is decided by being listed.
     hit boxes, deal stagger and tooltip delay, `GoalToast` box and `Timing`, `PauseMenu.dialogTop`.
     (f) Owner: the real second session. In the Editor press Play, then Stop, then Play again, and go Title, Bench, Journal, Title:
     no console error and no doubled handler (a click acts once). `StaticResetTests` check each reset alone, not a second session.
+    (g) Owner: step 3 of the template-refactor final gate was never done by hand: play the tutorial once and see that the lines, holes and arrow look as before, then set `trials` 4 → 5 in `GameRules.asset`, press Play, see 5 trials on the HUD, and undo it. (h) `production/qa/evidence/refactor/web` and `autoplay` are empty: re-run `tools/web/webtest.mjs` and `tools/web/autoplay.mjs` and keep the pictures. Until (g) and (h) are done the two 2026-11-24 template-refactor plans (`docs/superpowers/plans/2026-11-24-unity-template-refactor.md` and its copy `.claude/2026-11-24-unity-template-refactor.md`) stay; they are history and still name PrimeTween on purpose. Neither the release build size (last measured 2026-11-26, before DOTween) nor the six balance reports were re-run after the DOTween migration.
 12. Notes, not tasks: endless mode after depth 5 (the owner redesigns it), a currency (no purpose yet), sound (other plan).
 
 ---
