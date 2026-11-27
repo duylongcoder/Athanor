@@ -5,7 +5,7 @@ using System.IO;
 using System.Reflection;
 using Athanor.Gameplay;
 using Athanor.Game;
-using PrimeTween;
+using DG.Tweening;
 using UnityEditor;
 using UnityEngine;
 
@@ -14,7 +14,7 @@ namespace Athanor.EditorShared
     /// <summary>
     /// The golden shots: one picture of every view in a fixed, seeded state, in English and Vietnamese. Each view is built the way its
     /// prefab test builds it (instantiate, Bind, Show / Open), never through Update, so a shot holds no Time.time, no Random and no
-    /// running animation: tweens are completed (Tween.CompleteAll) rather than waited for. Phase 7 compares every task against these.
+    /// running animation: tweens are completed (DOTween.CompleteAll) rather than waited for. Phase 7 compares every task against these.
     /// </summary>
     public static class GoldenShots
 {
@@ -57,12 +57,12 @@ namespace Athanor.EditorShared
         var root = Build(name);
         try
         {
-            Tween.CompleteAll();
+            DOTween.CompleteAll();
             return ViewCapture.RenderAsShown(root);
         }
         finally
         {
-            Tween.StopAll();
+            DOTween.KillAll();
             Time.timeScale = 1f;
             foreach (var m in root.GetComponentsInChildren<MonoBehaviour>(true))
                 m.GetType().GetMethod("OnDestroy", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly)?.Invoke(m, null);
@@ -231,7 +231,7 @@ namespace Athanor.EditorShared
         };
         var choose = view.Choose("title", "line", cards, _ => { });
         choose.MoveNext();
-        Tween.CompleteAll();              // the deal is over: the cards are home
+        DOTween.CompleteAll();              // the deal is over: the cards are home
         choose.MoveNext();
         return go;
     }
@@ -258,7 +258,7 @@ namespace Athanor.EditorShared
         int last = run.EventOptions.Count - 1;      // the walk-on option: no gain, so no screen flash
         var show = view.Show(run, null);
         show.MoveNext();
-        Tween.CompleteAll();                        // slide-in done
+        DOTween.CompleteAll();                        // slide-in done
         if (!outcome) return go;
         show.MoveNext();
         Click(view.OptionLabel(last).GetComponentInParent<Clickable>());

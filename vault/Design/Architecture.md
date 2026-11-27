@@ -54,7 +54,7 @@ flowchart TB
 | Layer | Path | Rule |
 |---|---|---|
 | Gameplay | `Athanor/Assets/Scripts/Gameplay` ([[Gameplay Index]]) | Deterministic (seeded [[Rng]]) plain C# models in the Unity assembly `Athanor.Gameplay`; no Unity API (review only; UL008 has no path) |
-| Game | `Athanor/Assets/Scripts/Game` ([[Game Index]]) | `Managers` ([[ContentManager]], [[SaveManager]], [[LocalizationManager]], [[ProgressManager]], [[RunManager]]), `Tutorial` ([[TutorialManager]], [[TutorialSequence]]), rendering, input, tweens (PrimeTween), cutscenes; the screen loop is [[GameManager]] over Gameplay [[ScreenFlow]] |
+| Game | `Athanor/Assets/Scripts/Game` ([[Game Index]]) | `Managers` ([[ContentManager]], [[SaveManager]], [[LocalizationManager]], [[ProgressManager]], [[RunManager]]), `Tutorial` ([[TutorialManager]], [[TutorialSequence]]), rendering, input, tweens (DOTween), cutscenes; the screen loop is [[GameManager]] over Gameplay [[ScreenFlow]] |
 | Editor | `Athanor/Assets/Editor` ([[Editor Index]]) | Scene/font/atlas/web-build tools, content inspectors, [[BalanceReports]] (menu **Athanor > Balance**), `ContentSnapshot`; menu **Athanor** |
 | Tests | `Athanor/Assets/Tests`: EditMode, EditModeGame, PlayMode ([[Tests Index]]) | Every test runs in Unity (`unity test Athanor --mode EditMode` / `PlayMode`); no dotnet project |
 | Tools | `tools/` ([[Tools Index]]) | Sprite generation (`art`), effect sheets (`fx`), headless web checks (`web`), `content/snapshot.json`, this vault (`vault`) |

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Linq;
 using Athanor.Gameplay;
-using PrimeTween;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Athanor.Game
@@ -272,19 +272,19 @@ namespace Athanor.Game
             var icon = Spawn.Sprite(bench.transform, m.id, from, look.iconOrder);
             float pop = timing.rackPop * pace, fly = timing.rackFly * pace;
             var up = from + look.rackUp;
-            yield return Sequence.Create()
+            yield return Motion.Seq()
                 .Group(Motion.Scale(icon.transform, 0, look.popScale, pop, Ease.OutBack))
                 .Group(Motion.Move(icon.transform, from, up, pop))
                 .Group(Motion.Move(halo.transform, from, up, pop))
                 .ToYieldInstruction();
             yield return Anim.Wait(timing.rackHold * pace);
             Vector3 start = icon.transform.position, to = bench.RackSlot(slot);
-            var flight = Sequence.Create()
+            var flight = Motion.Seq()
                 .Group(Motion.Arc(icon.transform, start, to, look.arcHeight, fly, Ease.InOutSine))
                 .Group(Motion.Arc(halo.transform, start, to, look.arcHeight, fly, Ease.InOutSine))
                 .Group(Motion.Scale(icon.transform, look.popScale, 1, fly, Ease.InOutSine))
                 .Group(Motion.Fade(halo, look.haloAlpha, 0, fly));
-            while (flight.isAlive)
+            while (flight.IsActive())
             {
                 if (Random.value < timing.rackTrailChance) fx.Sparks.Trail(icon.transform.position, Random.insideUnitCircle * look.rackJitter, Mul(colour, look.rackTrailTint), look.rackLife, look.rackTrailOrder);
                 yield return null;

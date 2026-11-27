@@ -9,7 +9,6 @@
         "Athanor.EditorShared",
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "PrimeTween.Runtime",
         "Unity.TextMeshPro",
         "Unity.RenderPipelines.Core.Runtime",
         "Unity.RenderPipelines.Universal.Runtime",
@@ -22,7 +21,8 @@
     "allowUnsafeCode": false,
     "overrideReferences": true,
     "precompiledReferences": [
-        "nunit.framework.dll"
+        "nunit.framework.dll",
+        "DOTween.dll"
     ],
     "autoReferenced": false,
     "defineConstraints": [

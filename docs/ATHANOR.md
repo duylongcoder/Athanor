@@ -189,7 +189,7 @@ builds a view at run time. Edit a screen in the Inspector, not in C#.
 
 **Support.** `Label` (TextMeshPro wrapper with `Lines`/`LineBox`, font per role, Vietnamese vertical bias), `UiButton`, `Loc`
 (`Use`, `InitFromPlayer`, `Changed`), `Art`/`ArtLibrary` (fonts, sprites by content id, built by `Athanor > Refresh Art Library`),
-`PointerInput`, `Motion` (the tween wrapper; DOTween by decision, PrimeTween until the migration lands), `Haptics`, `AudioMute` (a hook; no sound ships), `Dev` (compiled out of release).
+`PointerInput`, `Motion` (the tween wrapper over DOTween: one-shot tweens snapped to pixels, `Seq`/`Group`, `Wait`, `StopOn`), `Haptics`, `AudioMute` (a hook; no sound ships), `Dev` (compiled out of release).
 
 **HD-2D rig** (`Scripts/Game/Depth`). The bench is rendered in depth: a perspective **world camera** at distance D from the art
 plane renders the layers under `DepthRig` into a RenderTexture of 640K x 360K px (K = whole display scale; never a fractional
@@ -297,8 +297,8 @@ scripts and both clones were removed from this repo in Phase 6. Spark particles 
 about 264 KB of wasm and rejected).
 
 **Fonts and credits.** Alagard (headings, numbers), BitPotion (reading text), Pixel Operator (tiny labels), Coder's Crux (Vietnamese
-roles and Phase 5 UI text). Attribution lives in `CREDITS.md`; keep the credit line on the title screen. PrimeTween 1.5.2 is kept as
-`Athanor/Packages/com.kyrylokuzyk.primetween.tgz`: fine while the repo is private, re-decide before any public release.
+roles and Phase 5 UI text). Attribution lives in `CREDITS.md`; keep the credit line on the title screen. DOTween (free) lives in
+`Athanor/Assets/Plugins/Demigiant/DOTween` (DLL, XML docs, readme and the Utils module; no Editor panel): fine while the repo is private, re-decide before any public release (`CREDITS.md`).
 
 ---
 
@@ -378,7 +378,7 @@ One line each. A decision is written here before it is relied on. Superseded and
 - 2026-11-24 (ADR-0001): dotnet is retired; all tests run in Unity (EditMode + PlayMode); CI job `unity-tests` (game-ci) replaces
   `core-tests` and needs the Unity secrets on every PR. The tutorial is the `TutorialSequence` asset run by `TutorialManager`
   (supersedes the 2026-11-19 `TutorialScript` clause and the 2026-11-20 `TutorialStep` scene-object line; the steps and their lit areas are in `Tutorial.asset`, edited with `TutorialSequenceEditor`).
-- 2026-11-26: **the project drops PrimeTween and uses DOTween** for tweens and sequences (owner instruction). Status: decision only. `Motion`, `Anim`, the views, `IgniteSequence`, `GameManager`, three asmdefs and `Packages/manifest.json` still use PrimeTween until a migration task replaces them; new code must not add PrimeTween calls. Constraints that carry over: no real-time waits in tests (UL104), WebGL single thread, cutscene look unchanged (golden shots 0 %, traces identical). The PrimeTween licence note in `CREDITS.md` stays until the package is removed; DOTween needs its own credit line.
+- 2026-11-26: **the project uses DOTween** for tweens and sequences (owner instruction); migrated 2026-11-27. Every tween goes through `Motion` (`Move`, `MoveLocal`, `Arc`, `Scale`, `Fade`, `Custom`, `Delay`, `Seq`, `Group`, `Wait`, `StopOn`), and each helper sets its own ease and guards a destroyed target. `GameManager` calls `DOTween.Init(false, true, LogBehaviour.ErrorsOnly)` and `SetTweensCapacity(200, 50)`; `Motion.ResetStatics` clears DOTween at `SubsystemRegistration` (domain reload is off). Only the core API is used. Installed: `DOTween.dll` (a plain precompiled reference; the test asmdef lists it in `precompiledReferences`), its XML docs, the readme and `Modules/DOTweenModuleUtils.cs` (DOTween looks it up at `Init` and logs an error without it). Not installed: the Editor panel and the other Modules. `Assets/csc.rsp` defines `DOTWEEN_NOPHYSICS` and `DOTWEEN_NOPHYSICS2D`, so the Utils module compiles no `Rigidbody` code and a 2D game keeps the physics modules out of the WebGL build (size not measured yet). Constraints that carry over: no real-time waits in tests (UL104), WebGL single thread, cutscene look unchanged (golden shots 0 %, traces identical).
 
 ---
 

@@ -48,7 +48,7 @@ generated-from: vault
 | Layer | Path | Rule |
 |-------|-------|------|
 | **Gameplay** | `Athanor/Assets/Scripts/Gameplay` | Deterministic (seeded RNG) plain C# models in the Unity assembly Athanor.Gameplay |
-| **Game** | `Athanor/Assets/Scripts/Game` | All rendering, input, tweens (PrimeTween), cutscenes; managers and the screen loop (GameManager) |
+| **Game** | `Athanor/Assets/Scripts/Game` | All rendering, input, tweens (DOTween), cutscenes; managers and the screen loop (GameManager) |
 | **Editor** | `Athanor/Assets/Editor` | Scene/font/atlas/web-build tools; menu Athanor |
 
 ## Run Lifecycle Flow

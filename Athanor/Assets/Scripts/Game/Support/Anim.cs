@@ -6,7 +6,7 @@ namespace Athanor.Game
 {
     /// <summary>
     /// Beats (Wait), easing curves, and Over for per-frame scripts that are not a move or a fade (the spark trails in
-    /// GameManager). Moves, fades and scales of objects go through Motion (PrimeTween, snapped to pixels).
+    /// GameManager). Moves, fades and scales of objects go through Motion (DOTween, snapped to pixels).
     /// </summary>
     public static class Anim
     {

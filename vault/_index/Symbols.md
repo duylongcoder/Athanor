@@ -169,7 +169,7 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | SaveManager | SaveManager | Game | class | Athanor/Assets/Scripts/Game/Managers/SaveManager.cs | 8 | The player's settings and the small saved flags. Storage itself stays in Save (PlayerPrefs; browser storage on the web). |
 | Singletons | Singletons | Game | class | Athanor/Assets/Scripts/Game/Managers/Singleton.cs | 11 | Forgets every manager instance when Play starts. Domain reload is off (EditorSettings), so statics survive Stop and Play; without this a second session would find the destroyed managers of the first. |
 | Singleton | Singleton | Game | class | Athanor/Assets/Scripts/Game/Managers/Singleton.cs | 30 | A manager that exists once, in Main.unity › Managers. There is no lazy creation and no DontDestroyOnLoad: the scene owns it. Instance throws when the manager is not in the scene, so a missing manager  |
-| Anim | Anim | Game | class | Athanor/Assets/Scripts/Game/Support/Anim.cs | 11 | Beats (Wait), easing curves, and Over for per-frame scripts that are not a move or a fade (the spark trails in GameManager). Moves, fades and scales of objects go through Motion (PrimeTween, snapped t |
+| Anim | Anim | Game | class | Athanor/Assets/Scripts/Game/Support/Anim.cs | 11 | Beats (Wait), easing curves, and Over for per-frame scripts that are not a move or a fade (the spark trails in GameManager). Moves, fades and scales of objects go through Motion (DOTween, snapped to p |
 | Art | Art | Game | class | Athanor/Assets/Scripts/Game/Support/Art.cs | 6 | The art library the running game uses. GameManager sets it from its serialized field; the Game tests set it in GameTestSetup. |
 | ArtLibrary | ArtLibrary | Game | class | Athanor/Assets/Scripts/Game/Support/ArtLibrary.cs | 8 | Every sprite, effect sheet, font and material the game looks up by name. Built by Athanor > Refresh Art Library. |
 | AudioMute | AudioMute | Game | class | Athanor/Assets/Scripts/Game/Support/AudioMute.cs | 11 | Silences audio while the browser tab is hidden, the app is paused or the window has lost focus. No sound ships in Phase 5, so this is a hook: it sets AudioListener.pause and is audible once sound land |
@@ -182,7 +182,7 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | KindColors | KindColors | Game | class | Athanor/Assets/Scripts/Game/Support/KindColors.cs | 4 | The label colour for each kind of material. |
 | Label | Label | Game | class | Athanor/Assets/Scripts/Game/Support/Label.cs | 11 | A line of pixel text with an optional one-pixel drop shadow. A label bound to a Lang key (Bind) rewrites itself when the language changes; every label swaps its font to the language's. |
 | Loc | Loc | Game | class | Athanor/Assets/Scripts/Game/Support/Loc.cs | 12 | The language the game is showing: the loaded Lang (Vietnamese falls back to English), the font set that goes with it and helpers for the words views share. Views never hold text; they ask for a key. E |
-| Motion | Motion | Game | class | Athanor/Assets/Scripts/Game/Support/Motion.cs | 16 | One-shot tweens on PrimeTween, kept in one place so every move is snapped to whole pixels (Px.Snap). Each call takes its start value explicitly and returns the Tween: group several with Sequence.Creat |
+| Motion | Motion | Game | class | Athanor/Assets/Scripts/Game/Support/Motion.cs | 17 | One-shot tweens on DOTween, kept in one place so every move is snapped to whole pixels (Px.Snap). Each call takes its start value explicitly and returns the Tween: group several with Motion.Seq().Grou |
 | RarityColors | RarityColors | Game | struct | Athanor/Assets/Scripts/Game/Support/Palette.cs | 8 | One colour per rarity, for code that switches on the rarity. |
 | Palette | Palette | Game | class | Athanor/Assets/Scripts/Game/Support/Palette.cs | 18 | The colours two or more files share, by role (Assets/Data/Palette.asset). A colour only one file uses stays on that file's view. GameManager publishes it as Art.Palette. |
 | PointerInput | PointerInput | Game | class | Athanor/Assets/Scripts/Game/Support/PointerInput.cs | 8 | Mouse or touch position in world space, press state for this frame, and hover/click dispatch to Clickables. |
@@ -291,7 +291,7 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | MainDepthTests | MainDepthTests | Tests | class | Athanor/Assets/Tests/EditModeGame/MainDepthTests.cs | 11 | The HD-2D bench in the main scene (5b-07a): layers, the tiles' depth group, clicks through the world ray, the shake. |
 | MainDevHookTests | MainDevHookTests | Tests | class | Athanor/Assets/Tests/EditModeGame/MainDevHookTests.cs | 11 | The dev-only hooks tools/web/mainhd2d.mjs drives (5b-07b): F6 mood steps, F10 tile faces in UI units, the bench's place / unplace lines. The key handling is guarded by Application.isEditor \|\| Debug.is |
 | MainSceneFixture | MainSceneFixture | Tests | class | Athanor/Assets/Tests/EditModeGame/MainSceneFixture.cs | 14 | Main.unity opened beside the test scene, for the views that are scene objects and not prefabs. Dispose closes it without saving. |
-| MotionTests | MotionTests | Tests | class | Athanor/Assets/Tests/EditModeGame/MotionTests.cs | 13 | Motion's helpers make live PrimeTween tweens. PrimeTween refuses a payload over 16 bytes: it logs an error and returns a dead tween, which a Sequence then refuses too (the rack flight and the catalyst |
+| MotionTests | MotionTests | Tests | class | Athanor/Assets/Tests/EditModeGame/MotionTests.cs | 13 | Motion's helpers make live DOTween tweens that a sequence accepts, and a completed tween lands on whole pixels (the rack flight and the catalyst hop are arcs inside a sequence). |
 | NoteTextTests | NoteTextTests | Tests | class | Athanor/Assets/Tests/EditModeGame/NoteTextTests.cs | 8 | An event note (a key and its arguments from the core) reads as the English or Vietnamese sentence the regex-matched wording used to give. |
 | PauseTests | PauseTests | Tests | class | Athanor/Assets/Tests/EditModeGame/PauseTests.cs | 10 | The pause menu: time stops and comes back on every exit, Esc toggles, nothing opens in the tutorial, Quit leaves the stored run data alone. |
 | PrefabBakeTests | PrefabBakeTests | Tests | class | Athanor/Assets/Tests/EditModeGame/PrefabBakeTests.cs | 13 | The shipped prefabs keep what the views need: a label keeps its key, a button still clicks, the tooltip makes its panel. |
@@ -1040,9 +1040,9 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | GameManager | method | EffectsLine | 59 | public static string EffectsLine(bool on) |
 | GameManager | property | JournalView | 127 | public JournalView JournalView |
 | GameManager | method | OnAwake | 151 | protected override void OnAwake() |
-| GameManager | method | RequestJournal | 232 | public void RequestJournal() |
-| GameManager | method | OnDestroy | 234 | protected override void OnDestroy() |
-| GameManager | method | Ignite | 482 | public void Ignite() |
+| GameManager | method | RequestJournal | 233 | public void RequestJournal() |
+| GameManager | method | OnDestroy | 235 | protected override void OnDestroy() |
+| GameManager | method | Ignite | 483 | public void Ignite() |
 | RunTiming | field | endingWait | 88 | public float descendWait, endingWait |
 | RunTiming | field | lossWait | 90 | public float lossShake, lossShakeSeconds, lossWait |
 | RunTiming | field | runFadeOut | 92 | public float titleFadeIn, titleFadeOut, runFadeIn, runFadeOut |
@@ -1491,16 +1491,19 @@ Flat tables behind `tools/vault/q.py`. For browsing use the per-type notes in `C
 | Loc | method | Upper | 119 | public static string Upper(string s) |
 | Loc | method | DepthName | 122 | public static string DepthName(ContentDb db, int depth) |
 | Loc | method | Number | 125 | public static string Number(long n) |
-| Motion | method | Move | 19 | public static Tween Move(Transform t, Vector3 from, Vector3 to, float seconds, Ease ease = Ease.Linear) |
-| Motion | method | MoveLocal | 23 | public static Tween MoveLocal(Transform t, Vector3 from, Vector3 to, float seconds, Ease ease = Ease.Linear) |
-| Motion | property | ArcPath | 30 | sealed class ArcPath |
-| Motion | method | Arc | 36 | public static Tween Arc(Transform t, Vector3 from, Vector3 to, float height, float seconds, Ease ease = Ease.Linear) |
-| Motion | method | Scale | 42 | public static Tween Scale(Transform t, float from, float to, float seconds, Ease ease = Ease.Linear) |
-| Motion | method | Fade | 46 | public static Tween Fade(SpriteRenderer r, float from, float to, float seconds, Ease ease = Ease.Linear) |
-| Motion | method | Fade | 50 | public static Tween Fade(Label l, float from, float to, float seconds, Ease ease = Ease.Linear) |
-| Motion | method | StopOn | 57 | public static void StopOn(Component owner) |
-| Motion | method | Wait | 67 | public static IEnumerator Wait(Tween tween, Func<bool> hurry = null) |
-| Motion | method | Wait | 73 | public static IEnumerator Wait(Sequence sequence, Func<bool> hurry = null) |
+| Motion | method | Move | 24 | public static Tween Move(Transform t, Vector3 from, Vector3 to, float seconds, Ease ease = Ease.Linear) |
+| Motion | method | MoveLocal | 28 | public static Tween MoveLocal(Transform t, Vector3 from, Vector3 to, float seconds, Ease ease = Ease.Linear) |
+| Motion | method | Arc | 35 | public static Tween Arc(Transform t, Vector3 from, Vector3 to, float height, float seconds, Ease ease = Ease.Linear) |
+| Motion | method | Scale | 43 | public static Tween Scale(Transform t, float from, float to, float seconds, Ease ease = Ease.Linear) |
+| Motion | method | Fade | 47 | public static Tween Fade(SpriteRenderer r, float from, float to, float seconds, Ease ease = Ease.Linear) |
+| Motion | method | Fade | 51 | public static Tween Fade(Label l, float from, float to, float seconds, Ease ease = Ease.Linear) |
+| Motion | method | Custom | 55 | public static Tween Custom<T>(T target, float from, float to, float seconds, Action<T, float> set, Ease ease = Ease.Linear) where T : class |
+| Motion | method | Delay | 59 | public static Tween Delay(float seconds) |
+| Motion | method | Seq | 62 | public static Sequence Seq() |
+| Motion | method | Group | 65 | public static Sequence Group(this Sequence sequence, Tween tween) |
+| Motion | method | StopOn | 71 | public static void StopOn(Component owner) |
+| Motion | method | Wait | 81 | public static IEnumerator Wait(Tween tween, Func<bool> hurry = null) |
+| Motion | method | ToYieldInstruction | 87 | public static IEnumerator ToYieldInstruction(this Tween tween) |
 | RarityColors | field | legendary | 10 | public Color common, uncommon, rare, legendary |
 | Palette | field | rarityText | 22 | public RarityColors rarityText |
 | Palette | field | rarityTone | 24 | public RarityColors rarityTone |

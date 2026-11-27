@@ -7,8 +7,7 @@
         "Unity.InputSystem",
         "Unity.RenderPipelines.Core.Runtime",
         "Unity.RenderPipelines.Universal.Runtime",
-        "Unity.RenderPipelines.Universal.2D.Runtime",
-        "PrimeTween.Runtime"
+        "Unity.RenderPipelines.Universal.2D.Runtime"
     ],
     "autoReferenced": true
 }

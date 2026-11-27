@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Athanor.Game;
 using NUnit.Framework;
-using PrimeTween;
+using DG.Tweening;
 using UnityEditor;
 using UnityEngine;
 
@@ -31,7 +31,7 @@ namespace Athanor.Tests
         [TearDown] public void Restore()
         {
             Application.logMessageReceived -= Hear;
-            Tween.StopAll();
+            DOTween.KillAll();
             fixture.Destroy();
         }
 

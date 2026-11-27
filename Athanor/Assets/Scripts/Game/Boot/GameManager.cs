@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Athanor.Gameplay;
-using PrimeTween;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
@@ -176,7 +176,8 @@ namespace Athanor.Game
 #else
             Application.targetFrameRate = 60;
 #endif
-            PrimeTweenConfig.SetTweensCapacity(200);   // a long chain runs many FloatTexts, Consumes and rack flights at once
+            DOTween.Init(false, true, LogBehaviour.ErrorsOnly);
+            DOTween.SetTweensCapacity(200, 50);   // a long chain runs many FloatTexts, Consumes and rack flights at once
 
             fx = new FxRefs(screenFx, sparks);
             screenFx.Bind(mainCamera, depthStage != null ? depthStage.sway : null);

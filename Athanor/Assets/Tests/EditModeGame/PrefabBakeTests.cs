@@ -3,7 +3,7 @@ using System.Reflection;
 using Athanor.Gameplay;
 using Athanor.Game;
 using NUnit.Framework;
-using PrimeTween;
+using DG.Tweening;
 using UnityEditor;
 using UnityEngine;
 
@@ -151,7 +151,7 @@ namespace Athanor.Tests
                 var view = f.Get<EventView>();
                 Assert.Throws<System.ArgumentNullException>(() => view.Bind(null));
             }
-            finally { Tween.StopAll(); f.Destroy(); }
+            finally { DOTween.KillAll(); f.Destroy(); }
         }
 
         [Test]
@@ -169,7 +169,7 @@ namespace Athanor.Tests
                 Assert.AreEqual(Wording.OptionLabel(run.CurrentEvent, run.EventOptions[0]), view.OptionLabel(0).Text);
                 Assert.IsNotEmpty(view.OptionLabel(0).Text);
             }
-            finally { Tween.StopAll(); f.Destroy(); }
+            finally { DOTween.KillAll(); f.Destroy(); }
         }
 
         [Test]
@@ -194,7 +194,7 @@ namespace Athanor.Tests
 
                 Assert.IsFalse(view.gameObject.activeSelf);
             }
-            finally { Tween.StopAll(); f.Destroy(); }
+            finally { DOTween.KillAll(); f.Destroy(); }
         }
 
         // a goal with no reward item: the toast needs no content database for it
@@ -265,7 +265,7 @@ namespace Athanor.Tests
                 Assert.AreEqual("Beta", view.CardName(1).Text);
                 Assert.AreEqual("Gamma", view.CardName(2).Text);
             }
-            finally { Tween.StopAll(); f.Destroy(); }
+            finally { DOTween.KillAll(); f.Destroy(); }
         }
 
         [Test]
@@ -290,7 +290,7 @@ namespace Athanor.Tests
                     Assert.AreEqual("star_corner", r.sprite.name);
                 }
             }
-            finally { Tween.StopAll(); f.Destroy(); }
+            finally { DOTween.KillAll(); f.Destroy(); }
         }
 
         [Test]
@@ -308,7 +308,7 @@ namespace Athanor.Tests
 
                 Assert.AreEqual("c", typeof(CatalystChoiceView).GetField("picked", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(view));
             }
-            finally { Tween.StopAll(); f.Destroy(); }
+            finally { DOTween.KillAll(); f.Destroy(); }
         }
 
         const string PausePrefab = "Assets/Prefabs/Views/Pause.prefab";

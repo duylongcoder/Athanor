@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Athanor.Gameplay;
-using PrimeTween;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Athanor.Game
@@ -157,8 +157,8 @@ namespace Athanor.Game
 
             float dealTime = timing.dealBase + timing.dealPerCard * count;
             // the shade and the heading come up first; the cards fly in one after another, 0.1 s apart
-            var deal = Sequence.Create()
-                .Group(Tween.Delay(dealTime))
+            var deal = Motion.Seq()
+                .Group(Motion.Delay(dealTime))
                 .Group(Motion.Fade(shade, 0, layout.dim, dealTime / timing.shadeDiv))
                 .Group(Motion.Fade(heading, 0, 1, dealTime / 2))
                 .Group(Motion.Fade(sub, 0, 1, dealTime / 2));
@@ -181,7 +181,7 @@ namespace Athanor.Game
             layout.pickBurst.Play(fx.Sparks, cards[chosen].root.position);
             // the others fall at once; the chosen card hops 10 px first, then falls after them
             float Away = timing.away, Hop = timing.hopShare * Away;
-            var away = Sequence.Create()
+            var away = Motion.Seq()
                 .Group(Motion.Fade(shade, layout.dim, 0, Away, Ease.InCubic))
                 .Group(Motion.Fade(heading, 1, 0, Away))
                 .Group(Motion.Fade(sub, 1, 0, Away));

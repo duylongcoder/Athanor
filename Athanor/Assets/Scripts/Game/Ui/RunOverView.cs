@@ -1,6 +1,6 @@
 using System.Collections;
 using Athanor.Gameplay;
-using PrimeTween;
+using DG.Tweening;
 using UnityEngine;
 using Hint = UnityEngine.TooltipAttribute;   // not "Tooltip": the game has a Tooltip view of its own
 
@@ -98,7 +98,7 @@ namespace Athanor.Game
             goalsLine.Text = goals.Count > 0 ? list + "  -  " + Loc.T("ui.runover.view_goals") : Loc.T("ui.runover.view_goals");
             done = false;
             gameObject.SetActive(true);
-            yield return Sequence.Create()
+            yield return Motion.Seq()
                 .Group(Motion.Fade(shade, 0, timing.shadeAlpha, timing.fadeIn))
                 .Group(Motion.MoveLocal(body, new Vector3(0, timing.slideFrom, 0), Vector3.zero, timing.slide, Ease.OutBack))
                 .ToYieldInstruction();

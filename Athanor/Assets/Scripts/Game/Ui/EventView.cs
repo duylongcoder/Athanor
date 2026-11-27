@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using Athanor.Gameplay;
-using PrimeTween;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Athanor.Game
@@ -97,7 +97,7 @@ namespace Athanor.Game
             proceed.gameObject.SetActive(false);
             picked = -1; closing = false; choosing = false;
             gameObject.SetActive(true);
-            yield return Sequence.Create()
+            yield return Motion.Seq()
                 .Group(Motion.Fade(shade, 0, timing.shadeAlpha, timing.fadeIn))
                 .Group(Motion.MoveLocal(body, new Vector3(0, timing.slideFrom, 0), Vector3.zero, timing.slide, Ease.OutBack))
                 .ToYieldInstruction();

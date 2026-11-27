@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Athanor.Gameplay;
-using PrimeTween;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Athanor.Game
@@ -208,7 +208,7 @@ namespace Athanor.Game
         {
             var label = Spawn.Text(transform, text, 0, 0, small ? FontKind.Tiny : FontKind.Title, small ? 8 : 16, color, 170, Align.Centre, layout.floatShadow);
             // it rises the whole time and fades over the last 30 %
-            yield return Sequence.Create()
+            yield return Motion.Seq()
                 .Group(Motion.Move(label.transform, from + layout.floatLiftFrom, from + layout.floatLiftTo, seconds, Ease.OutCubic))
                 .Insert(0.7f * seconds, Motion.Fade(label, 1, 0, 0.3f * seconds))
                 .ToYieldInstruction();

@@ -22,17 +22,14 @@ that includes them, include pixelfx's `LICENSE` and `NOTICE.md` as well.
 
 | Library | Author | Licence | Used for |
 |---|---|---|---|
-| PrimeTween | Kyrylo Kuzyk | PrimeTween licence (free to use in released games; v1.5.2) | Tweens and sequences |
+| DOTween (free) | Daniele Giardini (Demigiant) | DOTween licence, <http://dotween.demigiant.com/license.php> | Tweens and sequences |
 
-### PrimeTween licence note (owner decision #8, 2026-11-15)
+### DOTween licence note (2026-11-27)
 
-Read from `license.md` in the PrimeTween 1.5.2 package (Athanor/Library/PackageCache, read-only). Shipping games in binary
-form, free or commercial, is allowed. Internal sharing within a team, such as a private Git repository, is allowed.
-Not allowed: distributing PrimeTween's source or its .tgz inside derivative products, or reselling it. Athanor keeps the package as
-`Athanor/Packages/com.kyrylokuzyk.primetween.tgz` (referenced in `Athanor/Packages/manifest.json`), so a public repository would
-be a redistribution of that tarball. This is fine while the repo is private. **Re-decide before any public release** (public
-repo, or a repo published with the .tgz): switch to the NPM/UPM install, or drop the .tgz from the repo. The WebGL build
-ships only compiled code, which the licence allows. This is a reading of the licence text, not legal advice.
+`Athanor/Assets/Plugins/Demigiant/DOTween/` holds `DOTween.dll`, its XML docs, the package `readme.txt` and `Modules/DOTweenModuleUtils.cs`, taken from the
+"DOTween HOTween v2" package in the owner's Unity Asset Store download. The licence text has **not been read for this
+project**. **Re-decide before any public release:** read the licence and check whether the DLL may sit in a public repository
+(the repo is private today). The WebGL build ships only compiled code. This is not legal advice.
 
 ## Everything else
 

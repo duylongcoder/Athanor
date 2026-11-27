@@ -12,7 +12,7 @@ aliases: []
 # GameManager
 
 `public sealed class GameManager` : `Singleton<GameManager>`
-- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Boot/GameManager.cs:13-600`
+- Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Boot/GameManager.cs:13-601`
 
 > Owns the run and moves the game between its screens.
 
@@ -39,9 +39,9 @@ aliases: []
 | method | `public static string EffectsLine(bool on)` | 59 |  |
 | property | `public JournalView JournalView` | 127 | The journal screen, for the tutorial to point at parts of a page. |
 | method | `protected override void OnAwake()` | 151 |  |
-| method | `public void RequestJournal()` | 232 | Opens the Journal as the bench's Journal button would (the tutorial's auto-drive). |
-| method | `protected override void OnDestroy()` | 234 |  |
-| method | `public void Ignite()` | 482 | Spends a trial and plays out what happened. Ignored unless the bench is waiting for the player. |
+| method | `public void RequestJournal()` | 233 | Opens the Journal as the bench's Journal button would (the tutorial's auto-drive). |
+| method | `protected override void OnDestroy()` | 235 |  |
+| method | `public void Ignite()` | 483 | Spends a trial and plays out what happened. Ignored unless the bench is waiting for the player. |
 
 ## Uses
 [[Anim]], [[Art]], [[ArtLibrary]], [[AudioMuteHook]], [[AutoMove]], [[AutoPlayer]], [[Bench]], [[BenchView]], [[CatalystChoiceView]], [[ContentDb]], [[ContentManager]], [[DepthLook]], [[DepthMath]], [[DepthStage]], [[Dev]], [[EventView]], [[FlowState]], [[FxRefs]], [[GoalReward]], [[GoalToast]], [[GoalsView]], [[Haptics]], [[IgniteSequence]], [[Journal]], [[JournalView]], [[Loc]], [[Motion]], [[Palette]], [[PauseMenu]], [[PointerInput]], [[Profile]], [[ProgressManager]], [[Px]], [[ReactionCutscene]], [[RunManager]], [[RunOptions]], [[RunOverView]], [[RunPhase]], [[RunState]], [[SaveManager]], [[ScreenFlow]], [[ScreenFx]], [[Settings]], [[SimpleCutscene]], [[Singleton]], [[Sparks]], [[TitleView]], [[TutorialGate]], [[TutorialManager]], [[TutorialPlan]], [[TutorialRules]], [[Unlocks]], [[WindowView]]

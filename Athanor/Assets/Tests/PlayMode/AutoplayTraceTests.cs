@@ -31,8 +31,8 @@ namespace Athanor.Tests
                 result.Lines = trace.UpTo("[runover]");
             }
             finally { Time.timeScale = 1f; trace.Dispose(); prefs.Dispose(); }
-            // known game defect, carried over for Task 3+: RunOverView.OnDestroy stops tweens that are nested in a Sequence, and PrimeTween logs it once at scene unload
-            // (it may log it more than once, so the unload alone runs with failing log messages ignored; the run itself is checked as usual)
+            // RunOverView.OnDestroy stops tweens that may be nested in a Sequence; the unload alone runs with failing log messages ignored
+            // (the run itself is checked as usual)
             LogAssert.ignoreFailingMessages = true;
             yield return MainScene.Unload();
             yield return null;

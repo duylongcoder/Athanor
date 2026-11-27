@@ -1,6 +1,6 @@
 using System.Collections;
 using Athanor.Gameplay;
-using PrimeTween;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -110,7 +110,7 @@ namespace Athanor.Game
             var puff = layout.consumeBurst;
             fx.Sparks.Burst(centre + layout.consumeLift, puff.count, glow.Times(layout.consumeTint), puff.speed, puff.life, puff.order, puff.gravity);
             icon.color = Color.white;
-            yield return Sequence.Create()
+            yield return Motion.Seq()
                 .Group(Motion.Fade(icon, 1, 0, layout.consumeSeconds))
                 .Group(Motion.Scale(icon.transform, 1, layout.consumeGrow, layout.consumeSeconds))
                 .ToYieldInstruction();

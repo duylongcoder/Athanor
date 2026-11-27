@@ -4,8 +4,7 @@
     "references": [
         "Athanor.Gameplay",
         "Athanor.Game",
-        "Unity.TextMeshPro",
-        "PrimeTween.Runtime"
+        "Unity.TextMeshPro"
     ],
     "includePlatforms": [
         "Editor"

@@ -80,8 +80,11 @@ Other state: `production/session-state/active.md` is stale (2026-11-18, Phase 6 
 - Hooks added in `.claude/settings.json`: `guard-scene-files.sh` (PreToolUse Write|Edit; blocks text edits to `.unity` / `.prefab`, override `ATHANOR_ALLOW_SCENE_EDIT=1`) and
   `unity_lint.py --hook` (PostToolUse Write|Edit; exit 2 on lint errors in the edited file). Both were run with a passing and a failing input.
 - Skills `/scene-refresh` and `/log-change`, agent `scene-diff-reviewer`, and `.mcp.json` (context7; github over HTTP, needs `GITHUB_PERSONAL_ACCESS_TOKEN` in the environment).
-- Decision: **DOTween replaces PrimeTween** (`docs/ATHANOR.md` § 4, 2026-11-26). The code migration is NOT done: 15 C# files (`Support/Motion.cs`, `Support/Anim.cs`, views, `IgniteSequence`, `GameManager`,
-  tests, `GoldenShots`), three asmdefs and `Packages/manifest.json` still reference PrimeTween; DOTween is not installed. `CREDITS.md` keeps the PrimeTween licence note until the package is removed.
+- 2026-11-27: **DOTween migration done** (decision 2026-11-26, `docs/ATHANOR.md` § 4). DOTween comes from the owner's Asset Store download (`DOTween HOTween v2.unitypackage`, GUIDs kept) into
+  `Assets/Plugins/Demigiant/DOTween` (DLL, XML, readme, `Modules/DOTweenModuleUtils.cs`). `Support/Motion.cs` was rewritten (`Seq`, `Group`, `Delay`, `Custom`, `Wait`, `ToYieldInstruction`, `StopOn`, `ResetStatics`);
+  the views, `IgniteSequence`, `SimpleCutscene`, `GameManager`, `GoldenShots` and 5 test files moved over; PrimeTween is gone from code, three asmdefs, `manifest.json`, `packages-lock.json` and the `.tgz` was deleted.
+  `Assets/csc.rsp` defines `DOTWEEN_NOPHYSICS` / `DOTWEEN_NOPHYSICS2D`. EditMode 683 passed, 0 failed; PlayMode 12 passed, 0 failed; golden shots and the three autoplay traces plus the tutorial trace unchanged.
+  Not done: a WebGL build and its size against the 11,824,672 B ceiling; `CREDITS.md` says the DOTween licence text was not read. Not edited: the two frozen 2026-11-24 refactor plans, which still name PrimeTween.
 - Not done on purpose: the SessionStart `detect-gaps.sh` warnings ("sparse design docs", "no production planning") are expected for a project documented in `docs/ATHANOR.md` and `vault/`; switching them off means
   changing `modes.workflow` in `project.yaml`, an owner decision.
 
@@ -125,7 +128,7 @@ Dated decisions live in `docs/ATHANOR.md` § 4 "Decisions in force"; not duplica
 
 ## Gotchas
 
-- Tween library: the decision is DOTween, the code still uses PrimeTween until the migration task runs (see the 2026-11-26 entry). Do not add new PrimeTween calls.
+- Tween library: DOTween, through `Motion` only. Without `Modules/DOTweenModuleUtils.cs` DOTween logs `[Error] Couldn't load Modules system` at its first `Init`, which fails the first PlayMode test that logs; keep that file and the `csc.rsp` physics defines. Every helper must call `SetEase` (DOTween's default ease is OutQuad, not Linear).
 - `unity test` / `unity run` with the bare project name `Athanor` may open a different checkout (found in a worktree: 0 tests found and reported as pass). Pass the absolute project path, `/Users/bunker/Desktop/New Folder/Athanor`. The refactor worktree named in earlier notes (`unity-template-refactor-32f3f3`) is no longer registered in `git worktree list`; the work is in the main checkout.
 - The `unity run` wrapper adds `-quit`; passing `-quit` again exits with code 6. Batch form: `unity run Athanor -- -executeMethod <Type.Method>`. Editor must be closed (project lock). Unity wipes `Temp/` on start: write batch reports elsewhere.
 - Batch saves of `Athanor/Assets/Scenes/Main.unity` rewrite Camera `y: 0.125` / `height: 0.75` and four light `m_LocalPosition` values. After every scene-migration batch run `git diff -U0 Athanor/Assets/Scenes/Main.unity` and revert those lines. It was present in the uncommitted `Main.unity` diff on 2026-11-26 and is gone from commit `0d14b2d3`; the rule still holds for the next batch run.

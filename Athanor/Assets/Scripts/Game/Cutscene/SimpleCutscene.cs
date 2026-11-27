@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using Athanor.Gameplay;
-using PrimeTween;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -212,7 +212,7 @@ namespace Athanor.Game
             var win = descentBanner;
             fx.Screen.Flash(win.flash, win.flashSeconds); fx.Screen.Shake(win.shake, win.shakeSeconds);
             fx.Sparks.Burst(Px.At(CX, win.burstY), win.burst.count, win.burst.color, win.burst.speed, win.burst.life, win.burst.order, win.burst.gravity, win.burstSquash);
-            yield return Sequence.Create()
+            yield return Motion.Seq()
                 .Group(Motion.Fade(banner, 0, 1, win.rise))
                 .Group(Motion.Move(banner.transform, Px.At(CX, win.fromY), Px.At(CX, win.toY), win.rise, Ease.OutBack))
                 .ToYieldInstruction();
@@ -220,7 +220,7 @@ namespace Athanor.Game
             // 2. down the stair: the room leaves upward
             bench.SetActive(false);
             streaks = 1;
-            yield return Sequence.Create()
+            yield return Motion.Seq()
                 .Group(Motion.Fade(banner, 1, 0, descentLeave.fade))
                 .Group(Motion.Move(workshop.transform, Vector3.zero, new Vector3(0, descentLeave.scroll, 0), descentLeave.seconds, Ease.InCubic))
                 .ToYieldInstruction();
@@ -235,21 +235,21 @@ namespace Athanor.Game
             big.SetSize(depthName.Length > 20 ? 32 : 48);
             runeOn = 1;
             ClearSkip();
-            yield return Sequence.Create()
+            yield return Motion.Seq()
                 .Group(Motion.Fade(small, 0, 1, descentName.fade))
                 .Group(Motion.Fade(big, 0, 1, descentName.fade))
                 .Group(Motion.Move(big.transform, Px.At(CX, descentName.fromY), Px.At(CX, descentName.toY), descentName.rise, Ease.OutCubic))
                 .ToYieldInstruction();
-            if (introKey != null) yield return Sequence.Create().Group(Motion.Fade(intro, 0, 1, descentName.introFade)).ToYieldInstruction();
+            if (introKey != null) yield return Motion.Seq().Group(Motion.Fade(intro, 0, 1, descentName.introFade)).ToYieldInstruction();
             yield return Hold(descentName.hold);
             // 4. arriving: the room rises into view
             workshop.SetActive(true);
             streaks = descentArrive.streaks;
-            yield return Sequence.Create()
+            yield return Motion.Seq()
                 .Group(Motion.Fade(small, 1, 0, descentArrive.fade))
                 .Group(Motion.Fade(big, 1, 0, descentArrive.fade))
                 .Group(Motion.Fade(intro, 1, 0, descentArrive.fade))
-                .Group(Tween.Custom(this, 1f, 0f, descentArrive.runeFade, (s, v) => s.runeOn = v, Ease.Linear))
+                .Group(Motion.Custom(this, 1f, 0f, descentArrive.runeFade, (s, v) => s.runeOn = v, Ease.Linear))
                 .Group(Motion.Move(workshop.transform, new Vector3(0, -descentLeave.scroll, 0), Vector3.zero, descentArrive.seconds, Ease.OutCubic))
                 .ToYieldInstruction();
             End();
@@ -269,9 +269,9 @@ namespace Athanor.Game
             shade.color = depthLine.shade;
             intro.Text = Loc.T(key); intro.Alpha = 0;
             ClearSkip();
-            yield return Sequence.Create().Group(Motion.Fade(intro, 0, 1, depthLine.fade)).ToYieldInstruction();
+            yield return Motion.Seq().Group(Motion.Fade(intro, 0, 1, depthLine.fade)).ToYieldInstruction();
             yield return Hold(depthLine.hold);
-            yield return Sequence.Create().Group(Motion.Fade(intro, 1, 0, depthLine.fade)).ToYieldInstruction();
+            yield return Motion.Seq().Group(Motion.Fade(intro, 1, 0, depthLine.fade)).ToYieldInstruction();
             intro.Text = "";
             End();
             root.gameObject.SetActive(false);

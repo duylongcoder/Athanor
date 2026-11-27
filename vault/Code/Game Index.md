@@ -199,7 +199,7 @@ tags: [moc/code]
 - [[Loc]] _class_ — The language the game is showing: the loaded Lang (Vietnamese falls back to English), the font set that goes w
 
 ## `Game/Support/Motion.cs`
-- [[Motion]] _class_ — One-shot tweens on PrimeTween, kept in one place so every move is snapped to whole pixels (Px.Snap). Each call
+- [[Motion]] _class_ — One-shot tweens on DOTween, kept in one place so every move is snapped to whole pixels (Px.Snap). Each call ta
 
 ## `Game/Support/Palette.cs`
 - [[RarityColors]] _struct_ — One colour per rarity, for code that switches on the rarity.

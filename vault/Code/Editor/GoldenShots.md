@@ -14,7 +14,7 @@ aliases: []
 `public static class GoldenShots`
 - Layer: **Editor** · Source: `Athanor/Assets/Editor/Shared/GoldenShots.cs:19-300`
 
-> The golden shots: one picture of every view in a fixed, seeded state, in English and Vietnamese. Each view is built the way its prefab test builds it (instantiate, Bind, Show / Open), never through Update, so a shot holds no Time.time, no Random and no running animation: tweens are completed (Tween.CompleteAll) rather than waited for. Phase 7 compares every task against these.
+> The golden shots: one picture of every view in a fixed, seeded state, in English and Vietnamese. Each view is built the way its prefab test builds it (instantiate, Bind, Show / Open), never through Update, so a shot holds no Time.time, no Random and no running animation: tweens are completed (DOTween.CompleteAll) rather than waited for. Phase 7 compares every task against these.
 
 ## Uses
 [[AspectEffects]], [[AspectInstance]], [[BenchView]], [[CatalystChoiceView]], [[ChoiceCard]], [[Clickable]], [[ContentAssets]], [[ContentDb]], [[EditorGlobals]], [[EventView]], [[Fx]], [[FxRefs]], [[GoalReward]], [[GoalToast]], [[GoalsView]], [[HudView]], [[Journal]], [[JournalView]], [[Kind]], [[Loc]], [[PauseMenu]], [[Profile]], [[Rarities]], [[RunOptions]], [[RunOverView]], [[RunPhase]], [[RunState]], [[Save]], [[ScreenFx]], [[Settings]], [[Sparks]], [[TitleView]], [[TutorialSequence]], [[Unlocks]], [[ViewCapture]]

@@ -14,7 +14,7 @@ aliases: []
 `public static class Anim`
 - Layer: **Game** · Source: `Athanor/Assets/Scripts/Game/Support/Anim.cs:11-32`
 
-> Beats (Wait), easing curves, and Over for per-frame scripts that are not a move or a fade (the spark trails in GameManager). Moves, fades and scales of objects go through Motion (PrimeTween, snapped to pixels).
+> Beats (Wait), easing curves, and Over for per-frame scripts that are not a move or a fade (the spark trails in GameManager). Moves, fades and scales of objects go through Motion (DOTween, snapped to pixels).
 
 ## Members
 | Kind | Signature | Line | Note |

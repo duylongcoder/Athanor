@@ -1,14 +1,14 @@
 using Athanor.Game;
 using NUnit.Framework;
-using PrimeTween;
+using DG.Tweening;
 using UnityEngine;
 using Motion = Athanor.Game.Motion;   // UnityEngine has a Motion too
 
 namespace Athanor.Tests
 {
     /// <summary>
-    /// Motion's helpers make live PrimeTween tweens. PrimeTween refuses a payload over 16 bytes: it logs an error and
-    /// returns a dead tween, which a Sequence then refuses too (the rack flight and the catalyst hop did nothing).
+    /// Motion's helpers make live DOTween tweens that a sequence accepts, and a completed tween lands on whole pixels
+    /// (the rack flight and the catalyst hop are arcs inside a sequence).
     /// </summary>
     public class MotionTests
     {
@@ -19,7 +19,7 @@ namespace Athanor.Tests
         [TearDown]
         public void Clean()
         {
-            Tween.StopAll();
+            DOTween.KillAll();
             Object.DestroyImmediate(go);
         }
 
@@ -27,9 +27,9 @@ namespace Athanor.Tests
         public void Arc_IsAlive_AndCanJoinASequence()
         {
             var t = go.transform;
-            Assert.IsTrue(Motion.Arc(t, Vector3.zero, new Vector3(40, 0, 0), 20, 0.4f, Ease.InOutSine).isAlive);
-            var hop = Sequence.Create().Group(Motion.Arc(t, Vector3.zero, Vector3.zero, 10, 0.2f));
-            Assert.IsTrue(hop.isAlive);
+            Assert.IsTrue(Motion.Arc(t, Vector3.zero, new Vector3(40, 0, 0), 20, 0.4f, Ease.InOutSine).IsActive());
+            var hop = Motion.Seq().Group(Motion.Arc(t, Vector3.zero, Vector3.zero, 10, 0.2f));
+            Assert.IsTrue(hop.IsActive());
         }
 
         [Test]
@@ -45,10 +45,10 @@ namespace Athanor.Tests
         public void EveryHelper_WhenStarted_IsAlive()
         {
             var t = go.transform;
-            Assert.IsTrue(Motion.Move(t, Vector3.zero, Vector3.one, 0.2f).isAlive);
-            Assert.IsTrue(Motion.MoveLocal(t, Vector3.zero, Vector3.one, 0.2f).isAlive);
-            Assert.IsTrue(Motion.Scale(t, 0, 1, 0.2f).isAlive);
-            Assert.IsTrue(Motion.Fade(go.GetComponent<SpriteRenderer>(), 1, 0, 0.2f).isAlive);
+            Assert.IsTrue(Motion.Move(t, Vector3.zero, Vector3.one, 0.2f).IsActive());
+            Assert.IsTrue(Motion.MoveLocal(t, Vector3.zero, Vector3.one, 0.2f).IsActive());
+            Assert.IsTrue(Motion.Scale(t, 0, 1, 0.2f).IsActive());
+            Assert.IsTrue(Motion.Fade(go.GetComponent<SpriteRenderer>(), 1, 0, 0.2f).IsActive());
         }
     }
 }
